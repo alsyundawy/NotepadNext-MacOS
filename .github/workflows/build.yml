@@ -11,8 +11,6 @@ on:
 
 env:
   QT_RELEASE_VER: 6.5
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
 
 jobs:
   build:
@@ -70,7 +68,7 @@ jobs:
       # ─── Install Qt ────────────────────────────────────────────────────
       - name: Install Qt (mac)
         if: matrix.platform == 'mac'
-        uses: jurplel/install-qt-action@v4
+        uses: jdpurcell/install-qt-action@v5
         with:
           version: ${{ matrix.qt_version }}
           host: mac
