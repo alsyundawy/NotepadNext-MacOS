@@ -1,4 +1,4 @@
-name: Build Notepad Next
+name: Release New Build
 
 on:
   push:
