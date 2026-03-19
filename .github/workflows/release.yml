@@ -1,0 +1,201 @@
+name: Build Notepad Next
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - '*'
+  pull_request:
+  workflow_dispatch:
+
+env:
+  QT_RELEASE_VER: 6.5
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+
+          # ─── macOS Intel ──────────────────────────────────────────────
+          - runs_on: macos-15-intel
+            platform: mac
+            arch: x64
+            cmake_arch: x86_64
+            qt_arch: clang_64
+            qt_version: "6.5"
+          - runs_on: macos-15-intel
+            platform: mac
+            arch: x64
+            cmake_arch: x86_64
+            qt_arch: clang_64
+            qt_version: "6.8"
+          - runs_on: macos-15-intel
+            platform: mac
+            arch: x64
+            cmake_arch: x86_64
+            qt_arch: clang_64
+            qt_version: "6.10"
+
+          # ─── macOS Apple Silicon ──────────────────────────────────────
+          - runs_on: macos-latest
+            platform: mac
+            arch: arm64
+            cmake_arch: arm64
+            qt_arch: clang_64
+            qt_version: "6.5"
+          - runs_on: macos-latest
+            platform: mac
+            arch: arm64
+            cmake_arch: arm64
+            qt_arch: clang_64
+            qt_version: "6.8"
+          - runs_on: macos-latest
+            platform: mac
+            arch: arm64
+            cmake_arch: arm64
+            qt_arch: clang_64
+            qt_version: "6.10"
+
+    runs-on: ${{ matrix.runs_on }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+
+      # ─── Install Qt ────────────────────────────────────────────────────
+      - name: Install Qt (mac)
+        if: matrix.platform == 'mac'
+        uses: jdpurcell/install-qt-action@v5
+        with:
+          version: ${{ matrix.qt_version }}
+          host: mac
+          target: desktop
+          arch: ${{ matrix.qt_arch }}
+          modules: 'qt5compat'
+          cache: true
+
+
+      # ─── Set DISTRIBUTION ──────────────────────────────────────────────
+
+      - name: Set Distribution (mac)
+        if: matrix.platform == 'mac'
+        shell: bash
+        run: echo "DISTRIBUTION=dmg" >> "$GITHUB_ENV"
+
+      # ─── CMake Configure ───────────────────────────────────────────────
+      - name: Configure (CMake)
+        shell: bash
+        run: |
+          echo "Configure: run=$GITHUB_RUN_ID runner=${{ matrix.runs_on }} qt=${{ matrix.qt_version }}"
+          CMAKE_OPTS="-S . -B build -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DAPP_DISTRIBUTION=${{ env.DISTRIBUTION }}"
+
+          if [ "${{ matrix.platform }}" = "mac" ]; then
+            CMAKE_OPTS="$CMAKE_OPTS -DCMAKE_OSX_ARCHITECTURES=${{ matrix.cmake_arch }}"
+          fi
+
+          echo "CMake options: $CMAKE_OPTS"
+          cmake $CMAKE_OPTS
+
+      # ─── Build ─────────────────────────────────────────────────────────
+      - name: Build
+        shell: bash
+        run: cmake --build build --parallel
+
+      - name: Build MacOS Targets (dmg)
+        if: matrix.platform == 'mac'
+        shell: bash
+        run: cmake --build build --target dmg --parallel
+
+
+      # ─── Upload Artifacts ──────────────────────────────────────────────
+
+      - name: Upload MacOS dmg
+        if: matrix.platform == 'mac'
+        uses: actions/upload-artifact@v7
+        with:
+          name: NotepadNext-macOS-${{ matrix.arch }}-Qt${{ matrix.qt_version }}
+          path: build/NotepadNext*.dmg
+          if-no-files-found: warn
+
+
+  # ─── GitHub Release Draft ──────────────────────────────────────────────
+  github:
+    name: Draft GitHub Release
+    runs-on: ubuntu-latest
+    needs: [build]
+    if: >
+      github.repository == 'alsyundawy/NotepadNext' &&
+      github.event_name == 'push' &&
+      startsWith(github.ref, 'refs/tags/v')
+
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+
+      - name: Create Draft Release
+        shell: bash
+        run: |
+          gh release create "${{ github.ref_name }}" \
+            --title "${{ github.ref_name }}" \
+            --generate-notes \
+            --draft
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v8
+
+      - name: Upload macOS App (Intel x64)
+        shell: bash
+        run: |
+          gh release upload "${{ github.ref_name }}" \
+            "NotepadNext-macOS-x64-Qt${QT_RELEASE_VER}/NotepadNext-${{ github.ref_name }}.dmg" \
+            || true
+
+      - name: Upload macOS App (Apple Silicon arm64)
+        shell: bash
+        run: |
+          gh release upload "${{ github.ref_name }}" \
+            "NotepadNext-macOS-arm64-Qt${QT_RELEASE_VER}/NotepadNext-${{ github.ref_name }}.dmg" \
+            || true
+
+  # ─── NEW: Publish Release ──────────────────────────────────────────────
+  release:
+    name: Publish GitHub Release
+    runs-on: ubuntu-latest
+    needs: [github]
+    if: >
+      github.repository == 'alsyundawy/NotepadNext' &&
+      github.event_name == 'push' &&
+      startsWith(github.ref, 'refs/tags/v')
+
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+
+      - name: Publish Release
+        shell: bash
+        run: |
+          gh release edit "${{ github.ref_name }}" --draft=false
+
+
+  # ─── Debug Job ─────────────────────────────────────────────────────────
+  debug-mac-runner:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: macos-15-intel
+    steps:
+      - name: Debug runner info
+        shell: bash
+        run: |
+          echo "Runner: $RUNNER_NAME"
+          uname -a && uname -m
+          sw_vers || true
