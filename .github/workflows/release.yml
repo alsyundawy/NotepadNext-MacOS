@@ -23,7 +23,7 @@ jobs:
             cmake_arch: x86_64
             qt_arch: clang_64
             qt_version: "6.5"
-            deployment_target: "12.0"   # ← FIX UTAMA
+            deployment_target: "11.0"   # ← FIX UTAMA
 
           - runs_on: macos-15-intel
             platform: mac
@@ -39,7 +39,7 @@ jobs:
             cmake_arch: x86_64
             qt_arch: clang_64
             qt_version: "6.10"
-            deployment_target: "12.0"
+            deployment_target: "13.0"
 
           # ─── macOS Apple Silicon ──────────────────────────────────────
           - runs_on: macos-latest
@@ -48,7 +48,7 @@ jobs:
             cmake_arch: arm64
             qt_arch: clang_64
             qt_version: "6.5"
-            deployment_target: "12.0"
+            deployment_target: "11.0"
 
           - runs_on: macos-latest
             platform: mac
@@ -64,7 +64,7 @@ jobs:
             cmake_arch: arm64
             qt_arch: clang_64
             qt_version: "6.10"
-            deployment_target: "12.0"
+            deployment_target: "13.0"
 
     runs-on: ${{ matrix.runs_on }}
 
@@ -165,15 +165,3 @@ jobs:
           gh release upload "${{ github.ref_name }}" \
             "NotepadNext-macOS-arm64-Qt${QT_RELEASE_VER}/NotepadNext-${{ github.ref_name }}.dmg" \
             || true
-
-  # Debug Job (tetap)
-  debug-mac-runner:
-    if: github.event_name == 'workflow_dispatch'
-    runs-on: macos-15-intel
-    steps:
-      - name: Debug runner info
-        shell: bash
-        run: |
-          echo "Runner: $RUNNER_NAME"
-          uname -a && uname -m
-          sw_vers || true
