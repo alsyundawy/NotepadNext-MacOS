@@ -3,6 +3,11 @@
 > 🇬🇧 A cross-platform reimplementation of Notepad++ — built natively for macOS.
 > 🇮🇩 Implementasi ulang Notepad++ lintas platform — dibangun secara native untuk macOS.
 
+
+<img width="1053" height="715" alt="image" src="https://github.com/user-attachments/assets/60f58d46-56e1-471d-a532-addc959f7c40" />
+
+
+
 ![Build Notepad Next](https://github.com/alsyundawy/NotepadNext-MacOS/workflows/Build%20Notepad%20Next/badge.svg)
 [![Latest Version](https://img.shields.io/github/v/release/alsyundawy/NotepadNext-MacOS)](https://github.com/alsyundawy/NotepadNext-MacOS/releases)
 [![Maintenance Status](https://img.shields.io/maintenance/yes/9999)](https://github.com/alsyundawy/NotepadNext-MacOS/)
