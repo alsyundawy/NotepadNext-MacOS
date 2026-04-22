@@ -1,61 +1,111 @@
-# Notepad Next
+# 🍎 NotepadNext For MacOS — Notepad++ Like
 
-![Build Notepad Next](https://github.com/dail8859/NotepadNext/workflows/Build%20Notepad%20Next/badge.svg)
+> 🇬🇧 A cross-platform reimplementation of Notepad++ — built natively for macOS.
+> 🇮🇩 Implementasi ulang Notepad++ lintas platform — dibangun secara native untuk macOS.
 
-A cross-platform, reimplementation of Notepad++.
+![Build Notepad Next](https://github.com/alsyundawy/NotepadNext-MacOS/workflows/Build%20Notepad%20Next/badge.svg)
+[![Latest Version](https://img.shields.io/github/v/release/alsyundawy/NotepadNext-MacOS)](https://github.com/alsyundawy/NotepadNext-MacOS/releases)
+[![Maintenance Status](https://img.shields.io/maintenance/yes/9999)](https://github.com/alsyundawy/NotepadNext-MacOS/)
+[![License](https://img.shields.io/github/license/alsyundawy/NotepadNext-MacOS)](https://github.com/alsyundawy/NotepadNext-MacOS/blob/master/LICENSE)
+[![GitHub Issues](https://img.shields.io/github/issues/alsyundawy/NotepadNext-MacOS)](https://github.com/alsyundawy/NotepadNext-MacOS/issues)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/alsyundawy/NotepadNext-MacOS)](https://github.com/alsyundawy/NotepadNext-MacOS/pulls)
+[![Donate with PayPal](https://img.shields.io/badge/PayPal-donate-orange)](https://www.paypal.me/alsyundawy)
+[![Sponsor with GitHub](https://img.shields.io/badge/GitHub-sponsor-orange)](https://github.com/sponsors/alsyundawy)
+[![GitHub Stars](https://img.shields.io/github/stars/alsyundawy/NotepadNext-MacOS?style=social)](https://github.com/alsyundawy/NotepadNext-MacOS/stargazers)
+[![GitHub Forks](https://img.shields.io/github/forks/alsyundawy/NotepadNext-MacOS?style=social)](https://github.com/alsyundawy/NotepadNext-MacOS/network/members)
+[![GitHub Contributors](https://img.shields.io/github/contributors/alsyundawy/NotepadNext-MacOS?style=social)](https://github.com/alsyundawy/NotepadNext-MacOS/graphs/contributors)
 
-Though the application overall is stable and usable, it should not be considered safe for critically important work.
+---
 
-There are numerous bugs and half working implementations. Pull requests are greatly appreciated.
+<img width="1206" height="833" alt="image" src="https://github.com/user-attachments/assets/e8879eab-2adf-4961-94e9-296060d21ac0" />
+<img width="1053" height="715" alt="image" src="https://github.com/user-attachments/assets/60f58d46-56e1-471d-a532-addc959f7c40" />
 
-![screenshot](/doc/screenshot.png)
 
-# Installation
 
-Packages are available for Windows, Linux, and MacOS.
 
-Below are the supported distribution mechanisms. There may be other ways to download/install the application, but this project will likely not be able to offer any support for those since they are made available by other individuals.
+## 👨‍💻 Credits / Kredit
 
-## Windows
-Windows packages are available as an installer or a stand-alone zip file on the [release](https://github.com/dail8859/NotepadNext/releases) page. The installer provides additional components such as an auto-updater and Windows context menu integration. You can easily install it with Winget:
+> 🇬🇧 This repository is a **macOS-only build** of the original project by **[@dail8859](https://github.com/dail8859)**.
+> All credit for the original source code, design, and development goes to the original author.
+> This fork only provides macOS builds (Apple Silicon & Intel) for convenience.
+>
+> 🇮🇩 Repository ini merupakan **build khusus macOS** dari proyek asli oleh **[@dail8859](https://github.com/dail8859)**.
+> Seluruh kredit untuk kode sumber, desain, dan pengembangan diberikan kepada penulis asli.
+> Fork ini hanya menyediakan build macOS (Apple Silicon & Intel) untuk kemudahan pengguna.
 
-```powershell
-winget install dail8859.NotepadNext
-```
+| | |
+|---|---|
+| 🏠 **Original Repository** | [github.com/dail8859/NotepadNext](https://github.com/dail8859/NotepadNext) |
+| 👤 **Original Author** | [@dail8859](https://github.com/dail8859) |
+| 🍎 **macOS Build by** | [@alsyundawy](https://github.com/alsyundawy) |
 
-## Linux
-Linux packages can be obtained by downloading the stand-alone AppImage on the [release](https://github.com/dail8859/NotepadNext/releases) page or by installing the [flatpak](https://flathub.org/apps/details/com.github.dail8859.NotepadNext) by executing:
+---
+
+## 📦 Installation / Instalasi
+
+🇬🇧 MacOS disk images are available for **three architectures** on the [release](https://github.com/alsyundawy/NotepadNext-MacOS/releases) page.
+
+🇮🇩 Disk image MacOS tersedia untuk **tiga arsitektur** di halaman [release](https://github.com/alsyundawy/NotepadNext-MacOS/releases).
+
+---
+
+### 🖥️ Apple Silicon (arm64) — M1 / M2 / M3 / M4 / M5
+
+| 📁 Package | 🏗️ Architecture | 🍎 Minimum macOS | ⚙️ Qt Version |
+|---|---|---|---|
+| `NotepadNext-*-macOS-arm64-Qt6.5.dmg` | Apple Silicon (arm64) | macOS 11.0 Big Sur | Qt 6.5 |
+| `NotepadNext-*-macOS-arm64-Qt6.8.dmg` | Apple Silicon (arm64) | macOS 12.0 Monterey | Qt 6.8 |
+| `NotepadNext-*-macOS-arm64-Qt6.10.dmg` | Apple Silicon (arm64) | macOS 13.0 Ventura | Qt 6.10 |
+
+---
+
+### 💻 Intel (x86_64)
+
+| 📁 Package | 🏗️ Architecture | 🍎 Minimum macOS | ⚙️ Qt Version |
+|---|---|---|---|
+| `NotepadNext-*-macOS-x64-Qt6.5.dmg` | Intel (x86_64) | macOS 11.0 Big Sur | Qt 6.5 |
+| `NotepadNext-*-macOS-x64-Qt6.8.dmg` | Intel (x86_64) | macOS 12.0 Monterey | Qt 6.8 |
+| `NotepadNext-*-macOS-x64-Qt6.10.dmg` | Intel (x86_64) | macOS 13.0 Ventura | Qt 6.10 |
+
+
+---
+
+## 🍺 Install via Homebrew
+
+🇬🇧 It can also be installed using Homebrew:
+🇮🇩 Dapat juga diinstal menggunakan Homebrew:
 
 ```bash
-flatpak install flathub com.github.dail8859.NotepadNext
+brew tap alsyundawy/notepadnext
+brew install --no-quarantine notepadnext
 ```
 
-## MacOS
-MacOS disk images can be downloaded from the [release](https://github.com/dail8859/NotepadNext/releases) page.
+---
 
-It can also be installed using brew:
-```bash
-brew tap dail8859/notepadnext
-brew install notepadnext
-```
+## 🔧 MacOS Tweaks / Pengaturan Tambahan
 
-#### MacOS Tweaks
+### 🔤 Font Smoothing
 
-By default, MacOS enables font smoothing which causes text to appear quite differently from the Windows version. This can be disabled system-wide using the following command:
+🇬🇧 By default, macOS enables font smoothing which causes text to appear quite differently from the Windows version. This can be disabled system-wide using the following command:
+
+🇮🇩 Secara default, macOS mengaktifkan font smoothing yang menyebabkan tampilan teks berbeda jauh dari versi Windows. Hal ini dapat dinonaktifkan secara sistem menggunakan perintah berikut:
 
 ```bash
 defaults -currentHost write -g AppleFontSmoothing -int 0
 ```
 
-A restart is required for this to take effect.
+---
 
-# Development
-Current development is done using QtCreator with the Microsoft Visual C++ (msvc) compiler. Qt 6.5 is the currently supported Qt version. Older versions of Qt are likely to work but are not tested. Any fixes for older versions will be accepted as long as they do not introduce complex fixes. This application is also known to build successfully on various Linux distributions and macOS. Other platforms/compilers should be usable with minor modifications.
+## ⚠️ Catatan Penting / Important Notes
 
-If you are familiar with building C++ Qt desktop applications with Qt Creator, then this should be as simple as opening `CMakeLists` and build/run the project.
+> 🇬🇧 Though the application overall is stable and usable, it should **not** be considered safe for critically important work. There are numerous bugs and half working implementations. Pull requests are greatly appreciated.
+>
+> 🇮🇩 Meskipun aplikasi secara keseluruhan stabil dan dapat digunakan, aplikasi ini **tidak** disarankan untuk pekerjaan yang sangat penting. Masih terdapat banyak bug dan fitur yang belum sempurna. Pull request sangat diterima dengan tangan terbuka.
 
-If you are new to building C++ Qt desktop applications, there is a more detailed guide [here](/doc/Building.md).
+---
 
+## 📄 License / Lisensi
 
-# License
-This code is released under the [GNU General Public License version 3](https://www.gnu.org/licenses/gpl-3.0.txt).
+🇬🇧 This code is released under the [GNU General Public License version 3](https://www.gnu.org/licenses/gpl-3.0.txt).
+
+🇮🇩 Kode ini dirilis di bawah [GNU General Public License versi 3](https://www.gnu.org/licenses/gpl-3.0.txt).
