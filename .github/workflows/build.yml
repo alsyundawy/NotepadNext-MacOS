@@ -73,6 +73,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v6
 
+      # ─── Install Qt ──────────────────────────────────────────────
       - name: Install Qt (mac)
         if: matrix.platform == 'mac'
         uses: jdpurcell/install-qt-action@v5
@@ -84,14 +85,17 @@ jobs:
           modules: 'qt5compat'
           cache: true
 
+      # ─── Set DISTRIBUTION ────────────────────────────────────────
       - name: Set Distribution (mac)
         if: matrix.platform == 'mac'
         shell: bash
         run: echo "DISTRIBUTION=dmg" >> "$GITHUB_ENV"
 
+      # ─── CMake Configure ─────────────────────────────────────────
       - name: Configure (CMake)
         shell: bash
         run: |
+          echo "Configure: run=$GITHUB_RUN_ID runner=${{ matrix.runs_on }} qt=${{ matrix.qt_version }}"
           CMAKE_OPTS="-S . -B build -G Ninja \
             -DCMAKE_BUILD_TYPE=Release \
             -DAPP_DISTRIBUTION=${{ env.DISTRIBUTION }}"
@@ -100,8 +104,10 @@ jobs:
               -DCMAKE_OSX_ARCHITECTURES=${{ matrix.cmake_arch }} \
               -DCMAKE_OSX_DEPLOYMENT_TARGET=${{ matrix.deployment_target }}"
           fi
+          echo "CMake options: $CMAKE_OPTS"
           cmake $CMAKE_OPTS
 
+      # ─── Build ───────────────────────────────────────────────────
       - name: Build
         shell: bash
         run: cmake --build build --parallel
@@ -111,6 +117,7 @@ jobs:
         shell: bash
         run: cmake --build build --target dmg --parallel
 
+      # ─── Upload Artifacts ────────────────────────────────────────
       - name: Upload MacOS dmg
         if: matrix.platform == 'mac'
         uses: actions/upload-artifact@v7
@@ -119,6 +126,7 @@ jobs:
           path: build/NotepadNext*.dmg
           if-no-files-found: warn
 
+  # ─── GitHub Release Draft ────────────────────────────────────────
   github:
     name: Draft GitHub Release
     runs-on: ubuntu-latest
@@ -158,6 +166,7 @@ jobs:
             "NotepadNext-macOS-arm64-Qt${QT_RELEASE_VER}/NotepadNext-${{ github.ref_name }}.dmg" \
             || true
 
+  # ─── Debug Job ───────────────────────────────────────────────────
   debug-mac-runner:
     if: github.event_name == 'workflow_dispatch'
     runs-on: macos-26-intel
