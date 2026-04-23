@@ -18,7 +18,7 @@ jobs:
       matrix:
         include:
           # ─── macOS Intel ───────────────────────────────────────────
-          - runs_on: macos-26-intel
+          - runs_on: macos-15-intel
             platform: mac
             arch: x64
             cmake_arch: x86_64
@@ -26,7 +26,7 @@ jobs:
             qt_version: "6.5"
             deployment_target: "11.0"
 
-          - runs_on: macos-26-intel
+          - runs_on: macos-15-intel
             platform: mac
             arch: x64
             cmake_arch: x86_64
