@@ -49,13 +49,11 @@
 
 ---
 
-### 🖥️ Apple Silicon (arm64) — M1 / M2 / M3 / M4 / M5
-
 | 📁 Package | 🏗️ Architecture | 🍎 Minimum macOS | ⚙️ Qt Version |
 |---|---|---|---|
-| `NotepadNext-*-macOS-arm64-Qt6.5.dmg` | Apple Silicon (arm64) | macOS 11.0 Big Sur | Qt 6.5 |
-| `NotepadNext-*-macOS-arm64-Qt6.8.dmg` | Apple Silicon (arm64) | macOS 12.0 Monterey | Qt 6.8 |
-| `NotepadNext-*-macOS-arm64-Qt6.10.dmg` | Apple Silicon (arm64) | macOS 13.0 Ventura | Qt 6.10 |
+| `NotepadNext-macOS-arm64-Qt6.5.zip` | Apple Silicon (arm64) | macOS 11.0 Big Sur | Qt 6.5 |
+| `NotepadNext-macOS-arm64-Qt6.8.zip` | Apple Silicon (arm64) | macOS 12.0 Monterey | Qt 6.8 |
+| `NotepadNext-macOS-arm64-Qt6.10.zip` | Apple Silicon (arm64) | macOS 13.0 Ventura | Qt 6.10 |
 
 ---
 
@@ -63,10 +61,21 @@
 
 | 📁 Package | 🏗️ Architecture | 🍎 Minimum macOS | ⚙️ Qt Version |
 |---|---|---|---|
-| `NotepadNext-*-macOS-x64-Qt6.5.dmg` | Intel (x86_64) | macOS 11.0 Big Sur | Qt 6.5 |
-| `NotepadNext-*-macOS-x64-Qt6.8.dmg` | Intel (x86_64) | macOS 12.0 Monterey | Qt 6.8 |
-| `NotepadNext-*-macOS-x64-Qt6.10.dmg` | Intel (x86_64) | macOS 13.0 Ventura | Qt 6.10 |
+| `NotepadNext-macOS-x64-Qt6.5.zip` | Intel (x86_64) | macOS 11.0 Big Sur | Qt 6.5 |
+| `NotepadNext-macOS-x64-Qt6.8.zip` | Intel (x86_64) | macOS 12.0 Monterey | Qt 6.8 |
+| `NotepadNext-macOS-x64-Qt6.10.zip` | Intel (x86_64) | macOS 13.0 Ventura | Qt 6.10 |
 
+
+
+
+
+```bash
+sudo xattr -cr  "NotepadNext-v0.13.dmg"
+
+sudo xattr -rd com.apple.quarantine "NotepadNext-v0.13.dmg"
+
+sudo codesign --force --deep --sign - "NotepadNext-v0.13.dmg"
+```
 
 ---
 
