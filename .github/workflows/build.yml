@@ -11,6 +11,9 @@ on:
 env:
   QT_RELEASE_VER: "6.5"
 
+permissions:
+  contents: read
+
 jobs:
   build:
     strategy:
@@ -130,6 +133,8 @@ jobs:
   github:
     name: Draft GitHub Release
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     needs: [build]
     if: >
       github.repository == 'alsyundawy/NotepadNext' &&
