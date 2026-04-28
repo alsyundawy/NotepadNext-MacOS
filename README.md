@@ -18,8 +18,8 @@
 ---
 
 <img width="1206" height="833" alt="image" src="https://github.com/user-attachments/assets/e8879eab-2adf-4961-94e9-296060d21ac0" />
-<img width="1053" height="715" alt="image" src="https://github.com/user-attachments/assets/60f58d46-56e1-471d-a532-addc959f7c40" />
 
+<img width="810" height="744" alt="image" src="https://github.com/user-attachments/assets/9a53931f-0078-44af-8832-e863c9d57ddf" />
 
 
 
@@ -70,11 +70,11 @@
 
 
 ```bash
-sudo xattr -cr  "NotepadNext-v0.13.dmg"
+sudo xattr -cr  "NotepadNext-v0.14.dmg"
 
-sudo xattr -rd com.apple.quarantine "NotepadNext-v0.13.dmg"
+sudo xattr -rd com.apple.quarantine "NotepadNext-v0.14.dmg"
 
-sudo codesign --force --deep --sign - "NotepadNext-v0.13.dmg"
+sudo codesign --force --deep --sign - "NotepadNext-v0.14.dmg"
 ```
 
 ---
