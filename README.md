@@ -49,6 +49,8 @@
 
 ---
 
+### 💻 Apple Silicon (arm64)
+
 | 📁 Package | 🏗️ Architecture | 🍎 Minimum macOS | ⚙️ Qt Version |
 |---|---|---|---|
 | `NotepadNext-macOS-arm64-Qt6.5.zip` | Apple Silicon (arm64) | macOS 11.0 Big Sur | Qt 6.5 |
