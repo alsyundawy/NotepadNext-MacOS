@@ -47,7 +47,17 @@
 
 🇮🇩 Disk image MacOS tersedia untuk **tiga arsitektur** di halaman [release](https://github.com/alsyundawy/NotepadNext-MacOS/releases).
 
+### 🔨 Latest Artifacts (Development Build)
+
+🇬🇧 You can also download the **latest development builds** (artifacts) directly from the GitHub Actions workflow:
+
+🇮🇩 Anda juga dapat mengunduh **build development terbaru** (artifacts) langsung dari workflow GitHub Actions:
+
+- [Build Notepad Next Workflow](https://github.com/alsyundawy/NotepadNext-MacOS/actions/workflows/build.yml)
+- Pilih run terbaru → bagian **Artifacts** di bawah untuk mendownload `.dmg` sesuai arsitektur (arm64 / x64) dan Qt version.
+
 ---
+
 
 ### 💻 Apple Silicon (arm64)
 
