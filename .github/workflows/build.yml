@@ -21,7 +21,7 @@ jobs:
       matrix:
         include:
           # ─── macOS Intel ───────────────────────────────────────────
-          - runs_on: macos-14
+          - runs_on: macos-15-intel
             platform: mac
             arch: x64
             cmake_arch: x86_64
@@ -87,7 +87,7 @@ jobs:
       # ─── Install Qt ──────────────────────────────────────────────
       - name: Install Qt (mac)
         if: matrix.platform == 'mac'
-        uses: jurplel/install-qt-action@v4
+        uses: jurplel/install-qt-action@master
         with:
           version: ${{ matrix.qt_version }}
           host: mac
