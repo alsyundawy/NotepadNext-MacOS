@@ -204,6 +204,7 @@
       <string>Bookmarks</string>
      </property>
      <addaction name="actionToggleBookmark"/>
+     <addaction name="actionSearchAndBookmark"/>
      <addaction name="separator"/>
      <addaction name="actionNextBookmark"/>
      <addaction name="actionPreviousBookmark"/>
@@ -308,6 +309,9 @@
     <addaction name="actionUnfoldAll"/>
     <addaction name="menuFold_Level"/>
     <addaction name="menuUnfold_Level"/>
+    <addaction name="separator"/>
+    <addaction name="actionSplitHorizontal"/>
+    <addaction name="actionSplitVertical"/>
     <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuLanguage">
@@ -1188,6 +1192,14 @@
     <string>Ctrl+F2</string>
    </property>
   </action>
+  <action name="actionSearchAndBookmark">
+   <property name="text">
+    <string>Search and Bookmark Lines...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+M</string>
+   </property>
+  </action>
   <action name="actionNextBookmark">
    <property name="text">
     <string>Next Bookmark</string>
@@ -1529,6 +1541,28 @@
   <action name="actionReverseLineOrder">
    <property name="text">
     <string>Reverse Line Order</string>
+   </property>
+  </action>
+  <action name="actionSplitHorizontal">
+   <property name="text">
+    <string>Split Horizontal</string>
+   </property>
+   <property name="toolTip">
+    <string>Split editor horizontally (left/right)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+Right</string>
+   </property>
+  </action>
+  <action name="actionSplitVertical">
+   <property name="text">
+    <string>Split Vertical</string>
+   </property>
+   <property name="toolTip">
+    <string>Split editor vertically (top/bottom)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+Down</string>
    </property>
   </action>
  </widget>
