@@ -73,7 +73,7 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       # ─── Install Qt ────────────────────────────────────────────────────
       - name: Install Qt (mac)
@@ -145,7 +145,7 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Create Release
         shell: bash
