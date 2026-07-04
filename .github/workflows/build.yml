@@ -54,7 +54,6 @@ jobs:
             deployment_target: "15.0"
 
           # ─── macOS Apple Silicon ───────────────────────────────────
-
           - runs_on: macos-26
             platform: mac
             arch: arm64
