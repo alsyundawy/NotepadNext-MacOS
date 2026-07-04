@@ -68,8 +68,8 @@ jobs:
             arch: arm64
             cmake_arch: arm64
             qt_arch: clang_64
-            qt_version: "6.10"
-            deployment_target: "13.0"
+            qt_version: "6.8"
+            deployment_target: "12.0"
 
           - runs_on: macos-26
             platform: mac
