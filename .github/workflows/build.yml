@@ -63,7 +63,7 @@ jobs:
             qt_version: "6.5"
             deployment_target: "11.0"
 
-          - runs_on: macos-26
+          - runs_on: macos-latest
             platform: mac
             arch: arm64
             cmake_arch: arm64
