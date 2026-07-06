@@ -66,7 +66,7 @@
 | `NotepadNext-macOS-arm64-Qt6.5.zip` | Apple Silicon (arm64) | macOS 11.0 Big Sur | Qt 6.5 |
 | `NotepadNext-macOS-arm64-Qt6.8.zip` | Apple Silicon (arm64) | macOS 12.0 Monterey | Qt 6.8 |
 | `NotepadNext-macOS-arm64-Qt6.10.zip` | Apple Silicon (arm64) | macOS 13.0 Ventura | Qt 6.10 |
-| `NotepadNext-macOS-arm64-Qt6.11.zip` | Apple Silicon (arm64) | macOS 13.0 Sonoma | Qt 6.11 |
+| `NotepadNext-macOS-arm64-Qt6.11.zip` | Apple Silicon (arm64) | macOS 15.0 Sonoma | Qt 6.11 |
 
 ---
 
@@ -77,7 +77,7 @@
 | `NotepadNext-macOS-x64-Qt6.5.zip` | Intel (x86_64) | macOS 11.0 Big Sur | Qt 6.5 |
 | `NotepadNext-macOS-x64-Qt6.8.zip` | Intel (x86_64) | macOS 12.0 Monterey | Qt 6.8 |
 | `NotepadNext-macOS-x64-Qt6.10.zip` | Intel (x86_64) | macOS 13.0 Ventura | Qt 6.10 |
-| `NotepadNext-macOS-x64-Qt6.11.zip` | Intel (x86_64) | macOS 13.0 Sonoma | Qt 6.11 |
+| `NotepadNext-macOS-x64-Qt6.11.zip` | Intel (x86_64) | macOS 15.0 Sonoma | Qt 6.11 |
 
 
 
