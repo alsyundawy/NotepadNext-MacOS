@@ -9,8 +9,9 @@
 [![License](https://img.shields.io/github/license/alsyundawy/NotepadNext-MacOS)](https://github.com/alsyundawy/NotepadNext-MacOS/blob/master/LICENSE)
 [![GitHub Issues](https://img.shields.io/github/issues/alsyundawy/NotepadNext-MacOS)](https://github.com/alsyundawy/NotepadNext-MacOS/issues)
 [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/alsyundawy/NotepadNext-MacOS)](https://github.com/alsyundawy/NotepadNext-MacOS/pulls)
-[![Donate with PayPal](https://img.shields.io/badge/PayPal-donate-orange)](https://www.paypal.me/alsyundawy)
+[![Donate with PayPal](https://img.shields.io/badge/PayPal-donate-003087?logo=paypal&logoColor=white)](https://www.paypal.me/alsyundawy)
 [![Donate with Ko-fi](https://img.shields.io/badge/Ko--fi-donate-ff5e5b?logo=ko-fi&logoColor=white)](https://ko-fi.com/alsyundawy)
+[![Donate with QRIS](https://img.shields.io/badge/QRIS-donate-red)](https://github.com/user-attachments/assets/a0126f28-6dde-43da-ba14-d7c9a27de0df)
 [![Sponsor with GitHub](https://img.shields.io/badge/GitHub-sponsor-orange)](https://github.com/sponsors/alsyundawy)
 [![GitHub Stars](https://img.shields.io/github/stars/alsyundawy/NotepadNext-MacOS?style=social)](https://github.com/alsyundawy/NotepadNext-MacOS/stargazers)
 [![GitHub Forks](https://img.shields.io/github/forks/alsyundawy/NotepadNext-MacOS?style=social)](https://github.com/alsyundawy/NotepadNext-MacOS/network/members)
@@ -18,14 +19,14 @@
 
 ---
 
-<img width="1053" height="715" alt="image" src="https://github.com/user-attachments/assets/60f58d46-56e1-471d-a532-addc959f7c40" />
-<img width="810" height="744" alt="image" src="https://github.com/user-attachments/assets/9a53931f-0078-44af-8832-e863c9d57ddf" />
+![image](https://github.com/user-attachments/assets/60f58d46-56e1-471d-a532-addc959f7c40)
+![image](https://github.com/user-attachments/assets/9a53931f-0078-44af-8832-e863c9d57ddf)
 
 ## 👨‍💻 Credits / Kredit
 
 > 🇬🇧 This repository is a **macOS-only build** of the original project by **[@dail8859](https://github.com/dail8859)**.
 > All credit for the original source code, design, and development goes to the original author.
-> 
+>
 > 🇮🇩 Repository ini merupakan **build khusus macOS** dari proyek asli oleh **[@dail8859](https://github.com/dail8859)**.
 > Seluruh kredit untuk kode sumber, desain, dan pengembangan diberikan kepada penulis asli.
 > Fork ini hanya menyediakan build macOS (Apple Silicon & Intel) untuk kemudahan pengguna.
@@ -67,7 +68,7 @@ Build aplikasi NotepadNext tersedia untuk tiga arsitektur macOS. Anda dapat meng
 | `NotepadNext-macOS-x64-Qt6.11.zip` | Intel (x86_64) | macOS 15.0 Sonoma | Qt 6.11 |
 
 ```bash
-sudo xattr -cr  "NotepadNext-v0.14.dmg"
+sudo xattr -cr "NotepadNext-v0.14.dmg"
 
 sudo xattr -rd com.apple.quarantine "NotepadNext-v0.14.dmg"
 
@@ -107,6 +108,22 @@ defaults -currentHost write -g AppleFontSmoothing -int 0
 > 🇬🇧 Though the application overall is stable and usable, it should **not** be considered safe for critically important work. There are numerous bugs and half working implementations. Pull requests are greatly appreciated.
 >
 > 🇮🇩 Meskipun aplikasi secara keseluruhan stabil dan dapat digunakan, aplikasi ini **tidak** disarankan untuk pekerjaan yang sangat penting. Masih terdapat banyak bug dan fitur yang belum sempurna. Pull request sangat diterima dengan tangan terbuka.
+
+---
+
+## ☕ Support / Dukungan
+
+> 🇬🇧 If you find this project useful and would like to support its development:
+>
+> 🇮🇩 Jika Anda merasa proyek ini bermanfaat dan ingin memberikan dukungan / donasi:
+
+- 💳 **PayPal**: [![Donate with PayPal](https://img.shields.io/badge/PayPal-donate-003087?logo=paypal&logoColor=white)](https://www.paypal.me/alsyundawy)
+- ☕ **Ko-fi**: [![Donate with Ko-fi](https://img.shields.io/badge/Ko--fi-donate-ff5e5b?logo=ko-fi&logoColor=white)](https://ko-fi.com/alsyundawy)
+- 📱 **QRIS**:
+
+![QRIS Donation](https://github.com/user-attachments/assets/a0126f28-6dde-43da-ba14-d7c9a27de0df)
+
+[![Buy Me a Coffee](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/alsyundawy)
 
 ---
 
