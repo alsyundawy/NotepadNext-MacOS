@@ -118,7 +118,7 @@ jobs:
           echo "Configure: run=$GITHUB_RUN_ID runner=${{ matrix.runs_on }} qt=${{ matrix.qt_version }}"
           CMAKE_OPTS="-S . -B build -G Ninja \
             -DCMAKE_BUILD_TYPE=Release \
-            -DAPP_DISTRIBUTION=${{ env.DISTRIBUTION }}"
+            -DAPP_DISTRIBUTION=${DISTRIBUTION}"
           if [ "${{ matrix.platform }}" = "mac" ]; then
             CMAKE_OPTS="$CMAKE_OPTS \
               -DCMAKE_OSX_ARCHITECTURES=${{ matrix.cmake_arch }} \
