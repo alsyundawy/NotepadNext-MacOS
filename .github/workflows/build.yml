@@ -1,4 +1,5 @@
 name: Build Notepad Next
+
 on:
   push:
     branches:
