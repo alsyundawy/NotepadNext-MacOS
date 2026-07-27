@@ -26,30 +26,32 @@
 
 > 🇬🇧 This repository is a **macOS-only build** of the original project by **[@dail8859](https://github.com/dail8859)**.
 > All credit for the original source code, design, and development goes to the original author.
+> This fork is maintained at [https://github.com/alsyundawy/NotepadNext-MacOS](https://github.com/alsyundawy/NotepadNext-MacOS).
 >
 > 🇮🇩 Repository ini merupakan **build khusus macOS** dari proyek asli oleh **[@dail8859](https://github.com/dail8859)**.
 > Seluruh kredit untuk kode sumber, desain, dan pengembangan diberikan kepada penulis asli.
-> Fork ini hanya menyediakan build macOS (Apple Silicon & Intel) untuk kemudahan pengguna.
+> Fork ini dikelola di [https://github.com/alsyundawy/NotepadNext-MacOS](https://github.com/alsyundawy/NotepadNext-MacOS) untuk memberikan build macOS (Apple Silicon & Intel) bagi pengguna.
 
 | | |
 | --- | --- |
-| 🏠 **Original Repository** | [github.com/dail8859/NotepadNext](https://github.com/dail8859/NotepadNext) |
-| 👤 **Original Author** | [@dail8859](https://github.com/dail8859) |
-| 🍎 **macOS Build by** | [@alsyundawy](https://github.com/alsyundawy) |
+| 🏠 **Original Repository / Repositori Asli** | [github.com/dail8859/NotepadNext](https://github.com/dail8859/NotepadNext) |
+| 👤 **Original Author / Penulis Asli** | [@dail8859](https://github.com/dail8859) |
+| 🍎 **macOS Repository / Repositori macOS** | [github.com/alsyundawy/NotepadNext-MacOS](https://github.com/alsyundawy/NotepadNext-MacOS) |
+| 👤 **macOS Maintainer / Pengembang macOS** | [@alsyundawy](https://github.com/alsyundawy) |
 
 ---
 
 ## 📦 Installation / Instalasi
 
-Build aplikasi NotepadNext tersedia untuk tiga arsitektur macOS. Anda dapat mengunduh build terbaru langsung dari halaman [Releases](https://github.com/alsyundawy/NotepadNext-MacOS/releases).
-
-> 💡 **Petunjuk:** Pilih rilis terbaru, lalu lihat bagian **Assets** di bagian bawah untuk mendownload file `.dmg` atau `.zip` yang sesuai dengan arsitektur Mac Anda.
+> 🇬🇧 NotepadNext application builds are available for macOS. You can download the latest build directly from the [Releases](https://github.com/alsyundawy/NotepadNext-MacOS/releases) page. Choose the latest release, then check the **Assets** section at the bottom to download the `.dmg` or `.zip` file matching your Mac architecture.
+>
+> 🇮🇩 Build aplikasi NotepadNext tersedia untuk macOS. Anda dapat mengunduh build terbaru langsung dari halaman [Releases](https://github.com/alsyundawy/NotepadNext-MacOS/releases). Pilih rilis terbaru, lalu lihat bagian **Assets** di bagian bawah untuk mendownload file `.dmg` atau `.zip` yang sesuai dengan arsitektur Mac Anda.
 
 ---
 
 ### 💻 Apple Silicon (arm64)
 
-| 📁 Package | 🏗️ Architecture | 🍎 Minimum macOS | ⚙️ Qt Version |
+| 📁 Package / Paket | 🏗️ Architecture / Arsitektur | 🍎 Minimum macOS | ⚙️ Qt Version / Versi Qt |
 | --- | --- | --- | --- |
 | `NotepadNext-macOS-arm64-Qt6.5.zip` | Apple Silicon (arm64) | macOS 12.0 Monterey | Qt 6.5 |
 | `NotepadNext-macOS-arm64-Qt6.8.zip` | Apple Silicon (arm64) | macOS 13.0 Ventura | Qt 6.8 |
@@ -60,24 +62,30 @@ Build aplikasi NotepadNext tersedia untuk tiga arsitektur macOS. Anda dapat meng
 
 ### 💻 Intel (x86_64)
 
-| 📁 Package | 🏗️ Architecture | 🍎 Minimum macOS | ⚙️ Qt Version |
+| 📁 Package / Paket | 🏗️ Architecture / Arsitektur | 🍎 Minimum macOS | ⚙️ Qt Version / Versi Qt |
 | --- | --- | --- | --- |
 | `NotepadNext-macOS-x64-Qt6.5.zip` | Intel (x86_64) | macOS 11.0 Big Sur | Qt 6.5 |
 | `NotepadNext-macOS-x64-Qt6.8.zip` | Intel (x86_64) | macOS 12.0 Monterey | Qt 6.8 |
 | `NotepadNext-macOS-x64-Qt6.10.zip` | Intel (x86_64) | macOS 13.0 Ventura | Qt 6.10 |
 | `NotepadNext-macOS-x64-Qt6.11.zip` | Intel (x86_64) | macOS 14.0 Sonoma | Qt 6.11 |
 
+---
+
+### 🛡️ Gatekeeper Fix / Solusi Gatekeeper
+
+> 🇬🇧 If macOS prevents opening the downloaded app or shows a quarantine warning, run these commands in Terminal:
+>
+> 🇮🇩 Jika macOS mencegah pembukaan aplikasi yang diunduh atau menampilkan peringatan karantina, jalankan perintah berikut di Terminal:
+
 ```bash
 sudo xattr -cr "NotepadNext-v0.14.dmg"
-
 sudo xattr -rd com.apple.quarantine "NotepadNext-v0.14.dmg"
-
 sudo codesign --force --deep --sign - "NotepadNext-v0.14.dmg"
 ```
 
 ---
 
-## 🍺 Install via Homebrew
+## 🍺 Install via Homebrew / Instalasi via Homebrew
 
 🇬🇧 It can also be installed using Homebrew:
 🇮🇩 Dapat juga diinstal menggunakan Homebrew:
@@ -103,7 +111,7 @@ defaults -currentHost write -g AppleFontSmoothing -int 0
 
 ---
 
-## ⚠️ Catatan Penting / Important Notes
+## ⚠️ Important Notes / Catatan Penting
 
 > 🇬🇧 Though the application overall is stable and usable, it should **not** be considered safe for critically important work. There are numerous bugs and half working implementations. Pull requests are greatly appreciated.
 >
