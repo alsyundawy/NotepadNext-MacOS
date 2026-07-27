@@ -132,3 +132,5 @@ defaults -currentHost write -g AppleFontSmoothing -int 0
 🇬🇧 This code is released under the [GNU General Public License version 3](https://www.gnu.org/licenses/gpl-3.0.txt).
 
 🇮🇩 Kode ini dirilis di bawah [GNU General Public License versi 3](https://www.gnu.org/licenses/gpl-3.0.txt).
+
+![Alt](https://repobeats.axiom.co/api/embed/d2562b8d093a92380646fc849764852e07adb657.svg "Repobeats analytics image")
