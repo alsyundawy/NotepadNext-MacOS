@@ -141,7 +141,7 @@ jobs:
       # ─── Upload Artifacts ────────────────────────────────────────
       - name: Upload MacOS dmg
         if: matrix.platform == 'mac'
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v7.0.1
         with:
           name: NotepadNext-macOS-${{ matrix.arch }}-Qt${{ matrix.qt_version }}
           path: build/NotepadNext*.dmg
