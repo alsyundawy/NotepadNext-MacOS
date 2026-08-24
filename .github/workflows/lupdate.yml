@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v7.0.1
+        uses: actions/checkout@v7
         with:
           submodules: true
 
@@ -29,7 +29,7 @@ jobs:
         run: cmake --build build --target update_translations
 
       - name: Commit translation changes
-        uses: stefanzweifel/git-auto-commit-action@v7.2.0
+        uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: Update translation files
           file_pattern: 'i18n/NotepadNext_en.ts'

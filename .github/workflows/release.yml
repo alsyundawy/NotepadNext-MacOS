@@ -90,7 +90,7 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v7.0.1
+        uses: actions/checkout@v7
 
       # ─── Install Qt ────────────────────────────────────────────────────
       - name: Install Qt (mac)
@@ -141,7 +141,7 @@ jobs:
       # ─── Upload Artifacts ──────────────────────────────────────────────
       - name: Upload MacOS dmg
         if: matrix.platform == 'mac'
-        uses: actions/upload-artifact@v7.0.1
+        uses: actions/upload-artifact@v7
         with:
           name: NotepadNext-macOS-${{ matrix.arch }}-Qt${{ matrix.qt_version }}
           path: build/NotepadNext*.dmg
@@ -162,7 +162,7 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v7.0.1
+        uses: actions/checkout@v7
 
       - name: Create Release
         shell: bash

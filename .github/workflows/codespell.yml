@@ -5,16 +5,13 @@ on:
     branches:
       - master
   pull_request:
-
-permissions:
-  contents: read
-
+  
 jobs:
   codespell:
     name: Check for spelling errors
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v7.0.1
+    - uses: actions/checkout@v7
 
     - uses: codespell-project/actions-codespell@master
       with:
