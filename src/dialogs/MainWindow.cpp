@@ -282,8 +282,8 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         Finder f(editor);
         const UndoAction ua(editor);
 
-        f.setSearchText(QStringLiteral("\\R\\R+"));
-        f.setSearchFlags(SCFIND_REGEXP);
+        f.options().text = QStringLiteral("\\R\\R+");
+        f.options().flags = Scintilla::FindOption::RegExp;
         f.replaceAll(editor->eolString());
 
         // The regex will not entirely remove a blank first line
@@ -419,6 +419,33 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         if (f) {
             f->performPrevSearch();
         }
+    });
+
+    auto selectAndFind = [this](bool forward) {
+        auto editor = currentEditor();
+        auto range = editor->getContextText();
+
+        if (range.cpMin == range.cpMax)
+            return;
+
+        auto text = editor->get_text_range(range.cpMin, range.cpMax);
+
+        Finder f(editor);
+        f.options().text = QString::fromUtf8(text);
+        f.options().wrapAround = true;
+
+        FindResult result = forward ? f.findNext() : f.findPrev();
+
+        if (result)
+            editor->goToRange(result.range);
+    };
+
+    connect(ui->actionSelectandFindNext, &QAction::triggered, this, [this, selectAndFind]() {
+        selectAndFind(true);
+    });
+
+    connect(ui->actionSelectandFindPrevious, &QAction::triggered, this, [this, selectAndFind]() {
+        selectAndFind(false);
     });
 
     connect(ui->actionQuickFind, &QAction::triggered, this, [this]() {
@@ -712,6 +739,9 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         showEditorZoomLevelIndicator();
     });
     connect(ui->actionZoomOut, &QAction::triggered, this, [this]() {
+        // Scintilla can zoom out to "-10" but on a screen with fractional scaling it throws alot of Qt warnings
+        if (zoomLevel == -9) return;
+
         for (ScintillaNext *editor : editors()) {
             editor->zoomOut();
         }
@@ -733,7 +763,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(zoomEventWatcher, &ZoomEventWatcher::zoomOut, ui->actionZoomOut, &QAction::trigger);
 
     connectEditorAction(ui->actionFoldAll, &ScintillaNext::foldAll, SC_FOLDACTION_CONTRACT | SC_FOLDACTION_CONTRACT_EVERY_LEVEL);
-    connectEditorAction(ui->actionFoldAll, &ScintillaNext::foldAll, SC_FOLDACTION_EXPAND | SC_FOLDACTION_CONTRACT_EVERY_LEVEL);
+    connectEditorAction(ui->actionUnfoldAll, &ScintillaNext::foldAll, SC_FOLDACTION_EXPAND | SC_FOLDACTION_CONTRACT_EVERY_LEVEL);
 
     connectEditorAction(ui->actionFoldLevel1, &ScintillaNext::foldAllLevels, 0);
     connectEditorAction(ui->actionFoldLevel2, &ScintillaNext::foldAllLevels, 1);
@@ -1632,24 +1662,11 @@ void MainWindow::showFindReplaceDialog(int index)
     // the FindReplaceDialog's editor pointer needs updated...
 
     // Get any selected text
-    if (!editor->selectionEmpty()) {
-        int selection = editor->mainSelection();
-        int start = editor->selectionNStart(selection);
-        int end = editor->selectionNEnd(selection);
-        if (end > start) {
-            auto selText = editor->get_text_range(start, end);
-            frd->setFindString(QString::fromUtf8(selText));
-        }
-    }
-    else {
-        int start = editor->wordStartPosition(editor->currentPos(), true);
-        int end = editor->wordEndPosition(editor->currentPos(), true);
-        if (end > start) {
-            editor->setSelectionStart(start);
-            editor->setSelectionEnd(end);
-            auto selText = editor->get_text_range(start, end);
-            frd->setFindString(QString::fromUtf8(selText));
-        }
+    auto range = editor->getContextText();
+    if (range.cpMin != range.cpMax) {
+        editor->goToRange(range);
+        auto text = editor->get_text_range(range.cpMin, range.cpMax);
+        frd->setFindString(QString::fromUtf8(text));
     }
 
     frd->setTab(index);
@@ -1788,11 +1805,11 @@ void MainWindow::updateDocumentBasedUi(Scintilla::Update updated)
 
     // TODO: what if this is triggered by an editor that is not the active editor?
 
-    if (Scintilla::FlagSet(updated, Scintilla::Update::Content)) {
+    if (Scintilla::FlagSet(updated, Scintilla::Update::Text)) {
         updateSelectionBasedUi(editor);
     }
 
-    if (Scintilla::FlagSet(updated, Scintilla::Update::Content) || Scintilla::FlagSet(updated, Scintilla::Update::Selection)) {
+    if (Scintilla::FlagSet(updated, Scintilla::Update::Text) || Scintilla::FlagSet(updated, Scintilla::Update::Selection)) {
         updateContentBasedUi(editor);
     }
 }
