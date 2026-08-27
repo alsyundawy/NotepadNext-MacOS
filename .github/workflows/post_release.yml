@@ -4,6 +4,10 @@ on:
   release:
     types: [released]
 
+permissions:
+  contents: read
+  issues: write
+
 jobs:
   create-issues:
     name: Create GitHub Issues
@@ -25,7 +29,7 @@ jobs:
     name: Publish to WinGet
     runs-on: ubuntu-latest
     steps:
-      - uses: vedantmgoyal2009/winget-releaser@v2
+      - uses: vedantmgoyal2009/winget-releaser@4ffc7888bffd451b357355dc214d43bb9f23917e # v2
         with:
           identifier: dail8859.NotepadNext
           token: ${{ secrets.WINGET_TOKEN }}
