@@ -123,7 +123,7 @@ chmod +x NotepadNext-Default-Editor.sh
 | 🎯 Feature / Fitur | 🇬🇧 Description | 🇮🇩 Deskripsi |
 | :--- | :--- | :--- |
 | ⚡ **Batch Engine (<0.3s)** | Atomic LaunchServices configuration in a single pass without process spawn lag. | Konfigurasi atomik LaunchServices dalam 1 panggilan cepat tanpa jeda proses. |
-| 📄 **264+ Extensions** | Supports Web, Systems, Dynamic, Config, Shell, Shader, Database, and Template files. | Mendukung format Web, Sistem, Skrip, Konfigurasi, Dotfiles, Database, dan Shader. |
+| 📄 **264+ Extensions** | Supports 264+ developer file formats (Web, Systems, Scripts, Configs, and Data). | Mendukung 264+ format file developer (Web, Sistem, Skrip, Konfigurasi, dan Data). |
 | 🧩 **38 System UTIs** | Binds `public.plain-text`, `public.source-code`, `public.script`, `public.data`, etc. | Memetakan UTI teks, skrip, dan dokumen *unknown* tanpa ekstensi. |
 | 🛡️ **Gatekeeper Unblock** | Automatically strips `com.apple.quarantine` from the application bundle. | Menghapus atribut karantina Gatekeeper secara otomatis dari bundle aplikasi. |
 | 🔒 **TCC / FDA Check** | Validates Full Disk Access to avoid silent macOS permission blocks. | Memverifikasi Full Disk Access untuk mencegah pemblokiran izin macOS. |
@@ -148,11 +148,11 @@ chmod +x NotepadNext-Default-Editor.sh
 
 > 🇬🇧 **Native Full Indonesian & English Localization Support.**
 >
-> NotepadNext For MacOS features built-in support for **Bahasa Indonesia (`id_ID`)** alongside **English (`en_US`)**, covering 100% of interface components (Menu Bar, Toolbar, Settings dialogs, Find/Replace, Editor context menus, and Shortcuts).
+> NotepadNext For MacOS features built-in support for **Bahasa Indonesia (`id_ID`)** alongside **English (`en_US`)**, covering all interface components (Menu Bar, Toolbar, Settings dialogs, Find/Replace, Editor context menus, and Shortcuts).
 >
 > 🇮🇩 **Dukungan Pelokalan Penuh Bahasa Indonesia & Bahasa Inggris.**
 >
-> NotepadNext For MacOS kini menyediakan pelokalan penuh untuk **Bahasa Indonesia (`id_ID`)** bersama **Bahasa Inggris (`en_US`)**, mencakup 100% seluruh komponen antarmuka aplikasi (Menu Bar, Toolbar, Dialog Pengaturan, Pencarian/Penggantian, Menu Konteks Editor, dan Pintasan Tombol).
+> NotepadNext For MacOS kini menyediakan pelokalan lengkap untuk **Bahasa Indonesia (`id_ID`)** bersama **Bahasa Inggris (`en_US`)**, mencakup seluruh komponen antarmuka aplikasi (Menu Bar, Toolbar, Dialog Pengaturan, Pencarian/Penggantian, Menu Konteks Editor, dan Pintasan Tombol).
 
 ### 🇮🇩 Cara Mengaktifkan Bahasa Indonesia / 🇬🇧 How to Switch to Indonesian
 
@@ -174,8 +174,8 @@ chmod +x NotepadNext-Default-Editor.sh
 
 | 🌐 Language / Bahasa | 🏷️ Locale Code | 📊 Coverage / Cakupan | 👤 Maintainer / Penerjemah |
 | :--- | :--- | :--- | :--- |
-| 🇮🇩 **Bahasa Indonesia** | `id_ID` (`id`) | 100% (2.150+ baris string XML) | [@alsyundawy](https://github.com/alsyundawy) |
-| 🇬🇧 **English** | `en_US` (`en`) | 100% (Native / Base) | [@dail8859](https://github.com/dail8859) |
+| 🇮🇩 **Bahasa Indonesia** | `id_ID` (`id`) | Lengkap (2.150+ baris string XML) | [@alsyundawy](https://github.com/alsyundawy) |
+| 🇬🇧 **English** | `en_US` (`en`) | Base (Native) | [@dail8859](https://github.com/dail8859) |
 
 ---
 
