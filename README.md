@@ -5,6 +5,7 @@
 
 ![Build Notepad Next](https://github.com/alsyundawy/NotepadNext-MacOS/workflows/Build%20Notepad%20Next/badge.svg)
 [![Latest Version](https://img.shields.io/github/v/release/alsyundawy/NotepadNext-MacOS)](https://github.com/alsyundawy/NotepadNext-MacOS/releases)
+[![Language: Indonesian & English](https://img.shields.io/badge/Language-ID%20%7C%20EN-blue.svg)](#-localization--language-support--pelokalan--dukungan-bahasa)
 [![Maintenance Status](https://img.shields.io/maintenance/yes/9999)](https://github.com/alsyundawy/NotepadNext-MacOS/)
 [![License](https://img.shields.io/github/license/alsyundawy/NotepadNext-MacOS)](https://github.com/alsyundawy/NotepadNext-MacOS/blob/master/LICENSE)
 [![GitHub Issues](https://img.shields.io/github/issues/alsyundawy/NotepadNext-MacOS)](https://github.com/alsyundawy/NotepadNext-MacOS/issues)
@@ -140,6 +141,32 @@ chmod +x NotepadNext-Default-Editor.sh
 | `--no-restart` | Apply file associations without restarting Finder and Dock. *(Terapkan tanpa restart UI)* |
 | `-h`, `--help` | Show usage options and help information. *(Tampilkan bantuan)* |
 | `-v`, `--version` | Display script version. *(Tampilkan versi skrip)* |
+
+---
+
+## 🌐 Localization & Language Support / Pelokalan & Dukungan Bahasa
+
+> 🇬🇧 **Native Full Indonesian & English Localization Support.**  
+> NotepadNext For MacOS features built-in support for **Bahasa Indonesia (`id_ID`)** alongside **English (`en_US`)**, covering 100% of interface components (Menu Bar, Toolbar, Settings dialogs, Find/Replace, Editor context menus, and Shortcuts).
+>
+> 🇮🇩 **Dukungan Pelokalan Penuh Bahasa Indonesia & Bahasa Inggris.**  
+> NotepadNext For MacOS kini menyediakan pelokalan penuh untuk **Bahasa Indonesia (`id_ID`)** bersama **Bahasa Inggris (`en_US`)**, mencakup 100% seluruh komponen antarmuka aplikasi (Menu Bar, Toolbar, Dialog Pengaturan, Pencarian/Penggantian, Menu Konteks Editor, dan Pintasan Tombol).
+
+### 🇮🇩 Cara Mengaktifkan Bahasa Indonesia / 🇬🇧 How to Switch to Indonesian
+
+1. 🇬🇧 Open **NotepadNext** $\rightarrow$ Click menu **Settings** $\rightarrow$ **Preferences...** (or press `Cmd + ,`).  
+   🇮🇩 Buka aplikasi **NotepadNext** $\rightarrow$ Klik menu **Settings** $\rightarrow$ **Preferences...** (atau tekan `Cmd + ,`).
+2. 🇬🇧 Under the **General** tab $\rightarrow$ Look for the **Localization** / **Language** dropdown.  
+   🇮🇩 Pada tab **General** $\rightarrow$ Cari menu pilihan dropdown **Localization** / **Language**.
+3. 🇬🇧 Select **Bahasa Indonesia** from the list $\rightarrow$ Click **Close**.  
+   🇮🇩 Pilih **Bahasa Indonesia** dari daftar $\rightarrow$ Klik **Close**.
+4. 🇬🇧 Restart NotepadNext to apply the Indonesian language across the entire application.  
+   🇮🇩 Mulai ulang (restart) NotepadNext untuk menerapkan Bahasa Indonesia ke seluruh aplikasi.
+
+| 🌐 Language / Bahasa | 🏷️ Locale Code | 📊 Coverage / Cakupan | 👤 Maintainer / Penerjemah |
+| :--- | :--- | :--- | :--- |
+| 🇮🇩 **Bahasa Indonesia** | `id_ID` (`id`) | 100% (2.150+ baris string XML) | [@alsyundawy](https://github.com/alsyundawy) |
+| 🇬🇧 **English** | `en_US` (`en`) | 100% (Native / Base) | [@dail8859](https://github.com/dail8859) |
 
 ---
 
