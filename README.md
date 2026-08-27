@@ -1,11 +1,11 @@
 # 🍎 NotepadNext For MacOS — Notepad++ Like
 
-> 🇬🇧 A cross-platform reimplementation of Notepad++ — built natively for macOS.
+> 🇬🇧 A cross-platform reimplementation of Notepad++ — built natively for macOS.  
 > 🇮🇩 Implementasi ulang Notepad++ lintas platform — dibangun secara native untuk macOS.
 
 ![Build Notepad Next](https://github.com/alsyundawy/NotepadNext-MacOS/workflows/Build%20Notepad%20Next/badge.svg)
 [![Latest Version](https://img.shields.io/github/v/release/alsyundawy/NotepadNext-MacOS)](https://github.com/alsyundawy/NotepadNext-MacOS/releases)
-[![Language: Indonesian & English](https://img.shields.io/badge/Language-ID%20%7C%20EN-blue.svg)](#-localization--language-support--pelokalan--dukungan-bahasa)
+[![Language: Indonesian & English](https://img.shields.io/badge/Language-ID%20%7C%20EN-blue.svg)](#localization--language-support)
 [![Maintenance Status](https://img.shields.io/maintenance/yes/9999)](https://github.com/alsyundawy/NotepadNext-MacOS/)
 [![License](https://img.shields.io/github/license/alsyundawy/NotepadNext-MacOS)](https://github.com/alsyundawy/NotepadNext-MacOS/blob/master/LICENSE)
 [![GitHub Issues](https://img.shields.io/github/issues/alsyundawy/NotepadNext-MacOS)](https://github.com/alsyundawy/NotepadNext-MacOS/issues)
@@ -23,56 +23,53 @@
 ![image](https://github.com/user-attachments/assets/60f58d46-56e1-471d-a532-addc959f7c40)
 ![image](https://github.com/user-attachments/assets/9a53931f-0078-44af-8832-e863c9d57ddf)
 
-## 👨‍💻 Credits / Kredit
+---
 
-> 🇬🇧 This repository is a **macOS-only build** of the original project by **[@dail8859](https://github.com/dail8859)**.
-> All credit for the original codebase goes to the original author.
-> This fork is maintained at [https://github.com/alsyundawy/NotepadNext-MacOS](https://github.com/alsyundawy/NotepadNext-MacOS).
+## Overview
+
+> 🇬🇧 **NotepadNext For MacOS** is a native macOS reimplementation of Notepad++ built with modern Qt 6. It provides fast editing performance, syntax highlighting across 264+ file formats, tabbed document workflows, Gatekeeper support, and native Indonesian & English localization.
 >
-> 🇮🇩 Repository ini merupakan **build khusus macOS** dari proyek asli oleh **[@dail8859](https://github.com/dail8859)**.
-> Seluruh kredit untuk proyek aslinya diberikan kepada penulis asli.
-> Fork ini dikelola di [https://github.com/alsyundawy/NotepadNext-MacOS](https://github.com/alsyundawy/NotepadNext-MacOS) untuk memberikan build macOS (Apple Silicon & Intel) bagi pengguna.
-
-| | |
-| --- | --- |
-| 🏠 **Original Repository / Repositori Asli** | [github.com/dail8859/NotepadNext](https://github.com/dail8859/NotepadNext) |
-| 👤 **Original Author / Penulis Asli** | [@dail8859](https://github.com/dail8859) |
-| 🍎 **macOS Repository / Repositori macOS** | [github.com/alsyundawy/NotepadNext-MacOS](https://github.com/alsyundawy/NotepadNext-MacOS) |
-| 👤 **macOS Maintainer / Pengembang macOS** | [@alsyundawy](https://github.com/alsyundawy) |
+> 🇮🇩 **NotepadNext For MacOS** adalah implementasi ulang native Notepad++ untuk macOS yang dibangun menggunakan Qt 6 modern. Aplikasi ini menghadirkan kecepatan tinggi, penyorotan sintaks untuk 264+ format file, manajemen multi-tab dokumen, integrasi sistem macOS, serta pelokalan penuh Bahasa Indonesia dan Bahasa Inggris.
 
 ---
 
-## 📦 Installation / Instalasi
+## Quickstart
+
+```bash
+# 1. Berikan izin eksekusi skrip / Grant script execute permissions
+chmod +x NotepadNext-Default-Editor.sh
+
+# 2. Jadikan NotepadNext sebagai default editor macOS / Set as system default editor
+./NotepadNext-Default-Editor.sh -f
+```
+
+---
+
+## Installation
 
 > 🇬🇧 NotepadNext application builds are available for macOS. You can download the latest build directly from the [Releases](https://github.com/alsyundawy/NotepadNext-MacOS/releases) page. Choose the latest release, then check the **Assets** section at the bottom to download the `.dmg` or `.zip` file matching your Mac architecture.
 >
 > 🇮🇩 Build aplikasi NotepadNext tersedia untuk macOS. Anda dapat mengunduh build terbaru langsung dari halaman [Releases](https://github.com/alsyundawy/NotepadNext-MacOS/releases). Pilih rilis terbaru, lalu lihat bagian **Assets** di bagian bawah untuk mendownload file `.dmg` atau `.zip` yang sesuai dengan arsitektur Mac Anda.
 
----
+### Apple Silicon (arm64)
 
-### 💻 Apple Silicon (arm64)
-
-| 📁 Package / Paket | 🏗️ Architecture / Arsitektur | 🍎 Minimum macOS | ⚙️ Qt Version / Versi Qt |
-| --- | --- | --- | --- |
+| Package / Paket | Architecture / Arsitektur | Minimum macOS | Qt Version / Versi Qt |
+| :--- | :--- | :--- | :--- |
 | `NotepadNext-macOS-arm64-Qt6.5.zip` | Apple Silicon (arm64) | macOS 12.0 Monterey | Qt 6.5 |
 | `NotepadNext-macOS-arm64-Qt6.8.zip` | Apple Silicon (arm64) | macOS 13.0 Ventura | Qt 6.8 |
 | `NotepadNext-macOS-arm64-Qt6.10.zip` | Apple Silicon (arm64) | macOS 14.0 Sonoma | Qt 6.10 |
 | `NotepadNext-macOS-arm64-Qt6.11.zip` | Apple Silicon (arm64) | macOS 15.0 Sequoia | Qt 6.11 |
 
----
+### Intel (x86_64)
 
-### 💻 Intel (x86_64)
-
-| 📁 Package / Paket | 🏗️ Architecture / Arsitektur | 🍎 Minimum macOS | ⚙️ Qt Version / Versi Qt |
-| --- | --- | --- | --- |
+| Package / Paket | Architecture / Arsitektur | Minimum macOS | Qt Version / Versi Qt |
+| :--- | :--- | :--- | :--- |
 | `NotepadNext-macOS-x64-Qt6.5.zip` | Intel (x86_64) | macOS 11.0 Big Sur | Qt 6.5 |
 | `NotepadNext-macOS-x64-Qt6.8.zip` | Intel (x86_64) | macOS 12.0 Monterey | Qt 6.8 |
 | `NotepadNext-macOS-x64-Qt6.10.zip` | Intel (x86_64) | macOS 13.0 Ventura | Qt 6.10 |
 | `NotepadNext-macOS-x64-Qt6.11.zip` | Intel (x86_64) | macOS 14.0 Sonoma | Qt 6.11 |
 
----
-
-### 🛡️ Gatekeeper Fix / Solusi Gatekeeper
+### Gatekeeper Fix / Solusi Gatekeeper
 
 > 🇬🇧 If macOS prevents opening the downloaded app or shows a quarantine warning, run these commands in Terminal:
 >
@@ -84,12 +81,7 @@ sudo xattr -rd com.apple.quarantine "NotepadNext-v0.14.dmg"
 sudo codesign --force --deep --sign - "NotepadNext-v0.14.dmg"
 ```
 
----
-
-## 🍺 Install via Homebrew / Instalasi via Homebrew
-
-🇬🇧 It can also be installed using Homebrew:
-🇮🇩 Dapat juga diinstal menggunakan Homebrew:
+### Install via Homebrew
 
 ```bash
 brew tap alsyundawy/notepadnext
@@ -98,7 +90,27 @@ brew install --no-quarantine notepadnext
 
 ---
 
-## ⚡ Set as Default Editor / Jadikan Editor Default
+## Dependencies
+
+> 🇬🇧 **System Requirements & Dependencies:**
+>
+> - **Operating System**: macOS 11.0 (Big Sur) or higher.
+> - **Architectures**: Apple Silicon (`arm64`) and Intel (`x86_64`).
+> - **Framework**: Qt 6.5, 6.8, 6.10, or 6.11 with `Qt6Core5Compat`.
+> - **Build Tools**: CMake 3.21+, Ninja, and C++20 compiler (`AppleClang`).
+> - **Automation Helper**: `duti` (optional, for LaunchServices file associations).
+>
+> 🇮🇩 **Kebutuhan Sistem & Dependensi:**
+>
+> - **Sistem Operasi**: macOS 11.0 (Big Sur) ke atas.
+> - **Arsitektur**: Apple Silicon (`arm64`) dan Intel (`x86_64`).
+> - **Framework**: Qt 6.5, 6.8, 6.10, atau 6.11 dengan `Qt6Core5Compat`.
+> - **Build Tools**: CMake 3.21+, Ninja, dan C++20 compiler (`AppleClang`).
+> - **Otomatisasi**: `duti` (opsional, untuk pemetaan asosiasi file LaunchServices).
+
+---
+
+## Configuration
 
 > 🇬🇧 **Force-set NotepadNext as the system-wide default text and code editor on macOS.**  
 > By default, macOS binds hundreds of file formats and extensionless documents to TextEdit. We provide an automated, production-ready script (`NotepadNext-Default-Editor.sh`) that associates 264+ developer file extensions and 38 UTIs, unblocks Gatekeeper quarantine flags, rebuilds the LaunchServices cache database, and restarts Finder & Dock in sub-second time.
@@ -106,21 +118,9 @@ brew install --no-quarantine notepadnext
 > 🇮🇩 **Jadikan NotepadNext sebagai editor teks dan kode default seluruh sistem di macOS.**  
 > Secara default, macOS menetapkan ratusan format file dan dokumen tanpa ekstensi ke TextEdit. Kami menyediakan skrip otomatis (`NotepadNext-Default-Editor.sh`) yang memetakan 264+ ekstensi file developer dan 38 UTIs, menghapus karantina Gatekeeper, merefresh database LaunchServices, dan me-restart Finder & Dock secara instan (<0.3 detik).
 
-### 🚀 Quick Start / Cara Cepat
+### Features & Capabilities / Fitur & Keunggulan
 
-```bash
-# 1. Berikan izin eksekusi / Grant execution permission
-chmod +x NotepadNext-Default-Editor.sh
-
-# 2. Jalankan dalam Force Mode (Otomatis & Refresh Finder/Dock)
-./NotepadNext-Default-Editor.sh -f
-```
-
----
-
-### ✨ Features & Capabilities / Fitur & Keunggulan
-
-| 🎯 Feature / Fitur | 🇬🇧 Description | 🇮🇩 Deskripsi |
+| Feature / Fitur | 🇬🇧 Description | 🇮🇩 Deskripsi |
 | :--- | :--- | :--- |
 | ⚡ **Batch Engine (<0.3s)** | Atomic LaunchServices configuration in a single pass without process spawn lag. | Konfigurasi atomik LaunchServices dalam 1 panggilan cepat tanpa jeda proses. |
 | 📄 **264+ Extensions** | Supports 264+ developer file formats. | Mendukung 264+ format file developer. |
@@ -129,9 +129,7 @@ chmod +x NotepadNext-Default-Editor.sh
 | 🔒 **TCC / FDA Check** | Validates Full Disk Access to avoid silent macOS permission blocks. | Memverifikasi Full Disk Access untuk mencegah pemblokiran izin macOS. |
 | 🔄 **Auto Cache Refresh** | Rebuilds LaunchServices database (`lsregister -kill -r`) & restarts Finder/Dock. | Membangun ulang database LaunchServices dan me-restart Finder & Dock otomatis. |
 
----
-
-### ⚙️ Command-line Options / Opsi Perintah
+### Command-line Options / Opsi Perintah
 
 | Option / Opsi | Description / Deskripsi |
 | :--- | :--- |
@@ -142,9 +140,19 @@ chmod +x NotepadNext-Default-Editor.sh
 | `-h`, `--help` | Show usage options and help information. *(Tampilkan bantuan)* |
 | `-v`, `--version` | Display script version. *(Tampilkan versi skrip)* |
 
+### Font Smoothing
+
+🇬🇧 By default, macOS enables font smoothing which causes text to appear quite differently from the Windows version. This can be disabled system-wide using the following command:
+
+🇮🇩 Secara default, macOS mengaktifkan font smoothing yang menyebabkan tampilan teks berbeda jauh dari versi Windows. Hal ini dapat dinonaktifkan secara sistem menggunakan perintah berikut:
+
+```bash
+defaults -currentHost write -g AppleFontSmoothing -int 0
+```
+
 ---
 
-## 🌐 Localization & Language Support / Pelokalan & Dukungan Bahasa
+## Localization & Language Support
 
 > 🇬🇧 **Native Full Indonesian & English Localization Support.**
 >
@@ -154,7 +162,7 @@ chmod +x NotepadNext-Default-Editor.sh
 >
 > NotepadNext For MacOS kini menyediakan pelokalan lengkap untuk **Bahasa Indonesia (`id_ID`)** bersama **Bahasa Inggris (`en_US`)**, mencakup seluruh komponen antarmuka aplikasi (Menu Bar, Toolbar, Dialog Pengaturan, Pencarian/Penggantian, Menu Konteks Editor, dan Pintasan Tombol).
 
-### 🇮🇩 Cara Mengaktifkan Bahasa Indonesia / 🇬🇧 How to Switch to Indonesian
+### Cara Mengaktifkan Bahasa Indonesia / How to Switch to Indonesian
 
 1. **Settings / Preferensi**:
    - 🇬🇧 Open **NotepadNext** $\rightarrow$ Click menu **Settings** $\rightarrow$ **Preferences...** (or press `Cmd + ,`).
@@ -172,28 +180,75 @@ chmod +x NotepadNext-Default-Editor.sh
    - 🇬🇧 Restart NotepadNext to apply the Indonesian language across the entire application.
    - 🇮🇩 Mulai ulang (restart) NotepadNext untuk menerapkan Bahasa Indonesia ke seluruh aplikasi.
 
-| 🌐 Language / Bahasa | 🏷️ Locale Code | 📊 Coverage / Cakupan | 👤 Maintainer / Penerjemah |
+| Language / Bahasa | Locale Code | Coverage / Cakupan | Maintainer / Penerjemah |
 | :--- | :--- | :--- | :--- |
 | 🇮🇩 **Bahasa Indonesia** | `id_ID` (`id`) | Lengkap (2.150+ baris string XML) | [@alsyundawy](https://github.com/alsyundawy) |
 | 🇬🇧 **English** | `en_US` (`en`) | Base (Native) | [@dail8859](https://github.com/dail8859) |
 
 ---
 
-## 🔧 MacOS Tweaks / Pengaturan Tambahan
+## Running Tests
 
-### 🔤 Font Smoothing
-
-🇬🇧 By default, macOS enables font smoothing which causes text to appear quite differently from the Windows version. This can be disabled system-wide using the following command:
-
-🇮🇩 Secara default, macOS mengaktifkan font smoothing yang menyebabkan tampilan teks berbeda jauh dari versi Windows. Hal ini dapat dinonaktifkan secara sistem menggunakan perintah berikut:
-
-```bash
-defaults -currentHost write -g AppleFontSmoothing -int 0
-```
+> 🇬🇧 **Executing Tests & Script Diagnostics:**
+>
+> ```bash
+> # 1. Preview default editor mappings (Dry Run Mode)
+> ./NotepadNext-Default-Editor.sh --dry-run
+>
+> # 2. Build and verify locally with CMake & CTest
+> cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
+> cmake --build build --parallel
+> ctest --test-dir build --output-on-failure
+> ```
+>
+> 🇮🇩 **Menjalankan Pengujian & Diagnostik Skrip:**
+>
+> ```bash
+> # 1. Pratinjau pemetaan editor default (Mode Dry Run)
+> ./NotepadNext-Default-Editor.sh --dry-run
+>
+> # 2. Bangun dan verifikasi pengujian lokal dengan CMake & CTest
+> cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
+> cmake --build build --parallel
+> ctest --test-dir build --output-on-failure
+> ```
 
 ---
 
-## ⚠️ Important Notes / Catatan Penting
+## Contributing
+
+> 🇬🇧 Contributions are welcome! You can contribute bug reports, code improvements, or UI translations:
+>
+> - **Translations**: Managed on Crowdin at [crowdin.com/project/notepadnext](https://crowdin.com/project/notepadnext) or via direct GitHub Pull Requests for macOS resources.
+> - **Pull Requests**: Please ensure all changes pass MegaLinter, CodeQL, and local tests.
+>
+> 🇮🇩 Kontribusi sangat terbuka! Anda dapat mengirimkan laporan bug, perbaikan kode, atau penerjemahan antarmuka:
+>
+> - **Terjemahan**: Dikelola melalui Crowdin di [crowdin.com/project/notepadnext](https://crowdin.com/project/notepadnext) atau langsung melalui Pull Request GitHub.
+> - **Pull Requests**: Pastikan semua perubahan lolos verifikasi MegaLinter, CodeQL, dan uji coba build lokal.
+
+---
+
+## Credits
+
+> 🇬🇧 This repository is a **macOS-only build** of the original project by **[@dail8859](https://github.com/dail8859)**.  
+> All credit for the original codebase goes to the original author.  
+> This fork is maintained at [https://github.com/alsyundawy/NotepadNext-MacOS](https://github.com/alsyundawy/NotepadNext-MacOS).
+>
+> 🇮🇩 Repository ini merupakan **build khusus macOS** dari proyek asli oleh **[@dail8859](https://github.com/dail8859)**.  
+> Seluruh kredit untuk proyek aslinya diberikan kepada penulis asli.  
+> Fork ini dikelola di [https://github.com/alsyundawy/NotepadNext-MacOS](https://github.com/alsyundawy/NotepadNext-MacOS) untuk menyediakan build macOS (Apple Silicon & Intel).
+
+| Component / Komponen | Link / Tautan |
+| :--- | :--- |
+| 🏠 **Original Repository / Repositori Asli** | [github.com/dail8859/NotepadNext](https://github.com/dail8859/NotepadNext) |
+| 👤 **Original Author / Penulis Asli** | [@dail8859](https://github.com/dail8859) |
+| 🍎 **macOS Repository / Repositori macOS** | [github.com/alsyundawy/NotepadNext-MacOS](https://github.com/alsyundawy/NotepadNext-MacOS) |
+| 👤 **macOS Maintainer / Pengembang macOS** | [@alsyundawy](https://github.com/alsyundawy) |
+
+---
+
+## Important Notes
 
 > 🇬🇧 Though the application overall is stable and usable, it should **not** be considered safe for critically important work. There are numerous bugs and half working implementations. Pull requests are greatly appreciated.
 >
@@ -201,7 +256,7 @@ defaults -currentHost write -g AppleFontSmoothing -int 0
 
 ---
 
-## ☕ Support / Dukungan
+## Support
 
 > 🇬🇧 If you find this project useful and would like to support its development:
 >
@@ -217,7 +272,7 @@ defaults -currentHost write -g AppleFontSmoothing -int 0
 
 ---
 
-## 📄 License / Lisensi
+## License
 
 🇬🇧 This code is released under the [GNU General Public License version 3](https://www.gnu.org/licenses/gpl-3.0.txt).
 
