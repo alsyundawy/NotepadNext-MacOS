@@ -52,7 +52,7 @@ chmod +x NotepadNext-Default-Editor.sh
 >
 > 🇮🇩 Build aplikasi NotepadNext tersedia untuk macOS. Anda dapat mengunduh build terbaru langsung dari halaman [Releases](https://github.com/alsyundawy/NotepadNext-MacOS/releases). Pilih rilis terbaru, lalu lihat bagian **Assets** di bagian bawah untuk mendownload file `.dmg` atau `.zip` yang sesuai dengan arsitektur Mac Anda.
 
-**Apple Silicon (arm64)**
+Available packages for Apple Silicon (`arm64`):
 
 | Package / Paket | Architecture / Arsitektur | Minimum macOS | Qt Version / Versi Qt |
 | :--- | :--- | :--- | :--- |
@@ -61,7 +61,7 @@ chmod +x NotepadNext-Default-Editor.sh
 | `NotepadNext-macOS-arm64-Qt6.10.zip` | Apple Silicon (arm64) | macOS 14.0 Sonoma | Qt 6.10 |
 | `NotepadNext-macOS-arm64-Qt6.11.zip` | Apple Silicon (arm64) | macOS 15.0 Sequoia | Qt 6.11 |
 
-**Intel (x86_64)**
+Available packages for Intel (`x86_64`):
 
 | Package / Paket | Architecture / Arsitektur | Minimum macOS | Qt Version / Versi Qt |
 | :--- | :--- | :--- | :--- |
@@ -70,11 +70,7 @@ chmod +x NotepadNext-Default-Editor.sh
 | `NotepadNext-macOS-x64-Qt6.10.zip` | Intel (x86_64) | macOS 13.0 Ventura | Qt 6.10 |
 | `NotepadNext-macOS-x64-Qt6.11.zip` | Intel (x86_64) | macOS 14.0 Sonoma | Qt 6.11 |
 
-**Gatekeeper Fix / Solusi Gatekeeper**
-
-> 🇬🇧 If macOS prevents opening the downloaded app or shows a quarantine warning, run these commands in Terminal:
->
-> 🇮🇩 Jika macOS mencegah pembukaan aplikasi yang diunduh atau menampilkan peringatan karantina, jalankan perintah berikut di Terminal:
+To resolve Gatekeeper quarantine warnings on macOS:
 
 ```bash
 sudo xattr -cr "NotepadNext-v0.14.dmg"
@@ -82,7 +78,7 @@ sudo xattr -rd com.apple.quarantine "NotepadNext-v0.14.dmg"
 sudo codesign --force --deep --sign - "NotepadNext-v0.14.dmg"
 ```
 
-**Install via Homebrew**
+To install using Homebrew:
 
 ```bash
 brew tap alsyundawy/notepadnext
@@ -143,7 +139,7 @@ brew install --no-quarantine notepadnext
 | `-h`, `--help` | Show usage options and help information. *(Tampilkan bantuan)* |
 | `-v`, `--version` | Display script version. *(Tampilkan versi skrip)* |
 
-**Font Smoothing**
+To configure font smoothing to match Windows rendering:
 
 🇬🇧 By default, macOS enables font smoothing which causes text to appear quite differently from the Windows version. This can be disabled system-wide using the following command:
 
