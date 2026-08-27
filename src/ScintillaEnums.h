@@ -37,6 +37,7 @@ enum class Message {
     SelectAll = 2013,
     SetSavePoint = 2014,
     GetStyledText = 2015,
+    GetStyledTextFull = 2778,
     CanRedo = 2016,
     MarkerLineFromHandle = 2017,
     MarkerDeleteHandle = 2018,
@@ -139,6 +140,10 @@ enum class Message {
     StyleSetHotSpot = 2409,
     StyleSetCheckMonospaced = 2254,
     StyleGetCheckMonospaced = 2255,
+    StyleSetStretch = 2258,
+    StyleGetStretch = 2259,
+    StyleSetInvisibleRepresentation = 2256,
+    StyleGetInvisibleRepresentation = 2257,
     SetElementColour = 2753,
     GetElementColour = 2754,
     ResetElementColour = 2755,
@@ -171,6 +176,21 @@ enum class Message {
     GetCharacterCategoryOptimization = 2721,
     BeginUndoAction = 2078,
     EndUndoAction = 2079,
+    GetUndoSequence = 2799,
+    GetUndoActions = 2790,
+    SetUndoSavePoint = 2791,
+    GetUndoSavePoint = 2792,
+    SetUndoDetach = 2793,
+    GetUndoDetach = 2794,
+    SetUndoTentative = 2795,
+    GetUndoTentative = 2796,
+    SetUndoCurrent = 2797,
+    GetUndoCurrent = 2798,
+    PushUndoActionType = 2800,
+    ChangeLastUndoActionText = 2801,
+    GetUndoActionType = 2802,
+    GetUndoActionPosition = 2803,
+    GetUndoActionText = 2804,
     IndicSetStyle = 2080,
     IndicGetStyle = 2081,
     IndicSetFore = 2082,
@@ -230,6 +250,10 @@ enum class Message {
     AutoCGetMaxWidth = 2209,
     AutoCSetMaxHeight = 2210,
     AutoCGetMaxHeight = 2211,
+    AutoCSetStyle = 2109,
+    AutoCGetStyle = 2120,
+    AutoCSetImageScale = 2815,
+    AutoCGetImageScale = 2816,
     SetIndent = 2122,
     GetIndent = 2123,
     SetUseTabs = 2124,
@@ -264,6 +288,12 @@ enum class Message {
     FindTextFull = 2196,
     FormatRange = 2151,
     FormatRangeFull = 2777,
+    SetChangeHistory = 2780,
+    GetChangeHistory = 2781,
+    SetUndoSelectionHistory = 2782,
+    GetUndoSelectionHistory = 2783,
+    SetSelectionSerialized = 2784,
+    GetSelectionSerialized = 2785,
     GetFirstVisibleLine = 2152,
     GetLine = 2153,
     GetLineCount = 2154,
@@ -278,11 +308,13 @@ enum class Message {
     GetTextRange = 2162,
     GetTextRangeFull = 2039,
     HideSelection = 2163,
+    GetSelectionHidden = 2088,
     PointXFromPosition = 2164,
     PointYFromPosition = 2165,
     LineFromPosition = 2166,
     PositionFromLine = 2167,
     LineScroll = 2168,
+    ScrollVertical = 2817,
     ScrollCaret = 2169,
     ScrollRange = 2569,
     ReplaceSel = 2170,
@@ -320,6 +352,7 @@ enum class Message {
     TargetWholeDocument = 2690,
     ReplaceTarget = 2194,
     ReplaceTargetRE = 2195,
+    ReplaceTargetMinimal = 2779,
     SearchInTarget = 2197,
     SetSearchFlags = 2198,
     GetSearchFlags = 2199,
@@ -438,7 +471,9 @@ enum class Message {
     Cancel = 2325,
     DeleteBack = 2326,
     Tab = 2327,
+    LineIndent = 2813,
     BackTab = 2328,
+    LineDedent = 2814,
     NewLine = 2329,
     FormFeed = 2330,
     VCHome = 2331,
@@ -552,7 +587,9 @@ enum class Message {
     CopyRange = 2419,
     CopyText = 2420,
     SetSelectionMode = 2422,
+    ChangeSelectionMode = 2659,
     GetSelectionMode = 2423,
+    SetMoveExtendsSelection = 2719,
     GetMoveExtendsSelection = 2706,
     GetLineSelStartPosition = 2424,
     GetLineSelEndPosition = 2425,
@@ -617,6 +654,9 @@ enum class Message {
     SetLayoutThreads = 2775,
     GetLayoutThreads = 2776,
     CopyAllowLine = 2519,
+    CutAllowLine = 2810,
+    SetCopySeparator = 2811,
+    GetCopySeparator = 2812,
     GetCharacterPointer = 2520,
     GetRangePointer = 2643,
     GetGapPosition = 2644,
@@ -672,6 +712,7 @@ enum class Message {
     ClearSelections = 2571,
     SetSelection = 2572,
     AddSelection = 2573,
+    SelectionFromPoint = 2474,
     DropSelectionN = 2671,
     SetMainSelection = 2574,
     GetMainSelection = 2575,
@@ -761,6 +802,8 @@ enum class Message {
     ReleaseLineCharacterIndex = 2712,
     LineFromIndexPosition = 2713,
     IndexPositionFromLine = 2714,
+    GetDragDropEnabled = 2818,
+    SetDragDropEnabled = 2819,
     StartRecord = 3001,
     StopRecord = 3002,
     GetLexer = 4002,
@@ -791,6 +834,8 @@ enum class Message {
     TagsOfStyle = 4031,
     DescriptionOfStyle = 4032,
     SetILexer = 4033,
+    SetScaleTechnique = 2820,
+    GetScaleTechnique = 2821,
     GetBidirectional = 2708,
     SetBidirectional = 2709,
 };
@@ -807,6 +852,7 @@ Q_ENUM(WhiteSpace);
 enum class TabDrawMode {
     LongArrow = 0,
     StrikeOut = 1,
+    ControlChar = 2,
 };
 Q_ENUM(TabDrawMode);
 
@@ -872,11 +918,16 @@ enum class MarkerSymbol {
     RgbaImage = 30,
     Bookmark = 31,
     VerticalBookmark = 32,
+    Bar = 33,
     Character = 10000,
 };
 Q_ENUM(MarkerSymbol);
 
 enum class MarkerOutline {
+    HistoryRevertedToOrigin = 21,
+    HistorySaved = 22,
+    HistoryModified = 23,
+    HistoryRevertedToModified = 24,
     FolderEnd = 25,
     FolderOpenMid = 26,
     FolderMidTail = 27,
@@ -953,6 +1004,19 @@ enum class FontWeight {
 };
 Q_ENUM(FontWeight);
 
+enum class FontStretch {
+    UltraCondensed = 1,
+    ExtraCondensed = 2,
+    Condensed = 3,
+    SemiCondensed = 4,
+    Normal = 5,
+    SemiExpanded = 6,
+    Expanded = 7,
+    ExtraExpanded = 8,
+    UltraExpanded = 9,
+};
+Q_ENUM(FontStretch);
+
 enum class Element {
     List = 0,
     ListBack = 1,
@@ -966,6 +1030,8 @@ enum class Element {
     SelectionSecondaryBack = 15,
     SelectionInactiveText = 16,
     SelectionInactiveBack = 17,
+    SelectionInactiveAdditionalText = 18,
+    SelectionInactiveAdditionalBack = 19,
     Caret = 40,
     CaretAdditional = 41,
     CaretLineBack = 50,
@@ -1008,6 +1074,7 @@ enum class IndicatorStyle {
     PointCharacter = 19,
     Gradient = 20,
     GradientCentre = 21,
+    PointTop = 22,
 };
 Q_ENUM(IndicatorStyle);
 
@@ -1015,7 +1082,15 @@ enum class IndicatorNumbers {
     Container = 8,
     Ime = 32,
     ImeMax = 35,
-    Max = 35,
+    HistoryRevertedToOriginInsertion = 36,
+    HistoryRevertedToOriginDeletion = 37,
+    HistorySavedInsertion = 38,
+    HistorySavedDeletion = 39,
+    HistoryModifiedInsertion = 40,
+    HistoryModifiedDeletion = 41,
+    HistoryRevertedToModifiedInsertion = 42,
+    HistoryRevertedToModifiedDeletion = 43,
+    Max = 43,
 };
 Q_ENUM(IndicatorNumbers);
 
@@ -1034,6 +1109,7 @@ Q_ENUM(IndicFlag);
 enum class AutoCompleteOption {
     Normal = 0,
     FixedSize = 1,
+    SelectFirstItem = 2,
 };
 Q_ENUM(AutoCompleteOption);
 
@@ -1066,6 +1142,21 @@ enum class FindOption {
 };
 Q_ENUM(FindOption);
 
+enum class ChangeHistoryOption {
+    Disabled = 0,
+    Enabled = 1,
+    Markers = 2,
+    Indicators = 4,
+};
+Q_ENUM(ChangeHistoryOption);
+
+enum class UndoSelectionHistoryOption {
+    Disabled = 0,
+    Enabled = 1,
+    Scroll = 2,
+};
+Q_ENUM(UndoSelectionHistoryOption);
+
 enum class FoldLevel {
     None = 0x0,
     Base = 0x400,
@@ -1086,6 +1177,7 @@ enum class FoldAction {
     Contract = 0,
     Expand = 1,
     Toggle = 2,
+    ContractEveryLevel = 4,
 };
 Q_ENUM(FoldAction);
 
@@ -1209,6 +1301,7 @@ enum class Status {
     Ok = 0,
     Failure = 1,
     BadAlloc = 2,
+    OutsideDocument = 3,
     WarnStart = 1000,
     RegEx = 1001,
 };
@@ -1307,6 +1400,7 @@ enum class Technology {
     DirectWrite = 1,
     DirectWriteRetain = 2,
     DirectWriteDC = 3,
+    DirectWrite1 = 4,
 };
 Q_ENUM(Technology);
 
@@ -1398,6 +1492,8 @@ enum class Update {
     Selection = 0x2,
     VScroll = 0x4,
     HScroll = 0x8,
+    Text = 0x10,
+    LineCount = 0x20,
 };
 Q_ENUM(Update);
 
@@ -1448,6 +1544,7 @@ enum class CompletionMethods {
     Tab = 3,
     Newline = 4,
     Command = 5,
+    SingleChoice = 6,
 };
 Q_ENUM(CompletionMethods);
 
@@ -1458,6 +1555,12 @@ enum class CharacterSource {
 };
 Q_ENUM(CharacterSource);
 
+enum class ScaleTechnique {
+    Default = 0,
+    PixelAligned = 1,
+};
+Q_ENUM(ScaleTechnique);
+
 enum class Bidirectional {
     Disabled = 0,
     L2R = 1,
@@ -1465,39 +1568,39 @@ enum class Bidirectional {
 };
 Q_ENUM(Bidirectional);
 
-enum class Notification {
-    StyleNeeded = 2000,
-    CharAdded = 2001,
-    SavePointReached = 2002,
-    SavePointLeft = 2003,
-    ModifyAttemptRO = 2004,
-    Key = 2005,
-    DoubleClick = 2006,
-    UpdateUI = 2007,
-    Modified = 2008,
-    MacroRecord = 2009,
-    MarginClick = 2010,
-    NeedShown = 2011,
-    Painted = 2013,
-    UserListSelection = 2014,
-    URIDropped = 2015,
-    DwellStart = 2016,
-    DwellEnd = 2017,
-    Zoom = 2018,
-    HotSpotClick = 2019,
-    HotSpotDoubleClick = 2020,
-    CallTipClick = 2021,
-    AutoCSelection = 2022,
-    IndicatorClick = 2023,
-    IndicatorRelease = 2024,
-    AutoCCancelled = 2025,
-    AutoCCharDeleted = 2026,
-    HotSpotReleaseClick = 2027,
-    FocusIn = 2028,
-    FocusOut = 2029,
-    AutoCCompleted = 2030,
-    MarginRightClick = 2031,
-    AutoCSelectionChange = 2032,
-};
-Q_ENUM(Notification);
+	enum class Notification {
+		StyleNeeded = 2000,
+		CharAdded = 2001,
+		SavePointReached = 2002,
+		SavePointLeft = 2003,
+		ModifyAttemptRO = 2004,
+		Key = 2005,
+		DoubleClick = 2006,
+		UpdateUI = 2007,
+		Modified = 2008,
+		MacroRecord = 2009,
+		MarginClick = 2010,
+		NeedShown = 2011,
+		Painted = 2013,
+		UserListSelection = 2014,
+		URIDropped = 2015,
+		DwellStart = 2016,
+		DwellEnd = 2017,
+		Zoom = 2018,
+		HotSpotClick = 2019,
+		HotSpotDoubleClick = 2020,
+		CallTipClick = 2021,
+		AutoCSelection = 2022,
+		IndicatorClick = 2023,
+		IndicatorRelease = 2024,
+		AutoCCancelled = 2025,
+		AutoCCharDeleted = 2026,
+		HotSpotReleaseClick = 2027,
+		FocusIn = 2028,
+		FocusOut = 2029,
+		AutoCCompleted = 2030,
+		MarginRightClick = 2031,
+		AutoCSelectionChange = 2032,
+	};
+	Q_ENUM(Notification);
 /* --Autogenerated -- end of section automatically generated from Scintilla.iface */

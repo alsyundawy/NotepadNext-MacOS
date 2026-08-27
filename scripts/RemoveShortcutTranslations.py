@@ -1,7 +1,7 @@
-from pathlib import Path
 import re
+from pathlib import Path
 
-root = Path("..") / "src"
+root = Path(__file__).resolve().parent.parent / "src"
 
 pattern = re.compile(
     r'(<property name="shortcut">\s*<string)(?![^>]*\bnotr=)(>)',

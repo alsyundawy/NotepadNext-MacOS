@@ -123,8 +123,9 @@ ScintillaNext *ScintillaNext::fromFile(const QString &filePath, bool tryToCreate
         d.mkpath(QFileInfo(file).path());
 
         QFile f(filePath);
-        f.open(QIODevice::WriteOnly);
-        f.close();
+        if (f.open(QIODevice::WriteOnly)) {
+            f.close();
+        }
     }
 
     bool readSuccessful = editor->readFromDisk(file);

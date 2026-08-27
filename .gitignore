@@ -72,3 +72,7 @@ __cmake_systeminformation
 .ninja_log
 build.ninja
 /.vscode
+/.deps/
+/compile_commands.json
+.cache/
+.clangd

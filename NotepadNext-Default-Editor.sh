@@ -332,7 +332,9 @@ EOF
 }
 
 check_macos() {
-  if [[ "$(uname -s)" != "Darwin" ]]; then
+  local os_name
+  os_name="$(uname -s)"
+  if [[ "${os_name}" != "Darwin" ]]; then
     error "This script is designed exclusively for macOS."
     exit 1
   fi
@@ -422,8 +424,9 @@ unquarantine_app() {
 }
 
 ensure_duti() {
-  if command -v duti >/dev/null 2>&1; then
-    ok "duti is installed ($(command -v duti))"
+  local duti_path
+  if duti_path="$(command -v duti 2>/dev/null)"; then
+    ok "duti is installed (${duti_path})"
     return 0
   fi
 
@@ -440,12 +443,12 @@ ensure_duti() {
     exit 1
   fi
 
-  if ! command -v duti >/dev/null 2>&1; then
+  if ! duti_path="$(command -v duti 2>/dev/null)"; then
     error "duti was installed but is not resolvable in PATH."
     exit 1
   fi
 
-  ok "duti installed successfully ($(command -v duti))"
+  ok "duti installed successfully (${duti_path})"
 }
 
 register_app_launchservices() {

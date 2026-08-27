@@ -1527,11 +1527,11 @@ void MainWindow::exportAsFormat(Converter *converter, const QString &filter)
 
     QFile f(fileName);
 
-    f.open(QIODevice::WriteOnly);
-
-    QTextStream s(&f);
-    converter->convert(s);
-    f.close();
+    if (f.open(QIODevice::WriteOnly)) {
+        QTextStream s(&f);
+        converter->convert(s);
+        f.close();
+    }
 }
 
 void MainWindow::copyAsFormat(Converter *converter, const QString &mimeType)
@@ -1871,9 +1871,10 @@ void MainWindow::applyStyleSheet()
     QFile f(":/stylesheets/npp.css");
     qInfo() << "Loading stylesheet:" << f.fileName();
 
-    f.open(QFile::ReadOnly);
-    sheet = f.readAll();
-    f.close();
+    if (f.open(QFile::ReadOnly)) {
+        sheet = f.readAll();
+        f.close();
+    }
 
     // If there is a "custom.css" file where the ini is located, load it as a style sheet addition
     QString directoryPath = QFileInfo(app->getSettings()->fileName()).absolutePath();
@@ -1882,9 +1883,10 @@ void MainWindow::applyStyleSheet()
         QFile custom(fullPath);
         qInfo() << "Loading stylesheet:" << custom.fileName();
 
-        custom.open(QFile::ReadOnly);
-        sheet += custom.readAll();
-        custom.close();
+        if (custom.open(QFile::ReadOnly)) {
+            sheet += custom.readAll();
+            custom.close();
+        }
     }
 
     setStyleSheet(sheet);
@@ -2186,7 +2188,7 @@ void MainWindow::checkForUpdates(bool silent)
 #ifdef Q_OS_WIN
     qInfo(Q_FUNC_INFO);
 
-    QString url = "https://github.com/dail8859/NotepadNext/raw/master/updates.json";
+    QString url = "https://github.com/alsyundawy/NotepadNext-MacOS/raw/master/updates.json";
     QSimpleUpdater::getInstance()->checkForUpdates(url);
 
     if (!silent) {

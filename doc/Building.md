@@ -2,42 +2,43 @@
 
 To build Notepad Next you will need CMake, a compatible C++ compiler, the Qt libraries, and the Notepad Next source code.
 
-# Windows
+## Windows
 
-This section specifically describes how to build Notepad Next using Microsoft's Visual Studio 2022 compiler. 
+This section describes how to build Notepad Next using Microsoft's Visual Studio 2022 compiler.
 
-## Installing Visual Studio 2022
+### Installing Visual Studio 2022
 
 1. Download the installer for [Visual Studio 2022 Community](https://visualstudio.microsoft.com/) (other versions should work if you have those installed already).
-1. Run the installer
-1. Select the 'Desktop development with C++'
-1. Complete the installation
-
-## Installing Qt Libraries
-
-1. Download the [Qt installer](https://www.qt.io/download-qt-installer)
 1. Run the installer.
-1. Select 'custom installation'
-1. Install any version of Qt >= 6.5 (6.5 is recommended if possible)
-  * `MSVC 2019 64-bit` located under the desired version of Qt
-  * `Qt 5 Compatibility Module` (not needed for Qt 5.x)
-  * `Developer and Design Tools` > `Qt Creator CDB Debugger Support`
-  * `Developer and Design Tools` > `Debugging Tools for Windows`
+1. Select the 'Desktop development with C++'.
+1. Complete the installation.
 
-## Cloning the Notepad Next Repository
+### Installing Qt Libraries
 
-1. In a command prompt (or git shell, powershell, etc) run:
-1. `git clone https://github.com/dail8859/NotepadNext.git`
+1. Download the [Qt installer](https://www.qt.io/download-qt-installer).
+1. Launch the installer executable.
+1. Select 'custom installation'.
+1. Install any version of Qt >= 6.5 (6.5 is recommended if possible):
+   - `MSVC 2019 64-bit` located under the desired version of Qt
+   - `Qt 5 Compatibility Module` (not needed for Qt 5.x)
+   - `Developer and Design Tools` > `Qt Creator CDB Debugger Support`
+   - `Developer and Design Tools` > `Debugging Tools for Windows`
 
-## Building/Running Notepad Next
+### Cloning the Notepad Next Repository
+
+1. In a command prompt (or git shell, powershell, etc.) run:
+1. `git clone https://github.com/alsyundawy/NotepadNext-MacOS.git`
+
+### Building/Running Notepad Next
 
 1. Open Qt Creator and open the root `CMakeLists.txt` file.
-1. Configure the project for 'Desktop Qt 6.5 MSVC2019 64bit' (or whatever version of Qt you have installed)
-1. Press `Ctrl+R`
+1. Configure the project for 'Desktop Qt 6.5 MSVC2019 64bit' (or whatever version of Qt you have installed).
+1. Press `Ctrl+R`.
 1. Qt Creator will build and run the project.
 
-# Linux
-Here's instructions for ubuntu/debian. Should be same across all distros as long as you get the packages.
+## Linux
+
+Here are instructions for Ubuntu / Debian systems:
 
 ```sh
 export DISTRIBUTION=AppImage
@@ -76,6 +77,22 @@ cmake -S . -B build \
 cmake --build build --target appimage --parallel
 ```
 
-# MacOS
+## macOS
 
-TODO
+To build Notepad Next on macOS (Apple Silicon or Intel):
+
+```bash
+# 1. Install build prerequisites via Homebrew
+brew install cmake ninja qt@6
+
+# 2. Configure build directory with CMake
+cmake -S . -B build \
+    -G Ninja \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DAPP_DISTRIBUTION=dmg \
+    -DCMAKE_PREFIX_PATH="$(brew --prefix qt@6)"
+
+# 3. Build application and generate DMG bundle
+cmake --build build --parallel
+cmake --build build --target dmg --parallel
+```

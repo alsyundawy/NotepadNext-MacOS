@@ -61,9 +61,10 @@ static int require_resource(lua_State *L)
     lua_pop(L, 1);
 
     if (f.exists()) {
-        f.open(QFile::ReadOnly);
-        luaL_loadstring(L, f.readAll().constData());
-        f.close();
+        if (f.open(QFile::ReadOnly)) {
+            luaL_loadstring(L, f.readAll().constData());
+            f.close();
+        }
 
         // At this point either the function or an error string is on the stack
     }
