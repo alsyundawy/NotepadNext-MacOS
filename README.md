@@ -123,7 +123,7 @@ chmod +x NotepadNext-Default-Editor.sh
 | 🎯 Feature / Fitur | 🇬🇧 Description | 🇮🇩 Deskripsi |
 | :--- | :--- | :--- |
 | ⚡ **Batch Engine (<0.3s)** | Atomic LaunchServices configuration in a single pass without process spawn lag. | Konfigurasi atomik LaunchServices dalam 1 panggilan cepat tanpa jeda proses. |
-| 📄 **264+ Extensions** | Supports 264+ developer file formats (Web, Systems, Scripts, Configs, and Data). | Mendukung 264+ format file developer (Web, Sistem, Skrip, Konfigurasi, dan Data). |
+| 📄 **264+ Extensions** | Supports 264+ developer file formats. | Mendukung 264+ format file developer. |
 | 🧩 **38 System UTIs** | Binds `public.plain-text`, `public.source-code`, `public.script`, `public.data`, etc. | Memetakan UTI teks, skrip, dan dokumen *unknown* tanpa ekstensi. |
 | 🛡️ **Gatekeeper Unblock** | Automatically strips `com.apple.quarantine` from the application bundle. | Menghapus atribut karantina Gatekeeper secara otomatis dari bundle aplikasi. |
 | 🔒 **TCC / FDA Check** | Validates Full Disk Access to avoid silent macOS permission blocks. | Memverifikasi Full Disk Access untuk mencegah pemblokiran izin macOS. |
