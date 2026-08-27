@@ -8,7 +8,8 @@ project(NotepadNext
 
 set(APP_DISTRIBUTION "" CACHE STRING "Distribution type")
 string(TIMESTAMP CURRENT_YEAR "%Y")
-set(APP_COPYRIGHT "Copyright 2019-${CURRENT_YEAR} Justin Dailey\nCopyright ${CURRENT_YEAR} Harry Alsyundawy (MacOS)")
+set(APP_COPYRIGHT "Copyright 2019-${CURRENT_YEAR} Justin Dailey")
+set(APP_COPYRIGHT_BUILDER "Copyright ${CURRENT_YEAR} Harry Alsyundawy (MacOS-Builder)")
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)

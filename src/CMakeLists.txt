@@ -254,5 +254,6 @@ target_compile_definitions(NotepadNext
         QAPPLICATION_CLASS=QApplication
         APP_VERSION="${PROJECT_VERSION}"
         APP_COPYRIGHT="${APP_COPYRIGHT}"
+        APP_COPYRIGHT_BUILDER="${APP_COPYRIGHT_BUILDER}"
         APP_DISTRIBUTION="${APP_DISTRIBUTION}"
 )
