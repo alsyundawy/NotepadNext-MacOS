@@ -146,21 +146,21 @@ chmod +x NotepadNext-Default-Editor.sh
 
 ## 🌐 Localization & Language Support / Pelokalan & Dukungan Bahasa
 
-> 🇬🇧 **Native Full Indonesian & English Localization Support.**  
+> 🇬🇧 **Native Full Indonesian & English Localization Support.**<br>
 > NotepadNext For MacOS features built-in support for **Bahasa Indonesia (`id_ID`)** alongside **English (`en_US`)**, covering 100% of interface components (Menu Bar, Toolbar, Settings dialogs, Find/Replace, Editor context menus, and Shortcuts).
 >
-> 🇮🇩 **Dukungan Pelokalan Penuh Bahasa Indonesia & Bahasa Inggris.**  
+> 🇮🇩 **Dukungan Pelokalan Penuh Bahasa Indonesia & Bahasa Inggris.**<br>
 > NotepadNext For MacOS kini menyediakan pelokalan penuh untuk **Bahasa Indonesia (`id_ID`)** bersama **Bahasa Inggris (`en_US`)**, mencakup 100% seluruh komponen antarmuka aplikasi (Menu Bar, Toolbar, Dialog Pengaturan, Pencarian/Penggantian, Menu Konteks Editor, dan Pintasan Tombol).
 
 ### 🇮🇩 Cara Mengaktifkan Bahasa Indonesia / 🇬🇧 How to Switch to Indonesian
 
-1. 🇬🇧 Open **NotepadNext** $\rightarrow$ Click menu **Settings** $\rightarrow$ **Preferences...** (or press `Cmd + ,`).  
+1. 🇬🇧 Open **NotepadNext** $\rightarrow$ Click menu **Settings** $\rightarrow$ **Preferences...** (or press `Cmd + ,`).<br>
    🇮🇩 Buka aplikasi **NotepadNext** $\rightarrow$ Klik menu **Settings** $\rightarrow$ **Preferences...** (atau tekan `Cmd + ,`).
-2. 🇬🇧 Under the **General** tab $\rightarrow$ Look for the **Localization** / **Language** dropdown.  
+2. 🇬🇧 Under the **General** tab $\rightarrow$ Look for the **Localization** / **Language** dropdown.<br>
    🇮🇩 Pada tab **General** $\rightarrow$ Cari menu pilihan dropdown **Localization** / **Language**.
-3. 🇬🇧 Select **Bahasa Indonesia** from the list $\rightarrow$ Click **Close**.  
+3. 🇬🇧 Select **Bahasa Indonesia** from the list $\rightarrow$ Click **Close**.<br>
    🇮🇩 Pilih **Bahasa Indonesia** dari daftar $\rightarrow$ Klik **Close**.
-4. 🇬🇧 Restart NotepadNext to apply the Indonesian language across the entire application.  
+4. 🇬🇧 Restart NotepadNext to apply the Indonesian language across the entire application.<br>
    🇮🇩 Mulai ulang (restart) NotepadNext untuk menerapkan Bahasa Indonesia ke seluruh aplikasi.
 
 | 🌐 Language / Bahasa | 🏷️ Locale Code | 📊 Coverage / Cakupan | 👤 Maintainer / Penerjemah |

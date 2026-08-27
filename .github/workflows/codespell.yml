@@ -20,5 +20,5 @@ jobs:
         with:
           check_filenames: true
           path: ./src
-          skip: *.lua,*.ui
+          skip: "*.lua,*.ui"
           ignore_words_list: doubleclick,msdos
