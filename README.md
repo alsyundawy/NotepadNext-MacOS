@@ -25,11 +25,11 @@
 ## 👨‍💻 Credits / Kredit
 
 > 🇬🇧 This repository is a **macOS-only build** of the original project by **[@dail8859](https://github.com/dail8859)**.
-> All credit for the original source code, design, and development goes to the original author.
+> All credit for the original codebase goes to the original author.
 > This fork is maintained at [https://github.com/alsyundawy/NotepadNext-MacOS](https://github.com/alsyundawy/NotepadNext-MacOS).
 >
 > 🇮🇩 Repository ini merupakan **build khusus macOS** dari proyek asli oleh **[@dail8859](https://github.com/dail8859)**.
-> Seluruh kredit untuk kode sumber, desain, dan pengembangan diberikan kepada penulis asli.
+> Seluruh kredit untuk proyek aslinya diberikan kepada penulis asli.
 > Fork ini dikelola di [https://github.com/alsyundawy/NotepadNext-MacOS](https://github.com/alsyundawy/NotepadNext-MacOS) untuk memberikan build macOS (Apple Silicon & Intel) bagi pengguna.
 
 | | |
@@ -94,6 +94,52 @@ sudo codesign --force --deep --sign - "NotepadNext-v0.14.dmg"
 brew tap alsyundawy/notepadnext
 brew install --no-quarantine notepadnext
 ```
+
+---
+
+## ⚡ Set as Default Editor / Jadikan Editor Default
+
+> 🇬🇧 **Force-set NotepadNext as the system-wide default text and code editor on macOS.**  
+> By default, macOS binds hundreds of file formats and extensionless documents to TextEdit. We provide an automated, production-ready script (`NotepadNext-Default-Editor.sh`) that associates 264+ developer file extensions and 38 UTIs, unblocks Gatekeeper quarantine flags, rebuilds the LaunchServices cache database, and restarts Finder & Dock in sub-second time.
+>
+> 🇮🇩 **Jadikan NotepadNext sebagai editor teks dan kode default seluruh sistem di macOS.**  
+> Secara default, macOS menetapkan ratusan format file dan dokumen tanpa ekstensi ke TextEdit. Kami menyediakan skrip otomatis (`NotepadNext-Default-Editor.sh`) yang memetakan 264+ ekstensi file developer dan 38 UTIs, menghapus karantina Gatekeeper, merefresh database LaunchServices, dan me-restart Finder & Dock secara instan (<0.3 detik).
+
+### 🚀 Quick Start / Cara Cepat
+
+```bash
+# 1. Berikan izin eksekusi / Grant execution permission
+chmod +x NotepadNext-Default-Editor.sh
+
+# 2. Jalankan dalam Force Mode (Otomatis & Refresh Finder/Dock)
+./NotepadNext-Default-Editor.sh -f
+```
+
+---
+
+### ✨ Features & Capabilities / Fitur & Keunggulan
+
+| 🎯 Feature / Fitur | 🇬🇧 Description | 🇮🇩 Deskripsi |
+| :--- | :--- | :--- |
+| ⚡ **Batch Engine (<0.3s)** | Atomic LaunchServices configuration in a single pass without process spawn lag. | Konfigurasi atomik LaunchServices dalam 1 panggilan cepat tanpa jeda proses. |
+| 📄 **264+ Extensions** | Supports Web, Systems, Dynamic, Config, Shell, Shader, Database, and Template files. | Mendukung format Web, Sistem, Skrip, Konfigurasi, Dotfiles, Database, dan Shader. |
+| 🧩 **38 System UTIs** | Binds `public.plain-text`, `public.source-code`, `public.script`, `public.data`, etc. | Memetakan UTI teks, skrip, dan dokumen *unknown* tanpa ekstensi. |
+| 🛡️ **Gatekeeper Unblock** | Automatically strips `com.apple.quarantine` from the application bundle. | Menghapus atribut karantina Gatekeeper secara otomatis dari bundle aplikasi. |
+| 🔒 **TCC / FDA Check** | Validates Full Disk Access to avoid silent macOS permission blocks. | Memverifikasi Full Disk Access untuk mencegah pemblokiran izin macOS. |
+| 🔄 **Auto Cache Refresh** | Rebuilds LaunchServices database (`lsregister -kill -r`) & restarts Finder/Dock. | Membangun ulang database LaunchServices dan me-restart Finder & Dock otomatis. |
+
+---
+
+### ⚙️ Command-line Options / Opsi Perintah
+
+| Option / Opsi | Description / Deskripsi |
+| :--- | :--- |
+| `-f`, `-y`, `--force` | Force replace defaults non-interactively & auto-restart Finder/Dock. *(Mode paksa & restart UI)* |
+| `-d`, `--dry-run` | Preview all 300+ associations without applying any system changes. *(Pratinjau perubahan)* |
+| `--rebuild-cache` | Force reset & rebuild LaunchServices database cache (*default: on*). *(Rebuild cache LaunchServices)* |
+| `--no-restart` | Apply file associations without restarting Finder and Dock. *(Terapkan tanpa restart UI)* |
+| `-h`, `--help` | Show usage options and help information. *(Tampilkan bantuan)* |
+| `-v`, `--version` | Display script version. *(Tampilkan versi skrip)* |
 
 ---
 
