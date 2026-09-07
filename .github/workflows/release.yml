@@ -95,7 +95,7 @@ jobs:
       # ─── Install Qt ────────────────────────────────────────────────────
       - name: Install Qt (mac)
         if: matrix.platform == 'mac'
-        uses: jdpurcell/install-qt-action@45e0f7af1148a44776dfcec3c65b0222943cb190 # v5
+        uses: jdpurcell/install-qt-action@d715fb7cdd4e5661191a794764231398e2c952f2 # v5
         with:
           version: ${{ matrix.qt_version }}
           host: mac
