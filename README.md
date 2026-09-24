@@ -28,9 +28,9 @@
 
 ## Overview
 
-> 🇬🇧 **NotepadNext For MacOS** is a native macOS reimplementation of Notepad++ built with modern Qt 6. It provides fast editing performance, syntax highlighting across 264+ file formats, tabbed document workflows, Gatekeeper support, and native Indonesian & English localization.
+> 🇬🇧 **NotepadNext For MacOS** is a native macOS reimplementation of Notepad++ built with modern Qt 6. It provides fast editing performance, syntax highlighting across 470+ file formats, tabbed document workflows, Gatekeeper support, and native Indonesian & English localization.
 >
-> 🇮🇩 **NotepadNext For MacOS** adalah implementasi ulang native Notepad++ untuk macOS yang dibangun menggunakan Qt 6 modern. Aplikasi ini menghadirkan kecepatan tinggi, penyorotan sintaks untuk 264+ format file, manajemen multi-tab dokumen, integrasi sistem macOS, serta pelokalan penuh Bahasa Indonesia dan Bahasa Inggris.
+> 🇮🇩 **NotepadNext For MacOS** adalah implementasi ulang native Notepad++ untuk macOS yang dibangun menggunakan Qt 6 modern. Aplikasi ini menghadirkan kecepatan tinggi, penyorotan sintaks untuk 470+ format file, manajemen multi-tab dokumen, integrasi sistem macOS, serta pelokalan penuh Bahasa Indonesia dan Bahasa Inggris.
 
 ---
 
