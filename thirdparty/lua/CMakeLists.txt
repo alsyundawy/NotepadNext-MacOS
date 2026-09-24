@@ -1,3 +1,5 @@
+cmake_minimum_required(VERSION 3.21)
+
 project(lua C)
 
 set(LUA_HEADERS
@@ -9,11 +11,13 @@ set(LUA_HEADERS
     src/ldo.h
     src/lfunc.h
     src/lgc.h
+    src/ljumptab.h
     src/llex.h
     src/llimits.h
     src/lmem.h
     src/lobject.h
     src/lopcodes.h
+    src/lopnames.h
     src/lparser.h
     src/lprefix.h
     src/lstate.h
@@ -21,6 +25,7 @@ set(LUA_HEADERS
     src/ltable.h
     src/ltm.h
     src/lua.h
+    src/lua.hpp
     src/luaconf.h
     src/lualib.h
     src/lundump.h
@@ -32,7 +37,6 @@ set(LUA_SOURCES
     src/lapi.c
     src/lauxlib.c
     src/lbaselib.c
-    src/lbitlib.c
     src/lcode.c
     src/lcorolib.c
     src/lctype.c
@@ -75,7 +79,6 @@ target_compile_definitions(lua
     PUBLIC
         LUA_PATH_DEFAULT=""
         LUA_CPATH_DEFAULT=""
+    PRIVATE
+        LUA_COMPAT_5_3
 )
-
-# Optional: Lua 5.3 compatibility (if you want)
-# target_compile_definitions(lua PRIVATE LUA_COMPAT_5_3)
