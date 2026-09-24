@@ -963,7 +963,7 @@
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="465"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2023"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2021"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1722,7 +1722,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2014"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2012"/>
         <source>Save File</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1733,7 +1733,7 @@
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.cpp" line="1306"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1957"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1955"/>
         <source>Reload File</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1784,107 +1784,107 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1957"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1955"/>
         <source>&lt;b&gt;%1&lt;/b&gt; has been modified by another program. Do you want to reload it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1983"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1981"/>
         <source>Read error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1984"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1982"/>
         <source>Write error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1985"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1983"/>
         <source>Fatal error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1986"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1984"/>
         <source>Resource error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1987"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1985"/>
         <source>Open error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1988"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1986"/>
         <source>Abort error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1989"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1987"/>
         <source>Timeout error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1990"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1988"/>
         <source>Unspecified error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1991"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1989"/>
         <source>Remove error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1992"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1990"/>
         <source>Rename error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1993"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1991"/>
         <source>Position error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1994"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1992"/>
         <source>Resize error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1995"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1993"/>
         <source>Permissions error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1996"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1994"/>
         <source>Copy error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1997"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1995"/>
         <source>Unknown error (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2000"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1998"/>
         <source>Error Saving File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2001"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1999"/>
         <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2007"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2005"/>
         <source>Zoom: %1%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2019"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2017"/>
         <source>Save changes to &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/dialogs/MainWindow.cpp" line="2020"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2018"/>
         <source>There are %n files with unsaved changes. Save them?</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -1892,22 +1892,22 @@
         </translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2023"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2021"/>
         <source>Save All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2024"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2022"/>
         <source>Discard All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2024"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2022"/>
         <source>Discard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2212"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2219"/>
         <source>No updates are available at this time.</source>
         <translation type="unfinished"></translation>
     </message>

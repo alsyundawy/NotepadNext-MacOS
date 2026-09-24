@@ -1,11 +1,12 @@
 cmake_minimum_required(VERSION 3.21)
 
 project(NotepadNext
-    VERSION 0.14
+    VERSION 0.15
     DESCRIPTION "Cross-platform text editor"
     LANGUAGES CXX
 )
 
+set(APP_VERSION "0.15-01")
 set(APP_DISTRIBUTION "" CACHE STRING "Distribution type")
 string(TIMESTAMP CURRENT_YEAR "%Y")
 set(APP_COPYRIGHT "Copyright 2019-${CURRENT_YEAR} Justin Dailey")

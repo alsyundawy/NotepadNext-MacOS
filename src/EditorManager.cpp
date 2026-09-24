@@ -46,20 +46,20 @@ const int MARK_HIDELINESUNDERLINE = 21;
 EditorManager::EditorManager(ApplicationSettings *settings, QObject *parent)
     : QObject(parent), settings(settings)
 {
-    connect(this, &EditorManager::editorCreated, this, [=](ScintillaNext *editor) {
-        connect(editor, &ScintillaNext::closed, this, [=]() {
+    connect(this, &EditorManager::editorCreated, this, [=, this](ScintillaNext *editor) {
+        connect(editor, &ScintillaNext::closed, this, [=, this]() {
             emit editorClosed(editor);
         });
     });
 
-    connect(settings, &ApplicationSettings::showWrapSymbolChanged, this, [=](bool b) {
+    connect(settings, &ApplicationSettings::showWrapSymbolChanged, this, [=, this](bool b) {
         for (auto &editor : getEditors()) {
             editor->setWrapVisualFlags(b ? SC_WRAPVISUALFLAG_END : SC_WRAPVISUALFLAG_NONE);
         }
     });
 
 
-    connect(settings, &ApplicationSettings::showWhitespaceChanged, this, [=](bool b) {
+    connect(settings, &ApplicationSettings::showWhitespaceChanged, this, [=, this](bool b) {
         // TODO: could make SCWS_VISIBLEALWAYS configurable via settings. Probably not worth
         // taking up menu space e.g. show all, show leading, show trailing
         for (auto &editor : getEditors()) {
@@ -67,19 +67,19 @@ EditorManager::EditorManager(ApplicationSettings *settings, QObject *parent)
         }
     });
 
-    connect(settings, &ApplicationSettings::showEndOfLineChanged, this, [=](bool b) {
+    connect(settings, &ApplicationSettings::showEndOfLineChanged, this, [=, this](bool b) {
         for (auto &editor : getEditors()) {
             editor->setViewEOL(b);
         }
     });
 
-    connect(settings, &ApplicationSettings::showIndentGuideChanged, this, [=](bool b) {
+    connect(settings, &ApplicationSettings::showIndentGuideChanged, this, [=, this](bool b) {
         for (auto &editor : getEditors()) {
             editor->setIndentationGuides(b ? SC_IV_LOOKBOTH : SC_IV_NONE);
         }
     });
 
-    connect(settings, &ApplicationSettings::wordWrapChanged, this, [=](bool b) {
+    connect(settings, &ApplicationSettings::wordWrapChanged, this, [=, this](bool b) {
         if (b) {
             for (auto &editor : getEditors()) {
                 editor->setWrapMode(SC_WRAP_WORD);
@@ -95,7 +95,7 @@ EditorManager::EditorManager(ApplicationSettings *settings, QObject *parent)
         }
     });
 
-    connect(settings, &ApplicationSettings::fontNameChanged, this, [=](QString fontName){
+    connect(settings, &ApplicationSettings::fontNameChanged, this, [=, this](QString fontName){
         for (auto &editor : getEditors()) {
             for (int i = 0; i <= STYLE_MAX; ++i) {
                 editor->styleSetFont(i, fontName.toUtf8().data());
@@ -103,7 +103,7 @@ EditorManager::EditorManager(ApplicationSettings *settings, QObject *parent)
         }
     });
 
-    connect(settings, &ApplicationSettings::fontSizeChanged, this, [=](int fontSize){
+    connect(settings, &ApplicationSettings::fontSizeChanged, this, [=, this](int fontSize){
         for (auto &editor : getEditors()) {
             for (int i = 0; i <= STYLE_MAX; ++i) {
                 editor->styleSetSize(i, fontSize);
@@ -111,7 +111,7 @@ EditorManager::EditorManager(ApplicationSettings *settings, QObject *parent)
         }
     });
 
-    connect(settings, &ApplicationSettings::urlHighlightingChanged, this, [=](bool b){
+    connect(settings, &ApplicationSettings::urlHighlightingChanged, this, [=, this](bool b){
         for (auto &editor : getEditors()) {
             URLFinder *decorator = editor->findChild<URLFinder *>(QString(), Qt::FindDirectChildrenOnly);
             if (decorator) {
@@ -120,7 +120,7 @@ EditorManager::EditorManager(ApplicationSettings *settings, QObject *parent)
         }
     });
 
-    connect(settings, &ApplicationSettings::showLineNumbersChanged, this, [=](bool b){
+    connect(settings, &ApplicationSettings::showLineNumbersChanged, this, [=, this](bool b){
         for (auto &editor : getEditors()) {
             LineNumbers *decorator = editor->findChild<LineNumbers *>(QString(), Qt::FindDirectChildrenOnly);
             if (decorator) {
@@ -129,7 +129,7 @@ EditorManager::EditorManager(ApplicationSettings *settings, QObject *parent)
         }
     });
 
-    connect(settings, &ApplicationSettings::autoCompletionChanged, this, [=](bool b){
+    connect(settings, &ApplicationSettings::autoCompletionChanged, this, [=, this](bool b){
         for (auto &editor : getEditors()) {
             AutoCompletion *decorator = editor->findChild<AutoCompletion *>(QString(), Qt::FindDirectChildrenOnly);
             if (decorator) {
@@ -186,11 +186,75 @@ void EditorManager::manageEditor(ScintillaNext *editor)
     emit editorCreated(editor);
 }
 
+#ifdef Q_OS_MACOS
+// Scintilla's macOS key bindings are gated on PLAT_GTK_MACOSX (see KeyMap.cxx), which is
+// never defined for the Qt platform layer, so they never take effect. Scintilla also routes
+// word-wise movement through SCI_META, a modifier that the Qt layer does not report at all.
+// The bindings are assigned here rather than by patching the bundled Scintilla so that
+// updating Scintilla cannot silently revert them.
+//
+// On macOS Qt reports Command as Qt::ControlModifier (i.e. SCMOD_CTRL) and Option as
+// Qt::AltModifier (SCMOD_ALT).
+static void setupMacOsKeys(ScintillaNext *editor)
+{
+    constexpr int Cmd = SCMOD_CTRL;
+    constexpr int Opt = SCMOD_ALT;
+    constexpr int Shift = SCMOD_SHIFT;
+
+    struct KeyBinding {
+        int key;
+        int modifiers;
+        int message;
+    };
+
+    constexpr KeyBinding bindings[] = {
+        // Command + arrow keys move to the start/end of the line and of the document
+        {SCK_LEFT,  Cmd,               SCI_VCHOME},
+        {SCK_LEFT,  Cmd | Shift,       SCI_VCHOMEEXTEND},
+        {SCK_RIGHT, Cmd,               SCI_LINEEND},
+        {SCK_RIGHT, Cmd | Shift,       SCI_LINEENDEXTEND},
+        {SCK_UP,    Cmd,               SCI_DOCUMENTSTART},
+        {SCK_DOWN,  Cmd,               SCI_DOCUMENTEND},
+
+        // Command + Shift + Up/Down are deliberately left alone. They are already used by
+        // the Move Selected Lines Up/Down actions, and those actions receive the key press
+        // before the editor does.
+
+        // Option + arrow keys move by word
+        {SCK_LEFT,  Opt,               SCI_WORDLEFT},
+        {SCK_LEFT,  Opt | Shift,       SCI_WORDLEFTEXTEND},
+        {SCK_RIGHT, Opt,               SCI_WORDRIGHT},
+        {SCK_RIGHT, Opt | Shift,       SCI_WORDRIGHTEXTEND},
+
+        // Option + Shift + Left/Right now select by word, so add Command + Option + Shift +
+        // arrow keys for rectangular selection. Option + Shift + Up/Down are left with
+        // Scintilla's default rectangular behaviour since nothing else uses them.
+        {SCK_LEFT,  Cmd | Opt | Shift, SCI_CHARLEFTRECTEXTEND},
+        {SCK_RIGHT, Cmd | Opt | Shift, SCI_CHARRIGHTRECTEXTEND},
+        {SCK_UP,    Cmd | Opt | Shift, SCI_LINEUPRECTEXTEND},
+        {SCK_DOWN,  Cmd | Opt | Shift, SCI_LINEDOWNRECTEXTEND},
+
+        // Deleting by word/to the start of the line, and redo
+        {SCK_BACK,  Opt,               SCI_DELWORDLEFT},
+        {SCK_BACK,  Cmd,               SCI_DELLINELEFT},
+        {'Z',       Cmd | Shift,       SCI_REDO},
+    };
+
+    for (const KeyBinding &binding : bindings) {
+        editor->assignCmdKey(binding.key + (binding.modifiers << 16), binding.message);
+    }
+}
+#endif
+
 void EditorManager::setupEditor(ScintillaNext *editor)
 {
     qInfo(Q_FUNC_INFO);
 
     editor->clearCmdKey(SCK_INSERT);
+
+#ifdef Q_OS_MACOS
+    setupMacOsKeys(editor);
+#endif
 
     editor->setFoldMarkers(QStringLiteral("box"));
     for (int i = SC_MARKNUM_FOLDEREND; i <= SC_MARKNUM_FOLDEROPEN; ++i) {
