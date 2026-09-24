@@ -111,18 +111,18 @@ brew install --no-quarantine notepadnext
 
 > 🇬🇧 **Force-set NotepadNext as the system-wide default text and code editor on macOS.**
 >
-> By default, macOS binds hundreds of file formats and extensionless documents to TextEdit. We provide an automated, production-ready script (`NotepadNext-Default-Editor.sh`) that associates 264+ developer file extensions and 38 UTIs, unblocks Gatekeeper quarantine flags, rebuilds the LaunchServices cache database, and restarts Finder & Dock in sub-second time.
+> By default, macOS binds hundreds of file formats and extensionless documents to TextEdit. We provide an automated, production-ready script (`NotepadNext-Default-Editor.sh`) that associates 267+ developer file extensions and 38 UTIs, unblocks Gatekeeper quarantine flags, rebuilds the LaunchServices cache database, and restarts Finder & Dock in sub-second time.
 >
 > 🇮🇩 **Jadikan NotepadNext sebagai editor teks dan kode default seluruh sistem di macOS.**
 >
-> Secara default, macOS menetapkan ratusan format file dan dokumen tanpa ekstensi ke TextEdit. Kami menyediakan skrip otomatis (`NotepadNext-Default-Editor.sh`) yang memetakan 264+ ekstensi file developer dan 38 UTIs, menghapus karantina Gatekeeper, merefresh database LaunchServices, dan me-restart Finder & Dock secara instan (<0.3 detik).
+> Secara default, macOS menetapkan ratusan format file dan dokumen tanpa ekstensi ke TextEdit. Kami menyediakan skrip otomatis (`NotepadNext-Default-Editor.sh`) yang memetakan 267+ ekstensi file developer dan 38 UTIs, menghapus karantina Gatekeeper, merefresh database LaunchServices, dan me-restart Finder & Dock secara instan (<0.3 detik).
 
 ### Features & Capabilities / Fitur & Keunggulan
 
 | Feature / Fitur | 🇬🇧 Description | 🇮🇩 Deskripsi |
 | :--- | :--- | :--- |
 | ⚡ **Batch Engine (<0.3s)** | Atomic LaunchServices configuration in a single pass without process spawn lag. | Konfigurasi atomik LaunchServices dalam 1 panggilan cepat tanpa jeda proses. |
-| 📄 **264+ Extensions** | Supports 264+ developer file formats. | Mendukung 264+ format file developer. |
+| 📄 **267+ Extensions** | Supports 267+ developer file formats. | Mendukung 267+ format file developer. |
 | 🧩 **38 System UTIs** | Binds `public.plain-text`, `public.source-code`, `public.script`, `public.data`, etc. | Memetakan UTI teks, skrip, dan dokumen *unknown* tanpa ekstensi. |
 | 🛡️ **Gatekeeper Unblock** | Automatically strips `com.apple.quarantine` from the application bundle. | Menghapus atribut karantina Gatekeeper secara otomatis dari bundle aplikasi. |
 | 🔒 **TCC / FDA Check** | Validates Full Disk Access to avoid silent macOS permission blocks. | Memverifikasi Full Disk Access untuk mencegah pemblokiran izin macOS. |

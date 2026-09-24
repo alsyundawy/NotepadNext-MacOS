@@ -5,7 +5,7 @@
 #              system handler for all text, code, scripts, configs, markup,
 #              dotfiles, and extensionless documents on macOS.
 # AUTHOR:      Production Engineering & macOS Systems Automation
-# VERSION:     1.5.0
+# VERSION:     1.6.0
 # LICENSE:     MIT
 # ==============================================================================
 #
@@ -26,8 +26,12 @@
 # -----------------------------------------------------------------------
 # A. LaunchServices In-Memory Cache:
 #    macOS caches file associations in daemon memory (com.apple.LaunchServices.dv).
-#    Applying settings without purging the database leaves Finder using stale pointers.
-#    -> SOLUTION: Purge and rebuild LaunchServices cache first via 'lsregister -kill -r'.
+#    Applying settings without purging the user database leaves Finder using stale pointers.
+#    -> SOLUTION: Safely purge user cache via 'lsregister -kill -r -domain user'
+#       and re-seed system domains with 'lsregister -seed -domain system -domain local -domain user'.
+#       (NOTE: Modern macOS 13+ Ventura, Sonoma, and Sequoia build System Settings panes
+#       using ExtensionKit plugins. Running '-kill' on '-domain system' wipes those plugins
+#       and corrupts System Settings. We strictly restrict '-kill' to '-domain user').
 #
 # B. CFBundleDocumentTypes Rank Conflict (Owner vs Alternate):
 #    TextEdit declares 'LSHandlerRank = Owner' in its Info.plist, whereas third-party
@@ -92,7 +96,7 @@
 # Options:
 #   -y, --yes, -f, --force   Non-interactive mode (auto-confirm & force replace)
 #   -d, --dry-run            Simulate operations without modifying system settings
-#   --rebuild-cache          Force full reset & rebuild of LaunchServices database (default: on)
+#   --rebuild-cache          Safely reset & rebuild user LaunchServices database (default: on)
 #   --no-rebuild-cache       Skip rebuilding LaunchServices database cache
 #   --no-restart             Skip restarting Finder and Dock at completion
 #   -h, --help               Display help and usage information
@@ -106,6 +110,16 @@
 #
 # 7. CHANGELOG & VERSION HISTORY
 # ------------------------------
+# [v1.6.0] - Modern macOS (Ventura, Sonoma, Sequoia) ExtensionKit & System Settings Fix
+# - [Bugfix] Fixed critical macOS System Settings corruption where preference panes
+#   disappeared leaving only 'General'. Restricted 'lsregister -kill' to '-domain user'.
+# - [Resilience] Added proactive re-seeding and re-registration of ExtensionKit plugins
+#   (/System/Library/ExtensionKit/Extensions) and System Settings.app to automatically
+#   heal any previously damaged LaunchServices registrations in the active session without reboot.
+# - [Optimization] Replaced disruptive SystemUIServer termination with targeted
+#   Finder, Dock, and running System Settings restart.
+# - [Coverage] Expanded extensions list with modern developer formats (.mdx, .cnf, .lock).
+#
 # [v1.5.0] - High-Performance Batch Engine, Gatekeeper & Full Disk Access Integration
 # - [Gatekeeper] Added automated removal of 'com.apple.quarantine' attribute from NotepadNext.app.
 # - [TCC/FDA] Added non-intrusive Full Disk Access (FDA) detection and remediation guidance.
@@ -122,7 +136,7 @@
 # - [Backup] Versioned script backup preserved at NotepadNext-Default-Editor-v1.4.0.sh.
 #
 # [v1.3.0] - Force Mode, Comprehensive Coverage & Automated UI Refresh
-# - [Feature] Added automated LaunchServices cache rebuild ('lsregister -kill -r').
+# - [Feature] Added automated LaunchServices cache rebuild ('lsregister -kill -r -domain user').
 # - [Feature] Added automated restart for Finder, Dock, SystemUIServer, and QuickLook.
 # - [Coverage] Expanded file extension coverage to 264+ formats.
 # - [Coverage] Expanded UTI coverage to 37 standard macOS & programming UTIs.
@@ -145,7 +159,7 @@ IFS=$'\n\t'
 export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:${PATH:-}"
 
 # ====================== CONFIGURATION ======================
-readonly SCRIPT_VERSION="1.5.0"
+readonly SCRIPT_VERSION="1.6.0"
 readonly BUNDLE_ID="io.github.dail8859.NotepadNext"
 readonly APP_NAME="NotepadNext.app"
 readonly SYSTEM_APP_PATH="/Applications/${APP_NAME}"
@@ -207,10 +221,10 @@ readonly UTIS=(
   "com.apple.xml-property-list"
 )
 
-# Comprehensive File Extensions (264 common text, code, config & script formats)
+# Comprehensive File Extensions (267 common text, code, config & script formats)
 readonly EXTENSIONS=(
   # Plain Text, Documentation & Markup
-  "txt" "text" "md" "markdown" "mdown" "mkdn" "mkd" "mdwn" "rst" "adoc" "asciidoc"
+  "txt" "text" "md" "markdown" "mdown" "mkdn" "mkd" "mdwn" "mdx" "rst" "adoc" "asciidoc"
   "tex" "latex" "bib" "org" "pod" "nfo" "man" "rtf" "log" "out" "err" "audit" "me" "1st"
 
   # Web & Frontend Development
@@ -252,13 +266,13 @@ readonly EXTENSIONS=(
   "sql" "mysql" "pgsql" "sqlite" "cql" "hql" "prc" "tab" "udf" "graphql" "gql" "prisma"
 
   # Configuration, Preferences & System Files
-  "ini" "cfg" "conf" "config" "properties" "prefs" "inf" "reg"
+  "ini" "cfg" "conf" "config" "cnf" "properties" "prefs" "inf" "reg"
   "plist" "strings" "stringsdict" "storyboard" "xib" "entitlements" "xcconfig" "mobileconfig"
   "proto" "protobuf"
 
   # Build Tools, Makefiles & Manifests
   "cmake" "make" "makefile" "mk" "mak" "justfile" "procfile"
-  "brewfile" "gemfile" "rakefile" "vagrantfile" "dockerfile" "containerfile"
+  "brewfile" "gemfile" "rakefile" "vagrantfile" "dockerfile" "containerfile" "lock"
 
   # Tabular Data, Diffs & Patches
   "csv" "tsv" "psv" "diff" "patch"
@@ -319,7 +333,7 @@ Force-set NotepadNext as the default editor on macOS and refresh Finder/Dock.
 Options:
   -y, --yes, -f, --force   Non-interactive mode (auto-confirm & force replace)
   -d, --dry-run            Simulate operations without modifying system settings
-  --rebuild-cache          Force full reset & rebuild of LaunchServices database
+  --rebuild-cache          Safely reset & rebuild user LaunchServices database (default: on)
   --no-rebuild-cache       Skip rebuilding LaunchServices database cache
   --no-restart             Skip restarting Finder and Dock at completion
   -h, --help               Display this help message and exit
@@ -482,14 +496,30 @@ rebuild_launchservices_cache() {
   fi
 
   if [[ "${is_dry_run}" -eq 1 ]]; then
-    info "[DRY-RUN] Would rebuild LaunchServices database cache"
+    info "[DRY-RUN] Would rebuild user LaunchServices database cache (safe mode)"
     return 0
   fi
 
-  step "Rebuilding LaunchServices database cache..."
-  "${lsregister}" -kill -r -domain local -domain system -domain user >/dev/null 2>&1 || true
+  step "Rebuilding LaunchServices database cache (user domain)..."
+  # CRITICAL MODERN macOS SAFEGUARD (macOS 13+ Ventura, Sonoma, Sequoia):
+  # Never pass '-kill' to '-domain system'. System Settings panels on modern macOS
+  # are modular ExtensionKit plugins (/System/Library/ExtensionKit/Extensions/*.appex).
+  # Purging the system domain unregisters these plugins, breaking System Settings
+  # and showing only the 'General' pane until reboot.
+  # We restrict '-kill' to '-domain user', and non-destructively re-seed all domains.
+  "${lsregister}" -kill -r -domain user >/dev/null 2>&1 || true
+  "${lsregister}" -seed -domain system -domain local -domain user >/dev/null 2>&1 || true
+
+  # Proactively re-register System Settings app and ExtensionKit if present
+  if [[ -d "/System/Library/ExtensionKit/Extensions" ]]; then
+    "${lsregister}" -R /System/Library/ExtensionKit/Extensions >/dev/null 2>&1 || true
+  fi
+  if [[ -d "/System/Applications/System Settings.app" ]]; then
+    "${lsregister}" -f "/System/Applications/System Settings.app" >/dev/null 2>&1 || true
+  fi
+
   "${lsregister}" -f "${app_path}" >/dev/null 2>&1 || true
-  ok "LaunchServices cache rebuilt and synchronized."
+  ok "LaunchServices cache safely rebuilt and synchronized (System Settings preserved)."
 }
 
 apply_batch_handlers() {
@@ -550,10 +580,14 @@ restart_desktop_services() {
   qlmanage -r >/dev/null 2>&1 || true
   qlmanage -r cache >/dev/null 2>&1 || true
 
-  # Restart Finder, Dock, and SystemUIServer
+  # Restart Finder and Dock (primary LaunchServices desktop clients)
   killall Finder 2>/dev/null || true
   killall Dock 2>/dev/null || true
-  killall SystemUIServer 2>/dev/null || true
+
+  # Gracefully restart System Settings if currently running so fresh pane cache loads
+  if pgrep -x "System Settings" >/dev/null 2>&1; then
+    killall "System Settings" 2>/dev/null || true
+  fi
 
   ok "Finder and Dock have been restarted successfully."
 }
