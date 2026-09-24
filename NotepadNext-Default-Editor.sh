@@ -118,7 +118,9 @@
 #   heal any previously damaged LaunchServices registrations in the active session without reboot.
 # - [Optimization] Replaced disruptive SystemUIServer termination with targeted
 #   Finder, Dock, and running System Settings restart.
-# - [Coverage] Expanded extensions list with modern developer formats (.mdx, .cnf, .lock).
+# - [Coverage] Expanded file extensions to 470+ formats across 15 categories
+#   (text, code, markup, configs, shaders, subtitles, logs, security keys, diagrams)
+#   preventing Apple TextEdit from seizing default ownership.
 #
 # [v1.5.0] - High-Performance Batch Engine, Gatekeeper & Full Disk Access Integration
 # - [Gatekeeper] Added automated removal of 'com.apple.quarantine' attribute from NotepadNext.app.
@@ -221,64 +223,95 @@ readonly UTIS=(
   "com.apple.xml-property-list"
 )
 
-# Comprehensive File Extensions (267 common text, code, config & script formats)
+# Comprehensive File Extensions (471 common text, code, config & script formats)
 readonly EXTENSIONS=(
-  # Plain Text, Documentation & Markup
-  "txt" "text" "md" "markdown" "mdown" "mkdn" "mkd" "mdwn" "mdx" "rst" "adoc" "asciidoc"
-  "tex" "latex" "bib" "org" "pod" "nfo" "man" "rtf" "log" "out" "err" "audit" "me" "1st"
+  # Plain Text, Documentation, Notes & Markup
+  "txt" "text" "md" "markdown" "mdown" "mkdn" "mkd" "mdwn" "mdx"
+  "rst" "adoc" "asciidoc" "tex" "latex" "bib" "bibtex" "cls" "sty" "dtx" "ins"
+  "org" "pod" "nfo" "man" "rtf"
+  "log" "out" "err" "audit" "me" "1st" "ans" "diz" "readme" "license"
+  "todo" "notes" "textile" "wiki" "gmi"
 
   # Web & Frontend Development
   "xhtml" "css" "scss" "sass" "less" "styl" "postcss"
   "js" "mjs" "cjs" "jsx" "ts" "mts" "cts" "tsx" "vue" "svelte" "astro"
   "ejs" "hbs" "handlebars" "mustache" "jinja" "jinja2" "j2" "twig" "liquid" "erb" "haml" "pug" "jade"
+  "njk" "latte" "blade" "edge" "vash" "heex" "eex" "slim" "tpl" "webmanifest"
 
-  # Structured Data & Serialization
-  "json" "json5" "jsonc" "jsonl" "ndjson" "geojson" "topojson"
-  "xml" "xsl" "xslt" "xsd" "dtd" "svg" "rss" "atom" "kml" "gpx"
-  "yaml" "yml" "toml" "hcl" "tf" "tfvars"
+  # Structured Data, Serialization & Protocols
+  "json" "json5" "jsonc" "jsonl" "ndjson" "geojson" "topojson" "jsonld" "jsonnet" "cson"
+  "xml" "xsl" "xslt" "xsd" "dtd" "svg" "rss" "atom" "kml" "gpx" "opml" "wsdl" "wadl" "dae" "gltf"
+  "yaml" "yml" "toml" "hcl" "tf" "tfvars" "tfstate" "nomad"
+  "proto" "protobuf" "thrift" "avro" "avsc" "har" "asn" "asn1"
+
+  # Diagrams, CAD, CNC & Specialized Text Formats
+  "dot" "gv" "puml" "plantuml" "mermaid" "mmd" "scad" "gcode" "cnc"
+
+  # Localization & Translations
+  "po" "pot" "xlf" "xliff"
 
   # Shell, Terminal & Environment Configs
   "sh" "bash" "zsh" "fish" "ksh" "csh" "tcsh" "awk" "sed" "command" "tool"
-  "env" "env.local" "env.development" "env.production" "env.example" "env.test"
+  "env" "env.local" "env.development" "env.production" "env.example" "env.test" "envrc"
   "profile" "bashrc" "zshrc" "zprofile" "zlogin" "zlogout" "bash_profile" "bash_login" "bash_logout"
-  "inputrc" "nanorc" "vimrc" "gvimrc" "editorconfig"
+  "inputrc" "nanorc" "vimrc" "gvimrc" "editorconfig" "tmux"
+  "ps1" "psm1" "psd1" "bat" "cmd" "vbs" "applescript" "scpt"
 
-  # Git & Package Manager Ignore/Config
-  "gitignore" "gitattributes" "gitmodules" "gitconfig" "dockerignore"
+  # Git, CI/CD, Containers & Build Systems
+  "gitignore" "gitattributes" "gitmodules" "gitconfig" "gitmessage" "dockerignore" "helmignore" "npmignore" "eslintignore" "prettierignore"
   "npmrc" "nvmrc" "yarnrc" "bowerrc" "babelrc" "eslintrc" "prettierrc" "stylelintrc"
+  "cmake" "make" "makefile" "mk" "mak" "justfile" "procfile"
+  "brewfile" "gemfile" "rakefile" "vagrantfile" "dockerfile" "containerfile" "lock"
+  "jenkinsfile" "bzl" "bazel" "nix" "gradle" "sbt" "meson" "wrap" "pom" "spec" "podspec" "cartfile"
+  "pro" "pri" "prf" "qmake" "vcxproj" "csproj" "fsproj" "props" "targets" "manifest"
 
   # Systems & Compiled Languages
   "c" "cpp" "cc" "cxx" "c++" "h" "hpp" "hxx" "hh" "h++" "i" "ii" "m" "mm"
   "java" "kt" "kts" "scala" "sc" "groovy" "gvy"
   "go" "rs" "swift" "zig" "nim" "d" "v" "s" "asm" "nasm" "inc"
   "cs" "fs" "fsi" "fsx" "fsscript"
+  "sv" "svh" "vhd" "vhdl" "ada" "adb" "ads" "pas" "pp" "lpr"
+  "for" "f" "f90" "f95" "f03" "f08"
+  "odin" "sol" "vy" "cairo" "move" "cu" "cuh" "cl" "mojo" "carbon" "vala" "vapi" "cr" "hx"
 
-  # Dynamic, Scripting & Backend Languages
-  "py" "pyw" "pyi" "pyx"
+  # Dynamic, Scripting, Functional & Scientific Languages
+  "py" "pyw" "pyi" "pyx" "ipy" "ipynb"
   "rb" "rbs" "rake" "gemspec"
   "php" "phtml" "php3" "php4" "php5" "php7" "php8" "phps"
-  "pl" "pm" "t" "pod" "tcl" "lua" "luau"
+  "pl" "pm" "t" "tcl" "lua" "luau"
   "r" "rmd" "jl" "dart"
   "hs" "lhs" "erl" "hrl" "ex" "exs" "elm" "ml" "mli" "clj" "cljs" "cljc" "edn"
-  "lisp" "lsp" "cl" "scm" "ss" "rkt" "prolog" "plg"
+  "lisp" "lsp" "scm" "ss" "rkt" "prolog" "plg"
+  "purs" "re" "rei" "res" "resi" "gleam" "coffee" "litcoffee" "do" "mata" "sas" "wl" "wls"
 
-  # Database, Queries & Schemas
-  "sql" "mysql" "pgsql" "sqlite" "cql" "hql" "prc" "tab" "udf" "graphql" "gql" "prisma"
+  # Database, Queries & ORM Schemas
+  "sql" "mysql" "pgsql" "sqlite" "cql" "hql" "prc" "tab" "udf" "graphql" "gql" "graphqls" "prisma"
+  "ddl" "dml" "pls" "plb" "pks" "pkb" "tsql" "surql" "kql" "dbt"
 
-  # Configuration, Preferences & System Files
+  # Configuration, Preferences, Security, Keys & Certificates
   "ini" "cfg" "conf" "config" "cnf" "properties" "prefs" "inf" "reg"
   "plist" "strings" "stringsdict" "storyboard" "xib" "entitlements" "xcconfig" "mobileconfig"
-  "proto" "protobuf"
+  "pem" "crt" "cer" "key" "pub" "csr" "asc" "sig" "ovpn" "hosts" "netrc" "condarc"
+  "code-workspace" "code-snippets" "sublime-settings" "sublime-snippet" "sublime-keymap" "sublime-project"
+  "service" "timer" "socket" "desktop" "url" "policy" "rego" "sieve"
 
-  # Build Tools, Makefiles & Manifests
-  "cmake" "make" "makefile" "mk" "mak" "justfile" "procfile"
-  "brewfile" "gemfile" "rakefile" "vagrantfile" "dockerfile" "containerfile" "lock"
+  # Tabular Data, Diffs, Patches, Logs & Crash Reports
+  "csv" "tsv" "psv" "dsv" "diff" "patch" "rej"
+  "trace" "dump" "stackdump" "crash" "diag" "ips"
 
-  # Tabular Data, Diffs & Patches
-  "csv" "tsv" "psv" "diff" "patch"
+  # Subtitles, Captions & Lyrics
+  "srt" "vtt" "ass" "ssa" "lrc" "sub" "sbv" "cue"
 
-  # Shaders & GPU Programming
-  "glsl" "vert" "frag" "geom" "comp" "hlsl" "metal" "wgsl"
+  # Shaders, GPU Programming & Game Dev
+  "glsl" "vert" "frag" "geom" "comp" "tesc" "tese" "rgen" "rchit" "rmiss" "hlsl" "metal" "wgsl"
+  "cg" "fx" "shader" "cginc" "compute"
+  "gd" "tscn" "tres" "godot" "bbmodel"
+
+  # Network, REST & Web Services
+  "http" "rest"
+
+  # Typography & Font Development
+  "fea"
 )
 
 # ====================== COLORS & LOGGING ======================
