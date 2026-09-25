@@ -38,6 +38,10 @@ IFaceTableMixer ifacemixer;
 #define EOFMARK         "<eof>"
 #define marklen         (sizeof(EOFMARK)/sizeof(char) - 1)
 
+#if !defined(LUA_QL)
+#define LUA_QL(x) "'" x "'"
+#endif
+
 static bool call_function(lua_State *L, int nargs, bool ignoreFunctionReturnValue);
 
 // Helper function from SciTE
@@ -833,7 +837,7 @@ bool LuaExtension::OnExecute(const char *s) {
                 lua_getglobal(luaState, "print");
                 lua_insert(luaState, 1);
                 if (lua_pcall(luaState, lua_gettop(luaState) - 1, 0, 0) != 0)
-                    hostTraceError("error calling " LUA_QL("print"));
+                    hostTraceError("error calling 'print'");
             }
             // else everything finished fine but had no return value
         }

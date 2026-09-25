@@ -385,6 +385,15 @@
 #define lua_equal(L,idx1,idx2)		lua_compare(L,(idx1),(idx2),LUA_OPEQ)
 #define lua_lessthan(L,idx1,idx2)	lua_compare(L,(idx1),(idx2),LUA_OPLT)
 
+/*
+@@ LUA_QL describes how error messages quote program elements.
+@@ LUA_QS describes how to format a string with a quote.
+*/
+#if !defined(LUA_QL)
+#define LUA_QL(x)	"'" x "'"
+#define LUA_QS		LUA_QL("%s")
+#endif
+
 #endif				/* } */
 
 /* }================================================================== */
