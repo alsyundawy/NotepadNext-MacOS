@@ -35,6 +35,23 @@ add_custom_target(install_local
     DEPENDS NotepadNext
 )
 
+# Determine macOS target architecture suffix (arm64 or x64)
+if(NOT DEFINED MAC_ARCH_SUFFIX OR MAC_ARCH_SUFFIX STREQUAL "")
+    if(CMAKE_OSX_ARCHITECTURES MATCHES "arm64")
+        set(MAC_ARCH_SUFFIX "arm64")
+    elseif(CMAKE_OSX_ARCHITECTURES MATCHES "x86_64")
+        set(MAC_ARCH_SUFFIX "x64")
+    elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "arm64|aarch64")
+        set(MAC_ARCH_SUFFIX "arm64")
+    else()
+        set(MAC_ARCH_SUFFIX "x64")
+    endif()
+endif()
+
+set(MAC_DMG_NAME "NotepadNext-v${PROJECT_VERSION}-${MAC_ARCH_SUFFIX}.dmg")
+set(MAC_ZIP_NAME "NotepadNext-v${PROJECT_VERSION}-${MAC_ARCH_SUFFIX}.dmg.zip")
+set(MAC_SHORT_ZIP_NAME "NotepadNext-v${PROJECT_VERSION}-${MAC_ARCH_SUFFIX}.zip")
+
 find_program(MACDEPLOYQT_EXECUTABLE macdeployqt REQUIRED)
 
 add_custom_target(dmg
@@ -43,6 +60,15 @@ add_custom_target(dmg
         -dmg
     COMMAND ${CMAKE_COMMAND} -E rename
         ${INSTALL_DIR}/NotepadNext.dmg
-        ${CMAKE_BINARY_DIR}/NotepadNext-v${PROJECT_VERSION}.dmg
+        ${CMAKE_BINARY_DIR}/${MAC_DMG_NAME}
+    COMMAND ${CMAKE_COMMAND} -E tar cvf
+        ${CMAKE_BINARY_DIR}/${MAC_ZIP_NAME}
+        --format=zip
+        --
+        ${MAC_DMG_NAME}
+    COMMAND ${CMAKE_COMMAND} -E copy
+        ${CMAKE_BINARY_DIR}/${MAC_ZIP_NAME}
+        ${CMAKE_BINARY_DIR}/${MAC_SHORT_ZIP_NAME}
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
     DEPENDS install_local
 )
