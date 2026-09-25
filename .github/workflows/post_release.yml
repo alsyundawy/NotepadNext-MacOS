@@ -12,9 +12,12 @@ jobs:
   create-issues:
     name: Create GitHub Issues
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - run: |
           gh issue create --title "Publish Windows Release for $RELEASE_TAG" --body "Update json file in root of project."
@@ -28,6 +31,7 @@ jobs:
   winget:
     name: Publish to WinGet
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: vedantmgoyal2009/winget-releaser@4ffc7888bffd451b357355dc214d43bb9f23917e # v2
         with:

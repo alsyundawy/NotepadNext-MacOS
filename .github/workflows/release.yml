@@ -2,8 +2,8 @@ name: Release New Build
 
 on:
   push:
-    branches: [ master ]
-    tags: [ '*' ]
+    branches: [master]
+    tags: ["*"]
   pull_request:
   workflow_dispatch:
 
@@ -52,7 +52,6 @@ jobs:
             qt_version: "6.11"
             deployment_target: "14.0"
 
-
           # ─── macOS Apple Silicon ───────────────────────────────────
           - runs_on: macos-15
             platform: mac
@@ -87,10 +86,13 @@ jobs:
             deployment_target: "15.0"
 
     runs-on: ${{ matrix.runs_on }}
+    timeout-minutes: 60
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       # ─── Install Qt ────────────────────────────────────────────────────
       - name: Install Qt (mac)
@@ -145,6 +147,7 @@ jobs:
   github:
     name: GitHub Release
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     needs: [build]
     if: >
       github.repository == 'alsyundawy/NotepadNext-MacOS' &&
@@ -152,18 +155,21 @@ jobs:
       github.ref_type == 'tag'
     permissions:
       contents: write
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - name: Create or Verify Release
         shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TAG: ${{ github.ref_name }}
         run: |
-          gh release view "${{ github.ref_name }}" >/dev/null 2>&1 || \
-          gh release create "${{ github.ref_name }}" \
-            --title "${{ github.ref_name }}" \
+          gh release view "$RELEASE_TAG" >/dev/null 2>&1 || \
+          gh release create "$RELEASE_TAG" \
+            --title "$RELEASE_TAG" \
             --generate-notes
 
       - name: Download all artifacts
@@ -171,6 +177,9 @@ jobs:
 
       - name: Upload Release Assets
         shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TAG: ${{ github.ref_name }}
         run: |
           echo "Listing all downloaded artifact directories:"
           ls -la
@@ -180,8 +189,8 @@ jobs:
               echo "Processing assets from $dir..."
               for f in "$dir"/NotepadNext*.dmg; do
                 if [ -f "$f" ]; then
-                  echo "Uploading $f to release ${{ github.ref_name }}..."
-                  gh release upload "${{ github.ref_name }}" "$f" --clobber || true
+                  echo "Uploading $f to release $RELEASE_TAG..."
+                  gh release upload "$RELEASE_TAG" "$f" --clobber || true
                 fi
               done
             fi
@@ -189,8 +198,11 @@ jobs:
 
       - name: Upload Default Editor Script
         shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TAG: ${{ github.ref_name }}
         run: |
           if [ -f "scripts/NotepadNext-Default-Editor.sh" ]; then
-            echo "Uploading scripts/NotepadNext-Default-Editor.sh to release ${{ github.ref_name }}..."
-            gh release upload "${{ github.ref_name }}" "scripts/NotepadNext-Default-Editor.sh" --clobber || true
+            echo "Uploading scripts/NotepadNext-Default-Editor.sh to release $RELEASE_TAG..."
+            gh release upload "$RELEASE_TAG" "scripts/NotepadNext-Default-Editor.sh" --clobber || true
           fi

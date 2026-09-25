@@ -1,6 +1,6 @@
 name: Update translation files
 
-on: 
+on:
   workflow_dispatch:
   schedule:
     - cron: 35 1 * * 0
@@ -11,12 +11,14 @@ permissions:
 jobs:
   lupdate:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           submodules: true
+          persist-credentials: false
 
       - name: Install Qt
         uses: jurplel/install-qt-action@a9c63c7c123f3069cff414e7e482d95dfa9d8125 # v4.4.1
@@ -36,3 +38,4 @@ jobs:
         with:
           commit_message: Update translation files
           file_pattern: i18n/NotepadNext_en.ts
+          repository_token: ${{ secrets.GITHUB_TOKEN }}

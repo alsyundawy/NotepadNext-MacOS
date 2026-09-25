@@ -51,6 +51,7 @@ __cmake_systeminformation
 
 *.pyc
 
+build/
 /build
 /build*
 /icon/*.png
