@@ -114,7 +114,7 @@ QList<int> BookMarkDecorator::bookMarkedLines() const
     return bookMarkedLines;
 }
 
-void BookMarkDecorator::setBookMarkedLines(QList<int> &lines)
+void BookMarkDecorator::setBookMarkedLines(const QList<int> &lines)
 {
     // Make sure they are all clear first
     clearAllBookmarks();

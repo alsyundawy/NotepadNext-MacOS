@@ -26,13 +26,13 @@
 #include "ScintillaEdit.h"
 
 struct LexerStyle {
-    int id;
-    int fgColor;
-    int bgColor;
+    int id = 0;
+    int fgColor = 0;
+    int bgColor = 0;
     QString fontName;
-    int fontStyle;
-    int fontSize;
-    int keywordClass;
+    int fontStyle = 0;
+    int fontSize = 0;
+    int keywordClass = 0;
 };
 
 struct LexerType {
@@ -44,7 +44,7 @@ struct Language {
     QString name;
     QString shortName;
     QString longDescription;
-    int lexer_id;
+    int lexer_id = 0;
     QStringList extensions;
     LexerType lexer;
     QMap<int, QString> keywords;

@@ -34,12 +34,12 @@ public:
     void completeSearch() override;
 
 private:
-    ISearchResultsHandler *child;
+    ISearchResultsHandler *child = nullptr;
     int runningHitCount = 0;
 
     QString prevLine;
-    int prevLineNumber;
-    int prevStartPositionFromBeginning;
-    int prevEndPositionFromBeginning;
+    int prevLineNumber = -1;
+    int prevStartPositionFromBeginning = 0;
+    int prevEndPositionFromBeginning = 0;
 };
 

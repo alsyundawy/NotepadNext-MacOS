@@ -54,7 +54,7 @@ static int keywordClassToIndex(const QStringView keywordClass)
 struct LanguageName {
     QString shortName;
     QString longName;
-    int lexer_id;
+    int lexer_id = 0;
 };
 
 #define TEXT(x) x

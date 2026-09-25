@@ -40,7 +40,7 @@ public:
     void clearAllBookmarks();
 
     QList<int> bookMarkedLines() const;
-    void setBookMarkedLines(QList<int> &lines);
+    void setBookMarkedLines(const QList<int> &lines);
 
     QString cutBookMarkedLines();
     QString copyBookMarkedLines();
