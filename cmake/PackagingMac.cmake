@@ -49,8 +49,6 @@ if(NOT DEFINED MAC_ARCH_SUFFIX OR MAC_ARCH_SUFFIX STREQUAL "")
 endif()
 
 set(MAC_DMG_NAME "NotepadNext-v${PROJECT_VERSION}-${MAC_ARCH_SUFFIX}.dmg")
-set(MAC_ZIP_NAME "NotepadNext-v${PROJECT_VERSION}-${MAC_ARCH_SUFFIX}.dmg.zip")
-set(MAC_SHORT_ZIP_NAME "NotepadNext-v${PROJECT_VERSION}-${MAC_ARCH_SUFFIX}.zip")
 
 find_program(MACDEPLOYQT_EXECUTABLE macdeployqt REQUIRED)
 
@@ -61,14 +59,5 @@ add_custom_target(dmg
     COMMAND ${CMAKE_COMMAND} -E rename
         ${INSTALL_DIR}/NotepadNext.dmg
         ${CMAKE_BINARY_DIR}/${MAC_DMG_NAME}
-    COMMAND ${CMAKE_COMMAND} -E tar cvf
-        ${CMAKE_BINARY_DIR}/${MAC_ZIP_NAME}
-        --format=zip
-        --
-        ${MAC_DMG_NAME}
-    COMMAND ${CMAKE_COMMAND} -E copy
-        ${CMAKE_BINARY_DIR}/${MAC_ZIP_NAME}
-        ${CMAKE_BINARY_DIR}/${MAC_SHORT_ZIP_NAME}
-    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
     DEPENDS install_local
 )

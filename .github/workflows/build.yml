@@ -129,20 +129,18 @@ jobs:
         shell: bash
         run: cmake --build build --parallel
 
-      - name: Build MacOS Targets (dmg & zip)
+      - name: Build MacOS Targets (dmg)
         if: matrix.platform == 'mac'
         shell: bash
         run: cmake --build build --target dmg --parallel
 
       # ─── Upload Artifacts ────────────────────────────────────────
-      - name: Upload MacOS dmg and zip
+      - name: Upload MacOS dmg
         if: matrix.platform == 'mac'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: NotepadNext-macOS-${{ matrix.arch }}-Qt${{ matrix.qt_version }}
-          path: |
-            build/NotepadNext*.dmg
-            build/NotepadNext*.zip
+          path: build/NotepadNext*.dmg
           if-no-files-found: warn
 
   # ─── GitHub Release Draft ────────────────────────────────────────
@@ -183,7 +181,7 @@ jobs:
             dir="NotepadNext-macOS-${arch}-Qt${QT_RELEASE_VER}"
             if [ -d "$dir" ]; then
               echo "Processing assets from $dir..."
-              for f in "$dir"/NotepadNext*.zip "$dir"/NotepadNext*.dmg; do
+              for f in "$dir"/NotepadNext*.dmg; do
                 if [ -f "$f" ]; then
                   echo "Uploading $f to release ${{ github.ref_name }}..."
                   gh release upload "${{ github.ref_name }}" "$f" --clobber || true
