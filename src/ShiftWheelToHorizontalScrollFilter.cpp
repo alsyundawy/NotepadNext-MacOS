@@ -23,7 +23,7 @@
 #include <QWheelEvent>
 
 
-bool isHorizontalWheelEvent(QWheelEvent *event)
+static bool isHorizontalWheelEvent(QWheelEvent *event)
 {
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
     return event->angleDelta().y() == 0;
