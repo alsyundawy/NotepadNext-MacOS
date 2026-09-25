@@ -9,7 +9,8 @@ permissions:
   contents: read
 
 env:
-  QT_RELEASE_VER: 6.5
+  # Qt version used for the canonical release DMG (must match one of the matrix qt_version values)
+  QT_RELEASE_VER: "6.8"
 
 jobs:
   build:
@@ -141,12 +142,11 @@ jobs:
           path: build/NotepadNext*.dmg
           if-no-files-found: warn
 
-  # GitHub Release job
+  # GitHub Release job — only runs on tag pushes
   github:
     name: GitHub Release
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    environment: github-releases
     needs: [build]
     if: >
       github.repository == 'alsyundawy/NotepadNext-MacOS' &&
@@ -175,23 +175,31 @@ jobs:
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
 
       - name: Upload Release Assets
+        # For each arch (x64, arm64), upload only the canonical DMG from
+        # the default QT_RELEASE_VER build. The DMG is already named
+        # NotepadNext-v{VERSION}-{arch}.dmg by PackagingMac.cmake, so we
+        # just upload it directly — no extra zip/rename steps needed.
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_TAG: ${{ github.ref_name }}
         run: |
-          echo "Listing all downloaded artifact directories:"
+          echo "=== Downloaded artifact directories ==="
           ls -la
           for arch in x64 arm64; do
             dir="NotepadNext-macOS-${arch}-Qt${QT_RELEASE_VER}"
-            if [ -d "$dir" ]; then
-              echo "Processing assets from $dir..."
-              for f in "$dir"/NotepadNext*.dmg; do
-                if [ -f "$f" ]; then
-                  echo "Uploading $f to release $RELEASE_TAG..."
-                  gh release upload "$RELEASE_TAG" "$f" --clobber || true
-                fi
-              done
+            echo "Looking for canonical release dir: ${dir}"
+            if [ -d "${dir}" ]; then
+              # Find the single DMG produced by PackagingMac.cmake
+              dmg_file=$(find "${dir}" -maxdepth 1 -name 'NotepadNext-v*.dmg' | head -1)
+              if [ -n "${dmg_file}" ]; then
+                echo "Uploading ${dmg_file} → release ${RELEASE_TAG}"
+                gh release upload "${RELEASE_TAG}" "${dmg_file}" --clobber
+              else
+                echo "WARNING: No DMG found in ${dir}, skipping ${arch}"
+              fi
+            else
+              echo "WARNING: Directory ${dir} not found — skipping ${arch}"
             fi
           done
 
@@ -202,6 +210,6 @@ jobs:
           RELEASE_TAG: ${{ github.ref_name }}
         run: |
           if [ -f "scripts/NotepadNext-Default-Editor.sh" ]; then
-            echo "Uploading scripts/NotepadNext-Default-Editor.sh to release $RELEASE_TAG..."
-            gh release upload "$RELEASE_TAG" "scripts/NotepadNext-Default-Editor.sh" --clobber || true
+            echo "Uploading scripts/NotepadNext-Default-Editor.sh to release ${RELEASE_TAG}"
+            gh release upload "${RELEASE_TAG}" "scripts/NotepadNext-Default-Editor.sh" --clobber
           fi
