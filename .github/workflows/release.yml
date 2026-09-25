@@ -2,9 +2,7 @@ name: Release New Build
 
 on:
   push:
-    branches: [master]
     tags: ["*"]
-  pull_request:
   workflow_dispatch:
 
 permissions:
@@ -148,6 +146,7 @@ jobs:
     name: GitHub Release
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    environment: github-releases
     needs: [build]
     if: >
       github.repository == 'alsyundawy/NotepadNext-MacOS' &&

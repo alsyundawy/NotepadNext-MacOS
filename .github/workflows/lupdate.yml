@@ -33,9 +33,17 @@ jobs:
       - name: Update translations
         run: cmake --build build --target update_translations
 
-      - name: Commit translation changes
-        uses: stefanzweifel/git-auto-commit-action@4a55954c782fc1ea30b9056cd3e7a2b40ca8887d # v7.2.0
-        with:
-          commit_message: Update translation files
-          file_pattern: i18n/NotepadNext_en.ts
-          repository_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Commit and push translation changes
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git add i18n/NotepadNext_en.ts
+          if git diff --staged --quiet; then
+            echo "No translation changes to commit."
+          else
+            git commit -m "Update translation files"
+            git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:${{ github.ref_name }}
+          fi

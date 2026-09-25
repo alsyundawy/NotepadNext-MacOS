@@ -1,5 +1,5 @@
-name: Create Release
-run-name: Create Release v${{ github.event.inputs.version }}
+name: Create Release Tag
+run-name: Create Release Tag v${{ github.event.inputs.version }}
 
 on:
   workflow_dispatch:
@@ -12,7 +12,8 @@ permissions:
   contents: write
 
 jobs:
-  release:
+  bump-version:
+    name: Bump Version and Create Tag
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
@@ -22,36 +23,45 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Update App Version
+      - name: Update Version in Project Files
+        shell: bash
         env:
           NEW_VERSION: ${{ github.event.inputs.version }}
         run: |
-          sed -i "s/^\([[:space:]]*VERSION[[:space:]]*\).*/\1${NEW_VERSION}/" CMakeLists.txt
+          python3 -c '
+          import os, re, datetime
 
-      - name: Update Flatpak Version
+          ver = os.environ.get("NEW_VERSION", "").strip()
+          if not re.match(r"^[0-9]+(\.[0-9]+)*(-[0-9A-Za-z.]+)?$", ver):
+              raise ValueError(f"Invalid semantic version string: {ver}")
+
+          # Update CMakeLists.txt
+          with open("CMakeLists.txt", "r", encoding="utf-8") as f:
+              content = f.read()
+          content = re.sub(r"(VERSION\s+)[^\s\)]+", rf"\g<1>{ver}", content)
+          with open("CMakeLists.txt", "w", encoding="utf-8") as f:
+              f.write(content)
+
+          # Update Flatpak metadata
+          meta_path = "deploy/linux/com.github.dail8859.NotepadNext.metainfo.xml"
+          today = datetime.date.today().isoformat()
+          entry = f"<release version=\"v{ver}\" date=\"{today}\" />"
+          with open(meta_path, "r", encoding="utf-8") as f:
+              xml = f.read()
+          xml = xml.replace("<releases>", f"<releases>\n        {entry}")
+          with open(meta_path, "w", encoding="utf-8") as f:
+              f.write(xml)
+          '
+
+      - name: Commit and Tag Release
+        shell: bash
         env:
           NEW_VERSION: ${{ github.event.inputs.version }}
-        run: |
-          RELEASE_DATE=$(date +'%Y-%m-%d')
-          sed -i "s@<releases>@<releases>\n        <release version=\"v${NEW_VERSION}\" date=\"${RELEASE_DATE}\" />@" deploy/linux/com.github.dail8859.NotepadNext.metainfo.xml
-
-      - name: Commit changes
-        env:
-          NEW_VERSION: ${{ github.event.inputs.version }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add CMakeLists.txt deploy/linux/com.github.dail8859.NotepadNext.metainfo.xml
           git commit -m "v${NEW_VERSION} release"
-
-      - name: Tag commit
-        env:
-          NEW_VERSION: ${{ github.event.inputs.version }}
-        run: |
           git tag "v${NEW_VERSION}"
-
-      - name: Push
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
           git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" master --tags
