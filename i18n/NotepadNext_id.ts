@@ -167,7 +167,7 @@
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="48"/>
       <source>Line Indent Position</source>
-      <translation>Posisi Indent Baris</translation>
+      <translation>Posisi Indentasi Baris</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="52"/>
@@ -340,7 +340,7 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="106"/>
       <source>E&amp;xtended (\n, \r, \t, \0, \x...)</source>
-      <translation>E&amp;kstensi (\n, \r, \t, \0, \x...)</translation>
+      <translation>Diper&amp;luas (\n, \r, \t, \0, \x...)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="124"/>
@@ -468,59 +468,59 @@
       <translation>Tandai</translation>
     </message>
     <message numerus="yes">
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="149"/>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="357"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="154"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="362"/>
       <source>Replaced %Ln matches</source>
       <translation>
         <numerusform>Berhasil mengganti %Ln kecocokan</numerusform>
       </translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="257"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="262"/>
       <source>The end of the document has been reached. Found 1st occurrence from the top.</source>
       <translation>Akhir dokumen telah tercapai. Ditemukan kecocokan pertama dari atas.</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="268"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="273"/>
       <source>No matches found.</source>
       <translation>Kecocokan tidak ditemukan.</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="329"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="334"/>
       <source>1 occurrence was replaced</source>
       <translation>1 kecocokan berhasil diganti</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="338"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="343"/>
       <source>No more occurrences were found</source>
       <translation>Tidak ada lagi kecocokan yang ditemukan</translation>
     </message>
     <message numerus="yes">
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="368"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="373"/>
       <source>Found %Ln matches</source>
       <translation>
         <numerusform>Ditemukan %Ln kecocokan</numerusform>
       </translation>
     </message>
     <message numerus="yes">
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="778"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="783"/>
       <source>Mark: %Ln match in entire file</source>
       <translation>
         <numerusform>Tanda: %Ln kecocokan di seluruh berkas</numerusform>
       </translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="789"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="794"/>
       <source>All marks cleared</source>
       <translation>Semua tanda telah dihapus</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="813"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="818"/>
       <source>No marks to copy</source>
       <translation>Tidak ada teks yang ditandai untuk disalin</translation>
     </message>
     <message numerus="yes">
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="818"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="823"/>
       <source>Copied %Ln marked text(s)</source>
       <translation>
         <numerusform>Menyalin %Ln teks yang ditandai</numerusform>
@@ -930,7 +930,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="354"/>
       <source>Encoding</source>
-      <translation>Enkoding</translation>
+      <translation>Pengodean</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="370"/>
@@ -1448,42 +1448,42 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1255"/>
       <source>Fold Level 1</source>
-      <translation>Lipat Level 1</translation>
+      <translation>Lipat Tingkat 1</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1263"/>
       <source>Fold Level 2</source>
-      <translation>Lipat Level 2</translation>
+      <translation>Lipat Tingkat 2</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1271"/>
       <source>Fold Level 3</source>
-      <translation>Lipat Level 3</translation>
+      <translation>Lipat Tingkat 3</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1279"/>
       <source>Fold Level 4</source>
-      <translation>Lipat Level 4</translation>
+      <translation>Lipat Tingkat 4</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1287"/>
       <source>Unfold Level 1</source>
-      <translation>Buka Lipatan Level 1</translation>
+      <translation>Buka Lipatan Tingkat 1</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1295"/>
       <source>Unfold Level 2</source>
-      <translation>Buka Lipatan Level 2</translation>
+      <translation>Buka Lipatan Tingkat 2</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1303"/>
       <source>Unfold Level 3</source>
-      <translation>Buka Lipatan Level 3</translation>
+      <translation>Buka Lipatan Tingkat 3</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1311"/>
       <source>Unfold Level 4</source>
-      <translation>Buka Lipatan Level 4</translation>
+      <translation>Buka Lipatan Tingkat 4</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1319"/>
@@ -1498,52 +1498,52 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1335"/>
       <source>Fold Level 5</source>
-      <translation>Lipat Level 5</translation>
+      <translation>Lipat Tingkat 5</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1343"/>
       <source>Fold Level 6</source>
-      <translation>Lipat Level 6</translation>
+      <translation>Lipat Tingkat 6</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1351"/>
       <source>Fold Level 7</source>
-      <translation>Lipat Level 7</translation>
+      <translation>Lipat Tingkat 7</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1359"/>
       <source>Fold Level 8</source>
-      <translation>Lipat Level 8</translation>
+      <translation>Lipat Tingkat 8</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1367"/>
       <source>Fold Level 9</source>
-      <translation>Lipat Level 9</translation>
+      <translation>Lipat Tingkat 9</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1375"/>
       <source>Unfold Level 5</source>
-      <translation>Buka Lipatan Level 5</translation>
+      <translation>Buka Lipatan Tingkat 5</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1383"/>
       <source>Unfold Level 6</source>
-      <translation>Buka Lipatan Level 6</translation>
+      <translation>Buka Lipatan Tingkat 6</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1391"/>
       <source>Unfold Level 7</source>
-      <translation>Buka Lipatan Level 7</translation>
+      <translation>Buka Lipatan Tingkat 7</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1399"/>
       <source>Unfold Level 8</source>
-      <translation>Buka Lipatan Level 8</translation>
+      <translation>Buka Lipatan Tingkat 8</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1407"/>
       <source>Unfold Level 9</source>
-      <translation>Buka Lipatan Level 9</translation>
+      <translation>Buka Lipatan Tingkat 9</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1415"/>
