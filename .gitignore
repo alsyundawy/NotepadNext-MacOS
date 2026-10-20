@@ -56,7 +56,9 @@ build/
 /build
 /build*
 /icon/*.png
+!/icon/icon_*.png
 /icon/ImageMagick
+scratch/
 
 # JetBrains IDE prefs
 .idea/

@@ -84,11 +84,11 @@ private:
 
     void loadSettings();
 
-    EditorManager *editorManager;
-    RecentFilesListManager *recentFilesListManager;
-    ApplicationSettings *settings;
-    SessionManager *sessionManager;
-    TranslationManager *translationManager;
+    EditorManager *editorManager = nullptr;
+    RecentFilesListManager *recentFilesListManager = nullptr;
+    ApplicationSettings *settings = nullptr;
+    SessionManager *sessionManager = nullptr;
+    TranslationManager *translationManager = nullptr;
 
     LuaState *luaState = Q_NULLPTR;
 

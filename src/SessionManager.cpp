@@ -308,8 +308,8 @@ ScintillaNext *SessionManager::loadUnsavedFileDetails(QSettings &settings)
     qDebug("Session file: \"%s\"", qUtf8Printable(filePath));
     qDebug("  temp loc: \"%s\"", qUtf8Printable(sessionFilePath));
 
-    ScintillaNext *editor = app->getEditorManager()->getEditorByFilePath(filePath);
-    if (editor != Q_NULLPTR) {
+    ScintillaNext *existingEditor = app->getEditorManager()->getEditorByFilePath(filePath);
+    if (existingEditor != Q_NULLPTR) {
         qDebug("  file is already open, ignoring");
         return Q_NULLPTR;
     }

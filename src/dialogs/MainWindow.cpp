@@ -1573,7 +1573,9 @@ void MainWindow::renameFile()
         //auto otherEditor = app->getEditorByFilePath(fileName);
 
         bool renameSuccessful = editor->rename(fileName);
-        Q_UNUSED(renameSuccessful)
+        if (!renameSuccessful) {
+            showSaveErrorMessage(editor, QFileDevice::WriteError);
+        }
     }
     else {
         bool ok;
@@ -2084,7 +2086,9 @@ void MainWindow::restoreWindowState()
 
     // Always hide the dock no matter how the application was closed
     SearchResultsDock *srDock = findChild<SearchResultsDock *>();
-    srDock->hide();
+    if (srDock != nullptr) {
+        srDock->hide();
+    }
 }
 
 void MainWindow::switchToEditor(const ScintillaNext *editor)

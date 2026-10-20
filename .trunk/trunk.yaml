@@ -21,6 +21,7 @@ lint:
     - linters: [ALL]
       paths:
         - i18n/**
+        - scratch/**
     - linters: [checkov]
       paths:
         - .github/workflows/create_release.yml

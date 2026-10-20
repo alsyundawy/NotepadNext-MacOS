@@ -84,11 +84,11 @@ SearchResultsDock::~SearchResultsDock()
     delete ui;
 }
 
-void SearchResultsDock::newSearch(const QString searchTerm)
+void SearchResultsDock::newSearch(const QString newSearchTerm)
 {
     show();
 
-    this->searchTerm = searchTerm;
+    this->searchTerm = newSearchTerm;
 
     for (int i = 0; i < ui->treeWidget->topLevelItemCount(); ++i)
     {

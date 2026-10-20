@@ -23,7 +23,6 @@
 ![image](https://github.com/user-attachments/assets/60f58d46-56e1-471d-a532-addc959f7c40)
 ![image](https://github.com/user-attachments/assets/7718f399-e3ed-466f-967a-1cac00f8a9d1)
 
-
 ---
 
 ## Overview
@@ -54,28 +53,28 @@ chmod +x NotepadNext-Default-Editor.sh
 
 Available packages for Apple Silicon (`arm64`):
 
-| Package / Paket | Architecture / Arsitektur | Minimum macOS | Qt Version / Versi Qt |
-| :--- | :--- | :--- | :--- |
-| `NotepadNext-macOS-arm64-Qt6.5.zip` | Apple Silicon (arm64) | macOS 12.0 Monterey | Qt 6.5 |
-| `NotepadNext-macOS-arm64-Qt6.8.zip` | Apple Silicon (arm64) | macOS 13.0 Ventura | Qt 6.8 |
-| `NotepadNext-macOS-arm64-Qt6.10.zip` | Apple Silicon (arm64) | macOS 14.0 Sonoma | Qt 6.10 |
-| `NotepadNext-macOS-arm64-Qt6.11.zip` | Apple Silicon (arm64) | macOS 15.0 Sequoia | Qt 6.11 |
+| Package / Paket                      | Architecture / Arsitektur | Minimum macOS       | Qt Version / Versi Qt |
+| :----------------------------------- | :------------------------ | :------------------ | :-------------------- |
+| `NotepadNext-macOS-arm64-Qt6.5.zip`  | Apple Silicon (arm64)     | macOS 12.0 Monterey | Qt 6.5                |
+| `NotepadNext-macOS-arm64-Qt6.8.zip`  | Apple Silicon (arm64)     | macOS 13.0 Ventura  | Qt 6.8                |
+| `NotepadNext-macOS-arm64-Qt6.10.zip` | Apple Silicon (arm64)     | macOS 14.0 Sonoma   | Qt 6.10               |
+| `NotepadNext-macOS-arm64-Qt6.11.zip` | Apple Silicon (arm64)     | macOS 15.0 Sequoia  | Qt 6.11               |
 
 Available packages for Intel (`x86_64`):
 
-| Package / Paket | Architecture / Arsitektur | Minimum macOS | Qt Version / Versi Qt |
-| :--- | :--- | :--- | :--- |
-| `NotepadNext-macOS-x64-Qt6.5.zip` | Intel (x86_64) | macOS 11.0 Big Sur | Qt 6.5 |
-| `NotepadNext-macOS-x64-Qt6.8.zip` | Intel (x86_64) | macOS 12.0 Monterey | Qt 6.8 |
-| `NotepadNext-macOS-x64-Qt6.10.zip` | Intel (x86_64) | macOS 13.0 Ventura | Qt 6.10 |
-| `NotepadNext-macOS-x64-Qt6.11.zip` | Intel (x86_64) | macOS 14.0 Sonoma | Qt 6.11 |
+| Package / Paket                    | Architecture / Arsitektur | Minimum macOS       | Qt Version / Versi Qt |
+| :--------------------------------- | :------------------------ | :------------------ | :-------------------- |
+| `NotepadNext-macOS-x64-Qt6.5.zip`  | Intel (x86_64)            | macOS 11.0 Big Sur  | Qt 6.5                |
+| `NotepadNext-macOS-x64-Qt6.8.zip`  | Intel (x86_64)            | macOS 12.0 Monterey | Qt 6.8                |
+| `NotepadNext-macOS-x64-Qt6.10.zip` | Intel (x86_64)            | macOS 13.0 Ventura  | Qt 6.10               |
+| `NotepadNext-macOS-x64-Qt6.11.zip` | Intel (x86_64)            | macOS 14.0 Sonoma   | Qt 6.11               |
 
 To resolve Gatekeeper quarantine warnings on macOS:
 
 ```bash
-sudo xattr -cr "NotepadNext-v0.14.dmg"
-sudo xattr -rd com.apple.quarantine "NotepadNext-v0.14.dmg"
-sudo codesign --force --deep --sign - "NotepadNext-v0.14.dmg"
+sudo xattr -cr "NotepadNext-v0.15.dmg"
+sudo xattr -rd com.apple.quarantine "NotepadNext-v0.15.dmg"
+sudo codesign --force --deep --sign - "NotepadNext-v0.15.dmg"
 ```
 
 To install using Homebrew:
@@ -119,25 +118,25 @@ brew install --no-quarantine notepadnext
 
 ### Features & Capabilities / Fitur & Keunggulan
 
-| Feature / Fitur | 🇬🇧 Description | 🇮🇩 Deskripsi |
-| :--- | :--- | :--- |
-| ⚡ **Batch Engine (<0.3s)** | Atomic LaunchServices configuration in a single pass without process spawn lag. | Konfigurasi atomik LaunchServices dalam 1 panggilan cepat tanpa jeda proses. |
-| 📄 **470+ Extensions** | Supports 470+ developer file formats across 15 categories. | Mendukung 470+ format file developer lintas 15 kategori. |
-| 🧩 **38 System UTIs** | Binds `public.plain-text`, `public.source-code`, `public.script`, `public.data`, etc. | Memetakan UTI teks, skrip, dan dokumen *unknown* tanpa ekstensi. |
-| 🛡️ **Gatekeeper Unblock** | Automatically strips `com.apple.quarantine` from the application bundle. | Menghapus atribut karantina Gatekeeper secara otomatis dari bundle aplikasi. |
-| 🔒 **TCC / FDA Check** | Validates Full Disk Access to avoid silent macOS permission blocks. | Memverifikasi Full Disk Access untuk mencegah pemblokiran izin macOS. |
-| 🔄 **Auto Cache Refresh** | Safely rebuilds user LaunchServices database (`lsregister -domain user`) & restarts Finder/Dock. | Membangun ulang database LaunchServices user secara aman dan me-restart Finder & Dock otomatis. |
+| Feature / Fitur             | 🇬🇧 Description                                                                                   | 🇮🇩 Deskripsi                                                                                    |
+| :-------------------------- | :----------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------- |
+| ⚡ **Batch Engine (<0.3s)** | Atomic LaunchServices configuration in a single pass without process spawn lag.                  | Konfigurasi atomik LaunchServices dalam 1 panggilan cepat tanpa jeda proses.                    |
+| 📄 **470+ Extensions**      | Supports 470+ developer file formats across 15 categories.                                       | Mendukung 470+ format file developer lintas 15 kategori.                                        |
+| 🧩 **38 System UTIs**       | Binds `public.plain-text`, `public.source-code`, `public.script`, `public.data`, etc.            | Memetakan UTI teks, skrip, dan dokumen _unknown_ tanpa ekstensi.                                |
+| 🛡️ **Gatekeeper Unblock**   | Automatically strips `com.apple.quarantine` from the application bundle.                         | Menghapus atribut karantina Gatekeeper secara otomatis dari bundle aplikasi.                    |
+| 🔒 **TCC / FDA Check**      | Validates Full Disk Access to avoid silent macOS permission blocks.                              | Memverifikasi Full Disk Access untuk mencegah pemblokiran izin macOS.                           |
+| 🔄 **Auto Cache Refresh**   | Safely rebuilds user LaunchServices database (`lsregister -domain user`) & restarts Finder/Dock. | Membangun ulang database LaunchServices user secara aman dan me-restart Finder & Dock otomatis. |
 
 ### Command-line Options / Opsi Perintah
 
-| Option / Opsi | Description / Deskripsi |
-| :--- | :--- |
-| `-f`, `-y`, `--force` | Force replace defaults non-interactively & auto-restart Finder/Dock. *(Mode paksa & restart UI)* |
-| `-d`, `--dry-run` | Preview all 300+ associations without applying any system changes. *(Pratinjau perubahan)* |
-| `--rebuild-cache` | Force reset & rebuild LaunchServices database cache (*default: on*). *(Rebuild cache LaunchServices)* |
-| `--no-restart` | Apply file associations without restarting Finder and Dock. *(Terapkan tanpa restart UI)* |
-| `-h`, `--help` | Show usage options and help information. *(Tampilkan bantuan)* |
-| `-v`, `--version` | Display script version. *(Tampilkan versi skrip)* |
+| Option / Opsi         | Description / Deskripsi                                                                               |
+| :-------------------- | :---------------------------------------------------------------------------------------------------- |
+| `-f`, `-y`, `--force` | Force replace defaults non-interactively & auto-restart Finder/Dock. _(Mode paksa & restart UI)_      |
+| `-d`, `--dry-run`     | Preview all 300+ associations without applying any system changes. _(Pratinjau perubahan)_            |
+| `--rebuild-cache`     | Force reset & rebuild LaunchServices database cache (_default: on_). _(Rebuild cache LaunchServices)_ |
+| `--no-restart`        | Apply file associations without restarting Finder and Dock. _(Terapkan tanpa restart UI)_             |
+| `-h`, `--help`        | Show usage options and help information. _(Tampilkan bantuan)_                                        |
+| `-v`, `--version`     | Display script version. _(Tampilkan versi skrip)_                                                     |
 
 To configure font smoothing to match Windows rendering:
 
@@ -179,10 +178,10 @@ defaults -currentHost write -g AppleFontSmoothing -int 0
    - 🇬🇧 Restart NotepadNext to apply the Indonesian language across the entire application.
    - 🇮🇩 Mulai ulang (restart) NotepadNext untuk menerapkan Bahasa Indonesia ke seluruh aplikasi.
 
-| Language / Bahasa | Locale Code | Coverage / Cakupan | Maintainer / Penerjemah |
-| :--- | :--- | :--- | :--- |
+| Language / Bahasa       | Locale Code    | Coverage / Cakupan                | Maintainer / Penerjemah                      |
+| :---------------------- | :------------- | :-------------------------------- | :------------------------------------------- |
 | 🇮🇩 **Bahasa Indonesia** | `id_ID` (`id`) | Lengkap (2.150+ baris string XML) | [@alsyundawy](https://github.com/alsyundawy) |
-| 🇬🇧 **English** | `en_US` (`en`) | Base (Native) | [@dail8859](https://github.com/dail8859) |
+| 🇬🇧 **English**          | `en_US` (`en`) | Base (Native)                     | [@dail8859](https://github.com/dail8859)     |
 
 ---
 
@@ -242,12 +241,12 @@ defaults -currentHost write -g AppleFontSmoothing -int 0
 >
 > Fork ini dikelola di [https://github.com/alsyundawy/NotepadNext-MacOS](https://github.com/alsyundawy/NotepadNext-MacOS) untuk menyediakan build macOS (Apple Silicon & Intel).
 
-| Component / Komponen | Link / Tautan |
-| :--- | :--- |
-| 🏠 **Original Repository / Repositori Asli** | [github.com/dail8859/NotepadNext](https://github.com/dail8859/NotepadNext) |
-| 👤 **Original Author / Penulis Asli** | [@dail8859](https://github.com/dail8859) |
-| 🍎 **macOS Repository / Repositori macOS** | [github.com/alsyundawy/NotepadNext-MacOS](https://github.com/alsyundawy/NotepadNext-MacOS) |
-| 👤 **macOS Maintainer / Pengembang macOS** | [@alsyundawy](https://github.com/alsyundawy) |
+| Component / Komponen                         | Link / Tautan                                                                              |
+| :------------------------------------------- | :----------------------------------------------------------------------------------------- |
+| 🏠 **Original Repository / Repositori Asli** | [github.com/dail8859/NotepadNext](https://github.com/dail8859/NotepadNext)                 |
+| 👤 **Original Author / Penulis Asli**        | [@dail8859](https://github.com/dail8859)                                                   |
+| 🍎 **macOS Repository / Repositori macOS**   | [github.com/alsyundawy/NotepadNext-MacOS](https://github.com/alsyundawy/NotepadNext-MacOS) |
+| 👤 **macOS Maintainer / Pengembang macOS**   | [@alsyundawy](https://github.com/alsyundawy)                                               |
 
 ---
 
