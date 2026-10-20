@@ -35,4 +35,12 @@ add_subdirectory(scintilla)
 add_subdirectory(lexilla)
 add_subdirectory(uchardet)
 
+find_package(Python3 3.13 QUIET COMPONENTS Interpreter)
+if(NOT Python3_FOUND)
+    find_package(Python3 QUIET COMPONENTS Interpreter)
+endif()
+if(Python3_FOUND)
+    message(STATUS "NotepadNext: Python interpreter found: ${Python3_EXECUTABLE} (version ${Python3_VERSION})")
+endif()
+
 target_link_libraries(lexilla PRIVATE scintilla)

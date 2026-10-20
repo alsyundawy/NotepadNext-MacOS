@@ -2187,24 +2187,38 @@ void MainWindow::addEditor(ScintillaNext *editor)
         }
 
         QStringList actionNames = {
-            "Cut",
-            "Copy",
-            "Paste",
-            "Delete",
-            "",
-            "SelectAll",
-            "",
-            "Base64Encode",
-            "URLEncode",
-            "",
-            "Base64Decode",
-            "URLDecode"
+            QStringLiteral("Undo"),
+            QStringLiteral("Redo"),
+            QStringLiteral(""),
+            QStringLiteral("Cut"),
+            QStringLiteral("Copy"),
+            QStringLiteral("Paste"),
+            QStringLiteral("Delete"),
+            QStringLiteral(""),
+            QStringLiteral("SelectAll"),
+            QStringLiteral(""),
+            QStringLiteral("UpperCase"),
+            QStringLiteral("LowerCase"),
+            QStringLiteral(""),
+            QStringLiteral("Open"),
+            QStringLiteral("Save"),
+            QStringLiteral("Find"),
+            QStringLiteral(""),
+            QStringLiteral("Base64Encode"),
+            QStringLiteral("URLEncode"),
+            QStringLiteral(""),
+            QStringLiteral("Base64Decode"),
+            QStringLiteral("URLDecode")
         };
 
         // If the entry exists in the settings, use that
         ApplicationSettings *settings = app->getSettings();
         if (settings->contains("Gui/EditorContextMenu")) {
-            actionNames = settings->value("Gui/EditorContextMenu").toStringList();
+            const QStringList rawNames = settings->value("Gui/EditorContextMenu").toStringList();
+            actionNames.clear();
+            for (const QString &rawName : rawNames) {
+                actionNames.append(rawName.trimmed());
+            }
         }
 
         // If the cursor is at a URL, prepend the action

@@ -109,18 +109,53 @@ A custom `.mega-linter.yml` configuration has been established at repository roo
 
 ---
 
-## 7. Localization Architecture (English & Indonesian)
+## 7. Third-Party Component Stack & Default Context Menu
+
+### Updated Third-Party Stack (from NoteSciPad Integration)
+
+The third-party subsystem under `thirdparty/` has been upgraded and harmonized:
+
+- **Scintilla**: Upgraded from `5.6.6` to **`5.6.7`**, incorporating latest bugfixes for high-DPI font rendering, multi-cursor handling, and line marker decorations.
+- **Lexilla**: Upgraded from `5.5.3` to **`5.5.4`**, featuring enhanced lexing accuracy for C++, YAML, HTML, and TCL.
+- **Lua**: Upgraded from `5.4.9` to **`5.5.1`**, providing optimized bytecode execution and modern scripting capabilities.
+- **Python 3 Integration**: Embedded automated discovery for Python 3.13+ in `thirdparty/CMakeLists.txt` with graceful fallback.
+
+### Default NotepadNext.ini Context Menu
+
+The default context menu specification for the code editor is configured as:
+
+```ini
+[Gui]
+EditorContextMenu=Undo, Redo, , Cut, Copy, Paste, Delete, , SelectAll, , UpperCase, LowerCase, , Open, Save, Find, , Base64Encode, URLEncode, , Base64Decode, URLDecode
+```
+
+In `src/dialogs/MainWindow.cpp`, this sequence serves as the native fallback and includes token whitespace sanitization (`.trimmed()`) to reliably parse comma-space formatted INI entries.
+
+---
+
+## 8. Release Evolution: v0.15-01 through v0.15-04
+
+| Version     | Release Date | Key Milestones & Architectural Advancements                                                                                                                                                                                                                                                                                                        |
+| :---------- | :----------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **0.15-01** | 2026-09-10   | Full core rebase onto upstream NotepadNext `v0.15`; expanded default editor script (`NotepadNext-Default-Editor.sh` v1.6.0) to 470+ file extensions across 15 categories; resolved modern macOS Settings pane registration; extensive Indonesian translation foundation.                                                                           |
+| **0.15-02** | 2026-09-25   | Upgraded embedded Lua runtime to 5.4.9; defined `LUA_QL`/`LUA_QS` compatibility macros; added static linkage to scroll wheel event handler; packaged dual-arch release DMGs inside ZIP archives (`arm64` and `x64`).                                                                                                                               |
+| **0.15-03** | 2026-10-19   | Upstream sync with `dail8859/NotepadNext`; refined Indonesian translation across 64 UI elements; synchronized packaging workflow for automated macOS DMG distribution.                                                                                                                                                                             |
+| **0.15-04** | 2026-10-21   | 13-pillar security audit and hardening (CWE-120 fix, SIGSEGV protection, pointer safety); high-resolution macOS squircle branding icons; modernized rich-text About dialog; Qt 6.12 CI runners for macOS 15+; tailored MegaLinter config; Scintilla 5.6.7 / Lexilla 5.5.4 / Lua 5.5.1 third-party integration; default context menu configuration. |
+
+---
+
+## 9. Localization Architecture (English & Indonesian)
 
 In accordance with user requirements, the application's translation system has been streamlined exclusively to:
 
 1. 🇬🇧 **English (`en_US`)**: Base source strings and reference translation.
-2. 🇮🇩 **Bahasa Indonesia (`id_ID`)**: Native, complete translation with 419 XML strings covering menus, status bar, docks, preferences, find/replace dialogs, and Scintilla contextual menus.
+2. 🇮🇩 **Bahasa Indonesia (`id_ID`)**: Native, complete translation with 414 XML strings covering menus, status bar, docks, preferences, find/replace dialogs, and Scintilla contextual menus.
 
 All other language `.ts` files have been removed from `i18n/`, reducing repository bloat while accelerating CMake build and packaging stages.
 
 ---
 
-## 8. Verification & Quality Gates
+## 10. Verification & Quality Gates
 
 ### Linters Executed
 

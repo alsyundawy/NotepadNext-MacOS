@@ -22,6 +22,8 @@ lint:
       paths:
         - i18n/**
         - scratch/**
+        - thirdparty/**
+        - deploy/windows/**
     - linters: [checkov]
       paths:
         - .github/workflows/create_release.yml
