@@ -59,6 +59,7 @@ Available packages for Apple Silicon (`arm64`):
 | `NotepadNext-macOS-arm64-Qt6.8.zip`  | Apple Silicon (arm64)     | macOS 13.0 Ventura  | Qt 6.8                |
 | `NotepadNext-macOS-arm64-Qt6.10.zip` | Apple Silicon (arm64)     | macOS 14.0 Sonoma   | Qt 6.10               |
 | `NotepadNext-macOS-arm64-Qt6.11.zip` | Apple Silicon (arm64)     | macOS 15.0 Sequoia  | Qt 6.11               |
+| `NotepadNext-macOS-arm64-Qt6.12.zip` | Apple Silicon (arm64)     | macOS 15.0 Sequoia  | Qt 6.12               |
 
 Available packages for Intel (`x86_64`):
 
@@ -68,6 +69,7 @@ Available packages for Intel (`x86_64`):
 | `NotepadNext-macOS-x64-Qt6.8.zip`  | Intel (x86_64)            | macOS 12.0 Monterey | Qt 6.8                |
 | `NotepadNext-macOS-x64-Qt6.10.zip` | Intel (x86_64)            | macOS 13.0 Ventura  | Qt 6.10               |
 | `NotepadNext-macOS-x64-Qt6.11.zip` | Intel (x86_64)            | macOS 14.0 Sonoma   | Qt 6.11               |
+| `NotepadNext-macOS-x64-Qt6.12.zip` | Intel (x86_64)            | macOS 15.0 Sequoia  | Qt 6.12               |
 
 To resolve Gatekeeper quarantine warnings on macOS:
 
@@ -92,7 +94,7 @@ brew install --no-quarantine notepadnext
 >
 > - **Operating System**: macOS 11.0 (Big Sur) or higher.
 > - **Architectures**: Apple Silicon (`arm64`) and Intel (`x86_64`).
-> - **Framework**: Qt 6.5, 6.8, 6.10, or 6.11 with `Qt6Core5Compat`.
+> - **Framework**: Qt 6.5, 6.8, 6.10, 6.11, or 6.12 with `Qt6Core5Compat`.
 > - **Build Tools**: CMake 3.21+, Ninja, and C++20 compiler (`AppleClang`).
 > - **Automation Helper**: `duti` (optional, for LaunchServices file associations).
 >
@@ -100,7 +102,7 @@ brew install --no-quarantine notepadnext
 >
 > - **Sistem Operasi**: macOS 11.0 (Big Sur) ke atas.
 > - **Arsitektur**: Apple Silicon (`arm64`) dan Intel (`x86_64`).
-> - **Framework**: Qt 6.5, 6.8, 6.10, atau 6.11 dengan `Qt6Core5Compat`.
+> - **Framework**: Qt 6.5, 6.8, 6.10, 6.11, atau 6.12 dengan `Qt6Core5Compat`.
 > - **Build Tools**: CMake 3.21+, Ninja, dan C++20 compiler (`AppleClang`).
 > - **Otomatisasi**: `duti` (opsional, untuk pemetaan asosiasi file LaunchServices).
 

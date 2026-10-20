@@ -10,7 +10,7 @@
 
 ## 1. Executive Summary & Ecosystem Context
 
-**NotepadNext For MacOS** is a native macOS reimplementation of the renowned Windows editor **Notepad++**, engineered using modern C++20 and the **Qt 6 framework** (with support across Qt 6.5 LTS, Qt 6.8 LTS, Qt 6.10, and Qt 6.11).
+**NotepadNext For MacOS** is a native macOS reimplementation of the renowned Windows editor **Notepad++**, engineered using modern C++20 and the **Qt 6 framework** (with full support across Qt 6.5 LTS, Qt 6.8 LTS, Qt 6.10, Qt 6.11, and Qt 6.12).
 
 While alternative text editors each occupy specific architectural niches:
 
@@ -71,7 +71,45 @@ All PNG assets have been losslessly compressed with `oxipng` and verified with `
 
 ---
 
-## 4. Localization Architecture (English & Indonesian)
+## 4. Modernized "About Notepad Next" Dialog
+
+The about dialog (`src/dialogs/MainWindow.cpp`) has been elevated into an elegant, informative, modern, and professional presentation:
+
+- **Visual Brand Integration**: Scaled 80×80 high-resolution application icon (`:/icons/NotepadNext.png`).
+- **Dynamic System Metadata**: Displays runtime Qt version badge (`qVersion()`), macOS OS release, and host CPU architecture (`QSysInfo::prettyProductName()` and `QSysInfo::currentCpuArchitecture()`).
+- **Clear Attribution**: Dual copyright credits for original author **Justin Dailey** and macOS maintainer & builder **Harry DS Alsyundawy**.
+- **Architectural Overview**: Highlights core engines (Scintilla buffer, Lexilla lexers, Qt 6 Widgets, QADS advanced docking) and Universal 2 binary support.
+- **Interactive Links**: Clickable hyperlinks for macOS edition repository, upstream repository, and GNU GPL v3 license terms.
+
+---
+
+## 5. CI/CD Pipeline & Qt 6.12 for macOS 15+ (Sequoia)
+
+### GitHub Actions Matrix Expansion
+
+In `.github/workflows/build.yml` and `.github/workflows/release.yml`, dedicated matrix runners were added for **Qt 6.12** specifically targeting macOS 15+:
+
+| Architecture      | Runner Name      | Deployment Target | Qt Version | Host Arch |
+| :---------------- | :--------------- | :---------------- | :--------- | :-------- |
+| **Apple Silicon** | `macos-15`       | `15.0` (Sequoia)  | `6.12`     | `arm64`   |
+| **Intel x86_64**  | `macos-15-intel` | `15.0` (Sequoia)  | `6.12`     | `x86_64`  |
+
+Both jobs compile natively, link against `Qt6Core5Compat`, package standalone `.dmg` distributions with `PackagingMac.cmake`, and upload verified release assets.
+
+---
+
+## 6. Tailored MegaLinter Configuration (`.mega-linter.yml`)
+
+A custom `.mega-linter.yml` configuration has been established at repository root to align with the repository stack:
+
+- **Enabled Linters**: `ACTION_ACTIONLINT`, `BASH_SHELLCHECK`, `BASH_SHFMT`, `CMAKE_LINT`, `CPP_CPPCHECK`, `GIT_GIT_DIFF`, `JSON_JSONLINT`, `JSON_PRETTIER`, `MARKDOWN_MARKDOWNLINT`, `YAML_YAMLLINT`, `YAML_PRETTIER`, `XML_XMLLINT`.
+- **Disabled Irrelevant Descriptors**: 30+ descriptors disabled (PHP, Ruby, C#, Java, Dart, Terraform, Ansible, Kubernetes, Helm, Dockerfile, etc.).
+- **Suppressed False Positives**: Disabled `COPYPASTE` and `SPELL` checkers which generated false alarms on Scintilla/Lexilla vendored lexers and Indonesian localization strings.
+- **Path Exclusions**: Filter regex ignores `thirdparty/`, `.deps/`, `build/`, `scratch/`, `.trunk/`, and `i18n/`.
+
+---
+
+## 7. Localization Architecture (English & Indonesian)
 
 In accordance with user requirements, the application's translation system has been streamlined exclusively to:
 
@@ -82,10 +120,10 @@ All other language `.ts` files have been removed from `i18n/`, reducing reposito
 
 ---
 
-## 5. Verification & Quality Gates
+## 8. Verification & Quality Gates
 
 ### Linters Executed
 
 - **Trunk**: `actionlint`, `bandit`, `black`, `checkov`, `isort`, `markdownlint`, `oxipng`, `prettier`, `ruff`, `shellcheck`, `shfmt`, `svgo`, `taplo`, `yamllint`.
-- **Static Analyzers**: `cppcheck`, `flawfinder`.
+- **Static Analyzers**: `cppcheck`, `flawfinder`, `actionlint`.
 - **Status**: 100% clean passing state across all modified and generated files.

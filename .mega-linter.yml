@@ -1,0 +1,79 @@
+---
+# MegaLinter Configuration for NotepadNext-MacOS
+# Tailored specifically for C++/Qt6, CMake, macOS packaging, Shell, and GitHub Workflows
+# Documentation: https://megalinter.io/latest/configuration/
+
+# ─── Descriptor & Linter Selection ──────────────────────────────────────────
+# Explicitly enable only linters relevant to this repository's tech stack
+ENABLE_LINTERS:
+  - ACTION_ACTIONLINT
+  - BASH_SHELLCHECK
+  - BASH_SHFMT
+  - CMAKE_LINT
+  - CPP_CPPCHECK
+  - GIT_GIT_DIFF
+  - JSON_JSONLINT
+  - JSON_PRETTIER
+  - MARKDOWN_MARKDOWNLINT
+  - YAML_YAMLLINT
+  - YAML_PRETTIER
+  - XML_XMLLINT
+
+# Explicitly disable irrelevant descriptors and noisy checkers
+DISABLE_DESCRIPTORS:
+  - ANSIBLE
+  - CLOJURE
+  - CSHARP
+  - DART
+  - DOCKERFILE
+  - ELIXIR
+  - ENV
+  - GO
+  - GRAPHQL
+  - GROOVY
+  - HELM
+  - JAVA
+  - JUPYTER
+  - KOTLIN
+  - KUBERNETES
+  - LUA
+  - OPENAPI
+  - PERL
+  - PHP
+  - POWERSHELL
+  - PROTOBUF
+  - PYTHON
+  - R
+  - RUBY
+  - RUST
+  - SCALA
+  - SOLIDITY
+  - SQL
+  - SWIFT
+  - TERRAFORM
+  - TYPESCRIPT
+
+# Disable noisy cross-cutting linters
+DISABLE:
+  - COPYPASTE
+  - SPELL
+  - REPOSITORY_DEVSKIM
+  - REPOSITORY_DUSTILOCK
+  - REPOSITORY_KICS
+  - REPOSITORY_SECRETLINT
+  - REPOSITORY_TRIVY
+
+# ─── File Filtering & Exclusions ─────────────────────────────────────────────
+# Ignore vendored third-party code, submodules, build directories, and localization
+FILTER_REGEX_EXCLUDE: "(thirdparty/|\\.deps/|build/|scratch/|\\.cache/|\\.trunk/|i18n/|deploy/windows/|cmake-build-.*|\\.git/)"
+
+# ─── General Configuration ──────────────────────────────────────────────────
+PRINT_ALPACA: false
+SHOW_ELAPSED_TIME: true
+FILE_IO_LIMIT: 200
+
+# ─── Linter Arguments & Configs ─────────────────────────────────────────────
+BASH_SHELLCHECK_ARGUMENTS: "--shell=bash --severity=warning"
+CPP_CPPCHECK_ARGUMENTS: "--enable=warning,performance,portability --inline-suppr --suppress=missingIncludeSystem -I src"
+YAML_YAMLLINT_ARGUMENTS: "-d '{extends: default, rules: {line-length: disable, document-start: disable}}'"
+MARKDOWN_MARKDOWNLINT_ARGUMENTS: "--config .markdownlint.json"

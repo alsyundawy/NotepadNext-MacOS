@@ -455,7 +455,7 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="516"/>
       <source>Wra&amp;p Around</source>
-      <translation>Pencarian ber&amp;putar</translation>
+      <translation>Cari Ber&amp;keliling (Wrap Around)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="64"/>
@@ -1161,7 +1161,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="782"/>
       <source>Reset Zoom</source>
-      <translation>Atur Ulang Pembesaran</translation>
+      <translation>Atur Ulang Zoom</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="790"/>
@@ -1176,7 +1176,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="813"/>
       <source>Show Whitespace</source>
-      <translation>Tampilkan Spasi Putih</translation>
+      <translation>Tampilkan Karakter Spasi</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="821"/>
@@ -1196,12 +1196,12 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="855"/>
       <source>Show Wrap Symbol</source>
-      <translation>Tampilkan Simbol Pelipatan</translation>
+      <translation>Tampilkan Simbol Lipat Baris</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="868"/>
       <source>Word Wrap</source>
-      <translation>Pelipatan Teks</translation>
+      <translation>Bungkus Baris (Word Wrap)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="873"/>

@@ -36,12 +36,21 @@ Format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) a
 - 🇬🇧 **Code Hygiene & Shadow Variable Removal**: Fixed constructor overloading ambiguity and missing `explicit` in `TabsQuickActionsBar.h`, and eliminated variable shadowing in `SessionManager::loadUnsavedFileDetails()` and `SearchResultsDock::newSearch()`.
 - 🇮🇩 **Pembersihan Kode & Penyamaran Variabel**: Memperbaiki ambiguitas konstruktor pada `TabsQuickActionsBar.h` serta menghilangkan penyamaran variabel (variable shadowing) pada `SessionManager` dan `SearchResultsDock`.
 
-### ⚡ Build, Linters & Release Metadata / Pembuatan, Linter & Metadata Rilis
+### 💎 Modernized "About NotepadNext" Dialog / Dialog "Tentang NotepadNext" Modern
 
+- 🇬🇧 **Elegant Rich-Text Design**: Completely overhauled the About dialog into a modern, beautifully styled presentation featuring the 512x512 app logo icon, real-time Qt version badge, macOS CPU architecture (`QSysInfo`), dual author attribution (Justin Dailey & Harry DS Alsyundawy), core component breakdown (Scintilla, Lexilla, Qt, QADS), and clickable project links.
+- 🇮🇩 **Desain Dialog Elegan & Modern**: Memperbarui antarmuka dialog "Tentang Notepad Next" dengan tampilan modern berformat rich-text elegan, menampilkan ikon aplikasi beresolusi tinggi, lencana versi Qt dinamis, arsitektur CPU macOS (`QSysInfo`), atribusi pembuat & builder, rincian komponen utama, serta tautan resmi proyek.
+
+### ⚡ Build, CI/CD Runners & MegaLinter / Otomasi Build, Runner CI & MegaLinter
+
+- 🇬🇧 **Qt 6.12 Runner Matrix for macOS 15+**: Added dedicated GitHub Actions matrix runners for building and releasing with Qt 6.12 specifically targeting macOS 15+ (Sequoia) across both Apple Silicon (`arm64`) and Intel (`x64`) architectures in `build.yml` and `release.yml`.
+- 🇮🇩 **Matrix Runner Qt 6.12 untuk macOS 15+**: Menambahkan runner GitHub Actions untuk kompilasi dan rilis menggunakan Qt 6.12 yang secara spesifik menargetkan macOS 15+ (Sequoia) pada arsitektur Apple Silicon (`arm64`) maupun Intel (`x64`).
+- 🇬🇧 **Tailored MegaLinter Configuration (`.mega-linter.yml`)**: Designed a lean, repository-aligned MegaLinter configuration enabling only relevant descriptors (C++, CMake, Shell, Actions, YAML, JSON, Markdown, XML) while explicitly disabling 30+ irrelevant language linters (PHP, Ruby, C#, Java, Dart, Terraform, etc.) and suppressing false-positive spell/copypaste checks on vendored code.
+- 🇮🇩 **Konfigurasi MegaLinter Ringkas (`.mega-linter.yml`)**: Membuat konfigurasi MegaLinter yang disesuaikan khusus untuk basis kode C++/Qt/CMake, menonaktifkan 30+ linter bahasa yang tidak relevan, serta mengecualikan berkas thirdparty dan translasi dari pemeriksaan yang tidak perlu.
 - 🇬🇧 **Linter Cleanliness**: 100% compliant with `trunk check`, `actionlint`, `yamllint`, `markdownlint`, `prettier`, and `oxipng` image optimization.
 - 🇮🇩 **Kepatuhan Linter**: Memenuhi 100% standar pengujian `trunk check`, `actionlint`, `yamllint`, `markdownlint`, `prettier`, dan optimasi gambar `oxipng`.
-- 🇬🇧 **Metadata Synchronization**: Bumped version string to `0.15-04` across `CMakeLists.txt`, `updates.json`, and Linux AppStream metadata `com.github.dail8859.NotepadNext.metainfo.xml`.
-- 🇮🇩 **Sinkronisasi Metadata**: Menaikkan nomor versi ke `0.15-04` di `CMakeLists.txt`, `updates.json`, dan metadata AppStream Linux.
+- 🇬🇧 **Metadata Synchronization**: Maintained version string `0.15-04` across `CMakeLists.txt`, `updates.json`, and Linux AppStream metadata `com.github.dail8859.NotepadNext.metainfo.xml`.
+- 🇮🇩 **Sinkronisasi Metadata**: Mempertahankan nomor versi `0.15-04` di `CMakeLists.txt`, `updates.json`, dan metadata AppStream Linux.
 
 ---
 
