@@ -56,8 +56,8 @@ Format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) a
 - 🇮🇩 **Menu Konteks Editor Default**: Mengonfigurasi `EditorContextMenu` default pada pengaturan GUI sesuai urutan standar lengkap dengan pembersihan spasi token otomatis untuk keandalan parsing INI.
 - 🇬🇧 **Linter Cleanliness**: 100% compliant with `trunk check`, `actionlint`, `yamllint`, `markdownlint`, `prettier`, and `oxipng` image optimization.
 - 🇮🇩 **Kepatuhan Linter**: Memenuhi 100% standar pengujian `trunk check`, `actionlint`, `yamllint`, `markdownlint`, `prettier`, dan optimasi gambar `oxipng`.
-- 🇬🇧 **Metadata Synchronization**: Maintained version string `0.15-04` across `CMakeLists.txt`, `updates.json`, and Linux AppStream metadata `com.github.dail8859.NotepadNext.metainfo.xml`.
-- 🇮🇩 **Sinkronisasi Metadata**: Mempertahankan nomor versi `0.15-04` di `CMakeLists.txt`, `updates.json`, dan metadata AppStream Linux.
+- 🇬🇧 **Metadata Synchronization**: Maintained version string `0.15-04` across `CMakeLists.txt`, `updates.json`, and Linux AppStream metadata `com.github.alsyundawy.NotepadNext.metainfo.xml`.
+- 🇮🇩 **Sinkronisasi Metadata**: Mempertahankan nomor versi `0.15-04` di `CMakeLists.txt`, `updates.json`, dan metadata AppStream Linux `com.github.alsyundawy.NotepadNext.metainfo.xml`.
 
 ---
 

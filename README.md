@@ -1,8 +1,14 @@
+<p align="center">
+  <img src="icon/icon_256x256.png" width="128" height="128" alt="NotepadNext Logo">
+</p>
+
 # 🍎 NotepadNext For MacOS — Notepad++ Like
 
 > 🇬🇧 A cross-platform reimplementation of Notepad++ — built natively for macOS.
 >
 > 🇮🇩 Implementasi ulang Notepad++ lintas platform — dibangun secara native untuk macOS.
+
+[![Release Notes v0.15-04](https://img.shields.io/badge/Release%20Notes-v0.15--04%20vs%20v0.15%20Official-success.svg)](doc/RELEASE_NOTES_0.15-04.md)
 
 ![Build Notepad Next](https://github.com/alsyundawy/NotepadNext-MacOS/workflows/Build%20Notepad%20Next/badge.svg)
 [![Latest Version](https://img.shields.io/github/v/release/alsyundawy/NotepadNext-MacOS)](https://github.com/alsyundawy/NotepadNext-MacOS/releases)

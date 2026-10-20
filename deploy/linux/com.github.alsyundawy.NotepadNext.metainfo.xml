@@ -2,8 +2,8 @@
 <!-- Copyright 2022 dail8859 -->
 <!-- https://www.freedesktop.org/software/appstream/docs/chap-Metadata.html -->
 <component type="desktop-application">
-    <id>com.github.dail8859.NotepadNext</id>
-    <developer_name>Justin Dailey</developer_name>
+    <id>com.github.alsyundawy.NotepadNext</id>
+    <developer_name>Harry DS Alsyundawy (MacOS-Builder) / Justin Dailey</developer_name>
     <metadata_license>CC0-1.0</metadata_license>
     <project_license>GPL-3.0</project_license>
     <content_rating type="oars-1.1" />
@@ -15,16 +15,16 @@
         <p>Notepad Next is yet another text and source code editor.</p>
     </description>
 
-    <url type="homepage">https://github.com/dail8859/NotepadNext</url>
-    <url type="bugtracker">https://github.com/dail8859/NotepadNext/issues</url>
+    <url type="homepage">https://github.com/alsyundawy/NotepadNext-MacOS</url>
+    <url type="bugtracker">https://github.com/alsyundawy/NotepadNext-MacOS/issues</url>
     
     <screenshots>
         <screenshot type="default">
-            <image type="source">https://raw.githubusercontent.com/dail8859/NotepadNext/master/doc/screenshot_linux.png</image>
+            <image type="source">https://raw.githubusercontent.com/alsyundawy/NotepadNext-MacOS/master/doc/screenshot_linux.png</image>
         </screenshot>
     </screenshots>
 
-    <launchable type="desktop-id">com.github.dail8859.NotepadNext.desktop</launchable>
+    <launchable type="desktop-id">com.github.alsyundawy.NotepadNext.desktop</launchable>
     <releases>
         <release version="v0.15-04" date="2026-10-21" />
         <release version="v0.15" date="2026-09-21" />
