@@ -1,7 +1,7 @@
 translation:
-- changed-files:
-  - any-glob-to-any-file: i18n/**
+  - changed-files:
+      - any-glob-to-any-file: i18n/**
 
 installer:
-- changed-files:
-  - any-glob-to-any-file: installer/**
+  - changed-files:
+      - any-glob-to-any-file: installer/**

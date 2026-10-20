@@ -24,6 +24,11 @@ lint:
         - scratch/**
         - thirdparty/**
         - deploy/windows/**
+    - linters: [oxipng, svgo]
+      paths:
+        - src/icons/**
+        - icon/**
+        - doc/**
     - linters: [checkov]
       paths:
         - .github/workflows/create_release.yml

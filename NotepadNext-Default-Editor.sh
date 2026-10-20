@@ -18,7 +18,7 @@
 # By default, Apple sets TextEdit as the fallback for plain text, developer
 # source code, and unknown/extensionless files (public.data).
 # This script executes a complete, deterministic takeover for NotepadNext
-# (io.github.dail8859.NotepadNext), applying batch LaunchServices registrations,
+# (com.github.alsyundawy.NotepadNext), applying batch LaunchServices registrations,
 # unblocking Gatekeeper quarantine flags, verifying Full Disk Access (FDA),
 # rebuilding system caches, and refreshing Finder and Dock for instant effect.
 #
@@ -162,7 +162,8 @@ export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:${PA
 
 # ====================== CONFIGURATION ======================
 readonly SCRIPT_VERSION="1.6.0"
-readonly BUNDLE_ID="io.github.dail8859.NotepadNext"
+readonly BUNDLE_ID="com.github.alsyundawy.NotepadNext"
+readonly LEGACY_BUNDLE_ID="io.github.dail8859.NotepadNext"
 readonly APP_NAME="NotepadNext.app"
 readonly SYSTEM_APP_PATH="/Applications/${APP_NAME}"
 readonly USER_APP_PATH="${HOME}/Applications/${APP_NAME}"
@@ -431,6 +432,9 @@ resolve_app() {
 	else
 		local mdfind_result
 		mdfind_result=$(mdfind "kMDItemCFBundleIdentifier == '${BUNDLE_ID}'" 2>/dev/null | head -n 1 || true)
+		if [[ -z ${mdfind_result} ]]; then
+			mdfind_result=$(mdfind "kMDItemCFBundleIdentifier == '${LEGACY_BUNDLE_ID}'" 2>/dev/null | head -n 1 || true)
+		fi
 		if [[ -n ${mdfind_result} && -d ${mdfind_result} ]]; then
 			resolved_path="${mdfind_result}"
 		fi

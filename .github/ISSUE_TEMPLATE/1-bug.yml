@@ -25,18 +25,17 @@ body:
       label: Steps to Reproduce
       description: Exact steps to reproduce the problem
       value: |-
-        1. 
-        2. 
-        3. 
+        1.
+        2.
+        3.
     validations:
       required: true
   - type: textarea
     attributes:
       label: Debug Information
-      description: 'Menu: Help > Debug Info...'
+      description: "Menu: Help > Debug Info..."
   - type: textarea
     attributes:
       label: Additional Details
       description: Anything else that may be relavent
       value: e.g. screenshots, logs, etc
-

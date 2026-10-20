@@ -56,8 +56,12 @@ Format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) a
 - 🇮🇩 **Menu Konteks Editor Default**: Mengonfigurasi `EditorContextMenu` default pada pengaturan GUI sesuai urutan standar lengkap dengan pembersihan spasi token otomatis untuk keandalan parsing INI.
 - 🇬🇧 **Linter Cleanliness**: 100% compliant with `trunk check`, `actionlint`, `yamllint`, `markdownlint`, `prettier`, and `oxipng` image optimization.
 - 🇮🇩 **Kepatuhan Linter**: Memenuhi 100% standar pengujian `trunk check`, `actionlint`, `yamllint`, `markdownlint`, `prettier`, dan optimasi gambar `oxipng`.
-- 🇬🇧 **Metadata Synchronization**: Maintained version string `0.15-04` across `CMakeLists.txt`, `updates.json`, and Linux AppStream metadata `com.github.alsyundawy.NotepadNext.metainfo.xml`.
-- 🇮🇩 **Sinkronisasi Metadata**: Mempertahankan nomor versi `0.15-04` di `CMakeLists.txt`, `updates.json`, dan metadata AppStream Linux `com.github.alsyundawy.NotepadNext.metainfo.xml`.
+- 🇬🇧 **Metadata & Bundle Identifier Alignment**: Standardized application bundle and AppStream identifier to `com.github.alsyundawy.NotepadNext` across macOS `deploy/macos/info.plist`, Linux metadata `deploy/linux/com.github.alsyundawy.NotepadNext.metainfo.xml`, and system scripts `NotepadNext-Default-Editor.sh` (with legacy fallback).
+- 🇮🇩 **Penyelarasan Pengenal Bundle & Metadata**: Menstandarkan identifier bundle aplikasi dan AppStream menjadi `com.github.alsyundawy.NotepadNext` di seluruh `deploy/macos/info.plist`, metadata Linux `com.github.alsyundawy.NotepadNext.metainfo.xml`, dan skrip integrasi `NotepadNext-Default-Editor.sh` (dengan fallback kompatibilitas).
+- 🇬🇧 **Comparative Release Documentation**: Authored `doc/RELEASE_NOTES_0.15-04.md` providing a comprehensive architectural comparison against official upstream v0.15 and modern desktop text editors (Notepad2, Notepad3, Notepad4, Notepad++, Sublime Text, BBEdit, CotEditor, VS Code).
+- 🇮🇩 **Dokumentasi Catatan Rilis Komparatif**: Menyusun `doc/RELEASE_NOTES_0.15-04.md` yang memuat perbandingan arsitektural komprehensif terhadap versi resmi hulu v0.15 dan ekosistem text editor modern (Notepad2, Notepad3, Notepad4, Notepad++, Sublime Text, BBEdit, CotEditor, VS Code).
+- 🇬🇧 **README Logo Icon Header**: Elevated project presentation in `README.md` with centered high-craft macOS squircle app icon, release notes badge, and dual-language descriptions.
+- 🇮🇩 **Header Logo Ikon README**: Mempercantik tampilan proyek pada `README.md` dengan ikon squircle native macOS terpusat beresolusi tinggi, lencana catatan rilis, dan deskripsi bilingual.
 
 ---
 

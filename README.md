@@ -1,8 +1,9 @@
-<p align="center">
-  <img src="icon/icon_256x256.png" width="128" height="128" alt="NotepadNext Logo">
-</p>
-
-# 🍎 NotepadNext For MacOS — Notepad++ Like
+<div align="center">
+  <a href="https://github.com/alsyundawy/NotepadNext-MacOS">
+    <img src="icon/icon_256x256.png" width="128" height="128" alt="NotepadNext App Icon" />
+  </a>
+  <h1>🍎 NotepadNext For MacOS — Notepad++ Like</h1>
+</div>
 
 > 🇬🇧 A cross-platform reimplementation of Notepad++ — built natively for macOS.
 >
