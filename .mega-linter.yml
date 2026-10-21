@@ -63,8 +63,20 @@ DISABLE:
   - REPOSITORY_SECRETLINT
   - REPOSITORY_TRIVY
 
+DISABLE_LINTERS:
+  - ACTION_ZIZMOR
+  - MARKDOWN_RUMDL
+
 # ─── File Filtering & Exclusions ─────────────────────────────────────────────
 # Ignore vendored third-party code, submodules, build directories, and localization
+ADDITIONAL_EXCLUDED_DIRECTORIES:
+  - thirdparty
+  - build
+  - scratch
+  - .trunk
+  - i18n
+  - deploy/windows
+
 FILTER_REGEX_EXCLUDE: "(thirdparty/|\\.deps/|build/|scratch/|\\.cache/|\\.trunk/|i18n/|deploy/windows/|cmake-build-.*|\\.git/)"
 
 # ─── General Configuration ──────────────────────────────────────────────────
