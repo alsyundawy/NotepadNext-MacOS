@@ -57,7 +57,9 @@ void parseCommandLine(QCommandLineParser &parser, const QStringList &args)
         {"translation", "Overrides the system default translation.", "translation"},
         {"reset-settings", "Resets all application settings."},
         {"n", "Places the cursor on the line number for the first file specified", "line number"},
-        {"workspace", "Opens the specified folder as a workspace", "workspace path"}
+        {"workspace", "Opens the specified folder as a workspace", "workspace path"},
+        {"multi-instance", "Launches a new application instance."},
+        {"new-window", "Opens in a new window/instance."}
     });
 
     parser.process(args);

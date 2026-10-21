@@ -36,7 +36,7 @@ ApplicationSetting<type> name{#group "/" #name, default};\
 
 
 ApplicationSettings::ApplicationSettings(QObject *parent)
-    : QSettings{parent}
+    : QSettings{QSettings::IniFormat, QSettings::UserScope, QStringLiteral("NotepadNext"), QStringLiteral("NotepadNext"), parent}
 {
 }
 

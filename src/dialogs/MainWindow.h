@@ -64,6 +64,7 @@ public:
 
 public slots:
     void newFile();
+    void newWindow();
 
     void openFileDialog();
     void openFile(const QString &filePath);

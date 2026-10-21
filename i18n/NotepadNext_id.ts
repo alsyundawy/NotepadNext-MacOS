@@ -948,6 +948,14 @@
       <translation>Buat berkas baru</translation>
     </message>
     <message>
+      <source>New &amp;Window</source>
+      <translation>&amp;Jendela Baru</translation>
+    </message>
+    <message>
+      <source>Open a new Notepad Next window</source>
+      <translation>Buka jendela Notepad Next baru</translation>
+    </message>
+    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="446"/>
       <source>&amp;Open...</source>
       <translation>&amp;Buka...</translation>

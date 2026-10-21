@@ -297,7 +297,7 @@ void AboutDialog::updateThemeColors() {
                "<li><b>uchardet:</b> Maintained by Freedesktop. Enables fast and robust universal character encoding detection.</li>"
                "<li><b>Qt Project:</b> Developed by The Qt Company and the Qt Open Source Community. (<a style='color: %2;' href='https://www.qt.io'>qt.io</a>)</li>"
                "<li><b>Qt Advanced Docking System (QADS):</b> Advanced dock widget management for Qt.</li>"
-               "<li><b>SparkNotePad / NoteSciPad:</b> Contributed encoding detection and conversion logic, and modernized UI design patterns.</li>"
+               "<li><b>NoteSciPad:</b> Contributed modern Scintilla 5.6.7 / Lexilla 5.5.4 integration and multi-instance UI patterns.</li>"
                "</ul>"
                "</div>")
                 .arg(txtPri, accentCol));
@@ -309,6 +309,7 @@ void AboutDialog::updateThemeColors() {
                "<h3 style='color: %1; margin-top: 0;'>Key Productivity Shortcuts</h3>"
                "<table border='0' cellspacing='6' cellpadding='4' width='100%' style='color: %1;'>"
                "<tr><td style='color: %2; font-weight: bold;'>Ctrl / Cmd + N</td><td>Create New File</td></tr>"
+               "<tr><td style='color: %2; font-weight: bold;'>Ctrl / Cmd + Shift + N</td><td>Open New Window</td></tr>"
                "<tr><td style='color: %2; font-weight: bold;'>Ctrl / Cmd + O</td><td>Open File</td></tr>"
                "<tr><td style='color: %2; font-weight: bold;'>Ctrl / Cmd + S</td><td>Save File</td></tr>"
                "<tr><td style='color: %2; font-weight: bold;'>Ctrl / Cmd + Shift + S</td><td>Save As...</td></tr>"

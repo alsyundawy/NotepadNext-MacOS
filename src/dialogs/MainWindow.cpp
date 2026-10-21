@@ -41,6 +41,7 @@
 #include <QInputDialog>
 #include <QPrintPreviewDialog>
 #include <QPrinter>
+#include <QDir>
 #include <QDirIterator>
 #include <QProcess>
 #include <QScreen>
@@ -128,6 +129,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 
     // Set up the menus
     connect(ui->actionNew, &QAction::triggered, this, &MainWindow::newFile);
+    connect(ui->actionNewWindow, &QAction::triggered, this, &MainWindow::newWindow);
     connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::openFileDialog);
     connect(ui->actionReload, &QAction::triggered, this, &MainWindow::reloadFile);
     connect(ui->actionClose, &QAction::triggered, this, &MainWindow::closeCurrentFile);
@@ -1236,6 +1238,25 @@ void MainWindow::newFile()
 
         count++;
     }
+}
+
+void MainWindow::newWindow()
+{
+#if defined(Q_OS_MACOS)
+    QString appPath = QCoreApplication::applicationFilePath();
+    QDir dir(appPath);
+    if (dir.cdUp() && dir.cdUp() && dir.cdUp()) {
+        QString bundlePath = dir.absolutePath();
+        if (bundlePath.endsWith(QStringLiteral(".app"), Qt::CaseInsensitive)) {
+            QProcess::startDetached(QStringLiteral("/usr/bin/open"),
+                                    QStringList() << QStringLiteral("-n") << bundlePath << QStringLiteral("--args")
+                                                  << QStringLiteral("--multi-instance"));
+            return;
+        }
+    }
+#endif
+    QProcess::startDetached(QCoreApplication::applicationFilePath(), QStringList()
+                                                                         << QStringLiteral("--multi-instance"));
 }
 
 // One unedited, new blank document
