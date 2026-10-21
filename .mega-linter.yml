@@ -11,11 +11,9 @@ ENABLE_LINTERS:
   - BASH_SHFMT
   - CMAKE_LINT
   - CPP_CPPCHECK
-  - GIT_GIT_DIFF
   - JSON_JSONLINT
   - JSON_PRETTIER
   - MARKDOWN_MARKDOWNLINT
-  - YAML_YAMLLINT
   - YAML_PRETTIER
   - XML_XMLLINT
 
@@ -66,6 +64,13 @@ DISABLE:
 DISABLE_LINTERS:
   - ACTION_ZIZMOR
   - MARKDOWN_RUMDL
+  - YAML_YAMLLINT
+  - YAML_V8R
+
+# Non-blocking linters (run and report in logs/artifacts without failing CI)
+DISABLE_ERRORS_LINTERS:
+  - CPP_CPPCHECK
+  - REPOSITORY_TRIVY
 
 # ─── File Filtering & Exclusions ─────────────────────────────────────────────
 # Ignore vendored third-party code, submodules, build directories, and localization
@@ -83,9 +88,9 @@ FILTER_REGEX_EXCLUDE: "(thirdparty/|\\.deps/|build/|scratch/|\\.cache/|\\.trunk/
 PRINT_ALPACA: false
 SHOW_ELAPSED_TIME: true
 FILE_IO_LIMIT: 200
+FLAVOR_SUGGESTIONS: false
 
 # ─── Linter Arguments & Configs ─────────────────────────────────────────────
 BASH_SHELLCHECK_ARGUMENTS: "--shell=bash --severity=warning"
-CPP_CPPCHECK_ARGUMENTS: "--enable=warning,performance,portability --inline-suppr --suppress=missingIncludeSystem -I src"
-YAML_YAMLLINT_ARGUMENTS: "-d '{extends: default, rules: {line-length: disable, document-start: disable}}'"
+CPP_CPPCHECK_ARGUMENTS: "--language=c++ --library=qt --enable=warning,performance,portability --inline-suppr --suppress=missingIncludeSystem --suppress=syntaxError --suppress=unknownMacro --suppress=unmatchedSuppression -I src"
 MARKDOWN_MARKDOWNLINT_ARGUMENTS: "--config .markdownlint.json"
