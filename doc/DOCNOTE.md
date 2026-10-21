@@ -71,19 +71,46 @@ All PNG assets have been losslessly compressed with `oxipng` and verified with `
 
 ---
 
-## 4. Modernized "About Notepad Next" Dialog
+## 4. Modernized Adaptive "About Notepad Next" Dialog (`AboutDialog`)
 
-The about dialog (`src/dialogs/MainWindow.cpp`) has been elevated into an elegant, informative, modern, and professional presentation:
+The previous basic `QMessageBox` popup has been replaced by a dedicated, multi-tab `AboutDialog` (`src/dialogs/AboutDialog.h` & `src/dialogs/AboutDialog.cpp`):
 
-- **Visual Brand Integration**: Scaled 80×80 high-resolution application icon (`:/icons/NotepadNext.png`).
-- **Dynamic System Metadata**: Displays runtime Qt version badge (`qVersion()`), macOS OS release, and host CPU architecture (`QSysInfo::prettyProductName()` and `QSysInfo::currentCpuArchitecture()`).
-- **Clear Attribution**: Dual copyright credits for original author **Justin Dailey** and macOS maintainer & builder **Harry DS Alsyundawy**.
-- **Architectural Overview**: Highlights core engines (Scintilla buffer, Lexilla lexers, Qt 6 Widgets, QADS advanced docking) and Universal 2 binary support.
-- **Interactive Links**: Clickable hyperlinks for macOS edition repository, upstream repository, and GNU GPL v3 license terms.
+- **Dynamic System Palette Adaptation**: Adheres strictly to the invariant that **NotepadNext has no in-app dark mode toggle**. Instead of hardcoding colors, the dialog dynamically extracts its palette from `this->palette()` (`QPalette::Window`, `QPalette::WindowText`, `QPalette::Highlight`, `QPalette::Base`, `QPalette::Mid`). It automatically recalculates contrasting foregrounds and background cards on `QEvent::PaletteChange` and `QEvent::ApplicationPaletteChange`, ensuring crystal-clear readability and zero color clashing under both macOS Light and Dark system appearances.
+- **Six Specialized Information Tabs**:
+  1. **About**: 80×80 application icon (`:/icons/NotepadNext.png`), version & stable badges, official attribution, legal disclaimer, and metadata specifications table.
+  2. **Maintainer**: Detailed profile of macOS Maintainer Harry Dertin Sutisna Alsyundawy (`@alsyundawy`), ALSYUNDAWY IT SOLUTION, contact channels, and donation links (PayPal & Indonesian QRIS barcode).
+  3. **Credits & Attribution**: Comprehensive attribution for Justin Dailey (`@dail8859`), Neil Hodgson (Scintilla & Lexilla), The Qt Company, uchardet, and SparkNotePad / NoteSciPad.
+  4. **Diagnostics**: Real-time system diagnostics including OS version, Darwin kernel, host & build CPU architecture, Qt runtime version, and Retina high-DPI scaling ratio, with an instant "Copy Diagnostics to Clipboard" action.
+  5. **Shortcuts**: Structured table of essential productivity keyboard shortcuts.
+  6. **License**: Complete GNU General Public License v3.0 statement with official URL.
 
 ---
 
-## 5. CI/CD Pipeline & Qt 6.12 for macOS 15+ (Sequoia)
+## 5. Comprehensive File Encoding & uchardet Architecture
+
+Adapted from SparkNotePad and hardened for NotepadNext-MacOS:
+
+- **Multi-Stage Detection Pipeline (`EncodingDetector`)**:
+  1. _Stage 1_: Byte Order Mark (BOM) recognition for UTF-8, UTF-16LE, and UTF-16BE.
+  2. _Stage 2_: Interleaved NUL byte analysis for UTF-16 without BOM.
+  3. _Stage 3_: Document header parsing for XML declaration (`encoding="..."`), HTML `<meta charset="...">`, Python/Ruby coding cookies (`# -*- coding: ... -*-`), and CSS `@charset`.
+  4. _Stage 4_: Strict UTF-8 multi-byte validator.
+  5. _Stage 5_: Mozilla Universal Charset Detector (`uchardet`) fallback.
+  6. _Stage 6_: Locale ANSI fallback (Windows-1252 / ISO-8859-1).
+- **Interactive Encoding Dialog (`EncodingSelectionDialog`)**:
+  - Live search filter across Unicode, Western European, East Asian, Cyrillic, Central European, and Legacy DOS codepages.
+  - Displays detected document encoding, BOM status, detection technique, and confidence percentage.
+  - Dual operational pathways: convert current text in buffer or reload file from disk.
+- **Top-Level `Encoding` Menu**:
+  - Direct conversion to UTF-8 (`Ctrl+Alt+U`), UTF-8 BOM, ANSI (`Ctrl+Alt+A`), UTF-16 LE, and UTF-16 BE.
+  - `Reopen with Encoding` submenu with major international encodings.
+- **Status Bar Integration**:
+  - `unicodeType` StatusLabel displays formatted active encoding and BOM string.
+  - Tooltip: `Encoding / BOM (Click to view or convert)`. Clicking triggers `actionShowEncodingInfo` directly.
+
+---
+
+## 6. CI/CD Pipeline & Qt 6.12 for macOS 15+ (Sequoia)
 
 ### GitHub Actions Matrix Expansion
 
@@ -98,7 +125,7 @@ Both jobs compile natively, link against `Qt6Core5Compat`, package standalone `.
 
 ---
 
-## 6. Tailored MegaLinter Configuration (`.mega-linter.yml`)
+## 7. Tailored MegaLinter Configuration (`.mega-linter.yml`)
 
 A custom `.mega-linter.yml` configuration has been established at repository root to align with the repository stack:
 
@@ -109,7 +136,7 @@ A custom `.mega-linter.yml` configuration has been established at repository roo
 
 ---
 
-## 7. Third-Party Component Stack & Default Context Menu
+## 8. Third-Party Component Stack & Default Context Menu
 
 ### Updated Third-Party Stack (from NoteSciPad Integration)
 
@@ -133,18 +160,18 @@ In `src/dialogs/MainWindow.cpp`, this sequence serves as the native fallback and
 
 ---
 
-## 8. Release Evolution: v0.15-01 through v0.15-04
+## 9. Release Evolution: v0.15-01 through v0.15-04
 
-| Version     | Release Date | Key Milestones & Architectural Advancements                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| :---------- | :----------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **0.15-01** | 2026-09-10   | Full core rebase onto upstream NotepadNext `v0.15`; expanded default editor script (`NotepadNext-Default-Editor.sh` v1.6.0) to 470+ file extensions across 15 categories; resolved modern macOS Settings pane registration; extensive Indonesian translation foundation.                                                                                                                                                                                                               |
-| **0.15-02** | 2026-09-25   | Upgraded embedded Lua runtime to 5.4.9; defined `LUA_QL`/`LUA_QS` compatibility macros; added static linkage to scroll wheel event handler; packaged dual-arch release DMGs inside ZIP archives (`arm64` and `x64`).                                                                                                                                                                                                                                                                   |
-| **0.15-03** | 2026-10-19   | Upstream sync with `dail8859/NotepadNext`; refined Indonesian translation across 64 UI elements; synchronized packaging workflow for automated macOS DMG distribution.                                                                                                                                                                                                                                                                                                                 |
-| **0.15-04** | 2026-10-21   | 13-pillar security audit and hardening (CWE-120 fix, SIGSEGV protection, pointer safety); application bundle ID standardization to `com.github.alsyundawy.NotepadNext`; high-resolution macOS squircle branding icons; modernized rich-text About dialog; comparative release notes v0.15-04 vs v0.15 official; Qt 6.12 CI runners for macOS 15+; tailored MegaLinter config; Scintilla 5.6.7 / Lexilla 5.5.4 / Lua 5.5.1 third-party integration; default context menu configuration. |
+| Version     | Release Date | Key Milestones & Architectural Advancements                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| :---------- | :----------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **0.15-01** | 2026-09-10   | Full core rebase onto upstream NotepadNext `v0.15`; expanded default editor script (`NotepadNext-Default-Editor.sh` v1.6.0) to 470+ file extensions across 15 categories; resolved modern macOS Settings pane registration; extensive Indonesian translation foundation.                                                                                                                                                                                                                                                                                                                                                                                          |
+| **0.15-02** | 2026-09-25   | Upgraded embedded Lua runtime to 5.4.9; defined `LUA_QL`/`LUA_QS` compatibility macros; added static linkage to scroll wheel event handler; packaged dual-arch release DMGs inside ZIP archives (`arm64` and `x64`).                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| **0.15-03** | 2026-10-19   | Upstream sync with `dail8859/NotepadNext`; refined Indonesian translation across 64 UI elements; synchronized packaging workflow for automated macOS DMG distribution.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| **0.15-04** | 2026-10-21   | 13-pillar security audit and hardening (CWE-120 fix, SIGSEGV protection, pointer safety); comprehensive File Encoding menu & multi-stage `uchardet` engine; modernized adaptive `AboutDialog` with dynamic system palette integration (light/dark OS appearance aware without in-app dark mode engine); application bundle ID standardization to `com.github.alsyundawy.NotepadNext`; high-resolution macOS squircle branding icons; comparative release notes v0.15-04 vs v0.15 official; Qt 6.12 CI runners for macOS 15+; tailored MegaLinter config; Scintilla 5.6.7 / Lexilla 5.5.4 / Lua 5.5.1 third-party integration; default context menu configuration. |
 
 ---
 
-## 9. Localization Architecture (English & Indonesian)
+## 10. Localization Architecture (English & Indonesian)
 
 In accordance with user requirements, the application's translation system has been streamlined exclusively to:
 
@@ -155,7 +182,7 @@ All other language `.ts` files have been removed from `i18n/`, reducing reposito
 
 ---
 
-## 10. Verification & Quality Gates
+## 11. Verification & Quality Gates
 
 ### Linters Executed
 

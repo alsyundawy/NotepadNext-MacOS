@@ -351,9 +351,37 @@
    </widget>
    <widget class="QMenu" name="menuEncodings">
     <property name="title">
-     <string>Encoding</string>
+     <string>&amp;Encoding</string>
     </property>
-    <addaction name="actionThis_is_not_currently_implemented"/>
+    <widget class="QMenu" name="menuReopenWithEncoding">
+     <property name="title">
+      <string>Reopen with Encoding</string>
+     </property>
+     <addaction name="actionReopenUtf8"/>
+     <addaction name="actionReopenAnsi"/>
+     <addaction name="actionReopenUtf16Le"/>
+     <addaction name="actionReopenUtf16Be"/>
+     <addaction name="separator"/>
+     <addaction name="actionReopenShiftJis"/>
+     <addaction name="actionReopenGbk"/>
+     <addaction name="actionReopenBig5"/>
+     <addaction name="actionReopenEucKr"/>
+     <addaction name="separator"/>
+     <addaction name="actionReopenWin1251"/>
+     <addaction name="actionReopenWin1250"/>
+     <addaction name="actionReopenCp437"/>
+     <addaction name="separator"/>
+     <addaction name="actionReopenMore"/>
+    </widget>
+    <addaction name="actionShowEncodingInfo"/>
+    <addaction name="separator"/>
+    <addaction name="actionConvertToUtf8"/>
+    <addaction name="actionConvertToUtf8Bom"/>
+    <addaction name="actionConvertToAnsi"/>
+    <addaction name="actionConvertToUtf16Le"/>
+    <addaction name="actionConvertToUtf16Be"/>
+    <addaction name="separator"/>
+    <addaction name="menuReopenWithEncoding"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -1581,6 +1609,108 @@
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Shift+F3</string>
+   </property>
+  </action>
+  <action name="actionShowEncodingInfo">
+   <property name="text">
+    <string>Encoding &amp;Information &amp;&amp; Conversion...</string>
+   </property>
+   <property name="toolTip">
+    <string>Show detected encoding details, confidence, and conversion options</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+Shift+E</string>
+   </property>
+  </action>
+  <action name="actionConvertToUtf8">
+   <property name="text">
+    <string>Convert to &amp;UTF-8</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+U</string>
+   </property>
+  </action>
+  <action name="actionConvertToUtf8Bom">
+   <property name="text">
+    <string>Convert to UTF-8 with &amp;BOM</string>
+   </property>
+  </action>
+  <action name="actionConvertToAnsi">
+   <property name="text">
+    <string>Convert to &amp;ANSI (Windows-1252)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+A</string>
+   </property>
+  </action>
+  <action name="actionConvertToUtf16Le">
+   <property name="text">
+    <string>Convert to UTF-16 &amp;LE</string>
+   </property>
+  </action>
+  <action name="actionConvertToUtf16Be">
+   <property name="text">
+    <string>Convert to UTF-16 &amp;BE</string>
+   </property>
+  </action>
+  <action name="actionReopenUtf8">
+   <property name="text">
+    <string>UTF-8</string>
+   </property>
+  </action>
+  <action name="actionReopenAnsi">
+   <property name="text">
+    <string>ANSI / Windows-1252</string>
+   </property>
+  </action>
+  <action name="actionReopenUtf16Le">
+   <property name="text">
+    <string>UTF-16 LE</string>
+   </property>
+  </action>
+  <action name="actionReopenUtf16Be">
+   <property name="text">
+    <string>UTF-16 BE</string>
+   </property>
+  </action>
+  <action name="actionReopenShiftJis">
+   <property name="text">
+    <string>Shift-JIS (Japanese)</string>
+   </property>
+  </action>
+  <action name="actionReopenGbk">
+   <property name="text">
+    <string>GB18030 / GBK (Chinese)</string>
+   </property>
+  </action>
+  <action name="actionReopenBig5">
+   <property name="text">
+    <string>Big5 (Traditional Chinese)</string>
+   </property>
+  </action>
+  <action name="actionReopenEucKr">
+   <property name="text">
+    <string>EUC-KR (Korean)</string>
+   </property>
+  </action>
+  <action name="actionReopenWin1251">
+   <property name="text">
+    <string>Windows-1251 (Cyrillic)</string>
+   </property>
+  </action>
+  <action name="actionReopenWin1250">
+   <property name="text">
+    <string>Windows-1250 (Central European)</string>
+   </property>
+  </action>
+  <action name="actionReopenCp437">
+   <property name="text">
+    <string>OEM-US (DOS CP437)</string>
+   </property>
+  </action>
+  <action name="actionReopenMore">
+   <property name="text">
+    <string>&amp;More Encodings...</string>
    </property>
   </action>
  </widget>

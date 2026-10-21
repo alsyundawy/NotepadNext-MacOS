@@ -36,10 +36,23 @@ Format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) a
 - 🇬🇧 **Code Hygiene & Shadow Variable Removal**: Fixed constructor overloading ambiguity and missing `explicit` in `TabsQuickActionsBar.h`, and eliminated variable shadowing in `SessionManager::loadUnsavedFileDetails()` and `SearchResultsDock::newSearch()`.
 - 🇮🇩 **Pembersihan Kode & Penyamaran Variabel**: Memperbaiki ambiguitas konstruktor pada `TabsQuickActionsBar.h` serta menghilangkan penyamaran variabel (variable shadowing) pada `SessionManager` dan `SearchResultsDock`.
 
-### 💎 Modernized "About NotepadNext" Dialog / Dialog "Tentang NotepadNext" Modern
+### 🔤 Comprehensive File Encoding & uchardet Engine / Menu Encoding & Engine Deteksi Karakter uchardet
 
-- 🇬🇧 **Elegant Rich-Text Design**: Completely overhauled the About dialog into a modern, beautifully styled presentation featuring the 512x512 app logo icon, real-time Qt version badge, macOS CPU architecture (`QSysInfo`), dual author attribution (Justin Dailey & Harry DS Alsyundawy), core component breakdown (Scintilla, Lexilla, Qt, QADS), and clickable project links.
-- 🇮🇩 **Desain Dialog Elegan & Modern**: Memperbarui antarmuka dialog "Tentang Notepad Next" dengan tampilan modern berformat rich-text elegan, menampilkan ikon aplikasi beresolusi tinggi, lencana versi Qt dinamis, arsitektur CPU macOS (`QSysInfo`), atribusi pembuat & builder, rincian komponen utama, serta tautan resmi proyek.
+- 🇬🇧 **SparkNotePad Encoding Engine Integration**: Ported full multi-stage encoding and BOM detection logic from SparkNotePad into `src/utils/EncodingDetector`, powered by Mozilla Universal Charset Detector (`uchardet`), interleaved NUL heuristics for UTF-16, and regex-based header declaration sniffers (XML, HTML, Python/Ruby cookies).
+- 🇮🇩 **Integrasi Engine Encoding SparkNotePad**: Mengadopsi arsitektur deteksi encoding bertingkat dan BOM dari SparkNotePad ke dalam `src/utils/EncodingDetector`, didukung Mozilla Universal Charset Detector (`uchardet`), heuristik interleaved NUL untuk UTF-16, serta pencari header deklarasi (XML, HTML, coding cookie Python/Ruby).
+- 🇬🇧 **Dedicated Encoding Menu in MainWindow**: Activated top-level `Encoding` menu featuring quick conversion actions (UTF-8, UTF-8 BOM, ANSI Windows-1252, UTF-16 LE, UTF-16 BE) and a comprehensive `Reopen with Encoding` submenu with major East Asian, Cyrillic, Central European, and DOS codepages.
+- 🇮🇩 **Menu Encoding Terdedikasi pada MainWindow**: Mengaktifkan menu utama `Encoding` lengkap dengan aksi konversi cepat (UTF-8, UTF-8 BOM, ANSI Windows-1252, UTF-16 LE, UTF-16 BE) dan submenu `Reopen with Encoding` untuk membuka ulang berkas menggunakan berbagai codepage (Asia Timur, Sirilik, Eropa Tengah, dan DOS).
+- 🇬🇧 **Interactive Encoding Selection Dialog (`EncodingSelectionDialog`)**: Added interactive encoding dialog with real-time fuzzy filtering, document encoding confidence scores, quick preset buttons, and dual conversion vs reopening modes.
+- 🇮🇩 **Dialog Pemilih Encoding Interaktif (`EncodingSelectionDialog`)**: Menyediakan dialog pemilihan encoding interaktif dengan pencarian cepat, skor keyakinan deteksi, tombol pintas preset, dan dua mode operasi (konversi isi dokumen vs muat ulang dari disk).
+- 🇬🇧 **Status Bar Encoding Interaction**: Upgraded status bar encoding label (`unicodeType`) to dynamically display active encoding & BOM, with informative tooltip and one-click access to the Encoding Selection Dialog.
+- 🇮🇩 **Interaksi Status Bar untuk Encoding**: Label status bar encoding (`unicodeType`) kini menampilkan nama encoding dan BOM secara dinamis serta dapat diklik langsung untuk memunculkan dialog pemilihan encoding.
+
+### 💎 Modernized Adaptive "About NotepadNext" Dialog / Dialog "Tentang NotepadNext" Modern & Adaptif
+
+- 🇬🇧 **Full Adaptive About Dialog (`AboutDialog`)**: Replaced legacy `QMessageBox` with a dedicated, tabbed `AboutDialog` that dynamically derives high-contrast colors from the system palette (`QPalette`), adapting seamlessly to macOS light and dark appearances without requiring an in-app dark mode engine.
+- 🇮🇩 **Dialog Tentang NotepadNext Adaptif (`AboutDialog`)**: Menggantikan `QMessageBox` lama dengan dialog bertab modern (`AboutDialog`) yang menyesuaikan warna secara dinamis terhadap palet sistem (`QPalette`), bekerja sempurna pada tampilan macOS Terang maupun Gelap tanpa memerlukan engine dark mode internal.
+- 🇬🇧 **Six Structured Tabs**: Features dedicated tabs for About (logo, badges, legal note, metadata table), Maintainer (Harry DS Alsyundawy, ALSYUNDAWY IT SOLUTION, PayPal & QRIS donations), Credits & Attribution (Justin Dailey, Neil Hodgson, Scintilla/Lexilla, Qt, uchardet, SparkNotePad), Diagnostics (OS, kernel, CPU arch, Qt version, Retina DPI scale with one-click clipboard copy), Shortcuts (essential keyboard combinations), and License (GPLv3).
+- 🇮🇩 **Enam Tab Terstruktur**: Menyediakan tab khusus Tentang, Pemelihara (Harry DS Alsyundawy, ALSYUNDAWY IT SOLUTION, donasi PayPal & QRIS), Kredit & Atribusi, Diagnostik (spesifikasi OS, CPU, Qt, rasio Retina dengan tombol salin ke clipboard), Pintasan Keyboard, dan Lisensi (GPLv3).
 
 ### ⚡ Build, CI/CD Runners & MegaLinter / Otomasi Build, Runner CI & MegaLinter
 

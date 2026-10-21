@@ -26,12 +26,13 @@ This document provides a comprehensive, multi-dimensional comparison detailing e
 | **Hardware Architecture** | Standard x86_64, partial ARM builds                | Full Universal 2 (`arm64` Apple Silicon & `x86_64` Intel)                         | Peak native performance on M1/M2/M3/M4 chips without Rosetta translation.       |
 | **Qt Framework Version**  | Qt 6.2 – 6.5                                       | Qt 6.5 LTS, 6.8 LTS, 6.10, 6.11, and **Qt 6.12**                                  | Forward compatibility with modern macOS display pipelines and APIs.             |
 | **CI/CD Matrix Runners**  | Generic Ubuntu/Windows/macOS runners               | Dedicated macOS 15+ matrix (`macos-15` ARM64 & `macos-15-intel` x64)              | Fully automated, reproducible release pipeline for macOS 15 Sequoia.            |
+| **Character Encoding**    | Basic UTF-8 / BOM only, no detection or menu       | **Comprehensive Encoding Engine (`EncodingDetector`)** with `uchardet` & menu     | Multi-stage encoding detection, conversion, reopen presets & clickable status.  |
 | **Scintilla Engine**      | v5.6.6                                             | **v5.6.7**                                                                        | Enhanced multi-cursor selection, sub-pixel text rendering, and stability.       |
 | **Lexilla Lexers**        | v5.5.3                                             | **v5.5.4**                                                                        | Modernized lexing for C++20, YAML 1.2, HTML5, and TCL.                          |
 | **Embedded Scripting**    | Lua 5.4.4 / 5.4.9                                  | **Lua 5.5.1**                                                                     | Accelerated bytecode VM, improved memory efficiency, modern Lua syntax.         |
 | **Python Integration**    | Basic / manual                                     | Automated Python 3.13+ interpreter discovery                                      | Seamless background script execution via `thirdparty/CMakeLists.txt`.           |
 | **App Branding & Logo**   | Legacy generic raster icon                         | **macOS Squircle Design Language** (Apple ICNS Retina, SVG, multi-res PNG)        | Harmonious docking alongside macOS system applications with subtle drop shadow. |
-| **About Dialog**          | Bare unstyled `QMessageBox::about`                 | **Modern Rich-Text Dialog** with real-time Qt, OS & CPU architecture info         | Informative, elegant branding with dual author attribution and clickable links. |
+| **About Dialog**          | Bare unstyled `QMessageBox::about`                 | **Modern Adaptive Dialog (`AboutDialog`)** with dynamic system palette adaptation | 6 tabs, system palette aware (light/dark OS), diagnostics copy, full credits.   |
 | **Editor Context Menu**   | Hardcoded minimal menu                             | Standardized default sequence with automatic token whitespace sanitization        | Comprehensive editing actions out-of-the-box (Undo, Redo, Case, Base64, URL).   |
 | **Localization Parity**   | 20+ unmaintained, incomplete `.ts` files           | Streamlined exclusively to English & 100% complete Bahasa Indonesia (414 strings) | Eliminated build bloat, zero untranslated UI elements, clean settings dropdown. |
 | **Security Hardening**    | Unbounded string copy (`strcpy`/`strcat`)          | **CWE-120 Resolution**: Bounded `std::snprintf` in `IFaceTable.cpp`               | Complete elimination of buffer overflow risks in lexer interface mapping.       |
@@ -55,17 +56,43 @@ Upstream v0.15 bundled older Scintilla and Lexilla releases. Version `0.15-04` i
 - **Lexilla 5.5.4**: Delivers upgraded tokenizers for modern languages, including C++20 standard keywords (`concept`, `requires`, `consteval`), YAML multi-line block folding, and enhanced HTML entities.
 - **Lua 5.5.1**: Upgrades embedded scripting with cleaner C-closure management, enhanced garbage collection pacing, and full compatibility macros (`LUA_QL`, `LUA_QS`) in `luaconf.h`.
 
-### 2. Tailored "About Notepad Next" Presentation
+### 2. Comprehensive Character Encoding Architecture (`EncodingDetector` & Dual-Mode Dialog)
 
-Upstream v0.15 displayed a basic system alert box with plain text. In `0.15-04`, the About dialog in `src/dialogs/MainWindow.cpp` has been completely reimagined:
+Upstream v0.15 lacked dedicated character encoding detection and conversion facilities, supporting only basic UTF-8 with optional BOM without heuristic detection or an encoding menu. Version `0.15-04` ports and refines the complete encoding architecture from `SparkNotePad`:
 
-- High-resolution 80×80 app icon pixmap (`:/icons/NotepadNext.png`) rendered with smooth anti-aliased scaling.
-- Live system badge detailing `Version 0.15-04 | Qt <runtime_version> | <macOS_product_name> (<cpu_arch>)`.
-- Prominent dual credits honoring original creator **Justin Dailey** and macOS maintainer **Harry DS Alsyundawy**.
-- Highlighting core architecture: Scintilla, Lexilla, Qt Widgets, QADS, and Universal 2 binary support.
-- Direct links to GitHub repositories and GNU GPLv3 license terms.
+- **Multi-Stage Detection Engine (`EncodingDetector`)**:
+  - **BOM Sniffing**: Instantaneous detection of UTF-8 BOM (`EF BB BF`), UTF-16 LE (`FF FE`), UTF-16 BE (`FE FF`), UTF-32 LE, and UTF-32 BE.
+  - **Strict UTF-8 Validation**: Direct bitmask validator for UTF-8 byte sequences with zero false positives.
+  - **Heuristic UTF-16 Scanner**: Interleaved NUL byte analysis detects ASCII-range UTF-16 text even when BOM is missing.
+  - **Header Declaration Sniffer**: Inspects initial 1,024 bytes for embedded encoding declarations (`<?xml encoding="..."?>`, `<meta charset="...">`, `# -*- coding: ... -*-`).
+  - **Mozilla `uchardet` Integration**: Statistical character distribution modeling identifies legacy multi-byte and single-byte encodings (Shift-JIS, GB18030, EUC-KR, Windows-1252, ISO-8859-1).
+- **Dual-Mode Encoding Dialog (`EncodingSelectionDialog`)**:
+  - Interactive search bar for instant filtering across dozens of system and international character encodings.
+  - One-click quick presets: **UTF-8**, **UTF-8 with BOM**, and **ANSI (Windows-1252)**.
+  - Supports dual execution modes:
+    - **Convert Mode**: Re-encodes the in-memory editor buffer into the target encoding, marking the file dirty without touching the disk.
+    - **Reopen Mode**: Re-reads the file from disk using the specified encoding, overriding initial heuristic detection.
+- **Menu Bar & Status Bar Integration**:
+  - Full **Encoding** menu featuring direct conversion shortcuts (UTF-8, UTF-8 BOM, ANSI, UTF-16 LE, UTF-16 BE), quick reopen presets, and dialog access.
+  - Clickable status bar widget displaying the active encoding (e.g. `UTF-8`, `UTF-8 BOM`, `Windows-1252`), which directly opens the Encoding Selection Dialog when clicked.
 
-### 3. Default Context Menu Configuration
+### 3. Modern Adaptive "About Notepad Next" Presentation (`AboutDialog`)
+
+Upstream v0.15 displayed a bare, unstyled `QMessageBox` alert with hardcoded plain text. In `0.15-04`, the About dialog has been completely redesigned into a dedicated 6-tab dialog (`src/dialogs/AboutDialog.cpp`):
+
+- **6 Structured Tabs**:
+  1. **About**: High-resolution 80×80 squircle icon, dynamic version & build metadata badges, core architecture highlights (Scintilla 5.6.7, Lexilla 5.5.4, Lua 5.5.1, Universal 2, Qt 6), and repository links.
+  2. **Maintainer**: Dedicated profile honoring macOS maintainer **Harry DS Alsyundawy** ([@alsyundawy](https://github.com/alsyundawy)) with role, links, and system environment info.
+  3. **Credits & Attribution**: Dual attribution honoring original creator **Justin Dailey** ([@dail8859](https://github.com/dail8859)), core libraries (Scintilla, Lexilla, uchardet, QADS), and open-source contributors.
+  4. **Diagnostics**: Real-time system information including Qt runtime version, macOS product name/version, kernel version, CPU architecture, screen resolution/DPI scale, and process memory status. Features a one-click **"Copy Diagnostics"** button formatting details as Markdown.
+  5. **Shortcuts**: Comprehensive searchable reference table of macOS standard shortcuts (CMD+O, CMD+S, CMD+F, CMD+SHIFT+U, CMD+U, CMD+G, etc.).
+  6. **License**: Full GNU General Public License v3 terms rendered with clean monospace typography.
+- **Dynamic System Palette Adaptation ("No Dark Mode Engine Invariant")**:
+  - NotepadNext does not implement an in-app ThemeManager or dark mode engine.
+  - To ensure optimal legibility and contrast under both macOS Light and Dark appearance, `AboutDialog` dynamically derives colors from `this->palette()` (`QPalette::Window`, `QPalette::WindowText`, `QPalette::Highlight`, `QPalette::Base`, `QPalette::Mid`).
+  - Implements `changeEvent(QEvent *event)` listening for `QEvent::PaletteChange` and `QEvent::ApplicationPaletteChange`, instantly updating UI borders, text contrast, and badge styling when the macOS system theme toggles without requiring application restarts.
+
+### 4. Default Context Menu Configuration
 
 In official v0.15, the editor context menu defaults to a small subset of actions without case conversion or encoding utilities. In `0.15-04`, the default `NotepadNext.ini` context menu sequence is:
 
@@ -76,7 +103,7 @@ EditorContextMenu=Undo, Redo, , Cut, Copy, Paste, Delete, , SelectAll, , UpperCa
 
 Additionally, `src/dialogs/MainWindow.cpp` implements defensive token trimming (`.trimmed()`), guaranteeing that user-edited INI files with spaces after commas are parsed cleanly without failing `QAction` lookups.
 
-### 4. 13-Pillar Security Hardening & Bug Fixes
+### 5. 13-Pillar Security Hardening & Bug Fixes
 
 Version `0.15-04` resolves several latent security and stability issues present in the baseline code:
 
@@ -86,7 +113,7 @@ Version `0.15-04` resolves several latent security and stability issues present 
 - **Signal Disconnect Bug**: Corrected inverted disconnect logic in `QuickFindWidget::setEditor()`. Previously, passing a new editor disconnected the incoming editor instead of the existing listener, leaving orphaned signal handlers on old editor buffers.
 - **File Renaming Defense**: Added explicit failure reporting via `showSaveErrorMessage()` in `MainWindow::on_actionRename_triggered()`.
 
-### 5. Automated System Integration (`NotepadNext-Default-Editor.sh`)
+### 6. Automated System Integration (`NotepadNext-Default-Editor.sh`)
 
 Unlike upstream v0.15 which requires manual "Open With" configuration for every file type, `0.15-04` ships with an advanced shell automation script:
 
@@ -95,7 +122,7 @@ Unlike upstream v0.15 which requires manual "Open With" configuration for every 
 - Removes Gatekeeper quarantine attributes (`com.apple.quarantine`) and signs local app bundles.
 - Atomically flushes and rebuilds the macOS `LaunchServices` database in under 0.3 seconds.
 
-### 6. Curated MegaLinter Configuration (`.mega-linter.yml`)
+### 7. Curated MegaLinter Configuration (`.mega-linter.yml`)
 
 To ensure enterprise-grade code cleanliness, `0.15-04` establishes a dedicated `.mega-linter.yml` configuration:
 
@@ -103,7 +130,7 @@ To ensure enterprise-grade code cleanliness, `0.15-04` establishes a dedicated `
 - Suppresses false-positive spell-checking and copy-paste detection on third-party Scintilla/Lexilla lexers and Indonesian localization strings.
 - Enforces strict compliance with `trunk check`, `actionlint`, `yamllint`, `markdownlint`, and `prettier`.
 
-### 7. Unified Application Identity & Bundle ID (`com.github.alsyundawy.NotepadNext`)
+### 8. Unified Application Identity & Bundle ID (`com.github.alsyundawy.NotepadNext`)
 
 To eliminate identity divergence across platforms and system tooling, `0.15-04` standardizes the application identifier to **`com.github.alsyundawy.NotepadNext`**:
 

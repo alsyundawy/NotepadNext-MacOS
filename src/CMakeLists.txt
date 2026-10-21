@@ -125,9 +125,14 @@ qt_add_executable(NotepadNext
 	decorators/SurroundSelection.h
 	decorators/URLFinder.cpp
 	decorators/URLFinder.h
+	dialogs/AboutDialog.cpp
+	dialogs/AboutDialog.h
 	dialogs/ColumnEditorDialog.cpp
 	dialogs/ColumnEditorDialog.h
 	dialogs/ColumnEditorDialog.ui
+	dialogs/EncodingSelectionDialog.cpp
+	dialogs/EncodingSelectionDialog.h
+	dialogs/EncodingSelectionDialog.ui
 	dialogs/FindReplaceDialog.cpp
 	dialogs/FindReplaceDialog.h
 	dialogs/FindReplaceDialog.ui
@@ -146,6 +151,8 @@ qt_add_executable(NotepadNext
 	dialogs/PreferencesDialog.cpp
 	dialogs/PreferencesDialog.h
 	dialogs/PreferencesDialog.ui
+	utils/EncodingDetector.cpp
+	utils/EncodingDetector.h
 	docks/DebugLogDock.cpp
 	docks/DebugLogDock.h
 	docks/DebugLogDock.ui
@@ -208,6 +215,7 @@ target_include_directories(NotepadNext
         ${CMAKE_CURRENT_SOURCE_DIR}/decorators
         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs
         ${CMAKE_CURRENT_SOURCE_DIR}/docks
+        ${CMAKE_CURRENT_SOURCE_DIR}/utils
         ${CMAKE_CURRENT_SOURCE_DIR}/widgets
         ${CMAKE_CURRENT_SOURCE_DIR}
 )
@@ -233,6 +241,7 @@ target_link_libraries(NotepadNext
         Qt6::Widgets
         Qt6::Network
         Qt6::PrintSupport
+        Qt6::Core5Compat
         qtadvanceddocking-qt6
         QSimpleUpdater
         SingleApplication::SingleApplication

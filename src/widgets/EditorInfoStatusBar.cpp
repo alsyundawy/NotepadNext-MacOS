@@ -18,6 +18,7 @@
 
 
 #include "EditorInfoStatusBar.h"
+#include "EncodingDetector.h"
 #include "MainWindow.h"
 #include "StatusLabel.h"
 
@@ -42,8 +43,16 @@ EditorInfoStatusBar::EditorInfoStatusBar(QMainWindow *window) :
         emit customContextMenuRequestedForEOLLabel(eolFormat->mapToGlobal(pos));
     });
 
-    unicodeType = new StatusLabel(125);
+    unicodeType = new StatusLabel(110);
     addPermanentWidget(unicodeType, 0);
+    unicodeType->setToolTip(tr("Encoding / BOM (Click to view or convert)"));
+    connect(qobject_cast<StatusLabel *>(unicodeType), &StatusLabel::clicked, this, [this]() {
+        if (MainWindow *mw = qobject_cast<MainWindow *>(this->window())) {
+            if (QAction *act = mw->findChild<QAction *>("actionShowEncodingInfo")) {
+                act->trigger();
+            }
+        }
+    });
 
     overType = new StatusLabel(25);
     addPermanentWidget(overType, 0);
@@ -149,25 +158,9 @@ void EditorInfoStatusBar::updateEol(ScintillaNext *editor)
 
 void EditorInfoStatusBar::updateEncoding(ScintillaNext *editor)
 {
-    QString text;
-    switch(editor->codePage()) {
-    case 0:
-        text = tr("ANSI");
-        break;
-    case SC_CP_UTF8:
-        switch (editor->bom()) {
-        case ScintillaNext::BomType::None:    text = tr("UTF-8"); break;
-        case ScintillaNext::BomType::Utf8:    text = tr("UTF-8 BOM"); break;
-        case ScintillaNext::BomType::Utf16LE: text = tr("UTF-16LE BOM"); break;
-        case ScintillaNext::BomType::Utf16BE: text = tr("UTF-16BE BOM"); break;
-        }
-        break;
-    default:
-        text = QString::number(editor->codePage());
-        break;
-    }
-
-    unicodeType->setText(text);
+    if (!editor || !unicodeType)
+        return;
+    unicodeType->setText(EncodingDetector::formatDisplayName(editor->encodingName(), editor->bom()));
 }
 
 void EditorInfoStatusBar::updateOverType(ScintillaNext *editor)

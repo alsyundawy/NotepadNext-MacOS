@@ -18,6 +18,9 @@
 
 
 #include "MainWindow.h"
+#include "AboutDialog.h"
+#include "EncodingSelectionDialog.h"
+#include "EncodingDetector.h"
 #include "BookMarkDecorator.h"
 #include "DefaultDirectoryManager.h"
 #include "MarkerAppDecorator.h"
@@ -906,55 +909,92 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         }
     });
 
+    // Encoding actions
+    connect(ui->actionShowEncodingInfo, &QAction::triggered, this, [this]() {
+        if (auto *ed = currentEditor()) {
+            EncodingSelectionDialog dlg(ed, this);
+            if (dlg.exec() == QDialog::Accepted) {
+                ui->statusBar->refresh(ed);
+            }
+        }
+    });
+
+    connect(ui->actionConvertToUtf8, &QAction::triggered, this, [this]() {
+        if (auto *ed = currentEditor()) {
+            ed->convertToEncoding(QStringLiteral("UTF-8"), ScintillaNext::BomType::None);
+            ui->statusBar->refresh(ed);
+        }
+    });
+    connect(ui->actionConvertToUtf8Bom, &QAction::triggered, this, [this]() {
+        if (auto *ed = currentEditor()) {
+            ed->convertToEncoding(QStringLiteral("UTF-8"), ScintillaNext::BomType::Utf8);
+            ui->statusBar->refresh(ed);
+        }
+    });
+    connect(ui->actionConvertToAnsi, &QAction::triggered, this, [this]() {
+        if (auto *ed = currentEditor()) {
+            ed->convertToEncoding(QStringLiteral("windows-1252"), ScintillaNext::BomType::None);
+            ui->statusBar->refresh(ed);
+        }
+    });
+    connect(ui->actionConvertToUtf16Le, &QAction::triggered, this, [this]() {
+        if (auto *ed = currentEditor()) {
+            ed->convertToEncoding(QStringLiteral("UTF-16LE"), ScintillaNext::BomType::Utf16LE);
+            ui->statusBar->refresh(ed);
+        }
+    });
+    connect(ui->actionConvertToUtf16Be, &QAction::triggered, this, [this]() {
+        if (auto *ed = currentEditor()) {
+            ed->convertToEncoding(QStringLiteral("UTF-16BE"), ScintillaNext::BomType::Utf16BE);
+            ui->statusBar->refresh(ed);
+        }
+    });
+
+    auto reopenWith = [this](const QString &enc) {
+        if (auto *ed = currentEditor()) {
+            if (!ed->isFile()) {
+                QMessageBox::information(this, tr("Notepad Next"),
+                                         tr("Cannot reopen unsaved new buffer from disk."));
+                return;
+            }
+            ed->reloadWithEncoding(enc);
+            ui->statusBar->refresh(ed);
+        }
+    };
+
+    connect(ui->actionReopenUtf8, &QAction::triggered, this, [reopenWith]() { reopenWith(QStringLiteral("UTF-8")); });
+    connect(ui->actionReopenAnsi, &QAction::triggered, this,
+            [reopenWith]() { reopenWith(QStringLiteral("windows-1252")); });
+    connect(ui->actionReopenUtf16Le, &QAction::triggered, this,
+            [reopenWith]() { reopenWith(QStringLiteral("UTF-16LE")); });
+    connect(ui->actionReopenUtf16Be, &QAction::triggered, this,
+            [reopenWith]() { reopenWith(QStringLiteral("UTF-16BE")); });
+    connect(ui->actionReopenShiftJis, &QAction::triggered, this,
+            [reopenWith]() { reopenWith(QStringLiteral("Shift-JIS")); });
+    connect(ui->actionReopenGbk, &QAction::triggered, this, [reopenWith]() { reopenWith(QStringLiteral("GB18030")); });
+    connect(ui->actionReopenBig5, &QAction::triggered, this, [reopenWith]() { reopenWith(QStringLiteral("Big5")); });
+    connect(ui->actionReopenEucKr, &QAction::triggered, this, [reopenWith]() { reopenWith(QStringLiteral("EUC-KR")); });
+    connect(ui->actionReopenWin1251, &QAction::triggered, this,
+            [reopenWith]() { reopenWith(QStringLiteral("windows-1251")); });
+    connect(ui->actionReopenWin1250, &QAction::triggered, this,
+            [reopenWith]() { reopenWith(QStringLiteral("windows-1250")); });
+    connect(ui->actionReopenCp437, &QAction::triggered, this, [reopenWith]() { reopenWith(QStringLiteral("IBM850")); });
+    connect(ui->actionReopenMore, &QAction::triggered, this, [this]() {
+        if (auto *ed = currentEditor()) {
+            EncodingSelectionDialog dlg(ed, this);
+            if (dlg.exec() == QDialog::Accepted) {
+                ui->statusBar->refresh(ed);
+            }
+        }
+    });
+
     ui->actionAboutQt->setIcon(QPixmap(QLatin1String(":/qt-project.org/qmessagebox/images/qtlogo-64.png")));
     connect(ui->actionAboutQt, &QAction::triggered, &QApplication::aboutQt);
 
     ui->actionAboutNotepadNext->setShortcut(QKeySequence::HelpContents);
     connect(ui->actionAboutNotepadNext, &QAction::triggered, this, [this]() {
-        QMessageBox mb(this);
-        mb.setWindowTitle(tr("About Notepad Next"));
-        mb.setIconPixmap(QPixmap(QStringLiteral(":/icons/NotepadNext.png")).scaled(80, 80, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-        mb.setTextFormat(Qt::RichText);
-        mb.setTextInteractionFlags(Qt::TextBrowserInteraction);
-
-        const QString aboutHtml = QStringLiteral(
-            "<div style='font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif;'>"
-            "<h2 style='margin: 0 0 4px 0; color: #0078d4; font-size: 20px;'>Notepad Next <span style='font-size: 14px; font-weight: normal; color: #666;'>for macOS</span></h2>"
-            "<p style='margin: 0 0 10px 0; font-size: 12px; color: #555;'>"
-            "<b>Version %1</b> &nbsp;|&nbsp; <b>Qt %2</b> &nbsp;|&nbsp; <b>%3 (%4)</b>"
-            "</p>"
-            "<p style='margin: 0 0 10px 0; line-height: 1.4; font-size: 13px;'>"
-            "A fast, modern, and cross-platform reimplementation of Notepad++ built for macOS, Linux, and Windows with high-performance editing capabilities."
-            "</p>"
-            "<hr style='border: none; border-top: 1px solid #ddd; margin: 10px 0;'>"
-            "<table style='font-size: 12px; line-height: 1.5; width: 100%; border-collapse: collapse;'>"
-            "<tr><td style='width: 140px; color: #444; font-weight: bold;'>Original Author:</td><td>%5</td></tr>"
-            "<tr><td style='color: #444; font-weight: bold;'>macOS Maintainer:</td><td>%6</td></tr>"
-            "<tr><td style='color: #444; font-weight: bold;'>Core Components:</td><td>Scintilla &bull; Lexilla &bull; Qt Framework &bull; QADS</td></tr>"
-            "<tr><td style='color: #444; font-weight: bold;'>Architecture:</td><td>Universal 2 (Apple Silicon ARM64 &amp; Intel x86_64)</td></tr>"
-            "</table>"
-            "<hr style='border: none; border-top: 1px solid #ddd; margin: 10px 0;'>"
-            "<p style='margin: 0 0 8px 0; font-size: 12px;'>"
-            "<b>Links:</b> "
-            "<a href='https://github.com/alsyundawy/NotepadNext-MacOS' style='color: #0078d4; text-decoration: none;'>GitHub (macOS Edition)</a> &bull; "
-            "<a href='https://github.com/dail8859/NotepadNext' style='color: #0078d4; text-decoration: none;'>Upstream Repository</a> &bull; "
-            "<a href='https://www.gnu.org/licenses/gpl-3.0.html' style='color: #0078d4; text-decoration: none;'>GNU GPLv3 License</a>"
-            "</p>"
-            "<p style='margin: 0; font-size: 11px; color: #777; line-height: 1.3;'>"
-            "This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version."
-            "</p>"
-            "</div>")
-            .arg(APP_VERSION,
-                 QString::fromLatin1(qVersion()),
-                 QSysInfo::prettyProductName(),
-                 QSysInfo::currentCpuArchitecture(),
-                 QStringLiteral(APP_COPYRIGHT).toHtmlEscaped(),
-                 QStringLiteral(APP_COPYRIGHT_BUILDER).toHtmlEscaped());
-
-        mb.setText(aboutHtml);
-        mb.setStandardButtons(QMessageBox::Ok);
-        mb.setDefaultButton(QMessageBox::Ok);
-        mb.exec();
+        AboutDialog dlg(this);
+        dlg.exec();
     });
 
     connect(ui->actionDebugInfo, &QAction::triggered, this, [=, this]() {
