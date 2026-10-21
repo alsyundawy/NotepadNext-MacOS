@@ -19,6 +19,7 @@
 
 #include "MainWindow.h"
 #include "AboutDialog.h"
+#include "SaveModifiedDialog.h"
 #include "EncodingSelectionDialog.h"
 #include "EncodingDetector.h"
 #include "BookMarkDecorator.h"
@@ -2111,27 +2112,18 @@ void MainWindow::showEditorZoomLevelIndicator()
 
 MainWindow::UserSaveAction MainWindow::promptForSave(const QVector<ScintillaNext *> &editors)
 {
-    const int count = editors.count();
-    QMessageBox msgBox(this);
-    msgBox.setWindowTitle(tr("Save File"));
-    msgBox.setIcon(QMessageBox::Question);
+    SaveModifiedDialog dlg(editors, this);
+    dlg.exec();
 
-    // Using pluralization for the main text
-    QString text = (count == 1)
-                       ? tr("Save changes to <b>%1</b>?").arg(editors.first()->getName())
-                       : tr("There are %n files with unsaved changes. Save them?", "", count);
-    msgBox.setText(text);
-
-    auto *saveBtn = msgBox.addButton(count > 1 ? tr("Save All") : tr("Save"), QMessageBox::AcceptRole);
-    auto *discardBtn = msgBox.addButton(count > 1 ? tr("Discard All") : tr("Discard"), QMessageBox::DestructiveRole);
-    msgBox.addButton(QMessageBox::Cancel);
-
-    msgBox.setDefaultButton(saveBtn);
-    msgBox.exec();
-
-    if (msgBox.clickedButton() == saveBtn)    return UserSaveAction::SaveAll;
-    if (msgBox.clickedButton() == discardBtn) return UserSaveAction::DiscardAll;
-    return UserSaveAction::Cancel;
+    switch (dlg.userAction()) {
+        case SaveModifiedDialog::UserAction::Save:
+            return UserSaveAction::SaveAll;
+        case SaveModifiedDialog::UserAction::Discard:
+            return UserSaveAction::DiscardAll;
+        case SaveModifiedDialog::UserAction::Cancel:
+        default:
+            return UserSaveAction::Cancel;
+    }
 }
 
 void MainWindow::saveSettings() const

@@ -151,6 +151,8 @@ qt_add_executable(NotepadNext
 	dialogs/PreferencesDialog.cpp
 	dialogs/PreferencesDialog.h
 	dialogs/PreferencesDialog.ui
+	dialogs/SaveModifiedDialog.cpp
+	dialogs/SaveModifiedDialog.h
 	utils/EncodingDetector.cpp
 	utils/EncodingDetector.h
 	docks/DebugLogDock.cpp

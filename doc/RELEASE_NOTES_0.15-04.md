@@ -20,30 +20,31 @@ This document provides a comprehensive, multi-dimensional comparison detailing e
 
 ## 📊 Comprehensive Feature & Architecture Matrix
 
-| Capability / Dimension      | Official Upstream v0.15 (`dail8859`)               | NotepadNext-MacOS v0.15-04 (`alsyundawy`)                                         | Engineering Impact & Benefits                                                   |
-| :-------------------------- | :------------------------------------------------- | :-------------------------------------------------------------------------------- | :------------------------------------------------------------------------------ |
-| **Primary OS Target**       | Windows-centric, generic Linux & macOS             | Dedicated macOS first-class citizen (Big Sur to Sequoia 15.0+)                    | Native Cocoa windowing, Apple HIG aesthetics, trackpad gestures.                |
-| **Hardware Architecture**   | Standard x86_64, partial ARM builds                | Full Universal 2 (`arm64` Apple Silicon & `x86_64` Intel)                         | Peak native performance on M1/M2/M3/M4 chips without Rosetta translation.       |
-| **Qt Framework Version**    | Qt 6.2 – 6.5                                       | Qt 6.5 LTS, 6.8 LTS, 6.10, 6.11, and **Qt 6.12**                                  | Forward compatibility with modern macOS display pipelines and APIs.             |
-| **CI/CD Matrix Runners**    | Generic Ubuntu/Windows/macOS runners               | Dedicated macOS 15+ matrix (`macos-15` ARM64 & `macos-15-intel` x64)              | Fully automated, reproducible release pipeline for macOS 15 Sequoia.            |
-| **Character Encoding**      | Basic UTF-8 / BOM only, no detection or menu       | **Comprehensive Encoding Engine (`EncodingDetector`)** with `uchardet` & menu     | Multi-stage encoding detection, conversion, reopen presets & clickable status.  |
-| **Scintilla Engine**        | v5.6.6                                             | **v5.6.7**                                                                        | Enhanced multi-cursor selection, sub-pixel text rendering, and stability.       |
-| **Lexilla Lexers**          | v5.5.3                                             | **v5.5.4**                                                                        | Modernized lexing for C++20, YAML 1.2, HTML5, and TCL.                          |
-| **Embedded Scripting**      | Lua 5.4.4 / 5.4.9                                  | **Lua 5.5.1**                                                                     | Accelerated bytecode VM, improved memory efficiency, modern Lua syntax.         |
-| **Python Integration**      | Basic / manual                                     | Automated Python 3.13+ interpreter discovery                                      | Seamless background script execution via `thirdparty/CMakeLists.txt`.           |
-| **App Branding & Logo**     | Legacy generic raster icon                         | **macOS Squircle Design Language** (Apple ICNS Retina, SVG, multi-res PNG)        | Harmonious docking alongside macOS system applications with subtle drop shadow. |
-| **About Dialog**            | Bare unstyled `QMessageBox::about`                 | **Modern Adaptive Dialog (`AboutDialog`)** with dynamic system palette adaptation | 6 tabs, system palette aware (light/dark OS), diagnostics copy, full credits.   |
-| **Multi-Instance / Window** | Single window only, secondary launch opens tab     | **Native Multi-Instance Spawning (`open -n`, `Ctrl+Shift+N`)**                    | Independent process instances with isolated windows and shared preferences.     |
-| **Editor Context Menu**     | Hardcoded minimal menu                             | Standardized default sequence with automatic token whitespace sanitization        | Comprehensive editing actions out-of-the-box (Undo, Redo, Case, Base64, URL).   |
-| **Localization Parity**     | 20+ unmaintained, incomplete `.ts` files           | Streamlined exclusively to English & 100% complete Bahasa Indonesia (414 strings) | Eliminated build bloat, zero untranslated UI elements, clean settings dropdown. |
-| **Security Hardening**      | Unbounded string copy (`strcpy`/`strcat`)          | **CWE-120 Resolution**: Bounded `std::snprintf` in `IFaceTable.cpp`               | Complete elimination of buffer overflow risks in lexer interface mapping.       |
-| **Pointer Safety**          | Uninitialized pointer members                      | Explicit `nullptr` initialization across all application member pointers          | Prevention of dangling pointer dereferencing and undefined behavior.            |
-| **Dock Restore SIGSEGV**    | Vulnerable to crashes on window restore            | Defensive null check for `SearchResultsDock` (`QTBUG-111538` resilience)          | Zero crashes when restoring application geometry and docked panels.             |
-| **Signal Disconnect Bug**   | Inverted disconnect parameter in `QuickFindWidget` | Fixed: properly disconnects prior editor instance                                 | Eliminates signal listener leaks and dangling callback execution.               |
-| **File Rename Handling**    | Discarded return code (`Q_UNUSED`)                 | Explicit error reporting via `showSaveErrorMessage()`                             | Prevents silent data loss when filesystem renames fail.                         |
-| **Application Bundle ID**   | `io.github.dail8859.NotepadNext` / unaligned       | **`com.github.alsyundawy.NotepadNext`** (macOS, Linux AppStream, scripts)         | Unified identity across macOS Info.plist, Linux desktop, and LaunchServices.    |
-| **System Integration**      | Manual file association                            | **`NotepadNext-Default-Editor.sh` (v1.6.0)** mapping 470+ file formats & 38 UTIs  | Replaces TextEdit across the OS in <0.3s without Gatekeeper friction.           |
-| **Linter & Code Quality**   | Standard CI checks                                 | **MegaLinter + Trunk Pipeline** (0 errors across 163 files)                       | Multi-axis verification enforcing CISQ, ISO 5055, and OWASP compliance.         |
+| Capability / Dimension      | Official Upstream v0.15 (`dail8859`)               | NotepadNext-MacOS v0.15-04 (`alsyundawy`)                                            | Engineering Impact & Benefits                                                         |
+| :-------------------------- | :------------------------------------------------- | :----------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------ |
+| **Primary OS Target**       | Windows-centric, generic Linux & macOS             | Dedicated macOS first-class citizen (Big Sur to Sequoia 15.0+)                       | Native Cocoa windowing, Apple HIG aesthetics, trackpad gestures.                      |
+| **Hardware Architecture**   | Standard x86_64, partial ARM builds                | Full Universal 2 (`arm64` Apple Silicon & `x86_64` Intel)                            | Peak native performance on M1/M2/M3/M4 chips without Rosetta translation.             |
+| **Qt Framework Version**    | Qt 6.2 – 6.5                                       | Qt 6.5 LTS, 6.8 LTS, 6.10, 6.11, and **Qt 6.12**                                     | Forward compatibility with modern macOS display pipelines and APIs.                   |
+| **CI/CD Matrix Runners**    | Generic Ubuntu/Windows/macOS runners               | Dedicated macOS 15+ matrix (`macos-15` ARM64 & `macos-15-intel` x64)                 | Fully automated, reproducible release pipeline for macOS 15 Sequoia.                  |
+| **Character Encoding**      | Basic UTF-8 / BOM only, no detection or menu       | **Comprehensive Encoding Engine (`EncodingDetector`)** with `uchardet` & menu        | Multi-stage encoding detection, conversion, reopen presets & clickable status.        |
+| **Scintilla Engine**        | v5.6.6                                             | **v5.6.7**                                                                           | Enhanced multi-cursor selection, sub-pixel text rendering, and stability.             |
+| **Lexilla Lexers**          | v5.5.3                                             | **v5.5.4**                                                                           | Modernized lexing for C++20, YAML 1.2, HTML5, and TCL.                                |
+| **Embedded Scripting**      | Lua 5.4.4 / 5.4.9                                  | **Lua 5.5.1**                                                                        | Accelerated bytecode VM, improved memory efficiency, modern Lua syntax.               |
+| **Python Integration**      | Basic / manual                                     | Automated Python 3.13+ interpreter discovery                                         | Seamless background script execution via `thirdparty/CMakeLists.txt`.                 |
+| **Branding & Icon**         | Generic raster icon                                | **Apple HIG Squircle Icon Set** (ICNS, PNG 16–512px, SVG)                            | Crisp Retina display rendering across macOS Dock, Launchpad, and Finder.              |
+| **About Dialog**            | Bare unstyled `QMessageBox::about`                 | **Modern Adaptive Dialog (`AboutDialog`)** with dynamic palette adaptation           | 6 tabs, system palette aware (light/dark OS), reentrancy protected, full credits.     |
+| **Save / Exit Prompt**      | Plain unstyled `QMessageBox` popup                 | **Redesigned macOS HIG Dialog (`SaveModifiedDialog`)** with document cards & `Cmd+D` | Contextual file details, data loss warnings, keyboard shortcuts, and palette harmony. |
+| **Multi-Instance / Window** | Single window only, secondary launch opens tab     | **Native Multi-Instance Spawning (`open -n`, `Ctrl+Shift+N`)**                       | Independent process instances with isolated windows and shared preferences.           |
+| **Editor Context Menu**     | Hardcoded minimal menu                             | Standardized default sequence with automatic token whitespace sanitization           | Comprehensive editing actions out-of-the-box (Undo, Redo, Case, Base64, URL).         |
+| **Localization Parity**     | 20+ unmaintained, incomplete `.ts` files           | Streamlined exclusively to English & 100% complete Bahasa Indonesia (425 strings)    | Eliminated build bloat, zero untranslated UI elements, clean settings dropdown.       |
+| **Security Hardening**      | Unbounded string copy (`strcpy`/`strcat`)          | **CWE-120 Resolution**: Bounded `std::snprintf` in `IFaceTable.cpp`                  | Complete elimination of buffer overflow risks in lexer interface mapping.             |
+| **Pointer Safety**          | Uninitialized pointer members                      | Explicit `nullptr` initialization across all application member pointers             | Prevention of dangling pointer dereferencing and undefined behavior.                  |
+| **Dock Restore SIGSEGV**    | Vulnerable to crashes on window restore            | Defensive null check for `SearchResultsDock` (`QTBUG-111538` resilience)             | Zero crashes when restoring application geometry and docked panels.                   |
+| **Signal Disconnect Bug**   | Inverted disconnect parameter in `QuickFindWidget` | Fixed: properly disconnects prior editor instance                                    | Eliminates signal listener leaks and dangling callback execution.                     |
+| **File Rename Handling**    | Discarded return code (`Q_UNUSED`)                 | Explicit error reporting via `showSaveErrorMessage()`                                | Prevents silent data loss when filesystem renames fail.                               |
+| **Application Bundle ID**   | `io.github.dail8859.NotepadNext` / unaligned       | **`com.github.alsyundawy.NotepadNext`** (macOS, Linux AppStream, scripts)            | Unified identity across macOS Info.plist, Linux desktop, and LaunchServices.          |
+| **System Integration**      | Manual file association                            | **`NotepadNext-Default-Editor.sh` (v1.6.0)** mapping 470+ file formats & 38 UTIs     | Replaces TextEdit across the OS in <0.3s without Gatekeeper friction.                 |
+| **Linter & Code Quality**   | Standard CI checks                                 | **MegaLinter + Trunk Pipeline** (0 errors across 163 files)                          | Multi-axis verification enforcing CISQ, ISO 5055, and OWASP compliance.               |
 
 ---
 
@@ -92,6 +93,7 @@ Upstream v0.15 displayed a bare, unstyled `QMessageBox` alert with hardcoded pla
   - NotepadNext does not implement an in-app ThemeManager or dark mode engine.
   - To ensure optimal legibility and contrast under both macOS Light and Dark appearance, `AboutDialog` dynamically derives colors from `this->palette()` (`QPalette::Window`, `QPalette::WindowText`, `QPalette::Highlight`, `QPalette::Base`, `QPalette::Mid`).
   - Implements `changeEvent(QEvent *event)` listening for `QEvent::PaletteChange` and `QEvent::ApplicationPaletteChange`, instantly updating UI borders, text contrast, and badge styling when the macOS system theme toggles without requiring application restarts.
+- **Stability & Reentrancy Hardening**: Implements a strict boolean reentrancy guard (`m_isUpdatingTheme`) neutralizing stack-overflow crashes (SIGSEGV) caused by recursive `QEvent::PaletteChange` loops, corrects widget parentage across all tabs, and fixes string format argument counts.
 
 ### 4. Native Multi-Instance Architecture & "New Window" Support
 
@@ -109,7 +111,21 @@ In standard desktop operation, launching a second instance of an already-running
 - **Unified Settings Persistence**:
   - `ApplicationSettings` explicitly locks its scope to `NotepadNext` organization and application keys, ensuring all concurrent instances read from and write to the single, shared `NotepadNext.ini` configuration without preference file fragmentation.
 
-### 5. Default Context Menu Configuration
+### 5. Redesigned Unsaved Changes & Exit Dialog (`SaveModifiedDialog`)
+
+Upstream v0.15 displayed a bare, standard `QMessageBox` alert when attempting to close modified tabs or quit the application with unsaved work. In version `0.15-04`, the save prompt has been completely reimagined as a dedicated macOS HIG dialog (`src/dialogs/SaveModifiedDialog.cpp`):
+
+- **Visual Polish & App Branding**: Displays the Retina squircle application icon (`:/icons/NotepadNext.png`), bold contextual headline (`Do you want to save the changes made to the document "..."?`), and a clear warning detailing the consequences of discarding changes.
+- **Document Detail Preview**:
+  - Single document: Renders an elegant card displaying the document name and full filesystem path.
+  - Multi-document batch closure: Embeds a scrollable list card enumerating every modified file with distinct status badges (`[New]` or full path).
+- **macOS Button Hierarchy & Keyboard Shortcuts**:
+  - **"Don't Save" / "Don't Save All"**: Placed on the far left, accessible instantly via standard macOS `Cmd+D` shortcut without reaching for the mouse.
+  - **"Cancel"**: Placed in the center-right, triggered via `Escape` or `Cmd+.`.
+  - **"Save" / "Save All"**: Prominent accent-colored default button, triggered via `Return`, `Enter`, or `Cmd+S`.
+- **System Palette Awareness**: Automatically inherits Light/Dark OS appearance styles dynamically via `palette()` with built-in recursion protection.
+
+### 6. Default Context Menu Configuration
 
 In official v0.15, the editor context menu defaults to a small subset of actions without case conversion or encoding utilities. In `0.15-04`, the default `NotepadNext.ini` context menu sequence is:
 
@@ -120,7 +136,7 @@ EditorContextMenu=Undo, Redo, , Cut, Copy, Paste, Delete, , SelectAll, , UpperCa
 
 Additionally, `src/dialogs/MainWindow.cpp` implements defensive token trimming (`.trimmed()`), guaranteeing that user-edited INI files with spaces after commas are parsed cleanly without failing `QAction` lookups.
 
-### 6. 13-Pillar Security Hardening & Bug Fixes
+### 7. 13-Pillar Security Hardening & Bug Fixes
 
 Version `0.15-04` resolves several latent security and stability issues present in the baseline code:
 
@@ -130,7 +146,7 @@ Version `0.15-04` resolves several latent security and stability issues present 
 - **Signal Disconnect Bug**: Corrected inverted disconnect logic in `QuickFindWidget::setEditor()`. Previously, passing a new editor disconnected the incoming editor instead of the existing listener, leaving orphaned signal handlers on old editor buffers.
 - **File Renaming Defense**: Added explicit failure reporting via `showSaveErrorMessage()` in `MainWindow::on_actionRename_triggered()`.
 
-### 7. Automated System Integration (`NotepadNext-Default-Editor.sh`)
+### 8. Automated System Integration (`NotepadNext-Default-Editor.sh`)
 
 Unlike upstream v0.15 which requires manual "Open With" configuration for every file type, `0.15-04` ships with an advanced shell automation script:
 
@@ -139,7 +155,7 @@ Unlike upstream v0.15 which requires manual "Open With" configuration for every 
 - Removes Gatekeeper quarantine attributes (`com.apple.quarantine`) and signs local app bundles.
 - Atomically flushes and rebuilds the macOS `LaunchServices` database in under 0.3 seconds.
 
-### 8. Curated MegaLinter Configuration (`.mega-linter.yml`)
+### 9. Curated MegaLinter Configuration (`.mega-linter.yml`)
 
 To ensure enterprise-grade code cleanliness, `0.15-04` establishes a dedicated `.mega-linter.yml` configuration:
 
@@ -147,7 +163,7 @@ To ensure enterprise-grade code cleanliness, `0.15-04` establishes a dedicated `
 - Suppresses false-positive spell-checking and copy-paste detection on third-party Scintilla/Lexilla lexers and Indonesian localization strings.
 - Enforces strict compliance with `trunk check`, `actionlint`, `yamllint`, `markdownlint`, and `prettier`.
 
-### 9. Unified Application Identity & Bundle ID (`com.github.alsyundawy.NotepadNext`)
+### 10. Unified Application Identity & Bundle ID (`com.github.alsyundawy.NotepadNext`)
 
 To eliminate identity divergence across platforms and system tooling, `0.15-04` standardizes the application identifier to **`com.github.alsyundawy.NotepadNext`**:
 

@@ -31,6 +31,8 @@ AboutDialog::AboutDialog(QWidget *parent) : QDialog(parent) {
 
 void AboutDialog::setupUi() {
     setWindowTitle(tr("About Notepad Next"));
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    setModal(true);
     resize(740, 580);
 
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
@@ -53,13 +55,18 @@ void AboutDialog::setupUi() {
 }
 
 void AboutDialog::changeEvent(QEvent *event) {
-    if (event->type() == QEvent::PaletteChange || event->type() == QEvent::ApplicationPaletteChange) {
+    QDialog::changeEvent(event);
+    if ((event->type() == QEvent::PaletteChange || event->type() == QEvent::ApplicationPaletteChange) && !m_isUpdatingTheme) {
         updateThemeColors();
     }
-    QDialog::changeEvent(event);
 }
 
 void AboutDialog::updateThemeColors() {
+    if (m_isUpdatingTheme) {
+        return;
+    }
+    m_isUpdatingTheme = true;
+
     // Dynamically derive styling directly from the active system palette (macOS light/dark appearance)
     const QPalette pal = this->palette();
     const QColor winColor = pal.color(QPalette::Window);
@@ -242,23 +249,21 @@ void AboutDialog::updateThemeColors() {
 
         QString infoText = QString(
                                "<div style='color: %1; line-height: 1.6;'>"
-                               "<b>Operating System:</b> %2 (%3)<br/>"
-                               "<b>Architecture:</b> %4 (Build Target: %5)<br/>"
-                               "<b>Qt Version:</b> %6 (Built with %7)<br/>"
-                               "<b>Display Scale Ratio:</b> %8x (Retina / High-DPI)<br/>"
-                               "<b>Notepad Next Version:</b> v%9<br/>"
-                               "<b>Kernel Type:</b> %10"
+                               "<b>Operating System:</b> %2 (%3 %4)<br/>"
+                               "<b>Architecture:</b> %5 (Build Target: %6)<br/>"
+                               "<b>Qt Version:</b> %7 (Built with %8)<br/>"
+                               "<b>Display Scale Ratio:</b> %9x (Retina / High-DPI)<br/>"
+                               "<b>Notepad Next Version:</b> v" APP_VERSION "<br/>"
                                "</div>")
                                .arg(txtPri)
                                .arg(QSysInfo::prettyProductName())
+                               .arg(QSysInfo::kernelType())
                                .arg(QSysInfo::kernelVersion())
                                .arg(QSysInfo::currentCpuArchitecture())
                                .arg(QSysInfo::buildCpuArchitecture())
                                .arg(qVersion())
                                .arg(QT_VERSION_STR)
-                               .arg(QString::number(dpr, 'f', 1))
-                               .arg(APP_VERSION)
-                               .arg(QSysInfo::kernelType());
+                               .arg(QString::number(dpr, 'f', 1));
 
         m_diagnosticsCard->setText(infoText);
     }
@@ -346,10 +351,12 @@ void AboutDialog::updateThemeColors() {
                "</div>")
                 .arg(txtPri, accentCol));
     }
+
+    m_isUpdatingTheme = false;
 }
 
 QWidget *AboutDialog::createAboutTab() {
-    QWidget *tab = new QWidget(this);
+    QWidget *tab = new QWidget(m_tabWidget);
     QVBoxLayout *layout = new QVBoxLayout(tab);
     layout->setContentsMargins(18, 18, 18, 18);
     layout->setSpacing(14);
@@ -358,8 +365,11 @@ QWidget *AboutDialog::createAboutTab() {
     QHBoxLayout *headerLayout = new QHBoxLayout();
     headerLayout->setSpacing(16);
 
-    QLabel *iconLabel = new QLabel(this);
+    QLabel *iconLabel = new QLabel(tab);
     QPixmap iconPixmap(QStringLiteral(":/icons/NotepadNext.png"));
+    if (iconPixmap.isNull()) {
+        iconPixmap = windowIcon().pixmap(80, 80);
+    }
     if (!iconPixmap.isNull()) {
         iconLabel->setPixmap(iconPixmap.scaled(80, 80, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     }
@@ -369,10 +379,10 @@ QWidget *AboutDialog::createAboutTab() {
     QVBoxLayout *titleLayout = new QVBoxLayout();
     titleLayout->setSpacing(4);
 
-    m_titleLabel = new QLabel(this);
+    m_titleLabel = new QLabel(tab);
     titleLayout->addWidget(m_titleLabel);
 
-    m_badgesLabel = new QLabel(this);
+    m_badgesLabel = new QLabel(tab);
     titleLayout->addWidget(m_badgesLabel);
 
     headerLayout->addLayout(titleLayout);
@@ -380,11 +390,11 @@ QWidget *AboutDialog::createAboutTab() {
     layout->addLayout(headerLayout);
 
     // Legal notice box with dynamic theme card
-    m_noticeBox = new QLabel(this);
+    m_noticeBox = new QLabel(tab);
     m_noticeBox->setWordWrap(true);
     layout->addWidget(m_noticeBox);
 
-    m_metaLabel = new QLabel(this);
+    m_metaLabel = new QLabel(tab);
     m_metaLabel->setOpenExternalLinks(true);
     layout->addWidget(m_metaLabel);
 
@@ -393,39 +403,39 @@ QWidget *AboutDialog::createAboutTab() {
 }
 
 QWidget *AboutDialog::createMaintainerTab() {
-    QWidget *tab = new QWidget(this);
+    QWidget *tab = new QWidget(m_tabWidget);
     QVBoxLayout *layout = new QVBoxLayout(tab);
     layout->setContentsMargins(16, 16, 16, 16);
     layout->setSpacing(12);
 
-    m_maintainerBrowser = new QTextBrowser(this);
+    m_maintainerBrowser = new QTextBrowser(tab);
     m_maintainerBrowser->setOpenExternalLinks(true);
     layout->addWidget(m_maintainerBrowser);
     return tab;
 }
 
 QWidget *AboutDialog::createCreditsTab() {
-    QWidget *tab = new QWidget(this);
+    QWidget *tab = new QWidget(m_tabWidget);
     QVBoxLayout *layout = new QVBoxLayout(tab);
     layout->setContentsMargins(16, 16, 16, 16);
 
-    m_creditsBrowser = new QTextBrowser(this);
+    m_creditsBrowser = new QTextBrowser(tab);
     m_creditsBrowser->setOpenExternalLinks(true);
     layout->addWidget(m_creditsBrowser);
     return tab;
 }
 
 QWidget *AboutDialog::createEnvironmentTab() {
-    QWidget *tab = new QWidget(this);
+    QWidget *tab = new QWidget(m_tabWidget);
     QVBoxLayout *layout = new QVBoxLayout(tab);
     layout->setContentsMargins(16, 16, 16, 16);
     layout->setSpacing(14);
 
-    m_diagnosticsCard = new QLabel(this);
+    m_diagnosticsCard = new QLabel(tab);
     m_diagnosticsCard->setTextFormat(Qt::RichText);
     layout->addWidget(m_diagnosticsCard);
 
-    QPushButton *copyBtn = new QPushButton(tr("Copy Diagnostics to Clipboard"), this);
+    QPushButton *copyBtn = new QPushButton(tr("Copy Diagnostics to Clipboard"), tab);
     copyBtn->setCursor(Qt::PointingHandCursor);
     connect(copyBtn, &QPushButton::clicked, this, &AboutDialog::copySystemInfoToClipboard);
     layout->addWidget(copyBtn);
@@ -435,22 +445,22 @@ QWidget *AboutDialog::createEnvironmentTab() {
 }
 
 QWidget *AboutDialog::createShortcutsTab() {
-    QWidget *tab = new QWidget(this);
+    QWidget *tab = new QWidget(m_tabWidget);
     QVBoxLayout *layout = new QVBoxLayout(tab);
     layout->setContentsMargins(16, 16, 16, 16);
 
-    m_shortcutsBrowser = new QTextBrowser(this);
+    m_shortcutsBrowser = new QTextBrowser(tab);
     m_shortcutsBrowser->setOpenExternalLinks(false);
     layout->addWidget(m_shortcutsBrowser);
     return tab;
 }
 
 QWidget *AboutDialog::createLicenseTab() {
-    QWidget *tab = new QWidget(this);
+    QWidget *tab = new QWidget(m_tabWidget);
     QVBoxLayout *layout = new QVBoxLayout(tab);
     layout->setContentsMargins(16, 16, 16, 16);
 
-    m_licenseBrowser = new QTextBrowser(this);
+    m_licenseBrowser = new QTextBrowser(tab);
     m_licenseBrowser->setOpenExternalLinks(true);
     layout->addWidget(m_licenseBrowser);
     return tab;

@@ -2184,4 +2184,62 @@
       <translation>Tutup berkas saat ini</translation>
     </message>
   </context>
+  <context>
+    <name>SaveModifiedDialog</name>
+    <message>
+      <location filename="../src/dialogs/SaveModifiedDialog.cpp" line="34"/>
+      <source>Save Changes</source>
+      <translation>Simpan Perubahan</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/SaveModifiedDialog.cpp" line="67"/>
+      <source>Untitled</source>
+      <translation>Tanpa Judul</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/SaveModifiedDialog.cpp" line="68"/>
+      <source>Do you want to save the changes made to the document "%1"?</source>
+      <translation>Apakah Anda ingin menyimpan perubahan pada dokumen "%1"?</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/SaveModifiedDialog.cpp" line="70"/>
+      <source>There are %n documents with unsaved changes. Save them before closing?</source>
+      <translation>Terdapat %n dokumen dengan perubahan yang belum disimpan. Simpan sebelum menutup?</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/SaveModifiedDialog.cpp" line="75"/>
+      <source>Your changes will be permanently lost if you don't save them.</source>
+      <translation>Perubahan Anda akan hilang secara permanen jika Anda tidak menyimpannya.</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/SaveModifiedDialog.cpp" line="87"/>
+      <source>New unsaved document</source>
+      <translation>Dokumen baru belum disimpan</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/SaveModifiedDialog.cpp" line="115"/>
+      <source>Don't Save All</source>
+      <translation>Jangan Simpan Semua</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/SaveModifiedDialog.cpp" line="115"/>
+      <source>Don't Save</source>
+      <translation>Jangan Simpan</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/SaveModifiedDialog.cpp" line="122"/>
+      <source>Cancel</source>
+      <translation>Batal</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/SaveModifiedDialog.cpp" line="126"/>
+      <source>Save All</source>
+      <translation>Simpan Semua</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/SaveModifiedDialog.cpp" line="126"/>
+      <source>Save</source>
+      <translation>Simpan</translation>
+    </message>
+  </context>
 </TS>

@@ -51,6 +51,7 @@ private:
     QTextBrowser *m_creditsBrowser = nullptr;
     QTextBrowser *m_shortcutsBrowser = nullptr;
     QTextBrowser *m_licenseBrowser = nullptr;
+    bool m_isUpdatingTheme = false;
 };
 
 #endif  // ABOUTDIALOG_H
