@@ -51,9 +51,13 @@
 #include <QScreen>
 #include <QFontDatabase>
 #include <QSysInfo>
+#include <functional>
+#include <algorithm>
 
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
 #include <QSimpleUpdater.h>
+#endif
+#ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
 
@@ -272,6 +276,9 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 
     connectEditorAction(ui->actionUpperCase, &ScintillaNext::upperCase);
     connectEditorAction(ui->actionLowerCase, &ScintillaNext::lowerCase);
+    connect(ui->actionTitleCase, &QAction::triggered, this, &MainWindow::titleCase);
+    connect(ui->actionSentenceCase, &QAction::triggered, this, &MainWindow::sentenceCase);
+    connect(ui->actionInvertCase, &QAction::triggered, this, &MainWindow::invertCase);
 
     connectEditorAction(ui->actionDuplicateCurrentLine, &ScintillaNext::lineDuplicate);
     connectEditorAction(ui->actionMoveSelectedLinesUp, &ScintillaNext::moveSelectedLinesUp);
@@ -353,6 +360,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connectEditorAction(ui->actionCopy, &ScintillaNext::copyAllowLine);
     connectEditorAction(ui->actionDelete, &ScintillaNext::clear);
     connectEditorAction(ui->actionPaste, &ScintillaNext::paste);
+    connect(ui->actionPasteWithoutFormat, &QAction::triggered, this, &MainWindow::pasteWithoutFormat);
     connectEditorAction(ui->actionSelectAll, &ScintillaNext::selectAll);
     connect(ui->actionSelectNext, &QAction::triggered, this, [this]() {
         ScintillaNext *editor = currentEditor();
@@ -505,23 +513,23 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     }
 
     auto mark_callback = [=, this]() {
-        MarkerAppDecorator *markerAppDecorator = app->findChild<MarkerAppDecorator*>(QString(), Qt::FindDirectChildrenOnly);
+        MarkerAppDecorator *decorator = app->findChild<MarkerAppDecorator*>(QString(), Qt::FindDirectChildrenOnly);
 
-        if (markerAppDecorator && markerAppDecorator->isEnabled()) {
+        if (decorator && decorator->isEnabled()) {
             if (sender()->property("MarkerNumber").isValid()) {
                 ScintillaNext *editor = currentEditor();
-                markerAppDecorator->mark(editor, sender()->property("MarkerNumber").toInt());
+                decorator->mark(editor, sender()->property("MarkerNumber").toInt());
             }
         }
     };
 
     auto clear_mark_callback = [=, this]() {
-        MarkerAppDecorator *markerAppDecorator = app->findChild<MarkerAppDecorator*>(QString(), Qt::FindDirectChildrenOnly);
+        MarkerAppDecorator *decorator = app->findChild<MarkerAppDecorator*>(QString(), Qt::FindDirectChildrenOnly);
 
-        if (markerAppDecorator && markerAppDecorator->isEnabled()) {
+        if (decorator && decorator->isEnabled()) {
             if (sender()->property("MarkerNumber").isValid()) {
                 ScintillaNext *editor = currentEditor();
-                markerAppDecorator->clear(editor, sender()->property("MarkerNumber").toInt());
+                decorator->clear(editor, sender()->property("MarkerNumber").toInt());
             }
         }
     };
@@ -1850,6 +1858,134 @@ void MainWindow::convertEOLs(int eolMode)
     ui->statusBar->refresh(editor);
 }
 
+static void applyCaseTransform(ScintillaNext *editor, const std::function<QString(const QString &)> &transformFunc)
+{
+    if (!editor) {
+        return;
+    }
+
+    std::vector<std::pair<int, int>> selections;
+    const int num = editor->selections();
+    for (int i = 0; i < num; ++i) {
+        const int start = editor->selectionNStart(i);
+        const int end = editor->selectionNEnd(i);
+        if (start != end) {
+            selections.emplace_back(start, end);
+        }
+    }
+
+    if (selections.empty()) {
+        return;
+    }
+
+    std::sort(selections.begin(), selections.end());
+
+    editor->beginUndoAction();
+    editor->clearSelections();
+
+    int offset = 0;
+    for (size_t i = 0; i < selections.size(); ++i) {
+        const auto &sel = selections[i];
+        const int start = sel.first + offset;
+        const int end = sel.second + offset;
+        editor->setTargetRange(start, end);
+
+        const QByteArray target = editor->targetText();
+        const QString text = QString::fromUtf8(target);
+        const QString transformed = transformFunc(text);
+        const QByteArray transBytes = transformed.toUtf8();
+
+        editor->replaceTarget(transBytes.length(), transBytes.constData());
+
+        const int newEnd = start + transBytes.length();
+        if (i == 0) {
+            editor->setSelection(newEnd, start);
+        } else {
+            editor->addSelection(newEnd, start);
+        }
+
+        offset += (transBytes.length() - target.length());
+    }
+    editor->endUndoAction();
+}
+
+void MainWindow::titleCase()
+{
+    applyCaseTransform(currentEditor(), [](const QString &input) {
+        QString result = input;
+        bool newWord = true;
+        for (int i = 0; i < result.length(); ++i) {
+            const QChar ch = result.at(i);
+            if (ch.isLetter()) {
+                if (newWord) {
+                    result[i] = ch.toUpper();
+                    newWord = false;
+                } else {
+                    result[i] = ch.toLower();
+                }
+            } else if (!ch.isMark()) {
+                newWord = true;
+            }
+        }
+        return result;
+    });
+}
+
+void MainWindow::sentenceCase()
+{
+    applyCaseTransform(currentEditor(), [](const QString &input) {
+        QString result = input;
+        bool newSentence = true;
+        for (int i = 0; i < result.length(); ++i) {
+            const QChar ch = result.at(i);
+            if (ch.isLetter()) {
+                if (newSentence) {
+                    result[i] = ch.toUpper();
+                    newSentence = false;
+                } else {
+                    result[i] = ch.toLower();
+                }
+            } else if (ch == QLatin1Char('.') || ch == QLatin1Char('!') || ch == QLatin1Char('?') || ch == QLatin1Char('\n') || ch == QLatin1Char('\r')) {
+                newSentence = true;
+            }
+        }
+        return result;
+    });
+}
+
+void MainWindow::invertCase()
+{
+    applyCaseTransform(currentEditor(), [](const QString &input) {
+        QString result = input;
+        for (int i = 0; i < result.length(); ++i) {
+            const QChar ch = result.at(i);
+            if (ch.isUpper()) {
+                result[i] = ch.toLower();
+            } else if (ch.isLower()) {
+                result[i] = ch.toUpper();
+            }
+        }
+        return result;
+    });
+}
+
+void MainWindow::pasteWithoutFormat()
+{
+    ScintillaNext *editor = currentEditor();
+    if (!editor) {
+        return;
+    }
+    const QClipboard *clipboard = QApplication::clipboard();
+    if (!clipboard) {
+        return;
+    }
+    const QString text = clipboard->text(QClipboard::Clipboard);
+    if (!text.isEmpty()) {
+        const QByteArray bytes = text.toUtf8();
+        editor->replaceSel(bytes.constData());
+    }
+}
+
 void MainWindow::showFindReplaceDialog(int index)
 {
     ScintillaNext *editor = currentEditor();
@@ -2059,9 +2195,13 @@ void MainWindow::updateContentBasedUi(ScintillaNext *editor)
     bool hasAnySelections = !editor->selectionEmpty();
 
     ui->actionPaste->setEnabled(editor->canPaste());
+    ui->actionPasteWithoutFormat->setEnabled(editor->canPaste());
 
     ui->actionLowerCase->setEnabled(hasAnySelections);
     ui->actionUpperCase->setEnabled(hasAnySelections);
+    ui->actionTitleCase->setEnabled(hasAnySelections);
+    ui->actionSentenceCase->setEnabled(hasAnySelections);
+    ui->actionInvertCase->setEnabled(hasAnySelections);
 
     ui->actionBase64Encode->setEnabled(hasAnySelections);
     ui->actionURLEncode->setEnabled(hasAnySelections);
@@ -2378,12 +2518,10 @@ void MainWindow::addEditor(ScintillaNext *editor)
             QStringLiteral("Cut"),
             QStringLiteral("Copy"),
             QStringLiteral("Paste"),
+            QStringLiteral("PasteWithoutFormat"),
             QStringLiteral("Delete"),
             QStringLiteral(""),
             QStringLiteral("SelectAll"),
-            QStringLiteral(""),
-            QStringLiteral("UpperCase"),
-            QStringLiteral("LowerCase"),
             QStringLiteral(""),
             QStringLiteral("Open"),
             QStringLiteral("Save"),
@@ -2414,6 +2552,7 @@ void MainWindow::addEditor(ScintillaNext *editor)
         }
 
         auto menu = buildMenu(actionNames);
+        menu->addMenu(ui->menuConvertCase);
         menu->addSeparator();
         menu->addMenu(ui->menuMarkAllOccurrences);
         menu->addMenu(ui->menuClearMarks);
@@ -2427,17 +2566,15 @@ void MainWindow::addEditor(ScintillaNext *editor)
 
 void MainWindow::checkForUpdates(bool silent)
 {
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
     qInfo(Q_FUNC_INFO);
 
-    QString url = "https://github.com/alsyundawy/NotepadNext-MacOS/raw/master/updates.json";
+    const QString url = QStringLiteral("https://github.com/alsyundawy/NotepadNext-MacOS/raw/master/updates.json");
 
-#if defined(_M_ARM64) || defined(__aarch64__)
-    // updates.json only points to the x64 installer, so ARM64 builds check
-    // the "windows-arm64" key instead. Until that key is added to the json,
-    // the updater will never report an available update which effectively
-    // disables the auto updater rather than downloading a useless x64 installer.
-    QSimpleUpdater::getInstance()->setPlatformKey(url, "windows-arm64");
+#if defined(Q_OS_MACOS)
+    QSimpleUpdater::getInstance()->setPlatformKey(url, QStringLiteral("macos"));
+#elif defined(_M_ARM64) || defined(__aarch64__)
+    QSimpleUpdater::getInstance()->setPlatformKey(url, QStringLiteral("windows-arm64"));
 #endif
     QSimpleUpdater::getInstance()->checkForUpdates(url);
 
@@ -2448,8 +2585,7 @@ void MainWindow::checkForUpdates(bool silent)
         disconnect(QSimpleUpdater::getInstance(), &QSimpleUpdater::checkingFinished, this, &MainWindow::checkForUpdatesFinished);
     }
 
-
-    app->getSettings()->setValue("App/LastUpdateCheck", QDateTime::currentDateTime());
+    app->getSettings()->setValue(QStringLiteral("App/LastUpdateCheck"), QDateTime::currentDateTime());
 #else
     Q_UNUSED(silent);
 #endif
@@ -2457,52 +2593,44 @@ void MainWindow::checkForUpdates(bool silent)
 
 void MainWindow::checkForUpdatesFinished(const QString &url)
 {
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
     if (!QSimpleUpdater::getInstance()->getUpdateAvailable(url)) {
         QMessageBox::information(this, QString(), tr("No updates are available at this time."));
     }
+#else
+    Q_UNUSED(url);
 #endif
 }
 
 void MainWindow::initUpdateCheck()
 {
-#ifdef Q_OS_WIN
-#ifdef QT_DEBUG
-    if (true) {
-#else
-    QSettings registry(QSettings::NativeFormat, QSettings::UserScope, QApplication::organizationName(), QApplication::applicationName());
-    const bool autoUpdatesEnabled = registry.value("AutoUpdate", 0).toBool();
-    qInfo("AutoUpdates: %d", autoUpdatesEnabled);
+#if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
+    connect(ui->actionCheckForUpdates, &QAction::triggered, this, [this]() {
+        checkForUpdates(false);
+    });
+    ui->actionCheckForUpdates->setEnabled(true);
+    ui->actionCheckForUpdates->setVisible(true);
 
-    if (autoUpdatesEnabled) {
-#endif
-        connect(ui->actionCheckForUpdates, &QAction::triggered, this, &MainWindow::checkForUpdates);
+    // A bit after startup, see if we need to automatically check for an update
+    QTimer::singleShot(15000, this, [this]() {
+        ApplicationSettings settings;
+        QDateTime dt = settings.value(QStringLiteral("App/LastUpdateCheck"), QDateTime::currentDateTime()).toDateTime();
 
-        // A bit after startup, see if we need to automatically check for an update
-        QTimer::singleShot(15000, this, [this]() {
-            ApplicationSettings settings;
-            QDateTime dt = settings.value("App/LastUpdateCheck", QDateTime::currentDateTime()).toDateTime();
+        if (dt.isValid()) {
+            qInfo("Last checked for updates at: %s", qUtf8Printable(dt.toString()));
 
-            if (dt.isValid()) {
-                qInfo("Last checked for updates at: %s", qUtf8Printable(dt.toString()));
-
-                if (dt.addDays(7) < QDateTime::currentDateTime()) {
-                    checkForUpdates(true);
-                }
+            if (dt.addDays(7) < QDateTime::currentDateTime()) {
+                checkForUpdates(true);
             }
-        });
-    }
-    else {
-        ui->actionCheckForUpdates->setDisabled(true);
-        ui->actionCheckForUpdates->setVisible(false);
-    }
+        }
+    });
 #else
     ui->actionCheckForUpdates->setDisabled(true);
     ui->actionCheckForUpdates->setVisible(false);
 #endif
 }
 
-void MainWindow::closeEvent(QCloseEvent *event)
+void MainWindow::closeEvent(QCloseEvent *closeEv)
 {
     const SessionManager *sessionManager = app->getSessionManager();
     QVector<ScintillaNext *> e;
@@ -2515,15 +2643,15 @@ void MainWindow::closeEvent(QCloseEvent *event)
     }
 
     if (!checkEditorsBeforeClose(e)) {
-        event->ignore();
+        closeEv->ignore();
         return;
     }
 
     emit aboutToClose();
 
-    event->accept();
+    closeEv->accept();
 
-    QMainWindow::closeEvent(event);
+    QMainWindow::closeEvent(closeEv);
 }
 
 void MainWindow::dragEnterEvent(QDragEnterEvent *event)

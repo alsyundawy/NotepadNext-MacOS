@@ -363,15 +363,25 @@ void ThemeManager::applyThemeToEditor(ScintillaNext *editor) {
     // 24: Decorators
     editor->styleSetFore(24, scFromRgb(cyan.rgb()));
 
-    // 11. Dark mode safety: Ensure no style slot (0..127) has black or near-black foreground (prevent unreadable dark text on paste or unstyled tokens)
+    // 11. Dark mode safety: Ensure no style slot (0..127) has black/dark foreground or white/light background
     if (pal->isDark) {
         for (int i = 0; i <= 127; ++i) {
+            // Foreground contrast check: ensure text is never dark on a dark theme
             quint32 fg = static_cast<quint32>(editor->styleFore(i));
-            int r = fg & 0xFF;
-            int g = (fg >> 8) & 0xFF;
-            int b = (fg >> 16) & 0xFF;
-            if (r * 299 + g * 587 + b * 114 < 70000) {
+            int fgR = fg & 0xFF;
+            int fgG = (fg >> 8) & 0xFF;
+            int fgB = (fg >> 16) & 0xFF;
+            if (fgR * 299 + fgG * 587 + fgB * 114 < 140000) {
                 editor->styleSetFore(i, scFromRgb(txtPri.rgb()));
+            }
+
+            // Background contrast check: ensure background is never bright/white on a dark theme
+            quint32 bg = static_cast<quint32>(editor->styleBack(i));
+            int bgR = bg & 0xFF;
+            int bgG = (bg >> 8) & 0xFF;
+            int bgB = (bg >> 16) & 0xFF;
+            if (bgR * 299 + bgG * 587 + bgB * 114 > 90000) {
+                editor->styleSetBack(i, scFromRgb(card.rgb()));
             }
         }
     }

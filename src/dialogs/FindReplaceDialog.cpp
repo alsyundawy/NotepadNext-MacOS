@@ -211,7 +211,7 @@ bool FindReplaceDialog::event(QEvent *e)
     return QDialog::event(e);
 }
 
-void FindReplaceDialog::showEvent(QShowEvent *e)
+void FindReplaceDialog::showEvent(QShowEvent *showEv)
 {
     qInfo(Q_FUNC_INFO);
 
@@ -220,14 +220,14 @@ void FindReplaceDialog::showEvent(QShowEvent *e)
 
     isFirstTime = false;
 
-    QDialog::showEvent(e);
+    QDialog::showEvent(showEv);
 }
 
-void FindReplaceDialog::closeEvent(QCloseEvent *e)
+void FindReplaceDialog::closeEvent(QCloseEvent *closeEv)
 {
     saveSettings();
 
-    QDialog::closeEvent(e);
+    QDialog::closeEvent(closeEv);
 }
 
 static void updateComboList(QComboBox *comboBox, const QString &text)
@@ -575,7 +575,6 @@ void FindReplaceDialog::prepareToPerformSearch(bool isReplace)
 
     if (ui->radioExtendedSearch->isChecked()) {
         convertToExtended(findText);
-        //convertToExtended(replaceText);
     }
 
     finder->options() = findOptions();

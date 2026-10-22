@@ -107,6 +107,10 @@ public slots:
     void print();
 
     void convertEOLs(int eolMode);
+    void titleCase();
+    void sentenceCase();
+    void invertCase();
+    void pasteWithoutFormat();
 
     void showFindReplaceDialog(int index);
 

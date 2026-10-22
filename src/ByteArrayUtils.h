@@ -132,11 +132,11 @@ inline QByteArray join(const QList<QByteArrayView>& parts, const QByteArray& del
     for (int i = 0; i < parts.size(); ++i) {
         const auto& v = parts[i];
 
-        memcpy(dst, v.data(), v.size());
+        std::copy_n(v.data(), v.size(), dst);
         dst += v.size();
 
         if (i + 1 < parts.size()) {
-            memcpy(dst, delimiter.constData(), dlen);
+            std::copy_n(delimiter.constData(), dlen, dst);
             dst += dlen;
         }
     }

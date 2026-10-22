@@ -22,16 +22,46 @@ Format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) a
 - 🇬🇧 **Dedicated Themes Menu & Preferences Integration**: Added top-level `&Themes` menu to `MainWindow` with one-click toggling (`Ctrl+Alt+T` / `Cmd+Alt+T`), Light/Dark submenus, and Family submenus. Integrated a modern `Themes & Visual Styling` panel at the top of the General Preferences page.
 - 🇮🇩 **Menu Tema Terdedikasi & Integrasi Pengaturan**: Menambahkan menu utama `&Themes` pada `MainWindow` dengan tombol pintas (`Ctrl+Alt+T` / `Cmd+Alt+T`), submenu Terang/Gelap, dan submenu Famili Tema. Mengintegrasikan panel `Themes & Visual Styling` modern pada bagian teratas dialog Pengaturan Umum.
 
+### 🔄 Auto-Update & Help Menu Integration / Integrasi Pembaruan Otomatis & Menu Bantuan
+
+- 🇬🇧 **Native macOS Update Check**: Enabled "Check for Updates" under Help menu on macOS via `QSimpleUpdater`, querying `https://github.com/alsyundawy/NotepadNext-MacOS/raw/master/updates.json` with dedicated platform key `"macos"`.
+- 🇮🇩 **Pemeriksaan Pembaruan Native macOS**: Mengaktifkan "Periksa Pembaruan" pada menu Bantuan di macOS via `QSimpleUpdater`, menghubungkan ke `updates.json` dengan platform key `"macos"`.
+
+### 🔤 Convert Case & Context Menu Enhancement / Peningkatan Menu Konversi Huruf & Konteks
+
+- 🇬🇧 **Complete Convert Case Submenu**: Added `Convert Case >` submenu to the editor right-click context menu and Edit menu, featuring `UPPER CASE`, `lower case`, separator, `Title Case`, `Sentence case`, and `iNVERT cASE`.
+- 🇮🇩 **Submenu Konversi Huruf Lengkap**: Menambahkan submenu `Convert Case >` pada menu klik kanan editor dan menu Edit, mencakup `UPPER CASE`, `lower case`, pemisah, `Title Case`, `Sentence case`, dan `iNVERT cASE`.
+- 🇬🇧 **Multi-Selection & Unicode Safe**: Supports multi-selection ranges, full UTF-8 Unicode letter handling, and single atomic undo grouping across all case transformations.
+- 🇮🇩 **Mendukung Multi-Seleksi & Aman Unicode**: Mendukung rentang seleksi ganda, penanganan huruf UTF-8 Unicode lengkap, dan satu aksi pembatalan (undo) atomik.
+- 🇬🇧 **Paste Plain Text / Without Formatting**: Added `Paste Plain Text` (`actionPasteWithoutFormat`) with `Cmd+Shift+V` / `Ctrl+Shift+V` shortcut in Edit and editor context menus.
+- 🇮🇩 **Tempel Teks Polos Tanpa Format**: Menambahkan `Tempel Teks Polos` (`actionPasteWithoutFormat`) dengan pintasan `Cmd+Shift+V` / `Ctrl+Shift+V` pada menu Edit dan menu konteks editor.
+
+### 🌓 Dark Mode Contrast & Pasted Text Fix / Perbaikan Kontras & Warna Teks Tempel Mode Gelap
+
+- 🇬🇧 **Elimination of White Background Blocks**: Removed legacy hardcoded `bgColor = rgb(0xFFFFFF)` in `src/languages/markdown.lua`, eliminating white background rectangles when pasting bullet lists or headers.
+- 🇮🇩 **Pelenyapan Kotak Latar Putih**: Menghapus kode lama `bgColor = rgb(0xFFFFFF)` di `src/languages/markdown.lua`, menghilangkan kotak putih saat menempel teks daftar atau judul.
+- 🇬🇧 **Luminance Safety Sweep in ThemeManager**: Implemented dual luminance scanning across all 128 Scintilla style slots in dark mode, automatically elevating dark text (`lum < 140`) to `txtPri` and resetting bright backgrounds (`lum > 90`) to canvas.
+- 🇮🇩 **Pemindaian Luminansi di ThemeManager**: Menerapkan pemindaian luminansi ganda pada 128 slot gaya Scintilla dalam mode gelap, mengangkat teks gelap (`lum < 140`) dan mereset latar terang (`lum > 90`).
+- 🇬🇧 **Lua Init Style Protection**: Enhanced `init.lua` with dynamic luminance checks before applying language styles in dark mode.
+- 🇮🇩 **Proteksi Gaya Lua Init**: Menyempurnakan `init.lua` dengan pemeriksaan luminansi dinamis sebelum menerapkan gaya bahasa pada mode gelap.
+
+### 🚀 CI/CD Pipeline & GitHub Actions Stabilization / Stabilisasi Pipeline CI/CD & GitHub Actions
+
+- 🇬🇧 **Runner Matrix Optimization**: Standardized `.github/workflows/build.yml` and `release.yml` with valid official runners (`macos-15-intel`, `macos-14`, `macos-15`) and official Qt LTS versions (`6.5`, `6.8`), eliminating build timeouts and missing runner failures.
+- 🇮🇩 **Optimalisasi Matriks Runner**: Menstandarisasi `.github/workflows/build.yml` dan `release.yml` dengan runner resmi valid (`macos-15-intel`, `macos-14`, `macos-15`) dan Qt LTS (`6.5`, `6.8`), mengatasi kegagalan runner dan timeout.
+- 🇬🇧 **Fork Protection for Post-Release & CodeQL**: Added repository guards to prevent winget publish errors on forks and configured CodeQL triggers to prevent conflicts with GitHub Code Scanning default setup.
+- 🇮🇩 **Proteksi Fork untuk Post-Release & CodeQL**: Menambahkan pengaman repositori untuk mencegah kegagalan winget pada fork dan menyelaraskan konfigurasi CodeQL dengan pengaturan default GitHub.
+
 ### 🛡️ 13-Pillar Codebase Hardening & Bug Fixes / Penguatan Kode 13 Pilar & Perbaikan Bug
 
 - 🇬🇧 **Null Pointer Defense (CWE-476)**: Added defensive null pointer guards across `MainWindow.cpp` (`updateGui`, `updateFileStatusBasedUi`, `updateEOLBasedUi`, `updateSaveStatusBasedUi`, `updateLanguageBasedUi`, `updateDocumentBasedUi`, `updateSelectionBasedUi`, `updateContentBasedUi`, `detectLanguage`, `activateEditor`), preventing potential segmentation faults during dock tear-downs and tab close events.
 - 🇮🇩 **Pencegahan Null Pointer (CWE-476)**: Menambahkan pengecekan null pointer defensif pada seluruh fungsi pembaruan UI di `MainWindow.cpp`, mencegah potensi crash segmentasi saat penutupan tab atau pelepasan dock.
+- 🇬🇧 **Buffer Safety (CWE-120/CWE-126)**: Replaced raw `memcpy` with safe `std::copy_n` in `ByteArrayUtils.h`, and added null checks and safe string length handling in `LuaConsoleDock.cpp`.
+- 🇮🇩 **Keamanan Buffer (CWE-120/CWE-126)**: Mengganti `memcpy` mentah dengan `std::copy_n` di `ByteArrayUtils.h`, serta menambahkan validasi null pointer dan penanganan string aman di `LuaConsoleDock.cpp`.
 - 🇬🇧 **Filesystem Return Code Verification**: Enhanced `ScintillaNext.cpp` to verify the return status of `QDir::mkpath()`, logging diagnostic warnings upon filesystem failures instead of silently ignoring errors.
 - 🇮🇩 **Verifikasi Return Code Sistem Berkas**: Menyempurnakan `ScintillaNext.cpp` untuk memeriksa status kembalian fungsi `QDir::mkpath()` dan mencatat peringatan diagnostik ketika pembuatan direktori gagal.
-- 🇬🇧 **Pointer Type Safety in IFaceTableMixer**: Replaced auto reference `auto const &iface` with explicit `const IFaceTableInterface *iface` in pointer range loops in `src/IFaceTableMixer.cpp` to eliminate pointer-decay ambiguities.
-- 🇮🇩 **Keamanan Tipe Pointer pada IFaceTableMixer**: Mengganti referensi auto `auto const &iface` dengan tipe pointer eksplisit `const IFaceTableInterface *iface` pada perulangan di `src/IFaceTableMixer.cpp`.
-- 🇬🇧 **Variable Shadowing Elimination**: Resolved shadowed variables `targetEd` and `totalReplaced` in `FindReplaceDialog.cpp` to prevent subtle lexical scoping logic defects.
-- 🇮🇩 **Pembersihan Penyamaran Variabel**: Memperbaiki variabel yang tersamar `targetEd` dan `totalReplaced` pada `FindReplaceDialog.cpp` untuk mencegah kesalahan logika cakupan leksikal.
+- 🇬🇧 **Variable Shadowing Elimination**: Resolved shadowed variables `markerAppDecorator`, `closeEv`, `showEv`, `targetEd`, and `totalReplaced` across `MainWindow.cpp`, `AboutDialog.cpp`, and `FindReplaceDialog.cpp`.
+- 🇮🇩 **Pembersihan Penyamaran Variabel**: Memperbaiki variabel yang tersamar `markerAppDecorator`, `closeEv`, `showEv`, `targetEd`, dan `totalReplaced` pada `MainWindow.cpp`, `AboutDialog.cpp`, dan `FindReplaceDialog.cpp`.
 - 🇬🇧 **Tab Bar Visual Artifact Fix**: Disabled base line drawing (`tabBar->setDrawBase(false)`) across tabbed dialogs (`FindReplaceDialog`, `AboutDialog`) to prevent unstyled line clipping artifacts under dark themes.
 - 🇮🇩 **Perbaikan Garis Bawah Tab Bar**: Menonaktifkan penggambaran garis dasar (`tabBar->setDrawBase(false)`) pada dialog bertab (`FindReplaceDialog`, `AboutDialog`) untuk mencegah garis kliping yang tidak terwarnai pada tema gelap.
 
@@ -48,8 +78,8 @@ Format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) a
 
 - 🇬🇧 **Version Bump to 0.15-05**: Updated application version to `0.15-05` across `CMakeLists.txt`, `src/CMakeLists.txt`, `updates.json`, and documentation notes.
 - 🇮🇩 **Peningkatan Versi ke 0.15-05**: Memperbarui versi aplikasi menjadi `0.15-05` pada `CMakeLists.txt`, `src/CMakeLists.txt`, `updates.json`, dan catatan dokumentasi.
-- 🇬🇧 **Linter Cleanliness**: 100% compliant with `trunk check`, `markdownlint`, `prettier`, and MegaLinter quality gates.
-- 🇮🇩 **Kepatuhan Linter Penuh**: Memenuhi 100% standar pengujian `trunk check`, `markdownlint`, `prettier`, dan gerbang kualitas MegaLinter.
+- 🇬🇧 **Linter Cleanliness**: 100% compliant with `trunk check`, `cppcheck`, `markdownlint`, `prettier`, and MegaLinter quality gates.
+- 🇮🇩 **Kepatuhan Linter Penuh**: Memenuhi 100% standar pengujian `trunk check`, `cppcheck`, `markdownlint`, `prettier`, dan gerbang kualitas MegaLinter.
 
 ---
 

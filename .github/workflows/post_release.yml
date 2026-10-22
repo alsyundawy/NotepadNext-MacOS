@@ -11,6 +11,7 @@ permissions:
 jobs:
   create-issues:
     name: Create GitHub Issues
+    if: github.repository == 'dail8859/NotepadNext'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -30,6 +31,7 @@ jobs:
 
   winget:
     name: Publish to WinGet
+    if: github.repository == 'dail8859/NotepadNext'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:

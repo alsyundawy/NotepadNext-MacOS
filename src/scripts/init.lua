@@ -52,11 +52,23 @@ function SetStyle(L)
     if L.styles then
         for _, style in pairs(L.styles) do
             if is_dark_theme then
-                if style.bgColor and style.bgColor ~= rgb(0xFFFFFF) then
-                    editor.StyleBack[style.id] = style.bgColor
+                if style.bgColor then
+                    local r = style.bgColor & 0xFF
+                    local g = (style.bgColor >> 8) & 0xFF
+                    local b = (style.bgColor >> 16) & 0xFF
+                    local bgLum = (r * 299 + g * 587 + b * 114) / 1000
+                    if bgLum <= 90 then
+                        editor.StyleBack[style.id] = style.bgColor
+                    end
                 end
-                if style.fgColor and style.fgColor ~= rgb(0x000000) and style.fgColor ~= 0 then
-                    editor.StyleFore[style.id] = style.fgColor
+                if style.fgColor then
+                    local r = style.fgColor & 0xFF
+                    local g = (style.fgColor >> 8) & 0xFF
+                    local b = (style.fgColor >> 16) & 0xFF
+                    local fgLum = (r * 299 + g * 587 + b * 114) / 1000
+                    if fgLum >= 140 then
+                        editor.StyleFore[style.id] = style.fgColor
+                    end
                 end
             else
                 editor.StyleFore[style.id] = style.fgColor

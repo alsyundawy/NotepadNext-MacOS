@@ -62,9 +62,9 @@ void AboutDialog::setupUi() {
     mainLayout->addWidget(buttonBox);
 }
 
-void AboutDialog::changeEvent(QEvent *event) {
-    QDialog::changeEvent(event);
-    if ((event->type() == QEvent::PaletteChange || event->type() == QEvent::ApplicationPaletteChange) && !m_isUpdatingTheme) {
+void AboutDialog::changeEvent(QEvent *chEv) {
+    QDialog::changeEvent(chEv);
+    if ((chEv->type() == QEvent::PaletteChange || chEv->type() == QEvent::ApplicationPaletteChange) && !m_isUpdatingTheme) {
         updateThemeColors();
     }
 }

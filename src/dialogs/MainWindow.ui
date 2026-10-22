@@ -126,6 +126,10 @@
      </property>
      <addaction name="actionUpperCase"/>
      <addaction name="actionLowerCase"/>
+     <addaction name="separator"/>
+     <addaction name="actionTitleCase"/>
+     <addaction name="actionSentenceCase"/>
+     <addaction name="actionInvertCase"/>
     </widget>
     <widget class="QMenu" name="menuLine_Operations">
      <property name="title">
@@ -181,6 +185,7 @@
     <addaction name="actionCut"/>
     <addaction name="actionCopy"/>
     <addaction name="actionPaste"/>
+    <addaction name="actionPasteWithoutFormat"/>
     <addaction name="actionDelete"/>
     <addaction name="actionSelectAll"/>
     <addaction name="actionSelectNext"/>
@@ -586,6 +591,17 @@
     <string notr="true">Ctrl+V</string>
    </property>
   </action>
+  <action name="actionPasteWithoutFormat">
+   <property name="text">
+    <string>Paste Plain Text</string>
+   </property>
+   <property name="toolTip">
+    <string>Paste clipboard text without formatting</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+Shift+V</string>
+   </property>
+  </action>
   <action name="actionDelete">
    <property name="text">
     <string>&amp;Delete</string>
@@ -727,6 +743,30 @@
    </property>
    <property name="toolTip">
     <string>Convert text to lower case</string>
+   </property>
+  </action>
+  <action name="actionTitleCase">
+   <property name="text">
+    <string>Title Case</string>
+   </property>
+   <property name="toolTip">
+    <string>Convert text to title case</string>
+   </property>
+  </action>
+  <action name="actionSentenceCase">
+   <property name="text">
+    <string>Sentence case</string>
+   </property>
+   <property name="toolTip">
+    <string>Convert text to sentence case</string>
+   </property>
+  </action>
+  <action name="actionInvertCase">
+   <property name="text">
+    <string>iNVERT cASE</string>
+   </property>
+   <property name="toolTip">
+    <string>Invert text case</string>
    </property>
   </action>
   <action name="actionDuplicateCurrentLine">
