@@ -1,6 +1,8 @@
 /*
- * This file is part of Notepad Next.
- * Copyright 2019 Justin Dailey
+ * This file is part of Notepad Next (macOS Edition).
+ * Copyright 2019-2026 Justin Dailey
+ * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * https://github.com/alsyundawy/NotepadNext-MacOS
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +18,6 @@
  * along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-
 #include "MainWindow.h"
 #include <QtGlobal>
 #include "AboutDialog.h"
@@ -31,6 +32,7 @@
 #include "MarkerAppDecorator.h"
 #include "ScintillaSorter.h"
 #include "URLFinder.h"
+#include "XmlFormatter.h"
 #include "SessionManager.h"
 #include "UndoAction.h"
 #include "ui_MainWindow.h"
@@ -39,6 +41,10 @@
 #include <QMessageBox>
 #include <QStringList>
 #include <QClipboard>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QJsonParseError>
 #include <QStandardPaths>
 #include <QWindow>
 #include <QPushButton>
@@ -50,6 +56,7 @@
 #include <QDirIterator>
 #include <QProcess>
 #include <QScreen>
+#include <QDockWidget>
 #include <QFontDatabase>
 #include <QSysInfo>
 #include <functional>
@@ -57,6 +64,9 @@
 
 #if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
 #include <QSimpleUpdater.h>
+#endif
+#ifdef Q_OS_MACOS
+#include <objc/message.h>
 #endif
 #ifdef Q_OS_WIN
 #include <Windows.h>
@@ -135,6 +145,27 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(dockedEditor, &DockedEditor::editorActivated, this, &MainWindow::activateEditor);
     connect(dockedEditor, &DockedEditor::contextMenuRequestedForEditor, this, &MainWindow::tabBarRightClicked);
     connect(dockedEditor, &DockedEditor::titleBarDoubleClicked, this, &MainWindow::newFile);
+
+    // React immediately (instead of only on tab-switch/window-focus) when an
+    // open file is changed by another program - but only if NotepadNext is
+    // actually the foreground window and the affected editor is the one
+    // currently visible, matching Notepad++'s behavior. Otherwise, do
+    // nothing here: the existing activateEditor() (tab switch) and
+    // focusIn() (window regains focus) code paths already re-check the
+    // file's timestamp and will surface the dialog at the right time.
+    connect(app->getEditorManager(), &EditorManager::editorFileChangedOnDisk, this, [=, this](ScintillaNext *editor) {
+        if (!isActiveWindow()) {
+            return;
+        }
+
+        if (editor != currentEditor()) {
+            return;
+        }
+
+        if (checkFileForModification(editor)) {
+            updateGui(currentEditor());
+        }
+    });
 
     // Set up the menus
     connect(ui->actionNew, &QAction::triggered, this, &MainWindow::newFile);
@@ -217,6 +248,74 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         const QByteArray selection = editor->getSelText();
         editor->replaceSel(QByteArray::fromPercentEncoding(selection).constData());
     });
+    connect(ui->actionXmlPrettyPrint, &QAction::triggered, this, [this]() {
+        ScintillaNext *editor = currentEditor();
+        if (!editor) {
+            return;
+        }
+
+        sptr_t pointer = editor->characterPointer();
+        int len = editor->length();
+        const QByteArray input = QByteArray::fromRawData(reinterpret_cast<const char *>(pointer), len);
+
+        QByteArray output;
+        QString errorString;
+
+        if (!XmlFormatter::format(input, output, errorString)) {
+            QMessageBox::warning(this, tr("Pretty Print XML"), errorString);
+            return;
+        }
+
+        const UndoAction ua(editor);
+        editor->targetWholeDocument();
+        editor->replaceTarget(output.length(), output.constData());
+    });
+    connect(ui->actionJsonFormat, &QAction::triggered, this, [this]() {
+        ScintillaNext *editor = currentEditor();
+        if (!editor) {
+            return;
+        }
+
+        sptr_t pointer = editor->characterPointer();
+        int len = editor->length();
+        const QByteArray input = QByteArray::fromRawData(reinterpret_cast<const char *>(pointer), len);
+
+        QJsonParseError parseError;
+        QJsonDocument doc = QJsonDocument::fromJson(input, &parseError);
+        if (parseError.error != QJsonParseError::NoError) {
+            QMessageBox::warning(this, tr("Format JSON"), tr("JSON Error: %1 (offset %2)").arg(parseError.errorString()).arg(parseError.offset));
+            return;
+        }
+
+        QByteArray output = doc.toJson(QJsonDocument::Indented);
+        const UndoAction ua(editor);
+        editor->targetWholeDocument();
+        editor->replaceTarget(output.length(), output.constData());
+    });
+    connect(ui->actionJsonMinify, &QAction::triggered, this, [this]() {
+        ScintillaNext *editor = currentEditor();
+        if (!editor) {
+            return;
+        }
+
+        sptr_t pointer = editor->characterPointer();
+        int len = editor->length();
+        const QByteArray input = QByteArray::fromRawData(reinterpret_cast<const char *>(pointer), len);
+
+        QJsonParseError parseError;
+        QJsonDocument doc = QJsonDocument::fromJson(input, &parseError);
+        if (parseError.error != QJsonParseError::NoError) {
+            QMessageBox::warning(this, tr("Minify JSON"), tr("JSON Error: %1 (offset %2)").arg(parseError.errorString()).arg(parseError.offset));
+            return;
+        }
+
+        QByteArray output = doc.toJson(QJsonDocument::Compact);
+        const UndoAction ua(editor);
+        editor->targetWholeDocument();
+        editor->replaceTarget(output.length(), output.constData());
+    });
+    connectEditorAction(ui->actionConvertTabsToSpaces, &ScintillaNext::convertTabsToSpaces);
+    connectEditorAction(ui->actionConvertSpacesToTabs, &ScintillaNext::convertSpacesToTabs);
     connect(ui->actionCopyURL, &QAction::triggered, this, [this]() {
         ScintillaNext *editor = currentEditor();
         URLFinder *urlFinder = editor->findChild<URLFinder *>(QString(), Qt::FindDirectChildrenOnly);
@@ -224,6 +323,17 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
             urlFinder->copyURLToClipboard(contextMenuPos);
         }
     });
+
+#ifdef Q_OS_MACOS
+    QAction *actionEmojiSymbols = ui->menuEdit->addAction(tr("Emoji & Symbols"));
+    actionEmojiSymbols->setShortcut(QKeySequence(Qt::META | Qt::CTRL | Qt::Key_Space));
+    connect(actionEmojiSymbols, &QAction::triggered, this, []() {
+        // [NSApp orderFrontCharacterPalette:nil];
+        id (*msgSendFn)(id, SEL, ...) = reinterpret_cast<id (*)(id, SEL, ...)>(objc_msgSend);
+        id app = msgSendFn(reinterpret_cast<id>(objc_getClass("NSApplication")), sel_registerName("sharedApplication"));
+        msgSendFn(app, sel_registerName("orderFrontCharacterPalette:"), nullptr);
+    });
+#endif
 
     connect(ui->actionClearRecentFilesList, &QAction::triggered, app->getRecentFilesListManager(), &RecentFilesListManager::clear);
 
@@ -1148,7 +1258,10 @@ void MainWindow::applyCustomShortcuts()
         for (const QString &shortcutString : value.toStringList()) {
             auto sequence = QKeySequence(shortcutString);
 
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#ifndef QT_VERSION_CHECK
+#define QT_VERSION_CHECK(major, minor, patch) ((major<<16)|(minor<<8)|(patch))
+#endif
+#if defined(QT_VERSION) && (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
             if (!sequence.isEmpty() && sequence[0].key() != Qt::Key_unknown) {
 #else
             if (!sequence.isEmpty() && (sequence[0] & ~Qt::KeyboardModifierMask) != Qt::Key_unknown) {
@@ -1166,6 +1279,28 @@ void MainWindow::applyCustomShortcuts()
     }
 
     settings->endGroup();
+
+#ifdef Q_OS_MACOS
+    // On macOS, the Alt modifier maps to Option (⌥), which is essential for entering
+    // accented characters, currency symbols (€ = Option+2), hash (# = Option+3),
+    // and brackets on various European and international keyboard layouts (Issues #814 & #667).
+    // Single Option-key shortcuts (e.g. Alt+1 .. Alt+0) must be cleared so they don't
+    // hijack character entry in the editor.
+    const QList<QAction *> actionsWithAlt = {
+        ui->actionFoldLevel1, ui->actionFoldLevel2, ui->actionFoldLevel3, ui->actionFoldLevel4,
+        ui->actionFoldLevel5, ui->actionFoldLevel6, ui->actionFoldLevel7, ui->actionFoldLevel8,
+        ui->actionFoldLevel9, ui->actionFoldAll,
+        ui->actionUnfoldLevel1, ui->actionUnfoldLevel2, ui->actionUnfoldLevel3, ui->actionUnfoldLevel4,
+        ui->actionUnfoldLevel5, ui->actionUnfoldLevel6, ui->actionUnfoldLevel7, ui->actionUnfoldLevel8,
+        ui->actionUnfoldLevel9, ui->actionUnfoldAll
+    };
+
+    for (QAction *action : actionsWithAlt) {
+        if (action) {
+            action->setShortcut(QKeySequence());
+        }
+    }
+#endif
 }
 
 void MainWindow::setupLanguageMenu()
@@ -1235,6 +1370,8 @@ void MainWindow::setupThemeMenu()
     QList<const ThemePalette *> lightPalettes = getThemesByDarkMode(false);
     for (const ThemePalette *pal : lightPalettes) {
         QAction *act = menuLightOnly->addAction(QString::fromUtf8(pal->displayName));
+        act->setCheckable(true);
+        act->setData(QString::fromLatin1(pal->id));
         connect(act, &QAction::triggered, this, [this, pal]() {
             ThemeManager::instance()->setPalette(QString::fromLatin1(pal->id), this);
             ui->statusBar->showMessage(tr("Theme applied: %1").arg(QString::fromUtf8(pal->displayName)), 3000);
@@ -1246,6 +1383,8 @@ void MainWindow::setupThemeMenu()
     QList<const ThemePalette *> darkPalettes = getThemesByDarkMode(true);
     for (const ThemePalette *pal : darkPalettes) {
         QAction *act = menuDarkOnly->addAction(QString::fromUtf8(pal->displayName));
+        act->setCheckable(true);
+        act->setData(QString::fromLatin1(pal->id));
         connect(act, &QAction::triggered, this, [this, pal]() {
             ThemeManager::instance()->setPalette(QString::fromLatin1(pal->id), this);
             ui->statusBar->showMessage(tr("Theme applied: %1").arg(QString::fromUtf8(pal->displayName)), 3000);
@@ -1268,12 +1407,33 @@ void MainWindow::setupThemeMenu()
                 itemLabel += QStringLiteral(" (Light)");
             }
             QAction *act = famMenu->addAction(itemLabel);
+            act->setCheckable(true);
+            act->setData(QString::fromLatin1(pal->id));
             connect(act, &QAction::triggered, this, [this, pal]() {
                 ThemeManager::instance()->setPalette(QString::fromLatin1(pal->id), this);
                 ui->statusBar->showMessage(tr("Theme applied: %1").arg(QString::fromUtf8(pal->displayName)), 3000);
             });
         }
     }
+
+    connect(menuTheme, &QMenu::aboutToShow, this, [menuLightOnly, menuDarkOnly, menuFamilies]() {
+        const QString curId = ThemeManager::instance()->currentPaletteId();
+        auto updateChecks = [&curId](QMenu *menu) {
+            if (!menu) return;
+            for (QAction *action : menu->actions()) {
+                if (action->menu()) {
+                    for (QAction *subAction : action->menu()->actions()) {
+                        subAction->setChecked(subAction->data().toString() == curId);
+                    }
+                } else if (action->isCheckable()) {
+                    action->setChecked(action->data().toString() == curId);
+                }
+            }
+        };
+        updateChecks(menuLightOnly);
+        updateChecks(menuDarkOnly);
+        updateChecks(menuFamilies);
+    });
 
     menuTheme->addSeparator();
 
@@ -1285,10 +1445,10 @@ void MainWindow::setupThemeMenu()
     });
     menuTheme->addAction(actionThemeLight);
 
-    actionThemeDark = new QAction(tr("Default Dark Mode (Dracula)"), this);
+    actionThemeDark = new QAction(tr("Default Dark Mode (Horizon Dark)"), this);
     connect(actionThemeDark, &QAction::triggered, this, [this]() {
-        ThemeManager::instance()->setPalette(QStringLiteral("dracula"), this);
-        ui->statusBar->showMessage(tr("Theme set to Dark Mode (Dracula)"), 3000);
+        ThemeManager::instance()->setPalette(QStringLiteral("horizonDark"), this);
+        ui->statusBar->showMessage(tr("Theme set to Dark Mode (Horizon Dark)"), 3000);
     });
     menuTheme->addAction(actionThemeDark);
 
@@ -2330,7 +2490,14 @@ bool MainWindow::checkFileForModification(ScintillaNext *editor)
     else if (state == ScintillaNext::Modified) {
         qInfo("ScintillaNext::Modified");
         const QString filePath = editor->getFilePath();
-        auto reply = QMessageBox::question(this, tr("Reload File"), tr("<b>%1</b> has been modified by another program. Do you want to reload it?").arg(filePath));
+        QString message = tr("<b>%1</b> has been modified by another program. Do you want to reload it?").arg(filePath);
+
+        if (!editor->isSavedToDisk()) {
+            message += tr("<br><br><b>Warning:</b> you have unsaved changes in this tab. "
+                           "Reloading will discard them permanently.");
+        }
+
+        auto reply = QMessageBox::question(this, tr("Reload File"), message);
 
         if (reply == QMessageBox::Yes) {
             editor->reload();
@@ -2399,6 +2566,19 @@ MainWindow::UserSaveAction MainWindow::promptForSave(const QVector<ScintillaNext
     }
 }
 
+QStringList MainWindow::currentDockObjectNames() const
+{
+    QStringList names;
+
+    for (const QDockWidget *dock : findChildren<QDockWidget *>()) {
+        names.append(dock->objectName());
+    }
+
+    names.sort();
+
+    return names;
+}
+
 void MainWindow::saveSettings() const
 {
     qInfo(Q_FUNC_INFO);
@@ -2407,6 +2587,7 @@ void MainWindow::saveSettings() const
 
     settings->setValue("MainWindow/geometry", saveGeometry());
     settings->setValue("MainWindow/windowState", saveState());
+    settings->setValue("MainWindow/dockObjectNames", currentDockObjectNames());
 
     settings->setValue("Editor/ZoomLevel", zoomLevel);
 }
@@ -2447,7 +2628,17 @@ void MainWindow::restoreWindowState()
     ApplicationSettings *settings = app->getSettings();
 
     restoreGeometry(settings->value("MainWindow/geometry").toByteArray());
-    restoreState(settings->value("MainWindow/windowState").toByteArray());
+
+    // QMainWindow::restoreState() can crash (QTBUG-111538) when the saved
+    // state references a set of dock widgets that doesn't match the ones
+    // that exist now, e.g. after an upgrade added/removed/renamed a dock.
+    // Only restore it when the dock set is unchanged since it was saved.
+    if (settings->value("MainWindow/dockObjectNames").toStringList() == currentDockObjectNames()) {
+        restoreState(settings->value("MainWindow/windowState").toByteArray());
+    }
+    else {
+        qWarning() << "Skipping windowState restore: saved dock layout does not match the current dock set";
+    }
 
     // Always hide the dock no matter how the application was closed
     SearchResultsDock *srDock = findChild<SearchResultsDock *>();
@@ -2470,6 +2661,18 @@ void MainWindow::focusIn()
     if (editor) {
         if (checkFileForModification(currentEditor())) {
             updateGui(currentEditor());
+        }
+    }
+}
+
+void MainWindow::changeEvent(QEvent *event)
+{
+    QMainWindow::changeEvent(event);
+
+    if (event->type() == QEvent::ActivationChange) {
+        qInfo() << "ActivationChange, isActiveWindow() =" << isActiveWindow();
+        if (isActiveWindow()) {
+            focusIn();
         }
     }
 }

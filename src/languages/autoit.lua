@@ -1,6 +1,6 @@
 local L = {}
 
-L.lexer = "autoit"
+L.lexer = "au3"
 
 L.singleLineComment = "; "
 

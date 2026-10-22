@@ -1,6 +1,8 @@
 /*
- * This file is part of Notepad Next.
- * Copyright 2019 Justin Dailey
+ * This file is part of Notepad Next (macOS Edition).
+ * Copyright 2019-2026 Justin Dailey
+ * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * https://github.com/alsyundawy/NotepadNext-MacOS
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +18,6 @@
  * along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-
 #include "IFaceTable.h"
 #include <cstdio>
 #include <string.h>
@@ -26,11 +27,16 @@
 
 template<typename Iter>
 typename std::iterator_traits<Iter>::value_type const *binary_find(Iter begin, Iter end, const char *name) {
-    auto it = std::lower_bound(begin, end, name, [](const auto &lhs, const char *rhs) {
+    if (!name) {
+        return nullptr;
+    }
+    using ElementType = typename std::iterator_traits<Iter>::value_type;
+    auto it = std::lower_bound(begin, end, name, [](const ElementType &lhs, const char *rhs) -> bool {
+        if (!lhs.name || !rhs) return false;
         return strcmp(lhs.name, rhs) < 0;
     });
 
-    if (it == end || strcmp(name, it->name) != 0) {
+    if (it == end || !it->name || strcmp(name, it->name) != 0) {
         return nullptr;
     }
     else {
@@ -47,15 +53,20 @@ const IFaceFunction *IFaceTable::FindFunction(const char *name) const {
 }
 
 const IFaceFunction *IFaceTable::FindFunctionByConstantName(const char *name) const {
-    if (strncmp(name, prefix, strlen(prefix)) == 0) {
+    if (!name || !prefix) {
+        return nullptr;
+    }
+    const size_t prefixLen = strlen(prefix);
+    if (strncmp(name, prefix, prefixLen) == 0) {
         // This looks like a constant for an iface function.  This requires
         // a sequential search.  Take special care since the function names
         // are mixed case, whereas the constants are all-caps.
 
         for (const auto &func : functions) {
-            const char *nm = name + strlen(prefix);
+            if (!func.name) continue;
+            const char *nm = name + prefixLen;
             const char *fn = func.name;
-            while (*nm && *fn && (*nm == toupper(*fn))) {
+            while (*nm && *fn && (*nm == toupper(static_cast<unsigned char>(*fn)))) {
                 ++nm;
                 ++fn;
             }
@@ -68,11 +79,10 @@ const IFaceFunction *IFaceTable::FindFunctionByConstantName(const char *name) co
 }
 
 const IFaceFunction *IFaceTable::FindFunctionByValue(int value) const {
-    for (const auto &func : functions) {
-        if (func.value == value)
-            return &func;
-    }
-    return nullptr;
+    auto it = std::find_if(functions.cbegin(), functions.cend(), [value](const IFaceFunction &func) {
+        return func.value == value;
+    });
+    return (it != functions.cend()) ? &(*it) : nullptr;
 }
 
 const IFaceProperty *IFaceTable::FindProperty(const char *name) const {
@@ -84,14 +94,20 @@ int IFaceTable::GetConstantName(int value, char *nameOut, unsigned nameBufferLen
         *nameOut = '\0';
     }
 
+    if (!prefix) {
+        return 0;
+    }
+
+    const size_t prefixLen = strlen(prefix);
+
     // Look in both the constants table and the functions table.  Start with functions.
     for (const auto &func : functions) {
-        if (func.value == value) {
-            int len = static_cast<int>(strlen(func.name) + strlen(prefix));
+        if (func.value == value && func.name) {
+            int len = static_cast<int>(strlen(func.name) + prefixLen);
             if (nameOut && (static_cast<int>(nameBufferLen) > len)) {
                 std::snprintf(nameOut, nameBufferLen, "%s%s", prefix, func.name);
                 // fix case
-                for (char *nm = nameOut + strlen(prefix); *nm; ++nm) {
+                for (char *nm = nameOut + prefixLen; *nm; ++nm) {
                     if (*nm >= 'a' && *nm <= 'z') {
                         *nm = static_cast<char>(*nm - 'a' + 'A');
                     }
@@ -103,8 +119,9 @@ int IFaceTable::GetConstantName(int value, char *nameOut, unsigned nameBufferLen
         }
     }
 
+    const size_t hintLen = hint ? strnlen(hint, 256) : 0;
     for (const auto &con : constants) {
-        if (con.value == value && (hint == NULL || strncmp(hint, con.name, strlen(hint)) == 0)) {
+        if (con.value == value && con.name && (hint == nullptr || strncmp(hint, con.name, hintLen) == 0)) {
             int len = static_cast<int>(strlen(con.name));
             if (nameOut && (static_cast<int>(nameBufferLen) > len)) {
                 std::snprintf(nameOut, nameBufferLen, "%s", con.name);
@@ -119,12 +136,10 @@ int IFaceTable::GetConstantName(int value, char *nameOut, unsigned nameBufferLen
 }
 
 const IFaceFunction *IFaceTable::GetFunctionByMessage(int message) const {
-    for (const auto &func : functions) {
-        if (func.value == message) {
-            return &func;
-        }
-    }
-    return nullptr;
+    auto it = std::find_if(functions.cbegin(), functions.cend(), [message](const IFaceFunction &func) {
+        return func.value == message;
+    });
+    return (it != functions.cend()) ? &(*it) : nullptr;
 }
 
 IFaceFunction IFaceTable::GetPropertyFuncByMessage(int message) const {

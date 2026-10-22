@@ -1,6 +1,6 @@
 local L = {}
 
-L.lexer = "scheme"
+L.lexer = "lisp"
 
 L.singleLineComment = "; "
 

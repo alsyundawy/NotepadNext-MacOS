@@ -1,6 +1,8 @@
 /*
- * This file is part of Notepad Next.
- * Copyright 2019 Justin Dailey
+ * This file is part of Notepad Next (macOS Edition).
+ * Copyright 2019-2026 Justin Dailey
+ * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * https://github.com/alsyundawy/NotepadNext-MacOS
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,7 +17,6 @@
  * You should have received a copy of the GNU General Public License
  * along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
  */
-
 
 #ifndef SCINTILLANEXT_H
 #define SCINTILLANEXT_H
@@ -155,6 +156,9 @@ public slots:
     void removeDuplicateLines();
     void removeConsecutiveDuplicateLines();
 
+    void convertTabsToSpaces();
+    void convertSpacesToTabs();
+
 signals:
     void aboutToSave();
     void saved();
@@ -165,8 +169,9 @@ signals:
     void reloaded();
 
 protected:
-    void dragEnterEvent(QDragEnterEvent *event) override;
-    void dropEvent(QDropEvent *event) override;
+    void keyPressEvent(QKeyEvent *event) override;
+    void dragEnterEvent(QDragEnterEvent *dragEvent) override;
+    void dropEvent(QDropEvent *dropEvent) override;
 
 private:
     QString name;

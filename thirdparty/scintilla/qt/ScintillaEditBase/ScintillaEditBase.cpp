@@ -12,8 +12,13 @@
 #include "ScintillaQt.h"
 #include "PlatQt.h"
 
+#include <QtGlobal>
+#ifndef QT_VERSION_CHECK
+#define QT_VERSION_CHECK(major, minor, patch) (((major)<<16)|((minor)<<8)|(patch))
+#endif
+
 #include <QApplication>
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
+#if defined(QT_VERSION) && (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
 #include <QInputContext>
 #endif
 #include <QPainter>
@@ -562,8 +567,24 @@ void ScintillaEditBase::inputMethodEvent(QInputMethodEvent *event)
 		sqt->pdoc->DeleteChars(start, end - start);
 	}
 
-	if (!event->commitString().isEmpty()) {
-		const QString &commitStr = event->commitString();
+	QString commitStr = event->commitString();
+
+#ifdef Q_OS_MACOS
+	// macOS reports deleting the last jamo of a composition as a commit of a
+	// backspace. The tentative text is already undone, so there is nothing to insert.
+	if (commitStr == QLatin1String("\b"))
+		commitStr.clear();
+
+	// macOS can commit a single ASCII character (e.g. "!") without committing the
+	// Hangul composition it interrupts, which would then be lost. Keep it.
+	// Anything else (e.g. hanja or kana conversion) legitimately replaces the preedit.
+	if (commitStr.length() == 1 && commitStr.at(0).unicode() < 0x80
+			&& !lastPreedit.isEmpty() && IsHangul(lastPreedit.at(0)))
+		commitStr.prepend(lastPreedit);
+	lastPreedit = event->preeditString();
+#endif
+
+	if (!commitStr.isEmpty()) {
 		const int commitStrLen = commitStr.length();
 
 		for (int i = 0; i < commitStrLen;) {

@@ -1,7 +1,8 @@
 /*
- * This file is part of Notepad Next.
- * Copyright (C) 2016 The Qt Company Ltd.
- * Copyright 2024 Justin Dailey
+ * This file is part of Notepad Next (macOS Edition).
+ * Copyright 2019-2026 Justin Dailey
+ * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * https://github.com/alsyundawy/NotepadNext-MacOS
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

@@ -1,6 +1,8 @@
 /*
- * This file is part of Notepad Next.
- * Copyright 2019 Justin Dailey
+ * This file is part of Notepad Next (macOS Edition).
+ * Copyright 2019-2026 Justin Dailey
+ * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * https://github.com/alsyundawy/NotepadNext-MacOS
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,8 +17,6 @@
  * You should have received a copy of the GNU General Public License
  * along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
  */
-
-
 
 #include <QFile>
 #include <QDir>
@@ -204,15 +204,15 @@ void NppImporter::readLangsModel(const QString &filePath)
                 //qInfo(qUtf8Printable(xml.name().toString()));
 
                 while (xml.readNextStartElement()) {
-                    auto attrs = xml.attributes();
-                    if (!langNamesToLexer.contains(attrs.value("name").toString())) {
+                    auto langAttrs = xml.attributes();
+                    if (!langNamesToLexer.contains(langAttrs.value("name").toString())) {
                         xml.skipCurrentElement();
                         continue;
                     }
 
                     Language language;
-                    language.name = attrs.value("name").toString();
-                    language.extensions = attrs.value("ext").toString().split(" ", Qt::SkipEmptyParts);
+                    language.name = langAttrs.value("name").toString();
+                    language.extensions = langAttrs.value("ext").toString().split(" ", Qt::SkipEmptyParts);
                     language.shortName = langNamesToLexer[language.name].shortName;
                     language.longDescription = langNamesToLexer[language.name].longName;
                     language.lexer_id = langNamesToLexer[language.name].lexer_id;
@@ -290,14 +290,14 @@ void NppImporter::readLexerStyles(QXmlStreamReader &xml)
     qInfo("%s", qUtf8Printable(xml.name().toString()));
 
     while (xml.readNextStartElement()) {
-        auto attrs = xml.attributes();
-        if (!langNamesToLexer.contains(attrs.value("name").toString())) {
+        auto lexerAttrs = xml.attributes();
+        if (!langNamesToLexer.contains(lexerAttrs.value("name").toString())) {
             xml.skipCurrentElement();
             continue;
         }
 
-        LexerType *lexer = &languages[attrs.value("name").toString()].lexer;
-        lexer->description = attrs.value("desc").toString();
+        LexerType *lexer = &languages[lexerAttrs.value("name").toString()].lexer;
+        lexer->description = lexerAttrs.value("desc").toString();
         while (xml.readNextStartElement()) {
             //qInfo(qUtf8Printable(xml.name().toString()));
             auto styleAttrs = xml.attributes();

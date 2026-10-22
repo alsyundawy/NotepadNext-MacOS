@@ -1,6 +1,6 @@
 local L = {}
 
-L.lexer = "objc"
+L.lexer = "cpp"
 
 L.singleLineComment = "// "
 

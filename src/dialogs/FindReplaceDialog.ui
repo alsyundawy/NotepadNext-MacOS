@@ -517,6 +517,13 @@
            </property>
           </widget>
          </item>
+         <item>
+          <widget class="QCheckBox" name="checkBoxInSelection">
+           <property name="text">
+            <string>In &amp;selection</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </item>
       </layout>

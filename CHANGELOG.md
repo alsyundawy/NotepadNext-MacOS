@@ -5,6 +5,70 @@ Format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) a
 
 ---
 
+## [0.15-06] - 2026-10-23
+
+### 🌈 Unicode 18.0 Emoji & macOS Typography Architecture / Arsitektur Emoji Unicode 18.0 & Tipografi macOS
+
+- 🇬🇧 **Universal UTF-8 Encoding Enforcement**: Enforced `SC_CP_UTF8` across all Scintilla buffer initializations and disk read routines, guaranteeing lossless encoding for modern multi-byte characters and compound emoji sequences.
+- 🇮🇩 **Penegakan Enkodis UTF-8 Universal**: Menegakkan `SC_CP_UTF8` pada seluruh inisialisasi buffer Scintilla dan pembacaan disk, memastikan tidak ada distorsi karakter multi-byte atau urutan emoji majemuk.
+- 🇬🇧 **Native Apple Color Emoji Fallback Cascade**: Integrated `"Menlo, Apple Color Emoji"` font fallback cascade and enabled subpixel LCD quality (`SC_EFF_QUALITY_LCD_OPTIMIZED`) for crystal-clear glyph rendering on macOS Retina displays.
+- 🇮🇩 **Kaskade Font Native Apple Color Emoji**: Mengintegrasikan kaskade font `"Menlo, Apple Color Emoji"` dan mengaktifkan kualitas LCD subpixel (`SC_EFF_QUALITY_LCD_OPTIMIZED`) untuk ketajaman tampilan pada layar Retina macOS.
+- 🇬🇧 **Atomic Grapheme Cluster Traversal (`QTextBoundaryFinder`)**: Intercepted cursor navigation and deletion (Backspace, Delete, Arrow keys) using `QTextBoundaryFinder::Grapheme`. Compound emojis with Zero-Width-Joiners (`\u200D`), skin-tone modifiers, and flags are deleted and navigated atomically without leaving orphan surrogate pairs or broken question-mark glyphs.
+- 🇮🇩 **Penelusuran Kluster Grafem Atomik (`QTextBoundaryFinder`)**: Menghubungkan navigasi dan penghapusan kursor menggunakan `QTextBoundaryFinder::Grapheme`. Emoji majemuk dengan Zero-Width-Joiner (`\u200D`), pemodifikasi warna kulit, dan bendera dihapus dan dilewati secara atomik tanpa menyisakan pasangan pengganti atau glif tanda tanya rusak.
+- 🇬🇧 **macOS Native Character Palette (`Cmd+Ctrl+Space`)**: Added `actionEmojiSymbols` under Edit menu with shortcut `Cmd+Ctrl+Space`, dispatching native Cocoa `[NSApp orderFrontCharacterPalette:nil]` via Objective-C runtime messaging.
+- 🇮🇩 **Palet Karakter Native macOS (`Cmd+Ctrl+Space`)**: Menambahkan menu `Emoji & Karakter Khusus` di bawah menu Edit dengan tombol pintas `Cmd+Ctrl+Space`, memanggil `orderFrontCharacterPalette` Cocoa secara langsung.
+
+### 🌐 Upstream Crowdin Localization Synchronization / Sinkronisasi Lokalisasi Crowdin Upstream
+
+- 🇬🇧 **Synchronized 23 Translation Catalogs**: Extracted and integrated the latest translation files from upstream Crowdin (PR #1157), including German, French, Spanish, Italian, Portuguese, Russian, Simplified/Traditional Chinese, Japanese, Korean, and Indonesian.
+- 🇮🇩 **Sinkronisasi 23 Katalog Terjemahan**: Mengintegrasikan berkas terjemahan terbaru dari Crowdin upstream (PR #1157) untuk 23 bahasa dunia.
+- 🇬🇧 **Apple HIG Terminology Polish for Indonesian (`NotepadNext_id.ts`)**: Harmonized all Indonesian localizations with Apple Human Interface Guidelines standard macOS terminology (_Preferensi..._, _Bungkus Teks_, _Cari dan Ganti_, _Format Berkas_), and verified binary `.qm` compilation across all catalogs.
+- 🇮🇩 **Penyelarasan Terminologi Apple HIG Bahasa Indonesia (`NotepadNext_id.ts`)**: Menyelaraskan seluruh istilah antarmuka bahasa Indonesia dengan standar Apple Human Interface Guidelines (_Preferensi..._, _Bungkus Teks_, _Cari dan Ganti_, _Format Berkas_), serta memvalidasi kompilasi biner `.qm` tanpa kesalahan.
+
+### 🧩 Selective Porting of High-Value Upstream Pull Requests / Porting Selektif Pull Request Upstream
+
+- 🇬🇧 **Korean & CJK IME Composition Fix (PR #1166)**: Fixed `QInputMethodEvent` handling in `ScintillaEditBase` on macOS. Prevents character duplication when committing Hangul/Kanji syllables, drops rogue backspace commitments, and preserves pending compositions when ASCII symbols are typed.
+- 🇮🇩 **Perbaikan Komposisi IME Korea & CJK (PR #1166)**: Memperbaiki penanganan `QInputMethodEvent` pada `ScintillaEditBase` di macOS. Mencegah duplikasi karakter saat mengetik suku kata Hangul/Kanji, mengabaikan commit backspace palsu, dan menjaga komposisi yang sedang aktif saat mengetik simbol ASCII.
+- 🇬🇧 **Crash Prevention on First Keypress & Dock Layout Desync (PR #1153)**: Stored `currentDockObjectNames` alongside saved window state. Bypasses `QMainWindow::restoreState()` if saved dock layout references obsolete or renamed dock widgets (QTBUG-111538), preventing null-pointer crashes on first keypress.
+- 🇮🇩 **Pencegahan Crash Tombol Pertama & Desinkronisasi Dock (PR #1153)**: Menyimpan nama objek dock bersama windowState. Melewati `QMainWindow::restoreState()` jika dock yang tersimpan tidak cocok dengan dock aktif saat ini, mencegah crash dereferensi null separator pada penekanan tombol pertama.
+- 🇬🇧 **Regex Replace All Hang & Backreference Expansion Fix (PR #1165 & #1154)**: Resolved infinite loop in `Finder::replaceAll()` on zero-length regex matches by advancing position via `editor->positionAfter()`. Rewrote `QRegexSearch::SubstituteByPosition()` to expand capture groups (`\0`..`\9`) and escape sequences (`\n`, `\r`, `\t`, `\\`) directly from captured matches.
+- 🇮🇩 **Perbaikan Perulangan Buntu Regex & Ekspansi Referensi Balik (PR #1165 & #1154)**: Mengatasi infinite loop pada pencarian regex berpanjang-nol di `Finder::replaceAll()` dengan melajukan posisi kursor. Menulis ulang `QRegexSearch::SubstituteByPosition()` agar mendukung backreference (`\0`..`\9`) dan escape sequences (`\n`, `\r`, `\t`, `\\`).
+- 🇬🇧 **Real-Time External File Modification Watcher (PR #1122)**: Replaced polling with a centralized `QFileSystemWatcher` (leveraging macOS `FSEvents`) in `EditorManager`. Immediately prompts users when the active foreground file is modified on disk, with safety warnings if local unsaved edits exist.
+- 🇮🇩 **Pemantau Perubahan Berkas Eksternal Real-Time (PR #1122)**: Menggantikan polling dengan `QFileSystemWatcher` terpusat (memanfaatkan macOS `FSEvents`) pada `EditorManager`. Menampilkan konfirmasi muat ulang secara instan jika berkas aktif diubah di luar aplikasi.
+- 🇬🇧 **XML Tools: Pretty Print XML (PR #1096)**: Added dependency-free XML formatting under `Edit -> XML Tools -> Pretty Print XML` using native `QXmlStreamReader` and `QXmlStreamWriter` with single-step undo grouping.
+- 🇮🇩 **Alat XML: Format XML Cantik (PR #1096)**: Menambahkan format XML bebas ketergantungan eksternal di bawah `Edit -> XML Tools -> Pretty Print XML` menggunakan `QXmlStreamReader` dan `QXmlStreamWriter`.
+- 🇬🇧 **Find & Replace In Selection (PR #1045)**: Added `In selection` checkbox in `FindReplaceDialog`. Restricts search, count, find all, replace, replace all, and mark all strictly to the captured selection bounds.
+- 🇮🇩 **Cari & Ganti dalam Seleksi (PR #1045)**: Menambahkan opsi `In selection` pada dialog Cari/Ganti untuk membatasi ruang lingkup pencarian dan penggantian hanya pada teks yang diseleksi.
+
+### 🍏 Critical macOS Usability & Stability Enhancements / Peningkatan Stabilitas & Kegunaan macOS
+
+- 🇬🇧 **Option / Alt Key Shortcut Conflict Resolution (Issues #814 & #667)**: Scoped single `Alt` menu shortcuts (`Alt+1`..`Alt+0` folding shortcuts) on macOS, allowing European and international Mac keyboard layouts to seamlessly type characters like `#` (`Option+3`), `€` (`Option+2`), `[`, `]`, `~`, and `@` without menu shortcut interception.
+- 🇮🇩 **Penyelesaian Konflik Tombol Option / Alt (Issues #814 & #667)**: Menghapus jalan pintas menu `Alt` tunggal pada macOS, memungkinkan papan ketik Eropa dan internasional mengetik karakter penting seperti `#` (`Option+3`), `€` (`Option+2`), `[`, `]`, `~`, dan `@` tanpa terhalang menu lipat kode.
+- 🇬🇧 **Atomic Session Serialization with `QSaveFile` (Issue #650)**: Replaced direct `QFile` writes with `QSaveFile` commit transactions in `ScintillaNext::writeToDisk` and `SessionManager`, completely eliminating 0-byte corrupted session and document files during abrupt macOS shutdowns or power losses.
+- 🇮🇩 **Penyimpanan Sesi Atomik via `QSaveFile` (Issue #650)**: Mengganti penulisan `QFile` mentah dengan transaksi commit atomik `QSaveFile` pada penyimpanan berkas dan sesi, mencegah berkas rusak berukuran 0-byte saat macOS mati mendadak.
+- 🇬🇧 **Native JSON Tools: Format & Minify (Issue #1140)**: Added native `Format JSON` (indented) and `Minify JSON` (compact) utilities under `Edit -> JSON Tools` using high-performance `QJsonDocument`.
+- 🇮🇩 **Alat JSON Native: Format & Minifikasi (Issue #1140)**: Menambahkan utilitas `Format JSON` (berindentasi rapi) dan `Minify JSON` (kompak ringkas) di bawah `Edit -> JSON Tools` menggunakan `QJsonDocument`.
+- 🇬🇧 **Tab & Space Indentation Conversion (Issues #668 & #844)**: Added `Convert Tabs to Spaces` and `Convert Spaces to Tabs` under `Edit -> Indentation`, dynamically respecting the current editor tab width.
+- 🇮🇩 **Konversi Tab & Spasi (Issues #668 & #844)**: Menambahkan `Convert Tabs to Spaces` dan `Convert Spaces to Tabs` pada `Edit -> Indent`, menyesuaikan dengan lebar tab aktif secara dinamis.
+
+### ⚡ Lexilla Lexer Synchronization & Language Architecture / Sinkronisasi Lexer Lexilla & Arsitektur Bahasa
+
+- 🇬🇧 **Lexilla Lexer Name Harmonization**: Fixed and synchronized lexer identifier mapping across all 87 language definitions in `src/languages/`, updating `autoit` -> `au3`, `baanc` -> `baan`, `cobol` -> `COBOL`, `fortran77` -> `f77`, `postscript` -> `ps`, `scheme` -> `lisp`, `objc` -> `cpp`, `rc` -> `cpp`, `swift` -> `cpp`, `asp` -> `hypertext`, and `nfo` -> `null`. Guarantees 100% active syntax highlighting without silent lexer initialization failures.
+- 🇮🇩 **Penyelarasan Nama Lexer Lexilla**: Memperbaiki dan menyinkronkan pemetaan pengidentifikasi lexer pada seluruh 87 definisi bahasa di `src/languages/`, memperbarui `autoit` -> `au3`, `baanc` -> `baan`, `cobol` -> `COBOL`, `fortran77` -> `f77`, `postscript` -> `ps`, `scheme` -> `lisp`, `objc` -> `cpp`, `rc` -> `cpp`, `swift` -> `cpp`, `asp` -> `hypertext`, dan `nfo` -> `null`. Menjamin 100% penyorotan sintaks aktif tanpa kegagalan inisialisasi lexer.
+- 🇬🇧 **Defensive Lexer Alias & Case Fallback Resolution**: Implemented a resilient fallback lookup table in `NotepadNextApplication::setEditorLanguage` that automatically maps legacy or lowercase lexer requests (`autoit`, `cobol`, `swift`, `objc`, etc.) to valid Lexilla lexer modules, preventing syntax highlighting loss.
+- 🇮🇩 **Resolusi Alias & Fallback Kasus Lexer Defensif**: Mengimplementasikan tabel pencarian fallback yang tangguh pada `NotepadNextApplication::setEditorLanguage` yang secara otomatis memetakan permintaan lexer lama atau huruf kecil ke modul lexer Lexilla yang valid.
+- 🇬🇧 **13-Pillar Clean Code & SonarQube Enterprise Readiness**: Completed full-scale 13-pillar repository audit with `cppcheck`, `trunk check`, and SonarQube configuration (`sonar-project.properties` bumped to `0.15-06`), achieving 0 errors and 0 warnings across all 414 repository files.
+- 🇮🇩 **Kesiapan Enterprise 13-Pilar & SonarQube**: Menyelesaikan audit repositori 13-pilar secara penuh dengan `cppcheck`, `trunk check`, dan konfigurasi SonarQube (`sonar-project.properties` diperbarui ke `0.15-06`), mencapai 0 error dan 0 warning di seluruh 414 berkas repositori.
+
+### 🎨 Theme Studio Polish & Visual Enhancements / Pemolesan Theme Studio & Visual
+
+- 🇬🇧 **Default Dark Horizon Palette**: Updated default dark theme to the refined `"horizonDark"` palette, offering superior contrast and syntax readability.
+- 🇮🇩 **Palet Gelap Horizon Default**: Memperbarui tema gelap bawaan ke palet `"horizonDark"` yang elegan dan berdaya kontras tinggi.
+- 🇬🇧 **Dynamic Checkmarks in Themes Menu**: Connected `menuTheme->aboutToShow` signal to dynamically synchronize checkmarks on all 75 theme actions against the active palette ID.
+- 🇮🇩 **Tanda Centang Dinamis pada Menu Tema**: Menghubungkan sinyal `menuTheme->aboutToShow` untuk menyinkronkan centang aktif pada seluruh 75 aksi palet tema.
+
+---
+
 ## [0.15-05] - 2026-10-23
 
 ### 🎨 Dark & Light Mode Theme Engine / Engine Tema Mode Gelap & Terang

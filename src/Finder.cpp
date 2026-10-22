@@ -1,6 +1,8 @@
 /*
- * This file is part of Notepad Next.
- * Copyright 2019 Justin Dailey
+ * This file is part of Notepad Next (macOS Edition).
+ * Copyright 2019-2026 Justin Dailey
+ * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * https://github.com/alsyundawy/NotepadNext-MacOS
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -70,6 +72,24 @@ FindResult Finder::findNextFrom(Sci_Position startPos)
 
     editor->setSearchFlags(searchFlags());
 
+    if (use_selection_range) {
+        const Sci_Position rangeEnd = selection_range.cpMax;
+        Sci_Position pos = startPos;
+        if (pos < selection_range.cpMin) pos = selection_range.cpMin;
+        if (pos > rangeEnd) pos = rangeEnd;
+
+        result.range = searchTarget(pos, rangeEnd);
+        if (result || !find_options.wrapAround)
+            return result;
+
+        if (pos > selection_range.cpMin) {
+            result.range = searchTarget(selection_range.cpMin, pos);
+            if (result)
+                result.wrapped = true;
+        }
+        return result;
+    }
+
     result.range = searchTarget(startPos, editor->length());
 
     // Return the valid result, or if not wrap around, go ahead and return it anyways
@@ -95,6 +115,23 @@ FindResult Finder::findPrev()
 
     editor->setSearchFlags(searchFlags());
 
+    if (use_selection_range) {
+        Sci_Position pos = startPos;
+        if (pos > selection_range.cpMax) pos = selection_range.cpMax;
+        if (pos < selection_range.cpMin) pos = selection_range.cpMin;
+
+        result.range = searchTarget(pos, selection_range.cpMin);
+        if (result || !find_options.wrapAround)
+            return result;
+
+        if (pos < selection_range.cpMax) {
+            result.range = searchTarget(selection_range.cpMax, pos);
+            if (result)
+                result.wrapped = true;
+        }
+        return result;
+    }
+
     // A target with start > end searches backwards.
     result.range = searchTarget(startPos, 0);
 
@@ -117,11 +154,17 @@ int Finder::count()
 
     int total = 0;
 
-    forEachMatch([&total](int start, int end) {
+    auto counter = [&total](int start, int end) {
         Q_UNUSED(start);
         ++total;
         return end;
-    });
+    };
+
+    if (use_selection_range) {
+        forEachMatchInRange(counter, selection_range);
+    } else {
+        forEachMatch(counter);
+    }
 
     return total;
 }
@@ -136,23 +179,32 @@ FindResult Finder::replaceSelectionIfMatch(const QString &replaceText)
     const Sci_Position selectionStart = editor->selectionStart();
     const Sci_Position selectionEnd = editor->selectionEnd();
 
+    if (use_selection_range && (selectionStart < selection_range.cpMin || selectionEnd > selection_range.cpMax))
+        return result;
+
     result.range = searchTarget(selectionStart, selectionEnd);
 
     if (!result)
         return result;
 
     const QByteArray replacementText = replaceText.toUtf8();
+    const Sci_Position matchStart = editor->targetStart();
+    const Sci_Position matchEnd = editor->targetEnd();
+    Sci_Position replacementLength;
 
     if (isRegexSearch()) {
-        editor->replaceTargetRE(replacementText.length(), replacementText.constData());
+        replacementLength = editor->replaceTargetRE(replacementText.length(), replacementText.constData());
     }
     else {
-        editor->replaceTarget(replacementText.length(), replacementText.constData());
+        replacementLength = editor->replaceTarget(replacementText.length(), replacementText.constData());
     }
 
+    if (use_selection_range)
+        selection_range.cpMax += replacementLength - (matchEnd - matchStart);
+
     result.range = {
-        static_cast<Sci_PositionCR>(editor->targetStart()),
-        static_cast<Sci_PositionCR>(editor->targetEnd())
+        static_cast<Sci_PositionCR>(matchStart),
+        static_cast<Sci_PositionCR>(matchStart + replacementLength)
     };
 
     return result;
@@ -166,8 +218,11 @@ int Finder::replaceAll(const QString &replaceText)
     const QByteArray searchText = find_options.text.toUtf8();
     const QByteArray replacementText = replaceText.toUtf8();
 
+    const Sci_Position rangeStart = use_selection_range ? selection_range.cpMin : 0;
+    Sci_Position rangeEnd = use_selection_range ? selection_range.cpMax : editor->length();
+
     Sci_TextToFind findText{
-        {0, static_cast<Sci_PositionCR>(editor->length())},
+        {static_cast<Sci_PositionCR>(rangeStart), static_cast<Sci_PositionCR>(rangeEnd)},
         searchText.constData(),
         {-1, -1}
     };
@@ -190,7 +245,7 @@ int Finder::replaceAll(const QString &replaceText)
 
         Sci_Position replacementLength;
         if (isRegexSearch()) {
-            replacementLength= editor->replaceTargetRE(replacementText.length(), replacementText.constData());
+            replacementLength = editor->replaceTargetRE(replacementText.length(), replacementText.constData());
         }
         else {
             replacementLength = editor->replaceTarget(replacementText.length(), replacementText.constData());
@@ -198,10 +253,27 @@ int Finder::replaceAll(const QString &replaceText)
 
         // Continue searching after the replacement.
         findText.chrg.cpMin = start + replacementLength;
-        findText.chrg.cpMax = editor->length();
+        if (use_selection_range) {
+            rangeEnd += findText.chrg.cpMin - end; // delta = newLength - oldMatchLength
+            findText.chrg.cpMax = rangeEnd;
+        } else {
+            findText.chrg.cpMax = editor->length();
+        }
 
         ++total;
+
+        // An empty match must advance past the next original character, not
+        // match the same position again after inserting the replacement.
+        if (start == end) {
+            if (findText.chrg.cpMin == findText.chrg.cpMax)
+                break;
+
+            findText.chrg.cpMin = editor->positionAfter(findText.chrg.cpMin);
+        }
     }
+
+    if (use_selection_range)
+        selection_range.cpMax = rangeEnd;
 
     return total;
 }

@@ -111,6 +111,9 @@
      </property>
      <addaction name="actionIncreaseIndent"/>
      <addaction name="actionDecreaseIndent"/>
+     <addaction name="separator"/>
+     <addaction name="actionConvertTabsToSpaces"/>
+     <addaction name="actionConvertSpacesToTabs"/>
     </widget>
     <widget class="QMenu" name="menuEOLConversion">
      <property name="title">
@@ -179,6 +182,19 @@
      <addaction name="actionBase64Decode"/>
      <addaction name="actionURLDecode"/>
     </widget>
+    <widget class="QMenu" name="menuXmlTools">
+     <property name="title">
+      <string>XML Tools</string>
+     </property>
+     <addaction name="actionXmlPrettyPrint"/>
+    </widget>
+    <widget class="QMenu" name="menuJsonTools">
+     <property name="title">
+      <string>JSON Tools</string>
+     </property>
+     <addaction name="actionJsonFormat"/>
+     <addaction name="actionJsonMinify"/>
+    </widget>
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
     <addaction name="separator"/>
@@ -198,6 +214,8 @@
     <addaction name="menuLine_Operations"/>
     <addaction name="menuCommentUncomment"/>
     <addaction name="menuEncodingDecoding"/>
+    <addaction name="menuXmlTools"/>
+    <addaction name="menuJsonTools"/>
     <addaction name="separator"/>
     <addaction name="actionColumnMode"/>
    </widget>
@@ -1780,6 +1798,31 @@
   <action name="actionReopenMore">
    <property name="text">
     <string>&amp;More Encodings...</string>
+   </property>
+  </action>
+  <action name="actionXmlPrettyPrint">
+   <property name="text">
+    <string>Pretty Print XML</string>
+   </property>
+  </action>
+  <action name="actionJsonFormat">
+   <property name="text">
+    <string>Format JSON</string>
+   </property>
+  </action>
+  <action name="actionJsonMinify">
+   <property name="text">
+    <string>Minify JSON</string>
+   </property>
+  </action>
+  <action name="actionConvertTabsToSpaces">
+   <property name="text">
+    <string>Convert Tabs to Spaces</string>
+   </property>
+  </action>
+  <action name="actionConvertSpacesToTabs">
+   <property name="text">
+    <string>Convert Spaces to Tabs</string>
    </property>
   </action>
  </widget>

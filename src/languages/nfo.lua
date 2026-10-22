@@ -1,6 +1,6 @@
 local L = {}
 
-L.lexer = "nfo"
+L.lexer = "null"
 
 L.extensions = {
 	"nfo",

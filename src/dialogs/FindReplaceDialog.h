@@ -1,6 +1,8 @@
 /*
- * This file is part of Notepad Next.
- * Copyright 2019 Justin Dailey
+ * This file is part of Notepad Next (macOS Edition).
+ * Copyright 2019-2026 Justin Dailey
+ * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * https://github.com/alsyundawy/NotepadNext-MacOS
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,7 +17,6 @@
  * You should have received a copy of the GNU General Public License
  * along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
  */
-
 
 #ifndef FINDREPLACEDIALOG_H
 #define FINDREPLACEDIALOG_H
@@ -116,6 +117,8 @@ private:
     void updateFindList(const QString &text);
     void updateReplaceList(const QString &text);
 
+    void updateInSelectionCheckbox();
+
     bool isFirstTime = true;
     QPoint lastClosedPosition;
     Ui::FindReplaceDialog *ui;
@@ -125,6 +128,8 @@ private:
     QTabBar *tabBar;
     ISearchResultsHandler *searchResultsHandler;
     Finder *finder;
+
+    Sci_CharacterRange capturedSelectionRange = {0, 0};
 };
 
 #endif // FINDREPLACEDIALOG_H

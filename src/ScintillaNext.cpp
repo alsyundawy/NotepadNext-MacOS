@@ -1,6 +1,8 @@
 /*
- * This file is part of Notepad Next.
- * Copyright 2019 Justin Dailey
+ * This file is part of Notepad Next (macOS Edition).
+ * Copyright 2019-2026 Justin Dailey
+ * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * https://github.com/alsyundawy/NotepadNext-MacOS
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +18,6 @@
  * along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-
 #include "ScintillaNext.h"
 #include "EncodingDetector.h"
 #include "Finder.h"
@@ -30,6 +31,8 @@
 #include <QMouseEvent>
 #include <QSaveFile>
 #include <QTextCodec>
+#include <QTextBoundaryFinder>
+#include <QKeyEvent>
 
 
 const int CHUNK_SIZE = 1024 * 1024 * 4; // Not sure what is best
@@ -71,7 +74,7 @@ static QFileDevice::FileError writeToDisk(const QByteArray &data, const QString 
 {
     qInfo(Q_FUNC_INFO);
 
-    QFile file(path);
+    QSaveFile file(path);
     if (!file.open(QIODevice::WriteOnly)) {
         qWarning("writeToDisk() failed to open file %s: %s", qPrintable(path), qPrintable(file.errorString()));
         return file.error();
@@ -80,10 +83,16 @@ static QFileDevice::FileError writeToDisk(const QByteArray &data, const QString 
     const QByteArray encodedData = EncodingDetector::encodeFromUtf8(data, encoding, bom);
     if (file.write(encodedData) == -1) {
         qWarning("writeToDisk() failed writing to file %s: %s", qPrintable(path), qPrintable(file.errorString()));
+        file.cancelWriting();
         return file.error();
     }
 
-    return file.error();
+    if (!file.commit()) {
+        qWarning("writeToDisk() failed to commit file %s: %s", qPrintable(path), qPrintable(file.errorString()));
+        return file.error();
+    }
+
+    return QFileDevice::NoError;
 }
 
 static bool isNewlineCharacter(char c)
@@ -96,6 +105,18 @@ ScintillaNext::ScintillaNext(QString name, QWidget *parent) :
     name(name),
     indicatorResources(INDICATOR_MAX + 1)
 {
+    setCodePage(SC_CP_UTF8);
+
+#ifdef Q_OS_MACOS
+    send(SCI_SETFONTQUALITY, SC_EFF_QUALITY_LCD_OPTIMIZED);
+    styleSetFont(STYLE_DEFAULT, "Menlo, Apple Color Emoji");
+#endif
+
+    // Defensive initialization of caret position and cursor geometry
+    setCurrentPos(0);
+    setAnchor(0);
+    chooseCaretX();
+
     // Per the scintilla documentation, some parts of the range are not generally available
     indicatorResources.disableRange(0, 7);
     indicatorResources.disableRange(INDICATOR_IME, INDICATOR_IME_MAX);
@@ -619,24 +640,153 @@ void ScintillaNext::removeConsecutiveDuplicateLines()
     replaceTarget(result.length(), result.constData());
 }
 
-void ScintillaNext::dragEnterEvent(QDragEnterEvent *event)
+void ScintillaNext::convertTabsToSpaces()
 {
-    // Ignore all drag and drop events with urls and let the main application handle it
-    if (event->mimeData()->hasUrls()) {
+    const int tabSize = std::max(1, static_cast<int>(tabWidth()));
+    const QString spaceIndent(tabSize, ' ');
+
+    bool hasSel = (selectionStart() != selectionEnd());
+    Sci_Position startPos = hasSel ? selectionStart() : 0;
+    Sci_Position endPos = hasSel ? selectionEnd() : length();
+
+    if (startPos > endPos) {
+        std::swap(startPos, endPos);
+    }
+
+    QByteArray docBytes = get_text_range(startPos, endPos);
+    QString text = QString::fromUtf8(docBytes);
+    if (!text.contains('\t')) {
         return;
     }
 
-    ScintillaEdit::dragEnterEvent(event);
+    text.replace('\t', spaceIndent);
+    QByteArray newBytes = text.toUtf8();
+
+    const UndoAction ua(this);
+    setTargetRange(startPos, endPos);
+    replaceTarget(newBytes.length(), newBytes.constData());
 }
 
-void ScintillaNext::dropEvent(QDropEvent *event)
+void ScintillaNext::convertSpacesToTabs()
 {
-    // Ignore all drag and drop events with urls and let the main application handle it
-    if (event->mimeData()->hasUrls()) {
+    const int tabSize = std::max(1, static_cast<int>(tabWidth()));
+
+    bool hasSel = (selectionStart() != selectionEnd());
+    Sci_Position startPos = hasSel ? selectionStart() : 0;
+    Sci_Position endPos = hasSel ? selectionEnd() : length();
+
+    if (startPos > endPos) {
+        std::swap(startPos, endPos);
+    }
+
+    QByteArray docBytes = get_text_range(startPos, endPos);
+    QString text = QString::fromUtf8(docBytes);
+
+    QStringList lines = text.split('\n');
+    bool modified = false;
+    for (QString &line : lines) {
+        int leadingSpaces = 0;
+        while (leadingSpaces < line.length() && line.at(leadingSpaces) == ' ') {
+            leadingSpaces++;
+        }
+        if (leadingSpaces >= tabSize) {
+            int numTabs = leadingSpaces / tabSize;
+            int remSpaces = leadingSpaces % tabSize;
+            line = QString('\t').repeated(numTabs) + QString(' ').repeated(remSpaces) + line.mid(leadingSpaces);
+            modified = true;
+        }
+    }
+
+    if (!modified) {
         return;
     }
 
-    ScintillaEdit::dropEvent(event);
+    QString newText = lines.join('\n');
+    QByteArray newBytes = newText.toUtf8();
+
+    const UndoAction ua(this);
+    setTargetRange(startPos, endPos);
+    replaceTarget(newBytes.length(), newBytes.constData());
+}
+
+void ScintillaNext::keyPressEvent(QKeyEvent *event)
+{
+    if (!event) return;
+
+    const int key = event->key();
+    const Qt::KeyboardModifiers mods = event->modifiers();
+
+    if ((key == Qt::Key_Backspace || key == Qt::Key_Delete) && (mods == Qt::NoModifier || mods == Qt::KeypadModifier)) {
+        if (!selectionEmpty()) {
+            ScintillaEdit::keyPressEvent(event);
+            return;
+        }
+
+        const Sci_Position pos = currentPos();
+        const int line = lineFromPosition(pos);
+        const Sci_Position lineStart = positionFromLine(line);
+        const Sci_Position lineEnd = lineEndPosition(line);
+
+        if (key == Qt::Key_Backspace && pos > lineStart) {
+            const int lenInLine = static_cast<int>(pos - lineStart);
+            QByteArray bytes(lenInLine, '\0');
+            Sci_TextRange tr{{static_cast<Sci_PositionCR>(lineStart), static_cast<Sci_PositionCR>(pos)}, bytes.data()};
+            send(SCI_GETTEXTRANGE, 0, reinterpret_cast<sptr_t>(&tr));
+
+            QString lineStr = QString::fromUtf8(bytes.constData(), lenInLine);
+            QTextBoundaryFinder finder(QTextBoundaryFinder::Grapheme, lineStr);
+            finder.setPosition(lineStr.length());
+            const int prevUtf16 = finder.toPreviousBoundary();
+            if (prevUtf16 >= 0) {
+                const int clusterByteLen = lineStr.mid(prevUtf16).toUtf8().length();
+                if (clusterByteLen > 1) {
+                    deleteRange(pos - clusterByteLen, clusterByteLen);
+                    event->accept();
+                    return;
+                }
+            }
+        } else if (key == Qt::Key_Delete && pos < lineEnd) {
+            const int lenToLineEnd = static_cast<int>(lineEnd - pos);
+            QByteArray bytes(lenToLineEnd, '\0');
+            Sci_TextRange tr{{static_cast<Sci_PositionCR>(pos), static_cast<Sci_PositionCR>(lineEnd)}, bytes.data()};
+            send(SCI_GETTEXTRANGE, 0, reinterpret_cast<sptr_t>(&tr));
+
+            QString lineStr = QString::fromUtf8(bytes.constData(), lenToLineEnd);
+            QTextBoundaryFinder finder(QTextBoundaryFinder::Grapheme, lineStr);
+            finder.setPosition(0);
+            const int nextUtf16 = finder.toNextBoundary();
+            if (nextUtf16 > 0) {
+                const int clusterByteLen = lineStr.left(nextUtf16).toUtf8().length();
+                if (clusterByteLen > 1) {
+                    deleteRange(pos, clusterByteLen);
+                    event->accept();
+                    return;
+                }
+            }
+        }
+    }
+
+    ScintillaEdit::keyPressEvent(event);
+}
+
+void ScintillaNext::dragEnterEvent(QDragEnterEvent *dragEvent)
+{
+    // Ignore all drag and drop events with urls and let the main application handle it
+    if (dragEvent->mimeData()->hasUrls()) {
+        return;
+    }
+
+    ScintillaEdit::dragEnterEvent(dragEvent);
+}
+
+void ScintillaNext::dropEvent(QDropEvent *dropEvent)
+{
+    // Ignore all drag and drop events with urls and let the main application handle it
+    if (dropEvent->mimeData()->hasUrls()) {
+        return;
+    }
+
+    ScintillaEdit::dropEvent(dropEvent);
 }
 
 bool ScintillaNext::readFromDisk(QFile &file, const QString &forcedEncoding)
@@ -652,6 +802,7 @@ bool ScintillaNext::readFromDisk(QFile &file, const QString &forcedEncoding)
     }
 
     allocate(file.size());
+    setCodePage(SC_CP_UTF8);
 
     // Turn off undo collection and block signals during loading
     setUndoCollection(false);

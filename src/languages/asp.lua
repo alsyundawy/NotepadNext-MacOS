@@ -1,6 +1,6 @@
 local L = {}
 
-L.lexer = "asp"
+L.lexer = "hypertext"
 
 L.singleLineComment = "' "
 

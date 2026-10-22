@@ -1,6 +1,6 @@
 local L = {}
 
-L.lexer = "baanc"
+L.lexer = "baan"
 
 L.singleLineComment = "// "
 

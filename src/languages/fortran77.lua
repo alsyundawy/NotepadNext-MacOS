@@ -1,6 +1,6 @@
 local L = {}
 
-L.lexer = "fortran77"
+L.lexer = "f77"
 
 L.singleLineComment = "C "
 

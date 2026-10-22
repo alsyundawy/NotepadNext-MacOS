@@ -1,6 +1,8 @@
 /*
- * This file is part of Notepad Next.
- * Copyright 2019 Justin Dailey
+ * This file is part of Notepad Next (macOS Edition).
+ * Copyright 2019-2026 Justin Dailey
+ * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * https://github.com/alsyundawy/NotepadNext-MacOS
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,7 +17,6 @@
  * You should have received a copy of the GNU General Public License
  * along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
  */
-
 
 #include <stdlib.h>
 #include <string.h>
@@ -164,13 +165,14 @@ inline int absolute_index(lua_State *L, int index) {
 }
 
 [[maybe_unused]] static int cf_npp_constname(lua_State *L) {
-    char constName[100] = "";
+    char constName[128] = "";
     const char *hint = nullptr;
     int message = (int)luaL_checkinteger(L, 1);
 
     hint = luaL_optstring(L, 2, nullptr);
 
-    if (ifacemixer.GetConstantName(message, constName, 100, hint) > 0) {
+    if (ifacemixer.GetConstantName(message, constName, sizeof(constName), hint) > 0) {
+        constName[sizeof(constName) - 1] = '\0';
         lua_pushstring(L, constName);
         return 1;
     } else {

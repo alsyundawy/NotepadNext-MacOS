@@ -1,4 +1,24 @@
 /*
+ * This file is part of Notepad Next (macOS Edition).
+ * Copyright 2019-2026 Justin Dailey
+ * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * https://github.com/alsyundawy/NotepadNext-MacOS
+ *
+ * Notepad Next is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Notepad Next is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+/*
  * This file is part of NotepadNext.
  * Copyright 2026 Harry DS Alsyundawy (NotepadNext Maintainer)
  *
@@ -51,7 +71,7 @@ void ThemeManager::initialize(ApplicationSettings *settings) {
             m_currentPaletteId = savedPalette;
         } else {
             m_currentPaletteId =
-                (m_themeMode == ThemeMode::Dark) ? QStringLiteral("dracula") : QStringLiteral("notepadNext");
+                (m_themeMode == ThemeMode::Dark) ? QStringLiteral("horizonDark") : QStringLiteral("notepadNext");
         }
     }
 }
@@ -74,7 +94,7 @@ const ThemePalette *ThemeManager::currentPalette() const {
         const ThemePalette *p = findThemePaletteById(m_currentPaletteId);
         if (p) {
             if (m_themeMode == ThemeMode::Dark && !p->isDark) {
-                return findThemePaletteById(QStringLiteral("dracula"));
+                return findThemePaletteById(QStringLiteral("horizonDark"));
             }
             if (m_themeMode == ThemeMode::Light && p->isDark) {
                 return findThemePaletteById(QStringLiteral("notepadNext"));
@@ -82,7 +102,7 @@ const ThemePalette *ThemeManager::currentPalette() const {
             return p;
         }
     }
-    return isDarkActive() ? findThemePaletteById(QStringLiteral("dracula"))
+    return isDarkActive() ? findThemePaletteById(QStringLiteral("horizonDark"))
                           : findThemePaletteById(QStringLiteral("notepadNext"));
 }
 
@@ -95,7 +115,7 @@ void ThemeManager::setThemeMode(ThemeMode mode, MainWindow *window) {
     const ThemePalette *cur = findThemePaletteById(m_currentPaletteId);
     if (mode == ThemeMode::Dark) {
         if (!cur || !cur->isDark) {
-            m_currentPaletteId = QStringLiteral("dracula");
+            m_currentPaletteId = QStringLiteral("horizonDark");
         }
     } else if (mode == ThemeMode::Light) {
         if (!cur || cur->isDark) {
@@ -169,7 +189,7 @@ void ThemeManager::applyTheme(MainWindow *window) {
     const ThemePalette *pal = currentPalette();
     bool dark = isDarkActive();
     if (!pal) {
-        pal = dark ? findThemePaletteById(QStringLiteral("dracula"))
+        pal = dark ? findThemePaletteById(QStringLiteral("horizonDark"))
                    : findThemePaletteById(QStringLiteral("notepadNext"));
     }
 
@@ -224,7 +244,7 @@ void ThemeManager::applyThemeToEditor(ScintillaNext *editor) {
 
     const ThemePalette *pal = currentPalette();
     if (!pal) {
-        pal = isDarkActive() ? findThemePaletteById(QStringLiteral("dracula"))
+        pal = isDarkActive() ? findThemePaletteById(QStringLiteral("horizonDark"))
                              : findThemePaletteById(QStringLiteral("notepadNext"));
     }
     if (!pal)
@@ -390,7 +410,7 @@ void ThemeManager::applyThemeToEditor(ScintillaNext *editor) {
 QString ThemeManager::getThemeStyleSheet() const {
     const ThemePalette *pal = currentPalette();
     if (!pal) {
-        pal = isDarkActive() ? findThemePaletteById(QStringLiteral("dracula"))
+        pal = isDarkActive() ? findThemePaletteById(QStringLiteral("horizonDark"))
                              : findThemePaletteById(QStringLiteral("notepadNext"));
     }
 

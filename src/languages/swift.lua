@@ -1,6 +1,6 @@
 local L = {}
 
-L.lexer = "swift"
+L.lexer = "cpp"
 
 L.singleLineComment = "// "
 

@@ -1,6 +1,8 @@
 /*
- * This file is part of Notepad Next.
- * Copyright 2019 Justin Dailey
+ * This file is part of Notepad Next (macOS Edition).
+ * Copyright 2019-2026 Justin Dailey
+ * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * https://github.com/alsyundawy/NotepadNext-MacOS
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,7 +17,6 @@
  * You should have received a copy of the GNU General Public License
  * along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
  */
-
 
 #include "MainWindow.h"
 #include "NotepadNextApplication.h"
@@ -39,6 +40,7 @@
 #include <QCommandLineParser>
 
 #include <QDirIterator>
+#include <QMap>
 
 #ifdef Q_OS_WIN
 #include <Windows.h>
@@ -283,6 +285,25 @@ void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QStr
     editor->languageSingleLineComment = getLuaState()->executeAndReturn<QString>("return languages[languageName].singleLineComment or \"\"").toUtf8();
 
     auto lexerInstance = CreateLexer(lexer.toLatin1().constData());
+    if (!lexerInstance && !lexer.isEmpty()) {
+        static const QMap<QString, const char*> s_lexerAliases = {
+            { QStringLiteral("autoit"), "au3" },
+            { QStringLiteral("baanc"), "baan" },
+            { QStringLiteral("cobol"), "COBOL" },
+            { QStringLiteral("fortran77"), "f77" },
+            { QStringLiteral("postscript"), "ps" },
+            { QStringLiteral("objc"), "cpp" },
+            { QStringLiteral("rc"), "cpp" },
+            { QStringLiteral("scheme"), "lisp" },
+            { QStringLiteral("swift"), "cpp" },
+            { QStringLiteral("asp"), "hypertext" },
+            { QStringLiteral("nfo"), "null" }
+        };
+        auto it = s_lexerAliases.constFind(lexer.toLower());
+        if (it != s_lexerAliases.constEnd()) {
+            lexerInstance = CreateLexer(it.value());
+        }
+    }
     editor->setILexer((sptr_t) lexerInstance);
     editor->clearDocumentStyle(); // Remove all previous style information, setting the lexer does not guarantee styling information is cleared
 

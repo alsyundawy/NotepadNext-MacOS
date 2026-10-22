@@ -1,6 +1,6 @@
 local L = {}
 
-L.lexer = "cobol"
+L.lexer = "COBOL"
 
 L.singleLineComment = "* "
 
