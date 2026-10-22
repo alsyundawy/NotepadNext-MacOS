@@ -132,14 +132,14 @@ public:
     const std::vector<IFaceProperty> &properties;
 
     // IFaceTableInterface
-    const IFaceConstant *FindConstant(const char *name) const;
-    const IFaceFunction *FindFunction(const char *name) const;
-    const IFaceFunction *FindFunctionByConstantName(const char *name) const;
-    const IFaceFunction *FindFunctionByValue(int value) const;
-    const IFaceProperty *FindProperty(const char *name) const;
-    int GetConstantName(int value, char *nameOut, unsigned nameBufferLen, const char *hint) const;
-    const IFaceFunction *GetFunctionByMessage(int message) const;
-    IFaceFunction GetPropertyFuncByMessage(int message) const;
+    const IFaceConstant *FindConstant(const char *name) const override;
+    const IFaceFunction *FindFunction(const char *name) const override;
+    const IFaceFunction *FindFunctionByConstantName(const char *name) const override;
+    const IFaceFunction *FindFunctionByValue(int value) const override;
+    const IFaceProperty *FindProperty(const char *name) const override;
+    int GetConstantName(int value, char *nameOut, unsigned nameBufferLen, const char *hint) const override;
+    const IFaceFunction *GetFunctionByMessage(int message) const override;
+    IFaceFunction GetPropertyFuncByMessage(int message) const override;
 
     std::vector<std::string> GetAllConstantNames() const;
     std::vector<std::string> GetAllFunctionNames() const;

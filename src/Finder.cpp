@@ -25,9 +25,9 @@ Finder::Finder(ScintillaNext *editor) :
 {
 }
 
-void Finder::setEditor(ScintillaNext *editor)
+void Finder::setEditor(ScintillaNext *newEditor)
 {
-    this->editor = editor;
+    this->editor = newEditor;
 }
 
 int Finder::searchFlags() const

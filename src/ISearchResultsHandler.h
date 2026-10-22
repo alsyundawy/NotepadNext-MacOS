@@ -25,8 +25,8 @@
 
 class ISearchResultsHandler {
 public:
-    virtual void newSearch(const QString searchTerm) = 0;
+    virtual void newSearch(const QString &searchTerm) = 0;
     virtual void newFileEntry(ScintillaNext *editor) = 0;
-    virtual void newResultsEntry(const QString line, int lineNumber, int startPositionFromBeginning, int endPositionFromBeginning, int hitCount=1) = 0;
+    virtual void newResultsEntry(const QString &line, int lineNumber, int startPositionFromBeginning, int endPositionFromBeginning, int hitCount=1) = 0;
     virtual void completeSearch() = 0;
 };

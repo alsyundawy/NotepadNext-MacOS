@@ -29,7 +29,7 @@ void RangeAllocator::disableRange(int start, int end)
     resource.fill(true, start, end + 1);
 }
 
-int RangeAllocator::requestResource(const QString name)
+int RangeAllocator::requestResource(const QString &name)
 {
     // Check to see if this key is allocated yet
     if (allocation.contains(name)) {

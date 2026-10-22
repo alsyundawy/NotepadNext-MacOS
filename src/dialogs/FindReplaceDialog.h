@@ -65,9 +65,9 @@ public:
     void setSearchResultsHandler(ISearchResultsHandler *searchResultsHandler);
 
 protected:
-    bool event(QEvent *event) override;
-    void showEvent(QShowEvent *event) override;
-    void closeEvent(QCloseEvent *event) override;
+    bool event(QEvent *e) override;
+    void showEvent(QShowEvent *e) override;
+    void closeEvent(QCloseEvent *e) override;
 
 signals:
     void windowActivated();
@@ -88,7 +88,7 @@ public slots:
     void copyMarkedText();
 
 private slots:
-    void setEditor(ScintillaNext *edit);
+    void setEditor(ScintillaNext *targetEditor);
     void adjustOpacity(int value);
     void transparencyToggled(bool on);
     void adjustOpacityWhenLosingFocus(bool checked);
@@ -99,7 +99,7 @@ private slots:
 private:
     QString findString() const;
     void performFind(SearchDirection direction);
-    void prepareToPerformSearch(bool replace=false);
+    void prepareToPerformSearch(bool isReplace=false);
     void loadSettings();
     void saveSettings();
 

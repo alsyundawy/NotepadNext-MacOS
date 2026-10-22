@@ -60,7 +60,7 @@ void EncodingSelectionDialog::updateCurrentDocInfo() {
 
     // Run quick detection on sample to show detection method and confidence
     const QByteArray sample =
-        QByteArray::fromRawData((char *)m_editor->characterPointer(), qMin(m_editor->textLength(), 4096));
+        QByteArray::fromRawData(reinterpret_cast<const char *>(m_editor->characterPointer()), qMin(m_editor->textLength(), 4096));
     auto res = EncodingDetector::detect(sample);
     ui->labelDetectionMethod->setText(
         QStringLiteral("%1 (Confidence: %2%)").arg(res.detectionMethod).arg(res.confidence));

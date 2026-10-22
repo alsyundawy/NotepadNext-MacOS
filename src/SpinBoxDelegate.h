@@ -29,7 +29,7 @@ class SpinBoxDelegate : public QStyledItemDelegate
     Q_OBJECT
 
 public:
-    SpinBoxDelegate(QSpinBoxFactory factory, QObject *parent = nullptr);
+    explicit SpinBoxDelegate(QSpinBoxFactory factory, QObject *parent = nullptr);
 
     QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 

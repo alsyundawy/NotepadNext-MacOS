@@ -29,15 +29,15 @@ MacroRecorder::MacroRecorder(QObject *parent) :
 {
 }
 
-void MacroRecorder::startRecording(ScintillaNext *editor)
+void MacroRecorder::startRecording(ScintillaNext *targetEditor)
 {
-    this->editor = editor;
-    connect(editor, &ScintillaNext::macroRecord, this, &MacroRecorder::recordMacroStep);
+    this->editor = targetEditor;
+    connect(targetEditor, &ScintillaNext::macroRecord, this, &MacroRecorder::recordMacroStep);
 
     // We don't "own" the macro so don't delete it if it is a valid pointer
     macro = new Macro();
 
-    editor->startRecord();
+    targetEditor->startRecord();
 }
 
 Macro *MacroRecorder::stopRecording()

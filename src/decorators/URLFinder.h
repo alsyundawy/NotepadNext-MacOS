@@ -27,7 +27,7 @@ class URLFinder : public EditorDecorator
     Q_OBJECT
 
 public:
-    URLFinder(ScintillaNext *editor);
+    explicit URLFinder(ScintillaNext *editor);
     bool isURL(int position) const;
     void copyURLToClipboard(int position) const;
 

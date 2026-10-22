@@ -52,7 +52,7 @@ private slots:
     void editorRenamed();
 
 private:
-    QListWidgetItem *lookupItemByEditor(ScintillaNext *editor);
+    QListWidgetItem *lookupItemByEditor(const ScintillaNext *editor);
 
     Ui::FileList *ui;
     MainWindow *window;

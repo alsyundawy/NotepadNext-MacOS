@@ -27,10 +27,10 @@ ApplicationSetting<type> name{#group "/" #name, default};\
 {\
         return get(name);\
 }\
-    void ApplicationSettings::set##name(type lname)\
+    void ApplicationSettings::set##name(const type &val)\
 {\
-        set(name, lname);\
-        emit lname##Changed(lname);\
+        set(name, val);\
+        emit lname##Changed(val);\
 }
 
 

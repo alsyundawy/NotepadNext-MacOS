@@ -51,8 +51,17 @@ end
 function SetStyle(L)
     if L.styles then
         for _, style in pairs(L.styles) do
-            editor.StyleFore[style.id] = style.fgColor
-            editor.StyleBack[style.id] = style.bgColor
+            if is_dark_theme then
+                if style.bgColor and style.bgColor ~= rgb(0xFFFFFF) then
+                    editor.StyleBack[style.id] = style.bgColor
+                end
+                if style.fgColor and style.fgColor ~= rgb(0x000000) and style.fgColor ~= 0 then
+                    editor.StyleFore[style.id] = style.fgColor
+                end
+            else
+                editor.StyleFore[style.id] = style.fgColor
+                editor.StyleBack[style.id] = style.bgColor
+            end
 
             if style.fontStyle then
                 editor.StyleBold[style.id] = (style.fontStyle & 1 == 1)

@@ -148,7 +148,7 @@ QString ScintillaNext::eolModeToString(int eolMode)
         return QString(); // unknown
 }
 
-int ScintillaNext::stringToEolMode(QString eolMode)
+int ScintillaNext::stringToEolMode(const QString &eolMode)
 {
     if (eolMode == QStringLiteral("crlf"))
         return SC_EOL_CRLF;
@@ -160,9 +160,9 @@ int ScintillaNext::stringToEolMode(QString eolMode)
         return -1;
 }
 
-int ScintillaNext::allocateIndicator(const QString &name)
+int ScintillaNext::allocateIndicator(const QString &indicatorName)
 {
-    return indicatorResources.requestResource(name);
+    return indicatorResources.requestResource(indicatorName);
 }
 
 void ScintillaNext::goToRange(const Sci_CharacterRange &range)
@@ -306,9 +306,9 @@ bool ScintillaNext::canSaveToDisk() const
             (bufferType == ScintillaNext::FileMissing);
 }
 
-void ScintillaNext::setName(const QString &name)
+void ScintillaNext::setName(const QString &newName)
 {
-    this->name = name;
+    this->name = newName;
 
     emit renamed();
 }
@@ -376,7 +376,7 @@ QFileDevice::FileError ScintillaNext::save()
 
     emit aboutToSave();
 
-    const QByteArray data = QByteArray::fromRawData((char*)characterPointer(), textLength());
+    const QByteArray data = QByteArray::fromRawData(reinterpret_cast<const char *>(characterPointer()), textLength());
     const QString path = fileInfo.filePath();
     QFileDevice::FileError writeSuccessful = writeToDisk(data, path, bomType, fileEncoding);
 
@@ -453,7 +453,7 @@ QFileDevice::FileError ScintillaNext::saveAs(const QString &newFilePath)
 
     emit aboutToSave();
 
-    const QByteArray data = QByteArray::fromRawData((char*)characterPointer(), textLength());
+    const QByteArray data = QByteArray::fromRawData(reinterpret_cast<const char *>(characterPointer()), textLength());
     QFileDevice::FileError saveSuccessful = writeToDisk(data, newFilePath, bomType, fileEncoding);
 
     if (saveSuccessful == QFileDevice::NoError) {
@@ -475,7 +475,7 @@ QFileDevice::FileError ScintillaNext::saveAs(const QString &newFilePath)
 
 QFileDevice::FileError ScintillaNext::saveCopyAs(const QString &filePath)
 {
-    const QByteArray data = QByteArray::fromRawData((char*)characterPointer(), textLength());
+    const QByteArray data = QByteArray::fromRawData(reinterpret_cast<const char *>(characterPointer()), textLength());
     return writeToDisk(data, filePath, bomType, fileEncoding);
 }
 
@@ -582,7 +582,7 @@ void ScintillaNext::uncommentLineSelection()
 
 void ScintillaNext::removeDuplicateLines()
 {
-    QByteArray data = QByteArray::fromRawData((char*) characterPointer(), textLength());
+    QByteArray data = QByteArray::fromRawData(reinterpret_cast<const char *>(characterPointer()), textLength());
     const QByteArray delim = eolString();
 
     auto lines = ByteArrayUtils::split(data, delim);
@@ -602,7 +602,7 @@ void ScintillaNext::removeDuplicateLines()
 
 void ScintillaNext::removeConsecutiveDuplicateLines()
 {
-    QByteArray data = QByteArray::fromRawData((char*) characterPointer(), textLength());
+    QByteArray data = QByteArray::fromRawData(reinterpret_cast<const char *>(characterPointer()), textLength());
     const QByteArray delim = eolString();
 
     auto lines = ByteArrayUtils::split(data, delim);

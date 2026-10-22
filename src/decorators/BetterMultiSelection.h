@@ -34,7 +34,7 @@ class BetterMultiSelection : public EditorDecorator
     Q_OBJECT
 
 public:
-    BetterMultiSelection(ScintillaNext *editor);
+    explicit BetterMultiSelection(ScintillaNext *editor);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override;

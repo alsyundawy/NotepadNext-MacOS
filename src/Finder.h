@@ -44,7 +44,7 @@ class Finder
 public:
     explicit Finder(ScintillaNext *editor);
 
-    void setEditor(ScintillaNext *editor);
+    void setEditor(ScintillaNext *newEditor);
 
     FindOptions &options() { return find_options; }
     const FindOptions &options() const { return find_options; }

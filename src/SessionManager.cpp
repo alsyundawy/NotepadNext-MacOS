@@ -35,7 +35,7 @@ static QString RandomSessionFileName()
 }
 
 // QList<int> cannot be automatically serialized to/from QSettings (i.e. QVariant) so turn it to a QVariantList
-static QVariantList QListToQVariantList(const QList<int> intList)
+static QVariantList QListToQVariantList(const QList<int> &intList)
 {
     QVariantList vl;
     for (const int i : intList){
@@ -64,22 +64,23 @@ void SessionManager::setSessionFileTypes(SessionFileTypes types)
     fileTypes = types;
 }
 
-QDir SessionManager::sessionDirectory() const
+QDir SessionManager::sessionDirectory()
 {
     QDir d(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
 
-    d.mkpath("session");
-    d.cd("session");
+    if (d.mkpath("session")) {
+        Q_UNUSED(d.cd("session"));
+    }
 
     return d;
 }
 
-void SessionManager::saveIntoSessionDirectory(ScintillaNext *editor, const QString &sessionFileName) const
+void SessionManager::saveIntoSessionDirectory(ScintillaNext *editor, const QString &sessionFileName)
 {
     editor->saveCopyAs(sessionDirectory().filePath(sessionFileName));
 }
 
-SessionManager::SessionFileType SessionManager::determineType(ScintillaNext *editor) const
+SessionManager::SessionFileType SessionManager::determineType(const ScintillaNext *editor)
 {
     if (editor->isFile()) {
         if (editor->isSavedToDisk()) {
@@ -99,13 +100,13 @@ SessionManager::SessionFileType SessionManager::determineType(ScintillaNext *edi
     }
 }
 
-void SessionManager::clear() const
+void SessionManager::clear()
 {
     clearSettings();
     clearDirectory();
 }
 
-void SessionManager::clearSettings() const
+void SessionManager::clearSettings()
 {
     ApplicationSettings settings;;
 
@@ -114,7 +115,7 @@ void SessionManager::clearSettings() const
     settings.remove("");
 }
 
-void SessionManager::clearDirectory() const
+void SessionManager::clearDirectory()
 {
     QDir d = sessionDirectory();
 
@@ -234,7 +235,7 @@ void SessionManager::loadSession(MainWindow *window)
     }
 }
 
-bool SessionManager::willFileGetStoredInSession(ScintillaNext *editor) const
+bool SessionManager::willFileGetStoredInSession(const ScintillaNext *editor) const
 {
     SessionFileType editorType = determineType(editor);
 
@@ -250,7 +251,7 @@ void SessionManager::storeFileDetails(ScintillaNext *editor, QSettings &settings
     storeEditorViewDetails(editor, settings);
 }
 
-ScintillaNext* SessionManager::loadFileDetails(QSettings &settings)
+ScintillaNext* SessionManager::loadFileDetails(const QSettings &settings)
 {
     qInfo(Q_FUNC_INFO);
 
@@ -297,7 +298,7 @@ void SessionManager::storeUnsavedFileDetails(ScintillaNext *editor, QSettings &s
     saveIntoSessionDirectory(editor, sessionFileName);
 }
 
-ScintillaNext *SessionManager::loadUnsavedFileDetails(QSettings &settings)
+ScintillaNext *SessionManager::loadUnsavedFileDetails(const QSettings &settings)
 {
     qInfo(Q_FUNC_INFO);
 
@@ -308,7 +309,7 @@ ScintillaNext *SessionManager::loadUnsavedFileDetails(QSettings &settings)
     qDebug("Session file: \"%s\"", qUtf8Printable(filePath));
     qDebug("  temp loc: \"%s\"", qUtf8Printable(sessionFilePath));
 
-    ScintillaNext *existingEditor = app->getEditorManager()->getEditorByFilePath(filePath);
+    const ScintillaNext *existingEditor = app->getEditorManager()->getEditorByFilePath(filePath);
     if (existingEditor != Q_NULLPTR) {
         qDebug("  file is already open, ignoring");
         return Q_NULLPTR;
@@ -353,7 +354,7 @@ void SessionManager::storeTempFile(ScintillaNext *editor, QSettings &settings)
     saveIntoSessionDirectory(editor, sessionFileName);
 }
 
-ScintillaNext *SessionManager::loadTempFile(QSettings &settings)
+ScintillaNext *SessionManager::loadTempFile(const QSettings &settings)
 {
     qInfo(Q_FUNC_INFO);
 
@@ -408,7 +409,7 @@ void SessionManager::storeEditorViewDetails(ScintillaNext *editor, QSettings &se
         settings.setValue("BookMarks", QListToQVariantList(bookMarkedLines));
 }
 
-void SessionManager::loadEditorViewDetails(ScintillaNext *editor, QSettings &settings)
+void SessionManager::loadEditorViewDetails(ScintillaNext *editor, const QSettings &settings)
 {
     const int firstVisibleLine = settings.value("FirstVisibleLine").toInt() - 1;
     const int currentPosition = settings.value("CurrentPosition").toInt();

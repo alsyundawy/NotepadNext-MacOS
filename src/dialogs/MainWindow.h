@@ -117,7 +117,7 @@ public slots:
     void updateContentBasedUi(ScintillaNext *editor);
     void updateSaveStatusBasedUi(ScintillaNext *editor);
     void updateEditorPositionBasedUi();
-    void updateLanguageBasedUi(ScintillaNext *editor);
+    void updateLanguageBasedUi(const ScintillaNext *editor);
     void updateGui(ScintillaNext *editor);
 
     void detectLanguage(ScintillaNext *editor);
@@ -148,7 +148,7 @@ protected:
 private slots:
     void tabBarRightClicked(ScintillaNext *editor);
     void languageMenuTriggered();
-    void checkForUpdatesFinished(QString url);
+    void checkForUpdatesFinished(const QString &url);
     void activateEditor(ScintillaNext *editor);
 
 private:
@@ -179,13 +179,13 @@ private:
     void initUpdateCheck();
     ScintillaNext *getInitialEditor();
     void openFileList(const QStringList &fileNames);
-    bool checkEditorsBeforeClose(const QVector<ScintillaNext *> &editors);
+    bool checkEditorsBeforeClose(const QVector<ScintillaNext *> &editorList);
     bool checkFileForModification(ScintillaNext *editor);
     void showSaveErrorMessage(ScintillaNext *editor, QFileDevice::FileError error);
     void showEditorZoomLevelIndicator();
 
     enum class UserSaveAction { SaveAll, DiscardAll, Cancel };
-    UserSaveAction promptForSave(const QVector<ScintillaNext *> &editors);
+    UserSaveAction promptForSave(const QVector<ScintillaNext *> &editorList);
 
     void saveSettings() const;
     void restoreSettings();

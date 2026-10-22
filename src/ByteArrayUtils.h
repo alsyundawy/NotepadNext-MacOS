@@ -30,6 +30,7 @@ class QByteArrayView
 public:
     QByteArrayView() : m_data(nullptr), m_size(0) {}
     QByteArrayView(const char* data, qsizetype size) : m_data(data), m_size(size) {}
+    // cppcheck-suppress noExplicitConstructor
     QByteArrayView(const QByteArray& ba) : m_data(ba.constData()), m_size(ba.size()) {}
     const char* data() const { return m_data; }
     qsizetype size() const { return m_size; }

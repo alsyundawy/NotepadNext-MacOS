@@ -12,6 +12,10 @@
 #include "features/ThemeManager.h"
 #include "features/ThemePaletteData.h"
 
+#ifndef APP_VERSION
+#define APP_VERSION "0.15-05"
+#endif
+
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QTabWidget>

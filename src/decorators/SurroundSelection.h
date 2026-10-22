@@ -31,7 +31,7 @@ class SurroundSelection : public EditorDecorator
     Q_OBJECT
 
 public:
-    SurroundSelection(ScintillaNext *editor);
+    explicit SurroundSelection(ScintillaNext *editor);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override;

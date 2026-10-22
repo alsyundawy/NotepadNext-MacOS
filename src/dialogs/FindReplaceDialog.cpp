@@ -150,7 +150,7 @@ FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainW
 
         int totalReplaced = 0;
         ScintillaNext *current_editor = editor;
-        MainWindow *window = qobject_cast<MainWindow *>(parent());
+        const MainWindow *window = qobject_cast<MainWindow *>(parent());
 
         for (ScintillaNext *targetEd : window->editors()) {
             setEditor(targetEd);
@@ -199,19 +199,19 @@ void FindReplaceDialog::setTab(int tab)
     tabBar->setCurrentIndex(tab);
 }
 
-bool FindReplaceDialog::event(QEvent *event)
+bool FindReplaceDialog::event(QEvent *e)
 {
-    if (event->type() == QEvent::WindowActivate) {
+    if (e->type() == QEvent::WindowActivate) {
         emit windowActivated();
     }
-    else if (event->type() == QEvent::WindowDeactivate) {
+    else if (e->type() == QEvent::WindowDeactivate) {
         emit windowDeactivated();
     }
 
-    return QDialog::event(event);
+    return QDialog::event(e);
 }
 
-void FindReplaceDialog::showEvent(QShowEvent *event)
+void FindReplaceDialog::showEvent(QShowEvent *e)
 {
     qInfo(Q_FUNC_INFO);
 
@@ -220,14 +220,14 @@ void FindReplaceDialog::showEvent(QShowEvent *event)
 
     isFirstTime = false;
 
-    QDialog::showEvent(event);
+    QDialog::showEvent(e);
 }
 
-void FindReplaceDialog::closeEvent(QCloseEvent *event)
+void FindReplaceDialog::closeEvent(QCloseEvent *e)
 {
     saveSettings();
 
-    QDialog::closeEvent(event);
+    QDialog::closeEvent(e);
 }
 
 static void updateComboList(QComboBox *comboBox, const QString &text)
@@ -316,10 +316,10 @@ void FindReplaceDialog::findAllInDocuments()
     qInfo(Q_FUNC_INFO);
 
     ScintillaNext *current_editor = editor;
-    MainWindow *window = qobject_cast<MainWindow *>(parent());
+    const MainWindow *window = qobject_cast<MainWindow *>(parent());
 
-    for(ScintillaNext *editor : window->editors()) {
-        setEditor(editor);
+    for (ScintillaNext *targetEd : window->editors()) {
+        setEditor(targetEd);
         findAllInCurrentDocument();
     }
 
@@ -366,8 +366,8 @@ void FindReplaceDialog::replaceAll()
         convertToExtended(replaceText);
     }
 
-    int count = finder->replaceAll(replaceText);
-    showMessage(tr("Replaced %Ln matches", "", count), "green");
+    int totalReplaced = finder->replaceAll(replaceText);
+    showMessage(tr("Replaced %Ln matches", "", totalReplaced), "green");
 }
 
 void FindReplaceDialog::count()
@@ -381,11 +381,11 @@ void FindReplaceDialog::count()
     showMessage(tr("Found %Ln matches", "", total), "green");
 }
 
-void FindReplaceDialog::setEditor(ScintillaNext *editor)
+void FindReplaceDialog::setEditor(ScintillaNext *targetEditor)
 {
-    this->editor = editor;
+    this->editor = targetEditor;
 
-    finder->setEditor(editor);
+    finder->setEditor(targetEditor);
 }
 
 void FindReplaceDialog::performNextSearch()
@@ -559,14 +559,14 @@ void FindReplaceDialog::setSearchResultsHandler(ISearchResultsHandler *searchRes
     this->searchResultsHandler = searchResults;
 }
 
-void FindReplaceDialog::prepareToPerformSearch(bool replace)
+void FindReplaceDialog::prepareToPerformSearch(bool isReplace)
 {
     qInfo(Q_FUNC_INFO);
 
     QString findText = findString();
 
     updateFindList(findText);
-    if (replace) {
+    if (isReplace) {
         QString replaceText = replaceString();
         updateReplaceList(replaceText);
     }
@@ -768,27 +768,27 @@ void FindReplaceDialog::markAll()
         clearAllBookmarks();
     }
 
-    BookMarkDecorator *bookMarkDecorator = nullptr;
+    BookMarkDecorator *bmDecorator = nullptr;
     if (ui->checkBoxBookmarkLine->isChecked()) {
-        bookMarkDecorator = this->bookMarkDecorator();
+        bmDecorator = this->bookMarkDecorator();
     }
 
-    int count = 0;
+    int matchCount = 0;
     finder->forEachMatch([&](int start, int end) {
         editor->indicatorFillRange(start, end - start);
-        count++;
+        matchCount++;
 
-        if (bookMarkDecorator) {
+        if (bmDecorator) {
             const int line = editor->lineFromPosition(start);
-            if (!bookMarkDecorator->isBookmarkSet(line)) {
-                bookMarkDecorator->addBookmark(line);
+            if (!bmDecorator->isBookmarkSet(line)) {
+                bmDecorator->addBookmark(line);
             }
         }
 
         return end;
     });
 
-    showMessage(tr("Mark: %Ln match in entire file", "", count), "green");
+    showMessage(tr("Mark: %Ln match in entire file", "", matchCount), "green");
 }
 
 void FindReplaceDialog::clearAllMarks()

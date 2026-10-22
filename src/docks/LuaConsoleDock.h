@@ -43,7 +43,7 @@ public:
 
     void historyNext();
     void historyPrevious();
-    void historyAdd(QString line);
+    void historyAdd(const QString &line);
     void historyEnd();
 
 public slots:

@@ -133,7 +133,7 @@ void EditorInfoStatusBar::updateSelectionInfo(ScintillaNext *editor)
     docPos->setText(positionText + selectionText);
 }
 
-void EditorInfoStatusBar::updateLanguage(ScintillaNext *editor)
+void EditorInfoStatusBar::updateLanguage(const ScintillaNext *editor)
 {
     docType->setText(editor->languageName);
 }

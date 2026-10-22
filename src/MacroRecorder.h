@@ -32,9 +32,9 @@ class MacroRecorder : public QObject
     Q_OBJECT
 
 public:
-    MacroRecorder(QObject *parent = nullptr);
+    explicit MacroRecorder(QObject *parent = nullptr);
 
-    void startRecording(ScintillaNext *editor);
+    void startRecording(ScintillaNext *targetEditor);
     Macro *stopRecording();
 
 public slots:

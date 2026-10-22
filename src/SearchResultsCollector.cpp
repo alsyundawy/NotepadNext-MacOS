@@ -24,7 +24,7 @@ SearchResultsCollector::SearchResultsCollector(ISearchResultsHandler *child) :
 {
 }
 
-void SearchResultsCollector::newSearch(const QString searchTerm)
+void SearchResultsCollector::newSearch(const QString &searchTerm)
 {
     child->newSearch(searchTerm);
 }
@@ -40,7 +40,7 @@ void SearchResultsCollector::newFileEntry(ScintillaNext *editor)
     child->newFileEntry(editor);
 }
 
-void SearchResultsCollector::newResultsEntry(const QString line, int lineNumber, int startPositionFromBeginning, int endPositionFromBeginning, int hitCount)
+void SearchResultsCollector::newResultsEntry(const QString &line, int lineNumber, int startPositionFromBeginning, int endPositionFromBeginning, int hitCount)
 {
     if (runningHitCount == 0) {
         // Save the previous results since there have not been any yet

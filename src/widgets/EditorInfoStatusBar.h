@@ -48,7 +48,7 @@ private slots:
 
     void updateDocumentSize(ScintillaNext *editor);
     void updateSelectionInfo(ScintillaNext *editor);
-    void updateLanguage(ScintillaNext *editor);
+    void updateLanguage(const ScintillaNext *editor);
     void updateEol(ScintillaNext *editor);
     void updateEncoding(ScintillaNext *editor);
     void updateOverType(ScintillaNext *editor);

@@ -253,7 +253,7 @@ void LuaConsoleDock::writeErrorToOutput(const char *s)
 
     output->setReadOnly(false);
     output->documentEnd();
-    output->addStyledText(length * 2, (const char *) cells.constData());
+    output->addStyledText(length * 2, reinterpret_cast<const char *>(cells.constData()));
     output->setReadOnly(true);
     output->documentEnd();
 }
@@ -284,7 +284,7 @@ void LuaConsoleDock::historyPrevious()
     input->scrollToEnd();
 }
 
-void LuaConsoleDock::historyAdd(QString line)
+void LuaConsoleDock::historyAdd(const QString &line)
 {
     if (!line.isEmpty()) {
         if (history.isEmpty() || history.last() != line) {
@@ -328,7 +328,7 @@ void LuaConsoleDock::runCurrentCommand()
         output->marginSetStyle(i - 1, STYLE_LINENUMBER);
     }
 
-    QString text((const char *)input->characterPointer());
+    QString text(reinterpret_cast<const char *>(input->characterPointer()));
     historyAdd(text);
 
     input->clearAll();

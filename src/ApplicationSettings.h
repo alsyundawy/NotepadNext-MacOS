@@ -31,13 +31,13 @@ template<typename T>
 class ApplicationSetting
 {
 public:
-    ApplicationSetting(const char * const key, T defaultValue = T())
+    explicit ApplicationSetting(const char * const key, const T &defaultValue = T())
         : mKey(key)
         , mDefault(defaultValue)
         , mCallable(Q_NULLPTR)
     {}
 
-    ApplicationSetting(const char * const key, std::function<T()> callable)
+    explicit ApplicationSetting(const char * const key, std::function<T()> callable)
         : mKey(key)
         , mDefault(T())
         , mCallable(callable)
@@ -57,9 +57,9 @@ private:
 public:\
     type lname() const;\
 public slots:\
-    void set##name(type lname);\
+    void set##name(const type &val);\
 Q_SIGNAL\
-    void lname##Changed(type lname);\
+    void lname##Changed(const type &val);\
 
 
 class ApplicationSettings : public QSettings

@@ -219,10 +219,10 @@ void NppImporter::readLangsModel(const QString &filePath)
                     // TODO: read more
                     while (xml.readNextStartElement()) {
                         //qInfo(qUtf8Printable(language.name));
-                        auto attrs = xml.attributes();
+                        auto childAttrs = xml.attributes();
                         auto t = xml.readElementText();
                         //qInfo(qUtf8Printable(t));
-                        language.keywords[keywordClassToIndex(attrs.value("name"))] = t;
+                        language.keywords[keywordClassToIndex(childAttrs.value("name"))] = t;
                         //xml.skipCurrentElement();
                     }
                     languages.insert(language.name, language);
@@ -300,13 +300,13 @@ void NppImporter::readLexerStyles(QXmlStreamReader &xml)
         lexer->description = attrs.value("desc").toString();
         while (xml.readNextStartElement()) {
             //qInfo(qUtf8Printable(xml.name().toString()));
-            auto attrs = xml.attributes();
+            auto styleAttrs = xml.attributes();
             LexerStyle style;
-            style.id = attrs.value("styleID").toInt();
-            style.fgColor = color(attrs.value("fgColor").toInt(nullptr, 16));
-            style.bgColor = color(attrs.value("bgColor").toInt(nullptr, 16));
-            if (attrs.hasAttribute("keywordClass")) {
-                style.keywordClass = keywordClassToIndex(attrs.value("keywordClass"));
+            style.id = styleAttrs.value("styleID").toInt();
+            style.fgColor = color(styleAttrs.value("fgColor").toInt(nullptr, 16));
+            style.bgColor = color(styleAttrs.value("bgColor").toInt(nullptr, 16));
+            if (styleAttrs.hasAttribute("keywordClass")) {
+                style.keywordClass = keywordClassToIndex(styleAttrs.value("keywordClass"));
             }
             else {
                 style.keywordClass = -1;

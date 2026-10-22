@@ -41,38 +41,38 @@ public:
     Q_DECLARE_FLAGS(SessionFileTypes, SessionFileType)
 
 
-    SessionManager(NotepadNextApplication *app, SessionFileTypes types = SessionFileTypes());
+    explicit SessionManager(NotepadNextApplication *app, SessionFileTypes types = SessionFileTypes());
 
     void setSessionFileTypes(SessionFileTypes types);
 
-    void clear() const;
+    static void clear();
 
     void saveSession(MainWindow *window);
     void loadSession(MainWindow *window);
 
-    bool willFileGetStoredInSession(ScintillaNext *editor) const;
+    bool willFileGetStoredInSession(const ScintillaNext *editor) const;
 
 private:
-    QDir sessionDirectory() const;
+    static QDir sessionDirectory();
 
-    void saveIntoSessionDirectory(ScintillaNext *editor, const QString &sessionFileName) const;
+    static void saveIntoSessionDirectory(ScintillaNext *editor, const QString &sessionFileName);
 
-    SessionFileType determineType(ScintillaNext *editor) const;
+    static SessionFileType determineType(const ScintillaNext *editor);
 
-    void clearSettings() const;
-    void clearDirectory() const;
+    static void clearSettings();
+    static void clearDirectory();
 
     void storeFileDetails(ScintillaNext *editor, QSettings &settings);
-    ScintillaNext *loadFileDetails(QSettings &settings);
+    ScintillaNext *loadFileDetails(const QSettings &settings);
 
     void storeUnsavedFileDetails(ScintillaNext *editor, QSettings &settings);
-    ScintillaNext *loadUnsavedFileDetails(QSettings &settings);
+    ScintillaNext *loadUnsavedFileDetails(const QSettings &settings);
 
     void storeTempFile(ScintillaNext *editor, QSettings &settings);
-    ScintillaNext *loadTempFile(QSettings &settings);
+    ScintillaNext *loadTempFile(const QSettings &settings);
 
     void storeEditorViewDetails(ScintillaNext *editor, QSettings &settings);
-    void loadEditorViewDetails(ScintillaNext *editor, QSettings &settings);
+    void loadEditorViewDetails(ScintillaNext *editor, const QSettings &settings);
 
     NotepadNextApplication *app;
     SessionFileTypes fileTypes;

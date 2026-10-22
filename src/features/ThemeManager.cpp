@@ -362,6 +362,19 @@ void ThemeManager::applyThemeToEditor(ScintillaNext *editor) {
 
     // 24: Decorators
     editor->styleSetFore(24, scFromRgb(cyan.rgb()));
+
+    // 11. Dark mode safety: Ensure no style slot (0..127) has black or near-black foreground (prevent unreadable dark text on paste or unstyled tokens)
+    if (pal->isDark) {
+        for (int i = 0; i <= 127; ++i) {
+            quint32 fg = static_cast<quint32>(editor->styleFore(i));
+            int r = fg & 0xFF;
+            int g = (fg >> 8) & 0xFF;
+            int b = (fg >> 16) & 0xFF;
+            if (r * 299 + g * 587 + b * 114 < 70000) {
+                editor->styleSetFore(i, scFromRgb(txtPri.rgb()));
+            }
+        }
+    }
 }
 
 QString ThemeManager::getThemeStyleSheet() const {

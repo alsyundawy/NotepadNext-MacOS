@@ -1437,10 +1437,10 @@ void MainWindow::openFileList(const QStringList &fileNames)
 
 }
 
-bool MainWindow::checkEditorsBeforeClose(const QVector<ScintillaNext *> &editors)
+bool MainWindow::checkEditorsBeforeClose(const QVector<ScintillaNext *> &editorList)
 {
     QVector<ScintillaNext *> unsaved;
-    for (auto *e : editors) {
+    for (auto *e : editorList) {
         if (!e->isSavedToDisk()) unsaved.append(e);
     }
 
@@ -1572,15 +1572,15 @@ void MainWindow::closeAllExceptActive()
 void MainWindow::closeAllToLeft()
 {
     const int index = dockedEditor->currentDockArea()->currentIndex();
-    QVector<ScintillaNext *> editors;
+    QVector<ScintillaNext *> tabEditors;
 
     for (int i = 0; i < index; ++i) {
         auto editor = qobject_cast<ScintillaNext *>(dockedEditor->currentDockArea()->dockWidget(i)->widget());
-        editors.append(editor);
+        tabEditors.append(editor);
     }
 
-    if (checkEditorsBeforeClose(editors)) {
-        for (ScintillaNext *editor : editors) {
+    if (checkEditorsBeforeClose(tabEditors)) {
+        for (ScintillaNext *editor : tabEditors) {
             editor->close();
         }
     }
@@ -1590,15 +1590,15 @@ void MainWindow::closeAllToRight()
 {
     const int index = dockedEditor->currentDockArea()->currentIndex();
     const int total = dockedEditor->currentDockArea()->dockWidgetsCount();
-    QVector<ScintillaNext *> editors;
+    QVector<ScintillaNext *> tabEditors;
 
     for (int i = index + 1; i < total; ++i) {
         auto editor = qobject_cast<ScintillaNext *>(dockedEditor->currentDockArea()->dockWidget(i)->widget());
-        editors.append(editor);
+        tabEditors.append(editor);
     }
 
-    if (checkEditorsBeforeClose(editors)) {
-        for (ScintillaNext *editor : editors) {
+    if (checkEditorsBeforeClose(tabEditors)) {
+        for (ScintillaNext *editor : tabEditors) {
             editor->close();
         }
     }
@@ -1708,9 +1708,9 @@ bool MainWindow::saveAll()
     return saveAllEditors(editors());
 }
 
-bool MainWindow::saveAllEditors(const QVector<ScintillaNext *> &editors)
+bool MainWindow::saveAllEditors(const QVector<ScintillaNext *> &editorList)
 {
-    for (ScintillaNext *editor : editors) {
+    for (ScintillaNext *editor : editorList) {
         if (!saveFile(editor)){
             return false;
         }
@@ -1979,7 +1979,7 @@ void MainWindow::updateEditorPositionBasedUi()
     ui->actionCloseAllExceptActive->setEnabled(editorCount() > 1);
 }
 
-void MainWindow::updateLanguageBasedUi(ScintillaNext *editor)
+void MainWindow::updateLanguageBasedUi(const ScintillaNext *editor)
 {
     qInfo(Q_FUNC_INFO);
 
@@ -2242,9 +2242,9 @@ void MainWindow::showEditorZoomLevelIndicator()
     FadingIndicator::showText(currentEditor(), tr("Zoom: %1%").arg(zoomLevel * 10 + 100));
 }
 
-MainWindow::UserSaveAction MainWindow::promptForSave(const QVector<ScintillaNext *> &editors)
+MainWindow::UserSaveAction MainWindow::promptForSave(const QVector<ScintillaNext *> &editorList)
 {
-    SaveModifiedDialog dlg(editors, this);
+    SaveModifiedDialog dlg(editorList, this);
     dlg.exec();
 
     switch (dlg.userAction()) {
@@ -2455,7 +2455,7 @@ void MainWindow::checkForUpdates(bool silent)
 #endif
 }
 
-void MainWindow::checkForUpdatesFinished(QString url)
+void MainWindow::checkForUpdatesFinished(const QString &url)
 {
 #ifdef Q_OS_WIN
     if (!QSimpleUpdater::getInstance()->getUpdateAvailable(url)) {

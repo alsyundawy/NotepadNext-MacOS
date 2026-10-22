@@ -56,7 +56,7 @@ void Macro::addMacroStep(Message message, uptr_t wParam, sptr_t lParam)
 #endif
 }
 
-void Macro::addMacroStep(MacroStep step)
+void Macro::addMacroStep(const MacroStep &step)
 {
     steps.append(step);
 }
@@ -118,7 +118,7 @@ void Macro::replayTillEndOfFile(ScintillaNext *editor) const
     editor->endUndoAction();
 }
 
-QString Macro::getName() const
+const QString &Macro::getName() const
 {
     return name;
 }

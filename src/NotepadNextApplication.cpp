@@ -27,6 +27,7 @@
 #include "SessionManager.h"
 #include "TranslationManager.h"
 #include "ApplicationSettings.h"
+#include "features/ThemeManager.h"
 
 #include "LuaState.h"
 #include "lua.hpp"
@@ -65,7 +66,7 @@ void parseCommandLine(QCommandLineParser &parser, const QStringList &args)
     parser.process(args);
 }
 
-static QString toLocalFileName(const QString file)
+static QString toLocalFileName(const QString &file)
 {
     QUrl fileUrl(file);
     return fileUrl.isValid() && fileUrl.isLocalFile() ? fileUrl.toLocalFile() : file;
@@ -295,8 +296,11 @@ void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QStr
 
     getLuaState()->setVariable("skip_tabs", skipTabs);
     getLuaState()->setVariable("skip_tabwidth", skipTabWidth);
+    getLuaState()->setVariable("is_dark_theme", ThemeManager::instance()->isDarkActive());
 
     getLuaState()->execute("SetLanguage(languageName)");
+
+    ThemeManager::instance()->applyThemeToEditor(editor);
 }
 
 QStringList NotepadNextApplication::getLanguageKeywords(const QString &languageName) const
@@ -397,43 +401,40 @@ void NotepadNextApplication::receiveInfoFromSecondaryInstance(quint32 instanceId
 
     stream >> args;
 
-    QCommandLineParser parser;
-    parseCommandLine(parser, args);
+    QCommandLineParser cmdParser;
+    parseCommandLine(cmdParser, args);
 
-    openFiles(parser.positionalArguments());
+    openFiles(cmdParser.positionalArguments());
 }
 
 bool NotepadNextApplication::isRunningAsAdmin() const
 {
-    static bool initialized = false;
-    static bool isAdmin = false;
-
-    if (!initialized) {
-        initialized = true;
-
+    static const bool isAdmin = []() {
 #ifdef Q_OS_WIN
-        BOOL isMember;
+        BOOL isMember = FALSE;
         SID_IDENTIFIER_AUTHORITY ntAuthority = SECURITY_NT_AUTHORITY;
         PSID administratorsGroupSid = NULL;
 
         // Create a SID for the Administrators group
         if (AllocateAndInitializeSid(&ntAuthority, 2, SECURITY_BUILTIN_DOMAIN_RID, DOMAIN_ALIAS_RID_ADMINS, 0, 0, 0, 0, 0, 0, &administratorsGroupSid)) {
             if (CheckTokenMembership(NULL, administratorsGroupSid, &isMember)) {
-                isAdmin = isMember;
+                FreeSid(administratorsGroupSid);
+                return static_cast<bool>(isMember);
             }
             FreeSid(administratorsGroupSid);
         }
 #endif
-    }
+        return false;
+    }();
 
     return isAdmin;
 }
 
-bool NotepadNextApplication::event(QEvent *event)
+bool NotepadNextApplication::event(QEvent *e)
 {
     // Handle the QFileOpenEvent to open files on MacOS X.
-    if (event->type() == QEvent::FileOpen) {
-        QFileOpenEvent *fileOpenEvent = static_cast<QFileOpenEvent*>(event);
+    if (e->type() == QEvent::FileOpen) {
+        QFileOpenEvent *fileOpenEvent = static_cast<QFileOpenEvent*>(e);
 
         qInfo("QFileOpenEvent %s", qUtf8Printable(fileOpenEvent->file()));
 
@@ -442,7 +443,7 @@ bool NotepadNextApplication::event(QEvent *event)
         return true;
     }
 
-    return SingleApplication::event(event);
+    return SingleApplication::event(e);
 }
 
 void NotepadNextApplication::openFiles(const QStringList &files)

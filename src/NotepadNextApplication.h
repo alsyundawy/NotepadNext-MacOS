@@ -72,7 +72,7 @@ public:
     QStringList debugInfo() const;
 
 protected:
-    bool event(QEvent *event) override;
+    bool event(QEvent *e) override;
 
 private slots:
     void saveSettings();

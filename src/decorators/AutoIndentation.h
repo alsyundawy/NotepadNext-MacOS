@@ -28,7 +28,7 @@ class AutoIndentation : public EditorDecorator
     Q_OBJECT
 
 public:
-    AutoIndentation(ScintillaNext *editor);
+    explicit AutoIndentation(ScintillaNext *editor);
 
 public slots:
     void notify(const Scintilla::NotificationData *pscn) override;

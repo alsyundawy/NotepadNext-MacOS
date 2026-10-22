@@ -45,9 +45,9 @@ public:
 
     static ScintillaNext *fromFile(const QString &filePath, bool tryToCreate=false);
     static QString eolModeToString(int eolMode);
-    static int stringToEolMode(QString eolMode);
+    static int stringToEolMode(const QString &eolMode);
 
-    int allocateIndicator(const QString &name);
+    int allocateIndicator(const QString &indicatorName);
 
     template<typename Func>
     void forEachMatch(const QString &text, Func callback) { forEachMatch(text.toUtf8(), callback); }
@@ -88,7 +88,7 @@ public:
     bool canSaveToDisk() const;
 
     const QString &getName() const { return name; }
-    void setName(const QString &name);
+    void setName(const QString &newName);
     QString getPath() const;
     QString getFilePath() const;
 
