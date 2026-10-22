@@ -50,6 +50,8 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
+    friend class ThemeManager;
+
 public:
     explicit MainWindow(NotepadNextApplication *app);
     ~MainWindow() override;
@@ -57,6 +59,7 @@ public:
     bool isAnyUnsaved() const;
 
     void setupLanguageMenu();
+    void setupThemeMenu();
     ScintillaNext *currentEditor() const;
     int editorCount() const;
     QVector<ScintillaNext *> editors() const;
@@ -204,6 +207,12 @@ private:
     int zoomLevel = 0;
     int contextMenuPos = 0;
     QMenu *buildMenu(QStringList actionNames);
+
+    QMenu *menuTheme = Q_NULLPTR;
+    QAction *actionThemeSwitcher = Q_NULLPTR;
+    QAction *actionThemeLight = Q_NULLPTR;
+    QAction *actionThemeDark = Q_NULLPTR;
+    QAction *actionToggleTheme = Q_NULLPTR;
 };
 
 #endif // MAINWINDOW_H

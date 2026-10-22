@@ -21,6 +21,7 @@
 #include "ApplicationSettings.h"
 
 #include "EditorManager.h"
+#include "ThemeManager.h"
 #include "ScintillaNext.h"
 #include "Scintilla.h"
 
@@ -350,6 +351,8 @@ void EditorManager::setupEditor(ScintillaNext *editor)
 
     editor->styleSetFore(STYLE_INDENTGUIDE, 0xC0C0C0);
     editor->styleSetBack(STYLE_INDENTGUIDE, 0xFFFFFF);
+
+    ThemeManager::instance()->applyThemeToEditor(editor);
 
     // STYLE_CONTROLCHAR
     // STYLE_CALLTIP

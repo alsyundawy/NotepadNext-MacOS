@@ -19,6 +19,7 @@
 
 #include "FindReplaceDialog.h"
 #include "ApplicationSettings.h"
+#include "features/ThemeManager.h"
 #include "ui_FindReplaceDialog.h"
 
 #include <QStatusBar>
@@ -59,12 +60,19 @@ FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainW
     setEditor(window->currentEditor());
     connect(window, &MainWindow::editorActivated, this, &FindReplaceDialog::setEditor);
 
+    setStyleSheet(ThemeManager::instance()->getThemeStyleSheet());
+    connect(ThemeManager::instance(), &ThemeManager::themeChanged, this,
+            [this]() { setStyleSheet(ThemeManager::instance()->getThemeStyleSheet()); });
+    connect(ThemeManager::instance(), &ThemeManager::paletteChanged, this,
+            [this]() { setStyleSheet(ThemeManager::instance()->getThemeStyleSheet()); });
+
     tabBar = new QTabBar();
+    tabBar->setDrawBase(false);
     tabBar->addTab(tr("Find"));
     tabBar->addTab(tr("Replace"));
     tabBar->addTab(tr("Mark"));
     tabBar->setExpanding(false);
-    qobject_cast<QVBoxLayout *>(layout())->insertWidget(0, tabBar);
+    qobject_cast<QVBoxLayout *>(layout())->insertWidget(0, tabBar, 0, Qt::AlignLeft);
     connect(tabBar, &QTabBar::currentChanged, this, &FindReplaceDialog::changeTab);
 
     statusBar = new QStatusBar();
@@ -140,18 +148,18 @@ FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainW
             convertToExtended(replaceText);
         }
 
-        int count = 0;
+        int totalReplaced = 0;
         ScintillaNext *current_editor = editor;
         MainWindow *window = qobject_cast<MainWindow *>(parent());
 
-        for(ScintillaNext *editor : window->editors()) {
-            setEditor(editor);
-            count += finder->replaceAll(replaceText);
+        for (ScintillaNext *targetEd : window->editors()) {
+            setEditor(targetEd);
+            totalReplaced += finder->replaceAll(replaceText);
         }
 
         setEditor(current_editor);
 
-        showMessage(tr("Replaced %Ln matches", "", count), "green");
+        showMessage(tr("Replaced %Ln matches", "", totalReplaced), "green");
     });
     connect(ui->buttonClose, &QPushButton::clicked, this, &FindReplaceDialog::close);
     connect(ui->buttonMarkAll, &QPushButton::clicked, this, &FindReplaceDialog::markAll);

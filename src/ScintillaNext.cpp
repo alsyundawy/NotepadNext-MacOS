@@ -114,7 +114,9 @@ ScintillaNext *ScintillaNext::fromFile(const QString &filePath, bool tryToCreate
     if(tryToCreate && !file.exists()) {
         qInfo("Trying to create %s", qUtf8Printable(filePath));
         QDir d;
-        d.mkpath(QFileInfo(file).path());
+        if (!d.mkpath(QFileInfo(file).path())) {
+            qWarning("Failed to create directory structure for %s", qUtf8Printable(filePath));
+        }
 
         QFile f(filePath);
         if (f.open(QIODevice::WriteOnly)) {

@@ -153,6 +153,11 @@ qt_add_executable(NotepadNext
 	dialogs/PreferencesDialog.ui
 	dialogs/SaveModifiedDialog.cpp
 	dialogs/SaveModifiedDialog.h
+	dialogs/ThemeSwitcherDialog.cpp
+	dialogs/ThemeSwitcherDialog.h
+	features/ThemeManager.cpp
+	features/ThemeManager.h
+	features/ThemePaletteData.h
 	utils/EncodingDetector.cpp
 	utils/EncodingDetector.h
 	docks/DebugLogDock.cpp
@@ -217,6 +222,7 @@ target_include_directories(NotepadNext
         ${CMAKE_CURRENT_SOURCE_DIR}/decorators
         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs
         ${CMAKE_CURRENT_SOURCE_DIR}/docks
+        ${CMAKE_CURRENT_SOURCE_DIR}/features
         ${CMAKE_CURRENT_SOURCE_DIR}/utils
         ${CMAKE_CURRENT_SOURCE_DIR}/widgets
         ${CMAKE_CURRENT_SOURCE_DIR}

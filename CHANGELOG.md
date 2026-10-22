@@ -5,6 +5,54 @@ Format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) a
 
 ---
 
+## [0.15-05] - 2026-10-23
+
+### 🎨 Dark & Light Mode Theme Engine / Engine Tema Mode Gelap & Terang
+
+- 🇬🇧 **Dynamic Dark & Light Mode Support**: Engineered a full native Theme Manager architecture (`ThemeManager` singleton) ported and enhanced from `SparkNotePad`, supporting three distinct operating modes: Auto (synchronized with macOS system color scheme via `QPalette`), Force Light, and Force Dark.
+- 🇮🇩 **Dukungan Mode Gelap & Terang Dinamis**: Mengembangkan arsitektur Theme Manager native lengkap (`ThemeManager` singleton) yang diadaptasi dan ditingkatkan dari `SparkNotePad`, mendukung tiga mode operasi: Otomatis (sinkronisasi dengan skema warna sistem macOS melalui `QPalette`), Paksa Terang, dan Paksa Gelap.
+- 🇬🇧 **75 Curated Professional Palettes**: Bundled 75 studio-grade color palettes across 25 aesthetic families, including NotepadNext Default Light, Dracula Default Dark, Catppuccin (Mocha, Macchiato, Frappé, Latte), Nord, Tokyo Night, Gruvbox (Dark/Light), One Dark/Light, GitHub (Dark/Light), Solarized (Dark/Light), Monokai, Moonlight, Horizon, Rose Pine, SynthWave, and more.
+- 🇮🇩 **75 Palet Warna Profesional**: Menyertakan 75 palet warna tingkat studio dari 25 famili estetika, mencakup NotepadNext Default Light, Dracula Default Dark, Catppuccin (Mocha, Macchiato, Frappé, Latte), Nord, Tokyo Night, Gruvbox (Dark/Light), One Dark/Light, GitHub (Dark/Light), Solarized (Dark/Light), Monokai, Moonlight, Horizon, Rose Pine, SynthWave, dan lainnya.
+- 🇬🇧 **Interactive Theme Switcher Dialog (`ThemeSwitcherDialog`)**: Created an interactive visual theme picker dialog (`Ctrl+Shift+T` / `Cmd+Shift+T`) featuring real-time fuzzy search, category filtering (All, Light, Dark), 6-swatch palette color previews, live preview on selection, and instantaneous Esc key cancellation.
+- 🇮🇩 **Dialog Pemilih Tema Interaktif (`ThemeSwitcherDialog`)**: Membuat dialog pemilih tema visual interaktif (`Ctrl+Shift+T` / `Cmd+Shift+T`) dengan pencarian cepat, filter kategori (Semua, Terang, Gelap), pratinjau 6 blok warna palet, pratinjau langsung saat memilih, dan pembatalan instan dengan tombol Esc.
+- 🇬🇧 **High-Contrast Scintilla Editor Styling**: Applied semantic theme colors across Scintilla styles (slots 0..31), caret, selection, line number margin, fold markers, indent guides, and active line highlighting, completely eliminating low-contrast dark-on-dark text artifacts.
+- 🇮🇩 **Pewarnaan Editor Scintilla Kontras Tinggi**: Menerapkan warna tema semantik pada gaya Scintilla (slot 0..31), kursor caret, seleksi teks, margin nomor baris, penanda lipatan kode, panduan indentasi, dan penyorotan baris aktif, mencegah teks gelap di atas latar gelap.
+- 🇬🇧 **Comprehensive QSS UI Theming**: Full Qt stylesheet coverage for menus, menu bars, toolbars, status bars, docks, tab bars, comboboxes, spinboxes, pushbuttons, and dialog headers with native SVG checkmark badges (`checkmark.svg`).
+- 🇮🇩 **Pewarnaan UI Menyeluruh via QSS**: Cakupan stylesheet Qt lengkap untuk menu, bilah menu, bilah alat, bilah status, dock, bilah tab, kotak kombo, spinbox, tombol tekan, dan header dialog dengan ikon centang SVG native (`checkmark.svg`).
+- 🇬🇧 **Dedicated Themes Menu & Preferences Integration**: Added top-level `&Themes` menu to `MainWindow` with one-click toggling (`Ctrl+Alt+T` / `Cmd+Alt+T`), Light/Dark submenus, and Family submenus. Integrated a modern `Themes & Visual Styling` panel at the top of the General Preferences page.
+- 🇮🇩 **Menu Tema Terdedikasi & Integrasi Pengaturan**: Menambahkan menu utama `&Themes` pada `MainWindow` dengan tombol pintas (`Ctrl+Alt+T` / `Cmd+Alt+T`), submenu Terang/Gelap, dan submenu Famili Tema. Mengintegrasikan panel `Themes & Visual Styling` modern pada bagian teratas dialog Pengaturan Umum.
+
+### 🛡️ 13-Pillar Codebase Hardening & Bug Fixes / Penguatan Kode 13 Pilar & Perbaikan Bug
+
+- 🇬🇧 **Null Pointer Defense (CWE-476)**: Added defensive null pointer guards across `MainWindow.cpp` (`updateGui`, `updateFileStatusBasedUi`, `updateEOLBasedUi`, `updateSaveStatusBasedUi`, `updateLanguageBasedUi`, `updateDocumentBasedUi`, `updateSelectionBasedUi`, `updateContentBasedUi`, `detectLanguage`, `activateEditor`), preventing potential segmentation faults during dock tear-downs and tab close events.
+- 🇮🇩 **Pencegahan Null Pointer (CWE-476)**: Menambahkan pengecekan null pointer defensif pada seluruh fungsi pembaruan UI di `MainWindow.cpp`, mencegah potensi crash segmentasi saat penutupan tab atau pelepasan dock.
+- 🇬🇧 **Filesystem Return Code Verification**: Enhanced `ScintillaNext.cpp` to verify the return status of `QDir::mkpath()`, logging diagnostic warnings upon filesystem failures instead of silently ignoring errors.
+- 🇮🇩 **Verifikasi Return Code Sistem Berkas**: Menyempurnakan `ScintillaNext.cpp` untuk memeriksa status kembalian fungsi `QDir::mkpath()` dan mencatat peringatan diagnostik ketika pembuatan direktori gagal.
+- 🇬🇧 **Pointer Type Safety in IFaceTableMixer**: Replaced auto reference `auto const &iface` with explicit `const IFaceTableInterface *iface` in pointer range loops in `src/IFaceTableMixer.cpp` to eliminate pointer-decay ambiguities.
+- 🇮🇩 **Keamanan Tipe Pointer pada IFaceTableMixer**: Mengganti referensi auto `auto const &iface` dengan tipe pointer eksplisit `const IFaceTableInterface *iface` pada perulangan di `src/IFaceTableMixer.cpp`.
+- 🇬🇧 **Variable Shadowing Elimination**: Resolved shadowed variables `targetEd` and `totalReplaced` in `FindReplaceDialog.cpp` to prevent subtle lexical scoping logic defects.
+- 🇮🇩 **Pembersihan Penyamaran Variabel**: Memperbaiki variabel yang tersamar `targetEd` dan `totalReplaced` pada `FindReplaceDialog.cpp` untuk mencegah kesalahan logika cakupan leksikal.
+- 🇬🇧 **Tab Bar Visual Artifact Fix**: Disabled base line drawing (`tabBar->setDrawBase(false)`) across tabbed dialogs (`FindReplaceDialog`, `AboutDialog`) to prevent unstyled line clipping artifacts under dark themes.
+- 🇮🇩 **Perbaikan Garis Bawah Tab Bar**: Menonaktifkan penggambaran garis dasar (`tabBar->setDrawBase(false)`) pada dialog bertab (`FindReplaceDialog`, `AboutDialog`) untuk mencegah garis kliping yang tidak terwarnai pada tema gelap.
+
+### 🔍 SonarQube & Compilation Database Pipeline / Pipeline SonarQube & Basis Data Kompilasi
+
+- 🇬🇧 **SonarQube Static Analysis Configuration**: Configured repository-specific `sonar-project.properties` specifying project key, C/C++ source directories, exclusions for third-party libraries, and compilation database integration.
+- 🇮🇩 **Konfigurasi Analisis Statis SonarQube**: Mengonfigurasi `sonar-project.properties` khusus repositori yang memuat project key, direktori sumber C/C++, pengecualian pustaka pihak ketiga, dan integrasi compilation database.
+- 🇬🇧 **Compilation Database Generator**: Created `scripts/generate_compilation_database.py` that generates an accurate `compile_commands.json` (86 translation units) for SonarQube, SonarLint, and clangd static analysis without requiring a full local Qt build.
+- 🇮🇩 **Generator Basis Data Kompilasi**: Membuat skrip `scripts/generate_compilation_database.py` untuk memproduksi `compile_commands.json` yang presisi (86 unit translasi) bagi SonarQube, SonarLint, dan clangd tanpa memerlukan kompilasi lokal Qt secara utuh.
+- 🇬🇧 **SonarLint IDE Integration**: Added `.vscode/settings.json` configuring `sonarlint.pathToCompileCommands`, `sonarqube.pathToCompileCommands`, and `clangd` arguments, locking the default terminal profile to bash.
+- 🇮🇩 **Integrasi SonarLint IDE**: Menambahkan `.vscode/settings.json` yang mengonfigurasi jalur `compile_commands.json` untuk SonarLint dan SonarQube, argumen `clangd`, serta mengunci profil terminal default ke bash.
+
+### ⚡ Version Bump & Packaging / Peningkatan Versi & Pengemasan
+
+- 🇬🇧 **Version Bump to 0.15-05**: Updated application version to `0.15-05` across `CMakeLists.txt`, `src/CMakeLists.txt`, `updates.json`, and documentation notes.
+- 🇮🇩 **Peningkatan Versi ke 0.15-05**: Memperbarui versi aplikasi menjadi `0.15-05` pada `CMakeLists.txt`, `src/CMakeLists.txt`, `updates.json`, dan catatan dokumentasi.
+- 🇬🇧 **Linter Cleanliness**: 100% compliant with `trunk check`, `markdownlint`, `prettier`, and MegaLinter quality gates.
+- 🇮🇩 **Kepatuhan Linter Penuh**: Memenuhi 100% standar pengujian `trunk check`, `markdownlint`, `prettier`, dan gerbang kualitas MegaLinter.
+
+---
+
 ## [0.15-04] - 2026-10-21
 
 ### 🎨 App Logo & Brand Icon Modernization / Modernisasi Logo & Ikon Aplikasi

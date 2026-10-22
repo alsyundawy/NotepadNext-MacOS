@@ -20,6 +20,7 @@
 #include "LuaConsoleDock.h"
 #include "ui_LuaConsoleDock.h"
 
+#include "features/ThemeManager.h"
 #include "ScintillaNext.h"
 #include "ILexer.h"
 #include "Lexilla.h"
@@ -417,4 +418,6 @@ void LuaConsoleDock::setupStyle(ScintillaNext *editor)
     editor->styleSetBold(SCE_LUA_WORD5, 1);
     editor->styleSetFore(SCE_LUA_WORD6, 0x004080); // for SCI_SETKEYWORDS, 5, Notepad++ defines
     editor->styleSetBold(SCE_LUA_WORD6, 1);
+
+    ThemeManager::instance()->applyThemeToEditor(editor);
 }

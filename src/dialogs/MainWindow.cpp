@@ -22,6 +22,9 @@
 #include "SaveModifiedDialog.h"
 #include "EncodingSelectionDialog.h"
 #include "EncodingDetector.h"
+#include "ThemeManager.h"
+#include "ThemePaletteData.h"
+#include "ThemeSwitcherDialog.h"
 #include "BookMarkDecorator.h"
 #include "DefaultDirectoryManager.h"
 #include "MarkerAppDecorator.h"
@@ -1098,6 +1101,8 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     ui->statusBar->setVisible(app->getSettings()->showStatusBar());
 
     setupLanguageMenu();
+    ThemeManager::instance()->initialize(app->getSettings());
+    setupThemeMenu();
 
     applyStyleSheet();
 
@@ -1190,6 +1195,102 @@ void MainWindow::setupLanguageMenu()
         }
         i = j;
     }
+}
+
+void MainWindow::setupThemeMenu()
+{
+    if (menuTheme) {
+        return;
+    }
+
+    menuTheme = new QMenu(tr("&Themes"), this);
+    if (ui->menuLanguage) {
+        ui->menuBar->insertMenu(ui->menuLanguage->menuAction(), menuTheme);
+    } else {
+        ui->menuBar->addMenu(menuTheme);
+    }
+
+    // 1. Open Theme Switcher... (Ctrl+Shift+T / Cmd+Shift+T)
+    actionThemeSwitcher = new QAction(tr("Open Theme Switcher..."), this);
+    actionThemeSwitcher->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_T));
+    connect(actionThemeSwitcher, &QAction::triggered, this, [this]() {
+        ThemeSwitcherDialog dlg(this);
+        dlg.exec();
+    });
+    menuTheme->addAction(actionThemeSwitcher);
+
+    menuTheme->addSeparator();
+
+    // 2. Light Themes Only (Submenu)
+    QMenu *menuLightOnly = menuTheme->addMenu(tr("Light Themes Only"));
+    QList<const ThemePalette *> lightPalettes = getThemesByDarkMode(false);
+    for (const ThemePalette *pal : lightPalettes) {
+        QAction *act = menuLightOnly->addAction(QString::fromUtf8(pal->displayName));
+        connect(act, &QAction::triggered, this, [this, pal]() {
+            ThemeManager::instance()->setPalette(QString::fromLatin1(pal->id), this);
+            ui->statusBar->showMessage(tr("Theme applied: %1").arg(QString::fromUtf8(pal->displayName)), 3000);
+        });
+    }
+
+    // 3. Dark Themes Only (Submenu)
+    QMenu *menuDarkOnly = menuTheme->addMenu(tr("Dark Themes Only"));
+    QList<const ThemePalette *> darkPalettes = getThemesByDarkMode(true);
+    for (const ThemePalette *pal : darkPalettes) {
+        QAction *act = menuDarkOnly->addAction(QString::fromUtf8(pal->displayName));
+        connect(act, &QAction::triggered, this, [this, pal]() {
+            ThemeManager::instance()->setPalette(QString::fromLatin1(pal->id), this);
+            ui->statusBar->showMessage(tr("Theme applied: %1").arg(QString::fromUtf8(pal->displayName)), 3000);
+        });
+    }
+
+    menuTheme->addSeparator();
+
+    // 4. All 25 Families grouped neatly in a dedicated Submenu
+    QMenu *menuFamilies = menuTheme->addMenu(tr("Themes by Family"));
+    QStringList families = getThemeFamiliesList();
+    for (const QString &family : families) {
+        QMenu *famMenu = menuFamilies->addMenu(family);
+        QList<const ThemePalette *> palettes = getThemePalettesByFamily(family);
+        for (const ThemePalette *pal : palettes) {
+            QString itemLabel = QString::fromUtf8(pal->displayName);
+            if (pal->isDark) {
+                itemLabel += QStringLiteral(" (Dark)");
+            } else {
+                itemLabel += QStringLiteral(" (Light)");
+            }
+            QAction *act = famMenu->addAction(itemLabel);
+            connect(act, &QAction::triggered, this, [this, pal]() {
+                ThemeManager::instance()->setPalette(QString::fromLatin1(pal->id), this);
+                ui->statusBar->showMessage(tr("Theme applied: %1").arg(QString::fromUtf8(pal->displayName)), 3000);
+            });
+        }
+    }
+
+    menuTheme->addSeparator();
+
+    // 5. Reset and Mode Toggles
+    actionThemeLight = new QAction(tr("Reset to Default (Light Mode - NotepadNext)"), this);
+    connect(actionThemeLight, &QAction::triggered, this, [this]() {
+        ThemeManager::instance()->setPalette(QStringLiteral("notepadNext"), this);
+        ui->statusBar->showMessage(tr("Theme reset to default Light Mode (NotepadNext)"), 3000);
+    });
+    menuTheme->addAction(actionThemeLight);
+
+    actionThemeDark = new QAction(tr("Default Dark Mode (Dracula)"), this);
+    connect(actionThemeDark, &QAction::triggered, this, [this]() {
+        ThemeManager::instance()->setPalette(QStringLiteral("dracula"), this);
+        ui->statusBar->showMessage(tr("Theme set to Dark Mode (Dracula)"), 3000);
+    });
+    menuTheme->addAction(actionThemeDark);
+
+    actionToggleTheme = new QAction(tr("Toggle Dark / Light Mode"), this);
+    actionToggleTheme->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_T));
+    connect(actionToggleTheme, &QAction::triggered, this, [this]() {
+        ThemeManager::instance()->toggleTheme(this);
+        bool dark = ThemeManager::instance()->isDarkActive();
+        ui->statusBar->showMessage(dark ? tr("Switched to Dark Mode") : tr("Switched to Light Mode"), 3000);
+    });
+    menuTheme->addAction(actionToggleTheme);
 }
 
 ScintillaNext *MainWindow::currentEditor() const
@@ -1782,6 +1883,10 @@ void MainWindow::updateFileStatusBasedUi(ScintillaNext *editor)
 {
     qInfo(Q_FUNC_INFO);
 
+    if (!editor) {
+        return;
+    }
+
     bool isFile = editor->isFile();
     QString fileName;
 
@@ -1821,6 +1926,10 @@ void MainWindow::updateEOLBasedUi(ScintillaNext *editor)
 {
     qInfo(Q_FUNC_INFO);
 
+    if (!editor) {
+        return;
+    }
+
     switch(editor->eOLMode()) {
     case SC_EOL_CR:
         ui->actionMacintosh->setChecked(true);
@@ -1837,6 +1946,10 @@ void MainWindow::updateEOLBasedUi(ScintillaNext *editor)
 void MainWindow::updateSaveStatusBasedUi(ScintillaNext *editor)
 {
     qInfo(Q_FUNC_INFO);
+
+    if (!editor) {
+        return;
+    }
 
     bool isDirty = !editor->isSavedToDisk();
 
@@ -1870,6 +1983,10 @@ void MainWindow::updateLanguageBasedUi(ScintillaNext *editor)
 {
     qInfo(Q_FUNC_INFO);
 
+    if (!editor) {
+        return;
+    }
+
     const QString language_name = editor->languageName;
 
     for (QAction *action : languageActionGroup->actions()) {
@@ -1893,6 +2010,10 @@ void MainWindow::updateGui(ScintillaNext *editor)
 {
     qInfo(Q_FUNC_INFO);
 
+    if (!editor) {
+        return;
+    }
+
     updateFileStatusBasedUi(editor);
     updateSaveStatusBasedUi(editor);
     updateEOLBasedUi(editor);
@@ -1906,7 +2027,9 @@ void MainWindow::updateDocumentBasedUi(Scintilla::Update updated)
 {
     ScintillaNext *editor = qobject_cast<ScintillaNext *>(sender());
 
-    // TODO: what if this is triggered by an editor that is not the active editor?
+    if (!editor) {
+        return;
+    }
 
     if (Scintilla::FlagSet(updated, Scintilla::Update::Text)) {
         updateSelectionBasedUi(editor);
@@ -1919,12 +2042,20 @@ void MainWindow::updateDocumentBasedUi(Scintilla::Update updated)
 
 void MainWindow::updateSelectionBasedUi(ScintillaNext *editor)
 {
+    if (!editor) {
+        return;
+    }
+
     ui->actionUndo->setEnabled(editor->canUndo());
     ui->actionRedo->setEnabled(editor->canRedo());
 }
 
 void MainWindow::updateContentBasedUi(ScintillaNext *editor)
 {
+    if (!editor) {
+        return;
+    }
+
     bool hasAnySelections = !editor->selectionEmpty();
 
     ui->actionPaste->setEnabled(editor->canPaste());
@@ -1941,6 +2072,10 @@ void MainWindow::updateContentBasedUi(ScintillaNext *editor)
 void MainWindow::detectLanguage(ScintillaNext *editor)
 {
     qInfo(Q_FUNC_INFO);
+
+    if (!editor) {
+        return;
+    }
 
     if (!editor->isFile()) {
         // Default to some specific language if it is not a file.
@@ -1960,6 +2095,10 @@ void MainWindow::activateEditor(ScintillaNext *editor)
 {
     qInfo(Q_FUNC_INFO);
 
+    if (!editor) {
+        return;
+    }
+
     checkFileForModification(editor);
     updateGui(editor);
 
@@ -1970,14 +2109,7 @@ void MainWindow::applyStyleSheet()
 {
     qInfo(Q_FUNC_INFO);
 
-    QString sheet;
-    QFile f(":/stylesheets/npp.css");
-    qInfo() << "Loading stylesheet:" << f.fileName();
-
-    if (f.open(QFile::ReadOnly)) {
-        sheet = f.readAll();
-        f.close();
-    }
+    QString sheet = ThemeManager::instance()->getThemeStyleSheet();
 
     // If there is a "custom.css" file where the ini is located, load it as a style sheet addition
     QString directoryPath = QFileInfo(app->getSettings()->fileName()).absolutePath();

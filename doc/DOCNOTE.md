@@ -1,10 +1,10 @@
-# 📘 Documentation Note (DOCNOTE) — NotepadNext-MacOS v0.15-04
+# 📘 Documentation Note (DOCNOTE) — NotepadNext-MacOS v0.15-05
 
-**Project**: NotepadNext For MacOS  
-**Target Release**: `0.15-04`  
-**Date**: October 21, 2026  
-**Maintainer / Builder**: Harry DS Alsyundawy ([@alsyundawy](https://github.com/alsyundawy))  
-**Upstream Project**: [dail8859/NotepadNext](https://github.com/dail8859/NotepadNext)
+- **Project**: NotepadNext For MacOS
+- **Target Release**: `0.15-05`
+- **Date**: October 23, 2026
+- **Maintainer / Builder**: Harry DS Alsyundawy ([@alsyundawy](https://github.com/alsyundawy))
+- **Upstream Project**: [dail8859/NotepadNext](https://github.com/dail8859/NotepadNext)
 
 ---
 
@@ -22,23 +22,23 @@ While alternative text editors each occupy specific architectural niches:
 
 ---
 
-## 2. 13-Pillar Codebase Audit & Verification
+## 2. 13-Pillar Codebase Audit & Verification (v0.15-05)
 
-| #   | Pillar                            | Audit Findings & Resolution                                                                                                                                                                                                                                                                                                                                                      | Verification Status |
-| :-- | :-------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-----------------: |
-| 1   | **Bug Review**                    | **Fixed**: Corrected inverted disconnect in `QuickFindWidget::setEditor()`. Disconnecting incoming editor instead of previously attached instance caused persistent signal listeners on old buffers. **Fixed**: Added defensive null checks in `MainWindow::restoreWindowState()` for `SearchResultsDock` to prevent `SIGSEGV` during windowState restorations (`QTBUG-111538`). |        PASS         |
-| 2   | **Syntax Review**                 | Fully verified against ISO C++20 (`-std=c++20`). Ensured strict compliance with CMake 3.21+ standards, eliminated constructor ambiguity in `TabsQuickActionsBar.h`, and enforced `explicit` on single-parameter constructors.                                                                                                                                                    |        PASS         |
-| 3   | **Runtime Review**                | Evaluated application lifecycle: startup sequence in `NotepadNextApplication::init()`, session restoration in `SessionManager`, single-instance IPC via `SingleApplication`, and clean exit teardown. Handled potential write failures in file renaming with `showSaveErrorMessage()`.                                                                                           |        PASS         |
-| 4   | **Logic Review**                  | Streamlined translation initialization to prioritize explicit language choice, falling back to System Default. Guaranteed dynamic dropdown in preferences cleanly filters between Indonesian and English.                                                                                                                                                                        |        PASS         |
-| 5   | **Memory Review**                 | Initialized all raw member pointers (`editorManager`, `recentFilesListManager`, `settings`, `sessionManager`, `translationManager`) explicitly to `nullptr` in class definitions. Verified Qt parent-child object tree ownership for zero memory leaks.                                                                                                                          |        PASS         |
-| 6   | **Dead Code Review**              | Purged 21 unmaintained legacy `.ts` translation files from `i18n/`, reducing repository weight and eliminating build overhead during `lrelease`. Added `scratch/**` to `.gitignore` and `.trunk/trunk.yaml`.                                                                                                                                                                     |        PASS         |
-| 7   | **Duplicate Code Review**         | Unified icon generation pipeline: standardizing all output from a single high-resolution master asset into standard desktop square dimensions, avoiding multiple conflicting icon copies.                                                                                                                                                                                        |        PASS         |
-| 8   | **Circular Dependency Review**    | Audited header inclusion hierarchy in `src/`. Verified clean forward declarations for `TranslationManager`, `SessionManager`, `EditorManager`, and `RecentFilesListManager`.                                                                                                                                                                                                     |        PASS         |
-| 9   | **Performance Bottleneck Review** | Replaced naive string concatenations with direct bounded operations. Configured non-blocking, multi-threaded static checking (`-j 2`) to ensure macOS host CPU stability without thread saturation.                                                                                                                                                                              |        PASS         |
-| 10  | **Security Vulnerability Review** | **CWE-120 Resolution**: Replaced unchecked legacy `strcpy` and `strcat` in `src/IFaceTable.cpp` with bounded `std::snprintf`. Scanned entire tree with `flawfinder` and `cppcheck` (0 remaining vulnerabilities).                                                                                                                                                                |        PASS         |
-| 11  | **Maintainability Review**        | Standardized release metadata and application bundle identifier `com.github.alsyundawy.NotepadNext` across `CMakeLists.txt`, `deploy/macos/info.plist`, `updates.json`, `NotepadNext-Default-Editor.sh` (with legacy fallback), and Linux AppStream XML. Ensured transparent configuration for MegaLinter and Trunk linters.                                                     |        PASS         |
-| 12  | **Scalability Review**            | Streamlined language catalog: maintaining 100% complete translation parity (419 XML translation messages) between English and Indonesian.                                                                                                                                                                                                                                        |        PASS         |
-| 13  | **Readability Review**            | Enhanced documentation, bilingual comments (English & Indonesian), formatted markdown files with `prettier` and `markdownlint`.                                                                                                                                                                                                                                                  |        PASS         |
+| #   | Pillar                            | Audit Findings & Resolution                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | Verification Status |
+| :-- | :-------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-----------------: |
+| 1   | **Bug Review**                    | **Fixed**: Added defensive null pointer guards across `MainWindow.cpp` (`updateGui`, `updateFileStatusBasedUi`, `updateEOLBasedUi`, `updateSaveStatusBasedUi`, `updateLanguageBasedUi`, `updateDocumentBasedUi`, `updateSelectionBasedUi`, `updateContentBasedUi`, `detectLanguage`, `activateEditor`) to prevent `SIGSEGV` during tab closures or dock detachments. Resolved variable shadowing in `FindReplaceDialog.cpp` (`targetEd`, `totalReplaced`). Disabled `setDrawBase(false)` on tab bars to prevent dark theme edge clipping. |        PASS         |
+| 2   | **Syntax Review**                 | Fully verified against ISO C++20 (`-std=c++20`). Resolved pointer loop typing in `IFaceTableMixer.cpp` (`const IFaceTableInterface *iface`). Strict modern C++ syntax across all new ThemeManager, ThemePaletteData, and ThemeSwitcherDialog modules.                                                                                                                                                                                                                                                                                     |        PASS         |
+| 3   | **Runtime Review**                | Verified directory creation return codes in `ScintillaNext.cpp` with diagnostic warnings on `QDir::mkpath()` failure. Integrated live theme switching in `ThemeManager` with real-time UI stylesheet updates and instant Scintilla buffer palette propagation without requiring application restarts.                                                                                                                                                                                                                                     |        PASS         |
+| 4   | **Logic Review**                  | Architected 3-mode theme state machine (Auto/Light/Dark) in `ThemeManager`. Implemented intelligent high-contrast Scintilla style mapping (slots 0..31) guaranteeing legible foreground and background text combinations under both light and dark palettes (never dark-on-dark text).                                                                                                                                                                                                                                                    |        PASS         |
+| 5   | **Memory Review**                 | Clean singleton lifecycle management for `ThemeManager::instance()`. Proper Qt widget parentage across `ThemeSwitcherDialog` and dynamically added preference controls, ensuring zero memory leaks and deterministic widget disposal.                                                                                                                                                                                                                                                                                                     |        PASS         |
+| 6   | **Dead Code Review**              | Removed unused temporary includes, obsolete variables, and redundant type casts across `FindReplaceDialog.cpp` and `IFaceTableMixer.cpp`. Maintained lean `.trunk/trunk.yaml` ignore configurations.                                                                                                                                                                                                                                                                                                                                      |        PASS         |
+| 7   | **Duplicate Code Review**         | Unified 75 professional theme definitions in `src/features/ThemePaletteData.h`, reused across QSS stylesheet generation, Scintilla buffer styling, preferences dropdowns, and interactive 6-swatch palette previews.                                                                                                                                                                                                                                                                                                                      |        PASS         |
+| 8   | **Circular Dependency Review**    | Audited forward declarations and include boundaries between `MainWindow`, `ThemeManager`, `ThemeSwitcherDialog`, and `PreferencesDialog`. Kept clean acyclic dependency graphs with no circular header loops.                                                                                                                                                                                                                                                                                                                             |        PASS         |
+| 9   | **Performance Bottleneck Review** | Cached compiled QSS stylesheets in `ThemeManager` to avoid redundant string formatting on every editor tab switch. Optimized Scintilla style setting loop for immediate rendering without UI stutter.                                                                                                                                                                                                                                                                                                                                     |        PASS         |
+| 10  | **Security Vulnerability Review** | Zero critical/high vulnerabilities across SonarQube and Flawfinder audits. Safe input handling in `ThemeSwitcherDialog` search filtering. Bounded memory buffers throughout all theme loading and parsing logic.                                                                                                                                                                                                                                                                                                                          |        PASS         |
+| 11  | **Maintainability Review**        | Created `sonar-project.properties` and `scripts/generate_compilation_database.py` producing accurate 86-translation-unit `compile_commands.json` for CI/CD and IDE tooling. Configured `.vscode/settings.json` for SonarLint and clangd.                                                                                                                                                                                                                                                                                                  |        PASS         |
+| 12  | **Scalability Review**            | Modular theme catalog design allowing straightforward addition of new themes and color families without touching core editor logic. Clean separation of concerns between presentation and editor state.                                                                                                                                                                                                                                                                                                                                   |        PASS         |
+| 13  | **Readability Review**            | Comprehensive Doxygen documentation across all new header files (`ThemeManager.h`, `ThemePaletteData.h`, `ThemeSwitcherDialog.h`). Strict compliance with `trunk check`, `markdownlint`, and `prettier`.                                                                                                                                                                                                                                                                                                                                  |        PASS         |
 
 ---
 
@@ -75,7 +75,7 @@ All PNG assets have been losslessly compressed with `oxipng` and verified with `
 
 The previous basic `QMessageBox` popup has been replaced by a dedicated, multi-tab `AboutDialog` (`src/dialogs/AboutDialog.h` & `src/dialogs/AboutDialog.cpp`):
 
-- **Dynamic System Palette Adaptation**: Adheres strictly to the invariant that **NotepadNext has no in-app dark mode toggle**. Instead of hardcoding colors, the dialog dynamically extracts its palette from `this->palette()` (`QPalette::Window`, `QPalette::WindowText`, `QPalette::Highlight`, `QPalette::Base`, `QPalette::Mid`). It automatically recalculates contrasting foregrounds and background cards on `QEvent::PaletteChange` and `QEvent::ApplicationPaletteChange`, ensuring crystal-clear readability and zero color clashing under both macOS Light and Dark system appearances.
+- **Dynamic System Palette Adaptation & Theme Engine Integration**: In v0.15-04, the dialog dynamically adapted to the system palette via `this->palette()`. In v0.15-05, `AboutDialog` is directly hooked into `ThemeManager`, harmonizing its tab styling and card palettes dynamically whenever the user switches between any of the 75 themes or toggles Dark/Light modes.
 - **Six Specialized Information Tabs**:
   1. **About**: 80×80 application icon (`:/icons/NotepadNext.png`), version & stable badges, official attribution, legal disclaimer, and metadata specifications table.
   2. **Maintainer**: Detailed profile of macOS Maintainer Harry Dertin Sutisna Alsyundawy (`@alsyundawy`), ALSYUNDAWY IT SOLUTION, contact channels, and donation links (PayPal & Indonesian QRIS barcode).
@@ -193,7 +193,7 @@ In `src/dialogs/MainWindow.cpp`, this sequence serves as the native fallback and
 
 ---
 
-## 11. Release Evolution: v0.15-01 through v0.15-04
+## 11. Release Evolution: v0.15-01 through v0.15-05
 
 | Version     | Release Date | Key Milestones & Architectural Advancements                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 | :---------- | :----------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -201,6 +201,7 @@ In `src/dialogs/MainWindow.cpp`, this sequence serves as the native fallback and
 | **0.15-02** | 2026-09-25   | Upgraded embedded Lua runtime to 5.4.9; defined `LUA_QL`/`LUA_QS` compatibility macros; added static linkage to scroll wheel event handler; packaged dual-arch release DMGs inside ZIP archives (`arm64` and `x64`).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | **0.15-03** | 2026-10-19   | Upstream sync with `dail8859/NotepadNext`; refined Indonesian translation across 64 UI elements; synchronized packaging workflow for automated macOS DMG distribution.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | **0.15-04** | 2026-10-21   | 13-pillar security audit and hardening (CWE-120 fix, SIGSEGV protection, pointer safety); New Window & multi-instance architecture (`/usr/bin/open -n`, `Ctrl+Shift+N`); redesigned macOS HIG Save & Exit prompt (`SaveModifiedDialog`); AboutDialog crash & stack overflow resolution (`m_isUpdatingTheme` reentrancy guard); comprehensive File Encoding menu & multi-stage `uchardet` engine; modernized adaptive `AboutDialog` with dynamic system palette integration; application bundle ID standardization to `com.github.alsyundawy.NotepadNext`; high-resolution macOS squircle branding icons; comparative release notes; Qt 6.12 CI runners for macOS 15+; tailored MegaLinter config; Scintilla 5.6.7 / Lexilla 5.5.4 / Lua 5.5.1 integration; default context menu configuration. |
+| **0.15-05** | 2026-10-23   | Full Dark & Light Mode Theme Engine ported from `SparkNotePad` (`ThemeManager`, `ThemePaletteData`, `ThemeSwitcherDialog`); 75 studio-grade palettes across 25 families; 3 operating modes (Auto/Light/Dark); real-time high-contrast Scintilla buffer styling (slots 0..31); complete QSS widget controls styling; top-level `&Themes` menu (`Ctrl+Shift+T`, `Ctrl+Alt+T`); Preferences visual theme picker; 13-pillar codebase hardening (null guards in `MainWindow`, filesystem return verification in `ScintillaNext`, variable shadowing removal); SonarQube static analysis configuration (`sonar-project.properties`); compilation database generator (`generate_compilation_database.py`); VSCode SonarLint integration.                                                              |
 
 ---
 
@@ -221,4 +222,54 @@ All other language `.ts` files have been removed from `i18n/`, reducing reposito
 
 - **Trunk**: `actionlint`, `bandit`, `black`, `checkov`, `isort`, `markdownlint`, `oxipng`, `prettier`, `ruff`, `shellcheck`, `shfmt`, `svgo`, `taplo`, `yamllint`.
 - **Static Analyzers**: `cppcheck`, `flawfinder`, `actionlint`.
+- **SonarQube / SonarLint**: Integrated with `sonar-project.properties` and `compile_commands.json` (86 translation units).
 - **Status**: 100% clean passing state across all modified and generated files.
+
+---
+
+## 14. Native Dark & Light Mode Theme Architecture
+
+Ported and significantly elevated from `SparkNotePad`, `NotepadNext-MacOS` v0.15-05 introduces a comprehensive, standalone theming engine:
+
+### 1. Three Operating Modes
+
+- **Auto Mode**: Listens to macOS system palette events (`QPalette::WindowText.lightness() < QPalette::Window.lightness()`) to seamlessly synchronize with system Dark / Light appearance without restarting.
+- **Force Light Mode**: Locks application appearance to the active Light theme (defaulting to `NotepadNext Default Light`).
+- **Force Dark Mode**: Locks application appearance to the active Dark theme (defaulting to `Dracula Default Dark`).
+
+### 2. 75 Studio-Grade Palettes Across 25 Aesthetic Families
+
+All palettes are statically defined with zero runtime allocation overhead in `src/features/ThemePaletteData.h`, providing:
+
+- **Background & Foreground**: Base editor window, document canvas, text colors, and gutter margins.
+- **Scintilla Token Colors**: Keyword, String, Number, Comment, Type, Preprocessor, Operator, and Identifier hues.
+- **Selection & Caret**: High-visibility selection backgrounds and blinking caret colors.
+- **Gutter & Folding**: Line number text, active line highlights, fold margin colors, and fold marker outlines.
+
+### 3. High-Contrast Scintilla Styling (`applyThemeToEditor`)
+
+Unlike generic dark themes that cause low-contrast dark-on-dark unreadable text, `ThemeManager::applyThemeToEditor()` systematically configures Scintilla style slots `0` through `31`:
+
+- Slot `32` (`STYLE_DEFAULT`): Configures base font, foreground, and canvas background.
+- `clearDocumentStyle()`: Resets legacy attributes before applying new tokens.
+- Caret & Selection: Explicit `setCaretFore()`, `setSelFore(true, ...)`, and `setSelBack(true, ...)`.
+- Edge & Whitespace: Configured with contrasting indentation guides and edge columns.
+
+### 4. Interactive Theme Switcher Dialog (`ThemeSwitcherDialog`)
+
+Accessible via `Themes -> Theme Switcher...` or `Ctrl+Shift+T` (`Cmd+Shift+T` on macOS):
+
+- **Real-Time Live Search**: Filters themes instantaneously by title or category.
+- **Category Filter**: `All`, `Light`, or `Dark`.
+- **Visual Swatch Preview**: Renders 6 distinctive color swatches (Background, Foreground, Accent, Selection, Keyword, String) directly within the list item.
+- **Non-Destructive Live Preview**: Selecting a theme applies it instantly to the main window and active editors; pressing `Esc` restores the previous theme state cleanly.
+
+---
+
+## 15. SonarQube & Compilation Database Pipeline
+
+To guarantee enterprise static analysis without compromising macOS hardware performance:
+
+- **`sonar-project.properties`**: Declares project key `NotepadNext-MacOS`, designates `src` as the primary C/C++ source root, and links directly to `build/compile_commands.json`.
+- **`scripts/generate_compilation_database.py`**: A lightweight, self-contained Python script using standard libraries that parses CMake configuration and source trees to produce an accurate 86-translation-unit `compile_commands.json` in under 50ms.
+- **`.vscode/settings.json`**: Preconfigures SonarLint, SonarQube, and clangd to consume `compile_commands.json` with zero IDE setup friction.

@@ -20,12 +20,19 @@
 #include "PreferencesDialog.h"
 #include "NotepadNextApplication.h"
 #include "TranslationManager.h"
+#include "ThemeManager.h"
+#include "ThemePaletteData.h"
+#include "MainWindow.h"
 #include "ui_PreferencesDialog.h"
 #include "ScintillaNext.h"
 
 #include <QButtonGroup>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QFormLayout>
+#include <QComboBox>
+#include <QPushButton>
+#include <QAbstractItemView>
 
 
 PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *parent) :
@@ -34,6 +41,10 @@ PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *par
     settings(settings)
 {
     ui->setupUi(this);
+
+    setupThemeSettings();
+    connect(ThemeManager::instance(), &ThemeManager::themeChanged, this, &PreferencesDialog::updateThemeColors);
+    connect(ThemeManager::instance(), &ThemeManager::paletteChanged, this, &PreferencesDialog::updateThemeColors);
 
     QIcon icon = style()->standardIcon(QStyle::SP_MessageBoxInformation);
     QPixmap pixmap = icon.pixmap(QSize(16, 16));
@@ -196,5 +207,83 @@ void PreferencesDialog::populateTranslationComboBox()
     int index = ui->comboBoxTranslation->findData(settings->translation());
     if (index != -1) {
         ui->comboBoxTranslation->setCurrentIndex(index);
+    }
+}
+
+void PreferencesDialog::setupThemeSettings()
+{
+    QGroupBox *gbxThemes = new QGroupBox(tr("Themes & Visual Styling"), ui->scrollAreaWidgetContents);
+    QFormLayout *themeLayout = new QFormLayout(gbxThemes);
+    themeLayout->setSpacing(10);
+    themeLayout->setContentsMargins(14, 16, 14, 14);
+
+    // 1. Theme Palette Selector
+    comboBoxTheme = new QComboBox(gbxThemes);
+    comboBoxTheme->setMaxVisibleItems(12);
+    if (comboBoxTheme->view()) {
+        comboBoxTheme->view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    }
+    int selectedIdx = 0;
+    QString currentId = ThemeManager::instance()->currentPaletteId();
+    QString lastFamily;
+    for (const auto &pal : kAllThemePalettes) {
+        QString family = QString::fromUtf8(pal.family);
+        if (family != lastFamily) {
+            if (!lastFamily.isEmpty()) {
+                comboBoxTheme->insertSeparator(comboBoxTheme->count());
+            }
+            lastFamily = family;
+        }
+        QString label = QStringLiteral("[%1] %2 (%3)")
+                            .arg(family, QString::fromUtf8(pal.displayName), pal.isDark ? tr("Dark") : tr("Light"));
+        comboBoxTheme->addItem(label, QString::fromLatin1(pal.id));
+        if (pal.id == currentId) {
+            selectedIdx = comboBoxTheme->count() - 1;
+        }
+    }
+    comboBoxTheme->setCurrentIndex(selectedIdx);
+    connect(comboBoxTheme, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this](int index) {
+        if (index < 0) {
+            return;
+        }
+        QString themeId = comboBoxTheme->itemData(index).toString();
+        if (themeId.isEmpty()) {
+            return;
+        }
+        MainWindow *mw = qobject_cast<MainWindow *>(parentWidget());
+        ThemeManager::instance()->setPalette(themeId, mw);
+    });
+
+    QHBoxLayout *themeRowLayout = new QHBoxLayout();
+    themeRowLayout->addWidget(comboBoxTheme, 1);
+
+    btnToggleDarkLight = new QPushButton(tr("Toggle Dark/Light"), gbxThemes);
+    btnToggleDarkLight->setToolTip(tr("Quickly switch between active dark and light modes"));
+    connect(btnToggleDarkLight, &QPushButton::clicked, this, [this]() {
+        MainWindow *mw = qobject_cast<MainWindow *>(parentWidget());
+        ThemeManager::instance()->toggleTheme(mw);
+        QString currentId = ThemeManager::instance()->currentPaletteId();
+        int found = comboBoxTheme->findData(currentId);
+        if (found >= 0) {
+            QSignalBlocker blocker(comboBoxTheme);
+            comboBoxTheme->setCurrentIndex(found);
+        }
+    });
+    themeRowLayout->addWidget(btnToggleDarkLight);
+    themeLayout->addRow(tr("Active Theme:"), themeRowLayout);
+
+    // Insert at the top of scrollAreaWidgetContents layout
+    ui->verticalLayout_4->insertWidget(0, gbxThemes);
+}
+
+void PreferencesDialog::updateThemeColors()
+{
+    if (comboBoxTheme) {
+        QString currentId = ThemeManager::instance()->currentPaletteId();
+        int found = comboBoxTheme->findData(currentId);
+        if (found >= 0 && comboBoxTheme->currentIndex() != found) {
+            QSignalBlocker blocker(comboBoxTheme);
+            comboBoxTheme->setCurrentIndex(found);
+        }
     }
 }

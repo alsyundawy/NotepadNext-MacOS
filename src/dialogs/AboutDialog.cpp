@@ -9,6 +9,8 @@
  */
 
 #include "AboutDialog.h"
+#include "features/ThemeManager.h"
+#include "features/ThemePaletteData.h"
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -26,6 +28,8 @@
 
 AboutDialog::AboutDialog(QWidget *parent) : QDialog(parent) {
     setupUi();
+    connect(ThemeManager::instance(), &ThemeManager::themeChanged, this, &AboutDialog::updateThemeColors);
+    connect(ThemeManager::instance(), &ThemeManager::paletteChanged, this, &AboutDialog::updateThemeColors);
     updateThemeColors();
 }
 
@@ -67,19 +71,22 @@ void AboutDialog::updateThemeColors() {
     }
     m_isUpdatingTheme = true;
 
-    // Dynamically derive styling directly from the active system palette (macOS light/dark appearance)
-    const QPalette pal = this->palette();
-    const QColor winColor = pal.color(QPalette::Window);
-    const bool dark = (winColor.lightness() < 128);
+    // Dynamically derive styling directly from active ThemeManager palette
+    const ThemePalette *pal = ThemeManager::instance()->currentPalette();
+    const bool dark = ThemeManager::instance()->isDarkActive();
 
-    const QString winBg = winColor.name();
-    const QString cardBg = dark ? pal.color(QPalette::Base).name() : QStringLiteral("#ffffff");
-    const QString borderCol = dark ? QStringLiteral("#3e3e42") : QStringLiteral("#cbd5e1");
-    const QString accentCol = pal.color(QPalette::Highlight).isValid() && pal.color(QPalette::Highlight) != winColor
-                                ? pal.color(QPalette::Highlight).name()
-                                : (dark ? QStringLiteral("#38bdf8") : QStringLiteral("#0078d4"));
-    const QString txtPri = pal.color(QPalette::WindowText).name();
-    const QString txtSec = dark ? QStringLiteral("#94a3b8") : QStringLiteral("#475569");
+    const QString winBg =
+        pal ? QString::fromLatin1(pal->win) : (dark ? QStringLiteral("#0f172a") : QStringLiteral("#f8fafc"));
+    const QString cardBg =
+        pal ? QString::fromLatin1(pal->card) : (dark ? QStringLiteral("#1e293b") : QStringLiteral("#ffffff"));
+    const QString borderCol =
+        pal ? QString::fromLatin1(pal->border) : (dark ? QStringLiteral("#334155") : QStringLiteral("#cbd5e1"));
+    const QString accentCol =
+        pal ? QString::fromLatin1(pal->blue) : (dark ? QStringLiteral("#38bdf8") : QStringLiteral("#2563eb"));
+    const QString txtPri =
+        pal ? QString::fromLatin1(pal->txtPri) : (dark ? QStringLiteral("#f8fafc") : QStringLiteral("#0f172a"));
+    const QString txtSec =
+        pal ? QString::fromLatin1(pal->txtSec) : (dark ? QStringLiteral("#94a3b8") : QStringLiteral("#64748b"));
     const QString badgeBg = dark ? QStringLiteral("rgba(255,255,255,0.08)") : QStringLiteral("rgba(0,0,0,0.05)");
 
     const QString cardStyle =
@@ -109,6 +116,11 @@ void AboutDialog::updateThemeColors() {
             "  background-color: %2;"
             "  border: 1px solid %3;"
             "  border-radius: 8px;"
+            "}"
+            "QTabBar {"
+            "  background: transparent;"
+            "  border: none;"
+            "  qproperty-drawBase: 0;"
             "}"
             "QTabBar::tab {"
             "  background-color: %1;"

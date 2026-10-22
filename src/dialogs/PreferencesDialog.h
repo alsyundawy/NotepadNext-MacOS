@@ -31,6 +31,8 @@ class PreferencesDialog;
 }
 
 class Settings;
+class QComboBox;
+class QPushButton;
 
 class PreferencesDialog : public QDialog
 {
@@ -41,6 +43,9 @@ public:
     ~PreferencesDialog();
 
     void showApplicationRestartRequired() const;
+
+private slots:
+    void updateThemeColors();
 
 private:
     Ui::PreferencesDialog *ui;
@@ -53,6 +58,10 @@ private:
     void MapSettingToGroupBox(QGroupBox *groupBox, Func1 getter, Func2 setter, Func3 notifier) const;
 
     void populateTranslationComboBox();
+    void setupThemeSettings();
+
+    QComboBox *comboBoxTheme = nullptr;
+    QPushButton *btnToggleDarkLight = nullptr;
 };
 
 #endif // PREFERENCESDIALOG_H
