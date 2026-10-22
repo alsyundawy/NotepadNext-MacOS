@@ -20,6 +20,12 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QtGlobal>
+
+#ifndef QT_VERSION_CHECK
+#define QT_VERSION_CHECK(major, minor, patch) (((major)<<16)|((minor)<<8)|(patch))
+#endif
+
 #include <QMainWindow>
 #include <QLabel>
 #include <QActionGroup>

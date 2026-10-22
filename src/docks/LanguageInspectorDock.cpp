@@ -16,6 +16,12 @@
  * along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include <QtGlobal>
+
+#ifndef QT_VERSION_CHECK
+#define QT_VERSION_CHECK(major, minor, patch) (((major)<<16)|((minor)<<8)|(patch))
+#endif
+
 #include <QFontDatabase>
 
 #include "LanguageInspectorDock.h"

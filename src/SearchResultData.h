@@ -18,7 +18,7 @@
 
 #pragma once
 
-#include <Qt>
+#include <QtGlobal>
 
 namespace SearchResultData {
     enum Role

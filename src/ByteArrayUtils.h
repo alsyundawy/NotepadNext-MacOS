@@ -17,11 +17,16 @@
  */
 #pragma once
 
+#include <QtGlobal>
+
+#ifndef QT_VERSION_CHECK
+#define QT_VERSION_CHECK(major, minor, patch) (((major)<<16)|((minor)<<8)|(patch))
+#endif
+
 #include <QByteArray>
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 #include <QByteArrayView>
 #else
-#include <QtGlobal>
 #include <cstring>
 
 // WARNING: Dirty QT5 compat. Tested on Debian 13.

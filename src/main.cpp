@@ -17,6 +17,12 @@
  */
 
 
+#include <QtGlobal>
+
+#ifndef QT_VERSION_CHECK
+#define QT_VERSION_CHECK(major, minor, patch) (((major)<<16)|((minor)<<8)|(patch))
+#endif
+
 #include <QDebug>
 #include <QSettings>
 #include <QSysInfo>
