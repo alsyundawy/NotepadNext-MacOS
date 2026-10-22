@@ -56,8 +56,8 @@ Format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) a
 
 ### 🚀 CI/CD Pipeline & GitHub Actions Stabilization / Stabilisasi Pipeline CI/CD & GitHub Actions
 
-- 🇬🇧 **Runner Matrix Optimization**: Standardized `.github/workflows/build.yml` and `release.yml` with valid official runners (`macos-15-intel`, `macos-14`, `macos-15`) and official Qt LTS versions (`6.5`, `6.8`), eliminating build timeouts and missing runner failures.
-- 🇮🇩 **Optimalisasi Matriks Runner**: Menstandarisasi `.github/workflows/build.yml` dan `release.yml` dengan runner resmi valid (`macos-15-intel`, `macos-14`, `macos-15`) dan Qt LTS (`6.5`, `6.8`), mengatasi kegagalan runner dan timeout.
+- 🇬🇧 **Comprehensive Multi-Qt Matrix (Qt 6.5 - Qt 6.12)**: Standardized `.github/workflows/build.yml` and `release.yml` with the full matrix spanning Qt 6.5, Qt 6.8, Qt 6.10, Qt 6.11, and Qt 6.12 across macOS Intel (`macos-15-intel`) and Apple Silicon (`macos-15`, `macos-26`), matching the deployment specification in README.md.
+- 🇮🇩 **Matriks Multi-Qt Menyeluruh (Qt 6.5 - Qt 6.12)**: Menstandarisasi `.github/workflows/build.yml` dan `release.yml` dengan matriks lengkap mencakup Qt 6.5, Qt 6.8, Qt 6.10, Qt 6.11, dan Qt 6.12 pada macOS Intel (`macos-15-intel`) dan Apple Silicon (`macos-15`, `macos-26`), selaras dengan spesifikasi rilis pada README.md.
 - 🇬🇧 **Fork Protection for Post-Release & CodeQL**: Added repository guards to prevent winget publish errors on forks and configured CodeQL triggers to prevent conflicts with GitHub Code Scanning default setup.
 - 🇮🇩 **Proteksi Fork untuk Post-Release & CodeQL**: Menambahkan pengaman repositori untuk mencegah kegagalan winget pada fork dan menyelaraskan konfigurasi CodeQL dengan pengaturan default GitHub.
 
