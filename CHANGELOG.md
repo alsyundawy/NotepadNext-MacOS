@@ -27,6 +27,15 @@ Format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) a
 - 🇬🇧 **Native macOS Update Check**: Enabled "Check for Updates" under Help menu on macOS via `QSimpleUpdater`, querying `https://github.com/alsyundawy/NotepadNext-MacOS/raw/master/updates.json` with dedicated platform key `"macos"`.
 - 🇮🇩 **Pemeriksaan Pembaruan Native macOS**: Mengaktifkan "Periksa Pembaruan" pada menu Bantuan di macOS via `QSimpleUpdater`, menghubungkan ke `updates.json` dengan platform key `"macos"`.
 
+### 🛠️ Toolbar Enhancements & Exit Action / Peningkatan Bilah Alat & Aksi Keluar
+
+- 🇬🇧 **Integrated Missing Toolbar Actions**: Added standard supported actions to `mainToolBar`: `actionPrint` (Print...) with `printer.png` in the file operations block, and `actionPreferences` (Preferences...) with `cog.png` in the settings block, aligning toolbar accessibility with Notepad++, Notepad2, and modern code editors.
+- 🇮🇩 **Penambahan Aksi Bilah Alat Standar**: Menambahkan aksi yang didukung ke `mainToolBar`: `actionPrint` (Cetak...) dengan ikon `printer.png` pada grup operasi berkas, dan `actionPreferences` (Pengaturan...) dengan ikon `cog.png` pada grup pengaturan, menyelaraskan aksesibilitas bilah alat dengan Notepad++, Notepad2, dan editor kode modern.
+- 🇬🇧 **Dedicated Exit Icon on Toolbar**: Created modern vector `exit.svg` and pixel-crisp 16x16 `exit.png` icons, registered them in `resources.qrc`, and positioned `actionExit` preceded by a separator at the very end of `mainToolBar`.
+- 🇮🇩 **Ikon Keluar Khusus pada Bilah Alat**: Membuat ikon vektor modern `exit.svg` dan ikon 16x16 `exit.png` beresolusi tajam, mendaftarkannya pada `resources.qrc`, dan menempatkan `actionExit` yang didahului pemisah pada ujung akhir `mainToolBar`.
+- 🇬🇧 **Const-Reference Optimization & Header Hardening**: Updated `MainWindow::buildMenu` parameter to `const QStringList &` for zero-copy efficiency, and included `<QtGlobal>` to guarantee clean evaluation of Qt version check macros.
+- 🇮🇩 **Optimalisasi Referensi Konstan & Penguatan Header**: Memperbarui parameter `MainWindow::buildMenu` menjadi `const QStringList &` untuk efisiensi zero-copy, serta menyertakan `<QtGlobal>` untuk memastikan evaluasi makro pengecekan versi Qt berjalan mulus.
+
 ### 🔤 Convert Case & Context Menu Enhancement / Peningkatan Menu Konversi Huruf & Konteks
 
 - 🇬🇧 **Complete Convert Case Submenu**: Added `Convert Case >` submenu to the editor right-click context menu and Edit menu, featuring `UPPER CASE`, `lower case`, separator, `Title Case`, `Sentence case`, and `iNVERT cASE`.

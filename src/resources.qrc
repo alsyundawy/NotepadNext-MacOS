@@ -46,5 +46,7 @@
         <file>icons/plus.svg</file>
         <file>icons/list_with_icons.svg</file>
         <file>icons/checkmark.svg</file>
+        <file>icons/exit.png</file>
+        <file>icons/exit.svg</file>
     </qresource>
 </RCC>

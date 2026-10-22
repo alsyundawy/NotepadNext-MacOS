@@ -18,6 +18,7 @@
 
 
 #include "MainWindow.h"
+#include <QtGlobal>
 #include "AboutDialog.h"
 #include "SaveModifiedDialog.h"
 #include "EncodingSelectionDialog.h"
@@ -2722,7 +2723,7 @@ void MainWindow::dropEvent(QDropEvent *event)
     }
 }
 
-QMenu *MainWindow::buildMenu(QStringList actionNames)
+QMenu *MainWindow::buildMenu(const QStringList &actionNames)
 {
     QMenu *menu = new QMenu(this);
     menu->setAttribute(Qt::WA_DeleteOnClose);

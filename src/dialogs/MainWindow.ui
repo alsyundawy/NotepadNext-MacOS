@@ -430,6 +430,7 @@
    <addaction name="actionSaveAll"/>
    <addaction name="actionClose"/>
    <addaction name="actionCloseAll"/>
+   <addaction name="actionPrint"/>
    <addaction name="separator"/>
    <addaction name="actionCut"/>
    <addaction name="actionCopy"/>
@@ -452,6 +453,10 @@
    <addaction name="actionPlayback"/>
    <addaction name="actionRunMacroMultipleTimes"/>
    <addaction name="actionSaveCurrentRecordedMacro"/>
+   <addaction name="separator"/>
+   <addaction name="actionPreferences"/>
+   <addaction name="separator"/>
+   <addaction name="actionExit"/>
   </widget>
   <widget class="EditorInfoStatusBar" name="statusBar"/>
   <action name="actionNew">
@@ -519,8 +524,15 @@
    </property>
   </action>
   <action name="actionExit">
+   <property name="icon">
+    <iconset resource="../resources.qrc">
+     <normaloff>:/icons/exit.png</normaloff>:/icons/exit.png</iconset>
+   </property>
    <property name="text">
     <string>E&amp;xit</string>
+   </property>
+   <property name="toolTip">
+    <string>Exit</string>
    </property>
    <property name="menuRole">
     <enum>QAction::QuitRole</enum>

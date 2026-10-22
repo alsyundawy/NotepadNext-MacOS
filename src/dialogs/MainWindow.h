@@ -210,7 +210,7 @@ private:
     ShiftWheelToHorizontalScrollFilter *shiftWheelToHorizontalScrollFilter;
     int zoomLevel = 0;
     int contextMenuPos = 0;
-    QMenu *buildMenu(QStringList actionNames);
+    QMenu *buildMenu(const QStringList &actionNames);
 
     QMenu *menuTheme = Q_NULLPTR;
     QAction *actionThemeSwitcher = Q_NULLPTR;
