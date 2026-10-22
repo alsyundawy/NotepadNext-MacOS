@@ -24,7 +24,7 @@
 #include <QApplication>
 
 
-static bool isWheelEventHorizontal(QWheelEvent *event) {
+static bool isWheelEventHorizontal(const QWheelEvent *event) {
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
     return event->angleDelta().y() == 0;
 #else
@@ -32,7 +32,7 @@ static bool isWheelEventHorizontal(QWheelEvent *event) {
 #endif
 }
 
-static int wheelEventYDelta(QWheelEvent *event) {
+static int wheelEventYDelta(const QWheelEvent *event) {
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
     return event->angleDelta().y();
 #else
@@ -49,7 +49,7 @@ ZoomEventWatcher::ZoomEventWatcher(QObject *parent)
 bool ZoomEventWatcher::eventFilter(QObject *obj, QEvent *event)
 {
     if (event->type() == QEvent::Wheel) {
-        QWheelEvent *wheelEvent = static_cast<QWheelEvent *>(event);
+        const QWheelEvent *wheelEvent = static_cast<const QWheelEvent *>(event);
 
         if (!isWheelEventHorizontal(wheelEvent)) {
             if (QApplication::keyboardModifiers() & Qt::ControlModifier) {

@@ -18,6 +18,7 @@
 #include <QTextCodec>
 #include <QRegularExpression>
 #include <QtGlobal>
+#include <algorithm>
 
 static const QByteArray BOM_UTF8_BYTES = QByteArray::fromHex("EFBBBF");
 static const QByteArray BOM_UTF16LE_BYTES = QByteArray::fromHex("FFFE");
@@ -66,13 +67,9 @@ EncodingDetector::DetectionResult EncodingDetector::detect(const QByteArray &dat
     }
 
     // Stage 6: Fallback for 8-bit text with high-order bytes (>= 0x80)
-    bool hasHighBytes = false;
-    for (unsigned char c : data) {
-        if (c >= 0x80) {
-            hasHighBytes = true;
-            break;
-        }
-    }
+    const bool hasHighBytes = std::any_of(data.cbegin(), data.cend(), [](char c) {
+        return static_cast<unsigned char>(c) >= 0x80;
+    });
 
     if (hasHighBytes) {
         result.encoding = QStringLiteral("windows-1252");

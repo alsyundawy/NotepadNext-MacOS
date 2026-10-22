@@ -87,7 +87,7 @@ public:
     bool isSavedToDisk() const;
     bool canSaveToDisk() const;
 
-    QString getName() const { return name; }
+    const QString &getName() const { return name; }
     void setName(const QString &name);
     QString getPath() const;
     QString getFilePath() const;
@@ -118,9 +118,9 @@ public:
     };
 
     BomType bom() const { return bomType; }
-    void setBom(BomType bom) { bomType = bom; }
+    void setBom(BomType newBom) { bomType = newBom; }
 
-    QString encodingName() const { return fileEncoding; }
+    const QString &encodingName() const { return fileEncoding; }
     void setFileEncoding(const QString &encoding) { fileEncoding = encoding; }
 
     void convertToEncoding(const QString &newEncoding, BomType newBom);

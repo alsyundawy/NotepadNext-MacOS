@@ -26,7 +26,7 @@
 using namespace Scintilla;
 
 
-QMap<Scintilla::Message, QString> messageData {
+static const QMap<Scintilla::Message, QString> messageData {
     { Scintilla::Message::Cut, "Cut" },
     { Scintilla::Message::Copy, "Copy" },
     { Scintilla::Message::Paste, "Paste" },
@@ -201,7 +201,7 @@ QString MacroStep::NameOfMessage(Scintilla::Message message)
 {
     // Try to find the name in the known list
     if (messageData.contains(message)) {
-        return messageData[message];
+        return messageData.value(message);
     }
     else {
         // Default to the list of enums
@@ -234,7 +234,6 @@ QDataStream &operator>>(QDataStream& stream, MacroStep &macroStep)
     // them differently on different systems.
 
     quint32 w;
-    qint32 l;
 
     stream >> macroStep.message >> w;
     macroStep.wParam = static_cast<quint32>(w);
@@ -242,6 +241,7 @@ QDataStream &operator>>(QDataStream& stream, MacroStep &macroStep)
     if (MacroStep::MessageHasString(macroStep.message))
         return stream >> macroStep.str;
     else {
+        qint32 l;
         stream >> l;
         macroStep.lParam = static_cast<qint32>(l);
         return stream;
