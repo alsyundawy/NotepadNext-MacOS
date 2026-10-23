@@ -22,15 +22,20 @@
 
 #include <QObject>
 #include <QStringList>
+#include <QString>
 #include <QAction>
 #include <QApplication>
 #include <QStyle>
 #include <QPainter>
+#include <QIcon>
+#include <QPixmap>
+#include <QColor>
+#include <QDebug>
 
 namespace ActionUtils {
 
 template <typename Container>
-void populateActionContainer(Container* container, QObject* context, const QStringList& actionNames) {
+void populateActionContainer(Container* container, const QObject* context, const QStringList& actionNames) {
     for (const QString& actionName : actionNames) {
         if (actionName.isEmpty()) {
             container->addSeparator();
@@ -47,9 +52,9 @@ void populateActionContainer(Container* container, QObject* context, const QStri
     }
 }
 
-QIcon createSolidIcon(QColor color)
+inline QIcon createSolidIcon(const QColor &color)
 {
-    int iconSize = qApp->style()->pixelMetric(QStyle::PM_SmallIconSize);
+    const int iconSize = QApplication::style()->pixelMetric(QStyle::PM_SmallIconSize);
 
     QPixmap pixmap(iconSize, iconSize);
     pixmap.fill(color);

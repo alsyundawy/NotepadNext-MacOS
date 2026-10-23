@@ -114,26 +114,26 @@ public slots:
     void print();
 
     void convertEOLs(int eolMode);
-    void titleCase();
-    void sentenceCase();
-    void invertCase();
-    void pasteWithoutFormat();
+    void titleCase() const;
+    void sentenceCase() const;
+    void invertCase() const;
+    void pasteWithoutFormat() const;
 
     void showFindReplaceDialog(int index);
 
-    void updateFileStatusBasedUi(ScintillaNext *editor);
-    void updateEOLBasedUi(ScintillaNext *editor);
+    void updateFileStatusBasedUi(const ScintillaNext *editor);
+    void updateEOLBasedUi(const ScintillaNext *editor);
     void updateDocumentBasedUi(Scintilla::Update updated);
     void updateSelectionBasedUi(ScintillaNext *editor);
     void updateContentBasedUi(ScintillaNext *editor);
-    void updateSaveStatusBasedUi(ScintillaNext *editor);
+    void updateSaveStatusBasedUi(const ScintillaNext *editor);
     void updateEditorPositionBasedUi();
-    void updateLanguageBasedUi(const ScintillaNext *editor);
+    void updateLanguageBasedUi(const ScintillaNext *editor) const;
     void updateGui(ScintillaNext *editor);
 
     void detectLanguage(ScintillaNext *editor);
 
-    void setLanguage(ScintillaNext *editor, const QString &languageName);
+    void setLanguage(ScintillaNext *editor, const QString &languageName) const;
 
     void bringWindowToForeground();
     void focusIn();
@@ -158,7 +158,7 @@ protected:
     void changeEvent(QEvent *changeEvent) override;
 
 private slots:
-    void tabBarRightClicked(ScintillaNext *editor);
+    void tabBarRightClicked(const ScintillaNext *editor);
     void languageMenuTriggered();
     void checkForUpdatesFinished(const QString &url);
     void activateEditor(ScintillaNext *editor);
@@ -193,8 +193,8 @@ private:
     void openFileList(const QStringList &fileNames);
     bool checkEditorsBeforeClose(const QVector<ScintillaNext *> &editorList);
     bool checkFileForModification(ScintillaNext *editor);
-    void showSaveErrorMessage(ScintillaNext *editor, QFileDevice::FileError error);
-    void showEditorZoomLevelIndicator();
+    void showSaveErrorMessage(const ScintillaNext *editor, QFileDevice::FileError error);
+    void showEditorZoomLevelIndicator() const;
 
     enum class UserSaveAction { SaveAll, DiscardAll, Cancel };
     UserSaveAction promptForSave(const QVector<ScintillaNext *> &editorList);
