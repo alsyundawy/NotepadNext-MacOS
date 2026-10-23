@@ -29,7 +29,7 @@ def main():
     ]
 
     base_defines = [
-        '-DAPP_VERSION="0.15-05"',
+        '-DAPP_VERSION="0.15-06"',
         "-DSCI_OWNREGEX",
         "-DADS_STATIC",
         "-DQSIMPLEUPDATER_STATIC",
