@@ -18,12 +18,22 @@ Format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) a
 - 🇬🇧 **macOS Native Character Palette (`Cmd+Ctrl+Space`)**: Added `actionEmojiSymbols` under Edit menu with shortcut `Cmd+Ctrl+Space`, dispatching native Cocoa `[NSApp orderFrontCharacterPalette:nil]` via Objective-C runtime messaging.
 - 🇮🇩 **Palet Karakter Native macOS (`Cmd+Ctrl+Space`)**: Menambahkan menu `Emoji & Karakter Khusus` di bawah menu Edit dengan tombol pintas `Cmd+Ctrl+Space`, memanggil `orderFrontCharacterPalette` Cocoa secara langsung.
 
-### 🌐 Upstream Crowdin Localization Synchronization / Sinkronisasi Lokalisasi Crowdin Upstream
+### 🔔 Modern, Elegant & Informative Update Dialog / Desain Dialog Pembaruan Modern, Elegan & Informatif
 
-- 🇬🇧 **Synchronized 23 Translation Catalogs**: Extracted and integrated the latest translation files from upstream Crowdin (PR #1157), including German, French, Spanish, Italian, Portuguese, Russian, Simplified/Traditional Chinese, Japanese, Korean, and Indonesian.
-- 🇮🇩 **Sinkronisasi 23 Katalog Terjemahan**: Mengintegrasikan berkas terjemahan terbaru dari Crowdin upstream (PR #1157) untuk 23 bahasa dunia.
-- 🇬🇧 **Apple HIG Terminology Polish for Indonesian (`NotepadNext_id.ts`)**: Harmonized all Indonesian localizations with Apple Human Interface Guidelines standard macOS terminology (_Preferensi..._, _Bungkus Teks_, _Cari dan Ganti_, _Format Berkas_), and verified binary `.qm` compilation across all catalogs.
-- 🇮🇩 **Penyelarasan Terminologi Apple HIG Bahasa Indonesia (`NotepadNext_id.ts`)**: Menyelaraskan seluruh istilah antarmuka bahasa Indonesia dengan standar Apple Human Interface Guidelines (_Preferensi..._, _Bungkus Teks_, _Cari dan Ganti_, _Format Berkas_), serta memvalidasi kompilasi biner `.qm` tanpa kesalahan.
+- 🇬🇧 **Native macOS Card-Based Update Dialog (`UpdateDialog.h/.cpp`)**: Replaced the legacy plain QMessageBox with a modern, elegant, and informative macOS card-based dialog featuring real-time architecture detection (Apple Silicon `arm64` vs Intel `x86_64`), dynamic status badges (`✓ Up to Date`, `🚀 Update Available`, `ℹ Check Offline`), clean metadata cards, release highlights, and direct download actions.
+- 🇮🇩 **Dialog Pembaruan Native macOS Modern & Elegan (`UpdateDialog.h/.cpp`)**: Menggantikan QMessageBox standar dengan dialog native macOS modern dan elegan berbasis kartu yang dilengkapi deteksi arsitektur real-time (Apple Silicon `arm64` vs Intel `x86_64`), lencana status dinamis (`✓ Sudah Terbaru`, `🚀 Pembaruan Tersedia`), kartu metadata informatif, dan tombol unduh langsung.
+
+### 🌐 Streamlined to Indonesian & English / Penyederhanaan Bahasa Indonesia & Inggris
+
+- 🇬🇧 **Streamlined Exclusively to Indonesian & English (Hapus Selain Bahasa Indonesia & Inggris)**: Purged all unmaintained/redundant translation catalogs from `i18n/`, exclusively maintaining 100% complete native English (`en_US`) and high-polish Bahasa Indonesia (`id_ID`) harmonized with Apple Human Interface Guidelines terminology (_Preferensi..._, _Bungkus Teks_, _Cari dan Ganti_, _Format Berkas_).
+- 🇮🇩 **Penyederhanaan Bahasa Indonesia & Inggris**: Menghapus seluruh berkas terjemahan selain Bahasa Indonesia dan Bahasa Inggris dari direktori `i18n/`, dan memfokuskan dukungan penuh eksklusif pada Bahasa Indonesia (`id_ID`) dengan standar Apple Human Interface Guidelines dan Bahasa Inggris (`en_US`).
+
+### 🍏 Apple Silicon (arm64) & Universal Build Pipeline / Saluran Build Apple Silicon & Universal
+
+- 🇬🇧 **Resolved CI Build Compilation Error in `LuaExtension.cpp`**: Fixed `StringResultType::string` scoping error on line 366 that previously caused compiler failures on macOS runners.
+- 🇮🇩 **Perbaikan Kompilasi CI pada `LuaExtension.cpp`**: Memperbaiki cakupan `StringResultType::string` pada baris 366 yang sebelumnya menyebabkan kegagalan kompilasi di runner macOS.
+- 🇬🇧 **Harmonized GitHub Actions Runners & Packaging**: Standardized Apple Silicon runners on `macos-15`, updated `PackagingMac.cmake` to output both `NotepadNext-v0.15-06-arm64.dmg` and `NotepadNext-v0.15-arm64.dmg`, and configured `updates.json` with dedicated `macos-arm64` and `macos-x64` keys.
+- 🇮🇩 **Penyelarasan Runner GitHub Actions & Paket Rilis**: Menstandarkan runner Apple Silicon ke `macos-15`, memperbarui `PackagingMac.cmake` untuk menghasilkan `NotepadNext-v0.15-06-arm64.dmg` dan `NotepadNext-v0.15-arm64.dmg`, serta menyinkronkan `updates.json` untuk arsitektur `macos-arm64` dan `macos-x64`.
 
 ### 🧩 Selective Porting of High-Value Upstream Pull Requests / Porting Selektif Pull Request Upstream
 

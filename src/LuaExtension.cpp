@@ -363,7 +363,7 @@ static int iface_function_helper(lua_State *L, const IFaceFunction &func) {
 
     if (needStringResult != StringResultType::none) {
         sptr_t stringResultLen;
-        if (needStringResult == string) {
+        if (needStringResult == StringResultType::string) {
             stringResultLen = editor->send(func.value, params[0], 0);
             if (stringResultLen > 0) {
                 // not all string result methods are guaranteed to add a null terminator

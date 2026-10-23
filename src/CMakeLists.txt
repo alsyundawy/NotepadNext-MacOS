@@ -157,6 +157,8 @@ qt_add_executable(NotepadNext
 	dialogs/SaveModifiedDialog.h
 	dialogs/ThemeSwitcherDialog.cpp
 	dialogs/ThemeSwitcherDialog.h
+	dialogs/UpdateDialog.cpp
+	dialogs/UpdateDialog.h
 	features/ThemeManager.cpp
 	features/ThemeManager.h
 	features/ThemePaletteData.h

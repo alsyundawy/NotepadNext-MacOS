@@ -48,16 +48,37 @@ if(NOT DEFINED MAC_ARCH_SUFFIX OR MAC_ARCH_SUFFIX STREQUAL "")
     endif()
 endif()
 
-set(MAC_DMG_NAME "NotepadNext-v${PROJECT_VERSION}-${MAC_ARCH_SUFFIX}.dmg")
+if(DEFINED APP_VERSION AND NOT APP_VERSION STREQUAL "")
+    set(MAC_DMG_NAME "NotepadNext-v${APP_VERSION}-${MAC_ARCH_SUFFIX}.dmg")
+    set(MAC_DMG_LEGACY_NAME "NotepadNext-v${PROJECT_VERSION}-${MAC_ARCH_SUFFIX}.dmg")
+else()
+    set(MAC_DMG_NAME "NotepadNext-v${PROJECT_VERSION}-${MAC_ARCH_SUFFIX}.dmg")
+    set(MAC_DMG_LEGACY_NAME "")
+endif()
 
 find_program(MACDEPLOYQT_EXECUTABLE macdeployqt REQUIRED)
 
-add_custom_target(dmg
-    COMMAND ${MACDEPLOYQT_EXECUTABLE}
-        ${INSTALL_DIR}/NotepadNext.app
-        -dmg
-    COMMAND ${CMAKE_COMMAND} -E rename
-        ${INSTALL_DIR}/NotepadNext.dmg
-        ${CMAKE_BINARY_DIR}/${MAC_DMG_NAME}
-    DEPENDS install_local
-)
+if(MAC_DMG_LEGACY_NAME)
+    add_custom_target(dmg
+        COMMAND ${MACDEPLOYQT_EXECUTABLE}
+            ${INSTALL_DIR}/NotepadNext.app
+            -dmg
+        COMMAND ${CMAKE_COMMAND} -E rename
+            ${INSTALL_DIR}/NotepadNext.dmg
+            ${CMAKE_BINARY_DIR}/${MAC_DMG_NAME}
+        COMMAND ${CMAKE_COMMAND} -E copy
+            ${CMAKE_BINARY_DIR}/${MAC_DMG_NAME}
+            ${CMAKE_BINARY_DIR}/${MAC_DMG_LEGACY_NAME}
+        DEPENDS install_local
+    )
+else()
+    add_custom_target(dmg
+        COMMAND ${MACDEPLOYQT_EXECUTABLE}
+            ${INSTALL_DIR}/NotepadNext.app
+            -dmg
+        COMMAND ${CMAKE_COMMAND} -E rename
+            ${INSTALL_DIR}/NotepadNext.dmg
+            ${CMAKE_BINARY_DIR}/${MAC_DMG_NAME}
+        DEPENDS install_local
+    )
+endif()

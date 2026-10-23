@@ -64,6 +64,7 @@
 
 #if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
 #include <QSimpleUpdater.h>
+#include "UpdateDialog.h"
 #endif
 #ifdef Q_OS_MACOS
 #include <objc/message.h>
@@ -627,9 +628,10 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         MarkerAppDecorator *decorator = app->findChild<MarkerAppDecorator*>(QString(), Qt::FindDirectChildrenOnly);
 
         if (decorator && decorator->isEnabled()) {
-            if (sender()->property("MarkerNumber").isValid()) {
+            QObject *snd = sender();
+            if (snd && snd->property("MarkerNumber").isValid()) {
                 ScintillaNext *editor = currentEditor();
-                decorator->mark(editor, sender()->property("MarkerNumber").toInt());
+                decorator->mark(editor, snd->property("MarkerNumber").toInt());
             }
         }
     };
@@ -638,9 +640,10 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         MarkerAppDecorator *decorator = app->findChild<MarkerAppDecorator*>(QString(), Qt::FindDirectChildrenOnly);
 
         if (decorator && decorator->isEnabled()) {
-            if (sender()->property("MarkerNumber").isValid()) {
+            QObject *snd = sender();
+            if (snd && snd->property("MarkerNumber").isValid()) {
                 ScintillaNext *editor = currentEditor();
-                decorator->clear(editor, sender()->property("MarkerNumber").toInt());
+                decorator->clear(editor, snd->property("MarkerNumber").toInt());
             }
         }
     };
@@ -1406,13 +1409,15 @@ void MainWindow::setupThemeMenu()
             } else {
                 itemLabel += QStringLiteral(" (Light)");
             }
-            QAction *act = famMenu->addAction(itemLabel);
-            act->setCheckable(true);
-            act->setData(QString::fromLatin1(pal->id));
-            connect(act, &QAction::triggered, this, [this, pal]() {
-                ThemeManager::instance()->setPalette(QString::fromLatin1(pal->id), this);
-                ui->statusBar->showMessage(tr("Theme applied: %1").arg(QString::fromUtf8(pal->displayName)), 3000);
-            });
+            QAction *act = famMenu ? famMenu->addAction(itemLabel) : nullptr;
+            if (act) {
+                act->setCheckable(true);
+                act->setData(QString::fromLatin1(pal->id));
+                connect(act, &QAction::triggered, this, [this, pal]() {
+                    ThemeManager::instance()->setPalette(QString::fromLatin1(pal->id), this);
+                    ui->statusBar->showMessage(tr("Theme applied: %1").arg(QString::fromUtf8(pal->displayName)), 3000);
+                });
+            }
         }
     }
 
@@ -2775,17 +2780,28 @@ void MainWindow::checkForUpdates(bool silent)
     const QString url = QStringLiteral("https://github.com/alsyundawy/NotepadNext-MacOS/raw/master/updates.json");
 
 #if defined(Q_OS_MACOS)
-    QSimpleUpdater::getInstance()->setPlatformKey(url, QStringLiteral("macos"));
+#  if defined(__aarch64__) || defined(_M_ARM64)
+    QSimpleUpdater::getInstance()->setPlatformKey(url, QStringLiteral("macos-arm64"));
+#  else
+    QSimpleUpdater::getInstance()->setPlatformKey(url, QStringLiteral("macos-x64"));
+#  endif
 #elif defined(_M_ARM64) || defined(__aarch64__)
     QSimpleUpdater::getInstance()->setPlatformKey(url, QStringLiteral("windows-arm64"));
 #endif
+
+    QSimpleUpdater::getInstance()->setNotifyOnUpdate(url, false);
+    QSimpleUpdater::getInstance()->setNotifyOnFinish(url, false);
     QSimpleUpdater::getInstance()->checkForUpdates(url);
 
     if (!silent) {
         connect(QSimpleUpdater::getInstance(), &QSimpleUpdater::checkingFinished, this, &MainWindow::checkForUpdatesFinished, Qt::UniqueConnection);
     }
     else {
-        disconnect(QSimpleUpdater::getInstance(), &QSimpleUpdater::checkingFinished, this, &MainWindow::checkForUpdatesFinished);
+        connect(QSimpleUpdater::getInstance(), &QSimpleUpdater::checkingFinished, this, [this](const QString &finishUrl) {
+            if (QSimpleUpdater::getInstance()->getUpdateAvailable(finishUrl)) {
+                checkForUpdatesFinished(finishUrl);
+            }
+        }, Qt::UniqueConnection);
     }
 
     app->getSettings()->setValue(QStringLiteral("App/LastUpdateCheck"), QDateTime::currentDateTime());
@@ -2797,9 +2813,15 @@ void MainWindow::checkForUpdates(bool silent)
 void MainWindow::checkForUpdatesFinished(const QString &url)
 {
 #if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
-    if (!QSimpleUpdater::getInstance()->getUpdateAvailable(url)) {
-        QMessageBox::information(this, QString(), tr("No updates are available at this time."));
-    }
+    const bool available = QSimpleUpdater::getInstance()->getUpdateAvailable(url);
+    const QString latestVer = QSimpleUpdater::getInstance()->getLatestVersion(url);
+    const QString currentVer = QStringLiteral("0.15-06");
+    const QString downloadUrl = QSimpleUpdater::getInstance()->getDownloadUrl(url);
+    const QString changelog = QSimpleUpdater::getInstance()->getChangelog(url);
+    const QString openUrl = QSimpleUpdater::getInstance()->getOpenUrl(url);
+
+    UpdateDialog dlg(available, latestVer, currentVer, downloadUrl, changelog, openUrl, this);
+    dlg.exec();
 #else
     Q_UNUSED(url);
 #endif

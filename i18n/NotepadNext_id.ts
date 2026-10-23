@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.1" language="id_ID" sourcelanguage="en">
   <context>
@@ -1896,7 +1896,139 @@
       <source>No updates are available at this time.</source>
       <translation>Tidak ada pembaruan yang tersedia saat ini.</translation>
     </message>
-  <message><source>&amp;Themes</source><translation>&amp;Tema</translation></message><message><source>Open Theme Switcher...</source><translation>Buka Pengalih Tema...</translation></message><message><source>Light Themes Only</source><translation>Tema Terang Saja</translation></message><message><source>Dark Themes Only</source><translation>Tema Gelap Saja</translation></message><message><source>Themes by Family</source><translation>Tema Berdasarkan Keluarga</translation></message><message><source>Reset to Default (Light Mode - NotepadNext)</source><translation>Atur Ulang ke Default (Mode Terang - NotepadNext)</translation></message><message><source>Default Dark Mode (Horizon Dark)</source><translation>Mode Gelap Default (Horizon Dark)</translation></message><message><source>Toggle Dark / Light Mode</source><translation>Alihkan Mode Gelap / Terang</translation></message><message><source>Theme applied: %1</source><translation>Tema diterapkan: %1</translation></message><message><source>Theme reset to default Light Mode (NotepadNext)</source><translation>Tema diatur ulang ke Mode Terang default (NotepadNext)</translation></message><message><source>Theme set to Dark Mode (Horizon Dark)</source><translation>Tema diatur ke Mode Gelap (Horizon Dark)</translation></message><message><source>Switched to Dark Mode</source><translation>Beralih ke Mode Gelap</translation></message><message><source>Switched to Light Mode</source><translation>Beralih ke Mode Terang</translation></message><message><source>XML Tools</source><translation>Alat XML</translation></message><message><source>Pretty Print XML</source><translation>Format Rapi XML</translation></message><message><source>JSON Tools</source><translation>Alat JSON</translation></message><message><source>Format JSON</source><translation>Format Rapi JSON</translation></message><message><source>Minify JSON</source><translation>Minifikasi JSON</translation></message><message><source>Convert Tabs to Spaces</source><translation>Konversi Tab ke Spasi</translation></message><message><source>Convert Spaces to Tabs</source><translation>Konversi Spasi ke Tab</translation></message><message><source>Paste Plain Text</source><translation>Tempel Teks Polos</translation></message><message><source>Print</source><translation>Cetak</translation></message><message><source>Preferences</source><translation>Preferensi...</translation></message><message><source>Exit</source><translation>Keluar</translation></message><message><source>Find and Replace</source><translation>Cari dan Ganti</translation></message><message><source>Find / Replace</source><translation>Cari dan Ganti</translation></message><message><source>File Format</source><translation>Format Berkas</translation></message><message><source>Emoji &amp; Symbols</source><translation>Emoji &amp; Simbol</translation></message><message><source>In &amp;selection</source><translation>Dalam &amp;pilihan</translation></message><message><source>Mark: %Ln match in selection</source><translation>Tandai: %Ln kecocokan dalam pilihan</translation></message><message><source>Mark: %Ln match in entire file</source><translation>Tandai: %Ln kecocokan di seluruh berkas</translation></message><message><source>1 occurrence was replaced</source><translation>1 kemunculan telah diganti</translation></message><message><source>Replaced %Ln matches</source><translation>Mengganti %Ln kecocokan</translation></message></context>
+    <message>
+      <source>&amp;Themes</source>
+      <translation>&amp;Tema</translation>
+    </message>
+    <message>
+      <source>Open Theme Switcher...</source>
+      <translation>Buka Pengalih Tema...</translation>
+    </message>
+    <message>
+      <source>Light Themes Only</source>
+      <translation>Tema Terang Saja</translation>
+    </message>
+    <message>
+      <source>Dark Themes Only</source>
+      <translation>Tema Gelap Saja</translation>
+    </message>
+    <message>
+      <source>Themes by Family</source>
+      <translation>Tema Berdasarkan Keluarga</translation>
+    </message>
+    <message>
+      <source>Reset to Default (Light Mode - NotepadNext)</source>
+      <translation>Atur Ulang ke Default (Mode Terang - NotepadNext)</translation>
+    </message>
+    <message>
+      <source>Default Dark Mode (Horizon Dark)</source>
+      <translation>Mode Gelap Default (Horizon Dark)</translation>
+    </message>
+    <message>
+      <source>Toggle Dark / Light Mode</source>
+      <translation>Alihkan Mode Gelap / Terang</translation>
+    </message>
+    <message>
+      <source>Theme applied: %1</source>
+      <translation>Tema diterapkan: %1</translation>
+    </message>
+    <message>
+      <source>Theme reset to default Light Mode (NotepadNext)</source>
+      <translation>Tema diatur ulang ke Mode Terang default (NotepadNext)</translation>
+    </message>
+    <message>
+      <source>Theme set to Dark Mode (Horizon Dark)</source>
+      <translation>Tema diatur ke Mode Gelap (Horizon Dark)</translation>
+    </message>
+    <message>
+      <source>Switched to Dark Mode</source>
+      <translation>Beralih ke Mode Gelap</translation>
+    </message>
+    <message>
+      <source>Switched to Light Mode</source>
+      <translation>Beralih ke Mode Terang</translation>
+    </message>
+    <message>
+      <source>XML Tools</source>
+      <translation>Alat XML</translation>
+    </message>
+    <message>
+      <source>Pretty Print XML</source>
+      <translation>Format Rapi XML</translation>
+    </message>
+    <message>
+      <source>JSON Tools</source>
+      <translation>Alat JSON</translation>
+    </message>
+    <message>
+      <source>Format JSON</source>
+      <translation>Format Rapi JSON</translation>
+    </message>
+    <message>
+      <source>Minify JSON</source>
+      <translation>Minifikasi JSON</translation>
+    </message>
+    <message>
+      <source>Convert Tabs to Spaces</source>
+      <translation>Konversi Tab ke Spasi</translation>
+    </message>
+    <message>
+      <source>Convert Spaces to Tabs</source>
+      <translation>Konversi Spasi ke Tab</translation>
+    </message>
+    <message>
+      <source>Paste Plain Text</source>
+      <translation>Tempel Teks Polos</translation>
+    </message>
+    <message>
+      <source>Print</source>
+      <translation>Cetak</translation>
+    </message>
+    <message>
+      <source>Preferences</source>
+      <translation>Preferensi...</translation>
+    </message>
+    <message>
+      <source>Exit</source>
+      <translation>Keluar</translation>
+    </message>
+    <message>
+      <source>Find and Replace</source>
+      <translation>Cari dan Ganti</translation>
+    </message>
+    <message>
+      <source>Find / Replace</source>
+      <translation>Cari dan Ganti</translation>
+    </message>
+    <message>
+      <source>File Format</source>
+      <translation>Format Berkas</translation>
+    </message>
+    <message>
+      <source>Emoji &amp; Symbols</source>
+      <translation>Emoji &amp; Simbol</translation>
+    </message>
+    <message>
+      <source>In &amp;selection</source>
+      <translation>Dalam &amp;pilihan</translation>
+    </message>
+    <message>
+      <source>Mark: %Ln match in selection</source>
+      <translation>Tandai: %Ln kecocokan dalam pilihan</translation>
+    </message>
+    <message>
+      <source>Mark: %Ln match in entire file</source>
+      <translation>Tandai: %Ln kecocokan di seluruh berkas</translation>
+    </message>
+    <message>
+      <source>1 occurrence was replaced</source>
+      <translation>1 kemunculan telah diganti</translation>
+    </message>
+    <message>
+      <source>Replaced %Ln matches</source>
+      <translation>Mengganti %Ln kecocokan</translation>
+    </message>
+  </context>
   <context>
     <name>PreferencesDialog</name>
     <message>
@@ -2164,6 +2296,109 @@
       <location filename="../src/widgets/TabsQuickActionsBar.cpp" line="49" />
       <source>Close the current file</source>
       <translation>Tutup file saat ini</translation>
+    </message>
+  </context>
+  <context>
+    <name>UpdateDialog</name>
+    <message>
+      <source>Software Update</source>
+      <translation>Pembaruan Perangkat Lunak</translation>
+    </message>
+    <message>
+      <source>🚀 Update Available</source>
+      <translation>🚀 Pembaruan Tersedia</translation>
+    </message>
+    <message>
+      <source>Notepad Next %1 is Available</source>
+      <translation>Notepad Next %1 Telah Tersedia</translation>
+    </message>
+    <message>
+      <source>A newer version is ready with improvements and fixes.</source>
+      <translation>Versi yang lebih baru siap diunduh dengan berbagai penyempurnaan dan perbaikan.</translation>
+    </message>
+    <message>
+      <source>Installed Version:</source>
+      <translation>Versi Terpasang:</translation>
+    </message>
+    <message>
+      <source>Latest Version:</source>
+      <translation>Versi Terbaru:</translation>
+    </message>
+    <message>
+      <source>Target Architecture:</source>
+      <translation>Arsitektur Target:</translation>
+    </message>
+    <message>
+      <source>Check Timestamp:</source>
+      <translation>Waktu Pemeriksaan:</translation>
+    </message>
+    <message>
+      <source>ℹ Check Offline</source>
+      <translation>ℹ Pemeriksaan Offline</translation>
+    </message>
+    <message>
+      <source>Unable to Reach Update Server</source>
+      <translation>Tidak Dapat Menghubungi Server Pembaruan</translation>
+    </message>
+    <message>
+      <source>Could not verify the latest version definition. Check your connection or visit GitHub.</source>
+      <translation>Tidak dapat memverifikasi definisi versi terbaru. Periksa koneksi Anda atau kunjungi GitHub.</translation>
+    </message>
+    <message>
+      <source>System Architecture:</source>
+      <translation>Arsitektur Sistem:</translation>
+    </message>
+    <message>
+      <source>Status:</source>
+      <translation>Status:</translation>
+    </message>
+    <message>
+      <source>Network unreachable or server offline</source>
+      <translation>Jaringan tidak terjangkau atau server offline</translation>
+    </message>
+    <message>
+      <source>✓ Up to Date</source>
+      <translation>✓ Sudah Terbaru</translation>
+    </message>
+    <message>
+      <source>You're Running the Latest Release!</source>
+      <translation>Anda Menggunakan Rilis Terbaru!</translation>
+    </message>
+    <message>
+      <source>Notepad Next is completely up to date with full macOS optimization.</source>
+      <translation>Notepad Next sudah sepenuhnya menggunakan versi terbaru dengan optimasi penuh untuk macOS.</translation>
+    </message>
+    <message>
+      <source>Current Version:</source>
+      <translation>Versi Saat Ini:</translation>
+    </message>
+    <message>
+      <source>Release Channel:</source>
+      <translation>Saluran Rilis:</translation>
+    </message>
+    <message>
+      <source>Official GitHub Stable (0.15-06)</source>
+      <translation>Rilis Stabil Resmi GitHub (0.15-06)</translation>
+    </message>
+    <message>
+      <source>Last Checked:</source>
+      <translation>Terakhir Diperiksa:</translation>
+    </message>
+    <message>
+      <source>Release Notes</source>
+      <translation>Catatan Rilis</translation>
+    </message>
+    <message>
+      <source>Remind Me Later</source>
+      <translation>Ingatkan Nanti</translation>
+    </message>
+    <message>
+      <source>Download Update</source>
+      <translation>Unduh Pembaruan</translation>
+    </message>
+    <message>
+      <source>OK</source>
+      <translation>OK</translation>
     </message>
   </context>
 </TS>
