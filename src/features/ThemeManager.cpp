@@ -51,7 +51,7 @@ ThemeManager::ThemeManager(QObject *parent) : QObject(parent) {
     }
 }
 
-ThemeManager::~ThemeManager() {}
+ThemeManager::~ThemeManager() = default;
 
 void ThemeManager::initialize(ApplicationSettings *settings) {
     m_settings = settings;
@@ -361,7 +361,7 @@ void ThemeManager::applyThemeToEditor(ScintillaNext *editor) {
     // 17: User literal / Doc keyword
     editor->styleSetFore(17, scFromRgb(sub.rgb()));
 
-    // 18: Task marker (TODO, FIXME, NOTE)
+    // 18: Task marker tokens (e.g. to-do, fix-me, note tags)
     editor->styleSetFore(18, scFromRgb(net.rgb()));
     editor->styleSetBold(18, true);
 

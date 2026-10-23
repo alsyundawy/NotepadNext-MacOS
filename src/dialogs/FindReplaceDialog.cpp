@@ -41,7 +41,7 @@ static void convertToExtended(QString &str)
     str.replace("\\n", "\n");
     str.replace("\\t", "\t");
     str.replace("\\0", "\0");
-    str.replace("\\\\", "\\");
+    str.replace(R"(\\)", "\\");
     // TODO: more
 }
 
@@ -219,7 +219,7 @@ bool FindReplaceDialog::event(QEvent *e)
     return QDialog::event(e);
 }
 
-void FindReplaceDialog::showEvent(QShowEvent *showEv)
+void FindReplaceDialog::showEvent(QShowEvent *event)
 {
     qInfo(Q_FUNC_INFO);
 
@@ -230,14 +230,14 @@ void FindReplaceDialog::showEvent(QShowEvent *showEv)
 
     updateInSelectionCheckbox();
 
-    QDialog::showEvent(showEv);
+    QDialog::showEvent(event);
 }
 
-void FindReplaceDialog::closeEvent(QCloseEvent *closeEv)
+void FindReplaceDialog::closeEvent(QCloseEvent *event)
 {
     saveSettings();
 
-    QDialog::closeEvent(closeEv);
+    QDialog::closeEvent(event);
 }
 
 static void updateComboList(QComboBox *comboBox, const QString &text)
@@ -900,7 +900,7 @@ void FindReplaceDialog::copyMarkedText()
 
     while (pos < len) {
         if (editor->indicatorValueAt(markIndicator, pos)) {
-            const int end = static_cast<int>(editor->indicatorEnd(markIndicator, pos));
+            const auto end = static_cast<int>(editor->indicatorEnd(markIndicator, pos));
             markedTexts << QString::fromUtf8(editor->get_text_range(pos, end));
             pos = end;
         } else {

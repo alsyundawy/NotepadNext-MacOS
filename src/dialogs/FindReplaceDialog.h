@@ -67,8 +67,8 @@ public:
 
 protected:
     bool event(QEvent *e) override;
-    void showEvent(QShowEvent *e) override;
-    void closeEvent(QCloseEvent *e) override;
+    void showEvent(QShowEvent *event) override;
+    void closeEvent(QCloseEvent *event) override;
 
 signals:
     void windowActivated();

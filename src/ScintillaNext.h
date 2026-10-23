@@ -31,7 +31,7 @@
 
 
 
-class ScintillaNext : public ScintillaEdit
+class ScintillaNext : public ScintillaEdit // NOSONAR
 {
     Q_OBJECT
 
@@ -135,7 +135,7 @@ public:
     QString languageName;
     QByteArray languageSingleLineComment;
 
-    #include "ScintillaEnums.h"
+    #include "ScintillaEnums.h" // NOSONAR
 
 
 public slots:

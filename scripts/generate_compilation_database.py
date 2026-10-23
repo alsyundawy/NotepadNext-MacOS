@@ -23,9 +23,18 @@ def main():
         str(root / "src" / "utils"),
         str(root / "src" / "widgets"),
         str(root / "thirdparty" / "scintilla" / "include"),
+        str(root / "thirdparty" / "scintilla" / "src"),
+        str(root / "thirdparty" / "scintilla" / "qt" / "ScintillaEdit"),
+        str(root / "thirdparty" / "scintilla" / "qt" / "ScintillaEditBase"),
         str(root / "thirdparty" / "lexilla" / "include"),
         str(root / "thirdparty" / "lua" / "src"),
         str(root / "thirdparty" / "uchardet" / "src"),
+        str(root / ".deps" / "generated"),
+        str(root / ".deps" / "qt_shims"),
+        str(root / ".deps" / "ads" / "src"),
+        str(root / ".deps" / "SingleApplication"),
+        str(root / ".deps" / "QSimpleUpdater" / "include"),
+        str(root / ".deps" / "editorconfig-core-qt" / "src"),
     ]
 
     base_defines = [

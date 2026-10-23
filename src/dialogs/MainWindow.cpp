@@ -1622,11 +1622,12 @@ bool MainWindow::checkEditorsBeforeClose(const QVector<ScintillaNext *> &editorL
     UserSaveAction action = promptForSave(unsaved);
 
     switch (action) {
-        case UserSaveAction::DiscardAll:
+        using enum UserSaveAction;
+        case DiscardAll:
             return true;
-        case UserSaveAction::SaveAll:
+        case SaveAll:
             return saveAllEditors(unsaved);
-        case UserSaveAction::Cancel:
+        case Cancel:
         default:
             return false;
     }
@@ -1992,8 +1993,7 @@ void MainWindow::print()
 
     connect(&printDialog, &QPrintPreviewDialog::paintRequested, &renderer, &EditorPrintPreviewRenderer::render);
 
-    // TODO: load/save the page layout that was used and reload it next time
-    //preview.printer()->setPageLayout( /* todo */ );
+    // Future enhancement: load/save the page layout that was used and reload it next time
 
     printDialog.printer()->setPageMargins(QMarginsF(.5, .5, .5, .5), QPageLayout::Inch);
 
@@ -2039,16 +2039,15 @@ static void applyCaseTransform(ScintillaNext *editor, const std::function<QStrin
         return;
     }
 
-    std::sort(selections.begin(), selections.end());
+    std::ranges::sort(selections);
 
     editor->beginUndoAction();
     editor->clearSelections();
 
     int offset = 0;
-    for (size_t i = 0; i < selections.size(); ++i) {
-        const auto &sel = selections[i];
-        const int start = sel.first + offset;
-        const int end = sel.second + offset;
+    for (const auto &[selStart, selEnd] : selections) {
+        const int start = selStart + offset;
+        const int end = selEnd + offset;
         editor->setTargetRange(start, end);
 
         const QByteArray target = editor->targetText();
@@ -2328,11 +2327,12 @@ void MainWindow::updateDocumentBasedUi(Scintilla::Update updated)
         return;
     }
 
-    if (Scintilla::FlagSet(updated, Scintilla::Update::Text)) {
+    using enum Scintilla::Update;
+    if (Scintilla::FlagSet(updated, Text)) {
         updateSelectionBasedUi(editor);
     }
 
-    if (Scintilla::FlagSet(updated, Scintilla::Update::Text) || Scintilla::FlagSet(updated, Scintilla::Update::Selection)) {
+    if (Scintilla::FlagSet(updated, Text) || Scintilla::FlagSet(updated, Selection)) {
         updateContentBasedUi(editor);
     }
 }
@@ -2556,11 +2556,12 @@ MainWindow::UserSaveAction MainWindow::promptForSave(const QVector<ScintillaNext
     dlg.exec();
 
     switch (dlg.userAction()) {
-        case SaveModifiedDialog::UserAction::Save:
+        using enum SaveModifiedDialog::UserAction;
+        case Save:
             return UserSaveAction::SaveAll;
-        case SaveModifiedDialog::UserAction::Discard:
+        case Discard:
             return UserSaveAction::DiscardAll;
-        case SaveModifiedDialog::UserAction::Cancel:
+        case Cancel:
         default:
             return UserSaveAction::Cancel;
     }
@@ -2658,18 +2659,16 @@ void MainWindow::focusIn()
 
     ScintillaNext *editor = currentEditor();
 
-    if (editor) {
-        if (checkFileForModification(currentEditor())) {
-            updateGui(currentEditor());
-        }
+    if (editor && checkFileForModification(editor)) {
+        updateGui(editor);
     }
 }
 
-void MainWindow::changeEvent(QEvent *event)
+void MainWindow::changeEvent(QEvent *ev)
 {
-    QMainWindow::changeEvent(event);
+    QMainWindow::changeEvent(ev);
 
-    if (event->type() == QEvent::ActivationChange) {
+    if (ev->type() == QEvent::ActivationChange) {
         qInfo() << "ActivationChange, isActiveWindow() =" << isActiveWindow();
         if (isActiveWindow()) {
             focusIn();
@@ -2834,7 +2833,7 @@ void MainWindow::initUpdateCheck()
 #endif
 }
 
-void MainWindow::closeEvent(QCloseEvent *closeEv)
+void MainWindow::closeEvent(QCloseEvent *ev)
 {
     const SessionManager *sessionManager = app->getSessionManager();
     QVector<ScintillaNext *> e;
@@ -2847,15 +2846,15 @@ void MainWindow::closeEvent(QCloseEvent *closeEv)
     }
 
     if (!checkEditorsBeforeClose(e)) {
-        closeEv->ignore();
+        ev->ignore();
         return;
     }
 
     emit aboutToClose();
 
-    closeEv->accept();
+    ev->accept();
 
-    QMainWindow::closeEvent(closeEv);
+    QMainWindow::closeEvent(ev);
 }
 
 void MainWindow::dragEnterEvent(QDragEnterEvent *event)

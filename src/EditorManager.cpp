@@ -178,7 +178,7 @@ EditorManager::EditorManager(ApplicationSettings *settings, QObject *parent)
 
 ScintillaNext *EditorManager::createEditor(const QString &name)
 {
-    ScintillaNext *editor = new ScintillaNext(name);
+    auto *editor = new ScintillaNext(name);
 
     manageEditor(editor);
 
@@ -532,8 +532,8 @@ int EditorManager::detectEOLMode(ScintillaNext *editor) const
             if (chNext == '\n') crlf++;
             else cr++;
         }
-        else if (ch == '\n') {
-            if (chPrev != '\r') lf++;
+        else if (ch == '\n' && chPrev != '\r') {
+            lf++;
         }
 
         chPrev = ch;
