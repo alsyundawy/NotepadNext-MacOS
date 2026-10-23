@@ -207,7 +207,7 @@ jobs:
             echo "Looking for canonical release dir: ${dir}"
             if [ -d "${dir}" ]; then
               found_any=false
-              for dmg_file in $(find "${dir}" -maxdepth 1 -name 'NotepadNext-*.dmg'); do
+              for dmg_file in "${dir}"/NotepadNext-*.dmg; do
                 if [ -f "${dmg_file}" ]; then
                   echo "Uploading ${dmg_file} → release ${RELEASE_TAG}"
                   gh release upload "${RELEASE_TAG}" "${dmg_file}" --clobber

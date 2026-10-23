@@ -2050,6 +2050,7 @@ static void applyCaseTransform(ScintillaNext *editor, const std::function<QStrin
     editor->clearSelections();
 
     int offset = 0;
+    bool isFirst = true;
     for (const auto &[selStart, selEnd] : selections) {
         const int start = selStart + offset;
         const int end = selEnd + offset;
@@ -2063,8 +2064,9 @@ static void applyCaseTransform(ScintillaNext *editor, const std::function<QStrin
         editor->replaceTarget(transBytes.length(), transBytes.constData());
 
         const int newEnd = start + transBytes.length();
-        if (i == 0) {
+        if (isFirst) {
             editor->setSelection(newEnd, start);
+            isFirst = false;
         } else {
             editor->addSelection(newEnd, start);
         }
