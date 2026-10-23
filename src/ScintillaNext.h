@@ -169,9 +169,9 @@ signals:
     void reloaded();
 
 protected:
-    void keyPressEvent(QKeyEvent *event) override;
-    void dragEnterEvent(QDragEnterEvent *dragEvent) override;
-    void dropEvent(QDropEvent *dropEvent) override;
+    void keyPressEvent(QKeyEvent *keyEv) override;
+    void dragEnterEvent(QDragEnterEvent *dragEv) override;
+    void dropEvent(QDropEvent *dropEv) override;
 
 private:
     QString name;

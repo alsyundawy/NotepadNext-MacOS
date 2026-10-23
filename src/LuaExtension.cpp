@@ -35,9 +35,8 @@
 
 IFaceTableMixer ifacemixer;
 
-// From lua.c
-#define EOFMARK         "<eof>"
-#define marklen         (sizeof(EOFMARK)/sizeof(char) - 1)
+constexpr const char *EOFMARK = "<eof>";
+constexpr size_t marklen = sizeof("<eof>") - 1;
 
 #if !defined(LUA_QL)
 #define LUA_QL(x) "'" x "'"
@@ -46,7 +45,7 @@ IFaceTableMixer ifacemixer;
 static bool call_function(lua_State *L, int nargs, bool ignoreFunctionReturnValue);
 
 // Helper function from SciTE
-[[maybe_unused]] static int Substitute(std::string &s, const std::string &sFind, const std::string &sReplace) {
+[[maybe_unused]] static int Substitute(std::string &s, std::string_view sFind, std::string_view sReplace) {
     int c = 0;
     size_t lenFind = sFind.size();
     size_t lenReplace = sReplace.size();
@@ -86,12 +85,12 @@ static bool call_function(lua_State *L, int nargs, bool ignoreFunctionReturnValu
 // the normal SciTE convention.  There is some grey area of course,
 // and for these I just make a judgement call
 
-static ScintillaEdit *editor;
-static lua_State *luaState = 0;
+static ScintillaEdit *editor = nullptr;
+static lua_State *luaState = nullptr;
 static bool luaDisabled = false;
 static bool tracebackEnabled = true;
 
-typedef int NppExtensionAPIPane;
+using NppExtensionAPIPane = int;
 void hostTrace(const char *s)
 {
     qInfo("%s", s);
@@ -106,7 +105,7 @@ static NppExtensionAPIPane check_pane_object(lua_State *L, int index);
 static void push_pane_object(lua_State *L, NppExtensionAPIPane p);
 static int iface_function_helper(lua_State *L, const IFaceFunction &func);
 
-inline void raise_error(lua_State *L, const char *errMsg=NULL) {
+inline void raise_error(lua_State *L, const char *errMsg = nullptr) {
     luaL_where(L, 1);
     if (errMsg) {
         lua_pushstring(L, errMsg);
@@ -138,7 +137,7 @@ inline int absolute_index(lua_State *L, int index) {
     IFaceFunction propfunc;
     int paneIndex = lua_upvalueindex(1);
     check_pane_object(L, paneIndex);
-    int message = (int)luaL_checkinteger(L, 1);
+    const auto message = static_cast<int>(luaL_checkinteger(L, 1));
 
     lua_pushvalue(L, paneIndex);
     lua_replace(L, 1);
@@ -321,8 +320,9 @@ static int iface_function_helper(lua_State *L, const IFaceFunction &func) {
 
     sptr_t params[2] = {0,0};
 
-    char *stringResult = 0;
-    enum stringResultType { none, string, tstring } needStringResult = none;
+    char *stringResult = nullptr;
+    enum class StringResultType { none, string, tstring };
+    StringResultType needStringResult = StringResultType::none;
     int loopParamCount = 2;
 
     if (func.paramType[0] == iface_length && func.paramType[1] == iface_string) {
@@ -330,7 +330,7 @@ static int iface_function_helper(lua_State *L, const IFaceFunction &func) {
         params[1] = reinterpret_cast<sptr_t>(params[0] ? lua_tostring(L, arg) : "");
         loopParamCount = 0;
     } else if ((func.paramType[1] == iface_stringresult) || (func.returnType == iface_stringresult)) {
-        needStringResult = string;
+        needStringResult = StringResultType::string;
         // The buffer will be allocated later, so it won't leak if Lua does
         // a longjmp in response to a bad arg.
         if (func.paramType[0] == iface_length) {
@@ -361,7 +361,7 @@ static int iface_function_helper(lua_State *L, const IFaceFunction &func) {
         }
     }
 
-    if (needStringResult != none) {
+    if (needStringResult != StringResultType::none) {
         sptr_t stringResultLen;
         if (needStringResult == string) {
             stringResultLen = editor->send(func.value, params[0], 0);
@@ -480,8 +480,7 @@ static int cf_pane_iface_function(lua_State *L) {
 }
 
 static int push_iface_function(lua_State *L, const char *name, const IFaceTableInterface *iface) {
-    auto func = iface->FindFunction(name);
-    if (func != nullptr) {
+    if (auto func = iface->FindFunction(name); func != nullptr) {
         if (IFaceFunctionIsScriptable(*func)) {
             lua_pushlightuserdata(L, const_cast<void *>(static_cast<const void *>(func)));
             lua_pushcclosure(L, cf_pane_iface_function, 1);
@@ -674,7 +673,7 @@ static int cf_global_metatable_index(lua_State *L) {
 static int LuaPanicFunction(lua_State *L) {
     if (L == luaState) {
         lua_close(luaState);
-        luaState = NULL;
+        luaState = nullptr;
         luaDisabled = true;
     }
     hostTraceError("\nError occurred in unprotected call.  This is very bad.\n");
@@ -725,8 +724,8 @@ static bool InitGlobalScope() {
 }
 
 
-LuaExtension::LuaExtension() {}
-LuaExtension::~LuaExtension() {}
+LuaExtension::LuaExtension() = default;
+LuaExtension::~LuaExtension() = default;
 
 LuaExtension &LuaExtension::Instance() {
     static LuaExtension singleton;
@@ -753,8 +752,8 @@ bool LuaExtension::Finalise() {
         lua_close(luaState);
     }
 
-    luaState = NULL;
-    editor = NULL;
+    luaState = nullptr;
+    editor = nullptr;
 
     return false;
 }

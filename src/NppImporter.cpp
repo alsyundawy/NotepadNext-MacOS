@@ -24,9 +24,9 @@
 #include "NppImporter.h"
 #include "SciLexer.h"
 
-#define FONTSTYLE_BOLD 1
-#define FONTSTYLE_ITALIC 2
-#define FONTSTYLE_UNDERLINE 4
+constexpr int FONTSTYLE_BOLD = 1;
+constexpr int FONTSTYLE_ITALIC = 2;
+constexpr int FONTSTYLE_UNDERLINE = 4;
 
 static inline int color(int c) {
     return (c & 0xFF0000) >> 16 | (c & 0x00FF00) | (c & 0x0000FF) << 16;
@@ -49,7 +49,7 @@ static int keywordClassToIndex(const QStringView keywordClass)
     if (keywordClass == QStringLiteral("type3")) return LANG_INDEX_TYPE3;
     if (keywordClass == QStringLiteral("type4")) return LANG_INDEX_TYPE4;
     if (keywordClass == QStringLiteral("type5")) return LANG_INDEX_TYPE5;
-    return -1; // TODO: not sure what is best
+    return -1; // Unrecognized keyword class
 }
 struct LanguageName {
     QString shortName;
@@ -74,7 +74,6 @@ static const QMap<QString, LanguageName> langNamesToLexer = {
     {TEXT("batch"),			{TEXT("Batch"),				TEXT("Batch file"),										SCLEX_BATCH}},
     {TEXT("ini"),			{TEXT("ini"),				TEXT("MS ini file"),									SCLEX_PROPERTIES}},
     {TEXT("nfo"),			{TEXT("NFO"),				TEXT("MSDOS Style/ASCII Art"),							SCLEX_NULL}},
-    //{TEXT("udf"),			{TEXT("udf"),				TEXT("User Define File"),								SCLEX_USER}},
     {TEXT("asp"),			{TEXT("ASP"),				TEXT("Active Server Pages script file"),				SCLEX_HTML}},
     {TEXT("sql"),			{TEXT("SQL"),				TEXT("Structured Query Language file"),					SCLEX_SQL}},
     {TEXT("vb"),			{TEXT("Visual Basic"),		TEXT("Visual Basic file"),								SCLEX_VB}},
@@ -106,7 +105,6 @@ static const QMap<QString, LanguageName> langNamesToLexer = {
     {TEXT("matlab"),		{TEXT("MATLAB"),				TEXT("MATrix LABoratory"),							SCLEX_MATLAB}},
     {TEXT("haskell"),		{TEXT("Haskell"),			TEXT("Haskell"),										SCLEX_HASKELL}},
     {TEXT("inno"),			{TEXT("Inno Setup"),			TEXT("Inno Setup script"),							SCLEX_INNOSETUP}},
-    //{TEXT("searchResult"),	{TEXT("Internal Search"),	TEXT("Internal Search"),								SCLEX_SEARCHRESULT}},
     {TEXT("cmake"),			{TEXT("CMake"),				TEXT("CMake file"),										SCLEX_CMAKE}},
     {TEXT("yaml"),			{TEXT("YAML"),				TEXT("YAML Ain't Markup Language"),						SCLEX_YAML}},
     {TEXT("cobol"),			{TEXT("COBOL"),				TEXT("COmmon Business Oriented Language"),				SCLEX_COBOL}},
@@ -201,8 +199,6 @@ void NppImporter::readLangsModel(const QString &filePath)
         xml.readNextStartElement();
         while (xml.readNextStartElement()) {
             if (xml.name() == QStringLiteral("Languages")) {
-                //qInfo(qUtf8Printable(xml.name().toString()));
-
                 while (xml.readNextStartElement()) {
                     auto langAttrs = xml.attributes();
                     if (!langNamesToLexer.contains(langAttrs.value("name").toString())) {
@@ -216,14 +212,11 @@ void NppImporter::readLangsModel(const QString &filePath)
                     language.shortName = langNamesToLexer[language.name].shortName;
                     language.longDescription = langNamesToLexer[language.name].longName;
                     language.lexer_id = langNamesToLexer[language.name].lexer_id;
-                    // TODO: read more
+                    // Read keyword class element definitions
                     while (xml.readNextStartElement()) {
-                        //qInfo(qUtf8Printable(language.name));
                         auto childAttrs = xml.attributes();
                         auto t = xml.readElementText();
-                        //qInfo(qUtf8Printable(t));
                         language.keywords[keywordClassToIndex(childAttrs.value("name"))] = t;
-                        //xml.skipCurrentElement();
                     }
                     languages.insert(language.name, language);
                 }
@@ -299,7 +292,6 @@ void NppImporter::readLexerStyles(QXmlStreamReader &xml)
         LexerType *lexer = &languages[lexerAttrs.value("name").toString()].lexer;
         lexer->description = lexerAttrs.value("desc").toString();
         while (xml.readNextStartElement()) {
-            //qInfo(qUtf8Printable(xml.name().toString()));
             auto styleAttrs = xml.attributes();
             LexerStyle style;
             style.id = styleAttrs.value("styleID").toInt();
@@ -324,9 +316,6 @@ void NppImporter::readGlobalStyles(QXmlStreamReader &xml)
     editor->styleClearAll();
 
     while (xml.readNextStartElement()) {
-        //qInfo(qUtf8Printable(xml.tokenString()));
-        //qInfo(qUtf8Printable(xml.attributes().value("name").toString()));
-
         auto attrs = xml.attributes();
         int styleID = attrs.value("styleID").toInt();
         if (styleID >= 32 && styleID <= 39) {
@@ -382,9 +371,6 @@ void NppImporter::readGlobalStyles(QXmlStreamReader &xml)
         else if (attrs.value("name") == QStringLiteral("Fold margin")) {
             editor->setFoldMarginColour(true, color(attrs.value("fgColor").toInt(nullptr, 16)));
             editor->setFoldMarginHiColour(true, color(attrs.value("bgColor").toInt(nullptr, 16)));
-        }
-        else {
-            //qWarning("Unhandled WidgetStyle \"%s\"", qUtf8Printable(xml.attributes().value("name").toString()));
         }
         xml.skipCurrentElement();
     }

@@ -152,10 +152,10 @@ signals:
     void fileDialogAccepted(const QString &filePath);
 
 protected:
-    void closeEvent(QCloseEvent *ev) override;
+    void closeEvent(QCloseEvent *closeEvent) override;
     void dragEnterEvent(QDragEnterEvent *event) override;
     void dropEvent(QDropEvent *event) override;
-    void changeEvent(QEvent *ev) override;
+    void changeEvent(QEvent *changeEvent) override;
 
 private slots:
     void tabBarRightClicked(ScintillaNext *editor);

@@ -43,29 +43,32 @@ inline const QByteArray BOM_UTF16BE = QByteArray::fromHex("FEFF");
 
 ScintillaNext::BomType detectBom(const QByteArray& data)
 {
-    if (data.startsWith(BOM_UTF8))    return ScintillaNext::BomType::Utf8;
-    if (data.startsWith(BOM_UTF16LE)) return ScintillaNext::BomType::Utf16LE;
-    if (data.startsWith(BOM_UTF16BE)) return ScintillaNext::BomType::Utf16BE;
+    using enum ScintillaNext::BomType;
+    if (data.startsWith(BOM_UTF8))    return Utf8;
+    if (data.startsWith(BOM_UTF16LE)) return Utf16LE;
+    if (data.startsWith(BOM_UTF16BE)) return Utf16BE;
 
-    return ScintillaNext::BomType::None;
+    return None;
 }
 
 QByteArray bomData(ScintillaNext::BomType bom)
 {
+    using enum ScintillaNext::BomType;
     switch (bom) {
-    case ScintillaNext::BomType::Utf8:    return BOM_UTF8;
-    case ScintillaNext::BomType::Utf16LE: return BOM_UTF16LE;
-    case ScintillaNext::BomType::Utf16BE: return BOM_UTF16BE;
-    case ScintillaNext::BomType::None:    return QByteArray();
+    case Utf8:    return BOM_UTF8;
+    case Utf16LE: return BOM_UTF16LE;
+    case Utf16BE: return BOM_UTF16BE;
+    case None:    return QByteArray();
     }
     return QByteArray();
 }
 
 int bomLength(ScintillaNext::BomType bom)
 {
-    if (bom == ScintillaNext::BomType::Utf8) return BOM_UTF8.length();
-    else if (bom == ScintillaNext::BomType::Utf16LE) return BOM_UTF16LE.length();
-    else if (bom == ScintillaNext::BomType::Utf16BE) return BOM_UTF16BE.length();
+    using enum ScintillaNext::BomType;
+    if (bom == Utf8) return BOM_UTF8.length();
+    else if (bom == Utf16LE) return BOM_UTF16LE.length();
+    else if (bom == Utf16BE) return BOM_UTF16BE.length();
 
     return 0;
 }
@@ -123,14 +126,12 @@ ScintillaNext::ScintillaNext(QString name, QWidget *parent) :
     indicatorResources.disableRange(INDICATOR_HISTORY_REVERTED_TO_ORIGIN_INSERTION, INDICATOR_HISTORY_REVERTED_TO_MODIFIED_DELETION);
 }
 
-ScintillaNext::~ScintillaNext()
-{
-}
+ScintillaNext::~ScintillaNext() = default;
 
 ScintillaNext *ScintillaNext::fromFile(const QString &filePath, bool tryToCreate)
 {
     QFile file(filePath);
-    ScintillaNext *editor = new ScintillaNext(file.fileName());
+    auto *editor = new ScintillaNext(file.fileName());
 
     if(tryToCreate && !file.exists()) {
         qInfo("Trying to create %s", qUtf8Printable(filePath));
@@ -709,16 +710,16 @@ void ScintillaNext::convertSpacesToTabs()
     replaceTarget(newBytes.length(), newBytes.constData());
 }
 
-void ScintillaNext::keyPressEvent(QKeyEvent *event)
+void ScintillaNext::keyPressEvent(QKeyEvent *keyEv)
 {
-    if (!event) return;
+    if (!keyEv) return;
 
-    const int key = event->key();
-    const Qt::KeyboardModifiers mods = event->modifiers();
+    const int key = keyEv->key();
+    const Qt::KeyboardModifiers mods = keyEv->modifiers();
 
     if ((key == Qt::Key_Backspace || key == Qt::Key_Delete) && (mods == Qt::NoModifier || mods == Qt::KeypadModifier)) {
         if (!selectionEmpty()) {
-            ScintillaEdit::keyPressEvent(event);
+            ScintillaEdit::keyPressEvent(keyEv);
             return;
         }
 
@@ -728,7 +729,7 @@ void ScintillaNext::keyPressEvent(QKeyEvent *event)
         const Sci_Position lineEnd = lineEndPosition(line);
 
         if (key == Qt::Key_Backspace && pos > lineStart) {
-            const int lenInLine = static_cast<int>(pos - lineStart);
+            const auto lenInLine = static_cast<int>(pos - lineStart);
             QByteArray bytes(lenInLine, '\0');
             Sci_TextRange tr{{static_cast<Sci_PositionCR>(lineStart), static_cast<Sci_PositionCR>(pos)}, bytes.data()};
             send(SCI_GETTEXTRANGE, 0, reinterpret_cast<sptr_t>(&tr));
@@ -741,12 +742,12 @@ void ScintillaNext::keyPressEvent(QKeyEvent *event)
                 const int clusterByteLen = lineStr.mid(prevUtf16).toUtf8().length();
                 if (clusterByteLen > 1) {
                     deleteRange(pos - clusterByteLen, clusterByteLen);
-                    event->accept();
+                    keyEv->accept();
                     return;
                 }
             }
         } else if (key == Qt::Key_Delete && pos < lineEnd) {
-            const int lenToLineEnd = static_cast<int>(lineEnd - pos);
+            const auto lenToLineEnd = static_cast<int>(lineEnd - pos);
             QByteArray bytes(lenToLineEnd, '\0');
             Sci_TextRange tr{{static_cast<Sci_PositionCR>(pos), static_cast<Sci_PositionCR>(lineEnd)}, bytes.data()};
             send(SCI_GETTEXTRANGE, 0, reinterpret_cast<sptr_t>(&tr));
@@ -759,34 +760,34 @@ void ScintillaNext::keyPressEvent(QKeyEvent *event)
                 const int clusterByteLen = lineStr.left(nextUtf16).toUtf8().length();
                 if (clusterByteLen > 1) {
                     deleteRange(pos, clusterByteLen);
-                    event->accept();
+                    keyEv->accept();
                     return;
                 }
             }
         }
     }
 
-    ScintillaEdit::keyPressEvent(event);
+    ScintillaEdit::keyPressEvent(keyEv);
 }
 
-void ScintillaNext::dragEnterEvent(QDragEnterEvent *dragEvent)
+void ScintillaNext::dragEnterEvent(QDragEnterEvent *dragEv)
 {
     // Ignore all drag and drop events with urls and let the main application handle it
-    if (dragEvent->mimeData()->hasUrls()) {
+    if (dragEv->mimeData()->hasUrls()) {
         return;
     }
 
-    ScintillaEdit::dragEnterEvent(dragEvent);
+    ScintillaEdit::dragEnterEvent(dragEv);
 }
 
-void ScintillaNext::dropEvent(QDropEvent *dropEvent)
+void ScintillaNext::dropEvent(QDropEvent *dropEv)
 {
     // Ignore all drag and drop events with urls and let the main application handle it
-    if (dropEvent->mimeData()->hasUrls()) {
+    if (dropEv->mimeData()->hasUrls()) {
         return;
     }
 
-    ScintillaEdit::dropEvent(dropEvent);
+    ScintillaEdit::dropEvent(dropEv);
 }
 
 bool ScintillaNext::readFromDisk(QFile &file, const QString &forcedEncoding)

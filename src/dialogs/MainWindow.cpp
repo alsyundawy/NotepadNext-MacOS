@@ -2664,11 +2664,11 @@ void MainWindow::focusIn()
     }
 }
 
-void MainWindow::changeEvent(QEvent *ev)
+void MainWindow::changeEvent(QEvent *changeEvent)
 {
-    QMainWindow::changeEvent(ev);
+    QMainWindow::changeEvent(changeEvent);
 
-    if (ev->type() == QEvent::ActivationChange) {
+    if (changeEvent->type() == QEvent::ActivationChange) {
         qInfo() << "ActivationChange, isActiveWindow() =" << isActiveWindow();
         if (isActiveWindow()) {
             focusIn();
@@ -2833,28 +2833,28 @@ void MainWindow::initUpdateCheck()
 #endif
 }
 
-void MainWindow::closeEvent(QCloseEvent *ev)
+void MainWindow::closeEvent(QCloseEvent *closeEvent)
 {
     const SessionManager *sessionManager = app->getSessionManager();
-    QVector<ScintillaNext *> e;
+    QVector<ScintillaNext *> unsavedEditors;
 
     // Check all editors to see if the session manager will not handle it
     for (auto editor : editors()) {
         if (!sessionManager->willFileGetStoredInSession(editor)) {
-            e.append(editor);
+            unsavedEditors.append(editor);
         }
     }
 
-    if (!checkEditorsBeforeClose(e)) {
-        ev->ignore();
+    if (!checkEditorsBeforeClose(unsavedEditors)) {
+        closeEvent->ignore();
         return;
     }
 
     emit aboutToClose();
 
-    ev->accept();
+    closeEvent->accept();
 
-    QMainWindow::closeEvent(ev);
+    QMainWindow::closeEvent(closeEvent);
 }
 
 void MainWindow::dragEnterEvent(QDragEnterEvent *event)

@@ -224,6 +224,39 @@ public:
     void repaint() {}
 };
 
+class QPaintDevice {
+public:
+    virtual ~QPaintDevice() = default;
+};
+
+class QAbstractScrollArea : public QWidget {
+public:
+    explicit QAbstractScrollArea(QWidget *parent = nullptr) : QWidget(parent) {}
+};
+
+class QIODevice : public QObject {
+public:
+    enum OpenModeFlag { NotOpen = 0x0000, ReadOnly = 0x0001, WriteOnly = 0x0002, ReadWrite = 0x0003, Append = 0x0004, Truncate = 0x0008, Text = 0x0010 };
+    explicit QIODevice(QObject *parent = nullptr) : QObject(parent) {}
+    virtual bool open(int) { return true; }
+    virtual void close() {}
+};
+
+class QMimeData : public QObject {
+public:
+    bool hasUrls() const { return false; }
+    std::vector<class QUrl> urls() const { return {}; }
+    bool hasText() const { return false; }
+    QString text() const { return QString(); }
+    QObject *source() const { return nullptr; }
+};
+
+class QElapsedTimer {
+public:
+    void start() {}
+    long long elapsed() const { return 0; }
+};
+
 class QDialog : public QWidget {
 public:
     explicit QDialog(QWidget *parent = nullptr, int = 0) : QWidget(parent) {}
@@ -362,7 +395,7 @@ public:
     bool operator<(const QDateTime &) const { return false; }
 };
 
-class QFileDevice : public QObject {
+class QFileDevice : public QIODevice {
 public:
     enum FileError { NoError = 0, ReadError = 1, WriteError = 2, FatalError = 3, ResourceError = 4, OpenError = 5, AbortError = 6, TimeOutError = 7, UnspecifiedError = 8, RemoveError = 9, RenameError = 10, PositionError = 11, ResizeError = 12, PermissionsError = 13, CopyError = 14 };
 };
@@ -551,6 +584,7 @@ inline void qCritical(const char *, ...) {}
     headers = [
         "QAbstractItemModel",
         "QAbstractItemView",
+        "QAbstractScrollArea",
         "QAbstractTableModel",
         "QAction",
         "QActionGroup",
@@ -575,8 +609,10 @@ inline void qCritical(const char *, ...) {}
         "QDir",
         "QDirIterator",
         "QDockWidget",
+        "QElapsedTimer",
         "QEvent",
         "QFile",
+        "QFileDevice",
         "QFileDialog",
         "QFileInfo",
         "QFileSystemModel",
@@ -585,6 +621,9 @@ inline void qCritical(const char *, ...) {}
         "QFontDatabase",
         "QFormLayout",
         "QFrame",
+        "QIODevice",
+        "QMimeData",
+        "QPaintDevice",
         "QGraphicsOpacityEffect",
         "QGroupBox",
         "QGuiApplication",
