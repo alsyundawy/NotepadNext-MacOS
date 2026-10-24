@@ -59,7 +59,7 @@
 > - 🌐 **Pelokalan i18n 100% Sempurna**: 0 entri belum selesai untuk katalog bahasa Indonesia (`id_ID`) dan bahasa Inggris (`en_US`), distandarisasi penuh sesuai kaidah EYD V, PUEBI, glosarium PASTI Badan Bahasa, dan Mozilla L10n.
 > - 🔍 **Kualitas Kode Bebas Cacat**: Lolos 100% analisis statis dan linter (`trunk check` lolos 0 masalah, MegaLinter, cppcheck, dan seluruh 36/36 peringatan SonarLint terselesaikan tuntas).
 >
-> 📊 **Cumulative Architecture Matrix**: For the complete 21-dimension matrix synthesizing all innovations from `v0.15-01` through `v0.15-07` against official upstream v0.15, see [Release Notes 0.15-07](doc/RELEASE_NOTES_0.15-07.md#📊-comprehensive-feature--architecture-matrix-cumulative-v015-01-to-v015-07) and [DOCNOTE.md](doc/DOCNOTE.md#11-comprehensive-feature--architecture-matrix-cumulative-v015-01-to-v015-07).
+> 📊 **Cumulative Architecture Matrix & In-Depth Upstream Comparison**: For the comprehensive 21-dimension comparative whitepaper detailing why this edition is vastly superior to official upstream v0.15, see [In-Depth Upstream Comparison](doc/UPSTREAM_COMPARISON.md), [Release Notes 0.15-07](doc/RELEASE_NOTES_0.15-07.md), and [DOCNOTE.md](doc/DOCNOTE.md).
 
 ---
 

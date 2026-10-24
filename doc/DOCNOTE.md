@@ -5,6 +5,7 @@
 - **Date**: October 25, 2026
 - **Maintainer / Builder**: Harry DS Alsyundawy ([@alsyundawy](https://github.com/alsyundawy))
 - **Upstream Project**: [dail8859/NotepadNext](https://github.com/dail8859/NotepadNext)
+- **Comparative Whitepaper**: [UPSTREAM_COMPARISON.md](UPSTREAM_COMPARISON.md)
 
 ---
 

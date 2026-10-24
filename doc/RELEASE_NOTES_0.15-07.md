@@ -6,7 +6,8 @@
 > **Date**: October 25, 2026<br/>
 > **Maintainer & Builder**: Harry DS Alsyundawy ([@alsyundawy](https://github.com/alsyundawy))<br/>
 > **Upstream Repository**: [dail8859/NotepadNext](https://github.com/dail8859/NotepadNext)<br/>
-> **macOS Edition Repository**: [alsyundawy/NotepadNext-MacOS](https://github.com/alsyundawy/NotepadNext-MacOS)
+> **macOS Edition Repository**: [alsyundawy/NotepadNext-MacOS](https://github.com/alsyundawy/NotepadNext-MacOS)<br/>
+> **Comprehensive Whitepaper**: [UPSTREAM_COMPARISON.md](UPSTREAM_COMPARISON.md)
 
 ---
 
