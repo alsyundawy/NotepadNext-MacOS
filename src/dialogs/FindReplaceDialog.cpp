@@ -166,9 +166,8 @@ FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainW
 
         int totalReplaced = 0;
         ScintillaNext *current_editor = editor;
-        const auto *mainWin = qobject_cast<MainWindow *>(parent());
 
-        if (mainWin) {
+        if (const auto *mainWin = qobject_cast<MainWindow *>(parent()); mainWin != nullptr) {
             for (ScintillaNext *targetEd : mainWin->editors()) {
                 setEditor(targetEd);
                 totalReplaced += finder->replaceAll(replaceText);
@@ -314,9 +313,9 @@ void FindReplaceDialog::findAllInCurrentDocument()
             firstMatch = false;
         }
 
-        const int line = static_cast<int>(editor->lineFromPosition(start));
-        const int lineStartPosition = static_cast<int>(editor->positionFromLine(line));
-        const int lineEndPosition = static_cast<int>(editor->lineEndPosition(line));
+        const auto line = static_cast<int>(editor->lineFromPosition(start));
+        const auto lineStartPosition = static_cast<int>(editor->positionFromLine(line));
+        const auto lineEndPosition = static_cast<int>(editor->lineEndPosition(line));
         const int startPositionFromBeginning = start - lineStartPosition;
         const int endPositionFromBeginning = end - lineStartPosition;
         QString lineText = editor->get_text_range(lineStartPosition, lineEndPosition);
@@ -361,7 +360,7 @@ void FindReplaceDialog::replace()
     }
 
     const bool inSelection = ui->checkBoxInSelection->isChecked() && ui->checkBoxInSelection->isEnabled();
-    const int originalDocLength = inSelection ? static_cast<int>(editor->length()) : 0;
+    const auto originalDocLength = inSelection ? static_cast<int>(editor->length()) : 0;
 
     if (finder->replaceSelectionIfMatch(replaceText)) {
         if (inSelection) {
@@ -396,13 +395,13 @@ void FindReplaceDialog::replaceAll()
     }
 
     const bool inSelection = ui->checkBoxInSelection->isChecked() && ui->checkBoxInSelection->isEnabled();
-    const int originalDocLength = inSelection ? static_cast<int>(editor->length()) : 0;
+    const auto originalDocLength = inSelection ? static_cast<int>(editor->length()) : 0;
 
     int totalReplaced = finder->replaceAll(replaceText);
     showMessage(tr("Replaced %Ln matches", "", totalReplaced), "green");
 
     if (inSelection) {
-        const int lengthDelta = static_cast<int>(editor->length()) - originalDocLength;
+        const auto lengthDelta = static_cast<int>(editor->length()) - originalDocLength;
         const int newEnd = static_cast<int>(capturedSelectionRange.cpMax) + lengthDelta;
         editor->setSelection(newEnd, static_cast<int>(capturedSelectionRange.cpMin));
         capturedSelectionRange.cpMax = static_cast<Sci_PositionCR>(newEnd);
@@ -840,7 +839,7 @@ void FindReplaceDialog::markAll()
         matchCount++;
 
         if (bmDecorator) {
-            const int line = static_cast<int>(editor->lineFromPosition(start));
+            const auto line = static_cast<int>(editor->lineFromPosition(start));
             if (!bmDecorator->isBookmarkSet(line)) {
                 bmDecorator->addBookmark(line);
             }
@@ -865,8 +864,8 @@ void FindReplaceDialog::updateInSelectionCheckbox()
         return;
     }
 
-    const int selStart = static_cast<int>(editor->selectionStart());
-    const int selEnd   = static_cast<int>(editor->selectionEnd());
+    const auto selStart = static_cast<int>(editor->selectionStart());
+    const auto selEnd   = static_cast<int>(editor->selectionEnd());
     const bool hasSelection    = (selStart != selEnd);
     const bool isRectangular   = editor->selectionIsRectangle();
     const bool isMultiple      = (editor->selections() > 1);
@@ -903,7 +902,7 @@ void FindReplaceDialog::copyMarkedText()
 
     QStringList markedTexts;
     int pos = 0;
-    const int len = static_cast<int>(editor->length());
+    const auto len = static_cast<int>(editor->length());
 
     while (pos < len) {
         if (editor->indicatorValueAt(markIndicator, pos)) {

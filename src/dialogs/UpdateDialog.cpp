@@ -46,7 +46,7 @@ bool UpdateDialog::verifyPackageHash(const QString &filePath, const QString &exp
     if (!file.open(QIODevice::ReadOnly)) {
         return false;
     }
-    QCryptographicHash hash(QCryptographicHash::Sha256);
+    QCryptographicHash hash{QCryptographicHash::Sha256};
     if (!hash.addData(&file)) {
         return false;
     }

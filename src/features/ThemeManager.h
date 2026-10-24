@@ -18,17 +18,6 @@
  * along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-/*
- * This file is part of NotepadNext.
- * Copyright 2026 Harry DS Alsyundawy (NotepadNext Maintainer)
- *
- * NotepadNext is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- */
-
 #ifndef THEMEMANAGER_H
 #define THEMEMANAGER_H
 

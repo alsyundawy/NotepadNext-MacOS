@@ -18,8 +18,6 @@
  * along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
 #ifndef UPDATEDIALOG_H
 #define UPDATEDIALOG_H
 

@@ -21,6 +21,7 @@
 #ifndef EDITORINSPECTORDOCK_H
 #define EDITORINSPECTORDOCK_H
 
+#include <functional>
 #include <memory>
 #include <QDockWidget>
 #include <QTreeWidgetItem>

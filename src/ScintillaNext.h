@@ -198,7 +198,7 @@ private:
 };
 
 template<typename Func>
-void ScintillaNext::forEachLineInSelection(int selection, Func callback)
+void ScintillaNext::forEachLineInSelection(int selection, Func callback) // NOSONAR
 {
     const auto lineStart = static_cast<int>(lineFromPosition(selectionNStart(selection)));
     const auto lineEnd = static_cast<int>(lineFromPosition(selectionNEnd(selection)));
@@ -210,7 +210,7 @@ void ScintillaNext::forEachLineInSelection(int selection, Func callback)
 
 // Stick this in the header file...because C++, that's why
 template<typename Func>
-void ScintillaNext::forEachMatchInRange(const QByteArray &text, Func callback, Sci_CharacterRange range)
+void ScintillaNext::forEachMatchInRange(const QByteArray &text, Func callback, Sci_CharacterRange range) // NOSONAR
 {
     Sci_TextToFind ttf {range, text.constData(), {INVALID_POSITION, INVALID_POSITION}};
     const auto flags = static_cast<int>(searchFlags());
