@@ -199,7 +199,7 @@ void ScintillaNext::goToRange(const Sci_CharacterRange &range)
 
 QByteArray ScintillaNext::eolString() const
 {
-    const int eol = static_cast<int>(eOLMode());
+    const auto eol = static_cast<int>(eOLMode());
 
     if (eol == SC_EOL_LF) return QByteArrayLiteral("\n");
     else if (eol == SC_EOL_CRLF) return QByteArrayLiteral("\r\n");
@@ -231,8 +231,8 @@ Sci_CharacterRange ScintillaNext::getContextText()
 {
     if (!selectionEmpty()) {
         if (selections() == 1) {
-            const int start = static_cast<int>(selectionStart());
-            const int end = static_cast<int>(selectionEnd());
+            const auto start = static_cast<int>(selectionStart());
+            const auto end = static_cast<int>(selectionEnd());
 
             if (end - start < 1024 &&
                 lineFromPosition(start) == lineFromPosition(end)) {
@@ -248,8 +248,8 @@ Sci_CharacterRange ScintillaNext::getContextText()
 
 Sci_CharacterRange ScintillaNext::wordAtPosition(int pos)
 {
-    const int start = static_cast<int>(wordStartPosition(pos, true));
-    if (const int end = static_cast<int>(wordEndPosition(pos, true)); end > start) {
+    const auto start = static_cast<int>(wordStartPosition(pos, true));
+    if (const auto end = static_cast<int>(wordEndPosition(pos, true)); end > start) {
         return { start, end };
     }
 
@@ -258,11 +258,11 @@ Sci_CharacterRange ScintillaNext::wordAtPosition(int pos)
 
 void ScintillaNext::modifyFoldLevels(int level, int action)
 {
-    const int totalLines = static_cast<int>(lineCount());
+    const auto totalLines = static_cast<int>(lineCount());
 
     int line = 0;
     while (line < totalLines) {
-        const int foldFlags = static_cast<int>(foldLevel(line)); // Even though its called fold level it contains several other flags
+        const auto foldFlags = static_cast<int>(foldLevel(line)); // Even though its called fold level it contains several other flags
         const bool isHeader = foldFlags & SC_FOLDLEVELHEADERFLAG;
         const int actualLevel = (foldFlags & SC_FOLDLEVELNUMBERMASK) - SC_FOLDLEVELBASE;
 
@@ -295,7 +295,7 @@ void ScintillaNext::deleteLeadingEmptyLines()
 
 void ScintillaNext::deleteTrailingEmptyLines()
 {
-    const int docLength = static_cast<int>(length());
+    const auto docLength = static_cast<int>(length());
     int position = docLength;
 
     while (position > 0 && isNewlineCharacter(static_cast<char>(charAt(position - 1)))) {
@@ -418,9 +418,9 @@ void ScintillaNext::reload()
         return;
     }
 
-    const int line = static_cast<int>(firstVisibleLine());
-    const int caret = static_cast<int>(selectionNCaret(mainSelection()));
-    const int anchor = static_cast<int>(selectionNAnchor(mainSelection()));
+    const auto line = static_cast<int>(firstVisibleLine());
+    const auto caret = static_cast<int>(selectionNCaret(mainSelection()));
+    const auto anchor = static_cast<int>(selectionNAnchor(mainSelection()));
 
     // Remove all the text
     {
@@ -599,7 +599,7 @@ void ScintillaNext::removeDuplicateLines()
     const QByteArray delim = eolString();
 
     auto lines = ByteArrayUtils::split(data, delim);
-    const int originalLineCount = static_cast<int>(lines.length());
+    const auto originalLineCount = static_cast<int>(lines.length());
     ByteArrayUtils::removeDuplicates(lines);
 
     if (originalLineCount == lines.length()) {
@@ -619,7 +619,7 @@ void ScintillaNext::removeConsecutiveDuplicateLines()
     const QByteArray delim = eolString();
 
     auto lines = ByteArrayUtils::split(data, delim);
-    const int originalLineCount = static_cast<int>(lines.length());
+    const auto originalLineCount = static_cast<int>(lines.length());
     ByteArrayUtils::removeConsecutiveDuplicates(lines);
     const QByteArray result = ByteArrayUtils::join(lines, delim);
 

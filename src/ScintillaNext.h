@@ -71,7 +71,7 @@ public:
     void deleteLine(int line);
 
     using ScintillaEdit::cutAllowLine;
-    void cutAllowLine();
+    void cutAllowLine(); // NOSONAR
 
     Sci_CharacterRange getContextText();
     Sci_CharacterRange wordAtPosition(int pos);
@@ -141,7 +141,7 @@ public:
     using QWidget::close;
 
 public slots:
-    void close();
+    void close(); // NOSONAR
     QFileDevice::FileError save();
     void reload();
     void omitModifications();

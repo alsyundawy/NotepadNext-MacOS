@@ -31,7 +31,7 @@
 class MainWindow;
 class ScintillaNext;
 
-typedef std::function<QString(ScintillaNext *)> EditorFunction;
+using EditorFunction = std::function<QString(ScintillaNext *)>;
 
 namespace Ui {
 class EditorInspectorDock;

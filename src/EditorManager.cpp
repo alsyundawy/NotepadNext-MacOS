@@ -90,6 +90,11 @@ EditorManager::EditorManager(ApplicationSettings *settings, QObject *parent)
         watchEditorFile(editor);
     });
 
+    setupSettingsConnections();
+}
+
+void EditorManager::setupSettingsConnections()
+{
     connect(settings, &ApplicationSettings::showWrapSymbolChanged, this, [this](bool b) {
         for (const auto &editor : getEditors()) {
             editor->setWrapVisualFlags(b ? SC_WRAPVISUALFLAG_END : SC_WRAPVISUALFLAG_NONE);
@@ -124,7 +129,7 @@ EditorManager::EditorManager(ApplicationSettings *settings, QObject *parent)
         else {
             for (const auto &editor : getEditors()) {
                 // Store the top line and restore it after the lines have been unwrapped
-                const int topLine = static_cast<int>(editor->docLineFromVisible(editor->firstVisibleLine()));
+                const auto topLine = static_cast<int>(editor->docLineFromVisible(editor->firstVisibleLine()));
                 editor->setWrapMode(SC_WRAP_NONE);
                 editor->setFirstVisibleLine(topLine);
             }
@@ -179,7 +184,7 @@ EditorManager::EditorManager(ApplicationSettings *settings, QObject *parent)
 
 ScintillaNext *EditorManager::createEditor(const QString &name)
 {
-    auto *editor = new ScintillaNext(name);
+    auto *editor = new ScintillaNext(name); // NOSONAR
 
     manageEditor(editor);
 
@@ -282,7 +287,7 @@ static void setupMacOsKeys(ScintillaNext *editor)
 }
 #endif
 
-void EditorManager::setupEditor(ScintillaNext *editor)
+void EditorManager::setupEditor(ScintillaNext *editor) const
 {
     qInfo(Q_FUNC_INFO);
 
@@ -522,7 +527,7 @@ int EditorManager::detectEOLMode(const ScintillaNext *editor) const
     int cr = 0;
     int crlf = 0;
     int chPrev = ' ';
-    int chNext = static_cast<int>(editor->charAt(index));
+    auto chNext = static_cast<int>(editor->charAt(index));
 
     for (int i = 0; i < qMin(MAX_BYTES_TO_CHECK, static_cast<int>(editor->length())); ++i) {
         int ch = chNext;

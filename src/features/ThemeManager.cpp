@@ -114,10 +114,9 @@ void ThemeManager::setThemeMode(ThemeMode mode, MainWindow *window) {
         m_activeWindow = window;
     }
 
-    const ThemePalette *cur = findThemePaletteById(m_currentPaletteId);
-    if (mode == ThemeMode::Dark && (!cur || !cur->isDark)) {
+    if (const auto *cur = findThemePaletteById(m_currentPaletteId); mode == ThemeMode::Dark && (!cur || !cur->isDark)) {
         m_currentPaletteId = QStringLiteral("horizonDark");
-    } else if (mode == ThemeMode::Light && (!cur || cur->isDark)) {
+    } else if (const auto *cur = findThemePaletteById(m_currentPaletteId); mode == ThemeMode::Light && (!cur || cur->isDark)) {
         m_currentPaletteId = QStringLiteral("notepadNext");
     }
 

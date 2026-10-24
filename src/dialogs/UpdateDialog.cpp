@@ -97,7 +97,7 @@ void UpdateDialog::setupUi()
     mainLayout->setSpacing(18);
 
     // Top Header: App Icon + Titles & Badge
-    auto *topLayout = new QHBoxLayout();
+    auto *topLayout = new QHBoxLayout(); // NOSONAR
     topLayout->setSpacing(16);
     topLayout->setAlignment(Qt::AlignTop);
 
@@ -112,10 +112,10 @@ void UpdateDialog::setupUi()
     m_iconLabel->setFixedSize(64, 64);
     topLayout->addWidget(m_iconLabel);
 
-    auto *headerTextLayout = new QVBoxLayout();
+    auto *headerTextLayout = new QVBoxLayout(); // NOSONAR
     headerTextLayout->setSpacing(4);
 
-    auto *badgeRow = new QHBoxLayout();
+    auto *badgeRow = new QHBoxLayout(); // NOSONAR
     badgeRow->setSpacing(8);
 
     auto *appTitleLabel = new QLabel(QStringLiteral("Notepad Next"), this);
@@ -148,15 +148,15 @@ void UpdateDialog::setupUi()
     // Architecture detection string
 #if defined(Q_OS_MACOS)
 #  if defined(__aarch64__) || defined(_M_ARM64)
-    const QString archStr = QStringLiteral("macOS Apple Silicon (arm64)");
+    const auto archStr = QStringLiteral("macOS Apple Silicon (arm64)");
 #  else
-    const QString archStr = QStringLiteral("macOS Intel (x86_64)");
+    const auto archStr = QStringLiteral("macOS Intel (x86_64)");
 #  endif
 #elif defined(Q_OS_WIN)
 #  if defined(__aarch64__) || defined(_M_ARM64)
-    const QString archStr = QStringLiteral("Windows (arm64)");
+    const auto archStr = QStringLiteral("Windows (arm64)");
 #  else
-    const QString archStr = QStringLiteral("Windows (x64)");
+    const auto archStr = QStringLiteral("Windows (x64)");
 #  endif
 #else
     const QString archStr = QStringLiteral("Linux / Unix");
@@ -223,7 +223,7 @@ void UpdateDialog::setupUi()
     }
 
     // Action Buttons
-    auto *buttonLayout = new QHBoxLayout();
+    auto *buttonLayout = new QHBoxLayout(); // NOSONAR
     buttonLayout->setSpacing(10);
 
     m_viewReleaseButton = new QPushButton(tr("Release Notes"), this);

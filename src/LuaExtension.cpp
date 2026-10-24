@@ -267,105 +267,53 @@ struct ScintillaFailure {
     }
 };
 
-static int iface_function_helper(lua_State *L, const IFaceFunction &func) {
-    NppExtensionAPIPane p = check_pane_object(L, 1);
-    Q_UNUSED(p)
-
+static void extractFunctionParams(lua_State *L, const IFaceFunction &func, int loopParamCount, std::array<sptr_t, 2> &params) {
     int arg = 2;
-
-    std::array<sptr_t, 2> params = {0, 0};
-
-    std::vector<char> stringBuffer;
-    enum class StringResultType { none, string, tstring };
-    StringResultType needStringResult = StringResultType::none;
-    int loopParamCount = 2;
-
-    if (func.paramType[0] == iface_length && func.paramType[1] == iface_string) {
-        params[0] = static_cast<sptr_t>(lua_rawlen(L, arg));
-        params[1] = reinterpret_cast<sptr_t>(params[0] ? lua_tostring(L, arg) : "");
-        loopParamCount = 0;
-    } else if ((func.paramType[1] == iface_stringresult) || (func.returnType == iface_stringresult)) {
-        needStringResult = StringResultType::string;
-        // The buffer will be allocated later, so it won't leak if Lua does
-        // a longjmp in response to a bad arg.
-        if (func.paramType[0] == iface_length) {
-            loopParamCount = 0;
-        } else {
-            loopParamCount = 1;
-        }
-    }
-
-    // Specifically handle these 2 messages because they carry the setter in the 2nd param
     if (func.value == SCI_SETMARGINLEFT || func.value == SCI_SETMARGINRIGHT) {
         params[1] = static_cast<sptr_t>(luaL_checkinteger(L, arg++));
-    }
-    else {
-        for (int i = 0; i < loopParamCount; ++i) {
-            if (func.paramType[i] == iface_string) {
-                const char *s = lua_tostring(L, arg++);
-                params[i] = reinterpret_cast<sptr_t>(s ? s : "");
-            } else if (func.paramType[i] == iface_keymod) {
-                int keycode = static_cast<int>(luaL_checkinteger(L, arg++)) & 0xFFFF;
-                int modifiers = static_cast<int>(luaL_checkinteger(L, arg++)) & (SCMOD_SHIFT|SCMOD_CTRL|SCMOD_ALT);
-                params[i] = keycode | (modifiers<<16);
-            } else if (func.paramType[i] == iface_bool) {
-                params[i] = lua_toboolean(L, arg++);
-            } else if (IFaceTypeIsNumeric(func.paramType[i])) {
-                params[i] = static_cast<sptr_t>(luaL_checkinteger(L, arg++));
-            }
-        }
+        return;
     }
 
-    if (needStringResult != StringResultType::none) {
-        sptr_t stringResultLen;
-        if (needStringResult == StringResultType::string) {
-            stringResultLen = runtimeState().editor ? runtimeState().editor->send(func.value, params[0], 0) : 0;
-            if (stringResultLen > 0) {
-                // not all string result methods are guaranteed to add a null terminator
-                stringBuffer.resize(static_cast<size_t>(stringResultLen + 1), '\0');
-                params[1] = reinterpret_cast<sptr_t>(stringBuffer.data());
-            } else {
-                // Is this an error?  Are there any cases where it's not an error,
-                // and where the right thing to do is just return a blank string?
-                return 0;
-            }
-        }
-
-        if (func.paramType[0] == iface_length) {
-            params[0] = stringResultLen;
+    for (int i = 0; i < loopParamCount; ++i) {
+        if (func.paramType[i] == iface_string) {
+            const char *s = lua_tostring(L, arg++);
+            params[i] = reinterpret_cast<sptr_t>(s ? s : "");
+        } else if (func.paramType[i] == iface_keymod) {
+            int keycode = static_cast<int>(luaL_checkinteger(L, arg++)) & 0xFFFF;
+            int modifiers = static_cast<int>(luaL_checkinteger(L, arg++)) & (SCMOD_SHIFT|SCMOD_CTRL|SCMOD_ALT);
+            params[i] = keycode | (modifiers<<16);
+        } else if (func.paramType[i] == iface_bool) {
+            params[i] = lua_toboolean(L, arg++);
+        } else if (IFaceTypeIsNumeric(func.paramType[i])) {
+            params[i] = static_cast<sptr_t>(luaL_checkinteger(L, arg++));
         }
     }
+}
 
-    // Now figure out what to do with the param types and return type.
-    // - stringresult gets inserted at the start of return tuple.
-    // - numeric return type gets returned to lua as a number (following the stringresult)
-    // - other return types e.g. void get dropped.
-
-    sptr_t result = 0;
+static sptr_t invokeScintillaMessage(const IFaceFunction &func, const std::array<sptr_t, 2> &params) {
     try {
-        result = runtimeState().editor ? runtimeState().editor->send(func.value, params[0], params[1]) : 0;
-    }
-    catch (ScintillaFailure &sf) {
+        return runtimeState().editor ? runtimeState().editor->send(func.value, params[0], params[1]) : 0;
+    } catch (ScintillaFailure &sf) {
         std::string failureExplanation;
         failureExplanation += "Lua: Scintilla failure ";
         failureExplanation += std::to_string(sf.status);
         failureExplanation += " for message ";
         failureExplanation += std::to_string(func.value);
         failureExplanation += ".\n";
-        // Reset status before continuing
         if (runtimeState().editor) {
             runtimeState().editor->send(SCI_SETSTATUS, SC_STATUS_OK, 0);
         }
         hostTraceError(failureExplanation.c_str());
+        return 0;
     }
+}
 
+static int pushFunctionResults(lua_State *L, const IFaceFunction &func, sptr_t result, const std::vector<char> &stringBuffer) {
     int resultCount = 0;
-
     if (!stringBuffer.empty()) {
         lua_pushstring(L, stringBuffer.data());
         resultCount++;
     }
-
     if (func.returnType == iface_bool) {
         lua_pushboolean(L, static_cast<int>(result));
         resultCount++;
@@ -373,8 +321,43 @@ static int iface_function_helper(lua_State *L, const IFaceFunction &func) {
         lua_pushinteger(L, static_cast<lua_Integer>(result));
         resultCount++;
     }
-
     return resultCount;
+}
+
+static int iface_function_helper(lua_State *L, const IFaceFunction &func) {
+    NppExtensionAPIPane p = check_pane_object(L, 1);
+    Q_UNUSED(p)
+
+    std::array<sptr_t, 2> params = {0, 0};
+    std::vector<char> stringBuffer;
+    bool needStringResult = false;
+    int loopParamCount = 2;
+
+    if (func.paramType[0] == iface_length && func.paramType[1] == iface_string) {
+        params[0] = static_cast<sptr_t>(lua_rawlen(L, 2));
+        params[1] = reinterpret_cast<sptr_t>(params[0] ? lua_tostring(L, 2) : "");
+        loopParamCount = 0;
+    } else if ((func.paramType[1] == iface_stringresult) || (func.returnType == iface_stringresult)) {
+        needStringResult = true;
+        loopParamCount = (func.paramType[0] == iface_length) ? 0 : 1;
+    }
+
+    extractFunctionParams(L, func, loopParamCount, params);
+
+    if (needStringResult) {
+        const sptr_t stringResultLen = runtimeState().editor ? runtimeState().editor->send(func.value, params[0], 0) : 0;
+        if (stringResultLen <= 0) {
+            return 0;
+        }
+        stringBuffer.resize(static_cast<size_t>(stringResultLen + 1), '\0');
+        params[1] = reinterpret_cast<sptr_t>(stringBuffer.data());
+        if (func.paramType[0] == iface_length) {
+            params[0] = stringResultLen;
+        }
+    }
+
+    const sptr_t result = invokeScintillaMessage(func, params);
+    return pushFunctionResults(L, func, result, stringBuffer);
 }
 
 struct IFacePropertyBinding {
@@ -435,12 +418,10 @@ static int cf_pane_iface_function(lua_State *L) {
 }
 
 static int push_iface_function(lua_State *L, const char *name, const IFaceTableInterface *iface) {
-    if (auto func = iface->FindFunction(name); func != nullptr) {
-        if (IFaceFunctionIsScriptable(*func)) {
-            lua_pushlightuserdata(L, (void *)(uintptr_t)func);
-            lua_pushcclosure(L, cf_pane_iface_function, 1);
-            return 1;
-        }
+    if (const auto *func = iface->FindFunction(name); func != nullptr && IFaceFunctionIsScriptable(*func)) {
+        lua_pushlightuserdata(L, (void *)(uintptr_t)func);
+        lua_pushcclosure(L, cf_pane_iface_function, 1);
+        return 1;
     }
     return -1; // signal to try next pane index handler
 }
@@ -502,6 +483,16 @@ static int push_iface_propval(lua_State *L, const char *name, const IFaceTableIn
     return 1;
 }
 
+static bool try_get_metatable_field(lua_State *L) {
+    lua_getmetatable(L, 1);
+    if (!lua_istable(L, -1)) {
+        return false;
+    }
+    lua_pushvalue(L, 2);
+    lua_gettable(L, -2);
+    return !lua_isnil(L, -1);
+}
+
 static int cf_pane_metatable_index(lua_State *L) {
     const auto *iface = static_cast<const IFaceTableInterface *>(lua_touserdata(L, lua_upvalueindex(1)));
     if (lua_isstring(L, 2)) {
@@ -516,14 +507,8 @@ static int cf_pane_metatable_index(lua_State *L) {
             return results;
         }
 
-        if (name[0] != '_') {
-            lua_getmetatable(L, 1);
-            if (lua_istable(L, -1)) {
-                lua_pushvalue(L, 2);
-                lua_gettable(L, -2);
-                if (!lua_isnil(L, -1))
-                    return 1;
-            }
+        if (name[0] != '_' && try_get_metatable_field(L)) {
+            return 1;
         }
     }
 
@@ -592,13 +577,11 @@ static int cf_global_metatable_index(lua_State *L) {
             return 0;
         }
 
-        auto con = runtimeState().ifacemixer.FindConstant(name);
-        if (con != nullptr) {
+        if (const auto *con = runtimeState().ifacemixer.FindConstant(name); con != nullptr) {
             lua_pushinteger(L, con->value);
             return 1;
         }
-        auto func = runtimeState().ifacemixer.FindFunctionByConstantName(name);
-        if (func != nullptr) {
+        if (const auto *func = runtimeState().ifacemixer.FindFunctionByConstantName(name); func != nullptr) {
             lua_pushinteger(L, func->value);
 
             // FindFunctionByConstantName is slow, so cache the result into the
@@ -717,8 +700,7 @@ bool LuaExtension::RunString(const char *s) const {
     }
 
     const std::string_view sv(s);
-    auto &state = runtimeState();
-    if (state.luaState || InitGlobalScope()) {
+    if (auto &state = runtimeState(); state.luaState || InitGlobalScope()) {
         int status = luaL_loadbuffer(state.luaState, sv.data(), sv.size(), "=File");
 
         if (status == LUA_OK) {
@@ -763,8 +745,7 @@ static bool checkEofError(lua_State *L, int status) {
         return false;
     }
     size_t lmsg = 0;
-    const char *msg = lua_tolstring(L, -1, &lmsg);
-    if (lmsg >= marklen && strcmp(msg + lmsg - marklen, EOFMARK) == 0) {
+    if (const char *msg = lua_tolstring(L, -1, &lmsg); msg && lmsg >= marklen && strcmp(msg + lmsg - marklen, EOFMARK) == 0) {
         lua_pop(L, 1);
         return true;
     }

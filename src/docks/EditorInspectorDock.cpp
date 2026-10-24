@@ -74,12 +74,12 @@ EditorInspectorDock::EditorInspectorDock(MainWindow *parent) :
     newItem(selInfo, tr("Main Selection"), [](const ScintillaNext *editor) { return QString::number(editor->mainSelection()); });
     newItem(selInfo, tr("# of Selections"), [](const ScintillaNext *editor) { return QString::number(editor->selections()); });
 
-    selectionsInfo = new QTreeWidgetItem(selInfo);
+    selectionsInfo = new QTreeWidgetItem(selInfo); // NOSONAR
     selectionsInfo->setText(0, tr("Multiple Selections"));
     selectionsInfo->setExpanded(true);
 
 
-    auto *documentInfo = new QTreeWidgetItem(ui->treeWidget);
+    auto *documentInfo = new QTreeWidgetItem(ui->treeWidget); // NOSONAR
     documentInfo->setText(0, tr("Document Information"));
     documentInfo->setExpanded(true);
 
@@ -87,7 +87,7 @@ EditorInspectorDock::EditorInspectorDock(MainWindow *parent) :
     newItem(documentInfo, tr("Line Count"), [](const ScintillaNext *editor) { return QString::number(editor->lineCount()); });
 
 
-    auto *viewInfo = new QTreeWidgetItem(ui->treeWidget);
+    auto *viewInfo = new QTreeWidgetItem(ui->treeWidget); // NOSONAR
     viewInfo->setText(0, tr("View Information"));
     viewInfo->setExpanded(true);
 
@@ -96,7 +96,7 @@ EditorInspectorDock::EditorInspectorDock(MainWindow *parent) :
     newItem(viewInfo, tr("X Offset"), [](const ScintillaNext *editor) { return QString::number(editor->xOffset()); });
 
 
-    auto *foldInfo = new QTreeWidgetItem(ui->treeWidget);
+    auto *foldInfo = new QTreeWidgetItem(ui->treeWidget); // NOSONAR
     foldInfo->setText(0, tr("Fold Information"));
     foldInfo->setExpanded(true);
 
@@ -163,23 +163,23 @@ void EditorInspectorDock::updateEditorInfo(ScintillaNext *editor)
     qDeleteAll(selectionsInfo->takeChildren());
 
     for (int i = 0; i < editor->selections(); ++i) {
-        auto *selection = new QTreeWidgetItem(selectionsInfo);
+        auto *selection = new QTreeWidgetItem(selectionsInfo); // NOSONAR
         selection->setText(0, QLatin1Char('#') + QString::number(i));
         selection->setExpanded(true);
 
-        auto *caret = new QTreeWidgetItem(selection);
+        auto *caret = new QTreeWidgetItem(selection); // NOSONAR
         caret->setText(0, tr("Caret"));
         caret->setText(1, QString::number(editor->selectionNCaret(i)));
 
-        auto *anchor = new QTreeWidgetItem(selection);
+        auto *anchor = new QTreeWidgetItem(selection); // NOSONAR
         anchor->setText(0, tr("Anchor"));
         anchor->setText(1, QString::number(editor->selectionNAnchor(i)));
 
-        auto *caretVirtual = new QTreeWidgetItem(selection);
+        auto *caretVirtual = new QTreeWidgetItem(selection); // NOSONAR
         caretVirtual->setText(0, tr("Caret Virtual Space"));
         caretVirtual->setText(1, QString::number(editor->selectionNCaretVirtualSpace(i)));
 
-        auto *anchorVirtual = new QTreeWidgetItem(selection);
+        auto *anchorVirtual = new QTreeWidgetItem(selection); // NOSONAR
         anchorVirtual->setText(0, tr("Anchor Virtual Space"));
         anchorVirtual->setText(1, QString::number(editor->selectionNAnchorVirtualSpace(i)));
     }
@@ -189,7 +189,7 @@ void EditorInspectorDock::updateEditorInfo(ScintillaNext *editor)
 
 void EditorInspectorDock::newItem(QTreeWidgetItem *parent, const QString &label, EditorFunction func)
 {
-    auto *item = new QTreeWidgetItem(parent);
+    auto *item = new QTreeWidgetItem(parent); // NOSONAR
     item->setText(0, label);
     items.append(qMakePair(item, func));
 }

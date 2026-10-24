@@ -55,7 +55,7 @@ class Converter;
 class DefaultDirectoryManager;
 class TabsQuickActionsBar;
 
-class MainWindow : public QMainWindow
+class MainWindow : public QMainWindow // NOSONAR
 {
     Q_OBJECT
 

@@ -122,7 +122,7 @@
 #include "ActionUtils.h"
 
 
-MainWindow::MainWindow(NotepadNextApplication *app) :
+MainWindow::MainWindow(NotepadNextApplication *app) : // NOSONAR
     ui(std::make_unique<Ui::MainWindow>()),
     app(app),
     zoomEventWatcher(new ZoomEventWatcher(this)),
@@ -1399,42 +1399,42 @@ void MainWindow::setupThemeMenu()
 
     menuTheme->addSeparator();
 
-    // 4. All 25 Families grouped neatly in a dedicated Submenu
-    QMenu *menuFamilies = menuTheme->addMenu(tr("Themes by Family"));
-    const QStringList families = getThemeFamiliesList();
-    for (const QString &family : families) {
-        QMenu *famMenu = menuFamilies->addMenu(family);
-        const QList<const ThemePalette *> palettes = getThemePalettesByFamily(family);
-        for (const ThemePalette *pal : palettes) {
-            QString itemLabel = QString::fromUtf8(pal->displayName);
-            if (pal->isDark) {
-                itemLabel += QStringLiteral(" (Dark)");
-            } else {
-                itemLabel += QStringLiteral(" (Light)");
-            }
-            if (famMenu) {
-                auto *act = famMenu->addAction(itemLabel);
-                act->setCheckable(true);
-                act->setData(QString::fromLatin1(pal->id));
-                connect(act, &QAction::triggered, this, [this, pal]() {
-                    ThemeManager::instance()->setPalette(QString::fromLatin1(pal->id), this);
-                    ui->statusBar->showMessage(tr("Theme applied: %1").arg(QString::fromUtf8(pal->displayName)), 3000);
-                });
+    auto populateFamilySubmenus = [this](QMenu *familiesMenu) {
+        const QStringList families = getThemeFamiliesList();
+        for (const QString &family : families) {
+            QMenu *famMenu = familiesMenu->addMenu(family);
+            const QList<const ThemePalette *> palettes = getThemePalettesByFamily(family);
+            for (const ThemePalette *pal : palettes) {
+                QString itemLabel = QString::fromUtf8(pal->displayName);
+                itemLabel += pal->isDark ? QStringLiteral(" (Dark)") : QStringLiteral(" (Light)");
+                if (famMenu) {
+                    auto *act = famMenu->addAction(itemLabel);
+                    act->setCheckable(true);
+                    act->setData(QString::fromLatin1(pal->id));
+                    connect(act, &QAction::triggered, this, [this, pal]() {
+                        ThemeManager::instance()->setPalette(QString::fromLatin1(pal->id), this);
+                        ui->statusBar->showMessage(tr("Theme applied: %1").arg(QString::fromUtf8(pal->displayName)), 3000);
+                    });
+                }
             }
         }
-    }
+    };
+
+    // 4. All 25 Families grouped neatly in a dedicated Submenu
+    QMenu *menuFamilies = menuTheme->addMenu(tr("Themes by Family"));
+    populateFamilySubmenus(menuFamilies);
 
     connect(menuTheme, &QMenu::aboutToShow, this, [menuLightOnly, menuDarkOnly, menuFamilies]() {
         const QString curId = ThemeManager::instance()->currentPaletteId();
-        auto updateChecks = [&curId](const QMenu *menu) {
+        auto updateChecks = [&curId](QMenu *menu) {
             if (!menu) return;
-            for (const QAction *action : menu->actions()) {
+            for (QAction *action : menu->actions()) {
                 if (action->menu()) {
                     for (QAction *subAction : action->menu()->actions()) {
                         subAction->setChecked(subAction->data().toString() == curId);
                     }
                 } else if (action->isCheckable()) {
-                    const_cast<QAction *>(action)->setChecked(action->data().toString() == curId);
+                    action->setChecked(action->data().toString() == curId);
                 }
             }
         };
@@ -1574,8 +1574,7 @@ void MainWindow::openFileList(const QStringList &fileNames)
             return existing;
         }
         if (const QFileInfo fileInfo(filePath); !fileInfo.isFile()) {
-            const auto reply = QMessageBox::question(this, tr("Create File"), tr("<b>%1</b> does not exist. Do you want to create it?").arg(filePath));
-            if (reply == QMessageBox::Yes) {
+            if (const auto reply = QMessageBox::question(this, tr("Create File"), tr("<b>%1</b> does not exist. Do you want to create it?").arg(filePath)); reply == QMessageBox::Yes) {
                 return app->getEditorManager()->createEditorFromFile(filePath, true);
             }
             app->getRecentFilesListManager()->removeFile(filePath);
@@ -2664,6 +2663,35 @@ void MainWindow::changeEvent(QEvent *changeEvent)
     }
 }
 
+namespace {
+QStringList resolveContextMenuActionNames(const NotepadNextApplication *app, const ScintillaNext *editor, int clickPos) {
+    QStringList actionNames = {
+        QStringLiteral("Undo"), QStringLiteral("Redo"), QStringLiteral(""),
+        QStringLiteral("Cut"), QStringLiteral("Copy"), QStringLiteral("Paste"),
+        QStringLiteral("PasteWithoutFormat"), QStringLiteral("Delete"), QStringLiteral(""),
+        QStringLiteral("SelectAll"), QStringLiteral(""),
+        QStringLiteral("Open"), QStringLiteral("Save"), QStringLiteral("Find"), QStringLiteral(""),
+        QStringLiteral("Base64Encode"), QStringLiteral("URLEncode"), QStringLiteral(""),
+        QStringLiteral("Base64Decode"), QStringLiteral("URLDecode")
+    };
+
+    if (const ApplicationSettings *settings = app->getSettings(); settings->contains("Gui/EditorContextMenu")) {
+        const QStringList rawNames = settings->value("Gui/EditorContextMenu").toStringList();
+        actionNames.clear();
+        for (const QString &rawName : rawNames) {
+            actionNames.append(rawName.trimmed());
+        }
+    }
+
+    if (const URLFinder *urlFinder = editor->findChild<URLFinder *>(QString(), Qt::FindDirectChildrenOnly);
+        urlFinder && urlFinder->isEnabled() && urlFinder->isURL(clickPos)) {
+        actionNames.prepend("");
+        actionNames.prepend("CopyURL");
+    }
+    return actionNames;
+}
+}
+
 void MainWindow::addEditor(ScintillaNext *editor)
 {
     qInfo(Q_FUNC_INFO);
@@ -2691,40 +2719,13 @@ void MainWindow::addEditor(ScintillaNext *editor)
     editor->setZoom(zoomLevel);
 
     editor->setContextMenuPolicy(Qt::CustomContextMenu);
-    auto getContextMenuActionNames = [this, editor](int clickPos) {
-        QStringList actionNames = {
-            QStringLiteral("Undo"), QStringLiteral("Redo"), QStringLiteral(""),
-            QStringLiteral("Cut"), QStringLiteral("Copy"), QStringLiteral("Paste"),
-            QStringLiteral("PasteWithoutFormat"), QStringLiteral("Delete"), QStringLiteral(""),
-            QStringLiteral("SelectAll"), QStringLiteral(""),
-            QStringLiteral("Open"), QStringLiteral("Save"), QStringLiteral("Find"), QStringLiteral(""),
-            QStringLiteral("Base64Encode"), QStringLiteral("URLEncode"), QStringLiteral(""),
-            QStringLiteral("Base64Decode"), QStringLiteral("URLDecode")
-        };
-
-        if (const ApplicationSettings *settings = app->getSettings(); settings->contains("Gui/EditorContextMenu")) {
-            const QStringList rawNames = settings->value("Gui/EditorContextMenu").toStringList();
-            actionNames.clear();
-            for (const QString &rawName : rawNames) {
-                actionNames.append(rawName.trimmed());
-            }
-        }
-
-        if (const URLFinder *urlFinder = editor->findChild<URLFinder *>(QString(), Qt::FindDirectChildrenOnly);
-            urlFinder && urlFinder->isEnabled() && urlFinder->isURL(clickPos)) {
-            actionNames.prepend("");
-            actionNames.prepend("CopyURL");
-        }
-        return actionNames;
-    };
-
-    connect(editor, &ScintillaNext::customContextMenuRequested, this, [this, editor, getContextMenuActionNames](const QPoint &pos) {
+    connect(editor, &ScintillaNext::customContextMenuRequested, this, [this, editor](const QPoint &pos) {
         contextMenuPos = static_cast<int>(editor->positionFromPoint(pos.x(), pos.y()));
         if (editor->selectionFromPoint(pos.x(), pos.y()) == -1) {
             editor->setEmptySelection(contextMenuPos);
         }
 
-        auto menu = buildMenu(getContextMenuActionNames(contextMenuPos));
+        auto menu = buildMenu(resolveContextMenuActionNames(app, editor, contextMenuPos));
         menu->addMenu(ui->menuConvertCase);
         menu->addSeparator();
         menu->addMenu(ui->menuMarkAllOccurrences);

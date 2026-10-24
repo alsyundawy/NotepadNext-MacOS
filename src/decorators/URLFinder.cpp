@@ -78,8 +78,8 @@ void URLFinder::findURLs()
 {
     clearURLs();
 
-    int currentLine = static_cast<int>(editor->docLineFromVisible(editor->firstVisibleLine()));
-    int linesLeftToProcess = static_cast<int>(editor->linesOnScreen());
+    auto currentLine = static_cast<int>(editor->docLineFromVisible(editor->firstVisibleLine()));
+    auto linesLeftToProcess = static_cast<int>(editor->linesOnScreen());
     const int flags = SCFIND_REGEXP;
 
     while(linesLeftToProcess >= 0 && currentLine < editor->lineCount()) {
@@ -89,14 +89,14 @@ void URLFinder::findURLs()
             continue;
         }
 
-        const int startPos = static_cast<int>(editor->positionFromLine(currentLine));
-        const int endPos = static_cast<int>(editor->lineEndPosition(currentLine));
+        const auto startPos = static_cast<int>(editor->positionFromLine(currentLine));
+        const auto endPos = static_cast<int>(editor->lineEndPosition(currentLine));
         const auto reg = QByteArrayLiteral(R"(\bhttps?://[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))");
 
         Sci_TextToFind ttf {{static_cast<Sci_PositionCR>(startPos), static_cast<Sci_PositionCR>(endPos)}, reg.constData(), {-1, -1}};
         while (editor->send(SCI_FINDTEXT, flags, (sptr_t)&ttf) != -1) {
-            const int startUrl = static_cast<int>(ttf.chrgText.cpMin);
-            int endUrl = static_cast<int>(ttf.chrgText.cpMax);
+            const auto startUrl = static_cast<int>(ttf.chrgText.cpMin);
+            auto endUrl = static_cast<int>(ttf.chrgText.cpMax);
 
             trimUrlDelimiterPunctuation(editor, startUrl, endUrl);
 
@@ -142,12 +142,12 @@ void URLFinder::notify(const Scintilla::NotificationData *pscn)
         timer->start();
     }
     else if (pscn->nmhdr.code == Scintilla::Notification::IndicatorClick && FlagSet(pscn->modifiers, Scintilla::KeyMod::Ctrl)) {
-        const int indicators = static_cast<int>(editor->indicatorAllOnFor(pscn->position));
+        const auto indicators = static_cast<int>(editor->indicatorAllOnFor(pscn->position));
 
         if (indicators & (1 << indicator)) {
 
-            const int indicatorStart = static_cast<int>(editor->indicatorStart(indicator, pscn->position));
-            const int indicatorEnd = static_cast<int>(editor->indicatorEnd(indicator, pscn->position));
+            const auto indicatorStart = static_cast<int>(editor->indicatorStart(indicator, pscn->position));
+            const auto indicatorEnd = static_cast<int>(editor->indicatorEnd(indicator, pscn->position));
 
             QUrl url(editor->get_text_range(indicatorStart, indicatorEnd));
 
@@ -164,14 +164,14 @@ void URLFinder::notify(const Scintilla::NotificationData *pscn)
 
 bool URLFinder::isURL(int position) const
 {
-    const int indicators = static_cast<int>(editor->indicatorAllOnFor(position));
+    const auto indicators = static_cast<int>(editor->indicatorAllOnFor(position));
     return indicators & (1 << indicator);
 }
 
 void URLFinder::copyURLToClipboard(int position) const
 {
-    const int indicatorStart = static_cast<int>(editor->indicatorStart(indicator, position));
-    const int indicatorEnd = static_cast<int>(editor->indicatorEnd(indicator, position));
+    const auto indicatorStart = static_cast<int>(editor->indicatorStart(indicator, position));
+    const auto indicatorEnd = static_cast<int>(editor->indicatorEnd(indicator, position));
 
     QUrl url(editor->get_text_range(indicatorStart, indicatorEnd));
 
