@@ -23,7 +23,7 @@
 #include "features/ThemePaletteData.h"
 
 #ifndef APP_VERSION
-#define APP_VERSION "0.15-05"
+#define APP_VERSION "0.15-07"
 #endif
 
 #include <QVBoxLayout>

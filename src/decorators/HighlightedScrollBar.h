@@ -60,7 +60,7 @@ private:
     void drawIndicator(QPainter &p, int indicator);
     void drawCursors(QPainter &p);
 
-    void drawTickMark(QPainter &p, int y, int height, QColor color);
+    void drawTickMark(QPainter &p, int y, int height, const QColor &color) const;
 
     int posToScrollBarY(int pos) const;
     int lineToScrollBarY(int line) const;

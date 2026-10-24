@@ -47,12 +47,12 @@ private slots:
 
     void editorUpdated(Scintilla::Update updated);
 
-    void updateDocumentSize(ScintillaNext *editor);
+    void updateDocumentSize(const ScintillaNext *editor);
     void updateSelectionInfo(ScintillaNext *editor);
     void updateLanguage(const ScintillaNext *editor);
-    void updateEol(ScintillaNext *editor);
-    void updateEncoding(ScintillaNext *editor);
-    void updateOverType(ScintillaNext *editor);
+    void updateEol(const ScintillaNext *editor);
+    void updateEncoding(const ScintillaNext *editor);
+    void updateOverType(const ScintillaNext *editor);
 
 private:
     QLabel *docType;

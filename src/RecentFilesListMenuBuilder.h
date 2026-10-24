@@ -32,7 +32,7 @@ class RecentFilesListMenuBuilder : public QObject
 
 public:
     explicit RecentFilesListMenuBuilder(RecentFilesListManager *manager);
-    void populateMenu(QMenu *menu);
+    void populateMenu(QMenu *menu) const;
 
 signals:
     void fileOpenRequest(const QString &filePath);

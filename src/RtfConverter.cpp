@@ -62,10 +62,8 @@ void RtfConverter::convertRange(QTextStream &stream, int start, int end)
     int prevStyle = -1;
 
     for (int i = start; i < end; ++i) {
-        const int newStyle = editor->styleAt(i);
-
-        if (newStyle != prevStyle) {
-            const QColor c = ScintillaColorToQColor(editor->styleFore(newStyle));
+        if (const int newStyle = static_cast<int>(editor->styleAt(i)); newStyle != prevStyle) {
+            const QColor c = ScintillaColorToQColor(static_cast<int>(editor->styleFore(newStyle)));
 
             if (!styleColors.contains(c)) {
                 styleColors.append(c);
@@ -86,9 +84,9 @@ void RtfConverter::convertRange(QTextStream &stream, int start, int end)
         }
 
         // Output the character
-        const int ch = editor->charAt(i);
+        const int ch = static_cast<int>(editor->charAt(i));
         if (ch == '\r'){
-            if (editor->charAt(i + 1) != '\n') {
+            if (static_cast<int>(editor->charAt(i + 1)) != '\n') {
                 AddCharEscaped(rtf_stream, ch);
             }
         }

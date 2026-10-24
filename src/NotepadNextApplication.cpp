@@ -159,8 +159,12 @@ bool NotepadNextApplication::init()
     luaState->executeFile(":/scripts/init.lua");
     LuaExtension::Instance().Initialise(luaState->L, Q_NULLPTR);
 
-    createNewWindow();
-    connect(editorManager, &EditorManager::editorCreated, window, &MainWindow::addEditor);
+    MainWindow *initialWindow = createNewWindow();
+    connect(editorManager, &EditorManager::editorCreated, this, [this](ScintillaNext *editor) {
+        if (MainWindow *target = activeMainWindow()) {
+            target->addEditor(editor);
+        }
+    });
 
     // If the application is activated (e.g. user switching to another program and them back) the focus
     // needs to be reset on whatever object previously had focus (e.g. the find dialog)
@@ -170,7 +174,11 @@ bool NotepadNextApplication::init()
         }
     });
 
-    connect(this, &SingleApplication::instanceStarted, window, &MainWindow::bringWindowToForeground);
+    connect(this, &SingleApplication::instanceStarted, this, [this]() {
+        if (MainWindow *target = activeMainWindow()) {
+            target->bringWindowToForeground();
+        }
+    });
     connect(this, &SingleApplication::receivedMessage, this, &NotepadNextApplication::receiveInfoFromSecondaryInstance, Qt::QueuedConnection);
 
     connect(this, &NotepadNextApplication::applicationStateChanged, this, [this](Qt::ApplicationState state) {
@@ -179,8 +187,10 @@ bool NotepadNextApplication::init()
             // Make sure it is active...
             // The application can be active without the main window being show e.g. if there is a
             // message box that pops up before the main window
-            if (window->isActiveWindow()) {
-                window->focusIn();
+            if (MainWindow *target = activeMainWindow()) {
+                if (target->isActiveWindow()) {
+                    target->focusIn();
+                }
             }
 
             if (!currentlyFocusedWidget.isNull()) {
@@ -192,7 +202,7 @@ bool NotepadNextApplication::init()
     if (settings->restorePreviousSession()) {
         qInfo("Restoring previous session");
 
-        sessionManager->loadSession(window);
+        sessionManager->loadSession(initialWindow);
     }
 
     openFiles(parser.positionalArguments());
@@ -209,22 +219,22 @@ bool NotepadNextApplication::init()
 
     // If the window does not have any editors (meaning the no files were
     // specified on the command line) then create a new empty file
-    if (window->editorCount() == 0) {
-        window->newFile();
+    if (initialWindow->editorCount() == 0) {
+        initialWindow->newFile();
     }
 
     // Everything should be ready at this point
 
-    window->restoreWindowState();
+    initialWindow->restoreWindowState();
 
     // Check this after restoring the state, as the state contains the previous visibility state of the FAW dock
     if (parser.isSet("workspace")) {
         const QString dir = parser.value("workspace");
         qInfo("Opening folder as workspace: %s", qUtf8Printable(dir));
-        window->setFolderAsWorkspacePath(dir);
+        initialWindow->setFolderAsWorkspacePath(dir);
     }
 
-    window->show();
+    initialWindow->show();
 
     DebugManager::resumeDebugOutput();
 
@@ -429,7 +439,27 @@ void NotepadNextApplication::receiveInfoFromSecondaryInstance(quint32 instanceId
     QCommandLineParser cmdParser;
     parseCommandLine(cmdParser, args);
 
-    openFiles(cmdParser.positionalArguments());
+    MainWindow *target = activeMainWindow();
+    if (cmdParser.isSet("new-window") || cmdParser.isSet("multi-instance")) {
+        target = createNewWindow();
+        target->restoreWindowState();
+        target->show();
+        target->bringWindowToForeground();
+        if (cmdParser.positionalArguments().isEmpty()) {
+            target->newFile();
+        }
+    } else if (!target) {
+        target = createNewWindow();
+        target->restoreWindowState();
+        target->show();
+    }
+
+    if (target) {
+        target->bringWindowToForeground();
+        for (const QString &file : cmdParser.positionalArguments()) {
+            target->openFile(toLocalFileName(file));
+        }
+    }
 }
 
 bool NotepadNextApplication::isRunningAsAdmin() const
@@ -468,6 +498,25 @@ bool NotepadNextApplication::event(QEvent *e)
         return true;
     }
 
+    if (e->type() == QEvent::Close) {
+        qInfo("QEvent::Close received on NotepadNextApplication");
+
+        const auto windowsCopy = m_windows;
+        for (auto mw : windowsCopy) {
+            if (mw) {
+                mw->bringWindowToForeground();
+                if (!mw->close()) {
+                    qInfo("Window close rejected, aborting quit.");
+                    e->ignore();
+                    return true;
+                }
+            }
+        }
+
+        e->accept();
+        return true;
+    }
+
     return SingleApplication::event(e);
 }
 
@@ -475,8 +524,15 @@ void NotepadNextApplication::openFiles(const QStringList &files)
 {
     qInfo(Q_FUNC_INFO);
 
+    MainWindow *target = activeMainWindow();
+    if (!target) {
+        target = createNewWindow();
+        target->restoreWindowState();
+        target->show();
+    }
+
     for (const QString &file : files) {
-        window->openFile(toLocalFileName(file));
+        target->openFile(toLocalFileName(file));
     }
 }
 
@@ -490,38 +546,69 @@ void NotepadNextApplication::saveSettings() const
     getSettings()->setValue("App/RecentFilesList", recentFilesListManager->fileList());
 }
 
+MainWindow *NotepadNextApplication::activeMainWindow() const
+{
+    if (QWidget *active = QApplication::activeWindow()) {
+        if (auto *mw = qobject_cast<MainWindow *>(active)) {
+            return mw;
+        }
+    }
+    for (const auto &mw : m_windows) {
+        if (mw && mw->isActiveWindow()) {
+            return mw.data();
+        }
+    }
+    for (const auto &mw : m_windows) {
+        if (mw) {
+            return mw.data();
+        }
+    }
+    return nullptr;
+}
+
 void NotepadNextApplication::saveSession()
 {
+    MainWindow *target = activeMainWindow();
+    if (!target) {
+        return;
+    }
+
     // Iterate all the opened editors and add them to the recent file list
-    for (const auto &editor : window->editors()) {
-        if (editor->isFile()) {
+    for (const auto &editor : target->editors()) {
+        if (editor && editor->isFile()) {
             recentFilesListManager->addFile(editor->getFilePath());
         }
     }
     saveSettings();
 
-    getSessionManager()->saveSession(window);
+    getSessionManager()->saveSession(target);
 }
 
 MainWindow *NotepadNextApplication::createNewWindow()
 {
-    Q_ASSERT(window == Q_NULLPTR);
-
-    window = new MainWindow(this);
+    auto *newWindow = new MainWindow(this);
+    newWindow->setAttribute(Qt::WA_DeleteOnClose);
+    m_windows.append(newWindow);
 
     // Keep Lua's editor reference up to date
-    connect(window, &MainWindow::editorActivated, this, [](ScintillaNext *editor) {
+    connect(newWindow, &MainWindow::editorActivated, this, [](ScintillaNext *editor) {
         LuaExtension::Instance().setEditor(editor);
     });
 
     // Session persistence: MainWindow aboutToClose signals application shutdown while editors remain valid
-    connect(window, &MainWindow::aboutToClose, this, &NotepadNextApplication::saveSession);
+    connect(newWindow, &MainWindow::aboutToClose, this, &NotepadNextApplication::saveSession);
+
+    connect(newWindow, &QObject::destroyed, this, [this, newWindow]() {
+        m_windows.removeAll(newWindow);
+    });
 
     // Timer to autosave the session
-    connect(&autoSaveTimer, &QTimer::timeout, this, &NotepadNextApplication::saveSession);
-    autoSaveTimer.start(60 * 1000);
+    if (!autoSaveTimer.isActive()) {
+        connect(&autoSaveTimer, &QTimer::timeout, this, &NotepadNextApplication::saveSession);
+        autoSaveTimer.start(60 * 1000);
+    }
 
-    return window;
+    return newWindow;
 }
 
 QStringList NotepadNextApplication::debugInfo() const

@@ -48,11 +48,7 @@ int main(int argc, char *argv[])
 
     // Set these since other parts of the app references these
     QApplication::setOrganizationName("NotepadNext");
-    if (isMultiInstance) {
-        QApplication::setApplicationName(QStringLiteral("NotepadNext_%1").arg(QDateTime::currentMSecsSinceEpoch()));
-    } else {
-        QApplication::setApplicationName("NotepadNext");
-    }
+    QApplication::setApplicationName("NotepadNext");
     QGuiApplication::setApplicationDisplayName("Notepad Next");
     QGuiApplication::setApplicationVersion(APP_VERSION);
 

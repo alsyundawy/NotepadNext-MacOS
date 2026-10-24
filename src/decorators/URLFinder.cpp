@@ -100,8 +100,14 @@ void URLFinder::findURLs()
 
             trimUrlDelimiterPunctuation(editor, startUrl, endUrl);
 
-            editor->indicatorFillRange(startUrl, endUrl - startUrl);
-            ttf.chrg.cpMin = endUrl;
+            if (endUrl > startUrl) {
+                editor->indicatorFillRange(startUrl, endUrl - startUrl);
+            }
+            const auto nextMin = std::max<Sci_PositionCR>(ttf.chrgText.cpMax, ttf.chrg.cpMin + 1);
+            if (nextMin >= endPos) {
+                break;
+            }
+            ttf.chrg.cpMin = nextMin;
         }
 
         // If a line is wrapped, skip however many lines it takes up on the screen

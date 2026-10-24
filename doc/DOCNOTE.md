@@ -2,7 +2,7 @@
 
 - **Project**: NotepadNext For MacOS
 - **Target Release**: `0.15-07`
-- **Date**: October 24, 2026
+- **Date**: October 25, 2026
 - **Maintainer / Builder**: Harry DS Alsyundawy ([@alsyundawy](https://github.com/alsyundawy))
 - **Upstream Project**: [dail8859/NotepadNext](https://github.com/dail8859/NotepadNext)
 
@@ -342,3 +342,34 @@ To guarantee 100% active syntax highlighting across all 87 language definitions:
   - Sanitized `.clangd` to load directly from `CompilationDatabase: build` with `Suppress: ["*"]`, eliminating duplicate array item schema warnings.
   - Added project-level `tsconfig.json` and `biome.json` to properly exclude Qt translation `.ts` XML files from JavaScript/TypeScript language server parsers, resolving the JSX/TS parser error at line 1.
   - Verified `trunk check --no-fix` passes with 0 errors and 0 warnings.
+
+---
+
+## 20. In-Process Multi-Window Architecture, Dock Quit Save Prompt & 100% SonarLint/IDE Zero-Defect Hardening (v0.15-07)
+
+### macOS In-Process Multi-Window & Dock Integration
+
+- **Unified Single-Instance Multi-Window**: Eliminated the defect where opening a new window spawned a detached process that became unreachable from the macOS Dock. All windows are now managed within a single unified process via `NotepadNextApplication`, ensuring macOS Dock activation and Cmd+` window cycling work natively.
+- **Dock Right-Click Quit Save Prompt (`QEvent::Close`)**: Resolved critical UX issue where quitting from the macOS Dock context menu or Cmd+Q quit directly without prompting to save modified buffers. Intercepted `QEvent::Close` at the application level in `NotepadNextApplication::event`, cycling through all tracked `MainWindow` instances, bringing each to the foreground, and invoking `checkEditorsBeforeClose()`. If the user chooses "Cancel", the quit sequence is cleanly aborted with `e->ignore()`.
+
+### Multi-View Split & Unicode High-Volume Text Stability
+
+- **Multi-View Split Tab Closure & Select-All Guard**: Fixed null dereference and dangling pointer crashes occurring during tab closure in split vertical/horizontal views, as well as selection bounds anomalies during Select All operations across multiple view panes.
+- **High-Volume Lines & Emoji Crash Defense**: Hardened Scintilla's `PlatQt.cpp` text measurement and drawing routines with strict boundary checks, preventing crashes when processing files with tens of thousands of lines containing compound Unicode 18.0 emojis and ZWJ sequences.
+- **Cursor Selection Contrast & Multi-Word Selection**: Refined text selection mechanics and contrast shaders, ensuring smooth and responsive drag-selection across words, sentences, and multi-line blocks.
+
+### 100% Zero-Defect SonarLint & IDE Precision Hardening
+
+Resolved all 17 flagged IDE / SonarLint diagnostics:
+
+1. `HighlightedScrollBar.h/.cpp`: Defaulted destructor (`= default`), explicit `static_cast<int>` for Scintilla `sptr_t` conversions, C++17 `if` init-statement for `startAnchorY`, marked `drawTickMark` const.
+2. `RecentFilesListManager.h`: Explicit `static_cast<int>` on `recentFiles.size()` eliminating `qsizetype` to `int` precision loss.
+3. `RecentFilesListMenuBuilder.h/.cpp`: Declared `populateMenu` const, deduplicated type declarations with `auto *`.
+4. `RtfConverter.cpp`: C++17 `if` init-statement for `newStyle`, bounded `static_cast<int>` on `styleFore` and `charAt`.
+5. `EditorInfoStatusBar.h/.cpp`: Explicit lambda variable captures `[this]`, `[w, this]`, `[this, editor]`, pointer-to-const for `MainWindow` references, C++20 `using enum Scintilla::Update`, default case in switch statement, pointer-to-const for `ScintillaNext` parameter in const inspector methods, and explicit `static_cast<int>` on selection and position offsets.
+
+### Upstream 3 PRs Harmonization
+
+- **PR #8a0a615 (`trimTrailingWhitespace`)**: Added trim trailing whitespace buffer action under `Edit -> Blank Operations -> Trim Trailing Whitespace` with full Indonesian localization (`NotepadNext_id.ts`).
+- **PR #e08fc92 (`removeMessageHandler`)**: Added defensive message handler cleanup in `DebugManager` and unregistering on `DebugLogDock` destruction.
+- **PR #90d6174 (`getToolTip`)**: Centralized editor tab and file list tooltip generation through `ScintillaNext::getToolTip()`.

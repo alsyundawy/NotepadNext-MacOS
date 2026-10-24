@@ -84,3 +84,8 @@ void DebugManager::addMessageHandler(DebugOutputHandler handler)
 {
     handlers->append(handler);
 }
+
+void DebugManager::removeMessageHandler(DebugOutputHandler handler)
+{
+    handlers->removeAll(handler);
+}

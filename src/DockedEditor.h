@@ -22,6 +22,7 @@
 #define DOCKEDEDITOR_H
 
 #include <QObject>
+#include <QPointer>
 
 #include "DockManager.h"
 #include "ScintillaNext.h"
@@ -32,8 +33,8 @@ class DockedEditor : public QObject
 
 private:
     ads::CDockManager* dockManager = Q_NULLPTR;
-    ads::CDockAreaWidget* latestDockArea = Q_NULLPTR;
-    ScintillaNext *currentEditor = Q_NULLPTR;
+    QPointer<ads::CDockAreaWidget> latestDockArea;
+    QPointer<ScintillaNext> currentEditor;
 
 public:
     explicit DockedEditor(QWidget *parent);

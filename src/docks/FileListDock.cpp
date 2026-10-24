@@ -115,7 +115,7 @@ void FileListDock::addEditor(ScintillaNext *editor)
     qInfo(Q_FUNC_INFO);
 
     QListWidgetItem *item = new QListWidgetItem(editor->getName());
-    item->setToolTip(editor->getName());
+    item->setToolTip(editor->getToolTip());
     item->setIcon(QIcon(":/icons/saved.png"));
     item->setData(Qt::UserRole, QVariant::fromValue(editor));
     item->setIcon(QIcon(editor->canSaveToDisk() ? ":/icons/unsaved.png" : ":/icons/saved.png"));
@@ -190,7 +190,7 @@ void FileListDock::editorRenamed()
 
         if (item) {
             item->setText(editor->getName());
-            item->setToolTip(editor->getName());
+            item->setToolTip(editor->getToolTip());
         }
     }
 }

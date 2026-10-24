@@ -74,6 +74,9 @@ public:
 
     QStringList debugInfo() const;
 
+    MainWindow *createNewWindow();
+    MainWindow *activeMainWindow() const;
+
 protected:
     bool event(QEvent *e) override;
 
@@ -95,10 +98,8 @@ private:
 
     std::unique_ptr<LuaState> luaState;
 
-    MainWindow *window = Q_NULLPTR;
+    QList<QPointer<MainWindow>> m_windows;
     QPointer<QWidget> currentlyFocusedWidget; // Keep a weak pointer to the QWidget since we don't own it
-
-    MainWindow *createNewWindow();
 
     QCommandLineParser parser;
 

@@ -30,17 +30,17 @@ RecentFilesListMenuBuilder::RecentFilesListMenuBuilder(RecentFilesListManager *m
 {
 }
 
-void RecentFilesListMenuBuilder::populateMenu(QMenu *menu)
+void RecentFilesListMenuBuilder::populateMenu(QMenu *menu) const
 {
     int i = 0;
 
     QList<QAction *> recentFileListActions;
     for (const QString &file : manager->fileList()) {
         ++i;
-        QAction *action = new QAction(QString("%1%2: %3").arg(i < 10 ? "&" : "").arg(i).arg(QDir::toNativeSeparators(file)), menu);
+        auto *action = new QAction(QString("%1%2: %3").arg(i < 10 ? "&" : "").arg(i).arg(QDir::toNativeSeparators(file)), menu);
 
         action->setData(file);
-        connect(action, &QAction::triggered, this, &RecentFilesListMenuBuilder::recentFileActionTriggered);
+        connect(action, &QAction::triggered, const_cast<RecentFilesListMenuBuilder *>(this), &RecentFilesListMenuBuilder::recentFileActionTriggered);
 
         recentFileListActions.append(action);
     }

@@ -1812,6 +1812,15 @@
         <translation>Hapus Baris Kosong</translation>
     </message>
     <message>
+        <source>Blank Operations</source>
+        <translation>Operasi Spasi Kosong</translation>
+    </message>
+    <message>
+        <source>Trim Trailing Space</source>
+        <translation>Pangkas Spasi di Akhir</translation>
+    </message>
+
+    <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1298" />
         <location filename="../src/dialogs/MainWindow.ui" line="1301" />
         <source>Show in Explorer</source>

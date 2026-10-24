@@ -356,6 +356,11 @@ QString ScintillaNext::getFilePath() const
     return QDir::toNativeSeparators(fileInfo.canonicalFilePath());
 }
 
+QString ScintillaNext::getToolTip() const
+{
+    return isFile() ? getFilePath() : getName();
+}
+
 void ScintillaNext::setFoldMarkers(const QString &type)
 {
     QMap<QString, QList<int>> map{
@@ -633,6 +638,17 @@ void ScintillaNext::removeConsecutiveDuplicateLines()
     replaceTarget(result.length(), result.constData());
 }
 
+void ScintillaNext::trimTrailingWhitespace()
+{
+    Finder f(this);
+    const UndoAction ua(this);
+
+    // $ alone only matches before \n, so handle CRLF and CR line endings explicitly
+    f.options().text = QStringLiteral("[ \\t]+(?=[\\r\\n]|$)");
+    f.options().flags = Scintilla::FindOption::RegExp;
+    f.replaceAll(QString());
+}
+
 void ScintillaNext::convertTabsToSpaces()
 {
     const int tabSize = std::max(1, static_cast<int>(tabWidth()));
@@ -706,12 +722,13 @@ namespace {
 bool handleGraphemeDeletion(ScintillaNext *editor, QKeyEvent *keyEv, int key, Sci_Position pos, Sci_Position lineStart, Sci_Position lineEnd)
 {
     if (key == Qt::Key_Backspace && pos > lineStart) {
-        const auto lenInLine = static_cast<int>(pos - lineStart);
-        QByteArray bytes(lenInLine, '\0');
-        Sci_TextRange tr{{static_cast<Sci_PositionCR>(lineStart), static_cast<Sci_PositionCR>(pos)}, bytes.data()};
+        const Sci_Position checkStart = std::max<Sci_Position>(lineStart, pos - 64);
+        const auto len = static_cast<int>(pos - checkStart);
+        QByteArray bytes(len + 1, '\0');
+        Sci_TextRange tr{{static_cast<Sci_PositionCR>(checkStart), static_cast<Sci_PositionCR>(pos)}, bytes.data()};
         editor->send(SCI_GETTEXTRANGE, 0, reinterpret_cast<sptr_t>(&tr));
 
-        const QString lineStr = QString::fromUtf8(bytes.constData(), lenInLine);
+        const QString lineStr = QString::fromUtf8(bytes.constData(), len);
         QTextBoundaryFinder finder(QTextBoundaryFinder::Grapheme, lineStr);
         finder.setPosition(lineStr.length());
         const auto prevUtf16 = static_cast<int>(finder.toPreviousBoundary());
@@ -724,12 +741,13 @@ bool handleGraphemeDeletion(ScintillaNext *editor, QKeyEvent *keyEv, int key, Sc
             }
         }
     } else if (key == Qt::Key_Delete && pos < lineEnd) {
-        const auto lenToLineEnd = static_cast<int>(lineEnd - pos);
-        QByteArray bytes(lenToLineEnd, '\0');
-        Sci_TextRange tr{{static_cast<Sci_PositionCR>(pos), static_cast<Sci_PositionCR>(lineEnd)}, bytes.data()};
+        const Sci_Position checkEnd = std::min<Sci_Position>(lineEnd, pos + 64);
+        const auto len = static_cast<int>(checkEnd - pos);
+        QByteArray bytes(len + 1, '\0');
+        Sci_TextRange tr{{static_cast<Sci_PositionCR>(pos), static_cast<Sci_PositionCR>(checkEnd)}, bytes.data()};
         editor->send(SCI_GETTEXTRANGE, 0, reinterpret_cast<sptr_t>(&tr));
 
-        const QString lineStr = QString::fromUtf8(bytes.constData(), lenToLineEnd);
+        const QString lineStr = QString::fromUtf8(bytes.constData(), len);
         QTextBoundaryFinder finder(QTextBoundaryFinder::Grapheme, lineStr);
         finder.setPosition(0);
         const auto nextUtf16 = static_cast<int>(finder.toNextBoundary());

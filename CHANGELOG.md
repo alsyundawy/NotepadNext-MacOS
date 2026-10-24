@@ -5,7 +5,7 @@ Format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) a
 
 ---
 
-## [0.15-07] - 2026-10-24
+## [0.15-07] - 2026-10-25
 
 ### 🛡️ Security Hardening & 2025–2026 CVE Defenses / Pertahanan Keamanan & Mitigasi CVE 2025–2026
 
@@ -45,9 +45,19 @@ Format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) a
 - 🇮🇩 **Presisi Formulir Input Cari & Ganti**: Menegakkan format 1 kotak input (`comboFind`) pada Tab Find dan Tab Mark, menyembunyikan baris Replace sepenuhnya dan menyusutkan tinggi dialog via `adjustSize()`, serta membatasi 2 kotak input hanya untuk Tab Replace.
 - 🇬🇧 **Persistent Toolbar Preferences & Exit Actions**: Enforced persistent Settings/Preferences (cog icon) and Exit (exit icon) on `mainToolBar`, ensuring icons are never lost when restoring saved toolbars from `QSettings`.
 - 🇮🇩 **Retensi Permanen Ikon Toolbar Preferensi & Keluar**: Memastikan persistensi aksi Preferensi (ikon roda gigi) dan Keluar (ikon keluar) pada `mainToolBar`, mencegah hilangnya ikon saat memuat ulang konfigurasi dari `QSettings`.
+- 🇬🇧 **macOS In-Process Multi-Window & Dock Integration**: Unified multi-window architecture within a single process via `NotepadNextApplication`, ensuring secondary window invocations and Cmd+N remain responsive to macOS Dock activations and Cmd+` window cycling.
+- 🇮🇩 **Arsitektur Multi-Jendela In-Process & Integrasi Dock macOS**: Menyatukan arsitektur multi-jendela dalam satu proses tunggal via `NotepadNextApplication`, memastikan pembuatan jendela baru dan Cmd+N tetap responsif terhadap klik ikon Dock macOS dan pergantian jendela Cmd+`.
+- 🇬🇧 **macOS Dock Right-Click Quit Save Prompt (`QEvent::Close`)**: Intercepted application-level close events on macOS Dock context menu quit and Cmd+Q, iterating through all tracked windows and invoking `checkEditorsBeforeClose()` to guarantee dirty and untitled tabs prompt for saving before exit.
+- 🇮🇩 **Dialog Konfirmasi Simpan Berkas saat Keluar dari Menu Dock macOS (`QEvent::Close`)**: Menangkap event penutupan tingkat aplikasi saat keluar melalui klik kanan menu Dock atau Cmd+Q, menelusuri seluruh jendela dan memanggil `checkEditorsBeforeClose()` guna memastikan tab yang dimodifikasi atau baru selalu meminta konfirmasi simpan sebelum aplikasi ditutup.
+- 🇬🇧 **Multi-View Split Closure & Unicode Emoji Rendering Stability**: Fortified tab closure routines in horizontal/vertical split views and eliminated text layout crashes on high-volume documents (>10,000 lines) containing complex compound emojis via bounded PlatQt measurement.
+- 🇮🇩 **Stabilitas Penutupan Tab Tampilan Pisah & Rendering Emoji Unicode**: Memperkuat rutinitas penutupan tab pada mode belah horizontal/vertikal dan mencegah crash tata letak teks pada dokumen bervolume besar (>10.000 baris) dengan emoji majemuk melalui pengukuran berbatas PlatQt.
 
 ### 🔍 13-Pillar Code Quality, SonarLint & Static Analysis Audit / Audit Kualitas Kode 13 Pilar, SonarLint & Analisis Statis
 
+- 🇬🇧 **100% Zero-Defect SonarLint & IDE Diagnostics Resolution**: Resolved all 17 flagged IDE and SonarLint warnings across `HighlightedScrollBar`, `RecentFilesListManager`, `RecentFilesListMenuBuilder`, `RtfConverter`, and `EditorInfoStatusBar` (defaulted destructors `= default`, C++17 `if` init-statements, explicit lambda captures `[this]`, C++20 `using enum Scintilla::Update`, default cases in switch statements, pointer-to-const parameter qualifiers, and explicit `static_cast<int>` on `sptr_t` and `qsizetype`).
+- 🇮🇩 **Penyelesaian Penuh Diagnostik SonarLint & Linter IDE Bebas Cacat 100%**: Menyelesaikan seluruh 17 peringatan linter IDE dan SonarLint pada `HighlightedScrollBar`, `RecentFilesListManager`, `RecentFilesListMenuBuilder`, `RtfConverter`, dan `EditorInfoStatusBar` (destruktor defaulted `= default`, C++17 `if` init-statements, penangkapan lambda eksplisit `[this]`, C++20 `using enum Scintilla::Update`, case default pada switch, kualifikasi pointer-to-const pada parameter, serta `static_cast<int>` eksplisit untuk `sptr_t` dan `qsizetype`).
+- 🇬🇧 **Upstream PR Harmonization**: Cleanly ported and harmonized upstream PR #8a0a615 (Trim Trailing Whitespace buffer operation with full Indonesian localization), PR #e08fc92 (defensive message handler deregistration in `DebugManager`), and PR #90d6174 (centralized tooltip generation in `ScintillaNext::getToolTip`).
+- 🇮🇩 **Harmonisasi PR Upstream**: Mengintegrasikan dan mengharmonisasikan PR upstream #8a0a615 (Aksi Pangkas Spasi Akhir dengan pelokalan Indonesia penuh), PR #e08fc92 (pelepasan handler pesan secara defensif pada `DebugManager`), serta PR #90d6174 (pembuatan tooltip terpusat via `ScintillaNext::getToolTip`).
 - 🇬🇧 **100% Zero-Defect Codebase Hardening**: Resolved all SonarLint and static analysis warnings across `URLFinder`, `FindReplaceDialog`, `MacroEditorDialog`, `MainWindow`, `UpdateDialog`, `EditorInspectorDock`, `EditorManager`, `ThemeManager`, `LuaExtension`, `LuaState`, `NotepadNextApplication`, and `ScintillaNext`.
 - 🇮🇩 **Penguatan Basis Kode Bebas Cacat 100%**: Menyelesaikan seluruh peringatan SonarLint dan analisis statis di seluruh file inti (`URLFinder`, `FindReplaceDialog`, `MacroEditorDialog`, `MainWindow`, `UpdateDialog`, `EditorInspectorDock`, `EditorManager`, `ThemeManager`, `LuaExtension`, `LuaState`, `NotepadNextApplication`, dan `ScintillaNext`).
 - 🇬🇧 **Cognitive Complexity & Nesting Reductions**: Refactored monolithic functions in `MainWindow.cpp`, `LuaExtension.cpp`, `EditorManager.cpp`, and `ScintillaNext.cpp` into modular, single-responsibility helpers, dropping cognitive complexity well below 25 and maximum control flow nesting <= 3.

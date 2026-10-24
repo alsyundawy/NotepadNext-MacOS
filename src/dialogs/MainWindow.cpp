@@ -426,6 +426,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) : // NOSONAR
         editor->deleteTrailingEmptyLines();
     });
 
+    connectEditorAction(ui->actionTrimTrailingSpace, &ScintillaNext::trimTrailingWhitespace);
     connectEditorAction(ui->actionRemoveDuplicateLines, &ScintillaNext::removeDuplicateLines);
     connectEditorAction(ui->actionRemoveConsecutiveDuplicateLines, &ScintillaNext::removeConsecutiveDuplicateLines);
 
@@ -1527,22 +1528,14 @@ void MainWindow::newFile() const
     }
 }
 
-void MainWindow::newWindow() const
+void MainWindow::newWindow()
 {
-#if defined(Q_OS_MACOS)
-    const QString appPath = QCoreApplication::applicationFilePath();
-    if (QDir dir(appPath); dir.cdUp() && dir.cdUp() && dir.cdUp()) {
-        const QString bundlePath = dir.absolutePath();
-        if (bundlePath.endsWith(QStringLiteral(".app"), Qt::CaseInsensitive)) {
-            QProcess::startDetached(QStringLiteral("/usr/bin/open"),
-                                    QStringList() << QStringLiteral("-n") << bundlePath << QStringLiteral("--args")
-                                                  << QStringLiteral("--multi-instance"));
-            return;
-        }
+    if (MainWindow *newWin = app->createNewWindow()) {
+        newWin->restoreWindowState();
+        newWin->newFile();
+        newWin->show();
+        newWin->bringWindowToForeground();
     }
-#endif
-    QProcess::startDetached(QCoreApplication::applicationFilePath(), QStringList()
-                                                                         << QStringLiteral("--multi-instance"));
 }
 
 // One unedited, new blank document
@@ -1613,6 +1606,7 @@ bool MainWindow::checkEditorsBeforeClose(const QVector<ScintillaNext *> &editorL
 {
     QVector<ScintillaNext *> unsaved;
     for (auto *e : editorList) {
+        if (!e) continue;
         if (!e->isSavedToDisk()) unsaved.append(e);
     }
 
@@ -1693,6 +1687,10 @@ void MainWindow::closeCurrentFile()
 
 void MainWindow::closeFile(ScintillaNext *editor)
 {
+    if (!editor) {
+        return;
+    }
+
     // Early out. If we aren't exiting on last tab closed, and it exists, there's no point in continuing
     if (!app->getSettings()->exitOnLastTabClosed() && getInitialEditor() != Q_NULLPTR) {
         return;
@@ -2851,17 +2849,9 @@ void MainWindow::initUpdateCheck()
 
 void MainWindow::closeEvent(QCloseEvent *closeEvent)
 {
-    const SessionManager *sessionManager = app->getSessionManager();
-    QVector<ScintillaNext *> unsavedEditors;
+    bringWindowToForeground();
 
-    // Check all editors to see if the session manager will not handle it
-    for (auto editor : editors()) {
-        if (!sessionManager->willFileGetStoredInSession(editor)) {
-            unsavedEditors.append(editor);
-        }
-    }
-
-    if (!checkEditorsBeforeClose(unsavedEditors)) {
+    if (!checkEditorsBeforeClose(editors())) {
         closeEvent->ignore();
         return;
     }
