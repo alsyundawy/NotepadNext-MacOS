@@ -1961,7 +1961,7 @@ void MainWindow::renameFile()
 
 void MainWindow::moveCurrentFileToTrash()
 {
-    ScintillaNext *editor = currentEditor();
+    const ScintillaNext *editor = currentEditor();
 
     moveFileToTrash(editor);
 }

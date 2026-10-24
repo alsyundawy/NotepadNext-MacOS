@@ -45,13 +45,13 @@ class FindReplaceDialog : public QDialog
 
 public:
     enum class TabIndex : int {
-        FIND_TAB = 0,
-        REPLACE_TAB = 1,
-        MARK_TAB = 2
+        Find = 0,
+        Replace = 1,
+        Mark = 2
     };
-    static constexpr int FIND_TAB = static_cast<int>(TabIndex::FIND_TAB);
-    static constexpr int REPLACE_TAB = static_cast<int>(TabIndex::REPLACE_TAB);
-    static constexpr int MARK_TAB = static_cast<int>(TabIndex::MARK_TAB);
+    static constexpr int FIND_TAB = static_cast<int>(TabIndex::Find);
+    static constexpr int REPLACE_TAB = static_cast<int>(TabIndex::Replace);
+    static constexpr int MARK_TAB = static_cast<int>(TabIndex::Mark);
 
     enum class SearchDirection
     {

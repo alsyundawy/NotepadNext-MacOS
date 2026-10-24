@@ -312,14 +312,15 @@ bool ScintillaNext::isSavedToDisk() const
 
 bool ScintillaNext::canSaveToDisk() const
 {
+    using enum BufferType;
     // The buffer can be saved if:
     // - It is marked as a temporary since as soon as it gets saved it is no longer a temporary buffer
     // - A modified file
     // - A missing file since as soon as it is saved it is no longer missing.
     return temporary ||
-           (bufferType == BufferType::New && modify()) ||
-           (bufferType == BufferType::File && modify()) ||
-            (bufferType == BufferType::FileMissing);
+           (bufferType == New && modify()) ||
+           (bufferType == File && modify()) ||
+           (bufferType == FileMissing);
 }
 
 void ScintillaNext::setName(const QString &newName)

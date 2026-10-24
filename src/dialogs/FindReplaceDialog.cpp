@@ -935,8 +935,7 @@ bool FindReplaceDialog::eventFilter(QObject *obj, QEvent *event)
         return QDialog::eventFilter(obj, event);
     }
 
-    const auto *keyEvent = static_cast<const QKeyEvent *>(event);
-    if (!keyEvent->matches(QKeySequence::Paste)) {
+    if (const auto *keyEvent = static_cast<const QKeyEvent *>(event); !keyEvent->matches(QKeySequence::Paste)) {
         return QDialog::eventFilter(obj, event);
     }
 

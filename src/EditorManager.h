@@ -58,6 +58,9 @@ signals:
 
 private:
     void setupSettingsConnections();
+    void setupViewSettingsConnections();
+    void setupFontSettingsConnections();
+    void setupDecoratorSettingsConnections();
     void setupEditor(ScintillaNext *editor) const;
     void purgeOldEditorPointers();
     QList<QPointer<ScintillaNext>> getEditors();

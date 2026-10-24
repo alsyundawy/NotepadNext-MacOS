@@ -93,7 +93,7 @@ EditorManager::EditorManager(ApplicationSettings *settings, QObject *parent)
     setupSettingsConnections();
 }
 
-void EditorManager::setupSettingsConnections()
+void EditorManager::setupViewSettingsConnections()
 {
     connect(settings, &ApplicationSettings::showWrapSymbolChanged, this, [this](bool b) {
         for (const auto &editor : getEditors()) {
@@ -102,7 +102,6 @@ void EditorManager::setupSettingsConnections()
     });
 
     connect(settings, &ApplicationSettings::showWhitespaceChanged, this, [this](bool b) {
-        // Whitespace visibility uses standard SCWS_VISIBLEALWAYS when enabled
         for (const auto &editor : getEditors()) {
             editor->setViewWS(b ? SCWS_VISIBLEALWAYS : SCWS_INVISIBLE);
         }
@@ -128,14 +127,16 @@ void EditorManager::setupSettingsConnections()
         }
         else {
             for (const auto &editor : getEditors()) {
-                // Store the top line and restore it after the lines have been unwrapped
                 const auto topLine = static_cast<int>(editor->docLineFromVisible(editor->firstVisibleLine()));
                 editor->setWrapMode(SC_WRAP_NONE);
                 editor->setFirstVisibleLine(topLine);
             }
         }
     });
+}
 
+void EditorManager::setupFontSettingsConnections()
+{
     connect(settings, &ApplicationSettings::fontNameChanged, this, [this](const QString &fontName){
         for (const auto &editor : getEditors()) {
             for (int i = 0; i <= STYLE_MAX; ++i) {
@@ -151,7 +152,10 @@ void EditorManager::setupSettingsConnections()
             }
         }
     });
+}
 
+void EditorManager::setupDecoratorSettingsConnections()
+{
     connect(settings, &ApplicationSettings::urlHighlightingChanged, this, [this](bool b){
         for (const auto &editor : getEditors()) {
             URLFinder *decorator = editor->findChild<URLFinder *>(QString(), Qt::FindDirectChildrenOnly);
@@ -180,6 +184,13 @@ void EditorManager::setupSettingsConnections()
             }
         }
     });
+}
+
+void EditorManager::setupSettingsConnections()
+{
+    setupViewSettingsConnections();
+    setupFontSettingsConnections();
+    setupDecoratorSettingsConnections();
 }
 
 ScintillaNext *EditorManager::createEditor(const QString &name)
