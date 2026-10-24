@@ -38,6 +38,22 @@
 >
 > 🇮🇩 **NotepadNext For MacOS** adalah implementasi ulang native Notepad++ untuk macOS yang dibangun menggunakan Qt 6 modern. Aplikasi ini menghadirkan kecepatan tinggi, penyorotan sintaks untuk 470+ format file, manajemen multi-tab dokumen, integrasi sistem macOS, serta pelokalan penuh Bahasa Indonesia dan Bahasa Inggris.
 
+### 🌟 Latest Release Highlights (v0.15-07)
+
+> 🇬🇧 **Version 0.15-07 Enterprise Upgrade:**
+>
+> - 🛡️ **2025–2026 CVE Mitigations**: SHA-256 package validation (CVE-2025-15556), sandboxed Lua 5.5.1 runtime (CVE-2026-42214), canonical absolute binaries (CVE-2026-25926), and bounded C-string checks (CVE-2025-49144).
+> - ⚡ **Advanced Text Editing Power**: Scintilla 5.6.7 Retina pixel-aligned scaling, natural locale-aware numeric sorting (`QCollator`), inline math evaluator (`Cmd+Shift+M`), multi-line paste auto-escaping in Find/Replace, integrated side-by-side file diff, and read-only hex viewer.
+> - 🍏 **macOS Native UI/UX**: Menu bar extra status mode (`QSystemTrayIcon`), persistent Settings (cog) & Exit toolbar buttons, and strict 1-box form input for Find and Mark tabs.
+> - 🔍 **Zero-Defect Code Quality**: 100% clean static analysis and linters (`trunk check` 19/19 passed, MegaLinter & SonarQube compliant).
+>
+> 🇮🇩 **Peningkatan Enterprise Versi 0.15-07:**
+>
+> - 🛡️ **Mitigasi CVE 2025–2026**: Validasi paket kriptografis SHA-256 (CVE-2025-15556), kotak pasir runtime Lua 5.5.1 (CVE-2026-42214), kanonikalisasi biner absolut (CVE-2026-25926), dan proteksi batas memori string (CVE-2025-49144).
+> - ⚡ **Fitur Produktivitas Modern**: Penskalaan Retina sejajar piksel Scintilla 5.6.7, pengurutan baris numerik alami peka-lokal (`QCollator`), kalkulator ekspresi matematika langsung (`Cmd+Shift+M`), auto-escape baris baru pada tempel cari/ganti, perbandingan diff dua buffer terintegrasi, dan viewer heksadesimal/biner.
+> - 🍏 **Penyempurnaan UI/UX Native macOS**: Mode residen status menu bar (`QSystemTrayIcon`), persistensi tombol Preferences & Exit pada toolbar, dan presisi format 1 kotak input pada tab Find & Mark.
+> - 🔍 **Kualitas Kode Bebas Cacat**: Lolos 100% analisis statis dan linter (`trunk check` 19/19 passed, kompatibel penuh MegaLinter & SonarQube).
+
 ---
 
 ## Quickstart
