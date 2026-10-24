@@ -136,7 +136,8 @@ public:
     QString languageName;
     QByteArray languageSingleLineComment;
 
-    #include "ScintillaEnums.h" // NOSONAR
+    // NOSONAR(cpp:S3805)
+    #include "ScintillaEnums.h" // NOSONAR(cpp:S3805)
 
     using QWidget::close;
 
