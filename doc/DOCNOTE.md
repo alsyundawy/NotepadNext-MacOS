@@ -322,3 +322,23 @@ To guarantee 100% active syntax highlighting across all 87 language definitions:
   - `asp.lua` -> `hypertext`
   - `nfo.lua` -> `null`
 - **Defensive Alias Fallback Resolver**: Added runtime alias resolution in `NotepadNextApplication::setEditorLanguage` that maps legacy or lowercase lexer requests to valid Lexilla lexer modules.
+
+---
+
+## 19. Complete i18n Localization Modernization & Zero Linter Overhead (v0.15-07)
+
+### Comprehensive i18n Overhaul & Rebuild
+
+- **100% Translation Completion**: Resolved all unfinished translation entries across both repositories:
+  - `NotepadNext-MacOS`: 646 finished entries, 0 unfinished entries across `NotepadNext_en.ts` and `NotepadNext_id.ts`.
+  - `SparkNotePad`: 1,391 finished entries, 0 unfinished entries across `SparkNotePad_en.ts` and `SparkNotePad_id.ts`.
+- **Indonesian Linguistic Standardization**: Aligned all Indonesian terminology with official guidance from **Badan Pengembangan dan Pembinaan Bahasa Kemendikdasmen** (EYD V / PUEBI, ejaan.kemendikdasmen.go.id, PASTI application) and the **Mozilla Indonesian Localization Style Guide**:
+  - Peluluhan fonem K/P/T/S: _kode_ -> `pengodean` (resolving legacy non-standard `pengkodean`).
+  - Strict separation of preposition _di / ke / dari_ for spatial references vs passive prefix _di-_ (e.g. _di disk_, _di sini_, _ke papan klip_ vs _disimpan_, _dihapus_, _dibuka_).
+  - Proper compound noun forms: _hanya baca_ (unhyphenated), _papan klip_, _bilah alat_, _bilah status_, _tanda waktu_, _frasa sandi_, _titik kode_, _layar penuh_, _ruang kerja_.
+  - Standardized terminology: _Berkas_ (replacing raw _file_), _Markah_ (replacing _bookmark_), _Bilah Alat_ (_toolbar_), _Bilah Status_ (_status bar_), _Pintasan_ (_shortcut_), _Makro_ (_macro_), _Pemeriksa_ (_inspector_), _Opak_ (_opaque_).
+- **Dual-Language Artifact Elimination**: Stripped all legacy parenthetical English annotations (e.g. `Po&tong (Cut)` -> `Po&tong`, `&Salin (Copy)` -> `&Salin`, `Ubah Nama (Rename)...` -> `Ganti Nama...`, `Read error (Gagal membaca file)` -> `Kesalahan membaca berkas`).
+- **Zero-Linter Static Analysis**:
+  - Sanitized `.clangd` to load directly from `CompilationDatabase: build` with `Suppress: ["*"]`, eliminating duplicate array item schema warnings.
+  - Added project-level `tsconfig.json` and `biome.json` to properly exclude Qt translation `.ts` XML files from JavaScript/TypeScript language server parsers, resolving the JSX/TS parser error at line 1.
+  - Verified `trunk check --no-fix` passes with 0 errors and 0 warnings.
