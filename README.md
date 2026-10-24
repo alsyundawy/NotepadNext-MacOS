@@ -58,6 +58,8 @@
 > - 🧩 **Stabilitas & Pertahanan Crash Emoji Dokumen Besar**: Mengamankan penutupan tab pada mode belah tampilan horizontal/vertikal serta mencegah crash layout pada dokumen bervolume besar (>10.000 baris) dengan emoji majemuk Unicode 18.0 via pengukuran berbatas PlatQt.
 > - 🌐 **Pelokalan i18n 100% Sempurna**: 0 entri belum selesai untuk katalog bahasa Indonesia (`id_ID`) dan bahasa Inggris (`en_US`), distandarisasi penuh sesuai kaidah EYD V, PUEBI, glosarium PASTI Badan Bahasa, dan Mozilla L10n.
 > - 🔍 **Kualitas Kode Bebas Cacat**: Lolos 100% analisis statis dan linter (`trunk check` lolos 0 masalah, MegaLinter, cppcheck, dan seluruh 36/36 peringatan SonarLint terselesaikan tuntas).
+>
+> 📊 **Cumulative Architecture Matrix**: For the complete 21-dimension matrix synthesizing all innovations from `v0.15-01` through `v0.15-07` against official upstream v0.15, see [Release Notes 0.15-07](doc/RELEASE_NOTES_0.15-07.md#📊-comprehensive-feature--architecture-matrix-cumulative-v015-01-to-v015-07) and [DOCNOTE.md](doc/DOCNOTE.md#11-comprehensive-feature--architecture-matrix-cumulative-v015-01-to-v015-07).
 
 ---
 
