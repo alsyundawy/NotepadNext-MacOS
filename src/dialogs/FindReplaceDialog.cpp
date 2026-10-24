@@ -37,11 +37,11 @@
 
 static void convertToExtended(QString &str)
 {
-    str.replace("\\r", "\r");
-    str.replace("\\n", "\n");
-    str.replace("\\t", "\t");
-    str.replace("\\0", "\0");
-    str.replace(R"(\\)", "\\");
+    str.replace(R"(\r)", QStringLiteral("\r"));
+    str.replace(R"(\n)", QStringLiteral("\n"));
+    str.replace(R"(\t)", QStringLiteral("\t"));
+    str.replace(R"(\0)", QString::fromLatin1("\0", 1));
+    str.replace(R"(\\)", QStringLiteral("\\"));
     // Extended escape sequence processing complete
 }
 
@@ -67,7 +67,7 @@ FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainW
     connect(ThemeManager::instance(), &ThemeManager::paletteChanged, this,
             [this]() { setStyleSheet(ThemeManager::instance()->getThemeStyleSheet()); });
 
-    tabBar = new QTabBar(this);
+    tabBar = new QTabBar(this); // NOSONAR
     tabBar->setDrawBase(false);
     tabBar->addTab(tr("Find"));
     tabBar->addTab(tr("Replace"));
@@ -76,7 +76,7 @@ FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainW
     qobject_cast<QVBoxLayout *>(layout())->insertWidget(0, tabBar, 0, Qt::AlignLeft);
     connect(tabBar, &QTabBar::currentChanged, this, &FindReplaceDialog::changeTab);
 
-    statusBar = new QStatusBar(this);
+    statusBar = new QStatusBar(this); // NOSONAR
     statusBar->setSizeGripEnabled(false); // the dialog has one already
     qobject_cast<QVBoxLayout *>(layout())->insertWidget(-1, statusBar);
 
