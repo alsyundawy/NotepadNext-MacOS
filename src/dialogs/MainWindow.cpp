@@ -3120,14 +3120,14 @@ void MainWindow::compareOpenBuffers()
         const QByteArray t2 = (line < lines2) ? ed2->getLine(line) : QByteArray();
         if (t1 != t2) {
             if (line < lines1) {
-                const auto pStart = ed1->positionFromLine(line);
-                const auto pEnd = ed1->lineEndPosition(line);
+                const auto pStart = static_cast<int>(ed1->positionFromLine(line));
+                const auto pEnd = static_cast<int>(ed1->lineEndPosition(line));
                 ed1->setIndicatorCurrent(INDICATOR_CONTAINER);
                 ed1->indicatorFillRange(pStart, pEnd - pStart);
             }
             if (line < lines2) {
-                const auto pStart = ed2->positionFromLine(line);
-                const auto pEnd = ed2->lineEndPosition(line);
+                const auto pStart = static_cast<int>(ed2->positionFromLine(line));
+                const auto pEnd = static_cast<int>(ed2->lineEndPosition(line));
                 ed2->setIndicatorCurrent(INDICATOR_CONTAINER);
                 ed2->indicatorFillRange(pStart, pEnd - pStart);
             }
