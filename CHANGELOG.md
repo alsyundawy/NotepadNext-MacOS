@@ -41,6 +41,10 @@ Format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) a
 - 🇮🇩 **Elipsis Tengah Judul Tab (`elideMode`)**: Menerapkan pemotongan judul tab panjang dengan elipsis tengah yang dapat dikonfigurasi, menjaga stabilitas geometri bilah tab meski membuka 30+ dokumen.
 - 🇬🇧 **Horizon Dark Contrast Optimization**: Fine-tuned dark/light horizon themes for maximum contrast and readability on Apple Retina displays.
 - 🇮🇩 **Optimalisasi Kontras Horizon Dark**: Menyetel palet tema gelap/terang horizon untuk kontras dan keterbacaan optimal pada layar Apple Retina.
+- 🇬🇧 **Find & Replace Form Input Precision**: Enforced strict 1-box form input (`comboFind`) for Tab Find and Tab Mark, completely hiding the Replace row and shrinking dialog height via `adjustSize()`, reserving the 2-box input strictly for Tab Replace.
+- 🇮🇩 **Presisi Formulir Input Cari & Ganti**: Menegakkan format 1 kotak input (`comboFind`) pada Tab Find dan Tab Mark, menyembunyikan baris Replace sepenuhnya dan menyusutkan tinggi dialog via `adjustSize()`, serta membatasi 2 kotak input hanya untuk Tab Replace.
+- 🇬🇧 **Persistent Toolbar Preferences & Exit Actions**: Enforced persistent Settings/Preferences (cog icon) and Exit (exit icon) on `mainToolBar`, ensuring icons are never lost when restoring saved toolbars from `QSettings`.
+- 🇮🇩 **Retensi Permanen Ikon Toolbar Preferensi & Keluar**: Memastikan persistensi aksi Preferensi (ikon roda gigi) dan Keluar (ikon keluar) pada `mainToolBar`, mencegah hilangnya ikon saat memuat ulang konfigurasi dari `QSettings`.
 
 ### 🔍 13-Pillar Code Quality, SonarLint & Static Analysis Audit / Audit Kualitas Kode 13 Pilar, SonarLint & Analisis Statis
 
