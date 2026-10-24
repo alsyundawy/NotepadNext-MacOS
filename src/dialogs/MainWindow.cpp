@@ -1353,6 +1353,59 @@ void MainWindow::setupLanguageMenu()
     }
 }
 
+namespace {
+void populateThemeSubmenu(QMenu *menu, const QList<const ThemePalette *> &palettes, MainWindow *window)
+{
+    for (const ThemePalette *pal : palettes) {
+        auto *act = menu->addAction(QString::fromUtf8(pal->displayName));
+        act->setCheckable(true);
+        act->setData(QString::fromLatin1(pal->id));
+        QObject::connect(act, &QAction::triggered, window, [window, pal]() {
+            ThemeManager::instance()->setPalette(QString::fromLatin1(pal->id), window);
+            window->statusBar()->showMessage(QCoreApplication::translate("MainWindow", "Theme applied: %1").arg(QString::fromUtf8(pal->displayName)), 3000);
+        });
+    }
+}
+
+void populateThemeFamilySubmenus(QMenu *familiesMenu, MainWindow *window)
+{
+    const QStringList families = getThemeFamiliesList();
+    for (const QString &family : families) {
+        QMenu *famMenu = familiesMenu->addMenu(family);
+        const QList<const ThemePalette *> palettes = getThemePalettesByFamily(family);
+        for (const ThemePalette *pal : palettes) {
+            QString itemLabel = QString::fromUtf8(pal->displayName);
+            itemLabel += pal->isDark ? QStringLiteral(" (Dark)") : QStringLiteral(" (Light)");
+            if (famMenu) {
+                auto *act = famMenu->addAction(itemLabel);
+                act->setCheckable(true);
+                act->setData(QString::fromLatin1(pal->id));
+                QObject::connect(act, &QAction::triggered, window, [window, pal]() {
+                    ThemeManager::instance()->setPalette(QString::fromLatin1(pal->id), window);
+                    window->statusBar()->showMessage(QCoreApplication::translate("MainWindow", "Theme applied: %1").arg(QString::fromUtf8(pal->displayName)), 3000);
+                });
+            }
+        }
+    }
+}
+
+void updateThemeMenuChecks(const QMenu *menu, const QString &curId)
+{
+    if (!menu) {
+        return;
+    }
+    for (QAction *action : menu->actions()) {
+        if (action->menu()) {
+            for (QAction *subAction : action->menu()->actions()) {
+                subAction->setChecked(subAction->data().toString() == curId);
+            }
+        } else if (action->isCheckable()) {
+            action->setChecked(action->data().toString() == curId);
+        }
+    }
+}
+} // namespace
+
 void MainWindow::setupThemeMenu()
 {
     if (menuTheme) {
@@ -1377,70 +1430,25 @@ void MainWindow::setupThemeMenu()
 
     menuTheme->addSeparator();
 
-    auto populateSubmenu = [this](QMenu *menu, const QList<const ThemePalette *> &palettes) {
-        for (const ThemePalette *pal : palettes) {
-            auto *act = menu->addAction(QString::fromUtf8(pal->displayName));
-            act->setCheckable(true);
-            act->setData(QString::fromLatin1(pal->id));
-            connect(act, &QAction::triggered, this, [this, pal]() {
-                ThemeManager::instance()->setPalette(QString::fromLatin1(pal->id), this);
-                ui->statusBar->showMessage(tr("Theme applied: %1").arg(QString::fromUtf8(pal->displayName)), 3000);
-            });
-        }
-    };
-
     // 2. Light Themes Only (Submenu)
     QMenu *menuLightOnly = menuTheme->addMenu(tr("Light Themes Only"));
-    populateSubmenu(menuLightOnly, getThemesByDarkMode(false));
+    populateThemeSubmenu(menuLightOnly, getThemesByDarkMode(false), this);
 
     // 3. Dark Themes Only (Submenu)
     QMenu *menuDarkOnly = menuTheme->addMenu(tr("Dark Themes Only"));
-    populateSubmenu(menuDarkOnly, getThemesByDarkMode(true));
+    populateThemeSubmenu(menuDarkOnly, getThemesByDarkMode(true), this);
 
     menuTheme->addSeparator();
 
-    auto populateFamilySubmenus = [this](QMenu *familiesMenu) {
-        const QStringList families = getThemeFamiliesList();
-        for (const QString &family : families) {
-            QMenu *famMenu = familiesMenu->addMenu(family);
-            const QList<const ThemePalette *> palettes = getThemePalettesByFamily(family);
-            for (const ThemePalette *pal : palettes) {
-                QString itemLabel = QString::fromUtf8(pal->displayName);
-                itemLabel += pal->isDark ? QStringLiteral(" (Dark)") : QStringLiteral(" (Light)");
-                if (famMenu) {
-                    auto *act = famMenu->addAction(itemLabel);
-                    act->setCheckable(true);
-                    act->setData(QString::fromLatin1(pal->id));
-                    connect(act, &QAction::triggered, this, [this, pal]() {
-                        ThemeManager::instance()->setPalette(QString::fromLatin1(pal->id), this);
-                        ui->statusBar->showMessage(tr("Theme applied: %1").arg(QString::fromUtf8(pal->displayName)), 3000);
-                    });
-                }
-            }
-        }
-    };
-
     // 4. All 25 Families grouped neatly in a dedicated Submenu
     QMenu *menuFamilies = menuTheme->addMenu(tr("Themes by Family"));
-    populateFamilySubmenus(menuFamilies);
+    populateThemeFamilySubmenus(menuFamilies, this);
 
     connect(menuTheme, &QMenu::aboutToShow, this, [menuLightOnly, menuDarkOnly, menuFamilies]() {
         const QString curId = ThemeManager::instance()->currentPaletteId();
-        auto updateChecks = [&curId](QMenu *menu) {
-            if (!menu) return;
-            for (QAction *action : menu->actions()) {
-                if (action->menu()) {
-                    for (QAction *subAction : action->menu()->actions()) {
-                        subAction->setChecked(subAction->data().toString() == curId);
-                    }
-                } else if (action->isCheckable()) {
-                    action->setChecked(action->data().toString() == curId);
-                }
-            }
-        };
-        updateChecks(menuLightOnly);
-        updateChecks(menuDarkOnly);
-        updateChecks(menuFamilies);
+        updateThemeMenuChecks(menuLightOnly, curId);
+        updateThemeMenuChecks(menuDarkOnly, curId);
+        updateThemeMenuChecks(menuFamilies, curId);
     });
 
     menuTheme->addSeparator();
@@ -1958,7 +1966,7 @@ void MainWindow::moveCurrentFileToTrash()
     moveFileToTrash(editor);
 }
 
-void MainWindow::moveFileToTrash(ScintillaNext *editor)
+void MainWindow::moveFileToTrash(const ScintillaNext *editor)
 {
     Q_ASSERT(editor->isFile());
 

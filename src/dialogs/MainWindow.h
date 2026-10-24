@@ -111,7 +111,7 @@ public slots:
     void renameFile();
 
     void moveCurrentFileToTrash();
-    void moveFileToTrash(ScintillaNext *editor);
+    void moveFileToTrash(const ScintillaNext *editor);
 
     void print();
 
