@@ -37,8 +37,11 @@ Key innovations introduced in `0.15-07`:
    - **Tab Label Middle-Ellipsis (`elideMode`)**: Configurable tab title truncation maintaining clean tab geometry even with 30+ open files.
    - **Horizon Dark Theme Contrast Fine-Tuning**: Optimized high-contrast palette for Apple Retina displays.
 
-4. **100% Complete Bilingual Localization**:
-   - 100% complete Bahasa Indonesia (`id_ID`) and English (`en_US`) catalogs with 0 unfinished strings, fully harmonized with Apple Human Interface Guidelines (HIG).
+4. **100% Complete Bilingual Localization & Linguistic Rigor**:
+   - 100% complete Bahasa Indonesia (`id_ID`) and English (`en_US`) catalogs with 0 unfinished strings (646/646 entries).
+   - Standardized strictly against official Indonesian linguistic guidelines: EYD V ([ejaan.kemendikdasmen.go.id](https://ejaan.kemendikdasmen.go.id)), PUEBI, Mozilla Indonesian L10n Style Guide, and official IT terminology (PASTI Kemendikdasmen / KBBI).
+   - Eliminated legacy transliterations (e.g. _pengkodean_ -> _pengodean_, _file_ -> _berkas_, _shortcut_ -> _pintasan_) and stripped redundant parenthetical annotations.
+   - Zero-overhead IDE diagnostics: resolved Qt XML `.ts` vs TypeScript parser conflicts and `.clangd` schema validations.
 
 ---
 
