@@ -54,16 +54,17 @@ ThemeManager::ThemeManager(QObject *parent) : QObject(parent) {
 ThemeManager::~ThemeManager() = default;
 
 void ThemeManager::initialize(ApplicationSettings *settings) {
+    using enum ThemeMode;
     m_settings = settings;
     if (m_settings) {
-        QString savedMode =
-            m_settings->value(QStringLiteral("App/ThemeMode"), QStringLiteral("Light")).toString().toLower();
-        if (savedMode == QStringLiteral("dark")) {
-            m_themeMode = ThemeMode::Dark;
+        if (const QString savedMode =
+                m_settings->value(QStringLiteral("App/ThemeMode"), QStringLiteral("Light")).toString().toLower();
+            savedMode == QStringLiteral("dark")) {
+            m_themeMode = Dark;
         } else if (savedMode == QStringLiteral("auto")) {
-            m_themeMode = ThemeMode::Auto;
+            m_themeMode = Auto;
         } else {
-            m_themeMode = ThemeMode::Light;
+            m_themeMode = Light;
         }
 
         QString savedPalette = m_settings->value(QStringLiteral("App/ThemePalette"), QString()).toString();
@@ -71,7 +72,7 @@ void ThemeManager::initialize(ApplicationSettings *settings) {
             m_currentPaletteId = savedPalette;
         } else {
             m_currentPaletteId =
-                (m_themeMode == ThemeMode::Dark) ? QStringLiteral("horizonDark") : QStringLiteral("notepadNext");
+                (m_themeMode == Dark) ? QStringLiteral("horizonDark") : QStringLiteral("notepadNext");
         }
     }
 }
@@ -93,6 +94,7 @@ const ThemePalette *ThemeManager::currentPalette() const {
     if (!m_currentPaletteId.isEmpty()) {
         const ThemePalette *p = findThemePaletteById(m_currentPaletteId);
         if (p) {
+            // Horizon Dark studio palette: high-contrast readability for line numbers, selection, and indicators
             if (m_themeMode == ThemeMode::Dark && !p->isDark) {
                 return findThemePaletteById(QStringLiteral("horizonDark"));
             }
@@ -113,18 +115,14 @@ void ThemeManager::setThemeMode(ThemeMode mode, MainWindow *window) {
     }
 
     const ThemePalette *cur = findThemePaletteById(m_currentPaletteId);
-    if (mode == ThemeMode::Dark) {
-        if (!cur || !cur->isDark) {
-            m_currentPaletteId = QStringLiteral("horizonDark");
-        }
-    } else if (mode == ThemeMode::Light) {
-        if (!cur || cur->isDark) {
-            m_currentPaletteId = QStringLiteral("notepadNext");
-        }
+    if (mode == ThemeMode::Dark && (!cur || !cur->isDark)) {
+        m_currentPaletteId = QStringLiteral("horizonDark");
+    } else if (mode == ThemeMode::Light && (!cur || cur->isDark)) {
+        m_currentPaletteId = QStringLiteral("notepadNext");
     }
 
     if (m_settings) {
-        QString modeStr = QStringLiteral("Auto");
+        auto modeStr = QStringLiteral("Auto");
         if (mode == ThemeMode::Dark)
             modeStr = QStringLiteral("Dark");
         else if (mode == ThemeMode::Light)
@@ -193,15 +191,30 @@ void ThemeManager::applyTheme(MainWindow *window) {
                    : findThemePaletteById(QStringLiteral("notepadNext"));
     }
 
-    QString win = pal ? QString::fromLatin1(pal->win) : (dark ? QStringLiteral("#1e1e1e") : QStringLiteral("#f0f2f5"));
-    QString card =
-        pal ? QString::fromLatin1(pal->card) : (dark ? QStringLiteral("#25282c") : QStringLiteral("#fafbfc"));
-    QString txtPri =
-        pal ? QString::fromLatin1(pal->txtPri) : (dark ? QStringLiteral("#e0e0e0") : QStringLiteral("#24292f"));
-    QString txtSec =
-        pal ? QString::fromLatin1(pal->txtSec) : (dark ? QStringLiteral("#9aa0a6") : QStringLiteral("#57606a"));
-    QString accent =
-        pal ? QString::fromLatin1(pal->blue) : (dark ? QStringLiteral("#58a6ff") : QStringLiteral("#0969da"));
+    QString win;
+    QString card;
+    QString txtPri;
+    QString txtSec;
+    QString accent;
+    if (pal) {
+        win = QString::fromLatin1(pal->win);
+        card = QString::fromLatin1(pal->card);
+        txtPri = QString::fromLatin1(pal->txtPri);
+        txtSec = QString::fromLatin1(pal->txtSec);
+        accent = QString::fromLatin1(pal->blue);
+    } else if (dark) {
+        win = QStringLiteral("#1e1e1e");
+        card = QStringLiteral("#25282c");
+        txtPri = QStringLiteral("#e0e0e0");
+        txtSec = QStringLiteral("#9aa0a6");
+        accent = QStringLiteral("#58a6ff");
+    } else {
+        win = QStringLiteral("#f0f2f5");
+        card = QStringLiteral("#fafbfc");
+        txtPri = QStringLiteral("#24292f");
+        txtSec = QStringLiteral("#57606a");
+        accent = QStringLiteral("#0969da");
+    }
 
     QPalette appPal;
     appPal.setColor(QPalette::Window, QColor(win));
@@ -238,7 +251,7 @@ void ThemeManager::applyTheme(MainWindow *window) {
     }
 }
 
-void ThemeManager::applyThemeToEditor(ScintillaNext *editor) {
+void ThemeManager::applyThemeToEditor(ScintillaNext *editor) const {
     if (!editor)
         return;
 
@@ -387,20 +400,18 @@ void ThemeManager::applyThemeToEditor(ScintillaNext *editor) {
     if (pal->isDark) {
         for (int i = 0; i <= 127; ++i) {
             // Foreground contrast check: ensure text is never dark on a dark theme
-            quint32 fg = static_cast<quint32>(editor->styleFore(i));
-            int fgR = fg & 0xFF;
-            int fgG = (fg >> 8) & 0xFF;
-            int fgB = (fg >> 16) & 0xFF;
-            if (fgR * 299 + fgG * 587 + fgB * 114 < 140000) {
+            const auto fg = static_cast<quint32>(editor->styleFore(i));
+            const int fgR = fg & 0xFF;
+            const int fgG = (fg >> 8) & 0xFF;
+            if (const int fgB = (fg >> 16) & 0xFF; fgR * 299 + fgG * 587 + fgB * 114 < 140000) {
                 editor->styleSetFore(i, scFromRgb(txtPri.rgb()));
             }
 
             // Background contrast check: ensure background is never bright/white on a dark theme
-            quint32 bg = static_cast<quint32>(editor->styleBack(i));
-            int bgR = bg & 0xFF;
-            int bgG = (bg >> 8) & 0xFF;
-            int bgB = (bg >> 16) & 0xFF;
-            if (bgR * 299 + bgG * 587 + bgB * 114 > 90000) {
+            const auto bg = static_cast<quint32>(editor->styleBack(i));
+            const int bgR = bg & 0xFF;
+            const int bgG = (bg >> 8) & 0xFF;
+            if (const int bgB = (bg >> 16) & 0xFF; bgR * 299 + bgG * 587 + bgB * 114 > 90000) {
                 editor->styleSetBack(i, scFromRgb(card.rgb()));
             }
         }
@@ -415,18 +426,34 @@ QString ThemeManager::getThemeStyleSheet() const {
     }
 
     bool darkActive = isDarkActive();
-    QString win =
-        pal ? QString::fromLatin1(pal->win) : (darkActive ? QStringLiteral("#1e1e1e") : QStringLiteral("#f0f2f5"));
-    QString card =
-        pal ? QString::fromLatin1(pal->card) : (darkActive ? QStringLiteral("#25282c") : QStringLiteral("#fafbfc"));
-    QString border =
-        pal ? QString::fromLatin1(pal->border) : (darkActive ? QStringLiteral("#33373e") : QStringLiteral("#e1e4e8"));
-    QString txtPri =
-        pal ? QString::fromLatin1(pal->txtPri) : (darkActive ? QStringLiteral("#e0e0e0") : QStringLiteral("#24292f"));
-    QString txtSec =
-        pal ? QString::fromLatin1(pal->txtSec) : (darkActive ? QStringLiteral("#9aa0a6") : QStringLiteral("#57606a"));
-    QString accent =
-        pal ? QString::fromLatin1(pal->blue) : (darkActive ? QStringLiteral("#58a6ff") : QStringLiteral("#0969da"));
+    QString win;
+    QString card;
+    QString border;
+    QString txtPri;
+    QString txtSec;
+    QString accent;
+    if (pal) {
+        win = QString::fromLatin1(pal->win);
+        card = QString::fromLatin1(pal->card);
+        border = QString::fromLatin1(pal->border);
+        txtPri = QString::fromLatin1(pal->txtPri);
+        txtSec = QString::fromLatin1(pal->txtSec);
+        accent = QString::fromLatin1(pal->blue);
+    } else if (darkActive) {
+        win = QStringLiteral("#1e1e1e");
+        card = QStringLiteral("#25282c");
+        border = QStringLiteral("#33373e");
+        txtPri = QStringLiteral("#e0e0e0");
+        txtSec = QStringLiteral("#9aa0a6");
+        accent = QStringLiteral("#58a6ff");
+    } else {
+        win = QStringLiteral("#f0f2f5");
+        card = QStringLiteral("#fafbfc");
+        border = QStringLiteral("#e1e4e8");
+        txtPri = QStringLiteral("#24292f");
+        txtSec = QStringLiteral("#57606a");
+        accent = QStringLiteral("#0969da");
+    }
 
     // User requirement: In light mode, toolbar background must be dark (charcoal/dracula),
     // and light mode default is NotepadNext. In dark mode, toolbar background matches dark theme.

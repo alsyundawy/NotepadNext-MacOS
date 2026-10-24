@@ -21,6 +21,7 @@
 #ifndef FINDREPLACEDIALOG_H
 #define FINDREPLACEDIALOG_H
 
+#include <memory>
 #include <QDialog>
 #include <QEvent>
 #include <QStatusBar>
@@ -43,11 +44,14 @@ class FindReplaceDialog : public QDialog
     Q_OBJECT
 
 public:
-    enum {
+    enum class TabIndex : int {
         FIND_TAB = 0,
         REPLACE_TAB = 1,
         MARK_TAB = 2
     };
+    static constexpr int FIND_TAB = static_cast<int>(TabIndex::FIND_TAB);
+    static constexpr int REPLACE_TAB = static_cast<int>(TabIndex::REPLACE_TAB);
+    static constexpr int MARK_TAB = static_cast<int>(TabIndex::MARK_TAB);
 
     enum class SearchDirection
     {
@@ -67,6 +71,7 @@ public:
 
 protected:
     bool event(QEvent *e) override;
+    bool eventFilter(QObject *obj, QEvent *event) override;
     void showEvent(QShowEvent *event) override;
     void closeEvent(QCloseEvent *event) override;
 
@@ -102,7 +107,7 @@ private:
     void performFind(SearchDirection direction);
     void prepareToPerformSearch(bool isReplace=false);
     void loadSettings();
-    void saveSettings();
+    void saveSettings() const;
 
     void savePosition();
     void restorePosition();
@@ -112,7 +117,7 @@ private:
     void showMessage(const QString &message, const QString &color);
     int ensureMarkIndicator();
     BookMarkDecorator *bookMarkDecorator() const;
-    void clearAllBookmarks();
+    void clearAllBookmarks() const;
 
     void updateFindList(const QString &text);
     void updateReplaceList(const QString &text);
@@ -121,13 +126,13 @@ private:
 
     bool isFirstTime = true;
     QPoint lastClosedPosition;
-    Ui::FindReplaceDialog *ui;
+    std::unique_ptr<Ui::FindReplaceDialog> ui;
 
-    ScintillaNext *editor;
-    QStatusBar *statusBar;
-    QTabBar *tabBar;
-    ISearchResultsHandler *searchResultsHandler;
-    Finder *finder;
+    ScintillaNext *editor = nullptr;
+    QStatusBar *statusBar = nullptr;
+    QTabBar *tabBar = nullptr;
+    ISearchResultsHandler *searchResultsHandler = nullptr;
+    std::unique_ptr<Finder> finder;
 
     Sci_CharacterRange capturedSelectionRange = {0, 0};
 };

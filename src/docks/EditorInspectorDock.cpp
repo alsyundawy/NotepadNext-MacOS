@@ -17,6 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
  */
+#include <utility>
 
 #include "EditorInspectorDock.h"
 #include "ui_EditorInspectorDock.h"
@@ -30,19 +31,19 @@ static inline QString toBool(int b) {
 
 EditorInspectorDock::EditorInspectorDock(MainWindow *parent) :
     QDockWidget(parent),
-    ui(new Ui::EditorInspectorDock)
+    ui(std::make_unique<Ui::EditorInspectorDock>())
 {
     ui->setupUi(this);
 
-    QTreeWidgetItem *positionInfo = new QTreeWidgetItem(ui->treeWidget);
+    auto *positionInfo = new QTreeWidgetItem(ui->treeWidget);
     positionInfo->setText(0, tr("Position Information"));
     positionInfo->setExpanded(true);
 
-    newItem(positionInfo, tr("Current Position"), [](ScintillaNext *editor) { return QString::number(editor->currentPos()); });
+    newItem(positionInfo, tr("Current Position"), [](const ScintillaNext *editor) { return QString::number(editor->currentPos()); });
     newItem(positionInfo, tr("Current Position (x, y)"), [](ScintillaNext *editor) { return QString("(%1, %2)").arg(editor->pointXFromPosition(editor->currentPos())).arg(editor->pointYFromPosition(editor->currentPos())); });
-    newItem(positionInfo, tr("Column"), [](ScintillaNext *editor) { return QString::number(editor->column(editor->currentPos())); });
+    newItem(positionInfo, tr("Column"), [](const ScintillaNext *editor) { return QString::number(editor->column(editor->currentPos())); });
     // SCI_GETCHARAT(position pos) → int
-    newItem(positionInfo, tr("Current Style"), [](ScintillaNext *editor) { return QString::number(editor->styleAt(editor->currentPos())); });
+    newItem(positionInfo, tr("Current Style"), [](const ScintillaNext *editor) { return QString::number(editor->styleAt(editor->currentPos())); });
     newItem(positionInfo, tr("Current Line"), [](ScintillaNext *editor) { return QString::number(editor->lineFromPosition(editor->currentPos()) + 1); });
     newItem(positionInfo, tr("Line Length"), [](ScintillaNext *editor) { return QString::number(editor->lineLength(editor->lineFromPosition(editor->currentPos()))); });
     newItem(positionInfo, tr("Line End Position"), [](ScintillaNext *editor) { return QString::number(editor->lineEndPosition(editor->lineFromPosition(editor->currentPos()))); });
@@ -50,11 +51,11 @@ EditorInspectorDock::EditorInspectorDock(MainWindow *parent) :
     newItem(positionInfo, tr("Line Indent Position"), [](ScintillaNext *editor) { return QString::number(editor->lineIndentPosition(editor->lineFromPosition(editor->currentPos()))); });
 
 
-    QTreeWidgetItem *selInfo = new QTreeWidgetItem(ui->treeWidget);
+    auto *selInfo = new QTreeWidgetItem(ui->treeWidget);
     selInfo->setText(0, tr("Selection Information"));
     selInfo->setExpanded(true);
 
-    newItem(selInfo, tr("Mode"), [](ScintillaNext *editor) {
+    newItem(selInfo, tr("Mode"), [](const ScintillaNext *editor) {
         switch (editor->selectionMode()) {
             case SC_SEL_STREAM:
                 return QStringLiteral("SC_SEL_STREAM");
@@ -68,34 +69,34 @@ EditorInspectorDock::EditorInspectorDock(MainWindow *parent) :
                 return QStringLiteral("");
         }
     });
-    newItem(selInfo, tr("Is Rectangle"), [](ScintillaNext *editor) { return toBool(editor->selectionIsRectangle()); });
-    newItem(selInfo, tr("Selection Empty"), [](ScintillaNext *editor) { return toBool(editor->selectionEmpty()); });
-    newItem(selInfo, tr("Main Selection"), [](ScintillaNext *editor) { return QString::number(editor->mainSelection()); });
-    newItem(selInfo, tr("# of Selections"), [](ScintillaNext *editor) { return QString::number(editor->selections()); });
+    newItem(selInfo, tr("Is Rectangle"), [](const ScintillaNext *editor) { return toBool(editor->selectionIsRectangle()); });
+    newItem(selInfo, tr("Selection Empty"), [](const ScintillaNext *editor) { return toBool(editor->selectionEmpty()); });
+    newItem(selInfo, tr("Main Selection"), [](const ScintillaNext *editor) { return QString::number(editor->mainSelection()); });
+    newItem(selInfo, tr("# of Selections"), [](const ScintillaNext *editor) { return QString::number(editor->selections()); });
 
     selectionsInfo = new QTreeWidgetItem(selInfo);
     selectionsInfo->setText(0, tr("Multiple Selections"));
     selectionsInfo->setExpanded(true);
 
 
-    QTreeWidgetItem *documentInfo = new QTreeWidgetItem(ui->treeWidget);
+    auto *documentInfo = new QTreeWidgetItem(ui->treeWidget);
     documentInfo->setText(0, tr("Document Information"));
     documentInfo->setExpanded(true);
 
-    newItem(documentInfo, tr("Length"), [](ScintillaNext *editor) { return QString::number(editor->length()); });
-    newItem(documentInfo, tr("Line Count"), [](ScintillaNext *editor) { return QString::number(editor->lineCount()); });
+    newItem(documentInfo, tr("Length"), [](const ScintillaNext *editor) { return QString::number(editor->length()); });
+    newItem(documentInfo, tr("Line Count"), [](const ScintillaNext *editor) { return QString::number(editor->lineCount()); });
 
 
-    QTreeWidgetItem *viewInfo = new QTreeWidgetItem(ui->treeWidget);
+    auto *viewInfo = new QTreeWidgetItem(ui->treeWidget);
     viewInfo->setText(0, tr("View Information"));
     viewInfo->setExpanded(true);
 
-    newItem(viewInfo, tr("Lines on Screen"), [](ScintillaNext *editor) { return QString::number(editor->linesOnScreen()); });
-    newItem(viewInfo, tr("First Visible Line"), [](ScintillaNext *editor) { return QString::number(editor->firstVisibleLine() + 1); });
-    newItem(viewInfo, tr("X Offset"), [](ScintillaNext *editor) { return QString::number(editor->xOffset()); });
+    newItem(viewInfo, tr("Lines on Screen"), [](const ScintillaNext *editor) { return QString::number(editor->linesOnScreen()); });
+    newItem(viewInfo, tr("First Visible Line"), [](const ScintillaNext *editor) { return QString::number(editor->firstVisibleLine() + 1); });
+    newItem(viewInfo, tr("X Offset"), [](const ScintillaNext *editor) { return QString::number(editor->xOffset()); });
 
 
-    QTreeWidgetItem *foldInfo = new QTreeWidgetItem(ui->treeWidget);
+    auto *foldInfo = new QTreeWidgetItem(ui->treeWidget);
     foldInfo->setText(0, tr("Fold Information"));
     foldInfo->setExpanded(true);
 
@@ -107,7 +108,7 @@ EditorInspectorDock::EditorInspectorDock(MainWindow *parent) :
     newItem(foldInfo, tr("Last Child"), [](ScintillaNext *editor) { return QString::number(editor->lastChild(editor->lineFromPosition(editor->currentPos()), -1) + 1); });
     newItem(foldInfo, tr("Contracted Fold Next"), [](ScintillaNext *editor) { return QString::number(editor->contractedFoldNext(editor->lineFromPosition(editor->currentPos())) + 1); });
 
-    connect(this, &QDockWidget::visibilityChanged, this, [=, this](bool visible) {
+    connect(this, &QDockWidget::visibilityChanged, this, [parent, this](bool visible) {
         if (visible) {
             connectToEditor(parent->currentEditor());
             connect(parent, &MainWindow::editorActivated, this, &EditorInspectorDock::connectToEditor);
@@ -119,10 +120,7 @@ EditorInspectorDock::EditorInspectorDock(MainWindow *parent) :
     });
 }
 
-EditorInspectorDock::~EditorInspectorDock()
-{
-    delete ui;
-}
+EditorInspectorDock::~EditorInspectorDock() = default;
 
 void EditorInspectorDock::connectToEditor(ScintillaNext *editor)
 {
@@ -143,10 +141,11 @@ void EditorInspectorDock::disconnectFromEditor()
 
 void EditorInspectorDock::editorUIUpdated(Scintilla::Update updated)
 {
-    if (FlagSet(updated, Scintilla::Update::Content)
-            || FlagSet(updated, Scintilla::Update::Selection)
-            || FlagSet(updated, Scintilla::Update::VScroll)
-            || FlagSet(updated, Scintilla::Update::HScroll)) {
+    using enum Scintilla::Update;
+    if (FlagSet(updated, Content)
+            || FlagSet(updated, Selection)
+            || FlagSet(updated, VScroll)
+            || FlagSet(updated, HScroll)) {
         ScintillaNext *editor = qobject_cast<ScintillaNext*>(sender());
 
         updateEditorInfo(editor);
@@ -155,11 +154,8 @@ void EditorInspectorDock::editorUIUpdated(Scintilla::Update updated)
 
 void EditorInspectorDock::updateEditorInfo(ScintillaNext *editor)
 {
-    for (const QPair<QTreeWidgetItem *, EditorFunction> &pair : qAsConst(items)) {
-        QTreeWidgetItem *item = pair.first;
-
+    for (const auto &[item, func] : std::as_const(items)) {
         if (item->parent()->isExpanded()) {
-            EditorFunction func = pair.second;
             item->setText(1, func(editor));
         }
     }
@@ -167,23 +163,23 @@ void EditorInspectorDock::updateEditorInfo(ScintillaNext *editor)
     qDeleteAll(selectionsInfo->takeChildren());
 
     for (int i = 0; i < editor->selections(); ++i) {
-        QTreeWidgetItem *selection = new QTreeWidgetItem(selectionsInfo);
+        auto *selection = new QTreeWidgetItem(selectionsInfo);
         selection->setText(0, QLatin1Char('#') + QString::number(i));
         selection->setExpanded(true);
 
-        QTreeWidgetItem *caret = new QTreeWidgetItem(selection);
+        auto *caret = new QTreeWidgetItem(selection);
         caret->setText(0, tr("Caret"));
         caret->setText(1, QString::number(editor->selectionNCaret(i)));
 
-        QTreeWidgetItem *anchor = new QTreeWidgetItem(selection);
+        auto *anchor = new QTreeWidgetItem(selection);
         anchor->setText(0, tr("Anchor"));
         anchor->setText(1, QString::number(editor->selectionNAnchor(i)));
 
-        QTreeWidgetItem *caretVirtual = new QTreeWidgetItem(selection);
+        auto *caretVirtual = new QTreeWidgetItem(selection);
         caretVirtual->setText(0, tr("Caret Virtual Space"));
         caretVirtual->setText(1, QString::number(editor->selectionNCaretVirtualSpace(i)));
 
-        QTreeWidgetItem *anchorVirtual = new QTreeWidgetItem(selection);
+        auto *anchorVirtual = new QTreeWidgetItem(selection);
         anchorVirtual->setText(0, tr("Anchor Virtual Space"));
         anchorVirtual->setText(1, QString::number(editor->selectionNAnchorVirtualSpace(i)));
     }
@@ -193,7 +189,7 @@ void EditorInspectorDock::updateEditorInfo(ScintillaNext *editor)
 
 void EditorInspectorDock::newItem(QTreeWidgetItem *parent, const QString &label, EditorFunction func)
 {
-    QTreeWidgetItem *item = new QTreeWidgetItem(parent);
+    auto *item = new QTreeWidgetItem(parent);
     item->setText(0, label);
     items.append(qMakePair(item, func));
 }

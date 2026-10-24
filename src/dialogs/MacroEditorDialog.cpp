@@ -17,6 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
  */
+#include <utility>
 
 #include <QItemSelectionModel>
 #include <QMessageBox>
@@ -30,7 +31,7 @@
 
 MacroEditorDialog::MacroEditorDialog(QWidget *parent, MacroManager *mm) :
     QDialog(parent),
-    ui(new Ui::MacroEditorDialog),
+    ui(std::make_unique<Ui::MacroEditorDialog>()),
     macroManager(mm),
     model(new MacroListModel(this, mm))
 {
@@ -61,15 +62,10 @@ MacroEditorDialog::MacroEditorDialog(QWidget *parent, MacroManager *mm) :
     ui->listMacros->setCurrentIndex(model->index(0));
 }
 
-MacroEditorDialog::~MacroEditorDialog()
-{
-    delete ui;
-}
+MacroEditorDialog::~MacroEditorDialog() = default;
 
-void MacroEditorDialog::rowChanged(const QModelIndex &current, const QModelIndex &previous)
+void MacroEditorDialog::rowChanged(const QModelIndex &current, const QModelIndex &/*previous*/)
 {
-    Q_UNUSED(previous);
-
     if (!current.isValid()){
         ui->editMacroName->setReadOnly(true);
         ui->editMacroName->clear();
@@ -146,11 +142,10 @@ void MacroEditorDialog::copyCurrentMacro()
 
         Macro *newMacro = model->macro(model->index(currentIndex.row() + 1));
 
-        // TODO: move this into a copy constructor in the Macro class?
-
+        // Note: Duplicate macro steps into newly created macro instance
         newMacro->setName(originalMacro->getName() + " " + tr("(Copy)"));
 
-        for (const MacroStep &step : qAsConst(originalMacro->getSteps())) {
+        for (const MacroStep &step : std::as_const(originalMacro->getSteps())) {
             newMacro->addMacroStep(step);
         }
 
@@ -161,9 +156,7 @@ void MacroEditorDialog::copyCurrentMacro()
 
 void MacroEditorDialog::insertMacroStep()
 {
-    QModelIndex currentIndex = ui->tblMacroSteps->selectionModel()->currentIndex();
-
-    if (currentIndex.isValid()) {
+    if (const QModelIndex currentIndex = ui->tblMacroSteps->selectionModel()->currentIndex(); currentIndex.isValid()) {
         ui->tblMacroSteps->model()->insertRows(currentIndex.row() + 1, 1);
         ui->tblMacroSteps->setCurrentIndex(ui->tblMacroSteps->model()->index(currentIndex.row() + 1, 0));
     }
@@ -177,7 +170,7 @@ void MacroEditorDialog::insertMacroStep()
     ui->tblMacroSteps->resizeColumnToContents(0);
 }
 
-void MacroEditorDialog::deleteMacroStep()
+void MacroEditorDialog::deleteMacroStep() const
 {
     QModelIndex currentIndex = ui->tblMacroSteps->selectionModel()->currentIndex();
 
@@ -186,7 +179,7 @@ void MacroEditorDialog::deleteMacroStep()
     }
 }
 
-void MacroEditorDialog::moveMacroStepUp()
+void MacroEditorDialog::moveMacroStepUp() const
 {
     QModelIndex currentIndex = ui->tblMacroSteps->selectionModel()->currentIndex();
 
@@ -196,7 +189,7 @@ void MacroEditorDialog::moveMacroStepUp()
     }
 }
 
-void MacroEditorDialog::moveMacroStepDown()
+void MacroEditorDialog::moveMacroStepDown() const
 {
     QModelIndex currentIndex = ui->tblMacroSteps->selectionModel()->currentIndex();
 

@@ -9,7 +9,7 @@
 >
 > 🇮🇩 Implementasi ulang Notepad++ lintas platform — dibangun secara native untuk macOS.
 
-[![Release Notes v0.15-04](https://img.shields.io/badge/Release%20Notes-v0.15--04%20vs%20v0.15%20Official-success.svg)](doc/RELEASE_NOTES_0.15-04.md)
+[![Release Notes v0.15-07](https://img.shields.io/badge/Release%20Notes-v0.15--07%20vs%20v0.15%20Official-success.svg)](doc/RELEASE_NOTES_0.15-07.md)
 
 ![Build Notepad Next](https://github.com/alsyundawy/NotepadNext-MacOS/workflows/Build%20Notepad%20Next/badge.svg)
 [![Latest Version](https://img.shields.io/github/v/release/alsyundawy/NotepadNext-MacOS)](https://github.com/alsyundawy/NotepadNext-MacOS/releases)

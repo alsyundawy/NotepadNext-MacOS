@@ -31,10 +31,22 @@ class QPushButton;
 class QTextBrowser;
 class QWidget;
 
+struct UpdateManifest {
+    bool updateAvailable{false};
+    QString latestVersion;
+    QString currentVersion;
+    QString downloadUrl;
+    QString changelogUrl;
+    QString openUrl;
+    QString expectedSha256;
+};
+
 class UpdateDialog : public QDialog {
     Q_OBJECT
 
 public:
+    explicit UpdateDialog(const UpdateManifest &manifest, QWidget *parent = nullptr);
+
     explicit UpdateDialog(bool updateAvailable,
                           const QString &latestVersion,
                           const QString &currentVersion,
@@ -43,6 +55,8 @@ public:
                           const QString &openUrl,
                           QWidget *parent = nullptr);
     ~UpdateDialog() override = default;
+
+    static bool verifyPackageHash(const QString &filePath, const QString &expectedSha256);
 
 protected:
     void changeEvent(QEvent *event) override;
@@ -59,6 +73,7 @@ private:
     QString m_downloadUrl;
     QString m_changelogUrl;
     QString m_openUrl;
+    QString m_expectedSha256;
 
     // UI elements
     QLabel *m_iconLabel{nullptr};

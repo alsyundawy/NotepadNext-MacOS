@@ -28,10 +28,9 @@
 
 std::string dumpLuaState(lua_State *L) {
     std::stringstream ostr;
-    int i;
     int top = lua_gettop(L);
     ostr << "top=" << top << ":\n";
-    for (i = 1; i <= top; ++i) {
+    for (int i = 1; i <= top; ++i) {
         int t = lua_type(L, i);
         switch(t) {
         case LUA_TSTRING:
@@ -54,9 +53,9 @@ std::string dumpLuaState(lua_State *L) {
 
 static int require_resource(lua_State *L)
 {
-    const char *module = luaL_checkstring(L, 1);
+    const char *moduleName = luaL_checkstring(L, 1);
 
-    QString module_file = QString(":/languages/%1.lua").arg(module);
+    QString module_file = QString(":/languages/%1.lua").arg(moduleName);
     QFile f(module_file);
 
     lua_pop(L, 1);
@@ -82,6 +81,11 @@ LuaState::LuaState()
 
     L = luaL_newstate();
     luaL_openlibs(L);
+
+    // Sandbox unsafe OS/IO and dynamic loading vectors (CVE-2026-42214 / CWE-94)
+    execute("if os then os.execute = nil; os.remove = nil; os.rename = nil; os.exit = nil end "
+            "if io then io.popen = nil end "
+            "if package then package.loadlib = nil end");
 
     // Remove the searchers used for finding files on the file system
     execute("table.remove(package.searchers, 4); table.remove(package.searchers, 3); table.remove(package.searchers, 2)");

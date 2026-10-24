@@ -18,6 +18,9 @@
  * along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include <utility>
+#include <array>
+
 #include <QApplication>
 #include <QTimer>
 
@@ -52,7 +55,7 @@ EditorManager::EditorManager(ApplicationSettings *settings, QObject *parent)
 {
     fileWatcher = new QFileSystemWatcher(this);
 
-    connect(fileWatcher, &QFileSystemWatcher::fileChanged, this, [=, this](const QString &path) {
+    connect(fileWatcher, &QFileSystemWatcher::fileChanged, this, [this](const QString &path) {
         // Debounce: a single external write commonly fires this signal 2+
         // times in a row. Only arm one timer per path; further signals
         // received before it fires are simply dropped.
@@ -62,92 +65,90 @@ EditorManager::EditorManager(ApplicationSettings *settings, QObject *parent)
 
         pendingFileChanges.insert(path);
 
-        QTimer::singleShot(250, this, [=, this]() {
+        QTimer::singleShot(250, this, [this, path]() {
             pendingFileChanges.remove(path);
             processExternalFileChange(path);
         });
     });
 
-    connect(this, &EditorManager::editorCreated, this, [=, this](ScintillaNext *editor) {
-        connect(editor, &ScintillaNext::closed, this, [=, this]() {
+    connect(this, &EditorManager::editorCreated, this, [this](ScintillaNext *editor) {
+        connect(editor, &ScintillaNext::closed, this, [this, editor]() {
             emit editorClosed(editor);
         });
 
-        connect(editor, &ScintillaNext::closed, this, [=, this]() {
+        connect(editor, &ScintillaNext::closed, this, [this, editor]() {
             unwatchEditorFile(editor);
         });
 
         // Covers "Save As" and renaming a "New" buffer into an actual file,
         // in addition to a plain rename - fileInfo is already up to date
         // by the time this signal fires.
-        connect(editor, &ScintillaNext::renamed, this, [=, this]() {
+        connect(editor, &ScintillaNext::renamed, this, [this, editor]() {
             watchEditorFile(editor);
         });
 
         watchEditorFile(editor);
     });
 
-    connect(settings, &ApplicationSettings::showWrapSymbolChanged, this, [=, this](bool b) {
-        for (auto &editor : getEditors()) {
+    connect(settings, &ApplicationSettings::showWrapSymbolChanged, this, [this](bool b) {
+        for (const auto &editor : getEditors()) {
             editor->setWrapVisualFlags(b ? SC_WRAPVISUALFLAG_END : SC_WRAPVISUALFLAG_NONE);
         }
     });
 
-
-    connect(settings, &ApplicationSettings::showWhitespaceChanged, this, [=, this](bool b) {
-        // TODO: could make SCWS_VISIBLEALWAYS configurable via settings. Probably not worth
-        // taking up menu space e.g. show all, show leading, show trailing
-        for (auto &editor : getEditors()) {
+    connect(settings, &ApplicationSettings::showWhitespaceChanged, this, [this](bool b) {
+        // Whitespace visibility uses standard SCWS_VISIBLEALWAYS when enabled
+        for (const auto &editor : getEditors()) {
             editor->setViewWS(b ? SCWS_VISIBLEALWAYS : SCWS_INVISIBLE);
         }
     });
 
-    connect(settings, &ApplicationSettings::showEndOfLineChanged, this, [=, this](bool b) {
-        for (auto &editor : getEditors()) {
+    connect(settings, &ApplicationSettings::showEndOfLineChanged, this, [this](bool b) {
+        for (const auto &editor : getEditors()) {
             editor->setViewEOL(b);
         }
     });
 
-    connect(settings, &ApplicationSettings::showIndentGuideChanged, this, [=, this](bool b) {
-        for (auto &editor : getEditors()) {
+    connect(settings, &ApplicationSettings::showIndentGuideChanged, this, [this](bool b) {
+        for (const auto &editor : getEditors()) {
             editor->setIndentationGuides(b ? SC_IV_LOOKBOTH : SC_IV_NONE);
         }
     });
 
-    connect(settings, &ApplicationSettings::wordWrapChanged, this, [=, this](bool b) {
+    connect(settings, &ApplicationSettings::wordWrapChanged, this, [this](bool b) {
         if (b) {
-            for (auto &editor : getEditors()) {
+            for (const auto &editor : getEditors()) {
                 editor->setWrapMode(SC_WRAP_WORD);
             }
         }
         else {
-            for (auto &editor : getEditors()) {
+            for (const auto &editor : getEditors()) {
                 // Store the top line and restore it after the lines have been unwrapped
-                int topLine = editor->docLineFromVisible(editor->firstVisibleLine());
+                const int topLine = static_cast<int>(editor->docLineFromVisible(editor->firstVisibleLine()));
                 editor->setWrapMode(SC_WRAP_NONE);
                 editor->setFirstVisibleLine(topLine);
             }
         }
     });
 
-    connect(settings, &ApplicationSettings::fontNameChanged, this, [=, this](QString fontName){
-        for (auto &editor : getEditors()) {
+    connect(settings, &ApplicationSettings::fontNameChanged, this, [this](const QString &fontName){
+        for (const auto &editor : getEditors()) {
             for (int i = 0; i <= STYLE_MAX; ++i) {
                 editor->styleSetFont(i, fontName.toUtf8().data());
             }
         }
     });
 
-    connect(settings, &ApplicationSettings::fontSizeChanged, this, [=, this](int fontSize){
-        for (auto &editor : getEditors()) {
+    connect(settings, &ApplicationSettings::fontSizeChanged, this, [this](int fontSize){
+        for (const auto &editor : getEditors()) {
             for (int i = 0; i <= STYLE_MAX; ++i) {
                 editor->styleSetSize(i, fontSize);
             }
         }
     });
 
-    connect(settings, &ApplicationSettings::urlHighlightingChanged, this, [=, this](bool b){
-        for (auto &editor : getEditors()) {
+    connect(settings, &ApplicationSettings::urlHighlightingChanged, this, [this](bool b){
+        for (const auto &editor : getEditors()) {
             URLFinder *decorator = editor->findChild<URLFinder *>(QString(), Qt::FindDirectChildrenOnly);
             if (decorator) {
                 decorator->setEnabled(b);
@@ -155,8 +156,8 @@ EditorManager::EditorManager(ApplicationSettings *settings, QObject *parent)
         }
     });
 
-    connect(settings, &ApplicationSettings::showLineNumbersChanged, this, [=, this](bool b){
-        for (auto &editor : getEditors()) {
+    connect(settings, &ApplicationSettings::showLineNumbersChanged, this, [this](bool b){
+        for (const auto &editor : getEditors()) {
             LineNumbers *decorator = editor->findChild<LineNumbers *>(QString(), Qt::FindDirectChildrenOnly);
             if (decorator) {
                 decorator->setEnabled(b);
@@ -164,8 +165,8 @@ EditorManager::EditorManager(ApplicationSettings *settings, QObject *parent)
         }
     });
 
-    connect(settings, &ApplicationSettings::autoCompletionChanged, this, [=, this](bool b){
-        for (auto &editor : getEditors()) {
+    connect(settings, &ApplicationSettings::autoCompletionChanged, this, [this](bool b){
+        for (const auto &editor : getEditors()) {
             AutoCompletion *decorator = editor->findChild<AutoCompletion *>(QString(), Qt::FindDirectChildrenOnly);
             if (decorator) {
                 decorator->setEnabled(b);
@@ -203,7 +204,7 @@ ScintillaNext *EditorManager::getEditorByFilePath(const QString &filePath)
 
     purgeOldEditorPointers();
 
-    for (ScintillaNext *editor : qAsConst(editors)) {
+    for (ScintillaNext *editor : std::as_const(editors)) {
         if (editor->isFile() && editor->getFileInfo() == newInfo) {
             return editor;
         }
@@ -242,37 +243,37 @@ static void setupMacOsKeys(ScintillaNext *editor)
         int message;
     };
 
-    constexpr KeyBinding bindings[] = {
+    constexpr std::array bindings = {
         // Command + arrow keys move to the start/end of the line and of the document
-        {SCK_LEFT,  Cmd,               SCI_VCHOME},
-        {SCK_LEFT,  Cmd | Shift,       SCI_VCHOMEEXTEND},
-        {SCK_RIGHT, Cmd,               SCI_LINEEND},
-        {SCK_RIGHT, Cmd | Shift,       SCI_LINEENDEXTEND},
-        {SCK_UP,    Cmd,               SCI_DOCUMENTSTART},
-        {SCK_DOWN,  Cmd,               SCI_DOCUMENTEND},
+        KeyBinding{SCK_LEFT,  Cmd,               SCI_VCHOME},
+        KeyBinding{SCK_LEFT,  Cmd | Shift,       SCI_VCHOMEEXTEND},
+        KeyBinding{SCK_RIGHT, Cmd,               SCI_LINEEND},
+        KeyBinding{SCK_RIGHT, Cmd | Shift,       SCI_LINEENDEXTEND},
+        KeyBinding{SCK_UP,    Cmd,               SCI_DOCUMENTSTART},
+        KeyBinding{SCK_DOWN,  Cmd,               SCI_DOCUMENTEND},
 
         // Command + Shift + Up/Down are deliberately left alone. They are already used by
         // the Move Selected Lines Up/Down actions, and those actions receive the key press
         // before the editor does.
 
         // Option + arrow keys move by word
-        {SCK_LEFT,  Opt,               SCI_WORDLEFT},
-        {SCK_LEFT,  Opt | Shift,       SCI_WORDLEFTEXTEND},
-        {SCK_RIGHT, Opt,               SCI_WORDRIGHT},
-        {SCK_RIGHT, Opt | Shift,       SCI_WORDRIGHTEXTEND},
+        KeyBinding{SCK_LEFT,  Opt,               SCI_WORDLEFT},
+        KeyBinding{SCK_LEFT,  Opt | Shift,       SCI_WORDLEFTEXTEND},
+        KeyBinding{SCK_RIGHT, Opt,               SCI_WORDRIGHT},
+        KeyBinding{SCK_RIGHT, Opt | Shift,       SCI_WORDRIGHTEXTEND},
 
         // Option + Shift + Left/Right now select by word, so add Command + Option + Shift +
         // arrow keys for rectangular selection. Option + Shift + Up/Down are left with
         // Scintilla's default rectangular behaviour since nothing else uses them.
-        {SCK_LEFT,  Cmd | Opt | Shift, SCI_CHARLEFTRECTEXTEND},
-        {SCK_RIGHT, Cmd | Opt | Shift, SCI_CHARRIGHTRECTEXTEND},
-        {SCK_UP,    Cmd | Opt | Shift, SCI_LINEUPRECTEXTEND},
-        {SCK_DOWN,  Cmd | Opt | Shift, SCI_LINEDOWNRECTEXTEND},
+        KeyBinding{SCK_LEFT,  Cmd | Opt | Shift, SCI_CHARLEFTRECTEXTEND},
+        KeyBinding{SCK_RIGHT, Cmd | Opt | Shift, SCI_CHARRIGHTRECTEXTEND},
+        KeyBinding{SCK_UP,    Cmd | Opt | Shift, SCI_LINEUPRECTEXTEND},
+        KeyBinding{SCK_DOWN,  Cmd | Opt | Shift, SCI_LINEDOWNRECTEXTEND},
 
         // Deleting by word/to the start of the line, and redo
-        {SCK_BACK,  Opt,               SCI_DELWORDLEFT},
-        {SCK_BACK,  Cmd,               SCI_DELLINELEFT},
-        {'Z',       Cmd | Shift,       SCI_REDO},
+        KeyBinding{SCK_BACK,  Opt,               SCI_DELWORDLEFT},
+        KeyBinding{SCK_BACK,  Cmd,               SCI_DELLINELEFT},
+        KeyBinding{'Z',       Cmd | Shift,       SCI_REDO},
     };
 
     for (const KeyBinding &binding : bindings) {
@@ -398,8 +399,7 @@ void EditorManager::setupEditor(ScintillaNext *editor)
     editor->setIndentationGuides(settings->showIndentGuide() ? SC_IV_LOOKBOTH : SC_IV_NONE);
     editor->setWrapMode(settings->wordWrap() ? SC_WRAP_WORD : SC_WRAP_NONE);
 
-    int detectedEOLMode = detectEOLMode(editor);
-    if (detectedEOLMode == -1) {
+    if (const int detectedEOLMode = detectEOLMode(editor); detectedEOLMode == -1) {
         if (!settings->defaultEOLMode().isEmpty()) {
             const int eol = ScintillaNext::stringToEolMode(settings->defaultEOLMode().toLower());
 
@@ -415,34 +415,34 @@ void EditorManager::setupEditor(ScintillaNext *editor)
     }
 
     // Decorators
-    SmartHighlighter *s = new SmartHighlighter(editor);
+    auto *s = new SmartHighlighter(editor);
     s->setEnabled(true);
 
-    HighlightedScrollBarDecorator *h = new HighlightedScrollBarDecorator(editor);
+    auto *h = new HighlightedScrollBarDecorator(editor);
     h->setEnabled(true);
 
-    BraceMatch *b = new BraceMatch(editor);
+    auto *b = new BraceMatch(editor);
     b->setEnabled(true);
 
-    LineNumbers *l = new LineNumbers(editor);
+    auto *l = new LineNumbers(editor);
     l->setEnabled(settings->showLineNumbers());
 
-    SurroundSelection *ss = new SurroundSelection(editor);
+    auto *ss = new SurroundSelection(editor);
     ss->setEnabled(true);
 
-    BetterMultiSelection *bms = new BetterMultiSelection(editor);
+    auto *bms = new BetterMultiSelection(editor);
     bms->setEnabled(true);
 
-    AutoIndentation *ai = new AutoIndentation(editor);
+    auto *ai = new AutoIndentation(editor);
     ai->setEnabled(true);
 
-    AutoCompletion *ac = new AutoCompletion(editor);
+    auto *ac = new AutoCompletion(editor);
     ac->setEnabled(settings->autoCompletion());
 
-    URLFinder *uf = new URLFinder(editor);
+    auto *uf = new URLFinder(editor);
     uf->setEnabled(settings->urlHighlighting());
 
-    BookMarkDecorator *bm = new BookMarkDecorator(editor);
+    auto *bm = new BookMarkDecorator(editor);
     bm->setEnabled(true);
 
     new HTMLAutoCompleteDecorator(editor);
@@ -450,7 +450,7 @@ void EditorManager::setupEditor(ScintillaNext *editor)
 
 void EditorManager::purgeOldEditorPointers()
 {
-    QMutableListIterator<QPointer<ScintillaNext>> it(editors);
+    QMutableListIterator it(editors);
 
     while (it.hasNext()) {
         QPointer<ScintillaNext> pointer = it.next();
@@ -467,7 +467,7 @@ QList<QPointer<ScintillaNext> > EditorManager::getEditors()
 
 void EditorManager::processExternalFileChange(const QString &path)
 {
-    for (ScintillaNext *editor : qAsConst(editors)) {
+    for (ScintillaNext *editor : std::as_const(editors)) {
         if (editor && editor->isFile() && editor->getFilePath() == path) {
             // Some editors/tools save by replacing the file (rename-over-write),
             // which makes the OS-level watch silently drop the path. Re-arm it
@@ -510,7 +510,7 @@ void EditorManager::unwatchEditorFile(ScintillaNext *editor)
     }
 }
 
-int EditorManager::detectEOLMode(ScintillaNext *editor) const
+int EditorManager::detectEOLMode(const ScintillaNext *editor) const
 {
     qInfo(Q_FUNC_INFO);
 
@@ -522,11 +522,11 @@ int EditorManager::detectEOLMode(ScintillaNext *editor) const
     int cr = 0;
     int crlf = 0;
     int chPrev = ' ';
-    int chNext = editor->charAt(index);
+    int chNext = static_cast<int>(editor->charAt(index));
 
-    for (int i = 0; i < qMin(MAX_BYTES_TO_CHECK, (int) editor->length()); ++i) {
+    for (int i = 0; i < qMin(MAX_BYTES_TO_CHECK, static_cast<int>(editor->length())); ++i) {
         int ch = chNext;
-        chNext = editor->charAt(i + 1);
+        chNext = static_cast<int>(editor->charAt(i + 1));
 
         if (ch == '\r') {
             if (chNext == '\n') crlf++;

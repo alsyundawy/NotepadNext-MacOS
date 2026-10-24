@@ -38,14 +38,14 @@ public:
 
     ~LuaExtension();
 
-    bool Initialise(lua_State *L, ScintillaNext *editor_);
-    void setEditor(ScintillaEdit *editor_);
-    bool Finalise();
+    bool Initialise(lua_State *L, ScintillaNext *editor_) const;
+    void setEditor(ScintillaEdit *editor_) const;
+    bool Finalise() const;
 
     // Helper methods
-    bool RunString(const char *s);
-    bool OnExecute(const char *s);
-    void CallShortcut(int id);
+    bool RunString(const char *s) const;
+    bool OnExecute(const char *s) const;
+    void CallShortcut(int id) const;
 
     // Scintilla callbacks
     //bool OnStyle(unsigned int startPos, int lengthDoc, int initStyle, StyleWriter *styler);

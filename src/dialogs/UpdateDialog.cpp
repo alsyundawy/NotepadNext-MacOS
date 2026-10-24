@@ -34,6 +34,44 @@
 #include <QEvent>
 #include <QPalette>
 #include <QPixmap>
+#include <QCryptographicHash>
+#include <QFile>
+
+bool UpdateDialog::verifyPackageHash(const QString &filePath, const QString &expectedSha256)
+{
+    if (expectedSha256.trimmed().isEmpty()) {
+        return true;
+    }
+    QFile file(filePath);
+    if (!file.open(QIODevice::ReadOnly)) {
+        return false;
+    }
+    QCryptographicHash hash(QCryptographicHash::Sha256);
+    if (!hash.addData(&file)) {
+        return false;
+    }
+    return hash.result().toHex().compare(expectedSha256.trimmed().toLatin1(), Qt::CaseInsensitive) == 0;
+}
+
+UpdateDialog::UpdateDialog(const UpdateManifest &manifest, QWidget *parent)
+    : QDialog(parent)
+    , m_updateAvailable(manifest.updateAvailable)
+    , m_isError(manifest.latestVersion.trimmed().isEmpty())
+    , m_latestVersion(manifest.latestVersion)
+    , m_currentVersion(manifest.currentVersion.isEmpty() ? QStringLiteral("0.15-07") : manifest.currentVersion)
+    , m_downloadUrl(manifest.downloadUrl)
+    , m_changelogUrl(manifest.changelogUrl)
+    , m_openUrl(manifest.openUrl.isEmpty() ? QStringLiteral("https://github.com/alsyundawy/NotepadNext-MacOS/releases") : manifest.openUrl)
+    , m_expectedSha256(manifest.expectedSha256)
+{
+    // Enforce strict HTTPS URL pinning (CWE-494 / CVE-2025-15556)
+    if (!m_downloadUrl.isEmpty() && !m_downloadUrl.startsWith(QLatin1String("https://"), Qt::CaseInsensitive)) {
+        qWarning("Insecure non-HTTPS update download URL blocked: %s", qPrintable(m_downloadUrl));
+        m_downloadUrl.clear();
+    }
+    setupUi();
+    updateThemeColors();
+}
 
 UpdateDialog::UpdateDialog(bool updateAvailable,
                            const QString &latestVersion,
@@ -42,17 +80,8 @@ UpdateDialog::UpdateDialog(bool updateAvailable,
                            const QString &changelogUrl,
                            const QString &openUrl,
                            QWidget *parent)
-    : QDialog(parent)
-    , m_updateAvailable(updateAvailable)
-    , m_isError(latestVersion.trimmed().isEmpty())
-    , m_latestVersion(latestVersion)
-    , m_currentVersion(currentVersion.isEmpty() ? QStringLiteral("0.15-06") : currentVersion)
-    , m_downloadUrl(downloadUrl)
-    , m_changelogUrl(changelogUrl)
-    , m_openUrl(openUrl.isEmpty() ? QStringLiteral("https://github.com/alsyundawy/NotepadNext-MacOS/releases") : openUrl)
+    : UpdateDialog(UpdateManifest{updateAvailable, latestVersion, currentVersion, downloadUrl, changelogUrl, openUrl, QString()}, parent)
 {
-    setupUi();
-    updateThemeColors();
 }
 
 void UpdateDialog::setupUi()
@@ -63,12 +92,12 @@ void UpdateDialog::setupUi()
     setMinimumWidth(500);
     setMaximumWidth(580);
 
-    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    auto *mainLayout = new QVBoxLayout(this);
     mainLayout->setContentsMargins(24, 24, 24, 20);
     mainLayout->setSpacing(18);
 
     // Top Header: App Icon + Titles & Badge
-    QHBoxLayout *topLayout = new QHBoxLayout();
+    auto *topLayout = new QHBoxLayout();
     topLayout->setSpacing(16);
     topLayout->setAlignment(Qt::AlignTop);
 
@@ -83,13 +112,13 @@ void UpdateDialog::setupUi()
     m_iconLabel->setFixedSize(64, 64);
     topLayout->addWidget(m_iconLabel);
 
-    QVBoxLayout *headerTextLayout = new QVBoxLayout();
+    auto *headerTextLayout = new QVBoxLayout();
     headerTextLayout->setSpacing(4);
 
-    QHBoxLayout *badgeRow = new QHBoxLayout();
+    auto *badgeRow = new QHBoxLayout();
     badgeRow->setSpacing(8);
 
-    QLabel *appTitleLabel = new QLabel(QStringLiteral("Notepad Next"), this);
+    auto *appTitleLabel = new QLabel(QStringLiteral("Notepad Next"), this);
     QFont titleFont = appTitleLabel->font();
     titleFont.setPointSize(titleFont.pointSize() + 3);
     titleFont.setBold(true);
@@ -135,16 +164,16 @@ void UpdateDialog::setupUi()
 
     // Metadata Card
     m_cardWidget = new QWidget(this);
-    QFormLayout *cardLayout = new QFormLayout(m_cardWidget);
+    auto *cardLayout = new QFormLayout(m_cardWidget);
     cardLayout->setContentsMargins(16, 12, 16, 12);
     cardLayout->setHorizontalSpacing(16);
     cardLayout->setVerticalSpacing(8);
     cardLayout->setLabelAlignment(Qt::AlignLeft);
 
     auto addCardRow = [&](const QString &label, const QString &val) {
-        QLabel *lblKey = new QLabel(label, m_cardWidget);
+        auto *lblKey = new QLabel(label, m_cardWidget);
         lblKey->setStyleSheet(QStringLiteral("font-weight: 600; opacity: 0.85;"));
-        QLabel *lblVal = new QLabel(val, m_cardWidget);
+        auto *lblVal = new QLabel(val, m_cardWidget);
         lblVal->setTextInteractionFlags(Qt::TextSelectableByMouse);
         cardLayout->addRow(lblKey, lblVal);
     };
@@ -157,6 +186,9 @@ void UpdateDialog::setupUi()
         addCardRow(tr("Installed Version:"), QStringLiteral("v%1").arg(m_currentVersion));
         addCardRow(tr("Latest Version:"), QStringLiteral("v%1").arg(m_latestVersion));
         addCardRow(tr("Target Architecture:"), archStr);
+        if (!m_expectedSha256.isEmpty()) {
+            addCardRow(tr("SHA-256 Checksum:"), m_expectedSha256);
+        }
         addCardRow(tr("Check Timestamp:"), QDateTime::currentDateTime().toString(QStringLiteral("yyyy-MM-dd hh:mm")));
     } else if (m_isError) {
         m_badgeLabel->setText(tr("ℹ Check Offline"));
@@ -173,7 +205,7 @@ void UpdateDialog::setupUi()
 
         addCardRow(tr("Current Version:"), QStringLiteral("v%1").arg(m_currentVersion));
         addCardRow(tr("System Architecture:"), archStr);
-        addCardRow(tr("Release Channel:"), tr("Official GitHub Stable (0.15-06)"));
+        addCardRow(tr("Release Channel:"), tr("Official GitHub Stable (0.15-07)"));
         addCardRow(tr("Last Checked:"), QDateTime::currentDateTime().toString(QStringLiteral("yyyy-MM-dd hh:mm")));
     }
 
@@ -191,7 +223,7 @@ void UpdateDialog::setupUi()
     }
 
     // Action Buttons
-    QHBoxLayout *buttonLayout = new QHBoxLayout();
+    auto *buttonLayout = new QHBoxLayout();
     buttonLayout->setSpacing(10);
 
     m_viewReleaseButton = new QPushButton(tr("Release Notes"), this);

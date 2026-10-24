@@ -29,16 +29,21 @@ def main():
         str(root / "thirdparty" / "lexilla" / "include"),
         str(root / "thirdparty" / "lua" / "src"),
         str(root / "thirdparty" / "uchardet" / "src"),
-        str(root / ".deps" / "generated"),
-        str(root / ".deps" / "qt_shims"),
-        str(root / ".deps" / "ads" / "src"),
-        str(root / ".deps" / "SingleApplication"),
-        str(root / ".deps" / "QSimpleUpdater" / "include"),
-        str(root / ".deps" / "editorconfig-core-qt" / "src"),
     ]
+    deps_dir = root / ".deps"
+    include_dirs.extend(
+        [
+            str(deps_dir / "generated"),
+            str(deps_dir / "qt_shims"),
+            str(deps_dir / "ads" / "src"),
+            str(deps_dir / "SingleApplication"),
+            str(deps_dir / "QSimpleUpdater" / "include"),
+            str(deps_dir / "editorconfig-core-qt" / "src"),
+        ]
+    )
 
     base_defines = [
-        '-DAPP_VERSION="0.15-06"',
+        '-DAPP_VERSION="0.15-07"',
         "-DSCI_OWNREGEX",
         "-DADS_STATIC",
         "-DQSIMPLEUPDATER_STATIC",

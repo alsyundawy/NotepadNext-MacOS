@@ -30,6 +30,7 @@
 #include <QMainWindow>
 #include <QLabel>
 #include <QActionGroup>
+#include <memory>
 
 #include "DockedEditor.h"
 
@@ -43,6 +44,7 @@ class MainWindow;
 }
 
 class NotepadNextApplication;
+class QSystemTrayIcon;
 class Macro;
 class Settings;
 class QuickFindWidget;
@@ -73,14 +75,14 @@ public:
     DockedEditor *getDockedEditor() const { return dockedEditor; }
 
 public slots:
-    void newFile();
-    void newWindow();
+    void newFile() const;
+    void newWindow() const;
 
     void openFileDialog();
     void openFile(const QString &filePath);
 
     void openFolderAsWorkspaceDialog();
-    void setFolderAsWorkspacePath(const QString &dir);
+    void setFolderAsWorkspacePath(const QString &dir) const;
 
     void reloadFile();
 
@@ -104,7 +106,7 @@ public slots:
     bool saveAllEditors(const QVector<ScintillaNext *> &editors);
 
     void exportAsFormat(Converter *converter, const QString &filter);
-    void copyAsFormat(Converter *converter, const QString &mimeType);
+    void copyAsFormat(Converter *converter, const QString &mimeType) const;
 
     void renameFile();
 
@@ -119,6 +121,12 @@ public slots:
     void invertCase() const;
     void pasteWithoutFormat() const;
 
+    void sortLinesNatural(bool ascending = true, bool numericMode = true) const;
+    void evaluateMathExpression() const; // actionEvaluateMath inline math evaluator
+    void compareOpenBuffers();
+    void toggleHexView() const;
+    void setupSystemTray();
+
     void showFindReplaceDialog(int index);
 
     void updateFileStatusBasedUi(const ScintillaNext *editor);
@@ -131,7 +139,7 @@ public slots:
     void updateLanguageBasedUi(const ScintillaNext *editor) const;
     void updateGui(ScintillaNext *editor);
 
-    void detectLanguage(ScintillaNext *editor);
+    void detectLanguage(ScintillaNext *editor) const;
 
     void setLanguage(ScintillaNext *editor, const QString &languageName) const;
 
@@ -159,12 +167,12 @@ protected:
 
 private slots:
     void tabBarRightClicked(const ScintillaNext *editor);
-    void languageMenuTriggered();
+    void languageMenuTriggered() const;
     void checkForUpdatesFinished(const QString &url);
     void activateEditor(ScintillaNext *editor);
 
 private:
-    Ui::MainWindow *ui = Q_NULLPTR;
+    std::unique_ptr<Ui::MainWindow> ui;
     NotepadNextApplication *app = Q_NULLPTR;
     DockedEditor *dockedEditor = Q_NULLPTR;
 
@@ -173,16 +181,16 @@ private:
     template <typename Method>
     void connectEditorAction(QAction* action, Method method) {
         connect(action, &QAction::triggered, this, [this, method]() {
-            if (auto* editor = currentEditor()) {
-                (editor->*method)();
+            if (currentEditor()) {
+                (currentEditor()->*method)();
             }
         });
     }
     template <typename Method, typename Arg>
     void connectEditorAction(QAction* action, Method method, Arg value) {
         connect(action, &QAction::triggered, this, [this, method, value]() {
-            if (auto* editor = currentEditor()) {
-                (editor->*method)(value);
+            if (currentEditor()) {
+                (currentEditor()->*method)(value);
             }
         });
     }
@@ -209,8 +217,6 @@ private:
 
     TabsQuickActionsBar *tabsQuickActionsBar = Q_NULLPTR;
 
-    //NppImporter *npp;
-
     MacroManager macroManager;
     DefaultDirectoryManager *defaultDirectoryManager;
 
@@ -226,6 +232,7 @@ private:
     QAction *actionThemeLight = Q_NULLPTR;
     QAction *actionThemeDark = Q_NULLPTR;
     QAction *actionToggleTheme = Q_NULLPTR;
+    QSystemTrayIcon *m_systemTrayIcon = Q_NULLPTR;
 };
 
 #endif // MAINWINDOW_H

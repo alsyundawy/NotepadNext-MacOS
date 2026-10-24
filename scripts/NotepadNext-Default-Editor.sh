@@ -615,16 +615,16 @@ restart_desktop_services() {
 	step "Restarting Finder, Dock, and refreshing system daemons..."
 
 	# Reset QuickLook preview cache
-	qlmanage -r >/dev/null 2>&1 || true
-	qlmanage -r cache >/dev/null 2>&1 || true
+	/usr/bin/qlmanage -r >/dev/null 2>&1 || true
+	/usr/bin/qlmanage -r cache >/dev/null 2>&1 || true
 
 	# Restart Finder and Dock (primary LaunchServices desktop clients)
-	killall Finder 2>/dev/null || true
-	killall Dock 2>/dev/null || true
+	/usr/bin/killall Finder 2>/dev/null || true
+	/usr/bin/killall Dock 2>/dev/null || true
 
 	# Gracefully restart System Settings if currently running so fresh pane cache loads
-	if pgrep -x "System Settings" >/dev/null 2>&1; then
-		killall "System Settings" 2>/dev/null || true
+	if /usr/bin/pgrep -x "System Settings" >/dev/null 2>&1; then
+		/usr/bin/killall "System Settings" 2>/dev/null || true
 	fi
 
 	ok "Finder and Dock have been restarted successfully."

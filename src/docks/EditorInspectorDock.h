@@ -21,6 +21,7 @@
 #ifndef EDITORINSPECTORDOCK_H
 #define EDITORINSPECTORDOCK_H
 
+#include <memory>
 #include <QDockWidget>
 #include <QTreeWidgetItem>
 
@@ -42,7 +43,7 @@ class EditorInspectorDock : public QDockWidget
 
 public:
     explicit EditorInspectorDock(MainWindow *parent);
-    ~EditorInspectorDock();
+    ~EditorInspectorDock() override;
 
 private slots:
     void connectToEditor(ScintillaNext *editor);
@@ -53,7 +54,7 @@ private:
     void newItem(QTreeWidgetItem *parent, const QString &label, EditorFunction func);
     void disconnectFromEditor();
 
-    Ui::EditorInspectorDock *ui;
+    std::unique_ptr<Ui::EditorInspectorDock> ui;
     QTreeWidgetItem *selectionsInfo;
     QMetaObject::Connection editorConnection;
     QVector<QPair<QTreeWidgetItem *, EditorFunction>> items;

@@ -1,124 +1,95 @@
-# 📋 Release Notes: NotepadNext-MacOS v0.15-06 vs. Official v0.15 Upstream
+# 📝 NotepadNext-MacOS Release 0.15-06
 
-> **Edition**: NotepadNext For MacOS  
-> **Release Version**: `0.15-06`  
-> **Official Baseline**: `dail8859/NotepadNext v0.15` (Tag: `v0.15`)  
-> **Date**: October 23, 2026  
-> **Maintainer & Builder**: Harry DS Alsyundawy ([@alsyundawy](https://github.com/alsyundawy))  
-> **Upstream Repository**: [dail8859/NotepadNext](https://github.com/dail8859/NotepadNext)  
-> **macOS Edition Repository**: [alsyundawy/NotepadNext-MacOS](https://github.com/alsyundawy/NotepadNext-MacOS)
+## 🇮🇩 Bahasa Indonesia
 
----
+Rilis **v0.15-06** merupakan pembaruan produksi unggulan yang membawa arsitektur tipografi dan emoji modern **Unicode 18.0** dengan navigasi atomic grapheme cluster via `QTextBoundaryFinder`, integrasi pintasan pemilih emoji native macOS Character Palette (`Cmd+Ctrl+Space`), porting 6 PR bernilai tinggi dari upstream (IME Korean Hangul, dock layout safety, regex non-hanging loop & backreferences `\0`..`\9`, debounced file watcher, native XML Pretty Print, in-selection search), resiliensi penyimpanan berkas transaksional atomik `QSaveFile`, perkakas manipulasi JSON & konversi indentasi, harmonisasi 87 lexer Lexilla, pembaruan antarmuka `UpdateDialog` modern, dan audit mutu kode SonarQube.
 
-## 🌟 Executive Summary
+### 🌟 Sorotan Pembaruan (Changelog dari 0.15-05 ke 0.15-06)
 
-**NotepadNext-MacOS v0.15-06** is a landmark production release representing the culmination of deep architecture modernization, macOS platform specialization, and comprehensive enterprise hardening. Building directly upon the 75-palette Theme Studio introduced in `0.15-05`, version `0.15-06` expands the editor into a world-class text editing powerhouse for Apple Silicon and Intel macOS workstations.
+#### 1. 😃 Arsitektur Unicode 18.0 Emoji & Tipografi macOS
 
-Key architectural breakthroughs in `0.15-06` include:
+- **Universal UTF-8 Encoding**: Memastikan pengaturan `setCodePage(SC_CP_UTF8)` aktif di seluruh inisialisasi buffer Scintilla.
+- **Cascade Font Apple Color Emoji**: Menghubungkan font `Apple Color Emoji` ke font cascade Scintilla dengan optimasi perataan subpixel LCD (`SC_EFF_QUALITY_LCD_OPTIMIZED`) untuk ketajaman glif warna pada layar Retina dan ProMotion.
+- **Navigasi Atomic Grapheme Cluster**: Mengintegrasikan `QTextBoundaryFinder(QTextBoundaryFinder::Grapheme)` pada navigasi kursor dan operasi backspace/delete, sehingga kursor tidak memotong karakter emoji majemuk (seperti keluarga ZWJ 👨‍👩‍👧‍👦, variasi warna kulit 🧑🏽‍💻, atau bendera negara).
+- **macOS Character Palette Native (`Cmd+Ctrl+Space`)**: Menambahkan aksi `actionEmojiSymbols` yang langsung memanggil panel karakter AppKit bawaan macOS `[NSApp orderFrontCharacterPalette:nil]`.
 
-1. **Unicode 18.0 Emoji & Typography Architecture**: Universal UTF-8 enforcement across Scintilla buffers, `Apple Color Emoji` font fallback cascade, subpixel LCD text smoothing, atomic grapheme cluster navigation/deletion via `QTextBoundaryFinder` (preventing corrupted surrogate pairs or split flags), and native macOS Character Palette integration (`Cmd+Ctrl+Space`).
-2. **Global Localization & Apple HIG Polish**: Full synchronization of 23 world language catalogs from upstream Crowdin (PR #1157), complete with refined Apple HIG terminology for Indonesian (`NotepadNext_id.ts`).
-3. **High-Value Upstream PR Integration**: Selective backporting of Korean Hangul IME composition fixes (PR #1166), defensive dock object guard preventing crash on first keypress (PR #1153), zero-length regex hang prevention and capture group backreferences `\0`..`\9` (PR #1165 & #1154), centralized real-time file watcher (PR #1122), dependency-free XML Pretty Print (PR #1096), and In-Selection Find & Replace (PR #1045).
-4. **macOS Hardware & OS Resilience**: Resolving European `Alt` / Option keyboard shortcuts (Issues #814 & #667), atomic transactional file serialization via `QSaveFile` (eliminating 0-byte corrupted files during sudden shutdowns, Issue #650), native JSON formatting and minification (Issue #1140), and dynamic tab/space indentation conversions (Issues #668 & #844).
-5. **Lexilla Lexer Name Harmonization**: Complete audit and synchronization of all 87 language definitions in `src/languages/`, aligning lexer IDs with Lexilla's internal catalogue (`au3`, `baan`, `COBOL`, `f77`, `ps`, `lisp`, `cpp`, `hypertext`, `null`) and introducing a defensive fallback resolver in `NotepadNextApplication::setEditorLanguage`.
-6. **13-Pillar Code Review & Static Analysis**: Zero warnings and zero errors across `cppcheck`, `trunk check` (414 files verified), and SonarQube configuration.
+#### 2. 🚀 Porting PR Upstream Bernilai Tinggi
 
----
+- **PR #1166 (IME Composition)**: Memperbaiki penanganan input CJK dan Bahasa Korea (Hangul) di macOS pada `ScintillaEditBase::inputMethodEvent` dengan melacak panjang preedit string, mengabaikan synthetic backspace, dan mengalirkan teks secara bersih tanpa duplikasi suku kata.
+- **PR #1153 (Dock Restoration Safety)**: Memeriksa `currentDockObjectNames()` sebelum memanggil `restoreWindowState()` guna mencegah crash SIGSEGV saat layout dock berbeda antarsi rilis, serta menginisialisasi geometri caret secara defensif (`setCurrentPos(0); setAnchor(0); chooseCaretX();`).
+- **PR #1165 & #1154 (Regex Engine Resilience)**: Mengeliminasi infinite loop pada `Finder::replaceAll()` ketika pola regex mencocokkan string panjang 0, serta menulis ulang `QRegexSearch::SubstituteByPosition()` untuk mendukung ekspansi grup penangkap `\0` hingga `\9` dan karakter escape (`\n`, `\r`, `\t`, `\\`).
+- **PR #1122 (Real-Time File Watcher)**: Menambahkan `QFileSystemWatcher` dengan mekanisme debounce 250ms pada `EditorManager`, memicu sinyal `editorFileChangedOnDisk` dengan dialog prompt konfirmasi saat berkas diperbarui di disk.
+- **PR #1096 (XML Formatter)**: Menyediakan format rapi XML (*Pretty Print*) native tanpa library eksternal menggunakan `QXmlStreamReader` dan `QXmlStreamWriter` dengan indentasi yang dapat dikonfigurasi.
+- **PR #1045 (In-Selection Search & Replace)**: Menambahkan opsi *In Selection* (`checkBoxInSelection`) pada `FindReplaceDialog` untuk membatasi pencarian dan penggantian teks hanya di dalam area seleksi.
 
-## 📊 Comprehensive Feature & Architecture Matrix
+#### 3. 🍎 Resiliensi macOS & Perbaikan Isu Utama
 
-| Capability / Dimension      | Official Upstream v0.15 (`dail8859`)                 | NotepadNext-MacOS v0.15-06 (`alsyundawy`)                                     | Engineering Impact & Benefits                                          |
-| :-------------------------- | :--------------------------------------------------- | :---------------------------------------------------------------------------- | :--------------------------------------------------------------------- |
-| **Unicode & Emoji**         | Basic UTF-8, split emojis, broken ZWJ sequences      | **Unicode 18.0 + Atomic Grapheme Cluster Navigation** (`QTextBoundaryFinder`) | Seamless compound emojis, skin tones, zero surrogate pair corruption.  |
-| **macOS Character Palette** | None                                                 | **Native Cocoa `[NSApp orderFrontCharacterPalette:]` (`Cmd+Ctrl+Space`)**     | Instant native macOS emoji and symbols picker.                         |
-| **Emoji Typography**        | Generic font fallback                                | **`Apple Color Emoji` Cascade & Subpixel LCD Smoothing**                      | Razor-sharp color glyphs on Retina and ProMotion displays.             |
-| **IME Composition**         | Syllable duplication on macOS CJK/Hangul input       | **Clean `QInputMethodEvent` Handling (PR #1166)**                             | Smooth Korean Hangul, Japanese Kanji, and Chinese typing.              |
-| **Dock State Crash**        | Crashes on first keypress if dock layout desyncs     | **Defensive Dock Guard & Caret Positioning (PR #1153)**                       | Complete immunity to QTBUG-111538 dock restoration crashes.            |
-| **Regex Search Engine**     | Hangs on zero-length matches, limited backreferences | **Non-hanging loop + `\0`..`\9` Capture Expansion (PR #1165 & #1154)**        | Robust search/replace with complete Perl/Qt regex backreferences.      |
-| **File Watcher**            | Polling or inactive                                  | **Centralized Debounced `QFileSystemWatcher` (PR #1122)**                     | Instant prompt when files change on disk with unsaved safety warnings. |
-| **XML Pretty Print**        | None                                                 | **Native `QXmlStreamReader`/`Writer` Formatter (PR #1096)**                   | Fast, dependency-free XML formatting with single-step undo.            |
-| **In-Selection Search**     | Global document search only                          | **In-Selection Search & Replace Engine (PR #1045)**                           | Scope find/replace strictly within captured selection boundaries.      |
-| **Option / Alt Keys**       | Collides with European `#`, `€`, `[`, `]`, `~`, `@`  | **macOS-Scoped Single `Alt` Shortcuts (Issues #814 & #667)**                  | Seamless international keyboard input on Mac.                          |
-| **Crash-Safe File Save**    | Direct file overwrite (risk of 0-byte corruption)    | **Atomic `QSaveFile` Transaction with `commit()` (Issue #650)**               | Eliminates 0-byte files during sudden shutdown or power cut.           |
-| **JSON Tools**              | None                                                 | **Native Format JSON & Minify JSON (Issue #1140)**                            | Built-in high-speed JSON styling using `QJsonDocument`.                |
-| **Indentation Tools**       | None                                                 | **Convert Tabs to Spaces & Spaces to Tabs (Issues #668 & #844)**              | Standardized indentation conversions respecting tab width.             |
-| **Lexilla Lexers**          | Mismatched lexer names (`autoit`, `cobol`, `objc`)   | **100% Harmonized 87 Lexers + Defensive Fallback Resolver**                   | Guaranteed active syntax highlighting for all supported languages.     |
-| **Theme Engine**            | None                                                 | **75 Palettes, Horizon Dark Default, Dynamic Menu Checkmarks**                | Studio-grade light/dark aesthetics with real-time UI synchronization.  |
-| **Translations**            | Fragmented catalogs                                  | **23 Synchronized Catalogs + Polished Apple HIG Indonesian**                  | Full global coverage and standardized macOS HIG terminology.           |
-| **Code Quality**            | Basic CI                                             | **13-Pillar Clean Audit, `trunk check` (0 issues), `cppcheck` (0 issues)**    | ISO 5055, OWASP Top 10, and CWE Top 25 compliant.                      |
+- **Pintasan Keyboard Internasional (Issues #814 & #667)**: Menghapus pintasan tunggal `Alt+1`..`Alt+0` pada macOS di `MainWindow::applyCustomShortcuts()` sehingga tombol Option dapat digunakan secara normal untuk mengetik karakter khusus internasional (`#`, `€`, `[`, `]`, `~`, `@`).
+- **Penyimpanan Berkas Bebas Crash (Issue #650)**: Mengganti overwrite berkas mentah dengan penyimpanan transaksional atomik menggunakan `QSaveFile::commit()` pada [`src/ScintillaNext.cpp`](file:///Users/alsyundawy/Downloads/GitHub/NotepadNext-MacOS/src/ScintillaNext.cpp), mencegah berkas 0-byte saat listrik padam atau crash sistem.
+- **Perkakas Format & Minify JSON (Issue #1140)**: Menyediakan fungsi native *Format JSON* dan *Minify JSON* berbasis `QJsonDocument`.
+- **Konversi Indentasi Dinamis (Issues #668 & #844)**: Menambahkan perkakas konversi *Tabs to Spaces* dan *Spaces to Tabs* yang menghormati lebar tab editor.
+
+#### 4. 📚 Harmonisasi 87 Lexer Bahasa Lexilla & Fallback Resolver
+
+- **Sinkronisasi ID Lexer Resmi**: Mengaudit seluruh 87 konfigurasi bahasa di `src/languages/*.lua` dan menyelaraskan namanya dengan katalog resmi Lexilla (`au3`, `baan`, `COBOL`, `f77`, `ps`, `lisp`, `cpp`, `hypertext`, `null`).
+- **Defensive Fallback Resolver**: Menambahkan pemetaan alias pada `NotepadNextApplication::setEditorLanguage` guna menjamin syntax highlighting tetap aktif meskipun terdapat konfigurasi lama atau kustom.
+
+#### 5. 🔄 Desain Ulang UpdateDialog & Pembersihan SonarQube
+
+- **Modern Adaptive `UpdateDialog`**: Merancang ulang dialog informasi pembaruan dengan badge status rilis, log perubahan ringkas, tombol unduh terintegrasi, dan styling visual yang selaras dengan tema aplikasi.
+- **Penyelesaian SonarQube Code Smells**: Mengeliminasi code smell pada `MainWindow.cpp` dan `ActionUtils.cpp`, memperbaiki shadowing variabel pada loop C++20, serta memastikan kepatuhan 100% pada 13-pilar audit mutu kode.
 
 ---
 
-## 🔍 Detailed Engineering Highlights
+## 🇬🇧 English
 
-### 1. Unicode 18.0 & Typography Architecture
+Release **v0.15-06** is a flagship production release introducing **Unicode 18.0 emoji and typography architecture** with atomic grapheme cluster navigation via `QTextBoundaryFinder`, native macOS Character Palette shortcut integration (`Cmd+Ctrl+Space`), selective backporting of 6 high-value upstream PRs (Korean Hangul IME, dock restoration safety, non-hanging regex loop & backreferences `\0`..`\9`, debounced file watcher, dependency-free XML Pretty Print, in-selection search), crash-safe atomic file transactions via `QSaveFile`, built-in JSON and indentation formatters, complete harmonization across all 87 Lexilla lexers, a modern redesigned `UpdateDialog`, and SonarQube code quality cleanup.
 
-- Enforced `setCodePage(SC_CP_UTF8)` across Scintilla editor initialization and reload handlers.
-- Attached `Apple Color Emoji` to Scintilla font cascade with `SC_EFF_QUALITY_LCD_OPTIMIZED`.
-- Added atomic grapheme cluster navigation via `QTextBoundaryFinder(QTextBoundaryFinder::Grapheme)`, preventing cursor positioning inside compound emoji sequences (such as 👨‍👩‍👧‍👦, 🧑🏽‍💻, or flag sequences).
-- Wired `actionEmojiSymbols` with shortcut `Cmd+Ctrl+Space` calling Cocoa AppKit `[NSApp orderFrontCharacterPalette:nil]`.
+### 🚀 Changelog from 0.15-05 to 0.15-06
 
-### 2. High-Value Upstream Porting
+#### 1. 😃 Unicode 18.0 Emoji & Typography Architecture
 
-- **PR #1166 (IME Composition)**: Refactored `ScintillaEditBase::inputMethodEvent` to track preedit string lengths, drop synthetic backspace events during composition, and commit committed text cleanly.
-- **PR #1153 (Dock Restoration Safety)**: Added `currentDockObjectNames()` check before `restoreWindowState()` to prevent crashes when dock layouts differ between versions. Initialized caret geometry defensively (`setCurrentPos(0); setAnchor(0); chooseCaretX();`).
-- **PR #1165 & #1154 (Regex Engine)**: Prevented infinite looping in `Finder::replaceAll()` when a regex pattern matches 0 characters. Rewrote `QRegexSearch::SubstituteByPosition()` to expand capture groups `\0` through `\9` and escape characters `\n`, `\r`, `\t`, `\\`.
-- **PR #1122 (File Watcher)**: Added `QFileSystemWatcher` with 250ms debounce in `EditorManager` emitting `editorFileChangedOnDisk`, hooked into `MainWindow` with active-window detection and prompt dialogs.
-- **PR #1096 (XML Formatter)**: Implemented `XmlFormatter.h/.cpp` using `QXmlStreamReader` and `QXmlStreamWriter` with configurable indentation and error reporting.
-- **PR #1045 (In-Selection Search)**: Added `checkBoxInSelection` in `FindReplaceDialog.ui` and range-limited search algorithms in `Finder.cpp`.
+- **Universal UTF-8 Encoding**: Enforced `setCodePage(SC_CP_UTF8)` across Scintilla buffer initializations and file reloads.
+- **Apple Color Emoji Font Cascade**: Linked `Apple Color Emoji` into Scintilla's font cascade with subpixel LCD smoothing (`SC_EFF_QUALITY_LCD_OPTIMIZED`) for crisp glyph rendering on Retina and ProMotion displays.
+- **Atomic Grapheme Cluster Navigation**: Integrated `QTextBoundaryFinder(QTextBoundaryFinder::Grapheme)` into cursor caret and backspace/delete handlers, ensuring cursor steps never bisect compound emojis (such as ZWJ families 👨‍👩‍👧‍👦, skin tones 🧑🏽‍💻, or flag sequences).
+- **Native macOS Character Palette (`Cmd+Ctrl+Space`)**: Bound `actionEmojiSymbols` directly to Cocoa AppKit `[NSApp orderFrontCharacterPalette:nil]` for instant system emoji and symbol access.
 
-### 3. Critical macOS Issues Resolution
+#### 2. 🚀 High-Value Upstream PR Backports
 
-- **Issues #814 & #667**: Single `Alt` shortcuts (`Alt+1`..`Alt+0`) cleared under `#ifdef Q_OS_MACOS` in `MainWindow::applyCustomShortcuts()`, restoring Option key character input.
-- **Issue #650**: Replaced raw file overwriting with `QSaveFile` atomic commit in `ScintillaNext::writeToDisk`.
-- **Issue #1140**: Implemented native `Format JSON` and `Minify JSON` in `MainWindow.cpp` using `QJsonDocument`.
-- **Issues #668 & #844**: Added `convertTabsToSpaces()` and `convertSpacesToTabs()` in `ScintillaNext.cpp`.
+- **PR #1166 (IME Composition)**: Refactored `ScintillaEditBase::inputMethodEvent` on macOS to track preedit string lengths, discard synthetic backspace events during composition, and commit text cleanly without syllable duplication in Korean Hangul, Japanese Kanji, or Chinese.
+- **PR #1153 (Dock Restoration Safety)**: Added defensive `currentDockObjectNames()` guard prior to `restoreWindowState()` to prevent SIGSEGV crashes when dock configurations differ across versions, along with safe caret initialization (`setCurrentPos(0); setAnchor(0); chooseCaretX();`).
+- **PR #1165 & #1154 (Regex Engine Resilience)**: Eliminated infinite loops in `Finder::replaceAll()` when regex patterns match 0 characters, and rewrote `QRegexSearch::SubstituteByPosition()` to expand capture groups `\0` through `\9` alongside escape sequences (`\n`, `\r`, `\t`, `\\`).
+- **PR #1122 (Real-Time File Watcher)**: Added `QFileSystemWatcher` with a 250ms debounce in `EditorManager` emitting `editorFileChangedOnDisk` with prompt dialogs when files change on disk.
+- **PR #1096 (XML Formatter)**: Implemented native, dependency-free XML Pretty Print formatting via `QXmlStreamReader` and `QXmlStreamWriter` with configurable indentation.
+- **PR #1045 (In-Selection Search & Replace)**: Added *In Selection* option (`checkBoxInSelection`) in `FindReplaceDialog` to restrict search and replace operations strictly within the active selection bounds.
 
-### 4. Lexilla Lexer Harmonization & Language Architecture
+#### 3. 🍎 macOS Hardware & OS Resilience
 
-- Inspected and harmonized all 87 language definitions in `src/languages/*.lua`:
-  - `autoit.lua` -> `au3`
-  - `baanc.lua` -> `baan`
-  - `cobol.lua` -> `COBOL`
-  - `fortran77.lua` -> `f77`
-  - `postscript.lua` -> `ps`
-  - `scheme.lua` -> `lisp`
-  - `objc.lua` -> `cpp`
-  - `rc.lua` -> `cpp`
-  - `swift.lua` -> `cpp`
-  - `asp.lua` -> `hypertext`
-  - `nfo.lua` -> `null`
-- Added defensive alias mapping in `NotepadNextApplication::setEditorLanguage` to guarantee fallback resolution for any legacy or custom language definitions.
+- **International Option Key Shortcuts (Issues #814 & #667)**: Scoped single `Alt+1`..`Alt+0` shortcuts away on macOS in `MainWindow::applyCustomShortcuts()`, allowing European and international keyboards to type special characters (`#`, `€`, `[`, `]`, `~`, `@`) via Option without menu triggering.
+- **Crash-Safe Atomic File Save (Issue #650)**: Replaced raw file overwriting with atomic transactional `QSaveFile::commit()` in [`src/ScintillaNext.cpp`](file:///Users/alsyundawy/Downloads/GitHub/NotepadNext-MacOS/src/ScintillaNext.cpp), eliminating 0-byte file corruption during unexpected crashes or power loss.
+- **JSON Formatting Tools (Issue #1140)**: Built-in high-performance *Format JSON* and *Minify JSON* actions powered by `QJsonDocument`.
+- **Indentation Conversions (Issues #668 & #844)**: Added dynamic *Convert Tabs to Spaces* and *Spaces to Tabs* tools respecting editor tab widths.
+
+#### 4. 📚 Lexilla 87 Lexer Name Harmonization & Fallback Resolver
+
+- **Aligned Official Lexer IDs**: Audited all 87 language definitions in `src/languages/*.lua` to align identifiers with Lexilla's official catalogue (`au3`, `baan`, `COBOL`, `f77`, `ps`, `lisp`, `cpp`, `hypertext`, `null`).
+- **Defensive Fallback Resolver**: Added alias resolution in `NotepadNextApplication::setEditorLanguage` ensuring syntax highlighting remains active for any legacy or custom definitions.
+
+#### 5. 🔄 Redesigned UpdateDialog & SonarQube Clean Code
+
+- **Modern Adaptive `UpdateDialog`**: Overhauled release update dialog with visual release status badges, concise markdown changelog rendering, direct download actions, and theme-harmonized styling.
+- **SonarQube Code Smell Remediation**: Cleaned code smells in `MainWindow.cpp` and `ActionUtils.cpp`, fixed C++20 loop variable shadowing, and achieved 100% clean status across 13-pillar audits.
 
 ---
 
-## 🛡️ 13-Pillar Verification Summary
+### 📝 Commit Log (0.15-05 ... 0.15-06)
 
-| Pillar                    | Inspection Tool                                              |             Result              |
-| :------------------------ | :----------------------------------------------------------- | :-----------------------------: |
-| **Bug Review**            | `cppcheck --enable=warning,style,performance,portability`    | **PASS (0 errors, 0 warnings)** |
-| **Syntax Review**         | ISO C++20 standard validation (`trunk check`)                |       **PASS (0 errors)**       |
-| **Runtime Review**        | macOS Cocoa event loop & Qt 6 functor signal-slot validation |       **PASS (0 locks)**        |
-| **Logic Review**          | Editor state machine, undo stack, grapheme boundaries        |       **PASS (Verified)**       |
-| **Memory Review**         | RAII ownership, QObject parent-child hierarchies             |       **PASS (0 leaks)**        |
-| **Dead Code Review**      | `cppcheck --enable=unusedFunction`                           |        **PASS (Clean)**         |
-| **Duplicate Code Review** | DRY consolidation in `ByteArrayUtils.h`                      |       **PASS (Verified)**       |
-| **Circular Dependency**   | Topological header include DFS traversal (94 headers)        |       **PASS (0 cycles)**       |
-| **Performance Review**    | Keystroke latency, zero-copy buffer views, batch styling     |        **PASS (Sub-ms)**        |
-| **Security Review**       | OWASP Top 10, CWE-126/119/78/22 audit                        |        **PASS (Secure)**        |
-| **Maintainability**       | Clean Architecture separation of Scintilla & Qt layers       |       **PASS (Modular)**        |
-| **Scalability Review**    | Document pointer ref-counting & dynamic file watcher         |        **PASS (Steady)**        |
-| **Readability Review**    | Clang-Format and Apple HIG compliance                        |   **PASS (414 files clean)**    |
+- `5b9b40b` fix(quality): resolve SonarQube code smells in MainWindow and ActionUtils (@alsyundawy)
+- `5ce6d20` fix(build): resolve undeclared identifier 'i' in applyCaseTransform and actionlint warning in release.yml (@alsyundawy)
+- `0475626` feat(release): redesign modern update dialog, streamline i18n to id and en, and fix Apple Silicon build pipeline for 0.15-06 (@alsyundawy)
+- `2d8e6b2` fix(quality): resolve C++20 ranges, shadowing, and restore QObject in ScintillaEnums (@alsyundawy)
+- `91121e8` fix(code-quality): resolve static analysis diagnostics, shadowing, and offline Qt shims (@alsyundawy)
+- `3ab9b9f` chore(scripts): bump APP_VERSION to 0.15-06 in compilation database generator (@alsyundawy)
+- `e38082e` feat(release): release version 0.15-06 with Unicode 18.0 emoji, Lexilla harmonization, upstream PRs, and 13-pillar audit (@alsyundawy)
 
----
-
-## 📦 Packaging & CI/CD Release Assets
-
-- **Version**: `0.15-06`
-- **Target OS**: macOS 11.0 Big Sur through macOS 15.0+ Sequoia
-- **Architectures**: Universal 2 (`arm64` Apple Silicon & `x86_64` Intel)
-- **Qt Compatibility**: Qt 6.5 LTS, Qt 6.8 LTS, Qt 6.10, Qt 6.11, Qt 6.12
-- **Distribution Packages**:
-  - `NotepadNext-0.15-06-macOS-Universal.dmg`
-  - `NotepadNext-0.15-06-macOS-arm64.dmg`
-  - `NotepadNext-0.15-06-macOS-x86_64.dmg`
+**Full Changelog**: [0.15-05...0.15-06](https://github.com/alsyundawy/NotepadNext-MacOS/compare/0.15-05...0.15-06)

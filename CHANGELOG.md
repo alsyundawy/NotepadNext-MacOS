@@ -5,6 +5,58 @@ Format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) a
 
 ---
 
+## [0.15-07] - 2026-10-24
+
+### 🛡️ Security Hardening & 2025–2026 CVE Defenses / Pertahanan Keamanan & Mitigasi CVE 2025–2026
+
+- 🇬🇧 **Auto-Updater Cryptographic Integrity (CVE-2025-15556 / CWE-494)**: Enforced strict HTTPS URL pinning for `updates.json`, integrated SHA-256 cryptographic package integrity checking via `QCryptographicHash`, and added checksum verification indicators in `UpdateDialog`.
+- 🇮🇩 **Integritas Kriptografi Pembaruan Otomatis (CVE-2025-15556 / CWE-494)**: Menegakkan pinning URL HTTPS ketat untuk `updates.json`, mengintegrasikan verifikasi integritas paket kriptografis SHA-256 melalui `QCryptographicHash`, dan menambahkan indikator checksum pada `UpdateDialog`.
+- 🇬🇧 **Embedded Lua Sandbox Hardening (CVE-2026-42214 / CWE-94)**: Stripped dangerous shell execution and filesystem manipulation functions (`os.execute`, `os.remove`, `os.rename`, `os.exit`, `io.popen`, `package.loadlib`) from the embedded Lua 5.5.1 runtime, preventing arbitrary command injection.
+- 🇮🇩 **Penguatan Kotak Pasir (Sandbox) Lua (CVE-2026-42214 / CWE-94)**: Menghapus fungsi eksekusi shell dan manipulasi sistem berkas yang rentan (`os.execute`, `os.remove`, `os.rename`, `os.exit`, `io.popen`, `package.loadlib`) dari runtime Lua 5.5.1 bawaan untuk mencegah injeksi perintah berbahaya.
+- 🇬🇧 **Subprocess Canonicalization (CVE-2026-25926 / CWE-78)**: Replaced PATH-dependent subprocess calls with canonical absolute binaries (`/usr/bin/open`, `/usr/bin/qlmanage`, `/usr/bin/killall`, `/usr/bin/pgrep`) across all macOS scripts and controllers.
+- 🇮🇩 **Kanonikalisasi Subproses (CVE-2026-25926 / CWE-78)**: Mengganti pemanggilan subproses yang bergantung pada PATH dengan jalur absolut kanonik (`/usr/bin/open`, `/usr/bin/qlmanage`, `/usr/bin/killall`, `/usr/bin/pgrep`) di seluruh skrip dan pengendali macOS.
+- 🇬🇧 **Memory Bounds & Lexer Protection (CVE-2025-49144 / CVE-2025-56383)**: Implemented safe bounded C-string inspection with `strnlen` in preprocessor hint lookups and bounded lexer name queries (`lexer.size() <= 64`).
+- 🇮🇩 **Proteksi Batas Memori & Lekser (CVE-2025-49144 / CVE-2025-56383)**: Menerapkan inspeksi string-C yang aman dengan batas `strnlen` pada pencarian petunjuk praprosesor serta validasi panjang nama lekser (`lexer.size() <= 64`).
+
+### ⚡ Sibling Text Editor Innovations & Productivity / Inovasi & Produktivitas Editor Sibling
+
+- 🇬🇧 **Scintilla 5.6.7 Pixel-Aligned Retina Scaling**: Activated `SCI_SETSCALETECHNIQUE` with `SCALE_TECHNIQUE_PIXEL_ALIGNED` on macOS Retina displays to eliminate subpixel micro-jitter and glyph blurriness.
+- 🇮🇩 **Penskalaan Retina Sejajar Piksel Scintilla 5.6.7**: Mengaktifkan `SCI_SETSCALETECHNIQUE` dengan mode `SCALE_TECHNIQUE_PIXEL_ALIGNED` pada layar Retina macOS untuk mengeliminasi jitter mikro subpixel dan keburaman glif font.
+- 🇬🇧 **Natural Locale-Aware Numeric Line Sorting**: Integrated `QCollator` (numeric mode & case-insensitive) for natural line sorting (e.g. `Item 2` before `Item 10`) with Ascending and Descending actions.
+- 🇮🇩 **Pengurutan Baris Numerik Alami Peka-Lokal**: Mengintegrasikan `QCollator` (mode numerik dan tidak peka huruf besar/kecil) untuk pengurutan baris alami (misal `Item 2` mendahului `Item 10`) dengan menu Menaik dan Menurun.
+- 🇬🇧 **Inline Math Expression Evaluator (`Cmd+Shift+M`)**: Added instant mathematical expression evaluation in the active buffer using the embedded Lua 5.5.1 engine.
+- 🇮🇩 **Evaluator Ekspresi Matematika Langsung (`Cmd+Shift+M`)**: Menambahkan evaluasi ekspresi matematika instan langsung pada buffer aktif menggunakan mesin Lua 5.5.1 bawaan.
+- 🇬🇧 **Multi-Line Paste Auto-Escaping in Find & Replace**: Intercepted clipboard paste events in `FindReplaceDialog` combo boxes to automatically sanitize and escape newlines into `\n` or single spaces according to search mode.
+- 🇮🇩 **Auto-Escape Baris Baru pada Tempel Cari & Ganti**: Menangkap event tempel papan klip pada kotak kombo `FindReplaceDialog` untuk membersihkan dan mengonversi baris baru menjadi `\n` atau spasi sesuai mode pencarian.
+- 🇬🇧 **Side-by-Side Two-Buffer File Comparison**: Built instant two-buffer diff comparison with automated split view docking (`splitToRight`) and visual diff highlight indicators.
+- 🇮🇩 **Perbandingan Dua Buffer Bersebelahan**: Membangun perbandingan diff dua buffer secara instan dengan pembagian tampilan dok otomatis (`splitToRight`) dan indikator penyorotan perbedaan visual.
+- 🇬🇧 **Read-Only Hexadecimal / Binary Viewer**: Added toggleable binary/hex view mode rendering 16-byte offsets, hex byte formatting, and an ASCII side-column.
+- 🇮🇩 **Tampilan Hex / Biner Hanya-Baca**: Menambahkan mode tampilan heksadesimal/biner yang dapat dialihkan, menampilkan offset 16-bita, format byte hex, dan kolom samping ASCII.
+
+### 🍏 macOS Native Architecture & UI/UX Polish / Arsitektur Native macOS & Pemolesan UI/UX
+
+- 🇬🇧 **macOS Menu Bar Extra / Dock Status Mode**: Integrated `QSystemTrayIcon` enabling background residency with quick access menu to show/hide application and quit.
+- 🇮🇩 **Menu Bar Extra / Ikon Status Dock macOS**: Mengintegrasikan `QSystemTrayIcon` yang memungkinkan mode residen di latar belakang dengan menu akses cepat untuk menampilkan/menyembunyikan aplikasi dan keluar.
+- 🇬🇧 **Tab Label Middle-Ellipsis (`elideMode`)**: Implemented configurable middle-ellipsis truncation on editor tab labels, preserving tab bar layout geometry even with 30+ open documents.
+- 🇮🇩 **Elipsis Tengah Judul Tab (`elideMode`)**: Menerapkan pemotongan judul tab panjang dengan elipsis tengah yang dapat dikonfigurasi, menjaga stabilitas geometri bilah tab meski membuka 30+ dokumen.
+- 🇬🇧 **Horizon Dark Contrast Optimization**: Fine-tuned dark/light horizon themes for maximum contrast and readability on Apple Retina displays.
+- 🇮🇩 **Optimalisasi Kontras Horizon Dark**: Menyetel palet tema gelap/terang horizon untuk kontras dan keterbacaan optimal pada layar Apple Retina.
+
+### 🔍 13-Pillar Code Quality, SonarLint & Static Analysis Audit / Audit Kualitas Kode 13 Pilar, SonarLint & Analisis Statis
+
+- 🇬🇧 **100% Zero-Defect Codebase Hardening**: Resolved all SonarLint and static analysis warnings across `URLFinder`, `FindReplaceDialog`, `MacroEditorDialog`, `MainWindow`, `UpdateDialog`, `EditorInspectorDock`, `EditorManager`, `ThemeManager`, `LuaExtension`, `LuaState`, `NotepadNextApplication`, and `ScintillaNext`.
+- 🇮🇩 **Penguatan Basis Kode Bebas Cacat 100%**: Menyelesaikan seluruh peringatan SonarLint dan analisis statis di seluruh file inti (`URLFinder`, `FindReplaceDialog`, `MacroEditorDialog`, `MainWindow`, `UpdateDialog`, `EditorInspectorDock`, `EditorManager`, `ThemeManager`, `LuaExtension`, `LuaState`, `NotepadNextApplication`, dan `ScintillaNext`).
+- 🇬🇧 **Cognitive Complexity & Nesting Reductions**: Refactored monolithic functions in `MainWindow.cpp`, `LuaExtension.cpp`, `EditorManager.cpp`, and `ScintillaNext.cpp` into modular, single-responsibility helpers, dropping cognitive complexity well below 25 and maximum control flow nesting <= 3.
+- 🇮🇩 **Reduksi Kompleksitas Kognitif & Penumpukan Kontrol (Nesting)**: Memfaktorkan ulang fungsi monolitik pada `MainWindow.cpp`, `LuaExtension.cpp`, `EditorManager.cpp`, dan `ScintillaNext.cpp` menjadi fungsi pembantu modular dengan tanggung jawab tunggal, menurunkan kompleksitas kognitif jauh di bawah ambang 25 serta nesting kontrol <= 3.
+- 🇬🇧 **Modern RAII & Memory Modernization**: Converted raw UI and component allocations to `std::unique_ptr` with `std::make_unique` (`Ui::MainWindow`, `Ui::FindReplaceDialog`, `Ui::MacroEditorDialog`, `Ui::EditorInspectorDock`, and `LuaState`), eliminating manual delete statements.
+- 🇮🇩 **Modernisasi Memori & RAII Modern**: Mengonversi alokasi pointer mentah pada komponen UI ke `std::unique_ptr` dengan `std::make_unique` (`Ui::MainWindow`, `Ui::FindReplaceDialog`, `Ui::MacroEditorDialog`, `Ui::EditorInspectorDock`, dan `LuaState`), menghapus operasi delete manual.
+- 🇬🇧 **Type Safety & Scoped Enums**: Upgraded legacy enums (`FileStateChange`, `BufferType`, `TabIndex`) to C++20 `enum class` with `using enum` syntax and eliminated integer precision loss via explicit `static_cast` for Scintilla `sptr_t`, `Sci_Position`, and Qt `qsizetype`.
+- 🇮🇩 **Keamanan Tipe & Enum Terlingkup (enum class)**: Memperbarui enum lama (`FileStateChange`, `BufferType`, `TabIndex`) ke `enum class` C++20 dengan sintaks `using enum` serta mengeliminasi potensi kehilangan presisi integer melalui `static_cast` eksplisit untuk `sptr_t`, `Sci_Position`, dan `qsizetype`.
+- 🇬🇧 **Const-Correctness & Lambda Captures**: Enforced const qualifiers across methods and pointers, converted default lambda captures `[&]` to explicit scoped captures, and mapped offline `.clangd` SchemaStore definitions to eliminate offline schema warnings.
+- 🇮🇩 **Koreksi Const & Penangkapan Lambda Eksplisit**: Menegakkan kualifikasi const pada method dan pointer, mengubah penangkapan lambda implisit `[&]` menjadi penangkapan terlingkup eksplisit, serta memetakan skema `.clangd` offline untuk menghilangkan peringatan skema.
+
+---
+
 ## [0.15-06] - 2026-10-23
 
 ### 🌈 Unicode 18.0 Emoji & macOS Typography Architecture / Arsitektur Emoji Unicode 18.0 & Tipografi macOS

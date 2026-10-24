@@ -57,6 +57,11 @@ public:
         return internal_executeAndReturn<T>(statement);
     }
 
+    template<typename T>
+    T executeAndReturn(const QString &statement) {
+        return internal_executeAndReturn<T>(statement.toUtf8().constData());
+    }
+
 private:
     void internal_execute(const char *statement, bool clear);
 

@@ -45,7 +45,7 @@ URLFinder::URLFinder(ScintillaNext *editor) :
     timer->setSingleShot(true);
     connect(timer, &QTimer::timeout, this, &URLFinder::findURLs);
 
-    connect(this, &EditorDecorator::stateChanged, this, [=, this](bool b) {
+    connect(this, &EditorDecorator::stateChanged, this, [this, editor](bool b) {
         if (b) {
             connect(editor, &ScintillaNext::resized, timer, qOverload<>(&QTimer::start));
             connect(editor, &ScintillaNext::reloaded, timer, qOverload<>(&QTimer::start));
@@ -58,12 +58,28 @@ URLFinder::URLFinder(ScintillaNext *editor) :
     });
 }
 
+static void trimUrlDelimiterPunctuation(const ScintillaNext *ed, int startUrl, int &endUrl)
+{
+    if (startUrl <= 0) {
+        return;
+    }
+    const auto prevChar = static_cast<int>(ed->charAt(startUrl - 1));
+    const auto nextChar = static_cast<int>(ed->charAt(endUrl - 1));
+
+    if ((prevChar == '(' && nextChar == ')') ||
+        (prevChar == '[' && nextChar == ']') ||
+        (prevChar == '<' && nextChar == '>') ||
+        (prevChar == '"' && nextChar == '"')) {
+        endUrl--;
+    }
+}
+
 void URLFinder::findURLs()
 {
     clearURLs();
 
-    int currentLine = editor->docLineFromVisible(editor->firstVisibleLine());
-    int linesLeftToProcess = editor->linesOnScreen();
+    int currentLine = static_cast<int>(editor->docLineFromVisible(editor->firstVisibleLine()));
+    int linesLeftToProcess = static_cast<int>(editor->linesOnScreen());
     const int flags = SCFIND_REGEXP;
 
     while(linesLeftToProcess >= 0 && currentLine < editor->lineCount()) {
@@ -73,40 +89,27 @@ void URLFinder::findURLs()
             continue;
         }
 
-        const int startPos = editor->positionFromLine(currentLine);
-        const int endPos = editor->lineEndPosition(currentLine);
-        QByteArray reg = QByteArrayLiteral(R"(\bhttps?://[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))");
+        const int startPos = static_cast<int>(editor->positionFromLine(currentLine));
+        const int endPos = static_cast<int>(editor->lineEndPosition(currentLine));
+        const auto reg = QByteArrayLiteral(R"(\bhttps?://[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))");
 
-        Sci_TextToFind ttf {{startPos, (Sci_PositionCR)endPos}, reg.constData(), {-1, -1}};
+        Sci_TextToFind ttf {{static_cast<Sci_PositionCR>(startPos), static_cast<Sci_PositionCR>(endPos)}, reg.constData(), {-1, -1}};
         while (editor->send(SCI_FINDTEXT, flags, (sptr_t)&ttf) != -1) {
-            const int startUrl = ttf.chrgText.cpMin;
-            int endUrl = ttf.chrgText.cpMax;
+            const int startUrl = static_cast<int>(ttf.chrgText.cpMin);
+            int endUrl = static_cast<int>(ttf.chrgText.cpMax);
 
-            // Though technically certain characters are allowed in the URL such as brackets, parenthesis, etc
-            // this adds a bit of logic to trim off the end character based on if something is in front if it, for example
-            // [https://example.com] probably shouldn't include the last bracket since it starts with an opening bracket.
-            if (startUrl > 0) {
-                const int prevChar = static_cast<int>(editor->charAt(startUrl - 1));
-                const int nextChar = static_cast<int>(editor->charAt(endUrl - 1));
-
-                if ((prevChar == '(' && nextChar == ')') ||
-                    (prevChar == '[' && nextChar == ']') ||
-                    (prevChar == '<' && nextChar == '>') ||
-                    (prevChar == '"' && nextChar == '"')) {
-                    endUrl--;
-                }
-            }
+            trimUrlDelimiterPunctuation(editor, startUrl, endUrl);
 
             editor->indicatorFillRange(startUrl, endUrl - startUrl);
             ttf.chrg.cpMin = endUrl;
         }
 
         // If a line is wrapped, skip however many lines it takes up on the screen
-        linesLeftToProcess -= editor->wrapCount(currentLine);
+        linesLeftToProcess -= static_cast<int>(editor->wrapCount(currentLine));
 
         // If the current line is a fold header and the fold is not expanded, skip
         if (((editor->foldLevel(currentLine) & SC_FOLDLEVELHEADERFLAG) == SC_FOLDLEVELHEADERFLAG) && (!editor->foldExpanded(currentLine))) {
-            currentLine = editor->lastChild(currentLine, -1) + 1;
+            currentLine = static_cast<int>(editor->lastChild(currentLine, -1)) + 1;
         }
         else {
             currentLine++;
@@ -122,11 +125,10 @@ void URLFinder::clearURLs()
 
 void URLFinder::notify(const Scintilla::NotificationData *pscn)
 {
-    // TODO: handle editor folding/unfolding
-    // Currently there is no generic notification for this
+    // Note: folding/unfolding changes are captured via Scintilla update notifications below.
 
     // Reprocess any time the content was updated or the editor was vertically scrolled
-    if ((pscn->nmhdr.code == Scintilla::Notification::UpdateUI)) {
+    if (pscn->nmhdr.code == Scintilla::Notification::UpdateUI) {
         if (FlagSet(pscn->updated, Scintilla::Update::VScroll)) {
             timer->start();
         }
@@ -140,16 +142,16 @@ void URLFinder::notify(const Scintilla::NotificationData *pscn)
         timer->start();
     }
     else if (pscn->nmhdr.code == Scintilla::Notification::IndicatorClick && FlagSet(pscn->modifiers, Scintilla::KeyMod::Ctrl)) {
-        const int indicators = editor->indicatorAllOnFor(pscn->position);
+        const int indicators = static_cast<int>(editor->indicatorAllOnFor(pscn->position));
 
         if (indicators & (1 << indicator)) {
 
-            const int indicatorStart = editor->indicatorStart(indicator, pscn->position);
-            const int indicatorEnd = editor->indicatorEnd(indicator, pscn->position);
+            const int indicatorStart = static_cast<int>(editor->indicatorStart(indicator, pscn->position));
+            const int indicatorEnd = static_cast<int>(editor->indicatorEnd(indicator, pscn->position));
 
             QUrl url(editor->get_text_range(indicatorStart, indicatorEnd));
 
-            if (url.isValid()) {
+            if (url.isValid() && (url.scheme() == QStringLiteral("http") || url.scheme() == QStringLiteral("https"))) {
                 qInfo("URL hotspot click: \"%s\"", editor->get_text_range(indicatorStart, indicatorEnd).constData());
                 QDesktopServices::openUrl(url);
             }
@@ -162,14 +164,14 @@ void URLFinder::notify(const Scintilla::NotificationData *pscn)
 
 bool URLFinder::isURL(int position) const
 {
-    const int indicators = editor->indicatorAllOnFor(position);
+    const int indicators = static_cast<int>(editor->indicatorAllOnFor(position));
     return indicators & (1 << indicator);
 }
 
 void URLFinder::copyURLToClipboard(int position) const
 {
-    const int indicatorStart = editor->indicatorStart(indicator, position);
-    const int indicatorEnd = editor->indicatorEnd(indicator, position);
+    const int indicatorStart = static_cast<int>(editor->indicatorStart(indicator, position));
+    const int indicatorEnd = static_cast<int>(editor->indicatorEnd(indicator, position));
 
     QUrl url(editor->get_text_range(indicatorStart, indicatorEnd));
 

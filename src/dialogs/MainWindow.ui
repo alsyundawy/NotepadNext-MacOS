@@ -151,10 +151,12 @@
      <addaction name="separator"/>
      <addaction name="actionSortLinesAsc"/>
      <addaction name="actionSortLinesAscCaseInsensitive"/>
+     <addaction name="actionSortLinesNaturalAsc"/>
      <addaction name="actionSortLinesbyLengthAsc"/>
      <addaction name="separator"/>
      <addaction name="actionSortLinesDesc"/>
      <addaction name="actionSortLinesDescCaseInsensitive"/>
+     <addaction name="actionSortLinesNaturalDesc"/>
      <addaction name="actionSortLinesbyLengthDesc"/>
     </widget>
     <widget class="QMenu" name="menuCommentUncomment">
@@ -218,6 +220,7 @@
     <addaction name="menuJsonTools"/>
     <addaction name="separator"/>
     <addaction name="actionColumnMode"/>
+    <addaction name="actionEvaluateMath"/>
    </widget>
    <widget class="QMenu" name="menuSearch">
     <property name="title">
@@ -338,6 +341,9 @@
     <addaction name="separator"/>
     <addaction name="actionSplitHorizontal"/>
     <addaction name="actionSplitVertical"/>
+    <addaction name="separator"/>
+    <addaction name="actionCompareActiveFiles"/>
+    <addaction name="actionToggleHexView"/>
     <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuLanguage">
@@ -1823,6 +1829,34 @@
   <action name="actionConvertSpacesToTabs">
    <property name="text">
     <string>Convert Spaces to Tabs</string>
+   </property>
+  </action>
+  <action name="actionSortLinesNaturalAsc">
+   <property name="text">
+    <string>Sort Lines Naturally Ascending</string>
+   </property>
+  </action>
+  <action name="actionSortLinesNaturalDesc">
+   <property name="text">
+    <string>Sort Lines Naturally Descending</string>
+   </property>
+  </action>
+  <action name="actionEvaluateMath">
+   <property name="text">
+    <string>Evaluate Math Expression</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+M</string>
+   </property>
+  </action>
+  <action name="actionCompareActiveFiles">
+   <property name="text">
+    <string>Compare Two Open Buffers</string>
+   </property>
+  </action>
+  <action name="actionToggleHexView">
+   <property name="text">
+    <string>Toggle Hex / Binary View</string>
    </property>
   </action>
  </widget>

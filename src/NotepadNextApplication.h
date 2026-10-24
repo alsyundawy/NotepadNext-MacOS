@@ -28,6 +28,7 @@
 #include <QCommandLineParser>
 #include <QPointer>
 #include <QTimer>
+#include <memory>
 
 
 class MainWindow;
@@ -45,15 +46,16 @@ class NotepadNextApplication : public SingleApplication
 
 public:
     NotepadNextApplication(int &argc, char **argv);
+    ~NotepadNextApplication() override;
 
     bool init();
 
     RecentFilesListManager *getRecentFilesListManager() const { return recentFilesListManager; }
     EditorManager *getEditorManager() const { return editorManager; }
     SessionManager *getSessionManager() const;
-    TranslationManager *getTranslationManager() const { return translationManager; };
+    TranslationManager *getTranslationManager() const { return translationManager; }
 
-    LuaState *getLuaState() const { return luaState; }
+    LuaState *getLuaState() const { return luaState.get(); }
     QString getFileDialogFilter() const;
     QString getFileDialogFilterForLanguage(const QString &language) const;
     ApplicationSettings *getSettings() const { return settings; }
@@ -76,7 +78,7 @@ protected:
     bool event(QEvent *e) override;
 
 private slots:
-    void saveSettings();
+    void saveSettings() const;
     void receiveInfoFromSecondaryInstance(quint32 instanceId, QByteArray message);
     void saveSession();
 
@@ -91,7 +93,7 @@ private:
     SessionManager *sessionManager = nullptr;
     TranslationManager *translationManager = nullptr;
 
-    LuaState *luaState = Q_NULLPTR;
+    std::unique_ptr<LuaState> luaState;
 
     MainWindow *window = Q_NULLPTR;
     QPointer<QWidget> currentlyFocusedWidget; // Keep a weak pointer to the QWidget since we don't own it

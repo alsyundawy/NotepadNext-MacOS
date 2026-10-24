@@ -87,6 +87,8 @@ NotepadNextApplication::NotepadNextApplication(int &argc, char **argv)
     DebugManager::pauseDebugOutput();
 }
 
+NotepadNextApplication::~NotepadNextApplication() = default;
+
 bool NotepadNextApplication::init()
 {
     qInfo(Q_FUNC_INFO);
@@ -127,19 +129,19 @@ bool NotepadNextApplication::init()
     // This connection isn't needed since the application can not appropriately retranslate the UI at runtime
     //connect(settings, &ApplicationSettings::translationChanged, translationManager, &TranslationManager::loadTranslationByName);
 
-    luaState = new LuaState();
+    luaState = std::make_unique<LuaState>();
 
     recentFilesListManager = new RecentFilesListManager(this);
     editorManager = new EditorManager(settings, this);
     sessionManager = new SessionManager(this);
 
-    connect(editorManager, &EditorManager::editorCreated, recentFilesListManager, [this](ScintillaNext *editor) {
+    connect(editorManager, &EditorManager::editorCreated, recentFilesListManager, [this](const ScintillaNext *editor) {
         if (editor->isFile()) {
             recentFilesListManager->removeFile(editor->getFilePath());
         }
     });
 
-    connect(editorManager, &EditorManager::editorClosed, recentFilesListManager, [this](ScintillaNext *editor) {
+    connect(editorManager, &EditorManager::editorClosed, recentFilesListManager, [this](const ScintillaNext *editor) {
         if (editor->isFile()) {
             recentFilesListManager->addFile(editor->getFilePath());
         }
@@ -149,9 +151,9 @@ bool NotepadNextApplication::init()
 
     connect(this, &NotepadNextApplication::aboutToQuit, this, &NotepadNextApplication::saveSettings);
 
-    EditorConfigAppDecorator *ecad = new EditorConfigAppDecorator(this);
+    auto *ecad = new EditorConfigAppDecorator(this);
     ecad->setEnabled(true);
-    MarkerAppDecorator *mad = new MarkerAppDecorator(this);
+    auto *mad = new MarkerAppDecorator(this);
     mad->setEnabled(true);
 
     luaState->executeFile(":/scripts/init.lua");
@@ -162,8 +164,7 @@ bool NotepadNextApplication::init()
 
     // If the application is activated (e.g. user switching to another program and them back) the focus
     // needs to be reset on whatever object previously had focus (e.g. the find dialog)
-    connect(this, &NotepadNextApplication::focusChanged, this, [&](QWidget *old, QWidget *now) {
-        Q_UNUSED(old);
+    connect(this, &NotepadNextApplication::focusChanged, this, [this](const QWidget * /*old*/, QWidget *now) {
         if (now) {
             currentlyFocusedWidget = now;
         }
@@ -172,7 +173,7 @@ bool NotepadNextApplication::init()
     connect(this, &SingleApplication::instanceStarted, window, &MainWindow::bringWindowToForeground);
     connect(this, &SingleApplication::receivedMessage, this, &NotepadNextApplication::receiveInfoFromSecondaryInstance, Qt::QueuedConnection);
 
-    connect(this, &NotepadNextApplication::applicationStateChanged, this, [&](Qt::ApplicationState state) {
+    connect(this, &NotepadNextApplication::applicationStateChanged, this, [this](Qt::ApplicationState state) {
         if (state == Qt::ApplicationActive) {
 
             // Make sure it is active...
@@ -284,7 +285,10 @@ void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QStr
     editor->languageName = languageName;
     editor->languageSingleLineComment = getLuaState()->executeAndReturn<QString>("return languages[languageName].singleLineComment or \"\"").toUtf8();
 
-    auto lexerInstance = CreateLexer(lexer.toLatin1().constData());
+    void *lexerInstance = nullptr;
+    if (!lexer.isEmpty() && lexer.size() <= 64) {
+        lexerInstance = CreateLexer(lexer.toLatin1().constData());
+    }
     if (!lexerInstance && !lexer.isEmpty()) {
         static const QMap<QString, const char*> s_lexerAliases = {
             { QStringLiteral("autoit"), "au3" },
@@ -334,7 +338,7 @@ QString NotepadNextApplication::detectLanguage(ScintillaNext *editor) const
 {
     qInfo(Q_FUNC_INFO);
 
-    QString language_name = QStringLiteral("Text");
+    auto language_name = QStringLiteral("Text");
 
     if (editor->isFile()) {
         language_name = detectLanguageFromExtension(editor->getFileInfo().suffix());
@@ -455,7 +459,7 @@ bool NotepadNextApplication::event(QEvent *e)
 {
     // Handle the QFileOpenEvent to open files on MacOS X.
     if (e->type() == QEvent::FileOpen) {
-        QFileOpenEvent *fileOpenEvent = static_cast<QFileOpenEvent*>(e);
+        const auto *fileOpenEvent = static_cast<const QFileOpenEvent*>(e);
 
         qInfo("QFileOpenEvent %s", qUtf8Printable(fileOpenEvent->file()));
 
@@ -481,7 +485,7 @@ void NotepadNextApplication::loadSettings()
     recentFilesListManager->setFileList(getSettings()->value("App/RecentFilesList").toStringList());
 }
 
-void NotepadNextApplication::saveSettings()
+void NotepadNextApplication::saveSettings() const
 {
     getSettings()->setValue("App/RecentFilesList", recentFilesListManager->fileList());
 }
@@ -510,9 +514,7 @@ MainWindow *NotepadNextApplication::createNewWindow()
         LuaExtension::Instance().setEditor(editor);
     });
 
-    // TODO: this shouldn't be dependent on a MainWindow closing, but this works for now
-    // since the assumption is MainWindow::aboutToClose() infers the application is shutting
-    // down but the editors are still active.
+    // Session persistence: MainWindow aboutToClose signals application shutdown while editors remain valid
     connect(window, &MainWindow::aboutToClose, this, &NotepadNextApplication::saveSession);
 
     // Timer to autosave the session
@@ -530,7 +532,7 @@ QStringList NotepadNextApplication::debugInfo() const
     info.append(QStringLiteral("Build Date/Time: %1 %2").arg(__DATE__, __TIME__));
     info.append(QStringLiteral("Qt: %1").arg(qVersion()));
     info.append(QStringLiteral("OS: %1").arg(QSysInfo::prettyProductName()));
-    info.append(QStringLiteral("Locale: %1").arg(QLocale::system().name()));
+    info.append(QStringLiteral("Locale: %1").arg(QLocale().name()));
     info.append(QStringLiteral("CPU: %1").arg(QSysInfo::currentCpuArchitecture()));
     info.append(QStringLiteral("File Path: %1").arg(applicationFilePath()));
     info.append(QStringLiteral("Arguments: %1").arg(arguments().join(' ')));

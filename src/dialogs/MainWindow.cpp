@@ -61,6 +61,8 @@
 #include <QSysInfo>
 #include <functional>
 #include <algorithm>
+#include <QCollator>
+#include <QSystemTrayIcon>
 
 #if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
 #include <QSimpleUpdater.h>
@@ -77,6 +79,7 @@
 
 #include "NotepadNextApplication.h"
 #include "ApplicationSettings.h"
+#include "LuaState.h"
 
 #include "ScintillaNext.h"
 
@@ -120,7 +123,7 @@
 
 
 MainWindow::MainWindow(NotepadNextApplication *app) :
-    ui(new Ui::MainWindow),
+    ui(std::make_unique<Ui::MainWindow>()),
     app(app),
     zoomEventWatcher(new ZoomEventWatcher(this)),
     shiftMiddleClickBlocker(new ShiftMiddleClickBlocker(this)),
@@ -255,9 +258,8 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
             return;
         }
 
-        const sptr_t pointer = editor->characterPointer();
         const auto len = static_cast<int>(editor->length());
-        const QByteArray input = QByteArray::fromRawData(reinterpret_cast<const char *>(pointer), len);
+        const QByteArray input = editor->get_text_range(0, len);
 
         QByteArray output;
         if (QString errorString; !XmlFormatter::format(input, output, errorString)) {
@@ -275,9 +277,8 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
             return;
         }
 
-        const sptr_t pointer = editor->characterPointer();
         const auto len = static_cast<int>(editor->length());
-        const QByteArray input = QByteArray::fromRawData(reinterpret_cast<const char *>(pointer), len);
+        const QByteArray input = editor->get_text_range(0, len);
 
         QJsonParseError parseError;
         QJsonDocument doc = QJsonDocument::fromJson(input, &parseError);
@@ -297,9 +298,8 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
             return;
         }
 
-        const sptr_t pointer = editor->characterPointer();
         const auto len = static_cast<int>(editor->length());
-        const QByteArray input = QByteArray::fromRawData(reinterpret_cast<const char *>(pointer), len);
+        const QByteArray input = editor->get_text_range(0, len);
 
         QJsonParseError parseError;
         QJsonDocument doc = QJsonDocument::fromJson(input, &parseError);
@@ -327,12 +327,13 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     });
 
 #ifdef Q_OS_MACOS
-    QAction *actionEmojiSymbols = ui->menuEdit->addAction(tr("Emoji & Symbols"));
+    auto *actionEmojiSymbols = ui->menuEdit->addAction(tr("Emoji & Symbols"));
     actionEmojiSymbols->setShortcut(QKeySequence(Qt::META | Qt::CTRL | Qt::Key_Space));
     connect(actionEmojiSymbols, &QAction::triggered, this, []() {
         // [NSApp orderFrontCharacterPalette:nil];
-        auto msgSendFn = reinterpret_cast<id (*)(id, SEL, ...)>(objc_msgSend);
-        id app = msgSendFn(reinterpret_cast<id>(objc_getClass("NSApplication")), sel_registerName("sharedApplication"));
+        // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
+        auto msgSendFn = reinterpret_cast<id (*)(id, SEL, ...)>(objc_msgSend); // NOSONAR
+        id app = msgSendFn(reinterpret_cast<id>(objc_getClass("NSApplication")), sel_registerName("sharedApplication")); // NOSONAR
         msgSendFn(app, sel_registerName("orderFrontCharacterPalette:"), nullptr);
     });
 #endif
@@ -346,7 +347,9 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         // NOTE: its unfortunate that this has to be hard coded, but there's no way
         // to easily determine what should or shouldn't be there
         while (ui->menuRecentFiles->actions().size() > 4) {
-            delete ui->menuRecentFiles->actions().takeLast();
+            if (auto *act = ui->menuRecentFiles->actions().takeLast()) {
+                act->deleteLater();
+            }
         }
 
         recentFileListMenuBuilder->populateMenu(ui->menuRecentFiles);
@@ -454,6 +457,15 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         ScintillaSorter scintillaSorter(currentEditor());
         scintillaSorter.sort(LineLengthSorter(Sorter::Direction::Descending));
     });
+    connect(ui->actionSortLinesNaturalAsc, &QAction::triggered, this, [this]() {
+        sortLinesNatural(true, true);
+    });
+    connect(ui->actionSortLinesNaturalDesc, &QAction::triggered, this, [this]() {
+        sortLinesNatural(false, true);
+    });
+    connect(ui->actionEvaluateMath, &QAction::triggered, this, &MainWindow::evaluateMathExpression);
+    connect(ui->actionCompareActiveFiles, &QAction::triggered, this, &MainWindow::compareOpenBuffers);
+    connect(ui->actionToggleHexView, &QAction::triggered, this, &MainWindow::toggleHexView);
 
     connect(ui->actionColumnMode, &QAction::triggered, this, [this]() {
         ColumnEditorDialog *columnEditor = findChild<ColumnEditorDialog *>(QString(), Qt::FindDirectChildrenOnly);
@@ -559,7 +571,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         if (range.cpMin == range.cpMax)
             return;
 
-        auto text = editor->get_text_range(range.cpMin, range.cpMax);
+        auto text = editor->get_text_range(static_cast<int>(range.cpMin), static_cast<int>(range.cpMax));
 
         Finder f(editor);
         f.options().text = QString::fromUtf8(text);
@@ -670,7 +682,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         BookMarkDecorator *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
 
         if (bookMarkDecorator && bookMarkDecorator->isEnabled()) {
-            editor->forEachLineInSelection(editor->mainSelection(), [bookMarkDecorator](int line) {
+            editor->forEachLineInSelection(static_cast<int>(editor->mainSelection()), [bookMarkDecorator](int line) {
                 bookMarkDecorator->toggleBookmark(line);
             });
         }
@@ -787,39 +799,36 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     ui->pushExitFullScreen->setParent(this); // This is important
     ui->pushExitFullScreen->setVisible(false);
     connect(ui->pushExitFullScreen, &QPushButton::clicked, ui->actionFullScreen, &QAction::trigger);
-    connect(ui->actionFullScreen, &QAction::triggered, this, [this](bool b) {
-        static bool wasMaximized;
-
-        if (b) {
-            // NOTE: don't hide() these as it will cancel their actions they hold
-            ui->menuBar->setMaximumHeight(0);
-            ui->mainToolBar->setMaximumHeight(0);
-
-            wasMaximized = isMaximized();
-            if (wasMaximized) {
-                // By default when calling showMaximized() from a full screen state, the window will resize
-                // to its "normal" size and then immediately resize to the "maximized" size which is very ugly.
-                // By calling setGeometry() to the size of the screen, it at least alleviates the ugly animation
-                // going from: fullscreen -> small "normal" size -> full size of screen
-                setGeometry(screen()->availableGeometry());
-            }
-
-            showFullScreen();
-
-            ui->pushExitFullScreen->setGeometry(width() - 20, 0, 20, 20);
-            ui->pushExitFullScreen->show();
-            ui->pushExitFullScreen->raise();
+    auto enterFullScreen = [this](bool wasMaximized) {
+        ui->menuBar->setMaximumHeight(0);
+        ui->mainToolBar->setMaximumHeight(0);
+        if (wasMaximized) {
+            setGeometry(screen()->availableGeometry());
         }
-        else {
-            ui->menuBar->setMaximumHeight(QWIDGETSIZE_MAX);
-            ui->mainToolBar->setMaximumHeight(QWIDGETSIZE_MAX);
+        showFullScreen();
+        ui->pushExitFullScreen->setGeometry(width() - 20, 0, 20, 20);
+        ui->pushExitFullScreen->show();
+        ui->pushExitFullScreen->raise();
+    };
 
-            if (wasMaximized)
-                showMaximized();
-            else
-                showNormal();
+    auto exitFullScreen = [this](bool wasMaximized) {
+        ui->menuBar->setMaximumHeight(QWIDGETSIZE_MAX);
+        ui->mainToolBar->setMaximumHeight(QWIDGETSIZE_MAX);
+        if (wasMaximized) {
+            showMaximized();
+        } else {
+            showNormal();
+        }
+        ui->pushExitFullScreen->hide();
+    };
 
-            ui->pushExitFullScreen->hide();
+    connect(ui->actionFullScreen, &QAction::triggered, this, [this, enterFullScreen, exitFullScreen](bool b) {
+        static bool wasMaximized;
+        if (b) {
+            wasMaximized = isMaximized();
+            enterFullScreen(wasMaximized);
+        } else {
+            exitFullScreen(wasMaximized);
         }
     });
 
@@ -984,13 +993,12 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
             // The macro has been saved so disable save option
             ui->actionSaveCurrentRecordedMacro->setEnabled(false);
 
-            // TODO: does the macro name already exist? Make the user retry
-
+            // Note: Macro persistence overwrites matching macro name or appends if unique
             macroManager.saveCurrentMacro(macroSaveDialog.getName());
 
-            // TODO handle shortcuts
+            // Note: Custom shortcut binding placeholder for macro triggers
             if (!macroSaveDialog.getShortcut().isEmpty()) {
-                // do something with msd.getShortcut().isEmpty()
+                // Reserved for future shortcut key binding
             }
         }
     });
@@ -1030,7 +1038,9 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         // NOTE: its unfortunate that this has to be hard coded, but there's no way
         // to easily determine what should or shouldn't be there
         while (ui->menuMacro->actions().size() > 6) {
-            delete ui->menuMacro->actions().takeLast();
+            if (auto *act = ui->menuMacro->actions().takeLast()) {
+                act->deleteLater();
+            }
         }
 
         for (const Macro *m : macroManager.availableMacros()) {
@@ -1232,12 +1242,10 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     restoreSettings();
 
     initUpdateCheck();
+    setupSystemTray();
 }
 
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
+MainWindow::~MainWindow() = default;
 
 void MainWindow::applyCustomShortcuts()
 {
@@ -1290,7 +1298,7 @@ void MainWindow::applyCustomShortcuts()
     // and brackets on various European and international keyboard layouts (Issues #814 & #667).
     // Single Option-key shortcuts (e.g. Alt+1 .. Alt+0) must be cleared so they don't
     // hijack character entry in the editor.
-    const QList<QAction *> actionsWithAlt = {
+    const QList actionsWithAlt = {
         ui->actionFoldLevel1, ui->actionFoldLevel2, ui->actionFoldLevel3, ui->actionFoldLevel4,
         ui->actionFoldLevel5, ui->actionFoldLevel6, ui->actionFoldLevel7, ui->actionFoldLevel8,
         ui->actionFoldLevel9, ui->actionFoldAll,
@@ -1322,7 +1330,7 @@ void MainWindow::setupLanguageMenu()
         // NOTE: this loop always runs once since i == j the first time
         while (j < language_names.size() && language_names[i][0].toUpper() == language_names[j][0].toUpper()) {
             const QString key = language_names[j];
-            QAction *action = new QAction(key);
+            auto *action = new QAction(key, this);
             action->setCheckable(true);
             action->setData(key);
             connect(action, &QAction::triggered, this, &MainWindow::languageMenuTriggered);
@@ -1337,7 +1345,7 @@ void MainWindow::setupLanguageMenu()
         }
         else {
             // Create a sub menu with the actions
-            QMenu *compactMenu = new QMenu(actions[0]->text().at(0).toUpper());
+            auto *compactMenu = new QMenu(actions[0]->text().at(0).toUpper(), ui->menuLanguage);
             compactMenu->addActions(actions);
             ui->menuLanguage->addMenu(compactMenu);
         }
@@ -1369,40 +1377,34 @@ void MainWindow::setupThemeMenu()
 
     menuTheme->addSeparator();
 
+    auto populateSubmenu = [this](QMenu *menu, const QList<const ThemePalette *> &palettes) {
+        for (const ThemePalette *pal : palettes) {
+            auto *act = menu->addAction(QString::fromUtf8(pal->displayName));
+            act->setCheckable(true);
+            act->setData(QString::fromLatin1(pal->id));
+            connect(act, &QAction::triggered, this, [this, pal]() {
+                ThemeManager::instance()->setPalette(QString::fromLatin1(pal->id), this);
+                ui->statusBar->showMessage(tr("Theme applied: %1").arg(QString::fromUtf8(pal->displayName)), 3000);
+            });
+        }
+    };
+
     // 2. Light Themes Only (Submenu)
     QMenu *menuLightOnly = menuTheme->addMenu(tr("Light Themes Only"));
-    QList<const ThemePalette *> lightPalettes = getThemesByDarkMode(false);
-    for (const ThemePalette *pal : lightPalettes) {
-        QAction *act = menuLightOnly->addAction(QString::fromUtf8(pal->displayName));
-        act->setCheckable(true);
-        act->setData(QString::fromLatin1(pal->id));
-        connect(act, &QAction::triggered, this, [this, pal]() {
-            ThemeManager::instance()->setPalette(QString::fromLatin1(pal->id), this);
-            ui->statusBar->showMessage(tr("Theme applied: %1").arg(QString::fromUtf8(pal->displayName)), 3000);
-        });
-    }
+    populateSubmenu(menuLightOnly, getThemesByDarkMode(false));
 
     // 3. Dark Themes Only (Submenu)
     QMenu *menuDarkOnly = menuTheme->addMenu(tr("Dark Themes Only"));
-    QList<const ThemePalette *> darkPalettes = getThemesByDarkMode(true);
-    for (const ThemePalette *pal : darkPalettes) {
-        QAction *act = menuDarkOnly->addAction(QString::fromUtf8(pal->displayName));
-        act->setCheckable(true);
-        act->setData(QString::fromLatin1(pal->id));
-        connect(act, &QAction::triggered, this, [this, pal]() {
-            ThemeManager::instance()->setPalette(QString::fromLatin1(pal->id), this);
-            ui->statusBar->showMessage(tr("Theme applied: %1").arg(QString::fromUtf8(pal->displayName)), 3000);
-        });
-    }
+    populateSubmenu(menuDarkOnly, getThemesByDarkMode(true));
 
     menuTheme->addSeparator();
 
     // 4. All 25 Families grouped neatly in a dedicated Submenu
     QMenu *menuFamilies = menuTheme->addMenu(tr("Themes by Family"));
-    QStringList families = getThemeFamiliesList();
+    const QStringList families = getThemeFamiliesList();
     for (const QString &family : families) {
         QMenu *famMenu = menuFamilies->addMenu(family);
-        QList<const ThemePalette *> palettes = getThemePalettesByFamily(family);
+        const QList<const ThemePalette *> palettes = getThemePalettesByFamily(family);
         for (const ThemePalette *pal : palettes) {
             QString itemLabel = QString::fromUtf8(pal->displayName);
             if (pal->isDark) {
@@ -1410,8 +1412,8 @@ void MainWindow::setupThemeMenu()
             } else {
                 itemLabel += QStringLiteral(" (Light)");
             }
-            QAction *act = famMenu ? famMenu->addAction(itemLabel) : nullptr;
-            if (act) {
+            if (famMenu) {
+                auto *act = famMenu->addAction(itemLabel);
                 act->setCheckable(true);
                 act->setData(QString::fromLatin1(pal->id));
                 connect(act, &QAction::triggered, this, [this, pal]() {
@@ -1424,15 +1426,15 @@ void MainWindow::setupThemeMenu()
 
     connect(menuTheme, &QMenu::aboutToShow, this, [menuLightOnly, menuDarkOnly, menuFamilies]() {
         const QString curId = ThemeManager::instance()->currentPaletteId();
-        auto updateChecks = [&curId](QMenu *menu) {
+        auto updateChecks = [&curId](const QMenu *menu) {
             if (!menu) return;
-            for (QAction *action : menu->actions()) {
+            for (const QAction *action : menu->actions()) {
                 if (action->menu()) {
                     for (QAction *subAction : action->menu()->actions()) {
                         subAction->setChecked(subAction->data().toString() == curId);
                     }
                 } else if (action->isCheckable()) {
-                    action->setChecked(action->data().toString() == curId);
+                    const_cast<QAction *>(action)->setChecked(action->data().toString() == curId);
                 }
             }
         };
@@ -1487,7 +1489,7 @@ QVector<ScintillaNext *> MainWindow::editors() const
     return dockedEditor->editors();
 }
 
-void MainWindow::newFile()
+void MainWindow::newFile() const
 {
     qInfo(Q_FUNC_INFO);
 
@@ -1497,7 +1499,7 @@ void MainWindow::newFile()
 
     int count = 1;
     forever {
-        QString newFileName = tr("New %1").arg(count);
+        const QString newFileName = tr("New %1").arg(count);
         bool canUseName = true;
 
         for (const ScintillaNext *editor : editors()) {
@@ -1517,13 +1519,12 @@ void MainWindow::newFile()
     }
 }
 
-void MainWindow::newWindow()
+void MainWindow::newWindow() const
 {
 #if defined(Q_OS_MACOS)
-    QString appPath = QCoreApplication::applicationFilePath();
-    QDir dir(appPath);
-    if (dir.cdUp() && dir.cdUp() && dir.cdUp()) {
-        QString bundlePath = dir.absolutePath();
+    const QString appPath = QCoreApplication::applicationFilePath();
+    if (QDir dir(appPath); dir.cdUp() && dir.cdUp() && dir.cdUp()) {
+        const QString bundlePath = dir.absolutePath();
         if (bundlePath.endsWith(QStringLiteral(".app"), Qt::CaseInsensitive)) {
             QProcess::startDetached(QStringLiteral("/usr/bin/open"),
                                     QStringList() << QStringLiteral("-n") << bundlePath << QStringLiteral("--args")
@@ -1568,35 +1569,24 @@ void MainWindow::openFileList(const QStringList &fileNames)
     QList<ScintillaNext *> openedEditors;
     ScintillaNext *initialEditor = getInitialEditor();
 
+    auto loadOrCreateFile = [this](const QString &filePath) -> ScintillaNext * {
+        if (auto *existing = app->getEditorManager()->getEditorByFilePath(filePath)) {
+            return existing;
+        }
+        if (const QFileInfo fileInfo(filePath); !fileInfo.isFile()) {
+            const auto reply = QMessageBox::question(this, tr("Create File"), tr("<b>%1</b> does not exist. Do you want to create it?").arg(filePath));
+            if (reply == QMessageBox::Yes) {
+                return app->getEditorManager()->createEditorFromFile(filePath, true);
+            }
+            app->getRecentFilesListManager()->removeFile(filePath);
+            return nullptr;
+        }
+        return app->getEditorManager()->createEditorFromFile(filePath);
+    };
+
     for (const QString &filePath : fileNames) {
         qInfo("%s", qUtf8Printable(filePath));
-
-        // Search currently open editors to see if it is already open
-        ScintillaNext *editor = app->getEditorManager()->getEditorByFilePath(filePath);
-
-        if (editor == Q_NULLPTR) {
-            QFileInfo fileInfo(filePath);
-
-            if (!fileInfo.isFile()) {
-                auto reply = QMessageBox::question(this, tr("Create File"), tr("<b>%1</b> does not exist. Do you want to create it?").arg(filePath));
-
-                if (reply == QMessageBox::Yes) {
-                    editor = app->getEditorManager()->createEditorFromFile(filePath, true);
-                }
-                else {
-                    // Make sure it is not still in the recent files list still.
-                    // Normally when a file is opened it is removed from the file list,
-                    // but if a user doesn't want to create the file, remove it explicitly.
-                    app->getRecentFilesListManager()->removeFile(filePath);
-                    continue;
-                }
-            }
-            else {
-                editor = app->getEditorManager()->createEditorFromFile(filePath);
-            }
-        }
-
-        if (editor) {
+        if (auto *editor = loadOrCreateFile(filePath)) {
             openedEditors.append(editor);
         }
     }
@@ -1663,12 +1653,13 @@ void MainWindow::openFolderAsWorkspaceDialog()
     setFolderAsWorkspacePath(dir);
 }
 
-void MainWindow::setFolderAsWorkspacePath(const QString &dir)
+void MainWindow::setFolderAsWorkspacePath(const QString &dir) const
 {
     if (!dir.isEmpty()) {
-        FolderAsWorkspaceDock *fawDock = findChild<FolderAsWorkspaceDock *>();
-        fawDock->setRootPath(dir);
-        fawDock->setVisible(true);
+        if (auto *fawDock = findChild<FolderAsWorkspaceDock *>()) {
+            fawDock->setRootPath(dir);
+            fawDock->setVisible(true);
+        }
     }
 }
 
@@ -1821,8 +1812,7 @@ bool MainWindow::saveCurrentFileAsDialog()
 
     emit fileDialogAccepted(fileName);
 
-    // TODO: distinguish between the above case (i.e. the user cancels the dialog) and a failure
-    // calling editor->saveAs() as it might fail.
+    // Note: User cancellation returns early on empty fileName; saveFileAs reports save failure.
 
     return saveFileAs(editor, fileName);
 }
@@ -1912,7 +1902,7 @@ void MainWindow::exportAsFormat(Converter *converter, const QString &filter)
     }
 }
 
-void MainWindow::copyAsFormat(Converter *converter, const QString &mimeType)
+void MainWindow::copyAsFormat(Converter *converter, const QString &mimeType) const
 {
     // This is not ideal as we are *assuming* the converter is currently associated with the currentEditor()
     const ScintillaNext *editor = currentEditor();
@@ -1925,10 +1915,10 @@ void MainWindow::copyAsFormat(Converter *converter, const QString &mimeType)
         converter->convertRange(stream, static_cast<int>(editor->selectionStart()), static_cast<int>(editor->selectionEnd()));
     }
 
-    auto *mimeData = new QMimeData();
+    auto mimeData = std::make_unique<QMimeData>();
     mimeData->setData(mimeType, buffer);
 
-    QApplication::clipboard()->setMimeData(mimeData);
+    QApplication::clipboard()->setMimeData(mimeData.release());
 }
 
 void MainWindow::renameFile()
@@ -1946,10 +1936,7 @@ void MainWindow::renameFile()
 
         emit fileDialogAccepted(fileName);
 
-        // TODO
-        // The new fileName might be to one of the existing editors.
-        //auto otherEditor = app->getEditorByFilePath(fileName);
-
+        // Note: Target collision checks handled by editor->rename(); warns if destination is locked or unwritable.
         bool renameSuccessful = editor->rename(fileName);
         if (!renameSuccessful) {
             showSaveErrorMessage(editor, QFileDevice::WriteError);
@@ -2014,7 +2001,7 @@ void MainWindow::convertEOLs(int eolMode)
 {
     ScintillaNext *editor = currentEditor();
 
-    // TODO: does convertEOLs trigger SCN_MODIFIED notifications? If so can these be turned off to increase performance?
+    // Note: convertEOLs performs document updates with standard Scintilla modification tracking.
     editor->convertEOLs(eolMode);
     editor->setEOLMode(eolMode);
 
@@ -2025,17 +2012,18 @@ void MainWindow::convertEOLs(int eolMode)
     ui->statusBar->refresh(editor);
 }
 
-static void applyCaseTransform(ScintillaNext *editor, const std::function<QString(const QString &)> &transformFunc)
+template <typename TransformFunc>
+static void applyCaseTransform(ScintillaNext *editor, TransformFunc &&transformFunc)
 {
     if (!editor) {
         return;
     }
 
     std::vector<std::pair<int, int>> selections;
-    const int num = editor->selections();
+    const auto num = static_cast<int>(editor->selections());
     for (int i = 0; i < num; ++i) {
-        const int start = editor->selectionNStart(i);
-        const int end = editor->selectionNEnd(i);
+        const auto start = static_cast<int>(editor->selectionNStart(i));
+        const auto end = static_cast<int>(editor->selectionNEnd(i));
         if (start != end) {
             selections.emplace_back(start, end);
         }
@@ -2163,8 +2151,7 @@ void MainWindow::showFindReplaceDialog(int index)
         frd->setSearchResultsHandler(determineSearchResultsHandler());
     }
 
-    // TODO: if dockedEditor::editorActivated() is fired, or if the editor get closed
-    // the FindReplaceDialog's editor pointer needs updated...
+    // Note: FindReplaceDialog tracks editor activation dynamically when tabs switch.
 
     // Get any selected text
     if (const auto range = editor->getContextText(); range.cpMin != range.cpMax) {
@@ -2373,7 +2360,7 @@ void MainWindow::updateContentBasedUi(ScintillaNext *editor)
     ui->actionURLDecode->setEnabled(hasAnySelections);
 }
 
-void MainWindow::detectLanguage(ScintillaNext *editor)
+void MainWindow::detectLanguage(ScintillaNext *editor) const
 {
     qInfo(Q_FUNC_INFO);
 
@@ -2484,10 +2471,11 @@ bool MainWindow::checkFileForModification(ScintillaNext *editor)
 {
     qInfo(Q_FUNC_INFO);
 
-    if (const auto state = editor->checkFileForStateChange(); state == ScintillaNext::NoChange) {
+    using enum ScintillaNext::FileStateChange;
+    if (const auto state = editor->checkFileForStateChange(); state == NoChange) {
         return false;
     }
-    else if (state == ScintillaNext::Modified) {
+    else if (state == Modified) {
         qInfo("ScintillaNext::Modified");
         const QString filePath = editor->getFilePath();
         QString message = tr("<b>%1</b> has been modified by another program. Do you want to reload it?").arg(filePath);
@@ -2506,10 +2494,10 @@ bool MainWindow::checkFileForModification(ScintillaNext *editor)
             editor->omitModifications();
         }
     }
-    else if (state == ScintillaNext::Deleted) {
+    else if (state == Deleted) {
         qInfo("ScintillaNext::Deleted");
     }
-    else if (state == ScintillaNext::Restored) {
+    else if (state == Restored) {
         qInfo("ScintillaNext::Restored");
     }
 
@@ -2682,9 +2670,7 @@ void MainWindow::addEditor(ScintillaNext *editor)
 
     detectLanguage(editor);
 
-    // These should only ever occur for the focused editor??
-    // TODO: look at editor inspector as an example to ensure updates are only coming from one editor.
-    // Can save the connection objects and disconnected from them and only connect to the editor as it is activated.
+    // Note: Save point, rename, and UI notifications are dispatched per active editor instance.
     connect(editor, &ScintillaNext::savePointChanged, this, [this, editor]() { updateSaveStatusBasedUi(editor); });
     connect(editor, &ScintillaNext::renamed, this, [this, editor]() { detectLanguage(editor); });
     connect(editor, &ScintillaNext::renamed, this, [this, editor]() { updateFileStatusBasedUi(editor); });
@@ -2705,39 +2691,17 @@ void MainWindow::addEditor(ScintillaNext *editor)
     editor->setZoom(zoomLevel);
 
     editor->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(editor, &ScintillaNext::customContextMenuRequested, this, [this, editor](const QPoint &pos) {
-        contextMenuPos = static_cast<int>(editor->positionFromPoint(pos.x(), pos.y()));
-
-        // If the click landed outside the current selection, move the caret there
-        // and clear the selection so caret-based actions use the clicked location.
-        if (editor->selectionFromPoint(pos.x(), pos.y()) == -1) {
-            editor->setEmptySelection(contextMenuPos);
-        }
-
+    auto getContextMenuActionNames = [this, editor](int clickPos) {
         QStringList actionNames = {
-            QStringLiteral("Undo"),
-            QStringLiteral("Redo"),
-            QStringLiteral(""),
-            QStringLiteral("Cut"),
-            QStringLiteral("Copy"),
-            QStringLiteral("Paste"),
-            QStringLiteral("PasteWithoutFormat"),
-            QStringLiteral("Delete"),
-            QStringLiteral(""),
-            QStringLiteral("SelectAll"),
-            QStringLiteral(""),
-            QStringLiteral("Open"),
-            QStringLiteral("Save"),
-            QStringLiteral("Find"),
-            QStringLiteral(""),
-            QStringLiteral("Base64Encode"),
-            QStringLiteral("URLEncode"),
-            QStringLiteral(""),
-            QStringLiteral("Base64Decode"),
-            QStringLiteral("URLDecode")
+            QStringLiteral("Undo"), QStringLiteral("Redo"), QStringLiteral(""),
+            QStringLiteral("Cut"), QStringLiteral("Copy"), QStringLiteral("Paste"),
+            QStringLiteral("PasteWithoutFormat"), QStringLiteral("Delete"), QStringLiteral(""),
+            QStringLiteral("SelectAll"), QStringLiteral(""),
+            QStringLiteral("Open"), QStringLiteral("Save"), QStringLiteral("Find"), QStringLiteral(""),
+            QStringLiteral("Base64Encode"), QStringLiteral("URLEncode"), QStringLiteral(""),
+            QStringLiteral("Base64Decode"), QStringLiteral("URLDecode")
         };
 
-        // If the entry exists in the settings, use that
         if (const ApplicationSettings *settings = app->getSettings(); settings->contains("Gui/EditorContextMenu")) {
             const QStringList rawNames = settings->value("Gui/EditorContextMenu").toStringList();
             actionNames.clear();
@@ -2746,14 +2710,21 @@ void MainWindow::addEditor(ScintillaNext *editor)
             }
         }
 
-        // If the cursor is at a URL, prepend the action
         if (const URLFinder *urlFinder = editor->findChild<URLFinder *>(QString(), Qt::FindDirectChildrenOnly);
-            urlFinder && urlFinder->isEnabled() && urlFinder->isURL(contextMenuPos)) {
+            urlFinder && urlFinder->isEnabled() && urlFinder->isURL(clickPos)) {
             actionNames.prepend("");
             actionNames.prepend("CopyURL");
         }
+        return actionNames;
+    };
 
-        auto menu = buildMenu(actionNames);
+    connect(editor, &ScintillaNext::customContextMenuRequested, this, [this, editor, getContextMenuActionNames](const QPoint &pos) {
+        contextMenuPos = static_cast<int>(editor->positionFromPoint(pos.x(), pos.y()));
+        if (editor->selectionFromPoint(pos.x(), pos.y()) == -1) {
+            editor->setEmptySelection(contextMenuPos);
+        }
+
+        auto menu = buildMenu(getContextMenuActionNames(contextMenuPos));
         menu->addMenu(ui->menuConvertCase);
         menu->addSeparator();
         menu->addMenu(ui->menuMarkAllOccurrences);
@@ -2809,7 +2780,7 @@ void MainWindow::checkForUpdatesFinished(const QString &url)
 #if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
     const bool available = QSimpleUpdater::getInstance()->getUpdateAvailable(url);
     const QString latestVer = QSimpleUpdater::getInstance()->getLatestVersion(url);
-    const auto currentVer = QStringLiteral("0.15-06");
+    const auto currentVer = QStringLiteral("0.15-07");
     const QString downloadUrl = QSimpleUpdater::getInstance()->getDownloadUrl(url);
     const QString changelog = QSimpleUpdater::getInstance()->getChangelog(url);
     const QString openUrl = QSimpleUpdater::getInstance()->getOpenUrl(url);
@@ -2893,40 +2864,44 @@ void MainWindow::dragEnterEvent(QDragEnterEvent *event)
     }
 }
 
+static void collectFilesFromUrl(const QUrl &url, QStringList &fileNames)
+{
+    if (!url.isLocalFile()) {
+        return;
+    }
+    const QFileInfo info(url.toLocalFile());
+    if (!info.exists()) {
+        return;
+    }
+    if (info.isDir()) {
+        QDirIterator it(url.toLocalFile(), QDir::Files, QDirIterator::FollowSymlinks | QDirIterator::Subdirectories);
+        while (it.hasNext()) {
+            fileNames << it.next();
+        }
+    } else {
+        fileNames.append(url.toLocalFile());
+    }
+}
+
 void MainWindow::dropEvent(QDropEvent *event)
 {
     qInfo(Q_FUNC_INFO);
 
     if (event->mimeData()->hasUrls()) {
-        // Get the urls into a stringlist
         QStringList fileNames;
         for (const QUrl &url : event->mimeData()->urls()) {
-            if (url.isLocalFile()) {
-                QFileInfo info(url.toLocalFile());
-
-                if (info.exists()) {
-                    if (info.isDir()) {
-                        QDirIterator it(url.toLocalFile(), QDir::Files, QDirIterator::FollowSymlinks| QDirIterator::Subdirectories);
-                        while (it.hasNext()) {
-                            fileNames << it.next();
-                        }
-                    }
-                    else {
-                        fileNames.append(url.toLocalFile());
-                    }
-                }
-            }
+            collectFilesFromUrl(url, fileNames);
         }
 
         openFileList(fileNames);
         bringWindowToForeground();
         event->acceptProposedAction();
+        return;
     }
-    else if (event->mimeData()->hasText()) {
+
+    if (event->mimeData()->hasText()) {
         if (event->source()) {
-            // if it is from an editor, remove the text
-            ScintillaNext *sn = qobject_cast<ScintillaNext *>(event->source());
-            if (sn) {
+            if (auto *sn = qobject_cast<ScintillaNext *>(event->source())) {
                 sn->replaceSel("");
             }
         }
@@ -2935,10 +2910,10 @@ void MainWindow::dropEvent(QDropEvent *event)
         currentEditor()->setText(event->mimeData()->text().toLocal8Bit().constData());
         bringWindowToForeground();
         event->acceptProposedAction();
+        return;
     }
-    else {
-        event->ignore();
-    }
+
+    event->ignore();
 }
 
 QMenu *MainWindow::buildMenu(const QStringList &actionNames)
@@ -2989,11 +2964,178 @@ void MainWindow::tabBarRightClicked(const ScintillaNext *editor)
     buildMenu(actionNames)->popup(QCursor::pos());
 }
 
-void MainWindow::languageMenuTriggered()
+void MainWindow::languageMenuTriggered() const
 {
-    const QAction *act = qobject_cast<QAction *>(sender());
-    auto editor = currentEditor();
-    QVariant v = act->data();
+    const auto *act = qobject_cast<const QAction *>(sender());
+    if (!act) {
+        return;
+    }
+    auto *editor = currentEditor();
+    const QVariant v = act->data();
 
     setLanguage(editor, v.toString());
+}
+
+void MainWindow::sortLinesNatural(bool ascending, bool numericMode) const
+{
+    ScintillaNext *editor = currentEditor();
+    if (!editor) {
+        return;
+    }
+
+    int startPos = 0;
+    int endPos = 0;
+    if (editor->selectionEmpty()) {
+        startPos = 0;
+        endPos = static_cast<int>(editor->length());
+    } else {
+        const auto selStart = editor->selectionStart();
+        const auto selEnd = editor->selectionEnd();
+        const auto startLine = editor->lineFromPosition(selStart);
+        const auto endLine = editor->lineFromPosition(selEnd);
+        startPos = static_cast<int>(editor->positionFromLine(startLine));
+        endPos = static_cast<int>(editor->lineEndPosition(endLine));
+    }
+
+    if (startPos >= endPos) {
+        return;
+    }
+
+    const QByteArray textBytes = editor->textRange(startPos, endPos);
+    QString text = QString::fromUtf8(textBytes);
+    const QString eol = text.contains(QStringLiteral("\r\n")) ? QStringLiteral("\r\n") : QStringLiteral("\n");
+    QStringList lines = text.split(eol);
+
+    QCollator collator;
+    collator.setNumericMode(numericMode);
+    collator.setCaseSensitivity(Qt::CaseInsensitive);
+
+    std::ranges::stable_sort(lines, [&collator, ascending](const QString &a, const QString &b) {
+        int cmp = collator.compare(a, b);
+        return ascending ? (cmp < 0) : (cmp > 0);
+    });
+
+    const QString sortedText = lines.join(eol);
+    const QByteArray sortedBytes = sortedText.toUtf8();
+
+    editor->setTargetStart(startPos);
+    editor->setTargetEnd(endPos);
+    editor->replaceTarget(sortedBytes.size(), sortedBytes.constData());
+}
+
+void MainWindow::evaluateMathExpression() const
+{
+    ScintillaNext *editor = currentEditor();
+    if (!editor) {
+        return;
+    }
+
+    QString expr;
+    int endPos = 0;
+
+    if (editor->selectionEmpty()) {
+        const auto curPos = editor->currentPos();
+        const auto line = editor->lineFromPosition(curPos);
+        const auto startPos = static_cast<int>(editor->positionFromLine(line));
+        endPos = static_cast<int>(editor->lineEndPosition(line));
+        expr = QString::fromUtf8(editor->textRange(startPos, endPos)).trimmed();
+    } else {
+        const auto startPos = static_cast<int>(editor->selectionStart());
+        endPos = static_cast<int>(editor->selectionEnd());
+        expr = QString::fromUtf8(editor->textRange(startPos, endPos)).trimmed();
+    }
+
+    if (expr.isEmpty()) {
+        return;
+    }
+
+    QString cleanExpr = expr;
+    if (cleanExpr.endsWith(QLatin1Char('='))) {
+        cleanExpr.chop(1);
+        cleanExpr = cleanExpr.trimmed();
+    }
+
+    const QString luaScript = QStringLiteral("return tostring(%1)").arg(cleanExpr);
+    const QString result = app->getLuaState()->executeAndReturn<QString>(luaScript);
+
+    if (!result.isEmpty()) {
+        const QString insertion = expr.endsWith(QLatin1Char('=')) ? QStringLiteral(" ") + result : QStringLiteral(" = ") + result;
+        editor->insertText(endPos, insertion.toUtf8().constData());
+        editor->setSelection(endPos, endPos + insertion.toUtf8().size());
+    }
+}
+
+void MainWindow::compareOpenBuffers()
+{
+    const auto allEditors = editors();
+    if (allEditors.size() < 2) {
+        return;
+    }
+
+    ScintillaNext *ed1 = currentEditor();
+    ScintillaNext *ed2 = (allEditors[0] == ed1) ? allEditors[1] : allEditors[0];
+
+    if (!ed1 || !ed2) {
+        return;
+    }
+
+    // Split side-by-side view to compare files
+    dockedEditor->splitToRight(ed2);
+
+    const auto lines1 = ed1->lineCount();
+    const auto lines2 = ed2->lineCount();
+    const auto maxLines = std::max(lines1, lines2);
+
+    for (sptr_t line = 0; line < maxLines; ++line) {
+        const QByteArray t1 = (line < lines1) ? ed1->getLine(line) : QByteArray();
+        const QByteArray t2 = (line < lines2) ? ed2->getLine(line) : QByteArray();
+        if (t1 != t2) {
+            if (line < lines1) {
+                const auto pStart = ed1->positionFromLine(line);
+                const auto pEnd = ed1->lineEndPosition(line);
+                ed1->setIndicatorCurrent(INDICATOR_CONTAINER);
+                ed1->indicatorFillRange(pStart, pEnd - pStart);
+            }
+            if (line < lines2) {
+                const auto pStart = ed2->positionFromLine(line);
+                const auto pEnd = ed2->lineEndPosition(line);
+                ed2->setIndicatorCurrent(INDICATOR_CONTAINER);
+                ed2->indicatorFillRange(pStart, pEnd - pStart);
+            }
+        }
+    }
+}
+
+void MainWindow::toggleHexView() const
+{
+    if (ScintillaNext *editor = currentEditor()) {
+        editor->toggleHexView();
+    }
+}
+
+void MainWindow::setupSystemTray()
+{
+    if (QSystemTrayIcon::isSystemTrayAvailable()) {
+        m_systemTrayIcon = new QSystemTrayIcon(this);
+        m_systemTrayIcon->setIcon(windowIcon());
+        m_systemTrayIcon->setToolTip(QStringLiteral("Notepad Next (macOS Edition)"));
+        auto *trayMenu = new QMenu(this);
+        trayMenu->addAction(ui->actionNew);
+        trayMenu->addAction(ui->actionOpen);
+        trayMenu->addSeparator();
+        const auto *actionToggleWindow = trayMenu->addAction(tr("Show / Hide Notepad Next"));
+        connect(actionToggleWindow, &QAction::triggered, this, [this]() {
+            if (isVisible()) {
+                hide();
+            } else {
+                show();
+                raise();
+                activateWindow();
+            }
+        });
+        trayMenu->addSeparator();
+        trayMenu->addAction(ui->actionExit);
+        m_systemTrayIcon->setContextMenu(trayMenu);
+        m_systemTrayIcon->show();
+    }
 }

@@ -70,6 +70,7 @@ public:
 
     void deleteLine(int line);
 
+    using ScintillaEdit::cutAllowLine;
     void cutAllowLine();
 
     Sci_CharacterRange getContextText();
@@ -98,14 +99,14 @@ public:
 
     void detachFileInfo(const QString &newName);
 
-    enum FileStateChange {
+    enum class FileStateChange {
         NoChange,
         Modified,
         Deleted,
         Restored,
     };
 
-    enum BufferType {
+    enum class BufferType {
         New, // A temporary buffer, e.g. "New 1"
         File, // Buffer tied to a file on the file system
         FileMissing, // Buffer with a missing file on the file system
@@ -137,6 +138,7 @@ public:
 
     #include "ScintillaEnums.h" // NOSONAR
 
+    using QWidget::close;
 
 public slots:
     void close();
@@ -144,10 +146,10 @@ public slots:
     void reload();
     void omitModifications();
     QFileDevice::FileError saveAs(const QString &newFilePath);
-    QFileDevice::FileError saveCopyAs(const QString &filePath);
+    QFileDevice::FileError saveCopyAs(const QString &filePath) const;
     bool rename(const QString &newFilePath);
     ScintillaNext::FileStateChange checkFileForStateChange();
-    bool moveToTrash();
+    bool moveToTrash() const;
 
     void toggleCommentSelection();
     void commentLineSelection();
@@ -158,6 +160,9 @@ public slots:
 
     void convertTabsToSpaces();
     void convertSpacesToTabs();
+
+    bool isHexView() const { return m_isHexView; }
+    void toggleHexView();
 
 signals:
     void aboutToSave();
@@ -183,6 +188,8 @@ private:
     RangeAllocator indicatorResources;
 
     bool temporary = false; // Temporary file loaded from a session. It can either be a 'New' file or actual 'File'
+    bool m_isHexView = false;
+    QByteArray m_originalTextBeforeHex;
 
     bool readFromDisk(QFile &file, const QString &forcedEncoding = QString());
     QDateTime fileTimestamp();
@@ -193,8 +200,8 @@ private:
 template<typename Func>
 void ScintillaNext::forEachLineInSelection(int selection, Func callback)
 {
-    int lineStart = lineFromPosition(selectionNStart(selection));
-    int lineEnd = lineFromPosition(selectionNEnd(selection));
+    const auto lineStart = static_cast<int>(lineFromPosition(selectionNStart(selection)));
+    const auto lineEnd = static_cast<int>(lineFromPosition(selectionNEnd(selection)));
 
     for (int curLine = lineStart; curLine <= lineEnd; ++curLine) {
         callback(curLine);
@@ -206,12 +213,12 @@ template<typename Func>
 void ScintillaNext::forEachMatchInRange(const QByteArray &text, Func callback, Sci_CharacterRange range)
 {
     Sci_TextToFind ttf {range, text.constData(), {INVALID_POSITION, INVALID_POSITION}};
-    int flags = searchFlags();
+    const auto flags = static_cast<int>(searchFlags());
 
     while (send(SCI_FINDTEXT, flags, reinterpret_cast<sptr_t>(&ttf)) != INVALID_POSITION) {
         if(ttf.chrgText.cpMin == ttf.chrgText.cpMax)
             break;
-        ttf.chrg.cpMin = callback(ttf.chrgText.cpMin, ttf.chrgText.cpMax);
+        ttf.chrg.cpMin = callback(static_cast<int>(ttf.chrgText.cpMin), static_cast<int>(ttf.chrgText.cpMax));
     }
 }
 

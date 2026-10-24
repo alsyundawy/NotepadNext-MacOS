@@ -33,7 +33,20 @@
 
 #include "lua.hpp"
 
-IFaceTableMixer ifacemixer;
+namespace {
+struct LuaRuntimeState {
+    IFaceTableMixer ifacemixer;
+    ScintillaEdit *editor = nullptr;
+    lua_State *luaState = nullptr;
+    bool luaDisabled = false;
+    bool tracebackEnabled = true;
+};
+
+LuaRuntimeState &runtimeState() {
+    static LuaRuntimeState state;
+    return state;
+}
+}
 
 constexpr const char *EOFMARK = "<eof>";
 constexpr size_t marklen = sizeof("<eof>") - 1;
@@ -57,38 +70,6 @@ static bool call_function(lua_State *L, int nargs, bool ignoreFunctionReturnValu
     }
     return c;
 }
-
-// Helper function from SciTE
-[[maybe_unused]] static bool Exists(const char *fileName) {
-    bool ret = false;
-    if (fileName && fileName[0]) {
-        FILE *fp = fopen(fileName, "rb");
-        if (fp) {
-            ret = true;
-            fclose(fp);
-        }
-    }
-    return ret;
-}
-
-
-// A note on naming conventions:
-// I've gone back and forth on this a bit, trying different styles.
-// It isn't easy to get something that feels consistent, considering
-// that the Lua API uses lower case, underscore-separated words and
-// Scintilla of course uses mixed case with no underscores.
-
-// What I've settled on is that functions that require you to think
-// about the Lua stack are likely to be mixed with Lua API functions,
-// so these should using a naming convention similar to Lua itself.
-// Functions that don't manipulate Lua at a low level should follow
-// the normal SciTE convention.  There is some grey area of course,
-// and for these I just make a judgement call
-
-static ScintillaEdit *editor = nullptr;
-static lua_State *luaState = nullptr;
-static bool luaDisabled = false;
-static bool tracebackEnabled = true;
 
 using NppExtensionAPIPane = int;
 void hostTrace(const char *s)
@@ -114,14 +95,6 @@ inline void raise_error(lua_State *L, const char *errMsg = nullptr) {
     }
     lua_concat(L, 2);
     lua_error(L);
-}
-
-inline void raise_ferror(lua_State *L, const char *fmt, ...) {
-    va_list args;
-    va_start(args, fmt);
-    lua_pushvfstring(L, fmt, args);
-    va_end(args);
-    raise_error(L);
 }
 
 inline int absolute_index(lua_State *L, int index) {
@@ -163,29 +136,11 @@ inline int absolute_index(lua_State *L, int index) {
     }
 }
 
-[[maybe_unused]] static int cf_npp_constname(lua_State *L) {
-    char constName[128] = "";
-    const char *hint = nullptr;
-    int message = (int)luaL_checkinteger(L, 1);
-
-    hint = luaL_optstring(L, 2, nullptr);
-
-    if (ifacemixer.GetConstantName(message, constName, sizeof(constName), hint) > 0) {
-        constName[sizeof(constName) - 1] = '\0';
-        lua_pushstring(L, constName);
-        return 1;
-    } else {
-        raise_error(L, "Argument does not match any Scintilla / Notepad++ constant");
-        return 0;
-    }
-}
-
 void stackdump(lua_State* l)
 {
-    int i;
     int top = lua_gettop(l);
 
-    for (i = 1; i <= top; i++)
+    for (int i = 1; i <= top; i++)
     {  /* repeat for each level */
         int t = lua_type(l, i);
         hostTrace(lua_typename(l, t));
@@ -195,7 +150,7 @@ void stackdump(lua_State* l)
 }
 
 static NppExtensionAPIPane check_pane_object(lua_State *L, int index) {
-    const NppExtensionAPIPane *pPane = static_cast<const NppExtensionAPIPane *>(luaL_testudata(L, index, "Nn_MT_Pane"));
+    const auto *pPane = static_cast<const NppExtensionAPIPane *>(luaL_testudata(L, index, "Nn_MT_Pane"));
 
     if ((!pPane) && lua_istable(L, index)) {
         // so that nested objects have a convenient way to do a back reference
@@ -263,7 +218,7 @@ static int cf_global_print(lua_State *L) {
     bool handled = false;
     if (L) {
         int traceback = 0;
-        if (tracebackEnabled) {
+        if (runtimeState().tracebackEnabled) {
             lua_getglobal(L, "debug");
             lua_getfield(L, -1, "traceback");
             lua_remove(L, -2);
@@ -318,9 +273,9 @@ static int iface_function_helper(lua_State *L, const IFaceFunction &func) {
 
     int arg = 2;
 
-    sptr_t params[2] = {0,0};
+    std::array<sptr_t, 2> params = {0, 0};
 
-    char *stringResult = nullptr;
+    std::vector<char> stringBuffer;
     enum class StringResultType { none, string, tstring };
     StringResultType needStringResult = StringResultType::none;
     int loopParamCount = 2;
@@ -364,12 +319,11 @@ static int iface_function_helper(lua_State *L, const IFaceFunction &func) {
     if (needStringResult != StringResultType::none) {
         sptr_t stringResultLen;
         if (needStringResult == StringResultType::string) {
-            stringResultLen = editor->send(func.value, params[0], 0);
+            stringResultLen = runtimeState().editor ? runtimeState().editor->send(func.value, params[0], 0) : 0;
             if (stringResultLen > 0) {
                 // not all string result methods are guaranteed to add a null terminator
-                stringResult = new char[stringResultLen+1];
-                stringResult[stringResultLen]='\0';
-                params[1] = reinterpret_cast<sptr_t>(stringResult);
+                stringBuffer.resize(static_cast<size_t>(stringResultLen + 1), '\0');
+                params[1] = reinterpret_cast<sptr_t>(stringBuffer.data());
             } else {
                 // Is this an error?  Are there any cases where it's not an error,
                 // and where the right thing to do is just return a blank string?
@@ -389,7 +343,7 @@ static int iface_function_helper(lua_State *L, const IFaceFunction &func) {
 
     sptr_t result = 0;
     try {
-        result = editor->send(func.value, params[0], params[1]);
+        result = runtimeState().editor ? runtimeState().editor->send(func.value, params[0], params[1]) : 0;
     }
     catch (ScintillaFailure &sf) {
         std::string failureExplanation;
@@ -399,15 +353,16 @@ static int iface_function_helper(lua_State *L, const IFaceFunction &func) {
         failureExplanation += std::to_string(func.value);
         failureExplanation += ".\n";
         // Reset status before continuing
-        editor->send(SCI_SETSTATUS, SC_STATUS_OK, 0);
+        if (runtimeState().editor) {
+            runtimeState().editor->send(SCI_SETSTATUS, SC_STATUS_OK, 0);
+        }
         hostTraceError(failureExplanation.c_str());
     }
 
     int resultCount = 0;
 
-    if (stringResult) {
-        lua_pushstring(L, stringResult);
-        delete[] stringResult;
+    if (!stringBuffer.empty()) {
+        lua_pushstring(L, stringBuffer.data());
         resultCount++;
     }
 
@@ -430,7 +385,7 @@ struct IFacePropertyBinding {
 static int cf_ifaceprop_metatable_index(lua_State *L) {
     // if there is a getter, __index calls it
     // otherwise, __index raises "property 'name' is write-only".
-    const IFacePropertyBinding *ipb = static_cast<const IFacePropertyBinding *>(luaL_testudata(L, 1, "Nn_MT_IFacePropertyBinding"));
+    const auto *ipb = static_cast<const IFacePropertyBinding *>(luaL_testudata(L, 1, "Nn_MT_IFacePropertyBinding"));
     if (!(ipb && IFacePropertyIsScriptable(*(ipb->prop)))) {
         raise_error(L, "Internal error: property binding is improperly set up");
         return 0;
@@ -449,7 +404,7 @@ static int cf_ifaceprop_metatable_index(lua_State *L) {
 }
 
 static int cf_ifaceprop_metatable_newindex(lua_State *L) {
-    const IFacePropertyBinding *ipb = static_cast<const IFacePropertyBinding *>(luaL_testudata(L, 1, "Nn_MT_IFacePropertyBinding"));
+    const auto *ipb = static_cast<const IFacePropertyBinding *>(luaL_testudata(L, 1, "Nn_MT_IFacePropertyBinding"));
     if (!(ipb && IFacePropertyIsScriptable(*(ipb->prop)))) {
         raise_error(L, "Internal error: property binding is improperly set up");
         return 0;
@@ -482,14 +437,8 @@ static int cf_pane_iface_function(lua_State *L) {
 static int push_iface_function(lua_State *L, const char *name, const IFaceTableInterface *iface) {
     if (auto func = iface->FindFunction(name); func != nullptr) {
         if (IFaceFunctionIsScriptable(*func)) {
-            lua_pushlightuserdata(L, const_cast<void *>(static_cast<const void *>(func)));
+            lua_pushlightuserdata(L, (void *)(uintptr_t)func);
             lua_pushcclosure(L, cf_pane_iface_function, 1);
-
-            // Since Lua experts say it is inefficient to create closures / cfunctions
-            // in an inner loop, I tried caching the closures in the metatable, and looking
-            // for them there first.  However, it made very little difference and did not
-            // seem worth the added complexity. - WBD
-
             return 1;
         }
     }
@@ -498,68 +447,63 @@ static int push_iface_function(lua_State *L, const char *name, const IFaceTableI
 
 static int push_iface_propval(lua_State *L, const char *name, const IFaceTableInterface *iface) {
     // this function doesn't raise errors, but returns 0 if the function is not handled.
-
-    auto prop = iface->FindProperty(name);
-    if (prop != nullptr) {
-        if (!IFacePropertyIsScriptable(*prop)) {
-            raise_error(L, "Error: iface property is not scriptable.");
-            return -1;
-        }
-
-        if (prop->paramType == iface_void) {
-            if (prop->getter) {
-                lua_settop(L, 1);
-                return iface_function_helper(L, prop->GetterFunction());
-            }
-        } else if (prop->paramType == iface_bool) {
-            // The bool getter is untested since there are none in the iface.
-            // However, the following is suggested as a reference protocol.
-            NppExtensionAPIPane p = check_pane_object(L, 1);
-            Q_UNUSED(p)
-
-            if (prop->getter) {
-                if (editor->send(prop->getter, 1, 0)) {
-                    lua_pushnil(L);
-                    return 1;
-                } else {
-                    lua_settop(L, 1);
-                    lua_pushboolean(L, 0);
-                    return iface_function_helper(L, prop->GetterFunction());
-                }
-            }
-        } else {
-            // Indexed property.  These return an object with the following behavior:
-            // if there is a getter, __index calls it
-            // otherwise, __index raises "property 'name' is write-only".
-            // if there is a setter, __newindex calls it
-            // otherwise, __newindex raises "property 'name' is read-only"
-
-            IFacePropertyBinding *ipb = static_cast<IFacePropertyBinding *>(lua_newuserdata(L, sizeof(IFacePropertyBinding)));
-            if (ipb) {
-                ipb->pane = check_pane_object(L, 1);
-                ipb->prop = prop;
-                if (luaL_newmetatable(L, "Nn_MT_IFacePropertyBinding")) {
-                    lua_pushliteral(L, "__index");
-                    lua_pushcfunction(L, cf_ifaceprop_metatable_index);
-                    lua_settable(L, -3);
-                    lua_pushliteral(L, "__newindex");
-                    lua_pushcfunction(L, cf_ifaceprop_metatable_newindex);
-                    lua_settable(L, -3);
-                }
-                lua_setmetatable(L, -2);
-                return 1;
-            } else {
-                raise_error(L, "Internal error: failed to allocate userdata for indexed property");
-                return -1;
-            }
-        }
+    const auto *prop = iface->FindProperty(name);
+    if (!prop) {
+        return -1;
     }
 
-    return -1; // signal to try next pane index handler
+    if (!IFacePropertyIsScriptable(*prop)) {
+        raise_error(L, "Error: iface property is not scriptable.");
+        return -1;
+    }
+
+    if (prop->paramType == iface_void) {
+        if (prop->getter) {
+            lua_settop(L, 1);
+            return iface_function_helper(L, prop->GetterFunction());
+        }
+        return -1;
+    }
+
+    if (prop->paramType == iface_bool) {
+        NppExtensionAPIPane p = check_pane_object(L, 1);
+        Q_UNUSED(p)
+
+        if (prop->getter) {
+            if (runtimeState().editor && runtimeState().editor->send(prop->getter, 1, 0)) {
+                lua_pushnil(L);
+                return 1;
+            }
+            lua_settop(L, 1);
+            lua_pushboolean(L, 0);
+            return iface_function_helper(L, prop->GetterFunction());
+        }
+        return -1;
+    }
+
+    // Indexed property
+    auto *ipb = static_cast<IFacePropertyBinding *>(lua_newuserdata(L, sizeof(IFacePropertyBinding)));
+    if (!ipb) {
+        raise_error(L, "Internal error: failed to allocate userdata for indexed property");
+        return -1;
+    }
+
+    ipb->pane = check_pane_object(L, 1);
+    ipb->prop = prop;
+    if (luaL_newmetatable(L, "Nn_MT_IFacePropertyBinding")) {
+        lua_pushliteral(L, "__index");
+        lua_pushcfunction(L, cf_ifaceprop_metatable_index);
+        lua_settable(L, -3);
+        lua_pushliteral(L, "__newindex");
+        lua_pushcfunction(L, cf_ifaceprop_metatable_newindex);
+        lua_settable(L, -3);
+    }
+    lua_setmetatable(L, -2);
+    return 1;
 }
 
 static int cf_pane_metatable_index(lua_State *L) {
-    const IFaceTableInterface *iface = static_cast<const IFaceTableInterface *>(lua_touserdata(L, lua_upvalueindex(1)));
+    const auto *iface = static_cast<const IFaceTableInterface *>(lua_touserdata(L, lua_upvalueindex(1)));
     if (lua_isstring(L, 2)) {
         const char *name = lua_tostring(L, 2);
 
@@ -570,7 +514,9 @@ static int cf_pane_metatable_index(lua_State *L) {
 
         if (results >= 0) {
             return results;
-        } else if (name[0] != '_') {
+        }
+
+        if (name[0] != '_') {
             lua_getmetatable(L, 1);
             if (lua_istable(L, -1)) {
                 lua_pushvalue(L, 2);
@@ -586,42 +532,43 @@ static int cf_pane_metatable_index(lua_State *L) {
 }
 
 static int cf_pane_metatable_newindex(lua_State *L) {
-    const IFaceTableInterface *iface = static_cast<const IFaceTableInterface *>(lua_touserdata(L, lua_upvalueindex(1)));
-    if (lua_isstring(L, 2)) {
-        auto prop = iface->FindProperty(lua_tostring(L, 2));
-        if (prop != nullptr) {
-            if (IFacePropertyIsScriptable(*prop)) {
-                if (prop->setter) {
-                    // stack needs to be rearranged to look like an iface function call
-                    lua_remove(L, 2);
-                    if (prop->paramType == iface_void) {
-                        return iface_function_helper(L, prop->SetterFunction());
-                    } else if ((prop->paramType == iface_bool)) {
-                        if (!lua_isnil(L, 3)) {
-                            lua_pushboolean(L, 1);
-                            lua_insert(L, 2);
-                        } else {
-                            // the nil will do as a false value.
-                            // just push an arbitrary numeric value that Scintilla will ignore
-                            lua_pushinteger(L, 0);
-                        }
-                        return iface_function_helper(L, prop->SetterFunction());
-
-                    } else {
-                        raise_error(L, "Error - (pane object) cannot assign directly to indexed property");
-                    }
-                } else {
-                    raise_error(L, "Error - (pane object) cannot assign to a read-only property");
-                }
-            }
-        }
+    const auto *iface = static_cast<const IFaceTableInterface *>(lua_touserdata(L, lua_upvalueindex(1)));
+    if (!lua_isstring(L, 2)) {
+        raise_error(L, "Error - (pane object) expected the name of a writable property");
+        return 0;
     }
 
-    raise_error(L, "Error - (pane object) expected the name of a writable property");
+    const auto *prop = iface ? iface->FindProperty(lua_tostring(L, 2)) : nullptr;
+    if (!prop || !IFacePropertyIsScriptable(*prop)) {
+        raise_error(L, "Error - (pane object) expected the name of a writable property");
+        return 0;
+    }
+
+    if (!prop->setter) {
+        raise_error(L, "Error - (pane object) cannot assign to a read-only property");
+        return 0;
+    }
+
+    // stack needs to be rearranged to look like an iface function call
+    lua_remove(L, 2);
+    if (prop->paramType == iface_void) {
+        return iface_function_helper(L, prop->SetterFunction());
+    }
+    if (prop->paramType == iface_bool) {
+        if (!lua_isnil(L, 3)) {
+            lua_pushboolean(L, 1);
+            lua_insert(L, 2);
+        } else {
+            lua_pushinteger(L, 0);
+        }
+        return iface_function_helper(L, prop->SetterFunction());
+    }
+
+    raise_error(L, "Error - (pane object) cannot assign directly to indexed property");
     return 0;
 }
 
-void push_pane_object(lua_State *L, NppExtensionAPIPane p) {
+static void push_pane_object(lua_State *L, NppExtensionAPIPane p) {
     *static_cast<NppExtensionAPIPane *>(lua_newuserdata(L, sizeof(p))) = p;
     if (luaL_newmetatable(L, "Nn_MT_Pane")) {
         lua_pushlightuserdata(L, &SciIFaceTable);
@@ -645,24 +592,23 @@ static int cf_global_metatable_index(lua_State *L) {
             return 0;
         }
 
-        auto con = ifacemixer.FindConstant(name);
+        auto con = runtimeState().ifacemixer.FindConstant(name);
         if (con != nullptr) {
             lua_pushinteger(L, con->value);
             return 1;
-        } else {
-            auto func = ifacemixer.FindFunctionByConstantName(name);
-            if (func != nullptr) {
-                lua_pushinteger(L, func->value);
+        }
+        auto func = runtimeState().ifacemixer.FindFunctionByConstantName(name);
+        if (func != nullptr) {
+            lua_pushinteger(L, func->value);
 
-                // FindFunctionByConstantName is slow, so cache the result into the
-                // global table.  My tests show this gives an order of magnitude
-                // improvement.
-                lua_pushvalue(L, 2);
-                lua_pushvalue(L, -2);
-                lua_rawset(L, 1);
+            // FindFunctionByConstantName is slow, so cache the result into the
+            // global table.  My tests show this gives an order of magnitude
+            // improvement.
+            lua_pushvalue(L, 2);
+            lua_pushvalue(L, -2);
+            lua_rawset(L, 1);
 
-                return 1;
-            }
+            return 1;
         }
     }
 
@@ -671,58 +617,62 @@ static int cf_global_metatable_index(lua_State *L) {
 
 // cppcheck-suppress constParameterCallback
 static int LuaPanicFunction(lua_State *L) {
-    if (L == luaState) {
-        lua_close(luaState);
-        luaState = nullptr;
-        luaDisabled = true;
+    if (L && L == runtimeState().luaState) {
+        lua_settop(L, 0);
+        lua_close(runtimeState().luaState);
+        runtimeState().luaState = nullptr;
+        runtimeState().luaDisabled = true;
     }
     hostTraceError("\nError occurred in unprotected call.  This is very bad.\n");
     return 1;
 }
 
 static bool InitGlobalScope() {
-    tracebackEnabled = true;
+    auto &state = runtimeState();
+    state.tracebackEnabled = true;
 
-    if (!luaDisabled) {
-        if (!luaState) {
-            luaDisabled = true;
-            hostTraceError("Scripting engine failed to initialise\n");
-            return false;
-        }
-        lua_atpanic(luaState, LuaPanicFunction);
-
+    if (state.luaDisabled) {
+        return false;
     }
-    else {
+    if (!state.luaState) {
+        state.luaDisabled = true;
+        hostTraceError("Scripting engine failed to initialise\n");
         return false;
     }
 
-    ifacemixer.AddIFaceTable(&SciIFaceTable);
+    lua_atpanic(state.luaState, LuaPanicFunction);
+    state.ifacemixer.AddIFaceTable(&SciIFaceTable);
 
     // ...register standard libraries
-    luaL_openlibs(luaState);
+    luaL_openlibs(state.luaState);
+
+    // Sandbox unsafe OS/IO and dynamic loading vectors (CVE-2026-42214 / CWE-94)
+    luaL_dostring(state.luaState,
+        "if os then os.execute = nil; os.remove = nil; os.rename = nil; os.exit = nil end "
+        "if io then io.popen = nil end "
+        "if package then package.loadlib = nil end");
 
     // override a library function whose default impl uses stdout
-    lua_register(luaState, "print", cf_global_print);
+    lua_register(state.luaState, "print", cf_global_print);
 
     // pane objects
-    push_pane_object(luaState, 0);
-    lua_setglobal(luaState, "editor");
+    push_pane_object(state.luaState, 0);
+    lua_setglobal(state.luaState, "editor");
 
     // get global environment table from registry
-    lua_pushglobaltable(luaState);
+    lua_pushglobaltable(state.luaState);
     // Metatable for global namespace, to publish iface constants
-    if (luaL_newmetatable(luaState, "Nn_MT_GlobalScope")) {
-        lua_pushcfunction(luaState, cf_global_metatable_index);
-        lua_setfield(luaState, -2, "__index");
+    if (luaL_newmetatable(state.luaState, "Nn_MT_GlobalScope")) {
+        lua_pushcfunction(state.luaState, cf_global_metatable_index);
+        lua_setfield(state.luaState, -2, "__index");
     }
     // set global index callback hook
-    lua_setmetatable(luaState, -2);
+    lua_setmetatable(state.luaState, -2);
     // remove the global environment table from the stack
-    lua_pop(luaState, 1);
+    lua_pop(state.luaState, 1);
 
     return true;
 }
-
 
 LuaExtension::LuaExtension() = default;
 LuaExtension::~LuaExtension() = default;
@@ -733,134 +683,156 @@ LuaExtension &LuaExtension::Instance() {
 }
 
 // cppcheck-suppress functionStatic
-bool LuaExtension::Initialise(lua_State *L, ScintillaNext *editor_) {
-    luaState = L;
-    editor = editor_;
+bool LuaExtension::Initialise(lua_State *L, ScintillaNext *editor_) const {
+    auto &state = runtimeState();
+    state.luaState = L;
+    state.editor = editor_;
     InitGlobalScope();
 
     return false;
 }
 
 // cppcheck-suppress functionStatic
-void LuaExtension::setEditor(ScintillaEdit *editor_) {
-    editor = editor_;
+void LuaExtension::setEditor(ScintillaEdit *editor_) const {
+    runtimeState().editor = editor_;
 }
 
 // cppcheck-suppress functionStatic
-bool LuaExtension::Finalise() {
-    if (luaState) {
-        lua_close(luaState);
+bool LuaExtension::Finalise() const {
+    auto &state = runtimeState();
+    if (state.luaState) {
+        lua_close(state.luaState);
     }
 
-    luaState = nullptr;
-    editor = nullptr;
+    state.luaState = nullptr;
+    state.editor = nullptr;
 
     return false;
 }
 
 // cppcheck-suppress functionStatic
-bool LuaExtension::RunString(const char *s) {
-    if (luaState || InitGlobalScope()) {
-        int status = luaL_loadbuffer(luaState, s, strlen(s), "=File");
+bool LuaExtension::RunString(const char *s) const {
+    if (!s) {
+        return false;
+    }
+
+    const std::string_view sv(s);
+    auto &state = runtimeState();
+    if (state.luaState || InitGlobalScope()) {
+        int status = luaL_loadbuffer(state.luaState, sv.data(), sv.size(), "=File");
 
         if (status == LUA_OK) {
-            status = lua_pcall(luaState, 0, LUA_MULTRET, 0);
+            status = lua_pcall(state.luaState, 0, LUA_MULTRET, 0);
         }
 
         if (status != LUA_OK) {
             // Print an error message
-            hostTraceError(lua_tostring(luaState, -1));
+            hostTraceError(lua_tostring(state.luaState, -1));
             hostTraceError("\n");
-            lua_settop(luaState, 0); /* clear stack */
+            lua_settop(state.luaState, 0); /* clear stack */
             return false;
         }
 
-        lua_settop(luaState, 0); /* clear stack */
+        lua_settop(state.luaState, 0); /* clear stack */
     }
 
     return true;
 }
 
+static bool handleConsoleReturnStatement(lua_State *L, const std::string_view &sv, int &status) {
+    // First try to compile the chunk as a return statement
+    lua_pushfstring(L, "return %.*s;", static_cast<int>(sv.size()), sv.data());
+    size_t retlen = 0;
+    const char *retline = lua_tolstring(L, -1, &retlen);
+    status = luaL_loadbuffer(L, retline, retlen, "=Console");
+    if (status == 0) {
+        lua_remove(L, -2);
+    } else {
+        lua_pop(L, 2);
+    }
+
+    if (status == LUA_OK) {
+        status = lua_pcall(L, 0, LUA_MULTRET, 0);
+        return true;
+    }
+    return false;
+}
+
+static bool checkEofError(lua_State *L, int status) {
+    if (status != LUA_ERRSYNTAX) {
+        return false;
+    }
+    size_t lmsg = 0;
+    const char *msg = lua_tolstring(L, -1, &lmsg);
+    if (lmsg >= marklen && strcmp(msg + lmsg - marklen, EOFMARK) == 0) {
+        lua_pop(L, 1);
+        return true;
+    }
+    return false;
+}
+
+static void printExecutionResult(lua_State *L, int status) {
+    if (status == LUA_OK) {
+        if (lua_gettop(L) > 0) {
+            lua_getglobal(L, "print");
+            lua_insert(L, 1);
+            if (lua_pcall(L, lua_gettop(L) - 1, 0, 0) != 0) {
+                hostTraceError("error calling 'print'");
+            }
+        }
+    } else {
+        const char *errmsg = lua_tostring(L, -1);
+        hostTraceError(errmsg ? errmsg : "error");
+        hostTraceError("\n");
+    }
+    lua_settop(L, 0);
+}
+
 // cppcheck-suppress functionStatic
-bool LuaExtension::OnExecute(const char *s) {
-    // cppcheck-suppress variableScope
+bool LuaExtension::OnExecute(const char *s) const {
+    if (!s) {
+        return false;
+    }
+
+    const std::string_view sv(s);
+    auto &state = runtimeState();
+    if (!state.luaState && !InitGlobalScope()) {
+        return true;
+    }
+
+    lua_State *L = state.luaState;
     static bool isFirstLine = true;
     static std::string chunk;
 
-    if (luaState || InitGlobalScope()) {
-        int status;
-        if (isFirstLine) {
-            // First try to compile the chunk as a return statement
-            const char *retline = lua_pushfstring(luaState, "return %s;", s);
-            status = luaL_loadbuffer(luaState, retline, strlen(retline), "=Console");
-            if (status == 0) lua_remove(luaState, -2);
-            else lua_pop(luaState, 2);
-
+    int status = LUA_OK;
+    if (isFirstLine) {
+        if (!handleConsoleReturnStatement(L, sv, status)) {
+            status = luaL_loadbuffer(L, sv.data(), sv.size(), "=Console");
             if (status == LUA_OK) {
-                // It worked, let's call it
-                status = lua_pcall(luaState, 0, LUA_MULTRET, 0);
-            }
-            else {
-                // Else let's just try it as is
-                status = luaL_loadbuffer(luaState, s, strlen(s), "=Console");
-                if (status == LUA_OK) {
-                    status = lua_pcall(luaState, 0, LUA_MULTRET, 0);
-                }
-                else if (status == LUA_ERRSYNTAX) {
-                    size_t lmsg;
-                    const char *msg = lua_tolstring(luaState, -1, &lmsg);
-                    if (lmsg >= marklen && strcmp(msg + lmsg - marklen, EOFMARK) == 0) {
-                        lua_pop(luaState, 1);
-                        isFirstLine = false;
-                        chunk = s;
-                        return false;
-                    }
-                }
+                status = lua_pcall(L, 0, LUA_MULTRET, 0);
+            } else if (checkEofError(L, status)) {
+                isFirstLine = false;
+                chunk = sv;
+                return false;
             }
         }
-        else {
-            // Append the new line to what we've gotten so far
-            chunk.append("\n");
-            chunk.append(s);
-            status = luaL_loadbuffer(luaState, chunk.c_str(), chunk.length(), "=Console");
-            if (status == LUA_OK) {
-                status = lua_pcall(luaState, 0, LUA_MULTRET, 0);
-            }
-            else if (status == LUA_ERRSYNTAX) {
-                size_t lmsg;
-                const char *msg = lua_tolstring(luaState, -1, &lmsg);
-                if (lmsg >= marklen && strcmp(msg + lmsg - marklen, EOFMARK) == 0) {
-                    lua_pop(luaState, 1);
-                    return false;
-                }
-            }
-        }
-
-        // At this point *something* ran so clear out some data
-        chunk.clear();
-        isFirstLine = true;
-
+    } else {
+        chunk.append("\n");
+        chunk.append(sv);
+        status = luaL_loadbuffer(L, chunk.data(), chunk.size(), "=Console");
         if (status == LUA_OK) {
-            if (lua_gettop(luaState) > 0) {  /* any result to print? */
-                lua_getglobal(luaState, "print");
-                lua_insert(luaState, 1);
-                if (lua_pcall(luaState, lua_gettop(luaState) - 1, 0, 0) != 0)
-                    hostTraceError("error calling 'print'");
-            }
-            // else everything finished fine but had no return value
+            status = lua_pcall(L, 0, LUA_MULTRET, 0);
+        } else if (checkEofError(L, status)) {
+            return false;
         }
-        else {
-            // Print an error message if possible
-            const char *errmsg = lua_tostring(luaState, -1);
-            if (errmsg) {
-                hostTraceError(errmsg);
-                hostTraceError("\n");
-            }
-            else {
-                hostTraceError("error\n");
-            }
-        }
-        lua_settop(luaState, 0); /* clear stack */
     }
+
+    chunk.clear();
+    isFirstLine = true;
+    printExecutionResult(L, status);
     return true;
+}
+
+void LuaExtension::CallShortcut(int /*id*/) const {
+    // Reserved for future shortcut event dispatching
 }

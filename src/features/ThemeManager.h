@@ -74,7 +74,7 @@ public:
     void setPalette(const QString &paletteId, MainWindow *window = nullptr);
 
     void applyTheme(MainWindow *window);
-    void applyThemeToEditor(ScintillaNext *editor);
+    void applyThemeToEditor(ScintillaNext *editor) const;
     QString getThemeStyleSheet() const;
 
 signals:
