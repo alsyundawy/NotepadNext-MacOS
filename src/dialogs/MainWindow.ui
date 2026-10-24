@@ -418,6 +418,10 @@
    <addaction name="actionPlayback"/>
    <addaction name="actionRunMacroMultipleTimes"/>
    <addaction name="actionSaveCurrentRecordedMacro"/>
+   <addaction name="separator"/>
+   <addaction name="actionPreferences"/>
+   <addaction name="separator"/>
+   <addaction name="actionExit"/>
   </widget>
   <widget class="EditorInfoStatusBar" name="statusBar"/>
   <action name="actionNew">
@@ -1003,6 +1007,9 @@
    </property>
    <property name="text">
     <string>Preferences...</string>
+   </property>
+   <property name="toolTip">
+    <string>Preferences</string>
    </property>
    <property name="menuRole">
     <enum>QAction::PreferencesRole</enum>
