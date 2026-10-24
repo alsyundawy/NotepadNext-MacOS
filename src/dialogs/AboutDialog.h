@@ -49,7 +49,7 @@ protected:
     void changeEvent(QEvent *event) override;
 
 private slots:
-    void copySystemInfoToClipboard();
+    void copySystemInfoToClipboard() const;
     void updateThemeColors();
 
 private:

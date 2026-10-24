@@ -70,7 +70,7 @@ void HighlightedScrollBar::paintEvent(QPaintEvent *event)
     drawCursors(p);
 }
 
-void HighlightedScrollBar::drawMarker(QPainter &p, int marker)
+void HighlightedScrollBar::drawMarker(QPainter &p, int marker) const
 {
     // NOTE: SCI_MARKERGETBACK doesn't exist...so can't use the marker color
     int curLine = 0;
@@ -82,10 +82,10 @@ void HighlightedScrollBar::drawMarker(QPainter &p, int marker)
     }
 }
 
-void HighlightedScrollBar::drawIndicator(QPainter &p, int indicator)
+void HighlightedScrollBar::drawIndicator(QPainter &p, int indicator) const
 {
-    int curPos = static_cast<int>(editor->indicatorEnd(indicator, 0));
-    int color = static_cast<int>(editor->indicFore(indicator));
+    auto curPos = static_cast<int>(editor->indicatorEnd(indicator, 0));
+    const auto color = static_cast<int>(editor->indicFore(indicator));
 
     if (curPos > 0) {
         while ((curPos = static_cast<int>(editor->indicatorEnd(indicator, curPos))) < editor->length()) {
@@ -96,7 +96,7 @@ void HighlightedScrollBar::drawIndicator(QPainter &p, int indicator)
     }
 }
 
-void HighlightedScrollBar::drawCursors(QPainter &p)
+void HighlightedScrollBar::drawCursors(QPainter &p) const
 {
     for (int i = 0; i < editor->selections(); i++) {
         int startCaretY = posToScrollBarY(static_cast<int>(editor->selectionNCaret(i)));
@@ -118,14 +118,14 @@ void HighlightedScrollBar::drawTickMark(QPainter &p, int y, int height, const QC
 
 int HighlightedScrollBar::posToScrollBarY(int pos) const
 {
-    int line = static_cast<int>(editor->visibleFromDocLine(editor->lineFromPosition(pos)));
+    const auto line = static_cast<int>(editor->visibleFromDocLine(editor->lineFromPosition(pos)));
 
     return lineToScrollBarY(line);
 }
 
 int HighlightedScrollBar::lineToScrollBarY(int line) const
 {
-    int lineCount = static_cast<int>(editor->visibleFromDocLine(editor->lineCount()));
+    auto lineCount = static_cast<int>(editor->visibleFromDocLine(editor->lineCount()));
 
     if (!editor->endAtLastLine()) {
         lineCount += editor->linesOnScreen();

@@ -58,7 +58,7 @@ EditorInfoStatusBar::EditorInfoStatusBar(QMainWindow *window) :
     overType = new StatusLabel(25);
     addPermanentWidget(overType, 0);
 
-    auto *w = qobject_cast<MainWindow *>(window);
+    const auto *w = qobject_cast<MainWindow *>(window);
 
     connect(w, &MainWindow::editorActivated, this, &EditorInfoStatusBar::connectToEditor);
 
@@ -125,8 +125,8 @@ void EditorInfoStatusBar::updateSelectionInfo(ScintillaNext *editor)
         selectionText = tr("Sel: N/A");
     }
     else {
-        int start = static_cast<int>(editor->selectionStart());
-        int end = static_cast<int>(editor->selectionEnd());
+        const auto start = static_cast<int>(editor->selectionStart());
+        const auto end = static_cast<int>(editor->selectionEnd());
         int lines = 0;
         int chars = 0;
 
@@ -143,7 +143,7 @@ void EditorInfoStatusBar::updateSelectionInfo(ScintillaNext *editor)
         selectionText = tr("Sel: %L1 | %L2").arg(chars).arg(lines);
     }
 
-    const int pos = static_cast<int>(editor->currentPos());
+    const auto pos = static_cast<int>(editor->currentPos());
     QString positionText = tr("Ln: %L1    Col: %L2    ").arg(editor->lineFromPosition(pos) + 1).arg(editor->column(pos) + 1);
     docPos->setText(positionText + selectionText);
 }

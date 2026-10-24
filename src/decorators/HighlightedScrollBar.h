@@ -56,9 +56,9 @@ protected:
     void paintEvent(QPaintEvent *event) override;
 
 private:
-    void drawMarker(QPainter &p, int marker);
-    void drawIndicator(QPainter &p, int indicator);
-    void drawCursors(QPainter &p);
+    void drawMarker(QPainter &p, int marker) const;
+    void drawIndicator(QPainter &p, int indicator) const;
+    void drawCursors(QPainter &p) const;
 
     void drawTickMark(QPainter &p, int y, int height, const QColor &color) const;
 
