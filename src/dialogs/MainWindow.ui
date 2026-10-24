@@ -1101,6 +1101,9 @@
    <property name="text">
     <string>Preferences...</string>
    </property>
+   <property name="toolTip">
+    <string>Preferences</string>
+   </property>
    <property name="menuRole">
     <enum>QAction::PreferencesRole</enum>
    </property>

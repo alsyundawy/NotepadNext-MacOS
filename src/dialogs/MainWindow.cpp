@@ -2427,6 +2427,26 @@ void MainWindow::restoreSettings()
 
         ActionUtils::populateActionContainer(ui->mainToolBar, this, actionNames);
     }
+
+    // Ensure Preferences and Exit actions are always present on the toolbar
+    bool hasPreferences = false;
+    bool hasExit = false;
+    for (const QAction *act : ui->mainToolBar->actions()) {
+        if (act == ui->actionPreferences) {
+            hasPreferences = true;
+        }
+        if (act == ui->actionExit) {
+            hasExit = true;
+        }
+    }
+    if (!hasPreferences) {
+        ui->mainToolBar->addSeparator();
+        ui->mainToolBar->addAction(ui->actionPreferences);
+    }
+    if (!hasExit) {
+        ui->mainToolBar->addSeparator();
+        ui->mainToolBar->addAction(ui->actionExit);
+    }
 }
 
 ISearchResultsHandler *MainWindow::determineSearchResultsHandler()
