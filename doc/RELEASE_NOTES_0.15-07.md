@@ -1,11 +1,11 @@
 # 📋 Release Notes: NotepadNext-MacOS v0.15-07 vs. Official v0.15 Upstream
 
-> **Edition**: NotepadNext For MacOS  
-> **Release Version**: `0.15-07`  
-> **Official Baseline**: `dail8859/NotepadNext v0.15` (Tag: `v0.15`)  
-> **Date**: October 24, 2026  
-> **Maintainer & Builder**: Harry DS Alsyundawy ([@alsyundawy](https://github.com/alsyundawy))  
-> **Upstream Repository**: [dail8859/NotepadNext](https://github.com/dail8859/NotepadNext)  
+> **Edition**: NotepadNext For MacOS<br/>
+> **Release Version**: `0.15-07`<br/>
+> **Official Baseline**: `dail8859/NotepadNext v0.15` (Tag: `v0.15`)<br/>
+> **Date**: October 25, 2026<br/>
+> **Maintainer & Builder**: Harry DS Alsyundawy ([@alsyundawy](https://github.com/alsyundawy))<br/>
+> **Upstream Repository**: [dail8859/NotepadNext](https://github.com/dail8859/NotepadNext)<br/>
 > **macOS Edition Repository**: [alsyundawy/NotepadNext-MacOS](https://github.com/alsyundawy/NotepadNext-MacOS)
 
 ---
@@ -31,13 +31,26 @@ Key innovations introduced in `0.15-07`:
    - **Read-Only Hexadecimal / Binary Viewer**: Fast binary inspection mode featuring 16-byte hex dump and ASCII side-column.
 
 3. **macOS Native Architecture & UI Polish**:
+   - **macOS In-Process Multi-Window & Dock Integration**: Unified multi-window architecture within a single process via `NotepadNextApplication`, ensuring secondary window invocations and Cmd+N remain responsive to macOS Dock activations and Cmd+` window cycling.
+   - **macOS Dock Right-Click Quit Save Prompt (`QEvent::Close`)**: Intercepted application-level close events on macOS Dock context menu quit and Cmd+Q, cycling through all windows and invoking `checkEditorsBeforeClose()` to guarantee dirty and untitled tabs prompt for saving before exit.
    - **macOS Menu Bar Extra / Dock Status Mode**: Resident background mode with quick-access menu via `QSystemTrayIcon`.
    - **Toolbar Preferences & Exit Actions**: Enforced persistent Settings/Preferences (cog icon) and Exit (exit icon) actions on the main toolbar.
    - **Find & Replace Tab Form Precision**: Strict 1-box input layout for Tab Find and Tab Mark (completely hiding the Replace field), reserving 2-box input strictly for Tab Replace.
    - **Tab Label Middle-Ellipsis (`elideMode`)**: Configurable tab title truncation maintaining clean tab geometry even with 30+ open files.
    - **Horizon Dark Theme Contrast Fine-Tuning**: Optimized high-contrast palette for Apple Retina displays.
 
-4. **100% Complete Bilingual Localization & Linguistic Rigor**:
+4. **Multi-View Split & High-Volume Text Stability**:
+   - **Multi-View Split Closure & Select-All Guard**: Fixed crashes during tab closure in split vertical/horizontal views and stabilized multi-pane selection bounds.
+   - **High-Volume Lines & Emoji Crash Defense**: Hardened Scintilla's `PlatQt.cpp` text measurement and drawing routines with strict boundary checks, preventing crashes on files with tens of thousands of lines containing compound Unicode 18.0 emojis and ZWJ sequences.
+   - **Cursor Selection Contrast & Multi-Word Selection**: Refined text selection shaders and boundary detection for smooth word and sentence dragging.
+
+5. **100% Zero-Defect SonarLint & IDE Diagnostics Resolution**:
+   - Resolved all 36 flagged IDE / SonarLint warnings across `AboutDialog`, `HighlightedScrollBar`, `RecentFilesListManager`, `RecentFilesListMenuBuilder`, `RtfConverter`, and `EditorInfoStatusBar` (defaulted destructors `= default`, C++17 `if` init-statements, explicit lambda captures `[this]`, C++20 `using enum Scintilla::Update`, default cases in switch statements, pointer-to-const parameter qualifiers, extraction of nested ternary operators, and explicit `static_cast<int>` on `sptr_t` and `qsizetype`).
+
+6. **Upstream PR Harmonization**:
+   - Ported and harmonized upstream PR #8a0a615 (Trim Trailing Whitespace buffer operation with full Indonesian localization), PR #e08fc92 (defensive message handler deregistration in `DebugManager`), and PR #90d6174 (centralized tooltip generation in `ScintillaNext::getToolTip`).
+
+7. **100% Complete Bilingual Localization & Linguistic Rigor**:
    - 100% complete Bahasa Indonesia (`id_ID`) and English (`en_US`) catalogs with 0 unfinished strings (646/646 entries).
    - Standardized strictly against official Indonesian linguistic guidelines: EYD V ([ejaan.kemendikdasmen.go.id](https://ejaan.kemendikdasmen.go.id)), PUEBI, Mozilla Indonesian L10n Style Guide, and official IT terminology (PASTI Kemendikdasmen / KBBI).
    - Eliminated legacy transliterations (e.g. _pengkodean_ -> _pengodean_, _file_ -> _berkas_, _shortcut_ -> _pintasan_) and stripped redundant parenthetical annotations.
@@ -58,7 +71,7 @@ Key innovations introduced in `0.15-07`:
 | **Find/Replace Paste**    | Raw multiline paste disrupts input fields           | **Intelligent Newline Sanitization / Escaping**                     | Preserves search dialog layout and regex semantics.            |
 | **Buffer Comparison**     | None                                                | **Integrated Side-by-Side File Diff (`splitToRight`)**              | Instant visual code comparison without external tools.         |
 | **Hex / Binary View**     | Text only                                           | **Toggleable 16-Byte Hex Dump & ASCII View**                        | Low-level binary file inspection directly inside editor.       |
-| **macOS Menu Bar Extra**  | Window close terminates app                         | **Resident Background Mode via `QSystemTrayIcon`**                  | Instant summon from status bar or dock.                        |
+| **Multi-Window & Dock**   | Detached multi-process windows                      | **Single-Instance In-Process Multi-Window + Dock Quit Prompt**      | Native macOS Dock click handling and dirty-buffer protection.  |
 | **Tab Label Truncation**  | Tabs shrink indefinitely or expand endlessly        | **Middle-Ellipsis Truncation (`elideMode`)**                        | Readable filenames and stable tab bar geometry.                |
 | **Translations**          | Fragmented translation catalogs                     | **100% Complete Bahasa Indonesia & English (0 Unfinished)**         | Production-ready localization conforming to Apple HIG.         |
 | **Static Verification**   | Basic CI                                            | **Zero-Defect 13-Pillar Audit (`trunk`, `cppcheck`, `actionlint`)** | ISO 5055, OWASP Top 10, CWE Top 25 compliant.                  |
@@ -69,14 +82,14 @@ Key innovations introduced in `0.15-07`:
 
 All 13 pillars of enterprise verification were executed and validated with empirical evidence:
 
-- **Bug Review (Task 5.1)**: `cppcheck --library=qt --enable=warning --error-exitcode=1` passed with 0 errors across all 88 translation units.
-- **Syntax & Style Review (Task 5.2 / 5.13)**: `trunk check` passed across all modified repository files with 0 issues.
-- **Signal-Slot Safety (Task 5.3)**: 100% modern Qt functor-based connections verified.
-- **Unicode & Logic (Task 5.4)**: Atomic grapheme navigation verified via `QTextBoundaryFinder`.
-- **Memory Safety (Task 5.5)**: Clean RAII and `QObject` parent-child tree verified.
-- **Dependency Graph (Task 5.8)**: Header cycle DFS scan verified 0 circular dependencies.
-- **Workflow Linting (Task 6.2)**: `actionlint` passed with 0 warnings on `.github/workflows/`.
-- **Compilation Gate (Task 6.1)**: Clean build and link with Exit Code 0 on macOS (`clang++` / Qt 6.12.0).
+- **Bug Review**: `cppcheck --library=qt --enable=warning --error-exitcode=1` passed with 0 errors across all 88 translation units.
+- **Syntax & Style Review**: `trunk check` passed across all modified repository files with 0 issues.
+- **Signal-Slot Safety**: 100% modern Qt functor-based connections verified.
+- **Unicode & Logic**: Atomic grapheme navigation verified via `QTextBoundaryFinder`.
+- **Memory Safety**: Clean RAII and `QObject` parent-child tree verified.
+- **Dependency Graph**: Header cycle DFS scan verified 0 circular dependencies.
+- **Workflow Linting**: `actionlint` passed with 0 warnings on `.github/workflows/`.
+- **Compilation Gate**: Clean build and link with Exit Code 0 on macOS (`clang++` / Qt 6.12.0).
 
 ---
 

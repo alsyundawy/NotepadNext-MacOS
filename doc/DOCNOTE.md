@@ -360,13 +360,14 @@ To guarantee 100% active syntax highlighting across all 87 language definitions:
 
 ### 100% Zero-Defect SonarLint & IDE Precision Hardening
 
-Resolved all 17 flagged IDE / SonarLint diagnostics:
+Resolved all 36 flagged IDE and SonarLint diagnostics:
 
-1. `HighlightedScrollBar.h/.cpp`: Defaulted destructor (`= default`), explicit `static_cast<int>` for Scintilla `sptr_t` conversions, C++17 `if` init-statement for `startAnchorY`, marked `drawTickMark` const.
-2. `RecentFilesListManager.h`: Explicit `static_cast<int>` on `recentFiles.size()` eliminating `qsizetype` to `int` precision loss.
-3. `RecentFilesListMenuBuilder.h/.cpp`: Declared `populateMenu` const, deduplicated type declarations with `auto *`.
-4. `RtfConverter.cpp`: C++17 `if` init-statement for `newStyle`, bounded `static_cast<int>` on `styleFore` and `charAt`.
-5. `EditorInfoStatusBar.h/.cpp`: Explicit lambda variable captures `[this]`, `[w, this]`, `[this, editor]`, pointer-to-const for `MainWindow` references, C++20 `using enum Scintilla::Update`, default case in switch statement, pointer-to-const for `ScintillaNext` parameter in const inspector methods, and explicit `static_cast<int>` on selection and position offsets.
+1. `HighlightedScrollBar.h/.cpp`: Defaulted destructor (`= default`), explicit `static_cast<int>` for Scintilla `sptr_t` conversions, C++17 `if` init-statement for `startAnchorY`, marked `drawTickMark`, `drawCursors`, `drawMarker`, and `drawIndicator` const, replaced redundant types with `auto` and `const auto`.
+2. `AboutDialog.h/.cpp`: Replaced redundant types with `auto *` across layout, widget, and tab builders; extracted all 6 nested conditional (ternary) operators into independent branch-assigned statements; made `primary` screen pointer pointer-to-const (`const auto *primary`); declared `copySystemInfoToClipboard() const` in header and implementation.
+3. `RecentFilesListManager.h`: Explicit `static_cast<int>` on `recentFiles.size()` eliminating `qsizetype` to `int` precision loss.
+4. `RecentFilesListMenuBuilder.h/.cpp`: Declared `populateMenu` const, deduplicated type declarations with `auto *`.
+5. `RtfConverter.cpp`: C++17 `if` init-statement for `newStyle`, bounded `static_cast<int>` on `styleFore` and `charAt`.
+6. `EditorInfoStatusBar.h/.cpp`: Explicit lambda variable captures `[this]`, `[w, this]`, `[this, editor]`, pointer-to-const for `MainWindow` references (`const auto *w`), C++20 `using enum Scintilla::Update`, default case in switch statement, pointer-to-const for `ScintillaNext` parameter in const inspector methods, and explicit `static_cast<int>` with `const auto` on selection (`start`, `end`, `pos`) and position offsets.
 
 ### Upstream 3 PRs Harmonization
 
