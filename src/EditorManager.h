@@ -59,6 +59,7 @@ signals:
 private:
     void setupSettingsConnections();
     void setupViewSettingsConnections();
+    void setupWordWrapSettingsConnections();
     void setupFontSettingsConnections();
     void setupDecoratorSettingsConnections();
     void setupEditor(ScintillaNext *editor) const;

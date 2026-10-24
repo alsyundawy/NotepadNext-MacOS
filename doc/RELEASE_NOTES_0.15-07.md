@@ -32,6 +32,8 @@ Key innovations introduced in `0.15-07`:
 
 3. **macOS Native Architecture & UI Polish**:
    - **macOS Menu Bar Extra / Dock Status Mode**: Resident background mode with quick-access menu via `QSystemTrayIcon`.
+   - **Toolbar Preferences & Exit Actions**: Enforced persistent Settings/Preferences (cog icon) and Exit (exit icon) actions on the main toolbar.
+   - **Find & Replace Tab Form Precision**: Strict 1-box input layout for Tab Find and Tab Mark (completely hiding the Replace field), reserving 2-box input strictly for Tab Replace.
    - **Tab Label Middle-Ellipsis (`elideMode`)**: Configurable tab title truncation maintaining clean tab geometry even with 30+ open files.
    - **Horizon Dark Theme Contrast Fine-Tuning**: Optimized high-contrast palette for Apple Retina displays.
 

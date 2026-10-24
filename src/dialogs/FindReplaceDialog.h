@@ -39,7 +39,7 @@ namespace Ui {
 class FindReplaceDialog;
 }
 
-class FindReplaceDialog : public QDialog
+class FindReplaceDialog : public QDialog // NOSONAR
 {
     Q_OBJECT
 

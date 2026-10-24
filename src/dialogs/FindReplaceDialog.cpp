@@ -210,6 +210,7 @@ void FindReplaceDialog::setFindString(const QString &string)
 void FindReplaceDialog::setTab(int tab)
 {
     tabBar->setCurrentIndex(tab);
+    changeTab(tab);
 }
 
 bool FindReplaceDialog::event(QEvent *e)
@@ -234,6 +235,7 @@ void FindReplaceDialog::showEvent(QShowEvent *event)
     isFirstTime = false;
 
     updateInSelectionCheckbox();
+    changeTab(tabBar->currentIndex());
 
     QDialog::showEvent(event);
 }
@@ -514,9 +516,10 @@ void FindReplaceDialog::adjustOpacityAlways(bool checked)
 void FindReplaceDialog::changeTab(int index)
 {
     if (index == FIND_TAB) {
+        ui->labelReplaceWith->hide();
+        ui->comboReplace->hide();
         ui->labelReplaceWith->setMaximumHeight(0);
         ui->comboReplace->setMaximumHeight(0);
-        // The combo box isn't actually "hidden", so adjust the focus policy so it does not get tabbed to
         ui->comboReplace->setFocusPolicy(Qt::NoFocus);
 
         ui->buttonFind->show();
@@ -539,6 +542,8 @@ void FindReplaceDialog::changeTab(int index)
         ui->checkBoxWrapAround->setEnabled(true);
     }
     else if (index == REPLACE_TAB) {
+        ui->labelReplaceWith->show();
+        ui->comboReplace->show();
         ui->labelReplaceWith->setMaximumHeight(QWIDGETSIZE_MAX);
         ui->comboReplace->setMaximumHeight(QWIDGETSIZE_MAX);
         ui->comboReplace->setFocusPolicy(Qt::StrongFocus); // Reset its focus policy
@@ -563,6 +568,8 @@ void FindReplaceDialog::changeTab(int index)
         ui->checkBoxWrapAround->setEnabled(true);
     }
     else if (index == MARK_TAB) {
+        ui->labelReplaceWith->hide();
+        ui->comboReplace->hide();
         ui->labelReplaceWith->setMaximumHeight(0);
         ui->comboReplace->setMaximumHeight(0);
         ui->comboReplace->setFocusPolicy(Qt::NoFocus);
@@ -587,6 +594,7 @@ void FindReplaceDialog::changeTab(int index)
         ui->checkBoxWrapAround->setEnabled(true);
     }
 
+    adjustSize();
     ui->comboFind->setFocus();
     ui->comboFind->lineEdit()->selectAll();
 }

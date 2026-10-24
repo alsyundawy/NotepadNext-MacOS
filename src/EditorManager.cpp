@@ -118,7 +118,10 @@ void EditorManager::setupViewSettingsConnections()
             editor->setIndentationGuides(b ? SC_IV_LOOKBOTH : SC_IV_NONE);
         }
     });
+}
 
+void EditorManager::setupWordWrapSettingsConnections()
+{
     connect(settings, &ApplicationSettings::wordWrapChanged, this, [this](bool b) {
         if (b) {
             for (const auto &editor : getEditors()) {
@@ -189,6 +192,7 @@ void EditorManager::setupDecoratorSettingsConnections()
 void EditorManager::setupSettingsConnections()
 {
     setupViewSettingsConnections();
+    setupWordWrapSettingsConnections();
     setupFontSettingsConnections();
     setupDecoratorSettingsConnections();
 }
