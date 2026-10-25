@@ -438,4 +438,3 @@ A full, deep-dive multi-linter verification pass was executed across all 88 tran
   - Reduced final `.dmg` distribution archive to **28,144,826 bytes (~26.84 MiB / 28.14 MB)**, well below the strict 30 MB ceiling while preserving full functionality, Retina artwork, and native Cocoa integration.
 - **CMake Packaging Target Hardening**:
   - Added standalone target safety guards `if(NOT TARGET NotepadNext) return() endif()` in `cmake/PackagingMac.cmake` to prevent IDE parser errors when inspecting CMake packaging scripts in isolation.
-

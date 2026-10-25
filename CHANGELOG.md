@@ -102,7 +102,6 @@ Format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) a
 - 🇬🇧 **CMake Packaging Target Guard**: Added `if(NOT TARGET NotepadNext) return() endif()` to prevent standalone analyzer evaluation errors.
 - 🇮🇩 **Proteksi Target CMake Packaging**: Menambahkan pengaman `if(NOT TARGET NotepadNext) return() endif()` guna mencegah kesalahan evaluasi penganalisis skrip saat diperiksa secara mandiri.
 
-
 ---
 
 ## [0.15-06] - 2026-10-23

@@ -118,4 +118,3 @@ All 13 pillars of enterprise verification were executed and validated with empir
   - `NotepadNext-v0.15-arm64.dmg` (~27.9 MB, alias)
   - `NotepadNext-v0.15-x64.dmg` (~27.9 MB, alias)
   - `NotepadNext-Default-Editor.sh` (system integration script)
-
