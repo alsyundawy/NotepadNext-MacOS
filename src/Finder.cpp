@@ -67,25 +67,28 @@ FindResult Finder::findNextFrom(Sci_Position startPos)
 {
     FindResult result;
 
-    if (find_options.text.isEmpty())
+    if (find_options.text.isEmpty()) {
         return result;
+    }
 
     editor->setSearchFlags(searchFlags());
 
     if (use_selection_range) {
         const Sci_Position rangeEnd = selection_range.cpMax;
         Sci_Position pos = startPos;
-        if (pos < selection_range.cpMin) pos = selection_range.cpMin;
-        if (pos > rangeEnd) pos = rangeEnd;
+        if (pos < selection_range.cpMin) { pos = selection_range.cpMin; }
+        if (pos > rangeEnd) { pos = rangeEnd; }
 
         result.range = searchTarget(pos, rangeEnd);
-        if (result || !find_options.wrapAround)
+        if (result || !find_options.wrapAround) {
             return result;
+        }
 
         if (pos > selection_range.cpMin) {
             result.range = searchTarget(selection_range.cpMin, pos);
-            if (result)
+            if (result) {
                 result.wrapped = true;
+            }
         }
         return result;
     }
@@ -93,13 +96,15 @@ FindResult Finder::findNextFrom(Sci_Position startPos)
     result.range = searchTarget(startPos, editor->length());
 
     // Return the valid result, or if not wrap around, go ahead and return it anyways
-    if (result || !find_options.wrapAround)
+    if (result || !find_options.wrapAround) {
         return result;
+    }
 
     result.range = searchTarget(0, startPos);
 
-    if (result)
+    if (result) {
         result.wrapped = true;
+    }
 
     return result;
 }
@@ -108,8 +113,9 @@ FindResult Finder::findPrev()
 {
     FindResult result;
 
-    if (find_options.text.isEmpty())
+    if (find_options.text.isEmpty()) {
         return result;
+    }
 
     const Sci_Position startPos = editor->selectionStart();
 
@@ -117,17 +123,19 @@ FindResult Finder::findPrev()
 
     if (use_selection_range) {
         Sci_Position pos = startPos;
-        if (pos > selection_range.cpMax) pos = selection_range.cpMax;
-        if (pos < selection_range.cpMin) pos = selection_range.cpMin;
+        if (pos > selection_range.cpMax) { pos = selection_range.cpMax; }
+        if (pos < selection_range.cpMin) { pos = selection_range.cpMin; }
 
         result.range = searchTarget(pos, selection_range.cpMin);
-        if (result || !find_options.wrapAround)
+        if (result || !find_options.wrapAround) {
             return result;
+        }
 
         if (pos < selection_range.cpMax) {
             result.range = searchTarget(selection_range.cpMax, pos);
-            if (result)
+            if (result) {
                 result.wrapped = true;
+            }
         }
         return result;
     }
@@ -136,21 +144,24 @@ FindResult Finder::findPrev()
     result.range = searchTarget(startPos, 0);
 
     // Return the valid result, or if not wrap around, go ahead and return it anyways
-    if (result || !find_options.wrapAround)
+    if (result || !find_options.wrapAround) {
         return result;
+    }
 
     result.range = searchTarget(editor->length(), startPos);
 
-    if (result)
+    if (result) {
         result.wrapped = true;
+    }
 
     return result;
 }
 
 int Finder::count()
 {
-    if (find_options.text.isEmpty())
+    if (find_options.text.isEmpty()) {
         return 0;
+    }
 
     int total = 0;
 
@@ -173,19 +184,22 @@ FindResult Finder::replaceSelectionIfMatch(const QString &replaceText)
 {
     FindResult result;
 
-    if (find_options.text.isEmpty())
+    if (find_options.text.isEmpty()) {
         return result;
+    }
 
     const Sci_Position selectionStart = editor->selectionStart();
     const Sci_Position selectionEnd = editor->selectionEnd();
 
-    if (use_selection_range && (selectionStart < selection_range.cpMin || selectionEnd > selection_range.cpMax))
+    if (use_selection_range && (selectionStart < selection_range.cpMin || selectionEnd > selection_range.cpMax)) {
         return result;
+    }
 
     result.range = searchTarget(selectionStart, selectionEnd);
 
-    if (!result)
+    if (!result) {
         return result;
+    }
 
     const QByteArray replacementText = replaceText.toUtf8();
     const Sci_Position matchStart = editor->targetStart();
@@ -199,8 +213,9 @@ FindResult Finder::replaceSelectionIfMatch(const QString &replaceText)
         replacementLength = editor->replaceTarget(replacementText.length(), replacementText.constData());
     }
 
-    if (use_selection_range)
+    if (use_selection_range) {
         selection_range.cpMax += replacementLength - (matchEnd - matchStart);
+    }
 
     result.range = {
         static_cast<Sci_PositionCR>(matchStart),
@@ -212,8 +227,9 @@ FindResult Finder::replaceSelectionIfMatch(const QString &replaceText)
 
 int Finder::replaceAll(const QString &replaceText)
 {
-    if (find_options.text.isEmpty())
+    if (find_options.text.isEmpty()) {
         return 0;
+    }
 
     const QByteArray searchText = find_options.text.toUtf8();
     const QByteArray replacementText = replaceText.toUtf8();
@@ -265,15 +281,17 @@ int Finder::replaceAll(const QString &replaceText)
         // An empty match must advance past the next original character, not
         // match the same position again after inserting the replacement.
         if (start == end) {
-            if (findText.chrg.cpMin == findText.chrg.cpMax)
+            if (findText.chrg.cpMin == findText.chrg.cpMax) {
                 break;
+            }
 
             findText.chrg.cpMin = editor->positionAfter(findText.chrg.cpMin);
         }
     }
 
-    if (use_selection_range)
+    if (use_selection_range) {
         selection_range.cpMax = rangeEnd;
+    }
 
     return total;
 }

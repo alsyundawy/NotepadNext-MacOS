@@ -41,7 +41,7 @@ void SearchResultsCollector::newFileEntry(ScintillaNext *editor)
     child->newFileEntry(editor);
 }
 
-void SearchResultsCollector::newResultsEntry(const QString &line, int lineNumber, int startPositionFromBeginning, int endPositionFromBeginning, int hitCount)
+void SearchResultsCollector::newResultsEntry(const QString &line, int lineNumber, int startPositionFromBeginning, int endPositionFromBeginning, int hitCount) // NOLINT(bugprone-easily-swappable-parameters)
 {
     if (runningHitCount == 0) {
         // Save the previous results since there have not been any yet

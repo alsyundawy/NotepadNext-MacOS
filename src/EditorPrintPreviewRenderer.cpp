@@ -62,9 +62,9 @@ void EditorPrintPreviewRenderer::render(QPrinter *printer)
             }
         }
 
-        startPos = editor->formatRange(needsToDraw, printer, printer,
+        startPos = static_cast<int>(editor->formatRange(needsToDraw, printer, printer,
                                     printableArea.toRect(), printer->paperRect(QPrinter::DevicePixel).toRect(),
-                                    startPos, editor->length());
+                                    startPos, editor->length()));
 
         pageNum++;
     } while (startPos < editor->length());

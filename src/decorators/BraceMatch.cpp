@@ -61,10 +61,10 @@ void BraceMatch::doHighlighting()
 {
     static const QList<char> braces = {'[', ']', '(', ')', '{', '}'};
 
-    const Sci_Position pos = static_cast<Sci_Position>(editor->currentPos());
+    const auto pos = static_cast<Sci_Position>(editor->currentPos());
 
     // Check the character before the caret first
-    int match = editor->braceMatch(pos - 1, 0);
+    int match = static_cast<int>(editor->braceMatch(pos - 1, 0));
 
     if (match != INVALID_POSITION) {
          editor->braceHighlight(pos - 1, match);
@@ -72,7 +72,7 @@ void BraceMatch::doHighlighting()
     }
     else {
         // Check the character after the caret
-        match = editor->braceMatch(pos, 0);
+        match = static_cast<int>(editor->braceMatch(pos, 0));
         if (match != INVALID_POSITION) {
              editor->braceHighlight(pos, match);
              editor->setHighlightGuide(editor->column(editor->lineIndentPosition(editor->lineFromPosition(pos))));

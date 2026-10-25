@@ -40,7 +40,7 @@ QuickFindWidget::QuickFindWidget(QWidget *parent) :
 
     ui->lineEdit->installEventFilter(this);
 
-    FocusWatcher *fw = new FocusWatcher(ui->lineEdit);
+    auto *fw = new FocusWatcher(ui->lineEdit);
     connect(fw, &FocusWatcher::focusOut, this, &QuickFindWidget::focusOut);
     connect(fw, &FocusWatcher::focusIn, this, &QuickFindWidget::focusIn);
 
@@ -94,7 +94,7 @@ void QuickFindWidget::setEditor(ScintillaNext *newEditor)
 bool QuickFindWidget::eventFilter(QObject *obj, QEvent *event)
 {
     if (event->type() == QEvent::KeyPress) {
-        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+        auto *keyEvent = static_cast<QKeyEvent *>(event);
 
         // Use escape key to close the quick find widget
         if (keyEvent->key() == Qt::Key_Escape) {
@@ -181,10 +181,10 @@ void QuickFindWidget::navigateToNextMatch(bool skipCurrent)
     else {
         int startPos = INVALID_POSITION;
         if (skipCurrent) {
-            startPos = editor->selectionEnd();
+            startPos = static_cast<int>(editor->selectionEnd());
         }
         else {
-            startPos = editor->selectionStart();
+            startPos = static_cast<int>(editor->selectionStart());
         }
 
         auto it = std::lower_bound(matches.begin(), matches.end(), startPos, [](const QPair<int, int>& pair, int value) {
@@ -271,6 +271,10 @@ void QuickFindWidget::setSearchContextColor(const QString &color)
 
 void QuickFindWidget::initializeEditorIndicator()
 {
+    if (!editor) {
+        return;
+    }
+
     indicator = editor->allocateIndicator(QStringLiteral("quick_find"));
 
     editor->indicSetFore(indicator, 0xFF8000);

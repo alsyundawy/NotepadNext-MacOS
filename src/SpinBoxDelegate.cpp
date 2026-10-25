@@ -42,13 +42,13 @@ void SpinBoxDelegate::setEditorData(QWidget *editor, const QModelIndex &index) c
 {
     int value = index.model()->data(index, Qt::EditRole).toInt();
 
-    QSpinBox *spinBox = static_cast<QSpinBox*>(editor);
+    auto *spinBox = static_cast<QSpinBox*>(editor);
     spinBox->setValue(value);
 }
 
 void SpinBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
-    QSpinBox *spinBox = static_cast<QSpinBox*>(editor);
+    auto *spinBox = static_cast<QSpinBox*>(editor);
     spinBox->interpretText();
     int value = spinBox->value();
 

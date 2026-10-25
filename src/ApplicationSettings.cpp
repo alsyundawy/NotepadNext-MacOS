@@ -24,7 +24,7 @@
 #include <QFont>
 
 #define CREATE_SETTING(group, name, lname, type, default) \
-ApplicationSetting<type> name{#group "/" #name, default};\
+ApplicationSetting<type> name{#group "/" #name, (default)};\
     type ApplicationSettings::lname() const\
 {\
         return get(name);\

@@ -66,8 +66,9 @@ public:
         adjustSize();
         QWidget *parent = parentWidget();
         QPoint pos = parent ? (parent->rect().center() - rect().center()) : QPoint();
-        if (pixmapIndicator && pixmapIndicator->geometry().intersects(QRect(pos, size())))
+        if (pixmapIndicator && pixmapIndicator->geometry().intersects(QRect(pos, size()))) {
             pos.setY(pixmapIndicator->geometry().bottom() + 1);
+        }
         move(pos);
     }
 
@@ -79,8 +80,9 @@ public:
         resize(m_pixmap.size() / m_pixmap.devicePixelRatio());
         QWidget *parent = parentWidget();
         QPoint pos = parent ? (parent->rect().center() - rect().center()) : QPoint();
-        if (textIndicator && textIndicator->geometry().intersects(QRect(pos, size())))
+        if (textIndicator && textIndicator->geometry().intersects(QRect(pos, size()))) {
             pos.setY(textIndicator->geometry().bottom() + 1);
+        }
         move(pos);
     }
 
@@ -111,7 +113,7 @@ protected:
 private:
     void runInternal()
     {
-        QPropertyAnimation *anim = new QPropertyAnimation(m_effect, "opacity", this);
+        auto *anim = new QPropertyAnimation(m_effect, "opacity", this);
         anim->setDuration(200);
         anim->setEndValue(0.);
         connect(anim, &QAbstractAnimation::finished, this, &QObject::deleteLater);
@@ -135,8 +137,9 @@ void showText(QWidget *parent, const QString &text, TextSize size)
 {
     QPointer<Internal::FadingIndicatorPrivate> &indicator = Internal::FadingIndicatorPrivate::textIndicator;
 
-    if (indicator)
+    if (indicator) {
         delete indicator;
+    }
 
     indicator = new Internal::FadingIndicatorPrivate(parent, size);
     indicator->setText(text);
@@ -147,8 +150,9 @@ void showPixmap(QWidget *parent, const QString &pixmap)
 {
     QPointer<Internal::FadingIndicatorPrivate> &indicator = Internal::FadingIndicatorPrivate::pixmapIndicator;
 
-    if (indicator)
+    if (indicator) {
         delete indicator;
+    }
 
     indicator = new Internal::FadingIndicatorPrivate(parent, LargeText);
     indicator->setPixmap(pixmap);

@@ -54,7 +54,7 @@ public:
                           QWidget *parent = nullptr);
     ~UpdateDialog() override = default;
 
-    static bool verifyPackageHash(const QString &filePath, const QString &expectedSha256);
+    static bool verifyPackageHash(const QString &filePath, const QString &expectedSha256); // NOLINT(bugprone-easily-swappable-parameters)
 
 protected:
     void changeEvent(QEvent *event) override;

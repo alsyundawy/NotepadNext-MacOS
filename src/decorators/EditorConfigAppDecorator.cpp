@@ -29,7 +29,7 @@ class PreventUnfolding
 {
 public:
     explicit PreventUnfolding(ScintillaNext *editor) : editor(editor) {
-        foldFlags = editor->automaticFold();
+        foldFlags = static_cast<int>(editor->automaticFold());
         editor->setAutomaticFold(0);
     }
 
@@ -64,8 +64,11 @@ void EditorConfigAppDecorator::doEditorConfig(ScintillaNext *editor)
             }
 
             if (settings.contains(QStringLiteral("indent_style"))) {
-                if (settings[QStringLiteral("indent_style")] == QStringLiteral("tab")) editor->setUseTabs(true);
-                else if (settings[QStringLiteral("indent_style")] == QStringLiteral("space")) editor->setUseTabs(false);
+                if (settings[QStringLiteral("indent_style")] == QStringLiteral("tab")) {
+                    editor->setUseTabs(true);
+                } else if (settings[QStringLiteral("indent_style")] == QStringLiteral("space")) {
+                    editor->setUseTabs(false);
+                }
 
                 // Set a flag so that the tab/spaces won't get overridden
                 editor->QObject::setProperty("nn_skip_usetabs", "EditorConfig");
@@ -83,9 +86,13 @@ void EditorConfigAppDecorator::doEditorConfig(ScintillaNext *editor)
             }
 
             if (settings.contains(QStringLiteral("end_of_line"))) {
-                if (settings[QStringLiteral("end_of_line")] == QStringLiteral("lf")) editor->setEOLMode(SC_EOL_LF);
-                else if (settings[QStringLiteral("end_of_line")] == QStringLiteral("cr")) editor->setEOLMode(SC_EOL_CR);
-                else if (settings[QStringLiteral("end_of_line")] == QStringLiteral("crlf")) editor->setEOLMode(SC_EOL_CRLF);
+                if (settings[QStringLiteral("end_of_line")] == QStringLiteral("lf")) {
+                    editor->setEOLMode(SC_EOL_LF);
+                } else if (settings[QStringLiteral("end_of_line")] == QStringLiteral("cr")) {
+                    editor->setEOLMode(SC_EOL_CR);
+                } else if (settings[QStringLiteral("end_of_line")] == QStringLiteral("crlf")) {
+                    editor->setEOLMode(SC_EOL_CRLF);
+                }
             }
 
             if (settings.contains(QStringLiteral("trim_trailing_whitespace"))) {
@@ -108,7 +115,7 @@ void EditorConfigAppDecorator::doEditorConfig(ScintillaNext *editor)
 
 void EditorConfigAppDecorator::trimTrailingWhitespace()
 {
-    ScintillaNext *editor = qobject_cast<ScintillaNext *>(sender());
+    auto *editor = qobject_cast<ScintillaNext *>(sender());
     Finder f(editor);
     const PreventUnfolding pu(editor);
 
@@ -120,10 +127,10 @@ void EditorConfigAppDecorator::trimTrailingWhitespace()
 
 void EditorConfigAppDecorator::ensureFinalNewline()
 {
-    ScintillaNext *editor = qobject_cast<ScintillaNext *>(sender());
+    auto *editor = qobject_cast<ScintillaNext *>(sender());
     const PreventUnfolding pu(editor);
-    const int lastLine = editor->lineCount() - 1;
-    const int lastLineLength = editor->lineEndPosition(lastLine) - editor->positionFromLine(lastLine);
+    const auto lastLine = static_cast<int>(editor->lineCount() - 1);
+    const auto lastLineLength = static_cast<int>(editor->lineEndPosition(lastLine) - editor->positionFromLine(lastLine));
 
     if (lastLineLength != 0) {
         switch (editor->eOLMode()) {
@@ -136,13 +143,15 @@ void EditorConfigAppDecorator::ensureFinalNewline()
             case SC_EOL_LF:
                 editor->appendText(1, "\n");
                 break;
+            default:
+                break;
         }
     }
 }
 
 void EditorConfigAppDecorator::ensureNoFinalNewline()
 {
-    ScintillaNext *editor = qobject_cast<ScintillaNext *>(sender());
+    auto *editor = qobject_cast<ScintillaNext *>(sender());
     const PreventUnfolding pu(editor);
 
     editor->deleteTrailingEmptyLines();

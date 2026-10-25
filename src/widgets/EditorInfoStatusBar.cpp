@@ -49,7 +49,7 @@ EditorInfoStatusBar::EditorInfoStatusBar(QMainWindow *window) :
     unicodeType->setToolTip(tr("Encoding / BOM (Click to view or convert)"));
     connect(qobject_cast<StatusLabel *>(unicodeType), &StatusLabel::clicked, this, [this]() {
         if (const auto *mw = qobject_cast<MainWindow *>(this->window())) {
-            if (QAction *act = mw->findChild<QAction *>("actionShowEncodingInfo")) {
+            if (auto *act = mw->findChild<QAction *>("actionShowEncodingInfo")) {
                 act->trigger();
             }
         }
@@ -63,7 +63,7 @@ EditorInfoStatusBar::EditorInfoStatusBar(QMainWindow *window) :
     connect(w, &MainWindow::editorActivated, this, &EditorInfoStatusBar::connectToEditor);
 
     connect(qobject_cast<StatusLabel*>(overType), &StatusLabel::clicked, w, [w, this]() {
-        if (ScintillaNext *editor = w->currentEditor()) {
+        if (auto *editor = w->currentEditor()) {
             editor->editToggleOvertype();
             updateOverType(editor);
         }
@@ -95,7 +95,7 @@ void EditorInfoStatusBar::connectToEditor(ScintillaNext *editor)
 
 void EditorInfoStatusBar::editorUpdated(Scintilla::Update updated)
 {
-    ScintillaNext *editor = qobject_cast<ScintillaNext *>(sender());
+    auto *editor = qobject_cast<ScintillaNext *>(sender());
 
     using enum Scintilla::Update;
     if (Scintilla::FlagSet(updated, Text)) {
@@ -175,8 +175,9 @@ void EditorInfoStatusBar::updateEol(const ScintillaNext *editor)
 
 void EditorInfoStatusBar::updateEncoding(const ScintillaNext *editor)
 {
-    if (!editor || !unicodeType)
+    if (!editor || !unicodeType) {
         return;
+    }
     unicodeType->setText(EncodingDetector::formatDisplayName(editor->encodingName(), editor->bom()));
 }
 

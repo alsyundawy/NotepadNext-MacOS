@@ -399,15 +399,16 @@ void SessionManager::storeEditorViewDetails(ScintillaNext *editor, QSettings &se
     settings.setValue("FirstVisibleLine", static_cast<int>(editor->firstVisibleLine() + 1)); // Keep it 1-based in the settings just for human-readability
     settings.setValue("CurrentPosition", static_cast<int>(editor->currentPos()));
 
-    BookMarkDecorator *decorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
-    if (decorator == Q_NULLPTR) {
+    auto *decorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
+    if (decorator == nullptr) {
         qWarning("Editor has no BookMarkDecorator, unable to store bookmarks");
         return;
     }
 
     QList<int> bookMarkedLines = decorator->bookMarkedLines();
-    if (bookMarkedLines.length() > 0)
+    if (!bookMarkedLines.isEmpty()) {
         settings.setValue("BookMarks", QListToQVariantList(bookMarkedLines));
+    }
 }
 
 void SessionManager::loadEditorViewDetails(ScintillaNext *editor, const QSettings &settings)
@@ -422,8 +423,8 @@ void SessionManager::loadEditorViewDetails(ScintillaNext *editor, const QSetting
     {
         QList<int> bookMarkedLines = QVariantListToQList(settings.value("BookMarks").toList()); // just using .value<QList<int>>() does not work...possibly a Qt bug?
 
-        BookMarkDecorator *decorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
-        if (decorator != Q_NULLPTR) {
+        auto *decorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
+        if (decorator != nullptr) {
             decorator->setBookMarkedLines(bookMarkedLines);
         }
         else {

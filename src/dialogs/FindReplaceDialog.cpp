@@ -229,8 +229,9 @@ void FindReplaceDialog::showEvent(QShowEvent *event)
 {
     qInfo(Q_FUNC_INFO);
 
-    if (!isFirstTime)
+    if (!isFirstTime) {
         restorePosition();
+    }
 
     isFirstTime = false;
 
@@ -260,8 +261,9 @@ static void updateComboList(QComboBox *comboBox, const QString &text)
 
 void FindReplaceDialog::updateFindList(const QString &text)
 {
-    if (!text.isEmpty())
+    if (!text.isEmpty()) {
         updateComboList(ui->comboFind, text);
+    }
 }
 
 void FindReplaceDialog::updateReplaceList(const QString &text)
@@ -441,16 +443,18 @@ void FindReplaceDialog::performNextSearch()
 {
     FindResult result = finder->findNext();
 
-    if (result)
+    if (result) {
         editor->goToRange(result.range);
+    }
 }
 
 void FindReplaceDialog::performPrevSearch()
 {
     FindResult result = finder->findPrev();
 
-    if (result)
+    if (result) {
         editor->goToRange(result.range);
+    }
 }
 
 void FindReplaceDialog::adjustOpacity(int value)
@@ -659,8 +663,9 @@ void FindReplaceDialog::loadSettings()
         const QSize available = screen->availableGeometry().size();
         const QSize current = size();
         const QSize clamped = current.boundedTo(available);
-        if (clamped != current)
+        if (clamped != current) {
             resize(clamped);
+        }
     }
 
     ui->comboFind->addItems(settings.value("RecentSearchList").toStringList());
@@ -673,12 +678,13 @@ void FindReplaceDialog::loadSettings()
 
     if (settings.contains("SearchMode")) {
         const QString searchMode = settings.value("SearchMode").toString();
-        if (searchMode == "normal")
+        if (searchMode == "normal") {
             ui->radioNormalSearch->setChecked(true);
-        else if (searchMode == "extended")
+        } else if (searchMode == "extended") {
             ui->radioExtendedSearch->setChecked(true);
-        else
+        } else {
             ui->radioRegexSearch->setChecked(true);
+        }
     }
     ui->checkBoxRegexMatchesNewline->setChecked(settings.value("DotMatchesNewline").toBool());
 
@@ -725,12 +731,13 @@ void FindReplaceDialog::saveSettings() const
     settings.setValue("MatchCase", ui->checkBoxMatchCase->isChecked());
     settings.setValue("WrapAround", ui->checkBoxWrapAround->isChecked());
 
-    if (ui->radioNormalSearch->isChecked())
+    if (ui->radioNormalSearch->isChecked()) {
         settings.setValue("SearchMode", "normal");
-    else if (ui->radioExtendedSearch->isChecked())
+    } else if (ui->radioExtendedSearch->isChecked()) {
         settings.setValue("SearchMode", "extended");
-    else if (ui->radioRegexSearch->isChecked())
+    } else if (ui->radioRegexSearch->isChecked()) {
         settings.setValue("SearchMode", "regex");
+    }
     settings.setValue("DotMatchesNewline", ui->checkBoxRegexMatchesNewline->isChecked());
 
     settings.setValue("TransparencyUsed", ui->transparency->isChecked());
@@ -771,14 +778,17 @@ FindOptions FindReplaceDialog::findOptions() const
 
     options.text = findString();
 
-    if (ui->checkBoxMatchWholeWord->isChecked())
+    if (ui->checkBoxMatchWholeWord->isChecked()) {
         options.flags |= WholeWord;
+    }
 
-    if (ui->checkBoxMatchCase->isChecked())
+    if (ui->checkBoxMatchCase->isChecked()) {
         options.flags |= MatchCase;
+    }
 
-    if (ui->radioRegexSearch->isChecked())
+    if (ui->radioRegexSearch->isChecked()) {
         options.flags |= RegExp;
+    }
 
     options.wrapAround = ui->checkBoxWrapAround->isChecked();
 

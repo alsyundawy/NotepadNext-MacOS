@@ -46,8 +46,9 @@ EncodingSelectionDialog::~EncodingSelectionDialog() {
 }
 
 void EncodingSelectionDialog::updateCurrentDocInfo() {
-    if (!m_editor)
+    if (!m_editor) {
         return;
+    }
 
     ui->labelActiveEncoding->setText(m_editor->encodingName());
 
@@ -69,7 +70,7 @@ void EncodingSelectionDialog::updateCurrentDocInfo() {
 
     // Run quick detection on sample to show detection method and confidence
     const QByteArray sample =
-        QByteArray::fromRawData(reinterpret_cast<const char *>(m_editor->characterPointer()), qMin(m_editor->textLength(), 4096));
+        QByteArray::fromRawData(reinterpret_cast<const char *>(m_editor->characterPointer()), qMin(m_editor->textLength(), 4096)); // NOLINT(performance-no-int-to-ptr)
     auto res = EncodingDetector::detect(sample);
     ui->labelDetectionMethod->setText(
         QStringLiteral("%1 (Confidence: %2%)").arg(res.detectionMethod).arg(res.confidence));
@@ -83,7 +84,7 @@ void EncodingSelectionDialog::populateList() {
     for (const auto &info : m_allEncodings) {
         if (info.category != currentCategory) {
             currentCategory = info.category;
-            QListWidgetItem *catItem = new QListWidgetItem(QStringLiteral("── %1 ──").arg(currentCategory));
+            auto *catItem = new QListWidgetItem(QStringLiteral("── %1 ──").arg(currentCategory));
             catItem->setFlags(Qt::NoItemFlags);
             QFont font = catItem->font();
             font.setBold(true);
@@ -91,7 +92,7 @@ void EncodingSelectionDialog::populateList() {
             ui->listEncodings->addItem(catItem);
         }
 
-        QListWidgetItem *item = new QListWidgetItem(QStringLiteral("%1  (%2)").arg(info.description, info.name));
+        auto *item = new QListWidgetItem(QStringLiteral("%1  (%2)").arg(info.description, info.name));
         item->setData(Qt::UserRole, info.name);
         ui->listEncodings->addItem(item);
 
@@ -130,10 +131,12 @@ ScintillaNext::BomType EncodingSelectionDialog::selectedBom() const {
         return (m_editor && m_editor->bom() == ScintillaNext::BomType::Utf8) ? ScintillaNext::BomType::Utf8
                                                                              : ScintillaNext::BomType::None;
     }
-    if (enc == QStringLiteral("UTF-16LE"))
+    if (enc == QStringLiteral("UTF-16LE")) {
         return ScintillaNext::BomType::Utf16LE;
-    if (enc == QStringLiteral("UTF-16BE"))
+    }
+    if (enc == QStringLiteral("UTF-16BE")) {
         return ScintillaNext::BomType::Utf16BE;
+    }
     return ScintillaNext::BomType::None;
 }
 
@@ -166,8 +169,9 @@ void EncodingSelectionDialog::selectQuickAnsi() {
 }
 
 void EncodingSelectionDialog::onApply() {
-    if (!m_editor)
+    if (!m_editor) {
         return;
+    }
 
     const QString enc = selectedEncoding();
     const bool reopen = isReopenMode();

@@ -42,10 +42,8 @@ HighlightedScrollBarDecorator::~HighlightedScrollBarDecorator() = default;
 
 void HighlightedScrollBarDecorator::notify(const NotificationData *pscn)
 {
-    if (pscn->nmhdr.code == Notification::UpdateUI && (FlagSet(pscn->updated, Update::Text) || FlagSet(pscn->updated, Update::Selection))) {
-        scrollBar->update();
-    }
-    else if (pscn->nmhdr.code == Notification::Modified && FlagSet(pscn->modificationType, ModificationFlags::ChangeMarker)) {
+    if ((pscn->nmhdr.code == Notification::UpdateUI && (FlagSet(pscn->updated, Update::Text) || FlagSet(pscn->updated, Update::Selection))) ||
+        (pscn->nmhdr.code == Notification::Modified && FlagSet(pscn->modificationType, ModificationFlags::ChangeMarker))) {
         scrollBar->update();
     }
 }
@@ -75,7 +73,7 @@ void HighlightedScrollBar::drawMarker(QPainter &p, int marker) const
     // NOTE: SCI_MARKERGETBACK doesn't exist...so can't use the marker color
     int curLine = 0;
 
-    while ((curLine = static_cast<int>(editor->markerNext(curLine, 1 << marker))) != -1) {
+    while ((curLine = static_cast<int>(editor->markerNext(curLine, 1U << static_cast<unsigned int>(marker)))) != -1) {
         drawTickMark(p, lineToScrollBarY(curLine), DEFAULT_TICK_HEIGHT, QColor(100, 100, 255));
 
         curLine++;
@@ -128,7 +126,7 @@ int HighlightedScrollBar::lineToScrollBarY(int line) const
     auto lineCount = static_cast<int>(editor->visibleFromDocLine(editor->lineCount()));
 
     if (!editor->endAtLastLine()) {
-        lineCount += editor->linesOnScreen();
+        lineCount += static_cast<int>(editor->linesOnScreen());
     }
 
     if (lineCount <= 0) {

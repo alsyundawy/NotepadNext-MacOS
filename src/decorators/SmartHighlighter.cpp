@@ -47,24 +47,24 @@ void SmartHighlighter::notify(const NotificationData *pscn)
 void SmartHighlighter::highlightCurrentView()
 {
     editor->setIndicatorCurrent(indicator);
-    editor->indicatorClearRange(0, editor->length());
+    editor->indicatorClearRange(0, static_cast<int>(editor->length()));
 
     if (editor->selectionEmpty()) {
         return;
     }
 
-    const int mainSelection = editor->mainSelection();
-    const int selectionStart = editor->selectionNStart(mainSelection);
-    const int selectionEnd = editor->selectionNEnd(mainSelection);
+    const auto mainSelection = static_cast<int>(editor->mainSelection());
+    const auto selectionStart = static_cast<int>(editor->selectionNStart(mainSelection));
+    const auto selectionEnd = static_cast<int>(editor->selectionNEnd(mainSelection));
 
     // Make sure the current selection is valid
     if (selectionStart == selectionEnd) {
         return;
     }
 
-    const int curPos = editor->currentPos();
-    const int wordStart = editor->wordStartPosition(curPos, true);
-    const int wordEnd = editor->wordEndPosition(wordStart, true);
+    const auto curPos = static_cast<int>(editor->currentPos());
+    const auto wordStart = static_cast<int>(editor->wordStartPosition(curPos, true));
+    const auto wordEnd = static_cast<int>(editor->wordEndPosition(wordStart, true));
 
     // Make sure the selection is on word boundaries
     if (wordStart == wordEnd || wordStart != selectionStart || wordEnd != selectionEnd) {
@@ -85,10 +85,10 @@ void SmartHighlighter::highlightCurrentView()
 
     // TODO: skip hidden or folded lines?
 
-    Sci_TextToFind ttf {{0, (Sci_PositionCR)editor->length()}, selText.constData(), {-1, -1}};
-    const int flags = SCFIND_MATCHCASE | SCFIND_WHOLEWORD;
+    Sci_TextToFind ttf {{0, static_cast<Sci_PositionCR>(editor->length())}, selText.constData(), {-1, -1}};
+    const auto flags = static_cast<int>(static_cast<unsigned int>(SCFIND_MATCHCASE) | static_cast<unsigned int>(SCFIND_WHOLEWORD));
 
-    while (editor->send(SCI_FINDTEXT, flags, (sptr_t)&ttf) != -1) {
+    while (editor->send(SCI_FINDTEXT, flags, reinterpret_cast<sptr_t>(&ttf)) != -1) {
         editor->indicatorFillRange(ttf.chrgText.cpMin, ttf.chrgText.cpMax - ttf.chrgText.cpMin);
         ttf.chrg.cpMin = ttf.chrgText.cpMax;
     }

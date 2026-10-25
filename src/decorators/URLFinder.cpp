@@ -114,7 +114,7 @@ void URLFinder::findURLs()
         linesLeftToProcess -= static_cast<int>(editor->wrapCount(currentLine));
 
         // If the current line is a fold header and the fold is not expanded, skip
-        if (((editor->foldLevel(currentLine) & SC_FOLDLEVELHEADERFLAG) == SC_FOLDLEVELHEADERFLAG) && (!editor->foldExpanded(currentLine))) {
+        if (((static_cast<unsigned int>(editor->foldLevel(currentLine)) & static_cast<unsigned int>(SC_FOLDLEVELHEADERFLAG)) == static_cast<unsigned int>(SC_FOLDLEVELHEADERFLAG)) && (!editor->foldExpanded(currentLine))) {
             currentLine = static_cast<int>(editor->lastChild(currentLine, -1)) + 1;
         }
         else {
@@ -126,7 +126,7 @@ void URLFinder::findURLs()
 void URLFinder::clearURLs()
 {
     editor->setIndicatorCurrent(indicator);
-    editor->indicatorClearRange(0, editor->length());
+    editor->indicatorClearRange(0, static_cast<int>(editor->length()));
 }
 
 void URLFinder::notify(const Scintilla::NotificationData *pscn)
@@ -150,7 +150,7 @@ void URLFinder::notify(const Scintilla::NotificationData *pscn)
     else if (pscn->nmhdr.code == Scintilla::Notification::IndicatorClick && FlagSet(pscn->modifiers, Scintilla::KeyMod::Ctrl)) {
         const auto indicators = static_cast<int>(editor->indicatorAllOnFor(pscn->position));
 
-        if (indicators & (1 << indicator)) {
+        if ((static_cast<unsigned int>(indicators) & (1U << static_cast<unsigned int>(indicator))) != 0U) {
 
             const auto indicatorStart = static_cast<int>(editor->indicatorStart(indicator, pscn->position));
             const auto indicatorEnd = static_cast<int>(editor->indicatorEnd(indicator, pscn->position));
@@ -171,7 +171,7 @@ void URLFinder::notify(const Scintilla::NotificationData *pscn)
 bool URLFinder::isURL(int position) const
 {
     const auto indicators = static_cast<int>(editor->indicatorAllOnFor(position));
-    return indicators & (1 << indicator);
+    return (static_cast<unsigned int>(indicators) & (1U << static_cast<unsigned int>(indicator))) != 0U;
 }
 
 void URLFinder::copyURLToClipboard(int position) const

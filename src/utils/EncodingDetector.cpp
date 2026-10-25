@@ -514,60 +514,84 @@ QString EncodingDetector::canonicalizeEncodingName(const QString &rawName) {
     QString s = rawName.trimmed();
     QString lower = s.toLower().remove('-').remove('_');
 
-    if (lower == "utf8")
+    if (lower == "utf8") {
         return QStringLiteral("UTF-8");
-    if (lower == "utf16" || lower == "utf16le")
+    }
+    if (lower == "utf16" || lower == "utf16le") {
         return QStringLiteral("UTF-16LE");
-    if (lower == "utf16be")
+    }
+    if (lower == "utf16be") {
         return QStringLiteral("UTF-16BE");
-    if (lower == "ascii" || lower == "usascii")
+    }
+    if (lower == "ascii" || lower == "usascii") {
         return QStringLiteral("UTF-8");
-    if (lower == "cp1252" || lower == "windows1252" || lower == "win1252" || lower == "ansi")
+    }
+    if (lower == "cp1252" || lower == "windows1252" || lower == "win1252" || lower == "ansi") {
         return QStringLiteral("windows-1252");
-    if (lower == "latin1" || lower == "iso88591")
+    }
+    if (lower == "latin1" || lower == "iso88591") {
         return QStringLiteral("ISO-8859-1");
-    if (lower == "latin9" || lower == "iso885915")
+    }
+    if (lower == "latin9" || lower == "iso885915") {
         return QStringLiteral("ISO-8859-15");
-    if (lower == "cp1250" || lower == "windows1250" || lower == "win1250")
+    }
+    if (lower == "cp1250" || lower == "windows1250" || lower == "win1250") {
         return QStringLiteral("windows-1250");
-    if (lower == "cp1251" || lower == "windows1251" || lower == "win1251")
+    }
+    if (lower == "cp1251" || lower == "windows1251" || lower == "win1251") {
         return QStringLiteral("windows-1251");
-    if (lower == "cp1253" || lower == "windows1253")
+    }
+    if (lower == "cp1253" || lower == "windows1253") {
         return QStringLiteral("windows-1253");
-    if (lower == "cp1254" || lower == "windows1254")
+    }
+    if (lower == "cp1254" || lower == "windows1254") {
         return QStringLiteral("windows-1254");
-    if (lower == "cp1255" || lower == "windows1255")
+    }
+    if (lower == "cp1255" || lower == "windows1255") {
         return QStringLiteral("windows-1255");
-    if (lower == "cp1256" || lower == "windows1256")
+    }
+    if (lower == "cp1256" || lower == "windows1256") {
         return QStringLiteral("windows-1256");
-    if (lower == "cp1257" || lower == "windows1257")
+    }
+    if (lower == "cp1257" || lower == "windows1257") {
         return QStringLiteral("windows-1257");
-    if (lower == "sjis" || lower == "shiftjis" || lower == "cp932")
+    }
+    if (lower == "sjis" || lower == "shiftjis" || lower == "cp932") {
         return QStringLiteral("Shift-JIS");
-    if (lower == "eucjp")
+    }
+    if (lower == "eucjp") {
         return QStringLiteral("EUC-JP");
-    if (lower == "gb2312" || lower == "gbk" || lower == "gb18030" || lower == "cp936")
+    }
+    if (lower == "gb2312" || lower == "gbk" || lower == "gb18030" || lower == "cp936") {
         return QStringLiteral("GB18030");
-    if (lower == "big5" || lower == "big5hkscs" || lower == "cp950")
+    }
+    if (lower == "big5" || lower == "big5hkscs" || lower == "cp950") {
         return QStringLiteral("Big5");
-    if (lower == "euckr" || lower == "cp949")
+    }
+    if (lower == "euckr" || lower == "cp949") {
         return QStringLiteral("EUC-KR");
-    if (lower == "koi8r")
+    }
+    if (lower == "koi8r") {
         return QStringLiteral("KOI8-R");
-    if (lower == "koi8u")
+    }
+    if (lower == "koi8u") {
         return QStringLiteral("KOI8-U");
-    if (lower == "cp437" || lower == "ibm437" || lower == "oem437")
+    }
+    if (lower == "cp437" || lower == "ibm437" || lower == "oem437") {
         return QStringLiteral("IBM850");
-    if (lower == "macroman" || lower == "macintosh")
+    }
+    if (lower == "macroman" || lower == "macintosh") {
         return QStringLiteral("macintosh");
+    }
 
     return s;
 }
 
 bool EncodingDetector::isSupportedEncoding(const QString &encodingName) {
     const QString encUpper = encodingName.toUpper();
-    if (encUpper == "UTF-8" || encUpper == "UTF-16LE" || encUpper == "UTF-16BE")
+    if (encUpper == "UTF-8" || encUpper == "UTF-16LE" || encUpper == "UTF-16BE") {
         return true;
+    }
 
     const QTextCodec *codec = QTextCodec::codecForName(encodingName.toUtf8());
     return codec != nullptr;

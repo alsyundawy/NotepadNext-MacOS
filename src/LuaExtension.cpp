@@ -120,7 +120,7 @@ inline int absolute_index(lua_State *L, int index) {
 
     if (func == nullptr) {
         propfunc = SciIFaceTable.GetPropertyFuncByMessage(message);
-        if (propfunc.value != -1) func = &propfunc;
+        if (propfunc.value != -1) { func = &propfunc; }
     }
 
     if (func != nullptr) {
@@ -173,12 +173,13 @@ static NppExtensionAPIPane check_pane_object(lua_State *L, int index) {
         return *pPane;
     }
 
-    if (index == 1)
+    if (index == 1) {
         lua_pushliteral(L, "Self object is missing in pane method or property access.");
-    else if (index == lua_upvalueindex(1))
+    } else if (index == lua_upvalueindex(1)) {
         lua_pushliteral(L, "Internal error: pane object expected in closure.");
-    else
+    } else {
         lua_pushliteral(L, "Pane object expected.");
+    }
 
     raise_error(L);
     return 0; // this line never reached
@@ -190,8 +191,9 @@ static int cf_global_print(lua_State *L) {
     lua_getglobal(L, "tostring");
 
     for (int i = 1; i <= nargs; ++i) {
-        if (i > 1)
+        if (i > 1) {
             hostTrace("\t");
+        }
 
         const char *argStr = lua_tostring(L, i);
         if (argStr) {
@@ -279,9 +281,9 @@ static void extractFunctionParams(lua_State *L, const IFaceFunction &func, int l
             const char *s = lua_tostring(L, arg++);
             params[i] = reinterpret_cast<sptr_t>(s ? s : "");
         } else if (func.paramType[i] == iface_keymod) {
-            int keycode = static_cast<int>(luaL_checkinteger(L, arg++)) & 0xFFFF;
-            int modifiers = static_cast<int>(luaL_checkinteger(L, arg++)) & (SCMOD_SHIFT|SCMOD_CTRL|SCMOD_ALT);
-            params[i] = keycode | (modifiers<<16);
+            const unsigned int keycode = static_cast<unsigned int>(static_cast<int>(luaL_checkinteger(L, arg++))) & 0xFFFFU;
+            const unsigned int modifiers = static_cast<unsigned int>(static_cast<int>(luaL_checkinteger(L, arg++))) & (static_cast<unsigned int>(SCMOD_SHIFT) | static_cast<unsigned int>(SCMOD_CTRL) | static_cast<unsigned int>(SCMOD_ALT));
+            params[i] = static_cast<sptr_t>(keycode | (modifiers << 16U));
         } else if (func.paramType[i] == iface_bool) {
             params[i] = lua_toboolean(L, arg++);
         } else if (IFaceTypeIsNumeric(func.paramType[i])) {
@@ -419,7 +421,7 @@ static int cf_pane_iface_function(lua_State *L) {
 
 static int push_iface_function(lua_State *L, const char *name, const IFaceTableInterface *iface) {
     if (const auto *func = iface->FindFunction(name); func != nullptr && IFaceFunctionIsScriptable(*func)) {
-        lua_pushlightuserdata(L, (void *)(uintptr_t)func);
+        lua_pushlightuserdata(L, static_cast<void *>(const_cast<IFaceFunction *>(func)));
         lua_pushcclosure(L, cf_pane_iface_function, 1);
         return 1;
     }
@@ -500,8 +502,9 @@ static int cf_pane_metatable_index(lua_State *L) {
 
         // these return the number of values pushed (possibly 0), or -1 if no match
         int results = push_iface_function(L, name, iface);
-        if (results < 0)
+        if (results < 0) {
             results = push_iface_propval(L, name, iface);
+        }
 
         if (results >= 0) {
             return results;
@@ -627,7 +630,7 @@ static bool InitGlobalScope() {
     state.ifacemixer.AddIFaceTable(&SciIFaceTable);
 
     // ...register standard libraries
-    luaL_openlibs(state.luaState);
+    luaL_openlibs(state.luaState); // NOLINT(bugprone-signed-bitwise)
 
     // Sandbox unsafe OS/IO and dynamic loading vectors (CVE-2026-42214 / CWE-94)
     luaL_dostring(state.luaState,
@@ -658,7 +661,7 @@ static bool InitGlobalScope() {
 }
 
 LuaExtension::LuaExtension() = default;
-LuaExtension::~LuaExtension() = default;
+
 
 LuaExtension &LuaExtension::Instance() {
     static LuaExtension singleton;

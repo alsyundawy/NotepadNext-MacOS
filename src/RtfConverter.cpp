@@ -45,9 +45,10 @@ static void AddCharEscaped(QTextStream &stream, int ch)
 
 static QColor ScintillaColorToQColor(int color)
 {
-    int r = color & 0xFF;
-    int g = (color >> 8) & 0xFF;
-    int b = (color >> 16) & 0xFF;
+    const auto uColor = static_cast<unsigned int>(color);
+    const int r = static_cast<int>(uColor & 0xFFU);
+    const int g = static_cast<int>((uColor >> 8U) & 0xFFU);
+    const int b = static_cast<int>((uColor >> 16U) & 0xFFU);
 
     return QColor::fromRgb(r, g, b);
 }

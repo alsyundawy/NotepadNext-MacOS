@@ -36,7 +36,7 @@ private:
 public:
     static LuaExtension &Instance();
 
-    ~LuaExtension();
+    ~LuaExtension() = default;
 
     bool Initialise(lua_State *L, ScintillaNext *editor_) const;
     void setEditor(ScintillaEdit *editor_) const;

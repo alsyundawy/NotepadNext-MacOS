@@ -86,7 +86,7 @@ PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *par
     connect(ui->fcbDefaultFont, &QFontComboBox::currentFontChanged, this, [=, this](const QFont &f) {
         settings->setFontName(f.family());
     });
-    connect(settings, &ApplicationSettings::fontNameChanged, this, [=, this](QString fontName){
+    connect(settings, &ApplicationSettings::fontNameChanged, this, [=, this](const QString &fontName){
         ui->fcbDefaultFont->setCurrentFont(QFont(fontName));
     });
 
@@ -106,7 +106,7 @@ PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *par
     connect(ui->comboBoxLineEndings, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [=, this](int index) {
         settings->setDefaultEOLMode(ui->comboBoxLineEndings->itemData(index).toString());
     });
-    connect(settings, &ApplicationSettings::defaultEOLModeChanged, this, [=, this](QString defaultEOLMode) {
+    connect(settings, &ApplicationSettings::defaultEOLModeChanged, this, [=, this](const QString &defaultEOLMode) {
         int index = ui->comboBoxLineEndings->findData(defaultEOLMode);
         ui->comboBoxLineEndings->setCurrentIndex(index == -1 ? 0 : index);
     });
@@ -115,13 +115,13 @@ PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *par
     MapSettingToCheckBox(ui->checkBoxShowLineNumbers, &ApplicationSettings::showLineNumbers, &ApplicationSettings::setShowLineNumbers, &ApplicationSettings::showLineNumbersChanged);
     MapSettingToCheckBox(ui->checkBoxAutoCompletion, &ApplicationSettings::autoCompletion, &ApplicationSettings::setAutoCompletion, &ApplicationSettings::autoCompletionChanged);
 
-    QButtonGroup *buttonGroup = new QButtonGroup(this);
+    auto *buttonGroup = new QButtonGroup(this);
     buttonGroup->addButton(ui->radioFollowCurrentDirectory, ApplicationSettings::FollowCurrentDocument);
     buttonGroup->addButton(ui->radioLastUsedDirectory, ApplicationSettings::RememberLastUsed);
     buttonGroup->addButton(ui->radioHardCoded, ApplicationSettings::HardCoded);
 
     connect(buttonGroup, &QButtonGroup::idClicked, this, [=, this](int id) {
-        ApplicationSettings::DefaultDirectoryBehaviorEnum e = static_cast<ApplicationSettings::DefaultDirectoryBehaviorEnum>(id);
+        auto e = static_cast<ApplicationSettings::DefaultDirectoryBehaviorEnum>(id);
         settings->setDefaultDirectoryBehavior(e);
     });
 
@@ -132,7 +132,9 @@ PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *par
 
     connect(ui->btnSelectHardCodedPath, &QToolButton::clicked, this, [=, this]() {
         QString dir = QFileDialog::getExistingDirectory(this, tr("Default Directory"));
-        if (dir.isEmpty()) return; // user cancelled
+        if (dir.isEmpty()) {
+            return; // user cancelled
+        }
 
         settings->setDefaultDirectory(QDir::fromNativeSeparators(dir));
         ui->txtHardCodedPath->setText(QDir::toNativeSeparators(dir));
@@ -191,7 +193,7 @@ void PreferencesDialog::MapSettingToGroupBox(QGroupBox *groupBox, Func1 getter, 
 
 void PreferencesDialog::populateTranslationComboBox()
 {
-    NotepadNextApplication *app = qobject_cast<NotepadNextApplication *>(qApp);
+    auto *app = qobject_cast<NotepadNextApplication *>(qApp);
 
     // Add the system default at the top
     ui->comboBoxTranslation->addItem(tr("<System Default>"), QStringLiteral(""));
@@ -213,8 +215,8 @@ void PreferencesDialog::populateTranslationComboBox()
 
 void PreferencesDialog::setupThemeSettings()
 {
-    QGroupBox *gbxThemes = new QGroupBox(tr("Themes & Visual Styling"), ui->scrollAreaWidgetContents);
-    QFormLayout *themeLayout = new QFormLayout(gbxThemes);
+    auto *gbxThemes = new QGroupBox(tr("Themes & Visual Styling"), ui->scrollAreaWidgetContents);
+    auto *themeLayout = new QFormLayout(gbxThemes);
     themeLayout->setSpacing(10);
     themeLayout->setContentsMargins(14, 16, 14, 14);
 
@@ -251,17 +253,17 @@ void PreferencesDialog::setupThemeSettings()
         if (themeId.isEmpty()) {
             return;
         }
-        MainWindow *mw = qobject_cast<MainWindow *>(parentWidget());
+        auto *mw = qobject_cast<MainWindow *>(parentWidget());
         ThemeManager::instance()->setPalette(themeId, mw);
     });
 
-    QHBoxLayout *themeRowLayout = new QHBoxLayout();
+    auto *themeRowLayout = new QHBoxLayout();
     themeRowLayout->addWidget(comboBoxTheme, 1);
 
     btnToggleDarkLight = new QPushButton(tr("Toggle Dark/Light"), gbxThemes);
     btnToggleDarkLight->setToolTip(tr("Quickly switch between active dark and light modes"));
     connect(btnToggleDarkLight, &QPushButton::clicked, this, [this]() {
-        MainWindow *mw = qobject_cast<MainWindow *>(parentWidget());
+        auto *mw = qobject_cast<MainWindow *>(parentWidget());
         ThemeManager::instance()->toggleTheme(mw);
         QString currentId = ThemeManager::instance()->currentPaletteId();
         int found = comboBoxTheme->findData(currentId);

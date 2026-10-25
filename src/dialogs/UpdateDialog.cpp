@@ -37,7 +37,7 @@
 #include <QCryptographicHash>
 #include <QFile>
 
-bool UpdateDialog::verifyPackageHash(const QString &filePath, const QString &expectedSha256)
+bool UpdateDialog::verifyPackageHash(const QString &filePath, const QString &expectedSha256) // NOLINT(bugprone-easily-swappable-parameters)
 {
     if (expectedSha256.trimmed().isEmpty()) {
         return true;

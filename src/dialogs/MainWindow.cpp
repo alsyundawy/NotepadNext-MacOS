@@ -469,7 +469,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) : // NOSONAR
     connect(ui->actionToggleHexView, &QAction::triggered, this, &MainWindow::toggleHexView);
 
     connect(ui->actionColumnMode, &QAction::triggered, this, [this]() {
-        ColumnEditorDialog *columnEditor = findChild<ColumnEditorDialog *>(QString(), Qt::FindDirectChildrenOnly);
+        auto *columnEditor = findChild<ColumnEditorDialog *>(QString(), Qt::FindDirectChildrenOnly);
 
         if (columnEditor == Q_NULLPTR) {
             columnEditor = new ColumnEditorDialog(this);
@@ -535,7 +535,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) : // NOSONAR
     srDock->toggleViewAction()->setShortcut(Qt::Key_F7);
     ui->menuView->addAction(srDock->toggleViewAction());
 
-    connect(srDock, &SearchResultsDock::searchResultActivated, this, [this](ScintillaNext *editor, int lineNumber, int startPositionFromBeginning, int endPositionFromBeginning) {
+    connect(srDock, &SearchResultsDock::searchResultActivated, this, [this](ScintillaNext *editor, int lineNumber, int startPositionFromBeginning, int endPositionFromBeginning) { // NOLINT(bugprone-easily-swappable-parameters)
         dockedEditor->switchToEditor(editor);
 
         const auto linePos = static_cast<int>(editor->positionFromLine(lineNumber));
@@ -550,7 +550,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) : // NOSONAR
     });
 
     connect(ui->actionFindNext, &QAction::triggered, this, [this]() {
-        FindReplaceDialog *f = findChild<FindReplaceDialog *>(QString(), Qt::FindDirectChildrenOnly);
+        auto *f = findChild<FindReplaceDialog *>(QString(), Qt::FindDirectChildrenOnly);
 
         if (f) {
             f->performNextSearch();
@@ -558,7 +558,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) : // NOSONAR
     });
 
     connect(ui->actionFindPrevious, &QAction::triggered, this, [this]() {
-        FindReplaceDialog *f = findChild<FindReplaceDialog *>(QString(), Qt::FindDirectChildrenOnly);
+        auto *f = findChild<FindReplaceDialog *>(QString(), Qt::FindDirectChildrenOnly);
 
         if (f) {
             f->performPrevSearch();
@@ -569,8 +569,9 @@ MainWindow::MainWindow(NotepadNextApplication *app) : // NOSONAR
         auto editor = currentEditor();
         auto range = editor->getContextText();
 
-        if (range.cpMin == range.cpMax)
+        if (range.cpMin == range.cpMax) {
             return;
+        }
 
         auto text = editor->get_text_range(static_cast<int>(range.cpMin), static_cast<int>(range.cpMax));
 
@@ -580,8 +581,9 @@ MainWindow::MainWindow(NotepadNextApplication *app) : // NOSONAR
 
         FindResult result = forward ? f.findNext() : f.findPrev();
 
-        if (result)
+        if (result) {
             editor->goToRange(result.range);
+        }
     };
 
     connect(ui->actionSelectandFindNext, &QAction::triggered, this, [selectAndFind]() {
@@ -593,7 +595,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) : // NOSONAR
     });
 
     connect(ui->actionQuickFind, &QAction::triggered, this, [this]() {
-        QuickFindWidget *quickFind = findChild<QuickFindWidget *>(QString(), Qt::FindDirectChildrenOnly);
+        auto *quickFind = findChild<QuickFindWidget *>(QString(), Qt::FindDirectChildrenOnly);
 
         if (quickFind == Q_NULLPTR) {
             quickFind = new QuickFindWidget(this);
@@ -630,8 +632,8 @@ MainWindow::MainWindow(NotepadNextApplication *app) : // NOSONAR
     });
 
     // Style all actions that have a MarkerNumber and interpret that as the color needed
-    const MarkerAppDecorator *markerAppDecorator = app->findChild<MarkerAppDecorator*>(QString(), Qt::FindDirectChildrenOnly);
-    for (QAction* action : findChildren<QAction*>()) {
+    const auto *markerAppDecorator = app->findChild<MarkerAppDecorator*>(QString(), Qt::FindDirectChildrenOnly);
+    for (auto *action : findChildren<QAction*>()) {
         if (action->property("MarkerNumber").isValid()) {
             int markerNumber = action->property("MarkerNumber").toInt();
             action->setIcon(ActionUtils::createSolidIcon(markerAppDecorator->markerColor(markerNumber)));
@@ -639,7 +641,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) : // NOSONAR
     }
 
     auto mark_callback = [this]() {
-        MarkerAppDecorator *decorator = this->app->findChild<MarkerAppDecorator*>(QString(), Qt::FindDirectChildrenOnly);
+        auto *decorator = this->app->findChild<MarkerAppDecorator*>(QString(), Qt::FindDirectChildrenOnly);
 
         if (decorator && decorator->isEnabled()) {
             const QObject *snd = sender();
@@ -651,7 +653,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) : // NOSONAR
     };
 
     auto clear_mark_callback = [this]() {
-        MarkerAppDecorator *decorator = this->app->findChild<MarkerAppDecorator*>(QString(), Qt::FindDirectChildrenOnly);
+        auto *decorator = this->app->findChild<MarkerAppDecorator*>(QString(), Qt::FindDirectChildrenOnly);
 
         if (decorator && decorator->isEnabled()) {
             const QObject *snd = sender();
@@ -671,7 +673,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) : // NOSONAR
     connect(ui->actionClearStyle3, &QAction::triggered, this, clear_mark_callback);
 
     connect(ui->actionClearAllStyles, &QAction::triggered, this, [this]() {
-        MarkerAppDecorator *clearDecorator = this->app->findChild<MarkerAppDecorator*>(QString(), Qt::FindDirectChildrenOnly);
+        auto *clearDecorator = this->app->findChild<MarkerAppDecorator*>(QString(), Qt::FindDirectChildrenOnly);
 
         if (clearDecorator && clearDecorator->isEnabled()) {
             clearDecorator->clearAll(currentEditor());
@@ -680,7 +682,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) : // NOSONAR
 
     connect(ui->actionToggleBookmark, &QAction::triggered, this, [this]() {
         ScintillaNext *editor = currentEditor();
-        BookMarkDecorator *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
+        auto *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
 
         if (bookMarkDecorator && bookMarkDecorator->isEnabled()) {
             editor->forEachLineInSelection(static_cast<int>(editor->mainSelection()), [bookMarkDecorator](int line) {
@@ -691,7 +693,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) : // NOSONAR
 
     connect(ui->actionNextBookmark, &QAction::triggered, this, [this]() {
         ScintillaNext *editor = currentEditor();
-        BookMarkDecorator *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
+        auto *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
 
         if (bookMarkDecorator && bookMarkDecorator->isEnabled()) {
             const auto currentLine = static_cast<int>(editor->lineFromPosition(editor->currentPos()));
@@ -706,7 +708,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) : // NOSONAR
 
     connect(ui->actionClearBookmarks, &QAction::triggered, this, [this]() {
         const ScintillaNext *editor = currentEditor();
-        BookMarkDecorator *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
+        auto *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
 
         if (bookMarkDecorator && bookMarkDecorator->isEnabled()) {
             bookMarkDecorator->clearAllBookmarks();
@@ -715,7 +717,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) : // NOSONAR
 
     connect(ui->actionInvertBookmarks, &QAction::triggered, this, [this]() {
         const ScintillaNext *editor = currentEditor();
-        BookMarkDecorator *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
+        auto *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
 
         if (bookMarkDecorator && bookMarkDecorator->isEnabled()) {
             for (int line = 0; line < editor->lineCount(); line++) {
@@ -726,7 +728,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) : // NOSONAR
 
     connect(ui->actionPreviousBookmark, &QAction::triggered, this, [this]() {
         ScintillaNext *editor = currentEditor();
-        BookMarkDecorator *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
+        auto *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
 
         if (bookMarkDecorator && bookMarkDecorator->isEnabled()) {
             const auto currentLine = static_cast<int>(editor->lineFromPosition(editor->currentPos()));
@@ -741,7 +743,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) : // NOSONAR
 
     connect(ui->actionCutBookmarkedLines, &QAction::triggered, this, [this]() {
         const ScintillaNext *editor = currentEditor();
-        BookMarkDecorator *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
+        auto *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
 
         if (bookMarkDecorator && bookMarkDecorator->isEnabled()) {
             QString s = bookMarkDecorator->cutBookMarkedLines();
@@ -754,7 +756,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) : // NOSONAR
 
     connect(ui->actionCopyBookmarkedLines, &QAction::triggered, this, [this]() {
         const ScintillaNext *editor = currentEditor();
-        BookMarkDecorator *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
+        auto *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
 
         if (bookMarkDecorator && bookMarkDecorator->isEnabled()) {
             QString s = bookMarkDecorator->copyBookMarkedLines();
@@ -767,7 +769,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) : // NOSONAR
 
     connect(ui->actionDeleteBookmarkedLines, &QAction::triggered, this, [this]() {
         const ScintillaNext *editor = currentEditor();
-        BookMarkDecorator *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
+        auto *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
 
         if (bookMarkDecorator && bookMarkDecorator->isEnabled()) {
             bookMarkDecorator->deleteBookMarkedLines();
@@ -883,7 +885,9 @@ MainWindow::MainWindow(NotepadNextApplication *app) : // NOSONAR
     });
     connect(ui->actionZoomOut, &QAction::triggered, this, [this]() {
         // Scintilla can zoom out to "-10" but on a screen with fractional scaling it throws a lot of Qt warnings
-        if (zoomLevel == -9) return;
+        if (zoomLevel == -9) {
+            return;
+        }
 
         for (ScintillaNext *editor : editors()) {
             editor->zoomOut();
@@ -905,8 +909,8 @@ MainWindow::MainWindow(NotepadNextApplication *app) : // NOSONAR
     connect(zoomEventWatcher, &ZoomEventWatcher::zoomIn, ui->actionZoomIn, &QAction::trigger);
     connect(zoomEventWatcher, &ZoomEventWatcher::zoomOut, ui->actionZoomOut, &QAction::trigger);
 
-    connectEditorAction(ui->actionFoldAll, &ScintillaNext::foldAll, SC_FOLDACTION_CONTRACT | SC_FOLDACTION_CONTRACT_EVERY_LEVEL);
-    connectEditorAction(ui->actionUnfoldAll, &ScintillaNext::foldAll, SC_FOLDACTION_EXPAND | SC_FOLDACTION_CONTRACT_EVERY_LEVEL);
+    connectEditorAction(ui->actionFoldAll, &ScintillaNext::foldAll, static_cast<int>(static_cast<unsigned int>(SC_FOLDACTION_CONTRACT) | static_cast<unsigned int>(SC_FOLDACTION_CONTRACT_EVERY_LEVEL)));
+    connectEditorAction(ui->actionUnfoldAll, &ScintillaNext::foldAll, static_cast<int>(static_cast<unsigned int>(SC_FOLDACTION_EXPAND) | static_cast<unsigned int>(SC_FOLDACTION_CONTRACT_EVERY_LEVEL)));
 
     connectEditorAction(ui->actionFoldLevel1, &ScintillaNext::foldAllLevels, 0);
     connectEditorAction(ui->actionFoldLevel2, &ScintillaNext::foldAllLevels, 1);
@@ -932,7 +936,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) : // NOSONAR
     languageActionGroup->setExclusive(true);
 
     connect(ui->actionPreferences, &QAction::triggered, this, [this] {
-        PreferencesDialog *pd = findChild<PreferencesDialog *>(QString(), Qt::FindDirectChildrenOnly);
+        auto *pd = findChild<PreferencesDialog *>(QString(), Qt::FindDirectChildrenOnly);
 
         if (pd == Q_NULLPTR) {
             pd = new PreferencesDialog(this->app->getSettings(), this);
@@ -1005,16 +1009,17 @@ MainWindow::MainWindow(NotepadNextApplication *app) : // NOSONAR
     });
 
     connect(ui->actionRunMacroMultipleTimes, &QAction::triggered, this, [this]() {
-        MacroRunDialog *macroRunDialog = findChild<MacroRunDialog *>(QString(), Qt::FindDirectChildrenOnly);
+        auto *macroRunDialog = findChild<MacroRunDialog *>(QString(), Qt::FindDirectChildrenOnly);
 
         if (macroRunDialog == Q_NULLPTR) {
             macroRunDialog = new MacroRunDialog(this, &macroManager);
 
             connect(macroRunDialog, &MacroRunDialog::execute, this, [this](const Macro *macro, int times) {
-                if (times > 0)
+                if (times > 0) {
                     macro->replay(currentEditor(), times);
-                else if (times == -1)
+                } else if (times == -1) {
                     macro->replayTillEndOfFile(currentEditor());
+                }
             });
         }
 
@@ -1250,11 +1255,11 @@ MainWindow::~MainWindow() = default;
 
 void MainWindow::applyCustomShortcuts()
 {
-    ApplicationSettings *settings = app->getSettings();
+    auto *settings = app->getSettings();
     settings->beginGroup("Shortcuts");
 
     for (const QString &actionName : settings->childKeys()) {
-        QAction *action = findChild<QAction *>(QStringLiteral("action") + actionName, Qt::FindDirectChildrenOnly);
+        auto *action = findChild<QAction *>(QStringLiteral("action") + actionName, Qt::FindDirectChildrenOnly);
 
         if (!action) {
             qWarning() << "CustomShortcut: Cannot find action" << actionName;
@@ -1330,7 +1335,7 @@ void MainWindow::setupLanguageMenu()
         // Get all consecutive names that start with the same letter
         // NOTE: this loop always runs once since i == j the first time
         while (j < language_names.size() && language_names[i][0].toUpper() == language_names[j][0].toUpper()) {
-            const QString key = language_names[j];
+            const QString &key = language_names[j];
             auto *action = new QAction(key, this);
             action->setCheckable(true);
             action->setData(key);
@@ -1564,8 +1569,9 @@ void MainWindow::openFileList(const QStringList &fileNames)
 {
     qInfo(Q_FUNC_INFO);
 
-    if (fileNames.isEmpty())
+    if (fileNames.isEmpty()) {
         return;
+    }
 
     QList<ScintillaNext *> openedEditors;
     ScintillaNext *initialEditor = getInitialEditor();
@@ -1606,11 +1612,17 @@ bool MainWindow::checkEditorsBeforeClose(const QVector<ScintillaNext *> &editorL
 {
     QVector<ScintillaNext *> unsaved;
     for (auto *e : editorList) {
-        if (!e) continue;
-        if (!e->isSavedToDisk()) unsaved.append(e);
+        if (!e) {
+            continue;
+        }
+        if (!e->isSavedToDisk()) {
+            unsaved.append(e);
+        }
     }
 
-    if (unsaved.isEmpty()) return true;
+    if (unsaved.isEmpty()) {
+        return true;
+    }
 
     // Focus the user's attention on the first unsaved file
     dockedEditor->switchToEditor(unsaved.first());
@@ -1636,8 +1648,9 @@ void MainWindow::openFileDialog()
 
     QStringList fileNames = FileDialogHelpers::getOpenFileNames(this, QString(), defaultDirectoryManager->getDefaultDirectory(), filter);
 
-    if (!fileNames.empty())
+    if (!fileNames.empty()) {
         emit fileDialogAccepted(fileNames.last());
+    }
 
     openFileList(fileNames);
 }
@@ -1783,8 +1796,9 @@ bool MainWindow::saveCurrentFile()
 
 bool MainWindow::saveFile(ScintillaNext *editor)
 {
-    if (editor->isSavedToDisk())
+    if (editor->isSavedToDisk()) {
         return true;
+    }
 
     if (!editor->isFile()) {
         // Switch to the editor and show the saveas dialog
@@ -1914,9 +1928,9 @@ void MainWindow::copyAsFormat(Converter *converter, const QString &mimeType) con
     QByteArray buffer;
     QTextStream stream(&buffer);
 
-    if (editor->selectionEmpty())
+    if (editor->selectionEmpty()) {
         converter->convert(stream);
-    else {
+    } else {
         converter->convertRange(stream, static_cast<int>(editor->selectionStart()), static_cast<int>(editor->selectionEnd()));
     }
 
@@ -2147,7 +2161,7 @@ void MainWindow::pasteWithoutFormat() const
 void MainWindow::showFindReplaceDialog(int index)
 {
     ScintillaNext *editor = currentEditor();
-    FindReplaceDialog *frd = findChild<FindReplaceDialog *>(QString(), Qt::FindDirectChildrenOnly);
+    auto *frd = findChild<FindReplaceDialog *>(QString(), Qt::FindDirectChildrenOnly);
 
     if (frd == Q_NULLPTR) {
         frd = new FindReplaceDialog(determineSearchResultsHandler(), this);
@@ -2316,7 +2330,7 @@ void MainWindow::updateGui(ScintillaNext *editor)
 
 void MainWindow::updateDocumentBasedUi(Scintilla::Update updated)
 {
-    ScintillaNext *editor = qobject_cast<ScintillaNext *>(sender());
+    auto *editor = qobject_cast<ScintillaNext *>(sender());
 
     if (!editor) {
         return;
@@ -2655,7 +2669,7 @@ void MainWindow::restoreWindowState()
     }
 
     // Always hide the dock no matter how the application was closed
-    SearchResultsDock *srDock = findChild<SearchResultsDock *>();
+    auto *srDock = findChild<SearchResultsDock *>();
     if (srDock != nullptr) {
         srDock->hide();
     }
@@ -3075,7 +3089,7 @@ void MainWindow::evaluateMathExpression() const
     }
 
     const QString luaScript = QStringLiteral("return tostring(%1)").arg(cleanExpr);
-    const QString result = app->getLuaState()->executeAndReturn<QString>(luaScript);
+    const auto result = app->getLuaState()->executeAndReturn<QString>(luaScript);
 
     if (!result.isEmpty()) {
         const QString insertion = expr.endsWith(QLatin1Char('=')) ? QStringLiteral(" ") + result : QStringLiteral(" = ") + result;

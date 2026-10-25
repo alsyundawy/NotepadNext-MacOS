@@ -48,7 +48,7 @@ static void debug_manager_handler(QtMsgType type, const QMessageLogContext &cont
 void DebugManager::manageDebugOutput()
 {
     // Just to be safe, restore the original message handler
-    qInstallMessageHandler(0);
+    qInstallMessageHandler(nullptr);
 
     // Clear the list if it was ever used previously
     handlers->clear();
@@ -60,7 +60,7 @@ void DebugManager::manageDebugOutput()
 void DebugManager::pauseDebugOutput()
 {
     // Just to be safe, restore the original message handler
-    qInstallMessageHandler(0);
+    qInstallMessageHandler(nullptr);
 
     buffered_debug_output->clear();
 

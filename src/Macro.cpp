@@ -34,7 +34,7 @@ void Macro::addMacroStep(Message message, uptr_t wParam, sptr_t lParam)
 
     // Combine ReplaceSel messages into a single string
     if (message == Message::ReplaceSel && !steps.empty() && steps.constLast().message == Message::ReplaceSel) {
-        steps.last().str.append(reinterpret_cast<const char*>(lParam));
+        steps.last().str.append(reinterpret_cast<const char*>(lParam)); // NOLINT(performance-no-int-to-ptr)
     }
     // Combine DeleteBack (backspace) with ReplaceSel
     else if (message == Message::DeleteBack && !steps.empty() && steps.constLast().message == Message::ReplaceSel) {
@@ -86,8 +86,8 @@ void Macro::replayTillEndOfFile(ScintillaNext *editor) const
     editor->beginUndoAction();
 
     do {
-        int length = editor->length();
-        int curPos = editor->currentPos();
+        const auto length = editor->length();
+        const auto curPos = editor->currentPos();
 
         replay(editor);
 
@@ -96,10 +96,10 @@ void Macro::replayTillEndOfFile(ScintillaNext *editor) const
             continue;
         }
         // The doc can grow...
-        else if(editor->length() > length) {
+        else if (editor->length() > length) {
             // are we going to catch up?
-            int deltaLength = editor->length() - length;
-            int deltaPos = editor->currentPos() - curPos;
+            const auto deltaLength = editor->length() - length;
+            const auto deltaPos = editor->currentPos() - curPos;
             if (deltaPos > deltaLength) {
                 // Cursor position is moving forward more than document is growing
                 continue;

@@ -32,14 +32,11 @@ QString DefaultDirectoryManager::getDefaultDirectory() const
 {
     ApplicationSettings::DefaultDirectoryBehaviorEnum e = settings->defaultDirectoryBehavior();
 
-    if (e == ApplicationSettings::FollowCurrentDocument){
+    if (e == ApplicationSettings::FollowCurrentDocument) {
         const ScintillaNext *editor = window->currentEditor();
         return editor->isFile() ? editor->getPath() : settings->defaultDirectory();
     }
-    else if (e == ApplicationSettings::RememberLastUsed) {
-        return settings->defaultDirectory();
-    }
-    else if (e == ApplicationSettings::HardCoded) {
+    else if (e == ApplicationSettings::RememberLastUsed || e == ApplicationSettings::HardCoded) {
         return settings->defaultDirectory();
     }
 

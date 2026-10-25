@@ -220,8 +220,9 @@ void ScintillaNext::forEachMatchInRange(const QByteArray &text, Func callback, S
     const auto flags = static_cast<int>(searchFlags());
 
     while (send(SCI_FINDTEXT, flags, reinterpret_cast<sptr_t>(&ttf)) != INVALID_POSITION) {
-        if(ttf.chrgText.cpMin == ttf.chrgText.cpMax)
+        if (ttf.chrgText.cpMin == ttf.chrgText.cpMax) {
             break;
+        }
         ttf.chrg.cpMin = callback(static_cast<int>(ttf.chrgText.cpMin), static_cast<int>(ttf.chrgText.cpMax));
     }
 }

@@ -97,7 +97,7 @@ void MacroManager::loadSettings()
         settings.setArrayIndex(i);
 
         if (settings.value("Macro").canConvert<Macro>()) {
-            Macro *m = new Macro(settings.value("Macro").value<Macro>());
+            auto *m = new Macro(settings.value("Macro").value<Macro>());
             macros.append(m);
         }
         else {

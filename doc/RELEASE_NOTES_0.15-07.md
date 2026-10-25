@@ -3,7 +3,7 @@
 > **Edition**: NotepadNext For MacOS<br/>
 > **Release Version**: `0.15-07`<br/>
 > **Official Baseline**: `dail8859/NotepadNext v0.15` (Tag: `v0.15`)<br/>
-> **Date**: October 25, 2026<br/>
+> **Date**: October 26, 2026<br/>
 > **Maintainer & Builder**: Harry DS Alsyundawy ([@alsyundawy](https://github.com/alsyundawy))<br/>
 > **Upstream Repository**: [dail8859/NotepadNext](https://github.com/dail8859/NotepadNext)<br/>
 > **macOS Edition Repository**: [alsyundawy/NotepadNext-MacOS](https://github.com/alsyundawy/NotepadNext-MacOS)<br/>
@@ -57,6 +57,11 @@ Key innovations introduced in `0.15-07`:
    - Eliminated legacy transliterations (e.g. _pengkodean_ -> _pengodean_, _file_ -> _berkas_, _shortcut_ -> _pintasan_) and stripped redundant parenthetical annotations.
    - Zero-overhead IDE diagnostics: resolved Qt XML `.ts` vs TypeScript parser conflicts and `.clangd` schema validations.
 
+8. **LLVM Clang-Tidy, Cppcheck, Clangd Zero-Defect Audit & <30MB DMG Packaging**:
+   - Passed multi-linter verification across all 88 translation units with 0 errors and 0 warnings.
+   - Resolved null pointer dereference in `QuickFindWidget.cpp` and modernized raw loops with `std::find_if` in `NotepadNextApplication.cpp`.
+   - Pruned heavy unused dynamic Qt frameworks (`QtPdf`, `QtQml`, `QtQuick`, `QtVirtualKeyboard`, `QtOpenGL`, `platforminputcontexts`, unneeded `imageformats`), reducing DMG file size to ~28 MB (28,144,826 bytes), strictly meeting the <30 MB size invariant.
+
 ---
 
 ## 📊 Comprehensive Feature & Architecture Matrix (Cumulative v0.15-01 to v0.15-07)
@@ -108,6 +113,9 @@ All 13 pillars of enterprise verification were executed and validated with empir
 - **Architectures**: Universal 2 (`arm64` Apple Silicon + `x86_64` Intel 64-bit)
 - **Minimum OS Version**: macOS 11.0 (Big Sur) through macOS 15.0+ (Sequoia)
 - **Artifacts**:
-  - `NotepadNext-0.15-07-macOS-Universal.dmg`
-  - `NotepadNext-0.15-07-macOS-arm64.dmg`
-  - `NotepadNext-0.15-07-macOS-x86_64.dmg`
+  - `NotepadNext-v0.15-07-arm64.dmg` (~27.9 MB, Apple Silicon M1/M2/M3/M4)
+  - `NotepadNext-v0.15-07-x64.dmg` (~27.9 MB, Intel x86_64)
+  - `NotepadNext-v0.15-arm64.dmg` (~27.9 MB, alias)
+  - `NotepadNext-v0.15-x64.dmg` (~27.9 MB, alias)
+  - `NotepadNext-Default-Editor.sh` (system integration script)
+

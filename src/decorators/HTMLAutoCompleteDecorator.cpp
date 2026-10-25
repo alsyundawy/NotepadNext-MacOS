@@ -25,7 +25,7 @@
 static const int MAX_TAG_NAME_LENGTH = 64;
 static const int MAX_TAG_LENGTH = 1024;
 
-static const QByteArrayList voidTags = { "area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source", "track", "wbr" };
+static const QByteArrayList voidTags = { "area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source", "track", "wbr" }; // NOLINT(bugprone-throwing-static-initialization)
 
 
 HTMLAutoCompleteDecorator::HTMLAutoCompleteDecorator(ScintillaNext *editor)
@@ -41,22 +41,28 @@ void HTMLAutoCompleteDecorator::notify(const Scintilla::NotificationData *pscn)
 {
     if (pscn->nmhdr.code == Scintilla::Notification::CharAdded) {
         if (pscn->ch == '>') {
-            const int currentPos = editor->currentPos();
+            const int currentPos = static_cast<int>(editor->currentPos());
 
             // Skip if it is inside any scripting language
-            if (editor->styleAt(currentPos) >= SCE_HJ_START) return;
+            if (editor->styleAt(currentPos) >= SCE_HJ_START) {
+                return;
+            }
 
-            int tagEndPos = editor->positionBefore(currentPos);
-            int tagStartPos = editor->positionBefore(tagEndPos);
+            int tagEndPos = static_cast<int>(editor->positionBefore(currentPos));
+            int tagStartPos = static_cast<int>(editor->positionBefore(tagEndPos));
 
             // Check the char right before the >
-            const int prevChar = editor->charAt(tagStartPos);
-            if (prevChar == '-') return; // Assume -->
-            if (prevChar == '/') return; // <tag/>
+            const int prevChar = static_cast<int>(editor->charAt(tagStartPos));
+            if (prevChar == '-') {
+                return; // Assume -->
+            }
+            if (prevChar == '/') {
+                return; // <tag/>
+            }
 
             // Go backwards searching for the beginning of the tag
             while ((currentPos - tagStartPos) <= MAX_TAG_LENGTH) {
-                const int c = editor->charAt(tagStartPos);
+                const int c = static_cast<int>(editor->charAt(tagStartPos));
 
                 // While backing up, save the position of the last whitespace character we encounter
                 if (std::isspace(c) != 0) {
@@ -64,24 +70,40 @@ void HTMLAutoCompleteDecorator::notify(const Scintilla::NotificationData *pscn)
                 }
 
                 // Found the start (yes this can be fooled but this is by far the easiest for now)
-                if (c == '<') break;
+                if (c == '<') {
+                    break;
+                }
 
                 // Reached the beginning of the document
-                if (tagStartPos == 0) return;
+                if (tagStartPos == 0) {
+                    return;
+                }
 
-                tagStartPos = editor->positionBefore(tagStartPos);
+                tagStartPos = static_cast<int>(editor->positionBefore(tagStartPos));
             }
 
             // For sanity, check the length of the tag name
-            if (tagEndPos - tagStartPos >= MAX_TAG_NAME_LENGTH) return;
+            if (tagEndPos - tagStartPos >= MAX_TAG_NAME_LENGTH) {
+                return;
+            }
 
-            QByteArray tag = editor->get_text_range(editor->positionAfter(tagStartPos), tagEndPos);
+            QByteArray tag = editor->get_text_range(static_cast<int>(editor->positionAfter(tagStartPos)), tagEndPos);
 
-            if (tag.isEmpty()) return; // <>
-            if (tag[0] == '/') return; // </div>
-            if (tag[0] == '?') return; // <?php>
-            if (tag[0] == '!') return; // <!-- and <!doctype
-            if (voidTags.contains(tag)) return; // Some tags are not expected to have closing tags
+            if (tag.isEmpty()) {
+                return; // <>
+            }
+            if (tag[0] == '/') {
+                return; // </div>
+            }
+            if (tag[0] == '?') {
+                return; // <?php>
+            }
+            if (tag[0] == '!') {
+                return; // <!-- and <!doctype
+            }
+            if (voidTags.contains(tag)) {
+                return; // Some tags are not expected to have closing tags
+            }
 
             // All good to go now, wrap it and insert it
             tag.prepend("</");

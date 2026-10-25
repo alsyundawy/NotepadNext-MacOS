@@ -40,7 +40,7 @@
 
 static QSpinBox *FontSizeSpinBoxFactory()
 {
-    QSpinBox *editor = new QSpinBox();
+    auto *editor = new QSpinBox();
     editor->setFrame(false);
     editor->setRange(2, 24);
     editor->setAlignment(Qt::AlignHCenter);
@@ -49,7 +49,7 @@ static QSpinBox *FontSizeSpinBoxFactory()
 
 static QSpinBox *FontWeightSpinBoxFactory()
 {
-    QSpinBox *editor = new QSpinBox();
+    auto *editor = new QSpinBox();
     editor->setFrame(false);
     editor->setRange(100, 2400);
     editor->setSingleStep(10);
@@ -76,16 +76,16 @@ LanguageInspectorDock::LanguageInspectorDock(MainWindow *parent) :
 {
     ui->setupUi(this);
 
-    SpinBoxDelegate *fontSizeDelegate = new SpinBoxDelegate(FontSizeSpinBoxFactory, this);
+    auto *fontSizeDelegate = new SpinBoxDelegate(FontSizeSpinBoxFactory, this);
     ui->tblStyles->setItemDelegateForColumn(5, fontSizeDelegate);
 
-    SpinBoxDelegate *fontWeightDelegate = new SpinBoxDelegate(FontWeightSpinBoxFactory, this);
+    auto *fontWeightDelegate = new SpinBoxDelegate(FontWeightSpinBoxFactory, this);
     ui->tblStyles->setItemDelegateForColumn(6, fontWeightDelegate);
 
-    ColorPickerDelegate *foreColorDelegate = new ColorPickerDelegate(this);
+    auto *foreColorDelegate = new ColorPickerDelegate(this);
     ui->tblStyles->setItemDelegateForColumn(11, foreColorDelegate);
 
-    ColorPickerDelegate *backColorDelegate = new ColorPickerDelegate(this);
+    auto *backColorDelegate = new ColorPickerDelegate(this);
     ui->tblStyles->setItemDelegateForColumn(12, backColorDelegate);
 
     QList<ComboBoxItem> caseItems{
@@ -94,7 +94,7 @@ LanguageInspectorDock::LanguageInspectorDock(MainWindow *parent) :
         {"SC_CASE_LOWER", SC_CASE_LOWER},
         {"SC_CASE_CAMEL", SC_CASE_CAMEL}
     };
-    ComboBoxDelegate *caseComoboDelegate = new ComboBoxDelegate(caseItems, this);
+    auto *caseComoboDelegate = new ComboBoxDelegate(caseItems, this);
     ui->tblStyles->setItemDelegateForColumn(15, caseComoboDelegate);
 
     QList<ComboBoxItem> fontNames;
@@ -106,7 +106,7 @@ LanguageInspectorDock::LanguageInspectorDock(MainWindow *parent) :
 #endif
         fontNames.append(QPair<QString, QString>(font, font));
     }
-    ComboBoxDelegate *fontComboDelegate = new ComboBoxDelegate(fontNames, this);
+    auto *fontComboDelegate = new ComboBoxDelegate(fontNames, this);
     ui->tblStyles->setItemDelegateForColumn(4, fontComboDelegate);
 
     connect(this, &QDockWidget::visibilityChanged, this, [=, this](bool visible) {

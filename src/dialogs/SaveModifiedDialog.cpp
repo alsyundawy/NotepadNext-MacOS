@@ -47,12 +47,12 @@ void SaveModifiedDialog::setupUi()
     setWindowModality(Qt::WindowModal);
     setMinimumWidth(500);
 
-    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    auto *mainLayout = new QVBoxLayout(this);
     mainLayout->setContentsMargins(20, 20, 20, 16);
     mainLayout->setSpacing(16);
 
     // Top section: Icon + Text
-    QHBoxLayout *topLayout = new QHBoxLayout();
+    auto *topLayout = new QHBoxLayout();
     topLayout->setSpacing(16);
     topLayout->setAlignment(Qt::AlignTop);
 
@@ -67,10 +67,10 @@ void SaveModifiedDialog::setupUi()
     m_iconLabel->setFixedSize(64, 64);
     topLayout->addWidget(m_iconLabel);
 
-    QVBoxLayout *contentLayout = new QVBoxLayout();
+    auto *contentLayout = new QVBoxLayout();
     contentLayout->setSpacing(6);
 
-    const int count = m_editors.count();
+    const auto count = static_cast<int>(m_editors.count());
 
     m_headingLabel = new QLabel(this);
     m_headingLabel->setWordWrap(true);
@@ -94,7 +94,7 @@ void SaveModifiedDialog::setupUi()
     // Document detail card
     if (count == 1) {
         m_cardWidget = new QWidget(this);
-        QVBoxLayout *cardLayout = new QVBoxLayout(m_cardWidget);
+        auto *cardLayout = new QVBoxLayout(m_cardWidget);
         cardLayout->setContentsMargins(12, 10, 12, 10);
         cardLayout->setSpacing(4);
 
@@ -114,12 +114,14 @@ void SaveModifiedDialog::setupUi()
         m_fileListWidget->setSelectionMode(QAbstractItemView::NoSelection);
 
         for (auto *editor : m_editors) {
-            if (!editor) continue;
+            if (!editor) {
+                continue;
+            }
             QString name = editor->getName();
             QString path = editor->getFilePath();
             QString labelText = path.isEmpty() ? QStringLiteral("📄 %1  [New]").arg(name)
                                                : QStringLiteral("📄 %1  (%2)").arg(name, path);
-            QListWidgetItem *item = new QListWidgetItem(labelText, m_fileListWidget);
+            auto *item = new QListWidgetItem(labelText, m_fileListWidget);
             m_fileListWidget->addItem(item);
         }
         contentLayout->addWidget(m_fileListWidget);
@@ -129,7 +131,7 @@ void SaveModifiedDialog::setupUi()
     mainLayout->addLayout(topLayout);
 
     // Button Row (macOS HIG Layout: Destructive on Left, Cancel + Save on Right)
-    QHBoxLayout *buttonLayout = new QHBoxLayout();
+    auto *buttonLayout = new QHBoxLayout();
     buttonLayout->setSpacing(10);
 
     m_discardBtn = new QPushButton(count > 1 ? tr("Don't Save All") : tr("Don't Save"), this);

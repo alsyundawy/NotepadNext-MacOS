@@ -28,16 +28,18 @@ MacroListModel::MacroListModel(QObject *parent, MacroManager *mm) :
 
 int MacroListModel::rowCount(const QModelIndex &parent) const
 {
-    if (parent.isValid())
+    if (parent.isValid()) {
         return 0;
+    }
 
-    return macroManager->availableMacros().size();
+    return static_cast<int>(macroManager->availableMacros().size());
 }
 
 QVariant MacroListModel::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid())
+    if (!index.isValid()) {
         return QVariant();
+    }
 
    if (role == Qt::DisplayRole || role == Qt::ToolTipRole) {
        return macroManager->availableMacros()[index.row()]->getName();
@@ -63,8 +65,9 @@ bool MacroListModel::removeRows(int row, int count, const QModelIndex &parent)
 
 bool MacroListModel::insertRows(int row, int count, const QModelIndex &parent)
 {
-    if (count < 1 || row < 0 || row > rowCount(parent))
+    if (count < 1 || row < 0 || row > rowCount(parent)) {
         return false;
+    }
 
     beginInsertRows(QModelIndex(), row, row + count - 1);
 
@@ -79,8 +82,9 @@ bool MacroListModel::insertRows(int row, int count, const QModelIndex &parent)
 
 Macro *MacroListModel::macro(const QModelIndex &index)
 {
-    if (index.isValid())
+    if (index.isValid()) {
         return macroManager->availableMacros()[index.row()];
-    else
-        return Q_NULLPTR;
+    } else {
+        return nullptr;
+    }
 }

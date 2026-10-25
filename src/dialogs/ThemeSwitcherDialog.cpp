@@ -60,18 +60,18 @@ void ThemeSwitcherDialog::setupUi() {
     setWindowTitle(tr("Theme Switcher — NotepadNext"));
     resize(720, 520);
 
-    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    auto *mainLayout = new QVBoxLayout(this);
     mainLayout->setContentsMargins(18, 18, 18, 18);
     mainLayout->setSpacing(12);
 
-    QLabel *titleLabel = new QLabel(tr("<h2>Select Visual Theme</h2><p style='opacity: 0.8;'>Choose from %1 "
+    auto *titleLabel = new QLabel(tr("<h2>Select Visual Theme</h2><p style='opacity: 0.8;'>Choose from %1 "
                                        "professional themes across curated families with real-time preview.</p>")
                                         .arg(kTotalThemePaletteCount),
                                     this);
     mainLayout->addWidget(titleLabel);
 
     // Filter bar
-    QHBoxLayout *filterLayout = new QHBoxLayout();
+    auto *filterLayout = new QHBoxLayout();
     filterLayout->setSpacing(12);
     filterLayout->setContentsMargins(0, 2, 0, 2);
     m_searchEdit = new QLineEdit(this);
@@ -112,8 +112,8 @@ void ThemeSwitcherDialog::setupUi() {
     mainLayout->addWidget(m_table);
 
     // Buttons
-    QHBoxLayout *btnLayout = new QHBoxLayout();
-    QLabel *shortcutHint = new QLabel(
+    auto *btnLayout = new QHBoxLayout();
+    auto *shortcutHint = new QLabel(
         tr("<small style='opacity: 0.8;'>Tip: Press Esc to revert or Ctrl+Shift+T to open again.</small>"), this);
     btnLayout->addWidget(shortcutHint);
     btnLayout->addStretch();
@@ -153,10 +153,12 @@ void ThemeSwitcherDialog::populateTable(const QString &filterText, int modeFilte
         const ThemePalette &p = kAllThemePalettes[i];
 
         // Mode filter: 1 = Light only, 2 = Dark only
-        if (modeFilter == 1 && p.isDark)
+        if (modeFilter == 1 && p.isDark) {
             continue;
-        if (modeFilter == 2 && !p.isDark)
+        }
+        if (modeFilter == 2 && !p.isDark) {
             continue;
+        }
 
         // Text filter
         if (!filterText.isEmpty()) {
@@ -171,14 +173,14 @@ void ThemeSwitcherDialog::populateTable(const QString &filterText, int modeFilte
         int row = m_table->rowCount();
         m_table->insertRow(row);
 
-        QTableWidgetItem *item0 = new QTableWidgetItem(QString::fromUtf8(p.displayName));
+        auto *item0 = new QTableWidgetItem(QString::fromUtf8(p.displayName));
         item0->setData(Qt::UserRole, QString::fromLatin1(p.id));
         m_table->setItem(row, 0, item0);
 
-        QTableWidgetItem *item1 = new QTableWidgetItem(QString::fromUtf8(p.family));
+        auto *item1 = new QTableWidgetItem(QString::fromUtf8(p.family));
         m_table->setItem(row, 1, item1);
 
-        QTableWidgetItem *item2 = new QTableWidgetItem(p.isDark ? tr("Dark") : tr("Light"));
+        auto *item2 = new QTableWidgetItem(p.isDark ? tr("Dark") : tr("Light"));
         m_table->setItem(row, 2, item2);
 
         // Render preview swatches (Win, Card, TxtPri, Accent, Cyan, Net)
@@ -195,7 +197,7 @@ void ThemeSwitcherDialog::populateTable(const QString &filterText, int modeFilte
         }
         painter.end();
 
-        QTableWidgetItem *item3 = new QTableWidgetItem();
+        auto *item3 = new QTableWidgetItem();
         item3->setIcon(QIcon(pix));
         m_table->setItem(row, 3, item3);
 
@@ -215,11 +217,12 @@ void ThemeSwitcherDialog::filterThemes() {
     populateTable(m_searchEdit->text(), filterId);
 }
 
-void ThemeSwitcherDialog::onThemeSelected(int row, int column) {
+void ThemeSwitcherDialog::onThemeSelected(int row, int column) { // NOLINT(bugprone-easily-swappable-parameters)
     Q_UNUSED(column)
     QTableWidgetItem *item = m_table->item(row, 0);
-    if (!item)
+    if (!item) {
         return;
+    }
 
     QString palId = item->data(Qt::UserRole).toString();
     ThemeManager::instance()->setPalette(palId, m_mainWindow);

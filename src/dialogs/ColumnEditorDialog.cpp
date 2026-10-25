@@ -73,25 +73,25 @@ void ColumnEditorDialog::insertTextStartingAtCurrentColumn(const std::function<Q
     ScintillaNext *editor = parent->currentEditor();
 
     if (editor->selectionMode() == SC_SEL_STREAM && editor->selections() == 1 && editor->selectionEmpty()) {
-        const int currentPos = editor->selectionNCaret(0);
+        const auto currentPos = static_cast<int>(editor->selectionNCaret(0));
 
         // If the cursor is in virtual space, the call to selectionNCaretVirtualSpace will be > 0
-        const int currentColumn = editor->column(currentPos) + editor->selectionNCaretVirtualSpace(0);
+        const auto currentColumn = static_cast<int>(editor->column(currentPos)) + static_cast<int>(editor->selectionNCaretVirtualSpace(0));
 
         const UndoAction ua(editor);
-        for (int line = editor->lineFromPosition(currentPos); line < editor->lineCount(); ++line) {
+        for (int line = static_cast<int>(editor->lineFromPosition(currentPos)); line < static_cast<int>(editor->lineCount()); ++line) {
             insertTextAtColumn(editor, line, currentColumn, f());
         }
     }
     else/* if (editor->selectionMode() == SC_SEL_RECTANGLE || editor->selections() > 0)*/ {
-        const int totalSelections = editor->selections();
+        const auto totalSelections = static_cast<int>(editor->selections());
 
         // TODO: sort selections from top to bottom?
 
         const UndoAction ua(editor);
         for(int selection = 0; selection < totalSelections; ++selection) {
-            const int start = editor->selectionNStart(selection) + editor->selectionNStartVirtualSpace(selection);
-            const int end = editor->selectionNEnd(selection) + editor->selectionNEndVirtualSpace(selection);
+            const auto start = static_cast<int>(editor->selectionNStart(selection)) + static_cast<int>(editor->selectionNStartVirtualSpace(selection));
+            const auto end = static_cast<int>(editor->selectionNEnd(selection)) + static_cast<int>(editor->selectionNEndVirtualSpace(selection));
 
             editor->setTargetRange(start, end);
             editor->replaceTarget(-1, f().toUtf8().constData());
@@ -101,8 +101,8 @@ void ColumnEditorDialog::insertTextStartingAtCurrentColumn(const std::function<Q
 
 void ColumnEditorDialog::insertTextAtColumn(ScintillaNext *editor, int line, int column, const QString &str)
 {
-    const int lineEndPosition = editor->lineEndPosition(line);
-    const int lineEndColumn = editor->column(lineEndPosition);
+    const auto lineEndPosition = static_cast<int>(editor->lineEndPosition(line));
+    const auto lineEndColumn = static_cast<int>(editor->column(lineEndPosition));
 
     // If the line does not end past the needed column, then use the left over as virtual space
     if (lineEndColumn < column) {
@@ -112,7 +112,7 @@ void ColumnEditorDialog::insertTextAtColumn(ScintillaNext *editor, int line, int
         editor->setTargetEndVirtualSpace(column - lineEndColumn);
     }
     else {
-        const int pos = editor->findColumn(line, column);
+        const auto pos = static_cast<int>(editor->findColumn(line, column));
 
         editor->setTargetRange(pos, pos);
     }

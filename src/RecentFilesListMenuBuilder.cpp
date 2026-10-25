@@ -52,6 +52,6 @@ void RecentFilesListMenuBuilder::recentFileActionTriggered()
 {
     qInfo(Q_FUNC_INFO);
 
-    const QAction *action = qobject_cast<const QAction *>(sender());
+    const auto *action = qobject_cast<const QAction *>(sender());
     emit fileOpenRequest(action->data().toString());
 }

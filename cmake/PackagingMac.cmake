@@ -1,5 +1,9 @@
 message(STATUS "Configuring macOS packaging")
 
+if(NOT TARGET NotepadNext)
+    return()
+endif()
+
 set(INSTALL_DIR ${CMAKE_BINARY_DIR}/install)
 
 # Custom Info.plist
@@ -57,14 +61,39 @@ else()
 endif()
 
 find_program(MACDEPLOYQT_EXECUTABLE macdeployqt REQUIRED)
+find_program(HDIUTIL_EXECUTABLE hdiutil REQUIRED)
+
+set(PRUNE_UNUSED_QT_FILES
+    COMMAND ${CMAKE_COMMAND} -E rm -rf
+        ${INSTALL_DIR}/NotepadNext.app/Contents/Frameworks/QtPdf.framework
+        ${INSTALL_DIR}/NotepadNext.app/Contents/Frameworks/QtQml.framework
+        ${INSTALL_DIR}/NotepadNext.app/Contents/Frameworks/QtQmlMeta.framework
+        ${INSTALL_DIR}/NotepadNext.app/Contents/Frameworks/QtQmlModels.framework
+        ${INSTALL_DIR}/NotepadNext.app/Contents/Frameworks/QtQmlWorkerScript.framework
+        ${INSTALL_DIR}/NotepadNext.app/Contents/Frameworks/QtQuick.framework
+        ${INSTALL_DIR}/NotepadNext.app/Contents/Frameworks/QtVirtualKeyboard.framework
+        ${INSTALL_DIR}/NotepadNext.app/Contents/Frameworks/QtVirtualKeyboardQml.framework
+        ${INSTALL_DIR}/NotepadNext.app/Contents/Frameworks/QtOpenGL.framework
+        ${INSTALL_DIR}/NotepadNext.app/Contents/PlugIns/platforminputcontexts
+        ${INSTALL_DIR}/NotepadNext.app/Contents/PlugIns/imageformats/libqpdf.dylib
+        ${INSTALL_DIR}/NotepadNext.app/Contents/PlugIns/imageformats/libqtiff.dylib
+        ${INSTALL_DIR}/NotepadNext.app/Contents/PlugIns/imageformats/libqwebp.dylib
+        ${INSTALL_DIR}/NotepadNext.app/Contents/PlugIns/imageformats/libqmacheif.dylib
+        ${INSTALL_DIR}/NotepadNext.app/Contents/PlugIns/imageformats/libqmacjp2.dylib
+        ${INSTALL_DIR}/NotepadNext.app/Contents/PlugIns/imageformats/libqtga.dylib
+        ${INSTALL_DIR}/NotepadNext.app/Contents/PlugIns/imageformats/libqwbmp.dylib
+        ${INSTALL_DIR}/NotepadNext.app/Contents/PlugIns/imageformats/libqicns.dylib
+)
 
 if(MAC_DMG_LEGACY_NAME)
     add_custom_target(dmg
         COMMAND ${MACDEPLOYQT_EXECUTABLE}
             ${INSTALL_DIR}/NotepadNext.app
-            -dmg
-        COMMAND ${CMAKE_COMMAND} -E rename
-            ${INSTALL_DIR}/NotepadNext.dmg
+        ${PRUNE_UNUSED_QT_FILES}
+        COMMAND ${HDIUTIL_EXECUTABLE} create
+            -volname "NotepadNext"
+            -srcfolder ${INSTALL_DIR}/NotepadNext.app
+            -ov -format UDBZ
             ${CMAKE_BINARY_DIR}/${MAC_DMG_NAME}
         COMMAND ${CMAKE_COMMAND} -E copy
             ${CMAKE_BINARY_DIR}/${MAC_DMG_NAME}
@@ -75,9 +104,11 @@ else()
     add_custom_target(dmg
         COMMAND ${MACDEPLOYQT_EXECUTABLE}
             ${INSTALL_DIR}/NotepadNext.app
-            -dmg
-        COMMAND ${CMAKE_COMMAND} -E rename
-            ${INSTALL_DIR}/NotepadNext.dmg
+        ${PRUNE_UNUSED_QT_FILES}
+        COMMAND ${HDIUTIL_EXECUTABLE} create
+            -volname "NotepadNext"
+            -srcfolder ${INSTALL_DIR}/NotepadNext.app
+            -ov -format UDBZ
             ${CMAKE_BINARY_DIR}/${MAC_DMG_NAME}
         DEPENDS install_local
     )

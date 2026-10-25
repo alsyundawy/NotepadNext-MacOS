@@ -161,7 +161,7 @@ void EditorManager::setupDecoratorSettingsConnections()
 {
     connect(settings, &ApplicationSettings::urlHighlightingChanged, this, [this](bool b){
         for (const auto &editor : getEditors()) {
-            URLFinder *decorator = editor->findChild<URLFinder *>(QString(), Qt::FindDirectChildrenOnly);
+            auto *decorator = editor->findChild<URLFinder *>(QString(), Qt::FindDirectChildrenOnly);
             if (decorator) {
                 decorator->setEnabled(b);
             }
@@ -170,7 +170,7 @@ void EditorManager::setupDecoratorSettingsConnections()
 
     connect(settings, &ApplicationSettings::showLineNumbersChanged, this, [this](bool b){
         for (const auto &editor : getEditors()) {
-            LineNumbers *decorator = editor->findChild<LineNumbers *>(QString(), Qt::FindDirectChildrenOnly);
+            auto *decorator = editor->findChild<LineNumbers *>(QString(), Qt::FindDirectChildrenOnly);
             if (decorator) {
                 decorator->setEnabled(b);
             }
@@ -179,11 +179,12 @@ void EditorManager::setupDecoratorSettingsConnections()
 
     connect(settings, &ApplicationSettings::autoCompletionChanged, this, [this](bool b){
         for (const auto &editor : getEditors()) {
-            AutoCompletion *decorator = editor->findChild<AutoCompletion *>(QString(), Qt::FindDirectChildrenOnly);
+            auto *decorator = editor->findChild<AutoCompletion *>(QString(), Qt::FindDirectChildrenOnly);
             if (decorator) {
                 decorator->setEnabled(b);
-                if (!b && editor->autoCActive())
+                if (!b && editor->autoCActive()) {
                     editor->autoCCancel();
+                }
             }
         }
     });
@@ -253,13 +254,13 @@ void EditorManager::manageEditor(ScintillaNext *editor)
 // Qt::AltModifier (SCMOD_ALT).
 static void setupMacOsKeys(ScintillaNext *editor)
 {
-    constexpr int Cmd = SCMOD_CTRL;
-    constexpr int Opt = SCMOD_ALT;
-    constexpr int Shift = SCMOD_SHIFT;
+    constexpr auto Cmd = static_cast<unsigned int>(SCMOD_CTRL);
+    constexpr auto Opt = static_cast<unsigned int>(SCMOD_ALT);
+    constexpr auto Shift = static_cast<unsigned int>(SCMOD_SHIFT);
 
     struct KeyBinding {
         int key;
-        int modifiers;
+        unsigned int modifiers;
         int message;
     };
 
@@ -297,7 +298,7 @@ static void setupMacOsKeys(ScintillaNext *editor)
     };
 
     for (const KeyBinding &binding : bindings) {
-        editor->assignCmdKey(binding.key + (binding.modifiers << 16), binding.message);
+        editor->assignCmdKey(binding.key + static_cast<int>(binding.modifiers << 16U), binding.message);
     }
 }
 #endif
@@ -332,7 +333,7 @@ void EditorManager::setupEditor(ScintillaNext *editor) const
     editor->setMarginLeft(2);
 
     editor->setMarginWidthN(0, 30);
-    editor->setMarginMaskN(1, (1<<MARK_HIDELINESBEGIN) | (1<<MARK_HIDELINESEND) | (1<<MARK_HIDELINESUNDERLINE));
+    editor->setMarginMaskN(1, static_cast<int>((1U << static_cast<unsigned int>(MARK_HIDELINESBEGIN)) | (1U << static_cast<unsigned int>(MARK_HIDELINESEND)) | (1U << static_cast<unsigned int>(MARK_HIDELINESUNDERLINE))));
     editor->setMarginMaskN(2, SC_MASK_FOLDERS);
     editor->setMarginWidthN(2, 14);
 
@@ -382,7 +383,7 @@ void EditorManager::setupEditor(ScintillaNext *editor) const
     editor->setFoldMarginColour(true, 0xFFFFFF);
     editor->setFoldMarginHiColour(true, 0xE9E9E9);
 
-    editor->setAutomaticFold(SC_AUTOMATICFOLD_SHOW | SC_AUTOMATICFOLD_CLICK | SC_AUTOMATICFOLD_CHANGE);
+    editor->setAutomaticFold(static_cast<int>(static_cast<unsigned int>(SC_AUTOMATICFOLD_SHOW) | static_cast<unsigned int>(SC_AUTOMATICFOLD_CLICK) | static_cast<unsigned int>(SC_AUTOMATICFOLD_CHANGE)));
     editor->markerEnableHighlight(true);
 
     editor->setCharsDefault();
@@ -423,10 +424,11 @@ void EditorManager::setupEditor(ScintillaNext *editor) const
         if (!settings->defaultEOLMode().isEmpty()) {
             const int eol = ScintillaNext::stringToEolMode(settings->defaultEOLMode().toLower());
 
-            if (eol != -1)
+            if (eol != -1) {
                 editor->setEOLMode(eol);
-            else
+            } else {
                 qWarning("Unexpected DefaultEOLMode: %s", qUtf8Printable(settings->defaultEOLMode()));
+            }
         }
         // else it will just stay whatever EOL mode it was when it was created
     }
@@ -474,8 +476,9 @@ void EditorManager::purgeOldEditorPointers()
 
     while (it.hasNext()) {
         QPointer<ScintillaNext> pointer = it.next();
-        if (pointer.isNull())
+        if (pointer.isNull()) {
             it.remove();
+        }
     }
 }
 
@@ -549,8 +552,11 @@ int EditorManager::detectEOLMode(const ScintillaNext *editor) const
         chNext = static_cast<int>(editor->charAt(i + 1));
 
         if (ch == '\r') {
-            if (chNext == '\n') crlf++;
-            else cr++;
+            if (chNext == '\n') {
+                crlf++;
+            } else {
+                cr++;
+            }
         }
         else if (ch == '\n' && chPrev != '\r') {
             lf++;
@@ -559,9 +565,13 @@ int EditorManager::detectEOLMode(const ScintillaNext *editor) const
         chPrev = ch;
 
         // If any meet some minimum threshold then just declare victory
-        if (crlf == MIN_LINE_THRESHOLD) return SC_EOL_CRLF;
-        else if (cr == MIN_LINE_THRESHOLD) return SC_EOL_CR;
-        else if (lf == MIN_LINE_THRESHOLD) return SC_EOL_LF;
+        if (crlf == MIN_LINE_THRESHOLD) {
+            return SC_EOL_CRLF;
+        } else if (cr == MIN_LINE_THRESHOLD) {
+            return SC_EOL_CR;
+        } else if (lf == MIN_LINE_THRESHOLD) {
+            return SC_EOL_LF;
+        }
     }
 
     // There are either no lines or only a few, so make a best effort determination

@@ -31,10 +31,11 @@ QVariant MacroStepTableModel::headerData(int section, Qt::Orientation orientatio
 {
     if (role == Qt::DisplayRole) {
         if (orientation == Qt::Horizontal) {
-            if (section == 0)
+            if (section == 0) {
                 return tr("Name");
-            else if (section == 1)
+            } else if (section == 1) {
                 return tr("Text");
+            }
         }
     }
 
@@ -43,7 +44,7 @@ QVariant MacroStepTableModel::headerData(int section, Qt::Orientation orientatio
 
 int MacroStepTableModel::rowCount(const QModelIndex &parent) const
 {
-    return parent.isValid() ? 0 : macro->getSteps().size();
+    return parent.isValid() ? 0 : static_cast<int>(macro->getSteps().size());
 }
 
 int MacroStepTableModel::columnCount(const QModelIndex &parent) const
@@ -53,8 +54,9 @@ int MacroStepTableModel::columnCount(const QModelIndex &parent) const
 
 QVariant MacroStepTableModel::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid())
+    if (!index.isValid()) {
         return QVariant();
+    }
 
     if (role == Qt::DisplayRole || role == Qt::EditRole || role == Qt::ToolTipRole) {
         switch (index.column()) {
@@ -77,13 +79,14 @@ QVariant MacroStepTableModel::data(const QModelIndex &index, int role) const
 
 bool MacroStepTableModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    if (!index.isValid())
+    if (!index.isValid()) {
         return false;
+    }
 
     if (role == Qt::EditRole) {
         switch (index.column()) {
             case 0: {
-                Scintilla::Message newMessage = static_cast<Scintilla::Message>(value.toInt());
+                const auto newMessage = static_cast<Scintilla::Message>(value.toInt());
                 MacroStep &m = macro->getSteps()[index.row()];
 
                 m.message = newMessage;
@@ -112,8 +115,9 @@ bool MacroStepTableModel::setData(const QModelIndex &index, const QVariant &valu
 
 bool MacroStepTableModel::insertRows(int row, int count, const QModelIndex &parent)
 {
-    if (count < 1 || row < 0 || row > rowCount(parent))
+    if (count < 1 || row < 0 || row > rowCount(parent)) {
         return false;
+    }
 
     beginInsertRows(QModelIndex(), row, row + count - 1);
 
@@ -152,8 +156,9 @@ bool MacroStepTableModel::moveRows(const QModelIndex &sourceParent, int sourceRo
             return false;
         }
 
-    if (!beginMoveRows(QModelIndex(), sourceRow, sourceRow + count - 1, QModelIndex(), destinationChild))
+    if (!beginMoveRows(QModelIndex(), sourceRow, sourceRow + count - 1, QModelIndex(), destinationChild)) {
         return false;
+    }
     /*
     QList::move assumes that the second argument is the index where the item will end up to
     i.e. the valid range for that argument is from 0 to QList::size()-1
@@ -166,8 +171,9 @@ bool MacroStepTableModel::moveRows(const QModelIndex &sourceParent, int sourceRo
     destinationChild--;
 
     const int fromRow = destinationChild < sourceRow ? (sourceRow + count - 1) : sourceRow;
-    while (count--)
+    while (count--) {
         macro->getSteps().move(fromRow, destinationChild);
+    }
 
     endMoveRows();
 
@@ -176,14 +182,12 @@ bool MacroStepTableModel::moveRows(const QModelIndex &sourceParent, int sourceRo
 
 Qt::ItemFlags MacroStepTableModel::flags(const QModelIndex &index) const
 {
-    if (!index.isValid())
+    if (!index.isValid()) {
         return Qt::NoItemFlags;
-
-    if (index.column() == 0) {
-        return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable;
     }
-    else if (index.column() == 1 && MacroStep::MessageHasString(macro->getSteps()[index.row()].message)) {
-        // The second column is only editable if the macro has a string associated with it
+
+    if (index.column() == 0 || (index.column() == 1 && MacroStep::MessageHasString(macro->getSteps()[index.row()].message))) {
+        // The first column or second column with string associated is editable
         return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable;
     }
     else {

@@ -23,15 +23,15 @@
 #include "ScintillaNext.h"
 
 
-static QList<QColor> marker_colors = {
+static QList<QColor> marker_colors = { // NOLINT(bugprone-throwing-static-initialization)
     QColor(0x00, 0xFF, 0xFF),
     QColor(0xFF, 0x80, 0x00),
     QColor(0xFF, 0xFF, 0x00)
 };
 
-static int QColorToScintillaColour(QColor c)
+static int QColorToScintillaColour(const QColor &c)
 {
-    return c.red() | (c.green() << 8) | (c.blue() << 16);
+    return static_cast<int>(static_cast<unsigned int>(c.red()) | (static_cast<unsigned int>(c.green()) << 8U) | (static_cast<unsigned int>(c.blue()) << 16U));
 }
 
 MarkerAppDecorator::MarkerAppDecorator(NotepadNextApplication *app)
@@ -57,16 +57,16 @@ QColor MarkerAppDecorator::markerColor(int i) const
 
 void MarkerAppDecorator::mark(ScintillaNext *editor, int i)
 {
-    int selectionStart = editor->selectionStart();
-    int selectionEnd = editor->selectionEnd();
+    int selectionStart = static_cast<int>(editor->selectionStart());
+    int selectionEnd = static_cast<int>(editor->selectionEnd());
     bool isWholeWord = false;
 
     // If there is no selection, get the word at the cursor, else use it verbatim
     if (selectionStart == selectionEnd) {
         isWholeWord = true;
-        const int curPos = editor->currentPos();
-        selectionStart = editor->wordStartPosition(curPos, true);
-        selectionEnd = editor->wordEndPosition(curPos, true);
+        const int curPos = static_cast<int>(editor->currentPos());
+        selectionStart = static_cast<int>(editor->wordStartPosition(curPos, true));
+        selectionEnd = static_cast<int>(editor->wordEndPosition(curPos, true));
 
         // If they are still in the same location, just abort
         if (selectionStart == selectionEnd) {
@@ -96,7 +96,7 @@ void MarkerAppDecorator::clear(ScintillaNext *editor, int i)
 {
     int indicator = editor->allocateIndicator(QString("marker_%1").arg(i));
     editor->setIndicatorCurrent(indicator);
-    editor->indicatorClearRange(0, editor->length());
+    editor->indicatorClearRange(0, static_cast<int>(editor->length()));
 }
 
 void MarkerAppDecorator::clearAll(ScintillaNext *editor)

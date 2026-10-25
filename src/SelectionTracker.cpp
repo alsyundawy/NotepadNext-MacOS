@@ -34,8 +34,8 @@ SelectionTracker::~SelectionTracker()
 
 void SelectionTracker::saveSelection()
 {
-    caret = editor->selectionNCaret(editor->mainSelection());
-    anchor = editor->selectionNAnchor(editor->mainSelection());
+    caret = static_cast<int>(editor->selectionNCaret(editor->mainSelection()));
+    anchor = static_cast<int>(editor->selectionNAnchor(editor->mainSelection()));
 }
 
 void SelectionTracker::restoreSelection()
@@ -43,7 +43,7 @@ void SelectionTracker::restoreSelection()
     editor->setSelection(caret, anchor);
 }
 
-void SelectionTracker::trackInsertion(int pos, int length)
+void SelectionTracker::trackInsertion(int pos, int length) // NOLINT(bugprone-easily-swappable-parameters)
 {
     if (caret >= pos) {
         caret += length;

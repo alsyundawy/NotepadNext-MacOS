@@ -37,7 +37,7 @@ bool SurroundSelection::eventFilter(QObject *obj, QEvent *event)
     Q_UNUSED(obj)
 
     if (event->type() == QEvent::KeyPress) {
-        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+        auto *keyEvent = static_cast<QKeyEvent *>(event);
         if (editor->selectionEmpty() == false) {
             switch (keyEvent->key()) {
             case Qt::Key_Apostrophe:
@@ -61,6 +61,8 @@ bool SurroundSelection::eventFilter(QObject *obj, QEvent *event)
             case Qt::Key_BracketRight:
                 surroundSelections('[', ']');
                 return true;
+            default:
+                break;
             }
         }
     }
@@ -78,13 +80,14 @@ void SurroundSelection::surroundSelections(const char ch1, const char ch2)
 {
     std::vector<std::pair<int, int>> selections;
 
-    int num = editor->selections();
+    const auto num = static_cast<int>(editor->selections());
     for (int i = 0; i < num; ++i) {
-        int start = editor->selectionNStart(i);
-        int end = editor->selectionNEnd(i);
+        const auto start = static_cast<int>(editor->selectionNStart(i));
+        const auto end = static_cast<int>(editor->selectionNEnd(i));
 
-        if (start != end /* && editor.LineFromPosition(start) == editor.LineFromPosition(end) */)
+        if (start != end /* && editor.LineFromPosition(start) == editor.LineFromPosition(end) */) {
             selections.push_back(std::make_pair(start, end));
+        }
     }
 
     // Sort so they are replaced top to bottom
@@ -104,13 +107,14 @@ void SurroundSelection::surroundSelections(const char ch1, const char ch2)
         target.push_front(ch1);
         target.push_back(ch2);
 
-        editor->replaceTarget(target.length(), target.data());
+        editor->replaceTarget(static_cast<int>(target.length()), target.data());
 
         // leave cursor at end of insertion
-        if (i == 0)
+        if (i == 0) {
             editor->setSelection(selection.second + offset + 1, selection.first + offset + 1);
-        else
+        } else {
             editor->addSelection(selection.second + offset + 1, selection.first + offset + 1);
+        }
 
         offset += 2; // Add 2 since the replaced string is 2 chars longer
     }

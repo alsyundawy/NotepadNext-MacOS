@@ -34,8 +34,9 @@ void ScintillaSorter::sort(const Sorter &sorter)
     const QByteArray text = readEditorText(range);
     QVector<QByteArrayView> lines = ByteArrayUtils::split(text, eol);
 
-    if (lines.count() <= 1)
+    if (lines.count() <= 1) {
         return;
+    }
 
     sorter.sort(lines);
 
@@ -48,10 +49,10 @@ void ScintillaSorter::sort(const Sorter &sorter)
 QPair<int, int> ScintillaSorter::determineTargetRange() const
 {
     if (editor->selectionEmpty()) {
-        return {0, editor->length()};
+        return {0, static_cast<int>(editor->length())};
     } else {
-        const int start = editor->positionFromLine(editor->lineFromPosition(editor->selectionStart()));
-        const int end = editor->lineEndPosition(editor->lineFromPosition(editor->selectionEnd()));
+        const int start = static_cast<int>(editor->positionFromLine(editor->lineFromPosition(editor->selectionStart())));
+        const int end = static_cast<int>(editor->lineEndPosition(editor->lineFromPosition(editor->selectionEnd())));
         return {start, end};
     }
 }
@@ -61,7 +62,7 @@ const QByteArray ScintillaSorter::readEditorText(QPair<int, int> range)
     int len = range.second - range.first;
     sptr_t pointer = editor->rangePointer(range.first, len);
 
-    return QByteArray::fromRawData(reinterpret_cast<const char *>(pointer), len);
+    return QByteArray::fromRawData(reinterpret_cast<const char *>(pointer), len); // NOLINT(performance-no-int-to-ptr)
 }
 
 void ScintillaSorter::writeEditorText(const QByteArray &result, QPair<int, int> range)

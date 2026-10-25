@@ -27,7 +27,7 @@ Converter::Converter(ScintillaNext *editor) :
 
 void Converter::convert(QTextStream &stream)
 {
-    convertRange(stream, 0, editor->length());
+    convertRange(stream, 0, static_cast<int>(editor->length()));
 }
 
 void Converter::ensureDocumentStyled(int start, int end)

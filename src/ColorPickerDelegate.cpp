@@ -32,7 +32,7 @@ QWidget *ColorPickerDelegate::createEditor(QWidget *parent, const QStyleOptionVi
     Q_UNUSED(option)
     Q_UNUSED(index)
 
-    QColorDialog* colorDialog = new QColorDialog(parent);
+    auto *colorDialog = new QColorDialog(parent);
     colorDialog->setModal(true);
 
     return colorDialog;
@@ -40,15 +40,15 @@ QWidget *ColorPickerDelegate::createEditor(QWidget *parent, const QStyleOptionVi
 
 void ColorPickerDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
 {
-    QColorDialog *colorDialog = static_cast<QColorDialog*>(editor);
-    const QColor color = index.model()->data(index, Qt::DecorationRole).value<QColor>();
+    auto *colorDialog = static_cast<QColorDialog*>(editor);
+    const auto color = index.model()->data(index, Qt::DecorationRole).value<QColor>();
 
     colorDialog->setCurrentColor(color);
 }
 
 void ColorPickerDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
-    QColorDialog *colorDialog = static_cast<QColorDialog*>(editor);
+    auto *colorDialog = static_cast<QColorDialog*>(editor);
     QColor color = colorDialog->selectedColor();
 
     if (color.isValid()) {

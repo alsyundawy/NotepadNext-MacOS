@@ -39,11 +39,13 @@ QList<QUrl> FileDialogHelpers::getOpenFileUrls(QWidget *parent, const QString &c
     dialog.setOptions(options);
     dialog.setFileMode(QFileDialog::ExistingFiles);
 
-    if (selectedFilter && !selectedFilter->isEmpty())
+    if (selectedFilter && !selectedFilter->isEmpty()) {
         dialog.selectNameFilter(*selectedFilter);
+    }
     if (dialog.exec() == QDialog::Accepted) {
-        if (selectedFilter)
+        if (selectedFilter) {
             *selectedFilter = dialog.selectedNameFilter();
+        }
         return dialog.selectedUrls();
     }
     return QList<QUrl>();
@@ -57,10 +59,11 @@ QStringList FileDialogHelpers::getOpenFileNames(QWidget *parent, const QString &
 
     fileNames.reserve(selectedUrls.size());
     for (const QUrl &url : selectedUrls) {
-        if (url.isLocalFile() || url.isEmpty())
+        if (url.isLocalFile() || url.isEmpty()) {
             fileNames << url.toLocalFile();
-        else
+        } else {
             fileNames << url.toString();
+        }
     }
     return fileNames;
 }
@@ -74,11 +77,13 @@ QUrl FileDialogHelpers::getSaveFileUrl(QWidget *parent, const QString &caption, 
     dialog.setFilter(default_filters);
     dialog.setOptions(options);
 
-    if (selectedFilter && !selectedFilter->isEmpty())
+    if (selectedFilter && !selectedFilter->isEmpty()) {
         dialog.selectNameFilter(*selectedFilter);
+    }
     if (dialog.exec() == QDialog::Accepted) {
-        if (selectedFilter)
+        if (selectedFilter) {
             *selectedFilter = dialog.selectedNameFilter();
+        }
         return dialog.selectedUrls().value(0);
     }
     return QUrl();
@@ -88,8 +93,9 @@ QString FileDialogHelpers::getSaveFileName(QWidget *parent, const QString &capti
 {
     const QStringList schemes = QStringList(QStringLiteral("file"));
     const QUrl selectedUrl = getSaveFileUrl(parent, caption, dir, filter, selectedFilter, options, schemes);
-    if (selectedUrl.isLocalFile() || selectedUrl.isEmpty())
+    if (selectedUrl.isLocalFile() || selectedUrl.isEmpty()) {
         return selectedUrl.toLocalFile();
-    else
+    } else {
         return selectedUrl.toString();
+    }
 }

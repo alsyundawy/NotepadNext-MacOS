@@ -32,7 +32,7 @@ typename std::iterator_traits<Iter>::value_type const *binary_find(Iter begin, I
     }
     using ElementType = typename std::iterator_traits<Iter>::value_type;
     auto it = std::lower_bound(begin, end, name, [](const ElementType &lhs, const char *rhs) -> bool {
-        if (!lhs.name || !rhs) return false;
+        if (!lhs.name || !rhs) { return false; }
         return strcmp(lhs.name, rhs) < 0;
     });
 
@@ -62,7 +62,7 @@ const IFaceFunction *IFaceTable::FindFunctionByConstantName(const char *name) co
         // are mixed case, whereas the constants are all-caps.
 
         for (const auto &func : functions) {
-            if (!func.name) continue;
+            if (!func.name) { continue; }
             const char *nm = name + prefixLen;
             const char *fn = func.name;
             while (*nm && *fn && (*nm == toupper(static_cast<unsigned char>(*fn)))) {

@@ -5,7 +5,7 @@ Format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) a
 
 ---
 
-## [0.15-07] - 2026-10-25
+## [0.15-07] - 2026-10-26
 
 ### 🛡️ Security Hardening & 2025–2026 CVE Defenses / Pertahanan Keamanan & Mitigasi CVE 2025–2026
 
@@ -81,6 +81,27 @@ Format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) a
 - 🇮🇩 **Pembersihan Anotasi Ganda Inggris dalam Kurung**: Membersihkan artefak terjemahan lama yang mengandung istilah bahasa Inggris dalam kurung (misal `Po&tong (Cut)` -> `Po&tong`, `&Salin (Copy)` -> `&Salin`, `Ubah Nama (Rename)...` -> `Ganti Nama...`, `Read error (Gagal membaca file)` -> `Kesalahan membaca berkas`).
 - 🇬🇧 **Zero-Linter Defect Architecture**: Fixed `.clangd` configuration, excluded Qt translation `.ts` XML files from JavaScript/TypeScript language server parsers via `tsconfig.json` and `biome.json`, and eliminated all IDE warnings (`trunk check` passes 100% with 0 issues).
 - 🇮🇩 **Arsitektur Bebas Cacat Linter 100%**: Memperbaiki konfigurasi `.clangd`, mengecualikan berkas XML `.ts` translasi Qt dari parser bahasa JavaScript/TypeScript melalui `tsconfig.json` dan `biome.json`, serta mengeliminasi seluruh peringatan IDE (`trunk check` lolos 100% dengan 0 masalah).
+
+### 🧪 LLVM Clang-Tidy, Cppcheck & Zero-Defect Static Analysis Audit / Audit Analisis Statis LLVM Clang-Tidy, Cppcheck & Bebas-Cacat
+
+- 🇬🇧 **100% Clean Clang-Tidy, Cppcheck & Clangd Audit**: Passed comprehensive static analysis across all 88 translation units and header files with 0 errors and 0 warnings.
+- 🇮🇩 **Audit Clang-Tidy, Cppcheck & Clangd Bebas Cacat 100%**: Berhasil lolos verifikasi analisis statis komprehensif di seluruh 88 unit translasi dan file header tanpa peringatan maupun pesan kesalahan.
+- 🇬🇧 **Null-Pointer Dereference Bugfix in QuickFindWidget**: Added critical null guard `if (!editor) return;` in `QuickFindWidget::initializeEditorIndicator`, eliminating null pointer dereference during quick search initialization.
+- 🇮🇩 **Perbaikan Bug Null-Pointer Dereference pada QuickFindWidget**: Menambahkan proteksi defensif `if (!editor) return;` pada `QuickFindWidget::initializeEditorIndicator`, mengeliminasi potensi crash null pointer saat inisialisasi pencarian cepat.
+- 🇬🇧 **Modern Algorithm std::find_if Loop Modernization**: Replaced raw `for` loops in `NotepadNextApplication::activeMainWindow()` with modern C++ standard algorithm `std::find_if`, enhancing readability and branch efficiency.
+- 🇮🇩 **Modernisasi Loop dengan Algoritma Modern std::find_if**: Mengganti loop `for` konvensional pada `NotepadNextApplication::activeMainWindow()` menggunakan algoritma standar C++ `std::find_if`, meningkatkan keterbacaan kode dan efisiensi eksekusi cabang.
+- 🇬🇧 **Scintilla Template Compound Statement Bracing**: Fixed missing braces on single-line branch in `ScintillaNext.h:223` (`forEachMatchInRange`), eliminating compiler template warning propagation across translation units.
+- 🇮🇩 **Pemberian Kurung Kurawal Pernyataan Majemuk Templat Scintilla**: Memperbaiki kurung kurawal yang terlewat pada percabangan satu baris di `ScintillaNext.h:223` (`forEachMatchInRange`), mengeliminasi propagasi peringatan templat ke seluruh unit translasi.
+
+### 📦 macOS DMG Packaging Pipeline & Artifact Size Optimization (< 30MB) / Pengemasan DMG & Optimasi Ukuran macOS (< 30MB)
+
+- 🇬🇧 **Elimination of Qt Dynamic Module Bloat**: Enhanced `cmake/PackagingMac.cmake` to strip non-dependent frameworks (`QtPdf`, `QtQml`, `QtQuick`, `QtVirtualKeyboard`, `QtOpenGL`, `platforminputcontexts`, unneeded `imageformats`), reducing bundle size from 112 MB to ~65 MB.
+- 🇮🇩 **Eliminasi Bloat Modul Dinamis Qt**: Memperbarui `cmake/PackagingMac.cmake` untuk menghapus pustaka kerangka kerja dinamis yang tidak digunakan (`QtPdf`, `QtQml`, `QtQuick`, `QtVirtualKeyboard`, `QtOpenGL`, `platforminputcontexts`, `imageformats` yang tidak terpakai), memangkas ukuran bundle dari 112 MB menjadi ~65 MB.
+- 🇬🇧 **Native bzip2 DMG Compression (`hdiutil -format UDBZ`)**: Built ultra-compact release DMGs of ~28 MB (28,144,826 bytes), well beneath the strict 30 MB ceiling, while maintaining full Retina assets and native macOS integration.
+- 🇮🇩 **Kompresi DMG bzip2 Native (`hdiutil -format UDBZ`)**: Menghasilkan berkas distribusi rilis DMG ultra-ringkas berukuran ~28 MB (28.144.826 bita), jauh di bawah batas maksimal 30 MB, dengan tetap mempertahankan aset visual Retina dan integrasi native macOS penuh.
+- 🇬🇧 **CMake Packaging Target Guard**: Added `if(NOT TARGET NotepadNext) return() endif()` to prevent standalone analyzer evaluation errors.
+- 🇮🇩 **Proteksi Target CMake Packaging**: Menambahkan pengaman `if(NOT TARGET NotepadNext) return() endif()` guna mencegah kesalahan evaluasi penganalisis skrip saat diperiksa secara mandiri.
+
 
 ---
 

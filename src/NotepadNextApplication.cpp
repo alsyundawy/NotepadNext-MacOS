@@ -38,6 +38,7 @@
 #include "Lexilla.h"
 
 #include <QCommandLineParser>
+#include <algorithm>
 
 #include <QDirIterator>
 #include <QMap>
@@ -290,7 +291,7 @@ void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QStr
     LuaExtension::Instance().setEditor(editor);
 
     getLuaState()->setVariable("languageName", languageName);
-    const QString lexer = getLuaState()->executeAndReturn<QString>("return languages[languageName].lexer");
+    const auto lexer = getLuaState()->executeAndReturn<QString>("return languages[languageName].lexer");
 
     editor->languageName = languageName;
     editor->languageSingleLineComment = getLuaState()->executeAndReturn<QString>("return languages[languageName].singleLineComment or \"\"").toUtf8();
@@ -502,7 +503,7 @@ bool NotepadNextApplication::event(QEvent *e)
         qInfo("QEvent::Close received on NotepadNextApplication");
 
         const auto windowsCopy = m_windows;
-        for (auto mw : windowsCopy) {
+        for (const auto &mw : windowsCopy) {
             if (mw) {
                 mw->bringWindowToForeground();
                 if (!mw->close()) {
@@ -553,15 +554,18 @@ MainWindow *NotepadNextApplication::activeMainWindow() const
             return mw;
         }
     }
-    for (const auto &mw : m_windows) {
-        if (mw && mw->isActiveWindow()) {
-            return mw.data();
-        }
+    const auto activeIt = std::find_if(m_windows.cbegin(), m_windows.cend(), [](const auto &mw) {
+        return mw && mw->isActiveWindow();
+    });
+    if (activeIt != m_windows.cend()) {
+        return activeIt->data();
     }
-    for (const auto &mw : m_windows) {
-        if (mw) {
-            return mw.data();
-        }
+
+    const auto validIt = std::find_if(m_windows.cbegin(), m_windows.cend(), [](const auto &mw) {
+        return mw != nullptr;
+    });
+    if (validIt != m_windows.cend()) {
+        return validIt->data();
     }
     return nullptr;
 }

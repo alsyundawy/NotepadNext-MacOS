@@ -34,8 +34,8 @@
 class DockedEditorComponentsFactory : public ads::CDockComponentsFactory
 {
 public:
-    ads::CDockAreaTitleBar* createDockAreaTitleBar(ads::CDockAreaWidget* DockArea) const {
-        DockedEditorTitleBar *titleBar = new DockedEditorTitleBar(DockArea);
+    ads::CDockAreaTitleBar* createDockAreaTitleBar(ads::CDockAreaWidget* DockArea) const override {
+        auto *titleBar = new DockedEditorTitleBar(DockArea);
 
         // Disable the built in context menu for the title bar since it has options we don't want
         titleBar->setContextMenuPolicy(Qt::NoContextMenu);
@@ -72,7 +72,7 @@ DockedEditor::DockedEditor(QWidget *parent) : QObject(parent)
         Q_UNUSED(old)
 
         if (now) {
-            ScintillaNext *editor = qobject_cast<ScintillaNext *>(now->widget());
+            auto *editor = qobject_cast<ScintillaNext *>(now->widget());
             if (editor) {
                 currentEditor = editor;
                 latestDockArea = now->dockAreaWidget();
@@ -85,7 +85,7 @@ DockedEditor::DockedEditor(QWidget *parent) : QObject(parent)
         // When closing a tab or dock widget, 'now' is nullptr. Safely resolve the next active editor.
         ScintillaNext *fallbackEditor = nullptr;
         for (const ads::CDockAreaWidget* areaWidget : dockManager->openedDockAreas()) {
-            if (!areaWidget) continue;
+            if (!areaWidget) { continue; }
             if (ads::CDockWidget* currentDock = areaWidget->currentDockWidget()) {
                 fallbackEditor = qobject_cast<ScintillaNext *>(currentDock->widget());
                 if (fallbackEditor) {
@@ -102,7 +102,7 @@ DockedEditor::DockedEditor(QWidget *parent) : QObject(parent)
                     }
                 }
             }
-            if (fallbackEditor) break;
+            if (fallbackEditor) { break; }
         }
 
         currentEditor = fallbackEditor;
@@ -113,7 +113,7 @@ DockedEditor::DockedEditor(QWidget *parent) : QObject(parent)
     });
 
     connect(dockManager, &ads::CDockManager::dockAreaCreated, this, [=, this](ads::CDockAreaWidget* DockArea) {
-        DockedEditorTitleBar *titleBar = qobject_cast<DockedEditorTitleBar *>(DockArea->titleBar());
+        auto *titleBar = qobject_cast<DockedEditorTitleBar *>(DockArea->titleBar());
         connect(titleBar, &DockedEditorTitleBar::doubleClicked, this, &DockedEditor::titleBarDoubleClicked);
 
         connect(DockArea->titleBar()->tabBar(), &ads::CDockAreaTabBar::tabMoved, this, [=, this](int from, int to) {
@@ -138,15 +138,15 @@ ScintillaNext *DockedEditor::getCurrentEditor() const
     }
 
     for (const ads::CDockAreaWidget* areaWidget : dockManager->openedDockAreas()) {
-        if (!areaWidget) continue;
+        if (!areaWidget) { continue; }
         if (ads::CDockWidget* currentDock = areaWidget->currentDockWidget()) {
-            if (ScintillaNext *ed = qobject_cast<ScintillaNext *>(currentDock->widget())) {
+            if (auto *ed = qobject_cast<ScintillaNext *>(currentDock->widget())) {
                 return ed;
             }
         }
         for (const ads::CDockWidget* dockWidget : areaWidget->dockWidgets()) {
             if (dockWidget) {
-                if (ScintillaNext *ed = qobject_cast<ScintillaNext *>(dockWidget->widget())) {
+                if (auto *ed = qobject_cast<ScintillaNext *>(dockWidget->widget())) {
                     return ed;
                 }
             }
@@ -160,8 +160,9 @@ int DockedEditor::count() const
 {
     int total = 0;
 
-    for (int i = 0; i < dockManager->dockAreaCount(); ++i)
+    for (int i = 0; i < dockManager->dockAreaCount(); ++i) {
         total += dockManager->dockArea(i)->dockWidgetsCount();
+    }
 
     return total;
 }
@@ -182,9 +183,9 @@ QVector<ScintillaNext *> DockedEditor::editors() const
 
 void DockedEditor::switchToEditor(const ScintillaNext *editor)
 {
-    ads::CDockWidget *dockWidget = qobject_cast<ads::CDockWidget *>(editor->parentWidget());
+    auto *dockWidget = qobject_cast<ads::CDockWidget *>(editor->parentWidget());
 
-    if (dockWidget == Q_NULLPTR) {
+    if (dockWidget == nullptr) {
         qWarning() << "Expected editor's parent to be CDockWidget";
     }
     else {
@@ -194,11 +195,11 @@ void DockedEditor::switchToEditor(const ScintillaNext *editor)
 
 void DockedEditor::dockWidgetCloseRequested()
 {
-    ads::CDockWidget *dockWidget = qobject_cast<ads::CDockWidget *>(sender());
+    auto *dockWidget = qobject_cast<ads::CDockWidget *>(sender());
     if (!dockWidget) {
         return;
     }
-    ScintillaNext *editor = qobject_cast<ScintillaNext *>(dockWidget->widget());
+    auto *editor = qobject_cast<ScintillaNext *>(dockWidget->widget());
     if (editor) {
         emit editorCloseRequested(editor);
     }
@@ -290,7 +291,7 @@ void DockedEditor::editorRenamed(ScintillaNext *editor)
 {
     Q_ASSERT(editor != Q_NULLPTR);
 
-    ads::CDockWidget *dockWidget = qobject_cast<ads::CDockWidget *>(editor->parentWidget());
+    auto *dockWidget = qobject_cast<ads::CDockWidget *>(editor->parentWidget());
 
     dockWidget->setWindowTitle(editor->getName());
 
@@ -299,9 +300,9 @@ void DockedEditor::editorRenamed(ScintillaNext *editor)
 
 void DockedEditor::splitToRight(ScintillaNext *editor)
 {
-    if (!editor) return;
+    if (!editor) { return; }
 
-    ads::CDockWidget *newDockWidget = qobject_cast<ads::CDockWidget *>(editor->parentWidget());
+    auto *newDockWidget = qobject_cast<ads::CDockWidget *>(editor->parentWidget());
     if (newDockWidget) {
         ads::CDockAreaWidget *currentArea = currentDockArea();
         if (currentArea) {
@@ -312,9 +313,9 @@ void DockedEditor::splitToRight(ScintillaNext *editor)
 
 void DockedEditor::splitToBottom(ScintillaNext *editor)
 {
-    if (!editor) return;
+    if (!editor) { return; }
 
-    ads::CDockWidget *newDockWidget = qobject_cast<ads::CDockWidget *>(editor->parentWidget());
+    auto *newDockWidget = qobject_cast<ads::CDockWidget *>(editor->parentWidget());
     if (newDockWidget) {
         ads::CDockAreaWidget *currentArea = currentDockArea();
         if (currentArea) {

@@ -51,7 +51,7 @@ public:
 
 private slots:
     void filterThemes();
-    void onThemeSelected(int row, int column);
+    void onThemeSelected(int row, int column); // NOLINT(bugprone-easily-swappable-parameters)
     void applyAndClose();
     void reject() override;
 

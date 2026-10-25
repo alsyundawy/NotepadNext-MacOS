@@ -32,7 +32,7 @@ MacroRunDialog::MacroRunDialog(QWidget *parent, MacroManager *mm) :
     ui->setupUi(this);
 
     connect(ui->buttonRun, &QPushButton::clicked, this, [=, this]() {
-        Macro *selectedMacro = ui->comboBox->currentData().value<Macro*>();
+        auto *selectedMacro = ui->comboBox->currentData().value<Macro*>();
         int times = -1; // for end of file
 
         if (ui->radioExecute->isChecked()) {

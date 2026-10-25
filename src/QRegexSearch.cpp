@@ -66,18 +66,21 @@ Sci::Position QRegexSearch::FindText(Document *doc, Sci::Position minPos, Sci::P
     //qInfo("\tflags %d", flags);
 
     // No need to search an empty range
-    if (minPos == maxPos)
+    if (minPos == maxPos) {
         return -1;
+    }
 
     auto options = QRegularExpression::MultilineOption | QRegularExpression::UseUnicodePropertiesOption;
 
-    if (!FlagSet(flags, FindOption::MatchCase))
+    if (!FlagSet(flags, FindOption::MatchCase)) {
         options |= QRegularExpression::CaseInsensitiveOption;
+    }
 
     // TODO: does (*ANYCRLF) need prepended to the search string?
     QRegularExpression re(s, options);
-    if (!re.isValid())
+    if (!re.isValid()) {
         return -1; // Invalid regular expression
+    }
 
     // Get the bytes from the document. No need to go past maxPos bytes
     // Not actually sure if this copies the data or not
@@ -87,16 +90,17 @@ Sci::Position QRegexSearch::FindText(Document *doc, Sci::Position minPos, Sci::P
     // NOTE: QString uses UTF16 counts since QChars are 16 bits
     QRegularExpressionMatch m = re.match(utf8, 0, QRegularExpression::NormalMatch, QRegularExpression::NoMatchOption);
 
-    if (!m.hasMatch())
+    if (!m.hasMatch()) {
         return -1; // No match
+    }
 
-    match = m;
+    match = std::move(m);
 
     // NOTE: Returned started is the index into the QString which uses UTF16
-    const int positionStart = doc->GetRelativePositionUTF16(minPos, match.capturedStart(0));
+    const Sci::Position positionStart = doc->GetRelativePositionUTF16(minPos, match.capturedStart(0));
 
     // Now move ahead however many characters we matched. Again, based on UTF16 count
-    const int positionEnd = doc->GetRelativePositionUTF16(positionStart, match.capturedLength(0));
+    const Sci::Position positionEnd = doc->GetRelativePositionUTF16(positionStart, match.capturedLength(0));
 
     // The length is the number of bytes that was matched
     *length = positionEnd - positionStart;

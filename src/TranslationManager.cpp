@@ -78,7 +78,7 @@ void TranslationManager::loadSystemDefaultTranslation()
     loadTranslation(QLocale(QLocale::system().name()));
 }
 
-void TranslationManager::loadTranslation(QLocale locale)
+void TranslationManager::loadTranslation(const QLocale &locale)
 {
     qInfo(Q_FUNC_INFO);
 
@@ -96,7 +96,7 @@ void TranslationManager::loadTranslation(QLocale locale)
     }
 }
 
-void TranslationManager::loadTranslation(QString localeName)
+void TranslationManager::loadTranslation(const QString &localeName)
 {
     loadTranslation(QLocale(localeName));
 }

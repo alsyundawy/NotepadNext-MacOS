@@ -45,9 +45,9 @@ inline const QByteArray BOM_UTF16BE = QByteArray::fromHex("FEFF");
 ScintillaNext::BomType detectBom(const QByteArray& data)
 {
     using enum ScintillaNext::BomType;
-    if (data.startsWith(BOM_UTF8))    return Utf8;
-    if (data.startsWith(BOM_UTF16LE)) return Utf16LE;
-    if (data.startsWith(BOM_UTF16BE)) return Utf16BE;
+    if (data.startsWith(BOM_UTF8)) { return Utf8; }
+    if (data.startsWith(BOM_UTF16LE)) { return Utf16LE; }
+    if (data.startsWith(BOM_UTF16BE)) { return Utf16BE; }
 
     return None;
 }
@@ -67,9 +67,13 @@ QByteArray bomData(ScintillaNext::BomType bom)
 int bomLength(ScintillaNext::BomType bom)
 {
     using enum ScintillaNext::BomType;
-    if (bom == Utf8) return static_cast<int>(BOM_UTF8.length());
-    else if (bom == Utf16LE) return static_cast<int>(BOM_UTF16LE.length());
-    else if (bom == Utf16BE) return static_cast<int>(BOM_UTF16BE.length());
+    if (bom == Utf8) {
+        return static_cast<int>(BOM_UTF8.length());
+    } else if (bom == Utf16LE) {
+        return static_cast<int>(BOM_UTF16LE.length());
+    } else if (bom == Utf16BE) {
+        return static_cast<int>(BOM_UTF16BE.length());
+    }
 
     return 0;
 }
@@ -105,7 +109,7 @@ static bool isNewlineCharacter(char c)
 
 ScintillaNext::ScintillaNext(QString name, QWidget *parent) :
     ScintillaEdit(parent),
-    name(name),
+    name(std::move(name)),
     indicatorResources(INDICATOR_MAX + 1)
 {
     setCodePage(SC_CP_UTF8);
@@ -156,26 +160,28 @@ ScintillaNext *ScintillaNext::fromFile(const QString &filePath, bool tryToCreate
 
 QString ScintillaNext::eolModeToString(int eolMode)
 {
-    if (eolMode == SC_EOL_CRLF)
+    if (eolMode == SC_EOL_CRLF) {
         return QStringLiteral("crlf");
-    else if (eolMode == SC_EOL_CR)
+    } else if (eolMode == SC_EOL_CR) {
         return QStringLiteral("cr");
-    else if (eolMode == SC_EOL_LF)
+    } else if (eolMode == SC_EOL_LF) {
         return QStringLiteral("lf");
-    else
+    } else {
         return QString(); // unknown
+    }
 }
 
 int ScintillaNext::stringToEolMode(const QString &eolMode)
 {
-    if (eolMode == QStringLiteral("crlf"))
+    if (eolMode == QStringLiteral("crlf")) {
         return SC_EOL_CRLF;
-    else if (eolMode == QStringLiteral("cr"))
+    } else if (eolMode == QStringLiteral("cr")) {
         return SC_EOL_CR;
-    else if (eolMode == QStringLiteral("lf"))
+    } else if (eolMode == QStringLiteral("lf")) {
         return SC_EOL_LF;
-    else
+    } else {
         return -1;
+    }
 }
 
 int ScintillaNext::allocateIndicator(const QString &indicatorName)
@@ -201,9 +207,13 @@ QByteArray ScintillaNext::eolString() const
 {
     const auto eol = static_cast<int>(eOLMode());
 
-    if (eol == SC_EOL_LF) return QByteArrayLiteral("\n");
-    else if (eol == SC_EOL_CRLF) return QByteArrayLiteral("\r\n");
-    else return QByteArrayLiteral("\r");
+    if (eol == SC_EOL_LF) {
+        return QByteArrayLiteral("\n");
+    } else if (eol == SC_EOL_CRLF) {
+        return QByteArrayLiteral("\r\n");
+    } else {
+        return QByteArrayLiteral("\r");
+    }
 }
 
 bool ScintillaNext::lineIsEmpty(int line)
@@ -256,15 +266,15 @@ Sci_CharacterRange ScintillaNext::wordAtPosition(int pos)
     return { INVALID_POSITION, INVALID_POSITION };
 }
 
-void ScintillaNext::modifyFoldLevels(int level, int action)
+void ScintillaNext::modifyFoldLevels(int level, int action) // NOLINT(bugprone-easily-swappable-parameters)
 {
     const auto totalLines = static_cast<int>(lineCount());
 
     int line = 0;
     while (line < totalLines) {
-        const auto foldFlags = static_cast<int>(foldLevel(line)); // Even though its called fold level it contains several other flags
-        const bool isHeader = foldFlags & SC_FOLDLEVELHEADERFLAG;
-        const int actualLevel = (foldFlags & SC_FOLDLEVELNUMBERMASK) - SC_FOLDLEVELBASE;
+        const auto uFoldFlags = static_cast<unsigned int>(foldLevel(line)); // Even though its called fold level it contains several other flags
+        const bool isHeader = (uFoldFlags & static_cast<unsigned int>(SC_FOLDLEVELHEADERFLAG)) != 0U;
+        const int actualLevel = static_cast<int>(uFoldFlags & static_cast<unsigned int>(SC_FOLDLEVELNUMBERMASK)) - SC_FOLDLEVELBASE;
 
         if (isHeader && actualLevel == level) {
             foldLine(line, action);
@@ -370,8 +380,9 @@ void ScintillaNext::setFoldMarkers(const QString &type)
         {"box",    {SC_MARK_BOXMINUS, SC_MARK_BOXPLUS, SC_MARK_VLINE, SC_MARK_LCORNER, SC_MARK_BOXPLUSCONNECTED, SC_MARK_BOXMINUSCONNECTED, SC_MARK_TCORNER }},
     };
 
-    if (!map.contains(type))
+    if (!map.contains(type)) {
         return;
+    }
 
     const auto &types = map[type];
     markerDefine(SC_MARKNUM_FOLDEROPEN, types[0]);
@@ -447,8 +458,9 @@ void ScintillaNext::reload()
     setSavePoint();
 
     // If this was a temporary file, make sure it is not any more
-    if (isTemporary())
+    if (isTemporary()) {
         setTemporary(false);
+    }
 
     scrollVertical(line, 0);
     setSelection(caret, anchor);
@@ -719,7 +731,7 @@ void ScintillaNext::convertSpacesToTabs()
 }
 
 namespace {
-bool handleGraphemeDeletion(ScintillaNext *editor, QKeyEvent *keyEv, int key, Sci_Position pos, Sci_Position lineStart, Sci_Position lineEnd)
+bool handleGraphemeDeletion(ScintillaNext *editor, QKeyEvent *keyEv, int key, Sci_Position pos, Sci_Position lineStart, Sci_Position lineEnd) // NOLINT(bugprone-easily-swappable-parameters)
 {
     if (key == Qt::Key_Backspace && pos > lineStart) {
         const Sci_Position checkStart = std::max<Sci_Position>(lineStart, pos - 64);
@@ -766,7 +778,7 @@ bool handleGraphemeDeletion(ScintillaNext *editor, QKeyEvent *keyEv, int key, Sc
 
 void ScintillaNext::keyPressEvent(QKeyEvent *keyEv)
 {
-    if (!keyEv) return;
+    if (!keyEv) { return; }
 
     const int key = keyEv->key();
     if (const Qt::KeyboardModifiers mods = keyEv->modifiers();
@@ -847,7 +859,7 @@ bool ScintillaNext::readFromDisk(QFile &file, const QString &forcedEncoding)
         bytesRead = file.read(chunk.data(), CHUNK_SIZE);
         chunk.resize(bytesRead);
 
-        if (bytesRead <= 0) break;
+        if (bytesRead <= 0) { break; }
 
         int offset = 0;
         if (first_read) {
@@ -942,7 +954,7 @@ bool ScintillaNext::reloadWithEncoding(const QString &newEncoding)
     }
 
     QFile file(fileInfo.filePath());
-    if (!file.exists()) return false;
+    if (!file.exists()) { return false; }
 
     clearAll();
     return readFromDisk(file, newEncoding);
@@ -963,7 +975,7 @@ QString formatHexDump(const QByteArray &bytes)
             } else {
                 hexDump += QStringLiteral("   ");
             }
-            if (j == 7) hexDump += QStringLiteral(" ");
+            if (j == 7) { hexDump += QStringLiteral(" "); }
         }
         hexDump += QStringLiteral(" |");
         for (qsizetype j = 0; j < chunkSize; ++j) {

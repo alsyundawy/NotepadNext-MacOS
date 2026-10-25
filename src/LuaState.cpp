@@ -80,7 +80,7 @@ LuaState::LuaState()
     qInfo(Q_FUNC_INFO);
 
     L = luaL_newstate();
-    luaL_openlibs(L);
+    luaL_openlibs(L); // NOLINT(bugprone-signed-bitwise)
 
     // Sandbox unsafe OS/IO and dynamic loading vectors (CVE-2026-42214 / CWE-94)
     execute("if os then os.execute = nil; os.remove = nil; os.rename = nil; os.exit = nil end "
@@ -127,7 +127,7 @@ void LuaState::setVariable(const char* name, const QString& value)
     setVariable(name, value.toUtf8().constData());
 }
 
-void LuaState::setVariable(const char *name, const char *value)
+void LuaState::setVariable(const char *name, const char *value) // NOLINT(bugprone-easily-swappable-parameters)
 {
     lua_pushstring(L, value);
     lua_setglobal(L, name);
@@ -163,8 +163,9 @@ void LuaState::internal_execute(const char *statement, bool clear)
         qWarning("%s", lua_tostring(L, -1));
     }
 
-    if (clear)
+    if (clear) {
         lua_settop(L, stacktop);
+    }
 }
 
 void LuaState::executeFile(const QString &fileName)

@@ -33,14 +33,14 @@ BookMarkDecorator::BookMarkDecorator(ScintillaNext *editor) :
     editor->markerSetBack(MARK_BOOKMARK, 0xFF2020);
 
     const int mask = editor->marginMaskN(MARGIN);
-    editor->setMarginMaskN(MARGIN, (1 << MARK_BOOKMARK) | mask);
+    editor->setMarginMaskN(MARGIN, static_cast<int>(1U << static_cast<unsigned int>(MARK_BOOKMARK)) | mask);
 
     editor->setMarginSensitiveN(MARGIN, true);
 }
 
 bool BookMarkDecorator::isBookmarkSet(int line) const
 {
-    return editor->markerGet(line) & (1 << MARK_BOOKMARK);
+    return (static_cast<unsigned int>(editor->markerGet(line)) & (1U << static_cast<unsigned int>(MARK_BOOKMARK))) != 0U;
 }
 
 void BookMarkDecorator::addBookmark(int line)
@@ -68,10 +68,10 @@ void BookMarkDecorator::toggleBookmark(int line)
 
 int BookMarkDecorator::nextBookmarkAfter(int line)
 {
-    int nextMarkedLine = editor->markerNext(line, 1 << MARK_BOOKMARK);
+    int nextMarkedLine = static_cast<int>(editor->markerNext(line, 1U << static_cast<unsigned int>(MARK_BOOKMARK)));
 
     if (nextMarkedLine == -1) {
-        return editor->markerNext(0, 1 << MARK_BOOKMARK);
+        return static_cast<int>(editor->markerNext(0, 1U << static_cast<unsigned int>(MARK_BOOKMARK)));
     }
     else {
         return nextMarkedLine;
@@ -80,10 +80,10 @@ int BookMarkDecorator::nextBookmarkAfter(int line)
 
 int BookMarkDecorator::previousBookMarkBefore(int line)
 {
-    int prevMarkedLine = editor->markerPrevious(line, 1 << MARK_BOOKMARK);
+    int prevMarkedLine = static_cast<int>(editor->markerPrevious(line, 1U << static_cast<unsigned int>(MARK_BOOKMARK)));
 
     if (prevMarkedLine == -1) {
-        return editor->markerPrevious(editor->lineCount(), 1 << MARK_BOOKMARK);
+        return static_cast<int>(editor->markerPrevious(editor->lineCount(), 1U << static_cast<unsigned int>(MARK_BOOKMARK)));
     }
     else {
         return prevMarkedLine;
@@ -101,7 +101,7 @@ QList<int> BookMarkDecorator::bookMarkedLines() const
 
     int line = 0;
     forever {
-        line = editor->markerNext(line, 1 << MARK_BOOKMARK);
+        line = static_cast<int>(editor->markerNext(line, 1U << static_cast<unsigned int>(MARK_BOOKMARK)));
 
         if (line != -1) {
             bookMarkedLines.append(line);
@@ -151,13 +151,13 @@ void BookMarkDecorator::deleteBookMarkedLines()
 
     forever {
         // Since every time a bookmark is found it is deleted, the search can restart from the beginning again to find the next bookmark
-        const int line = editor->markerNext(0, 1 << MARK_BOOKMARK);
+        const int line = static_cast<int>(editor->markerNext(0, 1U << static_cast<unsigned int>(MARK_BOOKMARK)));
 
         if (line != -1) {
             removeBookmark(line);
 
-            const int lineStart = editor->positionFromLine(line);
-            const int lineLength = editor->lineLength(line);
+            const int lineStart = static_cast<int>(editor->positionFromLine(line));
+            const int lineLength = static_cast<int>(editor->lineLength(line));
             editor->deleteRange(lineStart, lineLength);
         }
         else {
@@ -170,7 +170,7 @@ void BookMarkDecorator::notify(const Scintilla::NotificationData *pscn)
 {
     if (pscn->nmhdr.code == Scintilla::Notification::MarginClick) {
         if (pscn->margin == MARGIN) {
-            int line = editor->lineFromPosition(pscn->position);
+            int line = static_cast<int>(editor->lineFromPosition(pscn->position));
             toggleBookmark(line);
         }
     }

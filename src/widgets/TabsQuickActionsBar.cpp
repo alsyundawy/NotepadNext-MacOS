@@ -58,7 +58,9 @@ TabsQuickActionsBar::TabsQuickActionsBar(const Buttons &visibileButtons, QWidget
 
     // Trick, cause addWidget will lose some style things
     const auto toolButton = qobject_cast<QToolButton*>(widgetForAction(showTabsMenuAction));
-    if (toolButton) toolButton->setPopupMode(QToolButton::InstantPopup);
+    if (toolButton) {
+        toolButton->setPopupMode(QToolButton::InstantPopup);
+    }
 
     connect(createNewTabAction, &QAction::triggered, this, &TabsQuickActionsBar::createNewTabClicked);
     connect(tabsMenu, &QMenu::aboutToShow, this, [this, tabsMenu]() { emit tabsMenuAboutToShow(tabsMenu); });
@@ -69,8 +71,9 @@ TabsQuickActionsBar::TabsQuickActionsBar(const Buttons &visibileButtons, QWidget
 
 void TabsQuickActionsBar::setVisibileButtons(const Buttons &buttons)
 {
-    if (visibileButtons == buttons)
+    if (visibileButtons == buttons) {
         return;
+    }
 
     visibileButtons = buttons;
 
@@ -80,8 +83,9 @@ void TabsQuickActionsBar::setVisibileButtons(const Buttons &buttons)
         { closeCurrentTabAction, CloseCurrentTab }
     };
 
-    for (const auto &pair : mapping)
+    for (const auto &pair : mapping) {
         pair.first->setVisible(buttons.testFlag(pair.second));
+    }
 
     emit visibileButtonsChanged(buttons);
 }

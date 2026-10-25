@@ -34,7 +34,7 @@ QWidget *ComboBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewI
     Q_UNUSED(option)
     Q_UNUSED(index)
 
-    QComboBox *comboBox = new QComboBox(parent);
+    auto *comboBox = new QComboBox(parent);
 
     for(const ComboBoxItem &item : comboBoxItems) {
         comboBox->addItem(item.first, item.second);
@@ -46,14 +46,14 @@ QWidget *ComboBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewI
 void ComboBoxDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
 {
     QVariant value = index.model()->data(index, Qt::EditRole);
-    QComboBox *comboBox = static_cast<QComboBox*>(editor);
+    auto *comboBox = static_cast<QComboBox*>(editor);
 
     comboBox->setCurrentIndex(comboBox->findData(value));
 }
 
 void ComboBoxDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
-    QComboBox *comboBox = static_cast<QComboBox*>(editor);
+    auto *comboBox = static_cast<QComboBox*>(editor);
     QVariant value = comboBox->currentData();
 
     model->setData(index, value, Qt::EditRole);

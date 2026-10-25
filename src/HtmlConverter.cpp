@@ -26,9 +26,10 @@
 
 static QByteArray ScintillaColorToCssColor(int color)
 {
-    int r = color & 0xFF;
-    int g = (color >> 8) & 0xFF;
-    int b = (color >> 16) & 0xFF;
+    const auto uColor = static_cast<unsigned int>(color);
+    const int r = static_cast<int>(uColor & 0xFFU);
+    const int g = static_cast<int>((uColor >> 8U) & 0xFFU);
+    const int b = static_cast<int>((uColor >> 16U) & 0xFFU);
 
     return QStringLiteral("rgb(%1, %2, %3)").arg(r).arg(g).arg(b).toLatin1();
 }
@@ -38,17 +39,20 @@ static void StyleToCss(QTextStream &stream, ScintillaNext *editor, int style)
     stream << ".s" << style << " {" << Qt::endl;
     stream << "  font-family: '" << editor->styleFont(style) << "';" << Qt::endl;
     stream << "  font-size: " << editor->styleSize(style) << "pt;" << Qt::endl;
-    stream << "  color: " << ScintillaColorToCssColor(editor->styleFore(style)) << ";" << Qt::endl;
-    stream << "  background: " << ScintillaColorToCssColor(editor->styleBack(style)) << ";" << Qt::endl;
+    stream << "  color: " << ScintillaColorToCssColor(static_cast<int>(editor->styleFore(style))) << ";" << Qt::endl;
+    stream << "  background: " << ScintillaColorToCssColor(static_cast<int>(editor->styleBack(style))) << ";" << Qt::endl;
 
-    if (editor->styleBold(style))
+    if (editor->styleBold(style)) {
         stream << "  font-weight: bold;" << Qt::endl;
+    }
 
-    if (editor->styleItalic(style))
+    if (editor->styleItalic(style)) {
         stream << "  font-style: italic;" << Qt::endl;
+    }
 
-    if (editor->styleUnderline(style))
+    if (editor->styleUnderline(style)) {
         stream << "  text-decoration: underline;" << Qt::endl;
+    }
 
     stream << "}" << Qt::endl;
 }
@@ -81,7 +85,7 @@ void HtmlConverter::convertRange(QTextStream &stream, int start, int end)
     int currentStyle = -1;
 
     for (int i = start; i < end; ++i) {
-        int style = editor->styleAt(i);
+        int style = static_cast<int>(editor->styleAt(i));
 
         if (style != currentStyle) {
             currentStyle = style;
@@ -90,7 +94,7 @@ void HtmlConverter::convertRange(QTextStream &stream, int start, int end)
             html_stream << "</span><span class=\"s" << currentStyle << "\">";
         }
 
-        const int ch = editor->charAt(i);
+        const int ch = static_cast<int>(editor->charAt(i));
         if (ch == '\r'){
             if (editor->charAt(i + 1) != '\n') {
                 AddCharEscaped(html_stream, ch);

@@ -130,7 +130,7 @@ void SearchResultsDock::newFileEntry(ScintillaNext *editor)
 
 void SearchResultsDock::newResultsEntry(const QString &line, int lineNumber, int startPositionFromBeginning, int endPositionFromBeginning, int hitCount)
 {
-    QTreeWidgetItem *item = new QTreeWidgetItem(currentFile);
+    auto *item = new QTreeWidgetItem(currentFile);
 
     // Scintilla internally references line numbers starting at 0, however it needs displayed starting at 1
     item->setText(0, QString::number(lineNumber + 1));
@@ -197,7 +197,7 @@ void SearchResultsDock::itemActivated(QTreeWidgetItem *item, int column)
     // Result entries have no children
     // Make sure the entry has a parent since search entries can have no children
     if (item->childCount() == 0 && item->parent() != Q_NULLPTR) {
-        QPointer<ScintillaNext> editor = item->parent()->data(0, Qt::UserRole).value<QPointer<ScintillaNext>>();
+        auto editor = item->parent()->data(0, Qt::UserRole).value<QPointer<ScintillaNext>>();
 
         // The editor may no longer exist
         if (editor) {

@@ -144,11 +144,11 @@ MacroStep::MacroStep(Message message, uptr_t wParam, sptr_t lParam) :
 {
     if (message == Message::ReplaceSel || message == Message::InsertText) {
         // wParam is 0 for replace, and position for insert
-        this->str = QByteArray(reinterpret_cast<const char*>(lParam));
+        this->str = QByteArray(reinterpret_cast<const char*>(lParam)); // NOLINT(performance-no-int-to-ptr)
     }
     else if (message == Message::AddText || message == Message::AppendText) {
         // wParam is length of text
-        this->str = QByteArray(reinterpret_cast<const char*>(lParam), wParam);
+        this->str = QByteArray(reinterpret_cast<const char*>(lParam), static_cast<qsizetype>(wParam)); // NOLINT(performance-no-int-to-ptr)
     }
     else {
         this->lParam = lParam;
@@ -223,10 +223,11 @@ QDataStream &operator<<(QDataStream& stream, const MacroStep &macroStep)
 
     stream << macroStep.message << static_cast<quint32>(macroStep.wParam);
 
-    if (MacroStep::MessageHasString(macroStep.message))
+    if (MacroStep::MessageHasString(macroStep.message)) {
         return stream << macroStep.str;
-    else
+    } else {
         return stream << static_cast<qint32>(macroStep.lParam);
+    }
 }
 
 QDataStream &operator>>(QDataStream& stream, MacroStep &macroStep)
@@ -239,9 +240,9 @@ QDataStream &operator>>(QDataStream& stream, MacroStep &macroStep)
     stream >> macroStep.message >> w;
     macroStep.wParam = static_cast<quint32>(w);
 
-    if (MacroStep::MessageHasString(macroStep.message))
+    if (MacroStep::MessageHasString(macroStep.message)) {
         return stream >> macroStep.str;
-    else {
+    } else {
         qint32 l;
         stream >> l;
         macroStep.lParam = static_cast<qint32>(l);

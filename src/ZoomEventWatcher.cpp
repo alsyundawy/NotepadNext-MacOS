@@ -55,7 +55,7 @@ ZoomEventWatcher::ZoomEventWatcher(QObject *parent)
 bool ZoomEventWatcher::eventFilter(QObject *obj, QEvent *event)
 {
     if (event->type() == QEvent::Wheel) {
-        const QWheelEvent *wheelEvent = static_cast<const QWheelEvent *>(event);
+        const auto *wheelEvent = static_cast<const QWheelEvent *>(event);
 
         if (!isWheelEventHorizontal(wheelEvent)) {
             if (QApplication::keyboardModifiers() & Qt::ControlModifier) {

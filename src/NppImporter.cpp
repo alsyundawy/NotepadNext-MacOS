@@ -28,8 +28,9 @@ constexpr int FONTSTYLE_BOLD = 1;
 constexpr int FONTSTYLE_ITALIC = 2;
 constexpr int FONTSTYLE_UNDERLINE = 4;
 
-static inline int color(int c) {
-    return (c & 0xFF0000) >> 16 | (c & 0x00FF00) | (c & 0x0000FF) << 16;
+static inline auto color(int c) -> int {
+    const auto uc = static_cast<unsigned int>(c); // NOLINT(bugprone-signed-bitwise)
+    return static_cast<int>((uc & 0xFF0000U) >> 16U | (uc & 0x00FF00U) | (uc & 0x0000FFU) << 16U); // NOLINT(bugprone-signed-bitwise)
 }
 
 const int LANG_INDEX_INSTR = 0;
@@ -42,13 +43,13 @@ const int LANG_INDEX_TYPE5 = 6;
 
 static int keywordClassToIndex(const QStringView keywordClass)
 {
-    if (keywordClass == QStringLiteral("instre1")) return LANG_INDEX_INSTR;
-    if (keywordClass == QStringLiteral("instre2")) return LANG_INDEX_INSTR2;
-    if (keywordClass == QStringLiteral("type1")) return LANG_INDEX_TYPE;
-    if (keywordClass == QStringLiteral("type2")) return LANG_INDEX_TYPE2;
-    if (keywordClass == QStringLiteral("type3")) return LANG_INDEX_TYPE3;
-    if (keywordClass == QStringLiteral("type4")) return LANG_INDEX_TYPE4;
-    if (keywordClass == QStringLiteral("type5")) return LANG_INDEX_TYPE5;
+    if (keywordClass == QStringLiteral("instre1")) { return LANG_INDEX_INSTR; }
+    if (keywordClass == QStringLiteral("instre2")) { return LANG_INDEX_INSTR2; }
+    if (keywordClass == QStringLiteral("type1")) { return LANG_INDEX_TYPE; }
+    if (keywordClass == QStringLiteral("type2")) { return LANG_INDEX_TYPE2; }
+    if (keywordClass == QStringLiteral("type3")) { return LANG_INDEX_TYPE3; }
+    if (keywordClass == QStringLiteral("type4")) { return LANG_INDEX_TYPE4; }
+    if (keywordClass == QStringLiteral("type5")) { return LANG_INDEX_TYPE5; }
     return -1; // Unrecognized keyword class
 }
 struct LanguageName {
@@ -58,7 +59,7 @@ struct LanguageName {
 };
 
 #define TEXT(x) x
-static const QMap<QString, LanguageName> langNamesToLexer = {
+static const QMap<QString, LanguageName> langNamesToLexer = { // NOLINT(bugprone-throwing-static-initialization)
     {TEXT("normal"),		{TEXT("Normal text"),		TEXT("Normal text file"),								SCLEX_NULL}},
     {TEXT("php"),			{TEXT("PHP"),				TEXT("PHP Hypertext Preprocessor file"),				SCLEX_HTML}},
     {TEXT("c"),				{TEXT("C"),					TEXT("C source file"),									SCLEX_CPP}},
@@ -144,7 +145,7 @@ static const QMap<QString, LanguageName> langNamesToLexer = {
     {TEXT("ext"),			{TEXT("External"),			TEXT("External"),										SCLEX_NULL}}
 };
 
-static const QMap<QString, QVector<int>> folderMarkers = {
+static const QMap<QString, QVector<int>> folderMarkers = { // NOLINT(bugprone-throwing-static-initialization)
     {"type", {SC_MARKNUM_FOLDEROPEN, SC_MARKNUM_FOLDER, SC_MARKNUM_FOLDERSUB, SC_MARKNUM_FOLDERTAIL, SC_MARKNUM_FOLDEREND,        SC_MARKNUM_FOLDEROPENMID,     SC_MARKNUM_FOLDERMIDTAIL}},
     {"simple", {SC_MARK_MINUS,         SC_MARK_PLUS,      SC_MARK_EMPTY,        SC_MARK_EMPTY,         SC_MARK_EMPTY,               SC_MARK_EMPTY,                SC_MARK_EMPTY}},
     {"arrow", {SC_MARK_ARROWDOWN,     SC_MARK_ARROW,     SC_MARK_EMPTY,        SC_MARK_EMPTY,         SC_MARK_EMPTY,               SC_MARK_EMPTY,                SC_MARK_EMPTY}},
@@ -334,9 +335,10 @@ void NppImporter::readGlobalStyles(QXmlStreamReader &xml)
             }
             if (attrs.hasAttribute("fontStyle") && attrs.value("fontStyle").length() > 0) {
                 int fontStyle = attrs.value("fontStyle").toInt();
-                editor->styleSetBold(styleID, fontStyle & FONTSTYLE_BOLD);
-                editor->styleSetItalic(styleID, fontStyle & FONTSTYLE_ITALIC);
-                editor->styleSetUnderline(styleID, fontStyle & FONTSTYLE_UNDERLINE);
+                const auto uFontStyle = static_cast<unsigned int>(fontStyle);
+                editor->styleSetBold(styleID, static_cast<int>(uFontStyle & static_cast<unsigned int>(FONTSTYLE_BOLD)));
+                editor->styleSetItalic(styleID, static_cast<int>(uFontStyle & static_cast<unsigned int>(FONTSTYLE_ITALIC)));
+                editor->styleSetUnderline(styleID, static_cast<int>(uFontStyle & static_cast<unsigned int>(FONTSTYLE_UNDERLINE)));
             }
             if (styleID == STYLE_DEFAULT) {
                 editor->styleClearAll();
@@ -402,7 +404,7 @@ void NppImporter::readGUIConfigs(QXmlStreamReader &xml)
                 editor->setViewEOL(true);
             }
             if (attrs.hasAttribute("folderMarkStyle")) {
-                editor->setAutomaticFold(SC_AUTOMATICFOLD_SHOW | SC_AUTOMATICFOLD_CLICK | SC_AUTOMATICFOLD_CHANGE);
+                editor->setAutomaticFold(static_cast<int>(static_cast<unsigned int>(SC_AUTOMATICFOLD_SHOW) | static_cast<unsigned int>(SC_AUTOMATICFOLD_CLICK) | static_cast<unsigned int>(SC_AUTOMATICFOLD_CHANGE)));
                 editor->markerEnableHighlight(true);
                 const auto markers = folderMarkers[attrs.value("folderMarkStyle").toString()];
                 const auto types = folderMarkers["type"];
