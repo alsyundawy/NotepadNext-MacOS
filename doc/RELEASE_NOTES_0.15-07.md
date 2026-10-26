@@ -108,12 +108,12 @@ Key innovations introduced in `0.15-07`:
 | **IME & Keyboard Usability**           | Syllable duplication on CJK; Alt conflicts               | **CJK IME Syllable Normalizer + Isolated Option/Alt Shortcuts**              | PR #1166 Hangul/Kanji fix; scoped `Alt` shortcuts allowing European keyboards to type `#`, `€`, `[`, `]`, `~`, `@` (`v0.15-06`).                                        |
 | **Tab Bar Geometry**                   | Tabs expand or shrink indefinitely                       | **Middle-Ellipsis Truncation (`elideMode`)**                                 | Filenames remain readable and tab bar geometry stays rock-solid even with 30+ open files (`v0.15-07`).                                                                  |
 | **System File Associations**           | Default macOS TextEdit bindings                          | **`NotepadNext-Default-Editor.sh` (470+ Extensions, 38 UTIs)**               | Full LaunchServices system integration, Gatekeeper unquarantine, sub-second cache rebuild (`v0.15-01`).                                                                 |
-| **Linux Default Editor Engine**        | None (manual file manager associations)                  | **`NotepadNext-Default-Editor-Linux.sh` (120+ MIME Types, Alternatives)**   | Freedesktop XDG MIME, update-alternatives/alternatives, and all DEs integration (`v0.15-07`).                                                                           |
+| **Linux Default Editor Engine**        | None (manual file manager associations)                  | **`NotepadNext-Default-Editor-Linux.sh` (120+ MIME Types, Alternatives)**    | Freedesktop XDG MIME, update-alternatives/alternatives, and all DEs integration (`v0.15-07`).                                                                           |
 | **App Branding & Packaging**           | Generic low-res raster icon                              | **macOS Squircle Retina ICNS + Universal 2 DMG Distribution**                | Emerald gradient squircle, 3D stylus, native ICNS (`1024x1024`), multi-arch Universal 2 DMG (`arm64` + `x86_64`) (`v0.15-04`).                                          |
 | **Localization & Linguistic Rigor**    | Fragmented, incomplete community translations            | **100% Complete Bahasa Indonesia & English (0 Unfinished)**                  | Strictly standardized per EYD V, PUEBI, PASTI Badan Bahasa, and Mozilla L10n; eliminated parenthetical artifacts (`v0.15-04` - `v0.15-07`).                             |
-| **Linux Packaging & CI/CD**            | Upstream AppImage script only                            | **Native CPack Debian (`.deb`) & RPM (`.rpm`) Packages**                    | Built-in CPack configuration in `cmake/PackagingLinux.cmake` supporting Ubuntu 22.04/24.04 and Fedora with GitHub Actions CI matrix (`v0.15-07`). |
+| **Linux Packaging & CI/CD**            | Upstream AppImage script only                            | **Native CPack Debian (`.deb`) & RPM (`.rpm`) Packages**                     | Built-in CPack configuration in `cmake/PackagingLinux.cmake` supporting Ubuntu 22.04/24.04 and Fedora with GitHub Actions CI matrix (`v0.15-07`).                       |
 | **Zoom Indicator UI**                  | Intrusive central screen-blocking OSD widget             | **Non-Intrusive Status Bar Zoom Message (`statusBar()->showMessage`)**       | Clean unobtrusive feedback in status bar; fixed macOS Qt 6 palette contrast bug in `FadingIndicator` (`v0.15-07`).                                                      |
-| **C++26 Modernization & Safety**       | Raw UI pointers subject to incomplete deletion warnings  | **`std::unique_ptr` UI Lifetime + C++20 `if constexpr` Enum Serialization**   | Zero compiler diagnostics in C++26 mode, automatic enum serialization in `ApplicationSettings` (`v0.15-07`).                                                              |
+| **C++26 Modernization & Safety**       | Raw UI pointers subject to incomplete deletion warnings  | **`std::unique_ptr` UI Lifetime + C++20 `if constexpr` Enum Serialization**  | Zero compiler diagnostics in C++26 mode, automatic enum serialization in `ApplicationSettings` (`v0.15-07`).                                                            |
 | **Static Verification & Clean Code**   | Basic CI checks                                          | **Zero-Defect 13-Pillar Audit (Trunk, Cppcheck, 36 SonarLint Fixes)**        | ISO 5055, OWASP Top 10, 100% clean across all 88 translation units without warnings (`v0.15-04` - `v0.15-07`).                                                          |
 
 ---
@@ -136,6 +136,7 @@ All 13 pillars of enterprise verification were executed and validated with empir
 ## 📦 Distribution Packages
 
 ### macOS Distribution (`.dmg`)
+
 - **Version**: `0.15-07`
 - **Architectures**: Universal 2 (`arm64` Apple Silicon + `x86_64` Intel 64-bit)
 - **Minimum OS Version**: macOS 11.0 (Big Sur) through macOS 15.0+ (Sequoia)
@@ -148,6 +149,7 @@ All 13 pillars of enterprise verification were executed and validated with empir
   - `NotepadNext-Default-Editor-Linux.sh` (Linux system integration script)
 
 ### Linux Distribution (`.deb` & `.rpm`)
+
 - **Version**: `0.15-07`
 - **Architectures**: `x86_64` / `amd64` and `aarch64` / `arm64`
 - **Supported Distributions**: Ubuntu 22.04 LTS / 24.04 LTS, Debian 12 / 13, Fedora 40 / 41 / 42, openSUSE, RHEL

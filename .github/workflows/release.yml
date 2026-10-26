@@ -387,4 +387,3 @@ jobs:
             echo "Uploading scripts/NotepadNext-Default-Editor-Linux.sh to release ${RELEASE_TAG}"
             gh release upload "${RELEASE_TAG}" "scripts/NotepadNext-Default-Editor-Linux.sh" --clobber
           fi
-

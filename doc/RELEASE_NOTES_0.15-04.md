@@ -2,7 +2,7 @@
 
 ## 🇮🇩 Bahasa Indonesia
 
-Rilis **v0.15-04** merupakan pembaruan arsitektural besar yang memodernisasi komponen inti editor (Scintilla 5.6.7, Lexilla 5.5.4, Lua 5.5.1), menambahkan mesin pendeteksi karakter encoding cerdas (`EncodingDetector` dengan `uchardet`), dukungan multi-jendela (*multi-instance New Window*), perancangan ulang dialog sesuai Apple Human Interface Guidelines (`AboutDialog` dan `SaveModifiedDialog`), penyelarasan Bundle ID ke `com.github.alsyundawy.NotepadNext`, set ikon Retina Squircle baru, serta audit mutu kode 13-pilar (MegaLinter & Trunk).
+Rilis **v0.15-04** merupakan pembaruan arsitektural besar yang memodernisasi komponen inti editor (Scintilla 5.6.7, Lexilla 5.5.4, Lua 5.5.1), menambahkan mesin pendeteksi karakter encoding cerdas (`EncodingDetector` dengan `uchardet`), dukungan multi-jendela (_multi-instance New Window_), perancangan ulang dialog sesuai Apple Human Interface Guidelines (`AboutDialog` dan `SaveModifiedDialog`), penyelarasan Bundle ID ke `com.github.alsyundawy.NotepadNext`, set ikon Retina Squircle baru, serta audit mutu kode 13-pilar (MegaLinter & Trunk).
 
 ### 🌟 Sorotan Pembaruan (Changelog dari 0.15-03 ke 0.15-04)
 
@@ -16,18 +16,18 @@ Rilis **v0.15-04** merupakan pembaruan arsitektural besar yang memodernisasi kom
 #### 2. 🔤 Mesin Deteksi & Konversi Encoding Komprehensif (`EncodingDetector`)
 
 - **Deteksi Cerdas Bertingkat**: Mengintegrasikan library `uchardet` untuk mendeteksi charset berkas secara otomatis (UTF-8, UTF-16, ISO-8859, Windows-1252, Shift-JIS, GB18030, dll.).
-- **Menu Encoding Baru**: Menyediakan opsi *Reopen with Encoding* dan *Convert to Encoding* langsung dari antarmuka editor.
+- **Menu Encoding Baru**: Menyediakan opsi _Reopen with Encoding_ dan _Convert to Encoding_ langsung dari antarmuka editor.
 - **Status Bar Interaktif**: Menampilkan label encoding aktif pada status bar yang dapat diklik untuk mengganti encoding secara instan.
 
 #### 3. 🪟 Dukungan Multi-Instance & Jendela Mandiri Baru (`Ctrl+Shift+N` / `open -n`)
 
-- **Jendela Terpisah Mandiri**: Menambahkan aksi *New Window* (`Ctrl+Shift+N` / `open -n`) yang meluncurkan instance proses terpisah untuk multitasking dokumen tanpa bercampur dalam satu tab bar.
+- **Jendela Terpisah Mandiri**: Menambahkan aksi _New Window_ (`Ctrl+Shift+N` / `open -n`) yang meluncurkan instance proses terpisah untuk multitasking dokumen tanpa bercampur dalam satu tab bar.
 - **Isolasi State & Berbagi Preferensi**: Setiap instance jendela berjalan independen dengan konfigurasi preferensi yang tersinkronisasi.
 
 #### 4. 🎨 Desain Ulang Dialog Antarmuka Apple HIG (`AboutDialog` & `SaveModifiedDialog`)
 
 - **Modern Adaptive `AboutDialog`**: Dialog Tentang modern 6 tab yang beradaptasi secara dinamis dengan palet sistem (Light/Dark mode) macOS, dilengkapi diagnostik sistem lengkap dan proteksi reentrancy.
-- **Modern `SaveModifiedDialog`**: Dialog konfirmasi simpan perubahan yang dirancang ulang dengan kartu detail dokumen, peringatan data loss visual, dan shortcut keyboard native macOS `Cmd+D` (*Don't Save*).
+- **Modern `SaveModifiedDialog`**: Dialog konfirmasi simpan perubahan yang dirancang ulang dengan kartu detail dokumen, peringatan data loss visual, dan shortcut keyboard native macOS `Cmd+D` (_Don't Save_).
 
 #### 5. 🏷️ Penyelarasan Bundle Identifier & Ikon Apple HIG Squircle
 
@@ -61,18 +61,18 @@ Release **v0.15-04** is a major architectural milestone delivering modernized co
 #### 2. 🔤 Comprehensive Character Encoding Architecture (`EncodingDetector`)
 
 - **Multi-Stage Statistical Detection**: Integrated `uchardet` library to automatically identify document charsets (UTF-8, UTF-16, ISO-8859, Windows-1252, Shift-JIS, GB18030, etc.).
-- **Dedicated Encoding Menu**: Offers *Reopen with Encoding* and *Convert to Encoding* directly from the menu bar.
+- **Dedicated Encoding Menu**: Offers _Reopen with Encoding_ and _Convert to Encoding_ directly from the menu bar.
 - **Interactive Status Bar**: Clickable status bar widget displaying the active document encoding with instant switcher presets.
 
 #### 3. 🪟 Native Multi-Instance Support (`Ctrl+Shift+N` / `open -n`)
 
-- **Independent Windows**: Added *New Window* (`Ctrl+Shift+N` / `open -n`) action allowing users to spawn standalone process instances for distraction-free multi-tasking.
+- **Independent Windows**: Added _New Window_ (`Ctrl+Shift+N` / `open -n`) action allowing users to spawn standalone process instances for distraction-free multi-tasking.
 - **State Isolation**: Each window instance runs with its own document tabs while seamlessly sharing user configuration.
 
 #### 4. 🎨 Apple HIG Modernized Dialogs (`AboutDialog` & `SaveModifiedDialog`)
 
 - **Adaptive `AboutDialog`**: 6-tab system-palette aware dialog with real-time light/dark theme adaptation, full diagnostic environment reporting, and reentrancy guards.
-- **Refined `SaveModifiedDialog`**: Clean macOS HIG unsaved changes dialog featuring document metadata cards, visual data-loss warnings, and standard macOS `Cmd+D` (*Don't Save*) shortcut.
+- **Refined `SaveModifiedDialog`**: Clean macOS HIG unsaved changes dialog featuring document metadata cards, visual data-loss warnings, and standard macOS `Cmd+D` (_Don't Save_) shortcut.
 
 #### 5. 🏷️ Bundle ID Standardization & Apple HIG Squircle Icon Set
 

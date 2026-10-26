@@ -19,15 +19,15 @@ Rilis **v0.15-06** merupakan pembaruan produksi unggulan yang membawa arsitektur
 - **PR #1153 (Dock Restoration Safety)**: Memeriksa `currentDockObjectNames()` sebelum memanggil `restoreWindowState()` guna mencegah crash SIGSEGV saat layout dock berbeda antarsi rilis, serta menginisialisasi geometri caret secara defensif (`setCurrentPos(0); setAnchor(0); chooseCaretX();`).
 - **PR #1165 & #1154 (Regex Engine Resilience)**: Mengeliminasi infinite loop pada `Finder::replaceAll()` ketika pola regex mencocokkan string panjang 0, serta menulis ulang `QRegexSearch::SubstituteByPosition()` untuk mendukung ekspansi grup penangkap `\0` hingga `\9` dan karakter escape (`\n`, `\r`, `\t`, `\\`).
 - **PR #1122 (Real-Time File Watcher)**: Menambahkan `QFileSystemWatcher` dengan mekanisme debounce 250ms pada `EditorManager`, memicu sinyal `editorFileChangedOnDisk` dengan dialog prompt konfirmasi saat berkas diperbarui di disk.
-- **PR #1096 (XML Formatter)**: Menyediakan format rapi XML (*Pretty Print*) native tanpa library eksternal menggunakan `QXmlStreamReader` dan `QXmlStreamWriter` dengan indentasi yang dapat dikonfigurasi.
-- **PR #1045 (In-Selection Search & Replace)**: Menambahkan opsi *In Selection* (`checkBoxInSelection`) pada `FindReplaceDialog` untuk membatasi pencarian dan penggantian teks hanya di dalam area seleksi.
+- **PR #1096 (XML Formatter)**: Menyediakan format rapi XML (_Pretty Print_) native tanpa library eksternal menggunakan `QXmlStreamReader` dan `QXmlStreamWriter` dengan indentasi yang dapat dikonfigurasi.
+- **PR #1045 (In-Selection Search & Replace)**: Menambahkan opsi _In Selection_ (`checkBoxInSelection`) pada `FindReplaceDialog` untuk membatasi pencarian dan penggantian teks hanya di dalam area seleksi.
 
 #### 3. 🍎 Resiliensi macOS & Perbaikan Isu Utama
 
 - **Pintasan Keyboard Internasional (Issues #814 & #667)**: Menghapus pintasan tunggal `Alt+1`..`Alt+0` pada macOS di `MainWindow::applyCustomShortcuts()` sehingga tombol Option dapat digunakan secara normal untuk mengetik karakter khusus internasional (`#`, `€`, `[`, `]`, `~`, `@`).
 - **Penyimpanan Berkas Bebas Crash (Issue #650)**: Mengganti overwrite berkas mentah dengan penyimpanan transaksional atomik menggunakan `QSaveFile::commit()` pada [`src/ScintillaNext.cpp`](file:///Users/alsyundawy/Downloads/GitHub/NotepadNext-MacOS/src/ScintillaNext.cpp), mencegah berkas 0-byte saat listrik padam atau crash sistem.
-- **Perkakas Format & Minify JSON (Issue #1140)**: Menyediakan fungsi native *Format JSON* dan *Minify JSON* berbasis `QJsonDocument`.
-- **Konversi Indentasi Dinamis (Issues #668 & #844)**: Menambahkan perkakas konversi *Tabs to Spaces* dan *Spaces to Tabs* yang menghormati lebar tab editor.
+- **Perkakas Format & Minify JSON (Issue #1140)**: Menyediakan fungsi native _Format JSON_ dan _Minify JSON_ berbasis `QJsonDocument`.
+- **Konversi Indentasi Dinamis (Issues #668 & #844)**: Menambahkan perkakas konversi _Tabs to Spaces_ dan _Spaces to Tabs_ yang menghormati lebar tab editor.
 
 #### 4. 📚 Harmonisasi 87 Lexer Bahasa Lexilla & Fallback Resolver
 
@@ -61,14 +61,14 @@ Release **v0.15-06** is a flagship production release introducing **Unicode 18.0
 - **PR #1165 & #1154 (Regex Engine Resilience)**: Eliminated infinite loops in `Finder::replaceAll()` when regex patterns match 0 characters, and rewrote `QRegexSearch::SubstituteByPosition()` to expand capture groups `\0` through `\9` alongside escape sequences (`\n`, `\r`, `\t`, `\\`).
 - **PR #1122 (Real-Time File Watcher)**: Added `QFileSystemWatcher` with a 250ms debounce in `EditorManager` emitting `editorFileChangedOnDisk` with prompt dialogs when files change on disk.
 - **PR #1096 (XML Formatter)**: Implemented native, dependency-free XML Pretty Print formatting via `QXmlStreamReader` and `QXmlStreamWriter` with configurable indentation.
-- **PR #1045 (In-Selection Search & Replace)**: Added *In Selection* option (`checkBoxInSelection`) in `FindReplaceDialog` to restrict search and replace operations strictly within the active selection bounds.
+- **PR #1045 (In-Selection Search & Replace)**: Added _In Selection_ option (`checkBoxInSelection`) in `FindReplaceDialog` to restrict search and replace operations strictly within the active selection bounds.
 
 #### 3. 🍎 macOS Hardware & OS Resilience
 
 - **International Option Key Shortcuts (Issues #814 & #667)**: Scoped single `Alt+1`..`Alt+0` shortcuts away on macOS in `MainWindow::applyCustomShortcuts()`, allowing European and international keyboards to type special characters (`#`, `€`, `[`, `]`, `~`, `@`) via Option without menu triggering.
 - **Crash-Safe Atomic File Save (Issue #650)**: Replaced raw file overwriting with atomic transactional `QSaveFile::commit()` in [`src/ScintillaNext.cpp`](file:///Users/alsyundawy/Downloads/GitHub/NotepadNext-MacOS/src/ScintillaNext.cpp), eliminating 0-byte file corruption during unexpected crashes or power loss.
-- **JSON Formatting Tools (Issue #1140)**: Built-in high-performance *Format JSON* and *Minify JSON* actions powered by `QJsonDocument`.
-- **Indentation Conversions (Issues #668 & #844)**: Added dynamic *Convert Tabs to Spaces* and *Spaces to Tabs* tools respecting editor tab widths.
+- **JSON Formatting Tools (Issue #1140)**: Built-in high-performance _Format JSON_ and _Minify JSON_ actions powered by `QJsonDocument`.
+- **Indentation Conversions (Issues #668 & #844)**: Added dynamic _Convert Tabs to Spaces_ and _Spaces to Tabs_ tools respecting editor tab widths.
 
 #### 4. 📚 Lexilla 87 Lexer Name Harmonization & Fallback Resolver
 

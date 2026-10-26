@@ -13,7 +13,7 @@ Rilis **v0.15-03** menghadirkan sinkronisasi perbaikan bug dari upstream resmi v
 
 #### 2. 🔍 Penyempurnaan Pencarian Ekspresi Reguler / Regex (Issue #1156)
 
-- **Sanitasi Opsi Pencarian**: Pada [`src/dialogs/FindReplaceDialog.cpp`](file:///Users/alsyundawy/Downloads/GitHub/NotepadNext-MacOS/src/dialogs/FindReplaceDialog.cpp), saat mode pencarian *Regular Expression (Regex)* diaktifkan, opsi yang tidak kompatibel seperti *Backwards Direction* dan *Match Whole Word* secara otomatis dimatikan (*unchecked*) dan dinonaktifkan (*disabled*).
+- **Sanitasi Opsi Pencarian**: Pada [`src/dialogs/FindReplaceDialog.cpp`](file:///Users/alsyundawy/Downloads/GitHub/NotepadNext-MacOS/src/dialogs/FindReplaceDialog.cpp), saat mode pencarian _Regular Expression (Regex)_ diaktifkan, opsi yang tidak kompatibel seperti _Backwards Direction_ dan _Match Whole Word_ secara otomatis dimatikan (_unchecked_) dan dinonaktifkan (_disabled_).
 - **Pencegahan Ambigu & Error Logika**: Menghindarkan pengguna dari error pencarian regex yang ambigu ketika mencoba mencocokkan pola regex dengan batasan kata utuh atau arah mundur yang tidak didukung mesin Scintilla Regex.
 
 #### 3. 🌐 Standardisasi Lokalisasi Bahasa Indonesia & Sinkronisasi Upstream
@@ -45,7 +45,7 @@ Release **v0.15-03** introduces upstream bugfix synchronization from official v0
 
 #### 2. 🔍 Regular Expression Search Dialog Sanitization (Issue #1156)
 
-- **Search Option Invalidation**: In [`src/dialogs/FindReplaceDialog.cpp`](file:///Users/alsyundawy/Downloads/GitHub/NotepadNext-MacOS/src/dialogs/FindReplaceDialog.cpp), when *Regular Expression* search mode is toggled, incompatible search options (*Backwards Direction* and *Match Whole Word*) are automatically unchecked and disabled.
+- **Search Option Invalidation**: In [`src/dialogs/FindReplaceDialog.cpp`](file:///Users/alsyundawy/Downloads/GitHub/NotepadNext-MacOS/src/dialogs/FindReplaceDialog.cpp), when _Regular Expression_ search mode is toggled, incompatible search options (_Backwards Direction_ and _Match Whole Word_) are automatically unchecked and disabled.
 - **Prevented Ambiguous Searches**: Protects users from syntax conflicts and engine stalls when attempting whole-word or backward regex searches unsupported by the underlying Scintilla regex engine.
 
 #### 3. 🌐 Indonesian Localization Polish & Upstream Translation Sync

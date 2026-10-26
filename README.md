@@ -130,12 +130,12 @@ brew install --no-quarantine notepadnext
 
 Available native Linux CPack distribution packages:
 
-| Package / Paket                       | Format | Distribution / Distribusi                 | Architecture / Arsitektur |
-| :------------------------------------ | :----- | :---------------------------------------- | :------------------------ |
-| `notepadnext_0.15-07_amd64.deb`       | DEB    | Ubuntu 22.04 / 24.04, Debian 12/13, Mint | x86_64 / amd64            |
-| `notepadnext_0.15-07_arm64.deb`       | DEB    | Ubuntu ARM, Debian ARM, Raspberry Pi OS   | arm64 / aarch64           |
-| `notepadnext-0.15-07-1.x86_64.rpm`    | RPM    | Fedora 40/41/42, RHEL 9/10, openSUSE      | x86_64                    |
-| `notepadnext-0.15-07-1.aarch64.rpm`   | RPM    | Fedora ARM, openSUSE ARM                  | aarch64                   |
+| Package / Paket                     | Format | Distribution / Distribusi                | Architecture / Arsitektur |
+| :---------------------------------- | :----- | :--------------------------------------- | :------------------------ |
+| `notepadnext_0.15-07_amd64.deb`     | DEB    | Ubuntu 22.04 / 24.04, Debian 12/13, Mint | x86_64 / amd64            |
+| `notepadnext_0.15-07_arm64.deb`     | DEB    | Ubuntu ARM, Debian ARM, Raspberry Pi OS  | arm64 / aarch64           |
+| `notepadnext-0.15-07-1.x86_64.rpm`  | RPM    | Fedora 40/41/42, RHEL 9/10, openSUSE     | x86_64                    |
+| `notepadnext-0.15-07-1.aarch64.rpm` | RPM    | Fedora ARM, openSUSE ARM                 | aarch64                   |
 
 Install on Debian / Ubuntu:
 
@@ -238,16 +238,16 @@ sudo ./NotepadNext-Default-Editor-Linux.sh set --system
 ./NotepadNext-Default-Editor-Linux.sh restore
 ```
 
-| Option / Opsi | Description / Deskripsi |
-| :--- | :--- |
-| `set` | Configure Notepad Next as default editor across 120+ MIME types |
-| `status` | Audit and display current MIME associations and default editor paths |
-| `restore` | Restore original MIME configurations from the latest backup |
-| `--user` | Target current user only (`~/.config/mimeapps.list`, default) |
-| `--system` | Target system-wide configuration (`/etc/xdg/mimeapps.list`) |
-| `--dry-run` | Simulate configuration changes without writing files |
-| `--no-color` | Disable ANSI terminal colors |
-| `--verbose` | Output detailed diagnostic logging |
+| Option / Opsi | Description / Deskripsi                                              |
+| :------------ | :------------------------------------------------------------------- |
+| `set`         | Configure Notepad Next as default editor across 120+ MIME types      |
+| `status`      | Audit and display current MIME associations and default editor paths |
+| `restore`     | Restore original MIME configurations from the latest backup          |
+| `--user`      | Target current user only (`~/.config/mimeapps.list`, default)        |
+| `--system`    | Target system-wide configuration (`/etc/xdg/mimeapps.list`)          |
+| `--dry-run`   | Simulate configuration changes without writing files                 |
+| `--no-color`  | Disable ANSI terminal colors                                         |
+| `--verbose`   | Output detailed diagnostic logging                                   |
 
 ---
 

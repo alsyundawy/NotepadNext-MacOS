@@ -2,7 +2,7 @@
 
 ## 🇮🇩 Bahasa Indonesia
 
-Rilis **v0.15-05** menghadirkan pembaruan estetika dan fungsional revolusioner: mesin tema native (*Native Theme Engine*) dengan **75 palet warna profesional di 25 keluarga tema**, pemilih tema visual interaktif `ThemeSwitcherDialog` (`Ctrl+Shift+T`), penyesuaian kontras tinggi teks Scintilla buffer, penambahan tombol penting pada toolbar utama (*Print*, *Preferences*, modern *Exit*), submenu transformasi teks (*Convert Case*), aksi *Paste Plain Text*, pemeriksa update terintegrasi untuk macOS (*Check for Updates*), integrasi SonarQube static analysis dengan generator database kompilasi instan, serta pembersihan bug 13-pilar (CWE-476 null safety).
+Rilis **v0.15-05** menghadirkan pembaruan estetika dan fungsional revolusioner: mesin tema native (_Native Theme Engine_) dengan **75 palet warna profesional di 25 keluarga tema**, pemilih tema visual interaktif `ThemeSwitcherDialog` (`Ctrl+Shift+T`), penyesuaian kontras tinggi teks Scintilla buffer, penambahan tombol penting pada toolbar utama (_Print_, _Preferences_, modern _Exit_), submenu transformasi teks (_Convert Case_), aksi _Paste Plain Text_, pemeriksa update terintegrasi untuk macOS (_Check for Updates_), integrasi SonarQube static analysis dengan generator database kompilasi instan, serta pembersihan bug 13-pilar (CWE-476 null safety).
 
 ### 🌟 Sorotan Pembaruan (Changelog dari 0.15-04 ke 0.15-05)
 
@@ -16,8 +16,8 @@ Rilis **v0.15-05** menghadirkan pembaruan estetika dan fungsional revolusioner: 
 
 #### 2. 🛠️ Toolbar Utama yang Diperkaya & Fitur Produktivitas Teks
 
-- **Tombol Toolbar Baru**: Menambahkan tombol aksi cepat *Print*, *Preferences*, dan ikon modern *Exit* pada toolbar utama untuk alur kerja yang lebih ergonomis.
-- **Submenu Convert Case**: Menyediakan konversi teks komprehensif pada menu Edit: *UPPERCASE*, *lowercase*, *Title Case*, *Sentence case*, *iNVERT cASE*, *camelCase*, dan *snake_case*.
+- **Tombol Toolbar Baru**: Menambahkan tombol aksi cepat _Print_, _Preferences_, dan ikon modern _Exit_ pada toolbar utama untuk alur kerja yang lebih ergonomis.
+- **Submenu Convert Case**: Menyediakan konversi teks komprehensif pada menu Edit: _UPPERCASE_, _lowercase_, _Title Case_, _Sentence case_, _iNVERT cASE_, _camelCase_, dan _snake_case_.
 - **Paste as Plain Text (`Cmd+Shift+V`)**: Menyisipkan teks dari clipboard tanpa menyertakan format rich-text atau artefak HTML.
 - **Pemeriksa Pembaruan macOS (Check for Updates)**: Fitur pengecekan pembaruan rilis GitHub langsung dari menu aplikasi pada macOS.
 
@@ -37,7 +37,7 @@ Rilis **v0.15-05** menghadirkan pembaruan estetika dan fungsional revolusioner: 
 
 ## 🇬🇧 English
 
-Release **v0.15-05** introduces a revolutionary aesthetic and functional leap: a full-scale **Native Theme Engine (`ThemeManager`) with 75 curated professional palettes across 25 families**, an interactive `ThemeSwitcherDialog` (`Ctrl+Shift+T`), high-contrast Scintilla buffer styling, extended main toolbar actions (*Print*, *Preferences*, modern *Exit*), a comprehensive *Convert Case* text transform submenu, *Paste Plain Text*, native macOS *Check for Updates*, integrated SonarQube static analysis with an instant compilation database generator, and 13-pillar codebase hardening (CWE-476 null safety).
+Release **v0.15-05** introduces a revolutionary aesthetic and functional leap: a full-scale **Native Theme Engine (`ThemeManager`) with 75 curated professional palettes across 25 families**, an interactive `ThemeSwitcherDialog` (`Ctrl+Shift+T`), high-contrast Scintilla buffer styling, extended main toolbar actions (_Print_, _Preferences_, modern _Exit_), a comprehensive _Convert Case_ text transform submenu, _Paste Plain Text_, native macOS _Check for Updates_, integrated SonarQube static analysis with an instant compilation database generator, and 13-pillar codebase hardening (CWE-476 null safety).
 
 ### 🚀 Changelog from 0.15-04 to 0.15-05
 
@@ -51,8 +51,8 @@ Release **v0.15-05** introduces a revolutionary aesthetic and functional leap: a
 
 #### 2. 🛠️ Extended Main Toolbar & Editing Productivity
 
-- **New Toolbar Shortcuts**: Added *Print*, *Preferences*, and modernized *Exit* action icons to the primary toolbar for immediate accessibility.
-- **Convert Case Submenu**: Full text transformations under the Edit menu: *UPPERCASE*, *lowercase*, *Title Case*, *Sentence case*, *iNVERT cASE*, *camelCase*, and *snake_case*.
+- **New Toolbar Shortcuts**: Added _Print_, _Preferences_, and modernized _Exit_ action icons to the primary toolbar for immediate accessibility.
+- **Convert Case Submenu**: Full text transformations under the Edit menu: _UPPERCASE_, _lowercase_, _Title Case_, _Sentence case_, _iNVERT cASE_, _camelCase_, and _snake_case_.
 - **Paste as Plain Text (`Cmd+Shift+V`)**: Clean clipboard insertion stripping rich-text styles and formatting tags.
 - **macOS Check for Updates**: In-app GitHub release update verification dialog tailored for macOS desktop workflows.
 

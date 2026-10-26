@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """Ensure CMake-generated compile_commands.json is synced to project root."""
 
-import os
 import shutil
 import subprocess
 from pathlib import Path
@@ -25,7 +24,9 @@ def main():
                 pass
         try:
             root_compile_commands.symlink_to("build/compile_commands.json")
-            print(f"Created symlink {root_compile_commands} -> build/compile_commands.json")
+            print(
+                f"Created symlink {root_compile_commands} -> build/compile_commands.json"
+            )
         except OSError:
             shutil.copy2(build_compile_commands, root_compile_commands)
             print(f"Copied {build_compile_commands} -> {root_compile_commands}")

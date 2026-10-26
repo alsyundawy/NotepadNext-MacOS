@@ -5,6 +5,7 @@
 `NotepadNext-Default-Editor-Linux.sh` is an enterprise-grade automation engine designed to set **Notepad Next** (`com.github.alsyundawy.NotepadNext`) as the canonical, default source code and text editor across all major Linux distributions and Desktop Environments (DEs).
 
 The script guarantees standard compliance with:
+
 - **Freedesktop.org XDG Standards** (Desktop Entry Specification 1.5, Shared MIME-Info Specification 2.4, XDG Base Directory Specification).
 - **Debian / Ubuntu Alternatives System** (`update-alternatives`).
 - **Red Hat / Fedora / SUSE Alternatives System** (`alternatives`).
@@ -19,15 +20,17 @@ Linux distributions primarily divide into two predominant package packaging ecos
 ### 2.1 The Debian Ecosystem (`.deb`)
 
 Debian packages are `ar` archives containing two compressed tarballs and a debian-binary version marker:
+
 1. `debian-binary`: Text string defining the package format version (`2.0`).
 2. `control.tar.xz` (or `.gz`): Contains package control metadata (`control`), pre/post installation scripts (`preinst`, `postinst`, `prerm`, `postrm`), and file hashes (`md5sums`).
 3. `data.tar.xz` (or `.gz`, `.zst`): Contains the actual filesystem payload installed onto the system.
 
 **Distributions using `.deb`:**
+
 - **Debian**: Debian 12 (Bookworm), Debian 13 (Trixie), Debian Unstable (Sid).
 - **Ubuntu**: Ubuntu 22.04 LTS (Jammy Jellyfish), Ubuntu 24.04 LTS (Noble Numbat), Ubuntu 26.04.
 - **Linux Mint**: Editions Cinnamon, MATE, XFCE, and LMDE (Linux Mint Debian Edition).
-- **Pop!_OS**: System76's Ubuntu-based distribution with COSMIC desktop.
+- **Pop!\_OS**: System76's Ubuntu-based distribution with COSMIC desktop.
 - **Elementary OS**: Ubuntu-based distribution featuring the Pantheon desktop.
 - **Zorin OS**: Ubuntu-based desktop environment targeting Windows/macOS switchers.
 - **Kali Linux & Parrot OS**: Security and penetration testing distributions based on Debian Testing.
@@ -38,12 +41,14 @@ Debian packages are `ar` archives containing two compressed tarballs and a debia
 ### 2.2 The RPM Ecosystem (`.rpm`)
 
 RPM packages are binary archives consisting of a lead, signature, header metadata, and a payload archive compressed using gzip, xz, or zstd:
+
 1. **Lead**: Legacy identifier block.
 2. **Signature Block**: OpenPGP/GPG signatures for package integrity verification.
 3. **Header**: Structured metadata (tags for Name, Version, Release, Architecture, Requires, Provides, Conflicts, Obsoletes).
 4. **Payload (cpio archive)**: The binary files unpacked into system directories.
 
 **Distributions using `.rpm`:**
+
 - **Fedora**: Fedora Workstation, Fedora Silverblue / Atomic Desktops (Rawhide, 39, 40, 41, 42).
 - **Red Hat Enterprise Linux (RHEL)**: RHEL 8, RHEL 9, RHEL 10.
 - **CentOS Stream**: Upstream development platform for RHEL.
@@ -60,20 +65,20 @@ RPM packages are binary archives consisting of a lead, signature, header metadat
 
 Different desktop environments employ specific daemons, IPC buses, and cache hierarchies to discover and launch default applications. `NotepadNext-Default-Editor-Linux.sh` natively detects and synchronizes with all of them:
 
-| Desktop Environment | Primary Tool / Mechanism | Default File Association Path | Cache / Refresh Command |
-| :--- | :--- | :--- | :--- |
-| **GNOME** (40–47+) | `gio mime`, XDG MIME | `~/.config/mimeapps.list` | `update-desktop-database ~/.local/share/applications` |
-| **KDE Plasma** (5 & 6) | `ktraderclient5/6`, KService | `~/.config/mimeapps.list` | `kbuildsycoca6` or `kbuildsycoca5` |
-| **XFCE** (4.16–4.20) | `exo-preferred-applications` | `~/.config/mimeapps.list` | `update-desktop-database` |
-| **Cinnamon** | `cinnamon-settings`, Nemo | `~/.config/mimeapps.list` | `update-desktop-database` |
-| **MATE** | `mate-default-applications` | `~/.config/mimeapps.list` | `update-desktop-database` |
-| **LXQt** | `lxqt-config-file-associations` | `~/.config/mimeapps.list` | `update-desktop-database` |
-| **LXDE** | `pcmanfm` / LibFM | `~/.config/mimeapps.list` | `update-desktop-database` |
-| **COSMIC** (System76) | COSMIC App Library / Rust XDG | `~/.config/mimeapps.list` | `update-desktop-database` |
-| **Pantheon** | Elementary Granite / Files | `~/.config/mimeapps.list` | `update-desktop-database` |
-| **Budgie** | Budgie Desktop Settings | `~/.config/mimeapps.list` | `update-desktop-database` |
-| **Deepin (DDE)** | DDE File Manager | `~/.config/mimeapps.list` | `update-desktop-database` |
-| **Tiling WMs** (i3, Sway, Hyprland) | XDG Utilities (`xdg-mime`) | `~/.config/mimeapps.list` | `update-desktop-database` |
+| Desktop Environment                 | Primary Tool / Mechanism        | Default File Association Path | Cache / Refresh Command                               |
+| :---------------------------------- | :------------------------------ | :---------------------------- | :---------------------------------------------------- |
+| **GNOME** (40–47+)                  | `gio mime`, XDG MIME            | `~/.config/mimeapps.list`     | `update-desktop-database ~/.local/share/applications` |
+| **KDE Plasma** (5 & 6)              | `ktraderclient5/6`, KService    | `~/.config/mimeapps.list`     | `kbuildsycoca6` or `kbuildsycoca5`                    |
+| **XFCE** (4.16–4.20)                | `exo-preferred-applications`    | `~/.config/mimeapps.list`     | `update-desktop-database`                             |
+| **Cinnamon**                        | `cinnamon-settings`, Nemo       | `~/.config/mimeapps.list`     | `update-desktop-database`                             |
+| **MATE**                            | `mate-default-applications`     | `~/.config/mimeapps.list`     | `update-desktop-database`                             |
+| **LXQt**                            | `lxqt-config-file-associations` | `~/.config/mimeapps.list`     | `update-desktop-database`                             |
+| **LXDE**                            | `pcmanfm` / LibFM               | `~/.config/mimeapps.list`     | `update-desktop-database`                             |
+| **COSMIC** (System76)               | COSMIC App Library / Rust XDG   | `~/.config/mimeapps.list`     | `update-desktop-database`                             |
+| **Pantheon**                        | Elementary Granite / Files      | `~/.config/mimeapps.list`     | `update-desktop-database`                             |
+| **Budgie**                          | Budgie Desktop Settings         | `~/.config/mimeapps.list`     | `update-desktop-database`                             |
+| **Deepin (DDE)**                    | DDE File Manager                | `~/.config/mimeapps.list`     | `update-desktop-database`                             |
+| **Tiling WMs** (i3, Sway, Hyprland) | XDG Utilities (`xdg-mime`)      | `~/.config/mimeapps.list`     | `update-desktop-database`                             |
 
 ---
 
@@ -82,6 +87,7 @@ Different desktop environments employ specific daemons, IPC buses, and cache hie
 ### 4.1 Freedesktop XDG MIME Association Precedence
 
 Freedesktop specifies that user preferences take precedence over system defaults:
+
 1. User override: `~/.config/mimeapps.list` (or `$XDG_CONFIG_HOME/mimeapps.list`)
 2. User package additions: `~/.local/share/applications/mimeapps.list` (deprecated by standard, but honored)
 3. Desktop-specific system overrides: `/etc/xdg/$desktop-mimeapps.list` (e.g. `gnome-mimeapps.list`)
@@ -89,6 +95,7 @@ Freedesktop specifies that user preferences take precedence over system defaults
 5. Distribution defaults: `/usr/share/applications/mimeapps.list`
 
 `NotepadNext-Default-Editor-Linux.sh` writes entries to both `[Default Applications]` and `[Added Associations]` sections:
+
 ```ini
 [Default Applications]
 text/plain=com.github.alsyundawy.NotepadNext.desktop;NotepadNext.desktop;
@@ -103,6 +110,7 @@ text/plain=com.github.alsyundawy.NotepadNext.desktop;NotepadNext.desktop;
 ### 4.2 Terminal & Console Alternatives
 
 To make Notepad Next the default editor for terminal operations (e.g., `git commit`, `crontab -e`, `sudoedit`), the script configures:
+
 1. **Debian / Ubuntu Alternatives System**:
    ```bash
    update-alternatives --install /usr/bin/editor editor /usr/bin/NotepadNext 100

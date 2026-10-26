@@ -58,7 +58,7 @@ readonly BINARY_NAME="NotepadNext"
 
 # ====================== COLOR & FORMATTING ======================
 setup_colors() {
-	if [[ -t 1 && "${TERM:-}" != "dumb" && "${NO_COLOR:-}" != "1" ]]; then
+	if [[ -t 1 && ${TERM:-} != "dumb" && ${NO_COLOR:-} != "1" ]]; then
 		C_RESET=$'\033[0m'
 		C_BOLD=$'\033[1m'
 		C_RED=$'\033[38;5;196m'
@@ -274,7 +274,10 @@ detect_os_and_distro() {
 			DISTRO_FAMILY="generic"
 		fi
 	else
-		DISTRO_PRETTY_NAME="Generic Linux ($(uname -s) $(uname -r))"
+		local u_sys u_rel
+		u_sys="$(uname -s 2>/dev/null || echo "Linux")"
+		u_rel="$(uname -r 2>/dev/null || echo "unknown")"
+		DISTRO_PRETTY_NAME="Generic Linux (${u_sys} ${u_rel})"
 		DISTRO_FAMILY="generic"
 	fi
 
@@ -309,9 +312,9 @@ detect_desktop_environment() {
 		DETECTED_DE="Pantheon"
 	elif [[ -n ${de} ]]; then
 		DETECTED_DE="${de}"
-	elif [[ -n "${WAYLAND_DISPLAY:-}" ]]; then
+	elif [[ -n ${WAYLAND_DISPLAY:-} ]]; then
 		DETECTED_DE="Wayland Compositor (Tiling/Custom)"
-	elif [[ -n "${DISPLAY:-}" ]]; then
+	elif [[ -n ${DISPLAY:-} ]]; then
 		DETECTED_DE="X11 Window Manager (Tiling/Custom)"
 	else
 		DETECTED_DE="Headless / Terminal"
@@ -523,7 +526,7 @@ update_mimeapps_list_atomically() {
 			if [[ ${in_default_apps} -eq 1 ]]; then
 				local mime_key="${line%%=*}"
 				# Skip if already handled by our target list
-				if [[ -n "${handled_mimes[${mime_key}]:-}" ]]; then
+				if [[ -n ${handled_mimes[${mime_key}]:-} ]]; then
 					continue
 				fi
 			fi
@@ -633,7 +636,7 @@ configure_system_alternatives() {
 # ====================== ENVIRONMENT VARIABLES ($EDITOR, $VISUAL) ======================
 
 configure_environment_variables() {
-	info "Configuring default terminal environment variables (\$EDITOR, \$VISUAL)..."
+	info "Configuring default terminal environment variables (EDITOR, VISUAL)..."
 
 	local export_block
 	export_block=$(
@@ -653,7 +656,7 @@ EOF
 			info "[DRY-RUN] Write system profile: ${profile_script}"
 		else
 			local cmd_prefix=""
-			if [[ ${EUID} -ne 0 && $(command -v sudo 2>/dev/null) ]]; then
+			if [[ ${EUID} -ne 0 ]] && command -v sudo >/dev/null 2>&1; then
 				cmd_prefix="sudo"
 			fi
 			echo "${export_block}" | ${cmd_prefix} tee "${profile_script}" >/dev/null

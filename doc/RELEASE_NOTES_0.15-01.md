@@ -11,19 +11,19 @@ Rilis **v0.15-01** menghadirkan pembaruan besar yang menggabungkan peningkatan t
 - **Dukungan Encoding UTF-16**: Menambahkan dukungan penuh untuk format teks UTF-16 Big Endian (`UTF-16 BE`) dan UTF-16 Little Endian (`UTF-16 LE`).
 - **Pembaruan Advanced Docking System (ADS)**: Mengintegrasikan ADS v5.1.1 untuk stabilitas panel, docking tabs, dan performa UI yang lebih responsif.
 - **Navigasi Teks Khusus macOS**: Menetapkan pintasan navigasi teks native macOS yang lebih alami bagi pengguna Mac.
-- **Perbaikan Stabilitas & Crash**: Memperbaiki masalah crash saat startup ketika berkas sesi (*session file*) rusak atau tidak terbaca.
+- **Perbaikan Stabilitas & Crash**: Memperbaiki masalah crash saat startup ketika berkas sesi (_session file_) rusak atau tidak terbaca.
 - **Dukungan C++20 & Kompatibilitas POSIX**: Memperbaiki peringatan capture implicit `this` pada lambda C++20 serta menambahkan guard `#ifndef` untuk variabel environment Lua di POSIX.
 
 #### 2. 🌐 Pelokalan Menyeluruh Bahasa Indonesia (Standar Baku KBBI)
 
 - **Penyempurnaan `i18n/NotepadNext_id.ts`**: Menyelaraskan lebih dari 2.200 baris string XML ke dalam Bahasa Indonesia yang baik, benar, dan profesional.
-- **Eliminasi Tanda Kurung Berlebih**: Menghapus teks terjemahan kaku seperti `(Wrap)`, `(EoL)`, `(Undo)`, `(Redo)` dan menggantinya dengan istilah baku yang elegan (*Bungkus Baris*, *Batal*, *Ulangi*, *Akhir Baris*).
-- **Kelengkapan Numerus & Dialog**: Menyelesaikan seluruh entri numerus jamak/tunggal serta dialog pencarian, penanda (*bookmarks*), makro, dan konfigurasi bahasa pemrograman.
+- **Eliminasi Tanda Kurung Berlebih**: Menghapus teks terjemahan kaku seperti `(Wrap)`, `(EoL)`, `(Undo)`, `(Redo)` dan menggantinya dengan istilah baku yang elegan (_Bungkus Baris_, _Batal_, _Ulangi_, _Akhir Baris_).
+- **Kelengkapan Numerus & Dialog**: Menyelesaikan seluruh entri numerus jamak/tunggal serta dialog pencarian, penanda (_bookmarks_), makro, dan konfigurasi bahasa pemrograman.
 
 #### 3. 🍎 Optimalisasi Skrip Default Editor v1.6.0 ([`NotepadNext-Default-Editor.sh`](file:///Users/alsyundawy/Downloads/GitHub/NotepadNext-MacOS/scripts/NotepadNext-Default-Editor.sh))
 
 - **Perbaikan Kritis System Settings macOS Modern**: Membatasi pembersihan cache LaunchServices hanya pada `domain user` (`lsregister -kill -r -domain user`), sehingga ExtensionKit (`/System/Library/ExtensionKit/Extensions/*.appex`) pada macOS 13+ (Ventura, Sonoma, Sequoia) tetap aman dan tidak menyebabkan panel System Settings hilang.
-- **Auto-Healing Tanpa Reboot**: Skrip secara otomatis memindai dan meregistrasi ulang *ExtensionKit* serta *System Settings.app*, memulihkan panel yang sempat hilang akibat skrip lama secara instan tanpa perlu me-reboot macOS.
+- **Auto-Healing Tanpa Reboot**: Skrip secara otomatis memindai dan meregistrasi ulang _ExtensionKit_ serta _System Settings.app_, memulihkan panel yang sempat hilang akibat skrip lama secara instan tanpa perlu me-reboot macOS.
 - **Ekspansi Cakupan 470+ Ekstensi & 38 UTIs**: Mendukung 470+ format developer lintas 15 kategori (teks, markdown/MDX, konfigurasi, skrip shell/PowerShell, diagram PlantUML/Mermaid/DOT, CAD/CNC/G-code, smart contracts Solidity/Cairo/Move, kunci kriptografi/sertifikat SSL, log crash report macOS `.ips`).
 - **Pembersihan Desktop Anggun**: Menghilangkan penghentian paksa `SystemUIServer` yang sebelumnya membuat menu bar berkedip, digantikan dengan penutupan anggun aplikasi System Settings jika sedang aktif.
 
@@ -52,7 +52,7 @@ Release **v0.15-01** brings a major milestone combining upstream NotepadNext v0.
 #### 2. 🌐 Comprehensive Indonesian Localization (Formal KBBI Standard)
 
 - **Refined `i18n/NotepadNext_id.ts`**: Aligned over 2,200 XML string lines with professional, natural Indonesian phrasing.
-- **Stripped Redundant Parentheses**: Replaced stiff parenthesized labels like `(Wrap)`, `(EoL)`, `(Undo)`, `(Redo)` with natural Indonesian equivalents (*Bungkus Baris*, *Batal*, *Ulangi*, *Akhir Baris*).
+- **Stripped Redundant Parentheses**: Replaced stiff parenthesized labels like `(Wrap)`, `(EoL)`, `(Undo)`, `(Redo)` with natural Indonesian equivalents (_Bungkus Baris_, _Batal_, _Ulangi_, _Akhir Baris_).
 - **Pluralization & Complete Dialogs**: Fully translated pluralization forms, find/replace dialogs, bookmarks, macros, and syntax language configurations.
 
 #### 3. 🍎 macOS Default Editor Script v1.6.0 Optimization

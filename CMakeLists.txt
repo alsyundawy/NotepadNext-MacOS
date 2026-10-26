@@ -8,6 +8,9 @@ project(NotepadNext
 
 set(APP_VERSION "0.15-07")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+if(APPLE AND NOT CMAKE_OSX_SYSROOT)
+    set(CMAKE_OSX_SYSROOT "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk" CACHE PATH "macOS SDK sysroot" FORCE)
+endif()
 set(APP_DISTRIBUTION "" CACHE STRING "Distribution type")
 string(TIMESTAMP CURRENT_YEAR "%Y")
 set(APP_COPYRIGHT "Copyright 2019-${CURRENT_YEAR} Justin Dailey")
