@@ -70,11 +70,13 @@
 ## Quickstart
 
 ```bash
-# 1. Berikan izin eksekusi skrip / Grant script execute permissions
+# macOS: Jadikan NotepadNext sebagai default editor macOS / Set as default editor on macOS
 chmod +x NotepadNext-Default-Editor.sh
-
-# 2. Jadikan NotepadNext sebagai default editor macOS / Set as system default editor
 ./NotepadNext-Default-Editor.sh -f
+
+# Linux (Debian, Ubuntu, Fedora, RHEL, openSUSE, Arch, etc.):
+chmod +x NotepadNext-Default-Editor-Linux.sh
+./NotepadNext-Default-Editor-Linux.sh set
 ```
 
 ---
@@ -211,6 +213,41 @@ To configure font smoothing to match Windows rendering:
 ```bash
 defaults -currentHost write -g AppleFontSmoothing -int 0
 ```
+
+### Linux Default Editor (`NotepadNext-Default-Editor-Linux.sh`)
+
+> 🇬🇧 **Automate NotepadNext as the default text and code editor on Linux.**
+>
+> Seamlessly configure Freedesktop XDG MIME associations, Debian/Ubuntu `update-alternatives`, RHEL/Fedora/openSUSE `alternatives`, and CLI `$EDITOR`/`$VISUAL` across all major desktop environments (GNOME, KDE Plasma, XFCE, Cinnamon, MATE, LXQt, COSMIC, etc.). For comprehensive technical details, see [Linux Default Editor Architecture](doc/DEFAULT_EDITOR_LINUX.md).
+>
+> 🇮🇩 **Jadikan NotepadNext sebagai editor teks dan kode default di Linux.**
+>
+> Mengonfigurasi asosiasi XDG MIME Freedesktop, `update-alternatives` Debian/Ubuntu, `alternatives` RHEL/Fedora/openSUSE, serta variabel terminal `$EDITOR`/`$VISUAL` di semua desktop environment populer (GNOME, KDE Plasma, XFCE, Cinnamon, MATE, LXQt, COSMIC, dll). Detail teknis lengkap dapat dibaca pada [Dokumentasi Linux Default Editor](doc/DEFAULT_EDITOR_LINUX.md).
+
+```bash
+# 1. Terapkan untuk user aktif (default, ~/.config/mimeapps.list)
+./NotepadNext-Default-Editor-Linux.sh set
+
+# 2. Terapkan untuk seluruh sistem (membutuhkan sudo, /etc/xdg/mimeapps.list)
+sudo ./NotepadNext-Default-Editor-Linux.sh set --system
+
+# 3. Cek status asosiasi MIME saat ini
+./NotepadNext-Default-Editor-Linux.sh status
+
+# 4. Pulihkan konfigurasi MIME awal dari backup
+./NotepadNext-Default-Editor-Linux.sh restore
+```
+
+| Option / Opsi | Description / Deskripsi |
+| :--- | :--- |
+| `set` | Configure Notepad Next as default editor across 120+ MIME types |
+| `status` | Audit and display current MIME associations and default editor paths |
+| `restore` | Restore original MIME configurations from the latest backup |
+| `--user` | Target current user only (`~/.config/mimeapps.list`, default) |
+| `--system` | Target system-wide configuration (`/etc/xdg/mimeapps.list`) |
+| `--dry-run` | Simulate configuration changes without writing files |
+| `--no-color` | Disable ANSI terminal colors |
+| `--verbose` | Output detailed diagnostic logging |
 
 ---
 

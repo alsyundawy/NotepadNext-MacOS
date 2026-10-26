@@ -1,0 +1,24 @@
+[Desktop Entry]
+Categories=Qt;TextEditor;Utility;Development;IDE;
+Exec=NotepadNext %F
+Icon=NotepadNext
+MimeType=text/plain;text/markdown;text/x-markdown;text/x-c;text/x-csrc;text/x-chdr;text/x-c++;text/x-c++src;text/x-c++hdr;text/x-csharp;text/x-java;text/x-python;text/x-python3;application/javascript;text/javascript;application/x-javascript;application/typescript;text/typescript;application/json;application/x-json;text/html;application/xhtml+xml;text/css;text/x-scss;text/x-sass;text/x-less;application/xml;text/xml;application/x-xml;application/x-yaml;text/yaml;text/x-yaml;application/toml;text/x-toml;text/x-ini;application/x-ini;text/x-sh;application/x-shellscript;text/x-shellscript;text/x-bash;text/x-zsh;text/x-rust;text/x-go;text/x-php;application/x-php;text/x-ruby;application/x-ruby;text/x-perl;application/x-perl;text/x-lua;text/x-sql;application/sql;text/x-makefile;text/x-cmake;text/x-meson;text/x-dockerfile;application/x-desktop;text/x-diff;text/x-patch;text/x-log;text/csv;text/tab-separated-values;text/x-qml;text/x-po;application/x-powershell;text/x-r;text/x-scala;text/x-kotlin;text/x-swift;text/x-zig;text/x-haskell;text/x-erlang;text/x-elixir;text/x-clojure;text/x-dart;
+StartupNotify=true
+Type=Application
+Terminal=false
+
+Name=Notepad Next
+Name[id]=Notepad Next
+Name[pt_BR]=Editor de Texto Notepad Next
+
+GenericName=Text Editor
+GenericName[id]=Penyunting Teks
+GenericName[pt_BR]=Editor de Texto
+
+Comment=A cross-platform reimplementation of Notepad++ for macOS and Linux
+Comment[id]=Implementasi ulang Notepad++ lintas platform untuk macOS dan Linux
+Comment[pt_BR]=O ‘Notepad Next’ é um editor de texto e editor de código-fonte, trata-se de uma reimplementação do Notepad++ para várias plataformas
+
+Keywords=notepad;next;text;editor;manager;IDE;programming tool;source code;tabs;
+Keywords[id]=notepad;next;teks;editor;penyunting;manajer;IDE;alat pemrograman;kode sumber;tab;bilah;
+Keywords[pt_BR]=notepad;next;bloco de notas;próximo;editor;texto;Ambiente de Desenvolvimento Integrado;IDE;ferramenta de programação;exibição de texto colorido;código-fonte;abas;guias;

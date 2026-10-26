@@ -475,3 +475,35 @@ A full, deep-dive multi-linter verification pass was executed across all 88 tran
 2. **Compile-Time Scoped Enum Template Serialization**:
    - Modernized `ApplicationSettings` template getters/setters with C++20 `if constexpr (std::is_enum_v<T>)` compile-time branches, enabling type-safe serialization of modern `enum class` types without manual casting boilerplate.
 
+---
+
+## 23. Linux Default Editor Automation Engine (`NotepadNext-Default-Editor-Linux.sh`) & Synchronized Release Assets (v0.15-07)
+
+### Executive Architecture & Design Rationale
+
+While macOS uses LaunchServices and UTI structures, Linux desktop environments adhere to Freedesktop.org specifications combined with distro-specific alternatives subsystems. To provide parity with macOS (`NotepadNext-Default-Editor.sh`), `NotepadNext-Default-Editor-Linux.sh` was engineered from the ground up:
+
+1. **Distro Family Research & Support Matrix**:
+   - **Debian Ecosystem (`.deb`)**: Debian 12 (Bookworm), Debian 13 (Trixie), Debian Unstable (Sid), Ubuntu 22.04 LTS, Ubuntu 24.04 LTS, Ubuntu 26.04, Linux Mint (Cinnamon/MATE/XFCE/LMDE), Pop!_OS, Elementary OS, Zorin OS, Kali Linux, Parrot OS, MX Linux, Raspberry Pi OS, Deepin/UOS.
+   - **RPM Ecosystem (`.rpm`)**: Fedora Workstation & Silverblue (Rawhide, 39–42), Red Hat Enterprise Linux (RHEL 8/9/10), CentOS Stream, AlmaLinux, Rocky Linux, openSUSE Tumbleweed & Leap, SUSE Linux Enterprise (SLED/SLES), Mageia, PCLinuxOS, Amazon Linux.
+   - **Auxiliary Fallbacks**: Arch Linux, Manjaro, Solus, Void Linux, Alpine Linux.
+2. **Desktop Environment Coverage**:
+   - Native integration and cache refreshing for **GNOME** (`gio mime`), **KDE Plasma 5 & 6** (`kbuildsycoca6` / `kbuildsycoca5`), **XFCE** (`exo-preferred-applications`), **Cinnamon** (`cinnamon-settings`), **MATE** (`mate-default-applications`), **LXQt** (`lxqt-config-file-associations`), **LXDE** (`pcmanfm`), **COSMIC** (Rust-based XDG), **Pantheon**, **Budgie**, **Deepin (DDE)**, and tiling window managers (**i3**, **Sway**, **Hyprland**).
+3. **Freedesktop XDG MIME Engine (120+ MIME Types)**:
+   - Configures both `[Default Applications]` and `[Added Associations]` sections in `~/.config/mimeapps.list` (user mode) and `/etc/xdg/mimeapps.list` (system mode).
+   - Covers over 120 formats across plain text, markdown, web technologies (HTML, CSS, JS, TS, JSON, XML, YAML), compiled languages (C, C++, Rust, Go, Java, Kotlin, C#), scripting languages (Python, Ruby, PHP, Perl, Lua, R), shell scripts (Bash, Sh, Zsh, Fish, PowerShell, Batch), and DevOps configurations (Dockerfile, CMake, Makefile, INI, TOML, SQL).
+4. **Terminal & CLI System Alternatives**:
+   - Automated registration with Debian/Ubuntu `update-alternatives --install /usr/bin/editor editor /usr/bin/NotepadNext 100` and RHEL/Fedora/openSUSE `alternatives --install /usr/bin/editor editor /usr/bin/NotepadNext 100`.
+   - Automatic export of `$EDITOR` and `$VISUAL` environment variables in `~/.bashrc` and `~/.profile`.
+5. **Standardized Reverse-DNS AppStream ID & Dual Desktop Entries**:
+   - Standardized AppStream ID to `com.github.alsyundawy.NotepadNext` (superseding legacy `io.github.dail8859.NotepadNext`).
+   - Installed dual desktop entries (`NotepadNext.desktop` and `com.github.alsyundawy.NotepadNext.desktop`) in `deploy/linux/` and integrated via `cmake/PackagingLinux.cmake`.
+6. **Dual Script Root & Release Synchronization Invariant**:
+   - Both `NotepadNext-Default-Editor.sh` (macOS) and `NotepadNext-Default-Editor-Linux.sh` (Linux) are permanently maintained in repository root and synchronized to `scripts/`.
+   - CI/CD workflow `.github/workflows/release.yml` automatically publishes both scripts as downloadable GitHub release assets.
+7. **Quality Gates & Static Verification**:
+   - Evaluated with `shellcheck` with **0 errors and 0 warnings**.
+   - Formatted with `shfmt` with **100% clean formatting**.
+   - Full technical documentation published in `doc/DEFAULT_EDITOR_LINUX.md`.
+
+

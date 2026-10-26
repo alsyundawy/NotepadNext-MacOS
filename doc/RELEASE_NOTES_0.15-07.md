@@ -76,6 +76,14 @@ Key innovations introduced in `0.15-07`:
     - Added C++20 `if constexpr (std::is_enum_v<T>)` serialization in `ApplicationSettings` for seamless scoped enum support.
     - Configured `.vscode/c_cpp_properties.json` and `.clangd` with exact Qt 6.12 include paths, resolving all 1200+ false-positive diagnostics in Antigravity IDE and SonarLint.
 
+12. **Linux Default Editor Automation Engine (`NotepadNext-Default-Editor-Linux.sh`) & Synchronized Release Assets**:
+    - Engineered enterprise-grade default editor configuration script for all Linux distributions (Debian, Ubuntu, Linux Mint, Pop!_OS, Fedora, RHEL, openSUSE, Arch, etc.) and Desktop Environments (GNOME, KDE Plasma 5/6, XFCE, Cinnamon, MATE, LXQt, LXDE, COSMIC, Pantheon, Budgie, Deepin).
+    - Configured Freedesktop XDG MIME database across 120+ code, markup, script, and configuration formats with automatic backup and restore.
+    - Integrated with Debian/Ubuntu `update-alternatives` and RHEL/Fedora/openSUSE `alternatives` alongside terminal `$EDITOR`/`$VISUAL`.
+    - Standardized AppStream ID to `com.github.alsyundawy.NotepadNext` and installed dual desktop entries.
+    - Both `NotepadNext-Default-Editor.sh` (macOS) and `NotepadNext-Default-Editor-Linux.sh` (Linux) are permanently synchronized in root and `scripts/`, and automated as release download assets in GitHub Actions.
+    - Achieved 100% zero-warning `shellcheck` pass and strict `shfmt` conformance. Full technical documentation published in `doc/DEFAULT_EDITOR_LINUX.md`.
+
 ---
 
 ## 📊 Comprehensive Feature & Architecture Matrix (Cumulative v0.15-01 to v0.15-07)
@@ -100,6 +108,7 @@ Key innovations introduced in `0.15-07`:
 | **IME & Keyboard Usability**           | Syllable duplication on CJK; Alt conflicts               | **CJK IME Syllable Normalizer + Isolated Option/Alt Shortcuts**              | PR #1166 Hangul/Kanji fix; scoped `Alt` shortcuts allowing European keyboards to type `#`, `€`, `[`, `]`, `~`, `@` (`v0.15-06`).                                        |
 | **Tab Bar Geometry**                   | Tabs expand or shrink indefinitely                       | **Middle-Ellipsis Truncation (`elideMode`)**                                 | Filenames remain readable and tab bar geometry stays rock-solid even with 30+ open files (`v0.15-07`).                                                                  |
 | **System File Associations**           | Default macOS TextEdit bindings                          | **`NotepadNext-Default-Editor.sh` (470+ Extensions, 38 UTIs)**               | Full LaunchServices system integration, Gatekeeper unquarantine, sub-second cache rebuild (`v0.15-01`).                                                                 |
+| **Linux Default Editor Engine**        | None (manual file manager associations)                  | **`NotepadNext-Default-Editor-Linux.sh` (120+ MIME Types, Alternatives)**   | Freedesktop XDG MIME, update-alternatives/alternatives, and all DEs integration (`v0.15-07`).                                                                           |
 | **App Branding & Packaging**           | Generic low-res raster icon                              | **macOS Squircle Retina ICNS + Universal 2 DMG Distribution**                | Emerald gradient squircle, 3D stylus, native ICNS (`1024x1024`), multi-arch Universal 2 DMG (`arm64` + `x86_64`) (`v0.15-04`).                                          |
 | **Localization & Linguistic Rigor**    | Fragmented, incomplete community translations            | **100% Complete Bahasa Indonesia & English (0 Unfinished)**                  | Strictly standardized per EYD V, PUEBI, PASTI Badan Bahasa, and Mozilla L10n; eliminated parenthetical artifacts (`v0.15-04` - `v0.15-07`).                             |
 | **Linux Packaging & CI/CD**            | Upstream AppImage script only                            | **Native CPack Debian (`.deb`) & RPM (`.rpm`) Packages**                    | Built-in CPack configuration in `cmake/PackagingLinux.cmake` supporting Ubuntu 22.04/24.04 and Fedora with GitHub Actions CI matrix (`v0.15-07`). |
@@ -135,7 +144,8 @@ All 13 pillars of enterprise verification were executed and validated with empir
   - `NotepadNext-v0.15-07-x64.dmg` (~25 MB, Intel x86_64)
   - `NotepadNext-v0.15-arm64.dmg` (~25 MB, canonical alias)
   - `NotepadNext-v0.15-x64.dmg` (~25 MB, canonical alias)
-  - `NotepadNext-Default-Editor.sh` (system integration script)
+  - `NotepadNext-Default-Editor.sh` (macOS system integration script)
+  - `NotepadNext-Default-Editor-Linux.sh` (Linux system integration script)
 
 ### Linux Distribution (`.deb` & `.rpm`)
 - **Version**: `0.15-07`
@@ -146,4 +156,5 @@ All 13 pillars of enterprise verification were executed and validated with empir
   - `notepadnext_0.15-07_arm64.deb` (Debian ARM / Ubuntu ARM / Raspberry Pi)
   - `notepadnext-0.15-07-1.x86_64.rpm` (Fedora / RHEL / openSUSE)
   - `notepadnext-0.15-07-1.aarch64.rpm` (Fedora ARM / openSUSE ARM)
+  - `NotepadNext-Default-Editor-Linux.sh` (Linux system integration script)
   - `SHA256SUMS.txt` (cryptographic verification digests)

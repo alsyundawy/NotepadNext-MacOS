@@ -367,12 +367,24 @@ jobs:
             gh release upload "${RELEASE_TAG}" "${pkg}" --clobber || true
           done
 
-      - name: Upload Default Editor Script
+      - name: Upload Default Editor Scripts (macOS & Linux)
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          if [ -f "scripts/NotepadNext-Default-Editor.sh" ]; then
+          if [ -f "NotepadNext-Default-Editor.sh" ]; then
+            echo "Uploading NotepadNext-Default-Editor.sh to release ${RELEASE_TAG}"
+            gh release upload "${RELEASE_TAG}" "NotepadNext-Default-Editor.sh" --clobber
+          elif [ -f "scripts/NotepadNext-Default-Editor.sh" ]; then
             echo "Uploading scripts/NotepadNext-Default-Editor.sh to release ${RELEASE_TAG}"
             gh release upload "${RELEASE_TAG}" "scripts/NotepadNext-Default-Editor.sh" --clobber
           fi
+
+          if [ -f "NotepadNext-Default-Editor-Linux.sh" ]; then
+            echo "Uploading NotepadNext-Default-Editor-Linux.sh to release ${RELEASE_TAG}"
+            gh release upload "${RELEASE_TAG}" "NotepadNext-Default-Editor-Linux.sh" --clobber
+          elif [ -f "scripts/NotepadNext-Default-Editor-Linux.sh" ]; then
+            echo "Uploading scripts/NotepadNext-Default-Editor-Linux.sh to release ${RELEASE_TAG}"
+            gh release upload "${RELEASE_TAG}" "scripts/NotepadNext-Default-Editor-Linux.sh" --clobber
+          fi
+

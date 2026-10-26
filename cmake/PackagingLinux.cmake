@@ -6,6 +6,7 @@ install(TARGETS NotepadNext
 )
 install(FILES
     ${PROJECT_SOURCE_DIR}/deploy/linux/NotepadNext.desktop
+    ${PROJECT_SOURCE_DIR}/deploy/linux/com.github.alsyundawy.NotepadNext.desktop
     DESTINATION share/applications
 )
 install(FILES
@@ -16,6 +17,13 @@ install(FILES
     ${PROJECT_SOURCE_DIR}/icon/NotepadNext.svg
     DESTINATION share/icons/hicolor/scalable/mimetypes
 )
+if(EXISTS ${PROJECT_SOURCE_DIR}/NotepadNext-Default-Editor-Linux.sh)
+    install(PROGRAMS
+        ${PROJECT_SOURCE_DIR}/NotepadNext-Default-Editor-Linux.sh
+        DESTINATION bin
+        RENAME NotepadNext-Default-Editor
+    )
+endif()
 if(EXISTS ${PROJECT_SOURCE_DIR}/deploy/linux/com.github.alsyundawy.NotepadNext.metainfo.xml)
     install(FILES
         ${PROJECT_SOURCE_DIR}/deploy/linux/com.github.alsyundawy.NotepadNext.metainfo.xml
