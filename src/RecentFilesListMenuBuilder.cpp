@@ -1,8 +1,9 @@
 /*
  * This file is part of Notepad Next (macOS Edition).
  * Copyright 2019-2026 Justin Dailey
- * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
+ * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +31,7 @@ RecentFilesListMenuBuilder::RecentFilesListMenuBuilder(RecentFilesListManager *m
 {
 }
 
-void RecentFilesListMenuBuilder::populateMenu(QMenu *menu) const
+void RecentFilesListMenuBuilder::populateMenu(QMenu *menu)
 {
     int i = 0;
 
@@ -40,7 +41,7 @@ void RecentFilesListMenuBuilder::populateMenu(QMenu *menu) const
         auto *action = new QAction(QString("%1%2: %3").arg(i < 10 ? "&" : "").arg(i).arg(QDir::toNativeSeparators(file)), menu);
 
         action->setData(file);
-        connect(action, &QAction::triggered, const_cast<RecentFilesListMenuBuilder *>(this), &RecentFilesListMenuBuilder::recentFileActionTriggered);
+        connect(action, &QAction::triggered, this, &RecentFilesListMenuBuilder::recentFileActionTriggered);
 
         recentFileListActions.append(action);
     }

@@ -1,8 +1,9 @@
 /*
  * This file is part of Notepad Next (macOS Edition).
  * Copyright 2019-2026 Justin Dailey
- * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
+ * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -84,15 +85,13 @@
 #include "Document.h"
 #include "Scintilla.h"
 
-using namespace Scintilla::Internal;
-
-class QRegexSearch : public RegexSearchBase
+class QRegexSearch : public Scintilla::Internal::RegexSearchBase
 {
 public:
-    QRegexSearch();
+    QRegexSearch() = default;
 
-    Sci::Position FindText(Document *doc, Sci::Position minPos, Sci::Position maxPos, const char *s, bool caseSensitive, bool word, bool wordStart, Scintilla::FindOption flags, Sci::Position *length) override;
-    const char *SubstituteByPosition(Document *doc, const char *text, Sci::Position *length) override;
+    Sci::Position FindText(Scintilla::Internal::Document *doc, Sci::Position minPos, Sci::Position maxPos, const char *s, bool caseSensitive, bool word, bool wordStart, Scintilla::FindOption flags, Sci::Position *length) override;
+    const char *SubstituteByPosition(Scintilla::Internal::Document *doc, const char *text, Sci::Position *length) override;
 
 private:
     QRegularExpressionMatch match;

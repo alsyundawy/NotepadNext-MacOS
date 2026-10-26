@@ -1,8 +1,9 @@
 /*
  * This file is part of Notepad Next (macOS Edition).
  * Copyright 2019-2026 Justin Dailey
- * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
+ * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,7 +48,7 @@ BraceMatch::BraceMatch(ScintillaNext *editor) :
     editor->indicSetUnder(braceBadlight, true);
     editor->braceBadLightIndicator(true, braceBadlight);
 
-    connect(this, &EditorDecorator::stateChanged, [=, this](bool b) {
+    connect(this, &EditorDecorator::stateChanged, [this](bool b) {
         if (b) {
             doHighlighting();
         }
@@ -59,12 +60,12 @@ BraceMatch::BraceMatch(ScintillaNext *editor) :
 
 void BraceMatch::doHighlighting()
 {
-    static const QList<char> braces = {'[', ']', '(', ')', '{', '}'};
+    static const QList braces = {'[', ']', '(', ')', '{', '}'};
 
     const auto pos = static_cast<Sci_Position>(editor->currentPos());
 
     // Check the character before the caret first
-    int match = static_cast<int>(editor->braceMatch(pos - 1, 0));
+    auto match = static_cast<int>(editor->braceMatch(pos - 1, 0));
 
     if (match != INVALID_POSITION) {
          editor->braceHighlight(pos - 1, match);
@@ -80,7 +81,7 @@ void BraceMatch::doHighlighting()
         else {
             // Nothing was found, now check to see if we need to badlight something
             // by checking the characters
-            char c = static_cast<char>(editor->charAt(pos - 1));
+            auto c = static_cast<char>(editor->charAt(pos - 1));
             if (braces.contains(c)) {
                 editor->braceBadLight(pos - 1);
             }
@@ -105,9 +106,8 @@ void BraceMatch::clearHighlighting()
 
 void BraceMatch::notify(const NotificationData *pscn)
 {
-    if (pscn->nmhdr.code == Notification::UpdateUI) {
-        if (FlagSet(pscn->updated, Update::Text) || FlagSet(pscn->updated, Update::Selection)) {
-            doHighlighting();
-        }
+    if (pscn->nmhdr.code == Notification::UpdateUI &&
+        (FlagSet(pscn->updated, Update::Text) || FlagSet(pscn->updated, Update::Selection))) {
+        doHighlighting();
     }
 }

@@ -1,8 +1,9 @@
 /*
  * This file is part of Notepad Next (macOS Edition).
  * Copyright 2019-2026 Justin Dailey
- * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
+ * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,9 +39,9 @@ QList<ComboBoxItem> caseItems{
 };
 
 QString val_to_case_str(int val) {
-    for (const ComboBoxItem &item : caseItems) {
-        if (item.second == val) {
-            return item.first;
+    for (const auto &[name, value] : caseItems) {
+        if (value == val) {
+            return name;
         }
     }
 
@@ -76,10 +77,8 @@ LanguageStylesModel::LanguageStylesModel(ScintillaNext *editor, QObject *parent)
 
 QVariant LanguageStylesModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if (role == Qt::DisplayRole) {
-        if (orientation == Qt::Horizontal) {
-            return columns[section];
-        }
+    if (role == Qt::DisplayRole && orientation == Qt::Horizontal) {
+        return columns[section];
     }
 
     return QVariant();
@@ -129,7 +128,7 @@ QVariant LanguageStylesModel::data(const QModelIndex &index, int role) const
                 if (role == Qt::EditRole) { return editor->styleBold(index.row()); }
                 else { return editor->styleBold(index.row()) ? "True" : "False"; }
             case 8: // Weight
-                return (int)editor->styleWeight(index.row());
+                return static_cast<int>(editor->styleWeight(index.row()));
             case 9: // Italic
                 if (role == Qt::EditRole) { return editor->styleItalic(index.row()); }
                 else { return editor->styleItalic(index.row()) ? "True" : "False"; }
@@ -137,14 +136,14 @@ QVariant LanguageStylesModel::data(const QModelIndex &index, int role) const
                 if (role == Qt::EditRole) { return editor->styleUnderline(index.row()); }
                 else { return editor->styleUnderline(index.row()) ? "True" : "False"; }
             case 11: // Fore
-                return QColor(convert_color(editor->styleFore(index.row())));
+                return QColor(convert_color(static_cast<QRgb>(editor->styleFore(index.row()))));
             case 12: // Back
-                return QColor(convert_color(editor->styleBack(index.row())));
+                return QColor(convert_color(static_cast<QRgb>(editor->styleBack(index.row()))));
             case 13: // EOL Filled
                 if (role == Qt::EditRole) { return editor->styleEOLFilled(index.row()); }
                 else { return editor->styleEOLFilled(index.row()) ? "True" : "False"; }
             case 14: // Character Set
-                return (int)editor->styleCharacterSet(index.row());
+                return static_cast<int>(editor->styleCharacterSet(index.row()));
             case 15: // Case
                 if (role == Qt::EditRole) { return static_cast<int>(editor->styleCase(index.row())); }
                 else { return val_to_case_str(static_cast<int>(editor->styleCase(index.row()))); }
@@ -174,10 +173,10 @@ QVariant LanguageStylesModel::data(const QModelIndex &index, int role) const
     }
     else if (role == Qt::DecorationRole) {
         if (index.column() == 11) {
-            return QColor(convert_color(editor->styleFore(index.row())));
+            return QColor(convert_color(static_cast<QRgb>(editor->styleFore(index.row()))));
         }
         else if (index.column() == 12) {
-            return QColor(convert_color(editor->styleBack(index.row())));
+            return QColor(convert_color(static_cast<QRgb>(editor->styleBack(index.row()))));
         }
     }
 

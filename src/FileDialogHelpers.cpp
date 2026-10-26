@@ -1,8 +1,9 @@
 /*
  * This file is part of Notepad Next (macOS Edition).
  * Copyright 2019-2026 Justin Dailey
- * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
+ * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,7 +54,7 @@ QList<QUrl> FileDialogHelpers::getOpenFileUrls(QWidget *parent, const QString &c
 
 QStringList FileDialogHelpers::getOpenFileNames(QWidget *parent, const QString &caption, const QString &dir, const QString &filter, QString *selectedFilter, QFileDialog::Options options)
 {
-    const QStringList schemes = QStringList(QStringLiteral("file"));
+    const auto schemes = QStringList(QStringLiteral("file"));
     const QList<QUrl> selectedUrls = getOpenFileUrls(parent, caption, dir, filter, selectedFilter, options, schemes);
     QStringList fileNames;
 
@@ -91,7 +92,7 @@ QUrl FileDialogHelpers::getSaveFileUrl(QWidget *parent, const QString &caption, 
 
 QString FileDialogHelpers::getSaveFileName(QWidget *parent, const QString &caption, const QString &dir, const QString &filter, QString *selectedFilter, QFileDialog::Options options)
 {
-    const QStringList schemes = QStringList(QStringLiteral("file"));
+    const auto schemes = QStringList(QStringLiteral("file"));
     const QUrl selectedUrl = getSaveFileUrl(parent, caption, dir, filter, selectedFilter, options, schemes);
     if (selectedUrl.isLocalFile() || selectedUrl.isEmpty()) {
         return selectedUrl.toLocalFile();

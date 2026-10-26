@@ -1,8 +1,9 @@
 /*
  * This file is part of Notepad Next (macOS Edition).
  * Copyright 2019-2026 Justin Dailey
- * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
+ * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -57,9 +58,9 @@ void SelectionTracker::trackDeletion(int pos, int length)
 {
     // Adjust the caret and anchor. Use the min in case they are within the range being deleted
     if (caret > pos) {
-        caret -= qMin(static_cast<int>(caret - pos), length);
+        caret -= qMin(caret - pos, length);
     }
     if (anchor > pos) {
-        anchor -= qMin(static_cast<int>(anchor - pos), length);
+        anchor -= qMin(anchor - pos, length);
     }
 }

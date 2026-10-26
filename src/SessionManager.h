@@ -1,8 +1,9 @@
 /*
  * This file is part of Notepad Next (macOS Edition).
  * Copyright 2019-2026 Justin Dailey
- * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
+ * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,7 +34,7 @@ class NotepadNextApplication;
 class SessionManager
 {
 public:
-    enum SessionFileType {
+    enum class SessionFileType {
         None = 0,
         SavedFile = 1,
         UnsavedFile = 2,
@@ -48,7 +49,7 @@ public:
 
     static void clear();
 
-    void saveSession(MainWindow *window);
+    void saveSession(const MainWindow *window) const;
     void loadSession(MainWindow *window);
 
     bool willFileGetStoredInSession(const ScintillaNext *editor) const;
@@ -56,24 +57,24 @@ public:
 private:
     static QDir sessionDirectory();
 
-    static void saveIntoSessionDirectory(ScintillaNext *editor, const QString &sessionFileName);
+    static void saveIntoSessionDirectory(const ScintillaNext *editor, const QString &sessionFileName);
 
     static SessionFileType determineType(const ScintillaNext *editor);
 
     static void clearSettings();
     static void clearDirectory();
 
-    void storeFileDetails(ScintillaNext *editor, QSettings &settings);
+    void storeFileDetails(const ScintillaNext *editor, QSettings &settings) const;
     ScintillaNext *loadFileDetails(const QSettings &settings);
 
-    void storeUnsavedFileDetails(ScintillaNext *editor, QSettings &settings);
+    void storeUnsavedFileDetails(const ScintillaNext *editor, QSettings &settings) const;
     ScintillaNext *loadUnsavedFileDetails(const QSettings &settings);
 
-    void storeTempFile(ScintillaNext *editor, QSettings &settings);
+    void storeTempFile(const ScintillaNext *editor, QSettings &settings) const;
     ScintillaNext *loadTempFile(const QSettings &settings);
 
-    void storeEditorViewDetails(ScintillaNext *editor, QSettings &settings);
-    void loadEditorViewDetails(ScintillaNext *editor, const QSettings &settings);
+    void storeEditorViewDetails(const ScintillaNext *editor, QSettings &settings) const;
+    void loadEditorViewDetails(ScintillaNext *editor, const QSettings &settings) const;
 
     NotepadNextApplication *app;
     SessionFileTypes fileTypes;

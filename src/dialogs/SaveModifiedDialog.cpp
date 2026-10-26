@@ -1,8 +1,9 @@
 /*
  * This file is part of Notepad Next (macOS Edition).
  * Copyright 2019-2026 Justin Dailey
- * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
+ * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -113,7 +114,7 @@ void SaveModifiedDialog::setupUi()
         m_fileListWidget->setFixedHeight(120);
         m_fileListWidget->setSelectionMode(QAbstractItemView::NoSelection);
 
-        for (auto *editor : m_editors) {
+        for (const auto *editor : m_editors) {
             if (!editor) {
                 continue;
             }
@@ -224,9 +225,10 @@ void SaveModifiedDialog::updateThemeColors()
     const QString borderCol = dark ? QStringLiteral("#3e3e42") : QStringLiteral("#cbd5e1");
     const QString txtPri = pal.color(QPalette::WindowText).name();
     const QString txtSec = dark ? QStringLiteral("#94a3b8") : QStringLiteral("#64748b");
-    const QString accentCol = pal.color(QPalette::Highlight).isValid() && pal.color(QPalette::Highlight) != winColor
+    const QString fallbackAccent = dark ? QStringLiteral("#38bdf8") : QStringLiteral("#0078d4");
+    const QString accentCol = (pal.color(QPalette::Highlight).isValid() && pal.color(QPalette::Highlight) != winColor)
                                 ? pal.color(QPalette::Highlight).name()
-                                : (dark ? QStringLiteral("#38bdf8") : QStringLiteral("#0078d4"));
+                                : fallbackAccent;
 
     const QString dialogStyle =
         QString(

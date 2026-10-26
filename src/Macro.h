@@ -1,8 +1,9 @@
 /*
  * This file is part of Notepad Next (macOS Edition).
  * Copyright 2019-2026 Justin Dailey
- * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
+ * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,12 +29,12 @@ class Macro
 public:
     Macro();
 
-    ~Macro();
+    ~Macro() = default;
 
     void addMacroStep(Scintilla::Message message, Scintilla::uptr_t wParam, Scintilla::sptr_t lParam);
     void addMacroStep(const MacroStep &step);
 
-    int size() const { return steps.size(); }
+    qsizetype size() const { return steps.size(); }
 
     void replay(ScintillaNext *editor, int n = 1) const;
     void replayTillEndOfFile(ScintillaNext *editor) const;
@@ -43,8 +44,15 @@ public:
 
     QVector<MacroStep> &getSteps() { return steps; }
 
-    friend QDataStream &operator<<(QDataStream& stream, const Macro &Macro);
-    friend QDataStream &operator>>(QDataStream& stream, Macro &Macro);
+    friend QDataStream &operator<<(QDataStream& stream, const Macro &macro)
+    {
+        return stream << macro.name << macro.steps;
+    }
+
+    friend QDataStream &operator>>(QDataStream& stream, Macro &macro)
+    {
+        return stream >> macro.name >> macro.steps;
+    }
 
 private:
     QVector<MacroStep> steps;

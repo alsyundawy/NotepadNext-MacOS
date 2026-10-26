@@ -1,8 +1,9 @@
 /*
  * This file is part of Notepad Next (macOS Edition).
  * Copyright 2019-2026 Justin Dailey
- * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
+ * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -138,25 +139,22 @@ static const QMap<Scintilla::Message, QString> messageData {
     { Scintilla::Message::ScrollToEnd, "Scroll To End" }
 };
 
-MacroStep::MacroStep(Message message, uptr_t wParam, sptr_t lParam) :
+MacroStep::MacroStep(Message message, uptr_t wParam, sptr_t lParamValue) :
     message(message),
     wParam(wParam)
 {
-    if (message == Message::ReplaceSel || message == Message::InsertText) {
+    using enum Scintilla::Message;
+    if (message == ReplaceSel || message == InsertText) {
         // wParam is 0 for replace, and position for insert
-        this->str = QByteArray(reinterpret_cast<const char*>(lParam)); // NOLINT(performance-no-int-to-ptr)
+        this->str = QByteArray(reinterpret_cast<const char*>(lParamValue)); // NOSONAR(cpp:S3630,cpp:S5416) // NOLINT(performance-no-int-to-ptr)
     }
-    else if (message == Message::AddText || message == Message::AppendText) {
+    else if (message == AddText || message == AppendText) {
         // wParam is length of text
-        this->str = QByteArray(reinterpret_cast<const char*>(lParam), static_cast<qsizetype>(wParam)); // NOLINT(performance-no-int-to-ptr)
+        this->str = QByteArray(reinterpret_cast<const char*>(lParamValue), static_cast<qsizetype>(wParam)); // NOSONAR(cpp:S3630,cpp:S5416) // NOLINT(performance-no-int-to-ptr)
     }
     else {
-        this->lParam = lParam;
+        this->lParam = lParamValue;
     }
-}
-
-MacroStep::~MacroStep()
-{
 }
 
 QString MacroStep::toString() const
@@ -180,7 +178,7 @@ QString MacroStep::getName() const
     return MacroStep::NameOfMessage(message);
 }
 
-void MacroStep::replay(ScintillaNext *editor) const
+void MacroStep::replay(const ScintillaNext *editor) const
 {
     if (MacroStep::MessageHasString(message)) {
         editor->sends(static_cast<int>(message), wParam, str.constBegin());
@@ -192,10 +190,11 @@ void MacroStep::replay(ScintillaNext *editor) const
 
 bool MacroStep::MessageHasString(Scintilla::Message message)
 {
-    return message == Message::ReplaceSel ||
-            message == Message::InsertText ||
-            message == Message::AddText ||
-            message == Message::AppendText;
+    using enum Scintilla::Message;
+    return message == ReplaceSel ||
+            message == InsertText ||
+            message == AddText ||
+            message == AppendText;
 }
 
 QString MacroStep::NameOfMessage(Scintilla::Message message)
@@ -214,38 +213,4 @@ QString MacroStep::NameOfMessage(Scintilla::Message message)
 QList<Message> MacroStep::RecordableMacroMessages()
 {
     return messageData.keys();
-}
-
-QDataStream &operator<<(QDataStream& stream, const MacroStep &macroStep)
-{
-    // NOTE: Need to force the wParam and lParam into 32 bits due to Scintilla defining
-    // them differently on different systems.
-
-    stream << macroStep.message << static_cast<quint32>(macroStep.wParam);
-
-    if (MacroStep::MessageHasString(macroStep.message)) {
-        return stream << macroStep.str;
-    } else {
-        return stream << static_cast<qint32>(macroStep.lParam);
-    }
-}
-
-QDataStream &operator>>(QDataStream& stream, MacroStep &macroStep)
-{
-    // NOTE: Need to force the wParam and lParam into 32 bits due to Scintilla defining
-    // them differently on different systems.
-
-    quint32 w;
-
-    stream >> macroStep.message >> w;
-    macroStep.wParam = static_cast<quint32>(w);
-
-    if (MacroStep::MessageHasString(macroStep.message)) {
-        return stream >> macroStep.str;
-    } else {
-        qint32 l;
-        stream >> l;
-        macroStep.lParam = static_cast<qint32>(l);
-        return stream;
-    }
 }

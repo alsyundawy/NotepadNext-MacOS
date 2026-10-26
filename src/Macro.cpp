@@ -1,8 +1,9 @@
 /*
  * This file is part of Notepad Next (macOS Edition).
  * Copyright 2019-2026 Justin Dailey
- * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
+ * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,17 +25,13 @@ using namespace Scintilla;
 
 Macro::Macro() : name("<Current Recorded Macro>") {}
 
-Macro::~Macro()
-{
-}
-
 void Macro::addMacroStep(Message message, uptr_t wParam, sptr_t lParam)
 {
     qInfo(Q_FUNC_INFO);
 
     // Combine ReplaceSel messages into a single string
     if (message == Message::ReplaceSel && !steps.empty() && steps.constLast().message == Message::ReplaceSel) {
-        steps.last().str.append(reinterpret_cast<const char*>(lParam)); // NOLINT(performance-no-int-to-ptr)
+        steps.last().str.append(reinterpret_cast<const char*>(lParam)); // NOSONAR(cpp:S3630,cpp:S5416) // NOLINT(performance-no-int-to-ptr)
     }
     // Combine DeleteBack (backspace) with ReplaceSel
     else if (message == Message::DeleteBack && !steps.empty() && steps.constLast().message == Message::ReplaceSel) {
@@ -127,14 +124,4 @@ const QString &Macro::getName() const
 void Macro::setName(const QString &value)
 {
     name = value;
-}
-
-QDataStream &operator<<(QDataStream& stream, const Macro &macro)
-{
-    return stream << macro.name << macro.steps;
-}
-
-QDataStream &operator>>(QDataStream& stream, Macro &macro)
-{
-    return stream >> macro.name >> macro.steps;
 }

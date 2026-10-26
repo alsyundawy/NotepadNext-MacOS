@@ -1,8 +1,9 @@
 /*
  * This file is part of Notepad Next (macOS Edition).
  * Copyright 2019-2026 Justin Dailey
- * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
+ * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1163,6 +1164,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) : // NOSONAR
         for (const auto editor : editorsList) {
             const auto iconPath = editor->isSavedToDisk() ? ":/icons/saved.png" : ":/icons/unsaved.png";
             const auto action = editorsMenu->addAction(QIcon(iconPath), editor->getName());
+            action->setIconVisibleInMenu(true);
 
             if (editor->isActiveWindow()) {
                 auto font = action->font();
@@ -1249,6 +1251,11 @@ MainWindow::MainWindow(NotepadNextApplication *app) : // NOSONAR
 
     initUpdateCheck();
     setupSystemTray();
+
+    const auto allActions = findChildren<QAction *>();
+    for (QAction *action : allActions) {
+        action->setIconVisibleInMenu(true);
+    }
 }
 
 MainWindow::~MainWindow() = default;
@@ -1359,7 +1366,7 @@ void MainWindow::setupLanguageMenu()
     }
 }
 
-namespace {
+namespace ThemeMenuHelpers {
 void populateThemeSubmenu(QMenu *menu, const QList<const ThemePalette *> &palettes, MainWindow *window)
 {
     for (const ThemePalette *pal : palettes) {
@@ -1410,7 +1417,8 @@ void updateThemeMenuChecks(const QMenu *menu, const QString &curId)
         }
     }
 }
-} // namespace
+} // namespace ThemeMenuHelpers
+using namespace ThemeMenuHelpers;
 
 void MainWindow::setupThemeMenu()
 {
@@ -1715,15 +1723,17 @@ void MainWindow::closeFile(ScintillaNext *editor)
 
     editor->close();
 
-    // If the last document was closed, figure out what to do next
-    if (editorCount() == 0) {
-        if (app->getSettings()->exitOnLastTabClosed()) {
-            close();
+    // If the last document was closed, figure out what to do next. Defer to next event loop iteration
+    // to allow Qt-Advanced-Docking-System tab-close signal handler to finish unwinding.
+    QTimer::singleShot(0, this, [this]() {
+        if (editorCount() == 0) {
+            if (app->getSettings()->exitOnLastTabClosed()) {
+                close();
+            } else {
+                newFile();
+            }
         }
-        else {
-            newFile();
-        }
-    }
+    });
 }
 
 void MainWindow::closeAllFiles()
@@ -1737,7 +1747,11 @@ void MainWindow::closeAllFiles()
         editor->close();
     }
 
-    newFile();
+    QTimer::singleShot(0, this, [this]() {
+        if (editorCount() == 0) {
+            newFile();
+        }
+    });
 }
 
 void MainWindow::closeAllExceptActive()
@@ -2553,8 +2567,10 @@ void MainWindow::showSaveErrorMessage(const ScintillaNext *editor, QFileDevice::
 
 void MainWindow::showEditorZoomLevelIndicator() const
 {
-    // Not sure if Scintilla's zoom level matches up to an exact percentage, but visibly this is close
-    FadingIndicator::showText(currentEditor(), tr("Zoom: %1%").arg(zoomLevel * 10 + 100));
+    const QString msg = tr("Zoom: %1%").arg(zoomLevel * 10 + 100);
+    if (statusBar()) {
+        statusBar()->showMessage(msg, 2000);
+    }
 }
 
 MainWindow::UserSaveAction MainWindow::promptForSave(const QVector<ScintillaNext *> &editorList)
@@ -2703,7 +2719,7 @@ void MainWindow::changeEvent(QEvent *changeEvent)
     }
 }
 
-namespace {
+namespace ContextMenuHelpers {
 QStringList resolveContextMenuActionNames(const NotepadNextApplication *app, const ScintillaNext *editor, int clickPos) {
     QStringList actionNames = {
         QStringLiteral("Undo"), QStringLiteral("Redo"), QStringLiteral(""),
@@ -2730,7 +2746,8 @@ QStringList resolveContextMenuActionNames(const NotepadNextApplication *app, con
     }
     return actionNames;
 }
-}
+} // namespace ContextMenuHelpers
+using namespace ContextMenuHelpers;
 
 void MainWindow::addEditor(ScintillaNext *editor)
 {
@@ -2770,6 +2787,15 @@ void MainWindow::addEditor(ScintillaNext *editor)
         menu->addSeparator();
         menu->addMenu(ui->menuMarkAllOccurrences);
         menu->addMenu(ui->menuClearMarks);
+
+        for (QAction *action : menu->actions()) {
+            action->setIconVisibleInMenu(true);
+            if (action->menu()) {
+                for (QAction *subAction : action->menu()->actions()) {
+                    subAction->setIconVisibleInMenu(true);
+                }
+            }
+        }
 
         menu->popup(QCursor::pos());
     });
@@ -2955,6 +2981,10 @@ QMenu *MainWindow::buildMenu(const QStringList &actionNames)
     menu->setAttribute(Qt::WA_DeleteOnClose);
 
     ActionUtils::populateActionContainer(menu, this, actionNames);
+
+    for (QAction *action : menu->actions()) {
+        action->setIconVisibleInMenu(true);
+    }
 
     return menu;
 }

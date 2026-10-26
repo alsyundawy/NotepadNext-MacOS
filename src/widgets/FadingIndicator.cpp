@@ -1,8 +1,9 @@
 /*
  * This file is part of Notepad Next (macOS Edition).
  * Copyright 2019-2026 Justin Dailey
- * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
+ * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,9 +50,8 @@ public:
         QFont font = m_label->font();
         font.setPixelSize(size == FadingIndicator::LargeText ? 30 : 18);
         m_label->setFont(font);
-        QPalette pal = palette();
-        pal.setColor(QPalette::WindowText, pal.color(QPalette::Window));
-        m_label->setPalette(pal);
+        m_label->setStyleSheet(QStringLiteral("color: #ffffff; background: transparent; padding: 6px 14px; font-weight: bold;"));
+        m_label->setAlignment(Qt::AlignCenter);
         auto layout = new QHBoxLayout;
         setLayout(layout);
         layout->addWidget(m_label);
@@ -104,9 +104,9 @@ protected:
         if (!m_pixmap.isNull()) {
             p.drawPixmap(rect(), m_pixmap);
         } else {
-            p.setBrush(palette().color(QPalette::WindowText));
-            p.setPen(Qt::NoPen);
-            p.drawRoundedRect(rect(), 15, 15);
+            p.setBrush(QColor(30, 30, 30, 220));
+            p.setPen(QColor(255, 255, 255, 45));
+            p.drawRoundedRect(rect().adjusted(1, 1, -1, -1), 12, 12);
         }
     }
 

@@ -1,8 +1,9 @@
 /*
  * This file is part of Notepad Next (macOS Edition).
  * Copyright 2019-2026 Justin Dailey
- * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
+ * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,6 +45,7 @@ void populateActionContainer(Container* container, const QObject* context, const
             QAction* action = context->findChild<QAction*>(fullObjectName, Qt::FindDirectChildrenOnly);
 
             if (action) {
+                action->setIconVisibleInMenu(true);
                 container->addAction(action);
             } else {
                 qWarning() << "Cannot locate action named" << fullObjectName;

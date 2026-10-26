@@ -1,8 +1,9 @@
 /*
  * This file is part of Notepad Next (macOS Edition).
  * Copyright 2019-2026 Justin Dailey
- * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
+ * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,19 +45,20 @@ public:
 
     QVector<ScintillaNext *> editors() const;
 
-    void switchToEditor(const ScintillaNext *editor);
+    void switchToEditor(const ScintillaNext *editor) const;
 
     int count() const;
 
-    void splitToRight(ScintillaNext *editor);
-    void splitToBottom(ScintillaNext *editor);
+    void splitToRight(const ScintillaNext *editor);
+    void splitToBottom(const ScintillaNext *editor);
 
 public slots:
     void addEditor(ScintillaNext *editor);
 
 private slots:
     void dockWidgetCloseRequested();
-    void editorRenamed(ScintillaNext *editor);
+    void editorRenamed(const ScintillaNext *editor) const;
+    void onFocusedDockWidgetChanged(const ads::CDockWidget *old, const ads::CDockWidget *now);
 
 signals:
     void editorAdded(ScintillaNext *editor);

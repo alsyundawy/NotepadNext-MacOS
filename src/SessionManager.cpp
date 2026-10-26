@@ -1,8 +1,9 @@
 /*
  * This file is part of Notepad Next (macOS Edition).
  * Copyright 2019-2026 Justin Dailey
- * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
+ * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -70,13 +71,13 @@ QDir SessionManager::sessionDirectory()
     QDir d(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
 
     if (d.mkpath("session")) {
-        Q_UNUSED(d.cd("session"));
+        (void)d.cd("session");
     }
 
     return d;
 }
 
-void SessionManager::saveIntoSessionDirectory(ScintillaNext *editor, const QString &sessionFileName)
+void SessionManager::saveIntoSessionDirectory(const ScintillaNext *editor, const QString &sessionFileName)
 {
     editor->saveCopyAs(sessionDirectory().filePath(sessionFileName));
 }
@@ -85,18 +86,18 @@ SessionManager::SessionFileType SessionManager::determineType(const ScintillaNex
 {
     if (editor->isFile()) {
         if (editor->isSavedToDisk()) {
-            return SessionManager::SavedFile;
+            return SessionManager::SessionFileType::SavedFile;
         }
         else {
-            return SessionManager::UnsavedFile;
+            return SessionManager::SessionFileType::UnsavedFile;
         }
     }
     else {
         if (!editor->isSavedToDisk()) {
-            return SessionManager::TempFile;
+            return SessionManager::SessionFileType::TempFile;
         }
         else {
-            return SessionManager::None;
+            return SessionManager::SessionFileType::None;
         }
     }
 }
@@ -109,7 +110,7 @@ void SessionManager::clear()
 
 void SessionManager::clearSettings()
 {
-    ApplicationSettings settings;;
+    ApplicationSettings settings;
 
     // Clear everything out. There can be left over entries that are no longer needed
     settings.beginGroup("CurrentSession");
@@ -125,20 +126,20 @@ void SessionManager::clearDirectory()
     }
 }
 
-void SessionManager::saveSession(MainWindow *window)
+void SessionManager::saveSession(const MainWindow *window) const
 {
     qInfo(Q_FUNC_INFO);
 
     clear();
 
     // Early out if no flags are set
-    if (fileTypes == SessionManager::None) {
+    if (fileTypes == SessionManager::SessionFileType::None) {
         return;
     }
 
     const ScintillaNext *currentEditor = window->currentEditor();
     int currentEditorIndex = 0;
-    ApplicationSettings settings;;
+    ApplicationSettings settings;
 
     settings.beginGroup("CurrentSession");
 
@@ -151,17 +152,17 @@ void SessionManager::saveSession(MainWindow *window)
         if (fileTypes.testFlag(editorType)) {
             settings.setArrayIndex(index);
 
-            if (editorType == SessionManager::SavedFile) {
+            if (editorType == SessionManager::SessionFileType::SavedFile) {
                 storeFileDetails(editor, settings);
             }
-            else if (editorType == SessionManager::UnsavedFile) {
+            else if (editorType == SessionManager::SessionFileType::UnsavedFile) {
                 storeUnsavedFileDetails(editor, settings);
             }
-            else if (editorType == SessionManager::TempFile) {
+            else if (editorType == SessionManager::SessionFileType::TempFile) {
                 storeTempFile(editor, settings);
             }
             else {
-                qWarning("Unknown SessionFileType %d", editorType);
+                qWarning("Unknown SessionFileType %d", static_cast<int>(editorType));
             }
 
             if (currentEditor == editor) {
@@ -183,11 +184,11 @@ void SessionManager::loadSession(MainWindow *window)
 {
     qInfo(Q_FUNC_INFO);
 
-    ApplicationSettings settings;;
+    ApplicationSettings settings;
 
     settings.beginGroup("CurrentSession");
 
-    ScintillaNext *currentEditor = Q_NULLPTR;
+    const ScintillaNext *currentEditor = Q_NULLPTR;
     const int currentEditorIndex = settings.value("CurrentEditorIndex").toInt();
     const int size = settings.beginReadArray("OpenedFiles");
 
@@ -198,12 +199,10 @@ void SessionManager::loadSession(MainWindow *window)
     for (int index = 0; index < size; ++index) {
         settings.setArrayIndex(index);
 
-        ScintillaNext *editor = Q_NULLPTR;
+        const ScintillaNext *editor = Q_NULLPTR;
 
         if (settings.contains("Type")) {
-            const QString type = settings.value("Type").toString();
-
-            if (type == QStringLiteral("File")) {
+            if (const QString type = settings.value("Type").toString(); type == QStringLiteral("File")) {
                 editor = loadFileDetails(settings);
             }
             else if (type == QStringLiteral("UnsavedFile")) {
@@ -216,10 +215,8 @@ void SessionManager::loadSession(MainWindow *window)
                 qDebug("Unknown session entry type: %s", qUtf8Printable(type));
             }
 
-            if (editor) {
-                 if (currentEditorIndex == index) {
-                    currentEditor = editor;
-                }
+            if (editor && currentEditorIndex == index) {
+                currentEditor = editor;
             }
         }
         else {
@@ -244,7 +241,7 @@ bool SessionManager::willFileGetStoredInSession(const ScintillaNext *editor) con
     return fileTypes.testFlag(editorType);
 }
 
-void SessionManager::storeFileDetails(ScintillaNext *editor, QSettings &settings)
+void SessionManager::storeFileDetails(const ScintillaNext *editor, QSettings &settings) const
 {
     settings.setValue("Type", "File");
     settings.setValue("FilePath", editor->getFilePath());
@@ -286,7 +283,7 @@ ScintillaNext* SessionManager::loadFileDetails(const QSettings &settings)
     }
 }
 
-void SessionManager::storeUnsavedFileDetails(ScintillaNext *editor, QSettings &settings)
+void SessionManager::storeUnsavedFileDetails(const ScintillaNext *editor, QSettings &settings) const
 {
     const QString sessionFileName = RandomSessionFileName();
 
@@ -310,8 +307,7 @@ ScintillaNext *SessionManager::loadUnsavedFileDetails(const QSettings &settings)
     qDebug("Session file: \"%s\"", qUtf8Printable(filePath));
     qDebug("  temp loc: \"%s\"", qUtf8Printable(sessionFilePath));
 
-    const ScintillaNext *existingEditor = app->getEditorManager()->getEditorByFilePath(filePath);
-    if (existingEditor != Q_NULLPTR) {
+    if (const ScintillaNext *existingEditor = app->getEditorManager()->getEditorByFilePath(filePath); existingEditor != Q_NULLPTR) {
         qDebug("  file is already open, ignoring");
         return Q_NULLPTR;
     }
@@ -341,7 +337,7 @@ ScintillaNext *SessionManager::loadUnsavedFileDetails(const QSettings &settings)
     }
 }
 
-void SessionManager::storeTempFile(ScintillaNext *editor, QSettings &settings)
+void SessionManager::storeTempFile(const ScintillaNext *editor, QSettings &settings) const
 {
     const QString sessionFileName = RandomSessionFileName();
 
@@ -394,12 +390,12 @@ ScintillaNext *SessionManager::loadTempFile(const QSettings &settings)
     }
 }
 
-void SessionManager::storeEditorViewDetails(ScintillaNext *editor, QSettings &settings)
+void SessionManager::storeEditorViewDetails(const ScintillaNext *editor, QSettings &settings) const
 {
     settings.setValue("FirstVisibleLine", static_cast<int>(editor->firstVisibleLine() + 1)); // Keep it 1-based in the settings just for human-readability
     settings.setValue("CurrentPosition", static_cast<int>(editor->currentPos()));
 
-    auto *decorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
+    const auto *decorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
     if (decorator == nullptr) {
         qWarning("Editor has no BookMarkDecorator, unable to store bookmarks");
         return;
@@ -411,7 +407,7 @@ void SessionManager::storeEditorViewDetails(ScintillaNext *editor, QSettings &se
     }
 }
 
-void SessionManager::loadEditorViewDetails(ScintillaNext *editor, const QSettings &settings)
+void SessionManager::loadEditorViewDetails(ScintillaNext *editor, const QSettings &settings) const
 {
     const int firstVisibleLine = settings.value("FirstVisibleLine").toInt() - 1;
     const int currentPosition = settings.value("CurrentPosition").toInt();

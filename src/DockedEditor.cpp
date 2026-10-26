@@ -1,8 +1,9 @@
 /*
  * This file is part of Notepad Next (macOS Edition).
  * Copyright 2019-2026 Justin Dailey
- * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
+ * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -68,66 +69,65 @@ DockedEditor::DockedEditor(QWidget *parent) : QObject(parent)
     dockManager = new ads::CDockManager(parent);
     dockManager->setStyleSheet("");
 
-    connect(dockManager, &ads::CDockManager::focusedDockWidgetChanged, this, [=, this](ads::CDockWidget* old, ads::CDockWidget* now) {
-        Q_UNUSED(old)
+    connect(dockManager, &ads::CDockManager::focusedDockWidgetChanged, this, &DockedEditor::onFocusedDockWidgetChanged);
 
-        if (now) {
-            auto *editor = qobject_cast<ScintillaNext *>(now->widget());
-            if (editor) {
-                currentEditor = editor;
-                latestDockArea = now->dockAreaWidget();
-                editor->grabFocus();
-                emit editorActivated(editor);
-                return;
-            }
-        }
-
-        // When closing a tab or dock widget, 'now' is nullptr. Safely resolve the next active editor.
-        ScintillaNext *fallbackEditor = nullptr;
-        for (const ads::CDockAreaWidget* areaWidget : dockManager->openedDockAreas()) {
-            if (!areaWidget) { continue; }
-            if (ads::CDockWidget* currentDock = areaWidget->currentDockWidget()) {
-                fallbackEditor = qobject_cast<ScintillaNext *>(currentDock->widget());
-                if (fallbackEditor) {
-                    latestDockArea = const_cast<ads::CDockAreaWidget*>(areaWidget);
-                    break;
-                }
-            }
-            for (const ads::CDockWidget* dockWidget : areaWidget->dockWidgets()) {
-                if (dockWidget) {
-                    fallbackEditor = qobject_cast<ScintillaNext *>(dockWidget->widget());
-                    if (fallbackEditor) {
-                        latestDockArea = const_cast<ads::CDockAreaWidget*>(areaWidget);
-                        break;
-                    }
-                }
-            }
-            if (fallbackEditor) { break; }
-        }
-
-        currentEditor = fallbackEditor;
-        if (currentEditor) {
-            currentEditor->grabFocus();
-            emit editorActivated(currentEditor.data());
-        }
-    });
-
-    connect(dockManager, &ads::CDockManager::dockAreaCreated, this, [=, this](ads::CDockAreaWidget* DockArea) {
-        auto *titleBar = qobject_cast<DockedEditorTitleBar *>(DockArea->titleBar());
+    connect(dockManager, &ads::CDockManager::dockAreaCreated, this, [this](ads::CDockAreaWidget* DockArea) {
+        const auto *titleBar = qobject_cast<const DockedEditorTitleBar *>(DockArea->titleBar());
         connect(titleBar, &DockedEditorTitleBar::doubleClicked, this, &DockedEditor::titleBarDoubleClicked);
 
-        connect(DockArea->titleBar()->tabBar(), &ads::CDockAreaTabBar::tabMoved, this, [=, this](int from, int to) {
-            Q_UNUSED(from);
-            Q_UNUSED(to);
-
+        connect(DockArea->titleBar()->tabBar(), &ads::CDockAreaTabBar::tabMoved, this, [this](int /*from*/, int /*to*/) {
             emit editorOrderChanged();
         });
-
-        // In theory the order changes when a new dock area is created (e.g. editor is dragged and dropped),
-        // but the dockAreaCreated() signal is triggered before it is actually added to the CDockManager,
-        // so interrogating the dock manager during the signal doesn't help.
-        //emit editorOrderChanged();
     });
+}
+
+namespace {
+ScintillaNext *findFallbackEditor(const ads::CDockManager *mgr, ads::CDockAreaWidget *&targetArea)
+{
+    for (ads::CDockAreaWidget *areaWidget : mgr->openedDockAreas()) {
+        if (!areaWidget) {
+            continue;
+        }
+        if (const ads::CDockWidget *currentDock = areaWidget->currentDockWidget()) {
+            if (auto *ed = qobject_cast<ScintillaNext *>(currentDock->widget())) {
+                targetArea = areaWidget;
+                return ed;
+            }
+        }
+        for (const ads::CDockWidget *dockWidget : areaWidget->dockWidgets()) {
+            if (dockWidget) {
+                if (auto *ed = qobject_cast<ScintillaNext *>(dockWidget->widget())) {
+                    targetArea = areaWidget;
+                    return ed;
+                }
+            }
+        }
+    }
+    return nullptr;
+}
+}
+
+void DockedEditor::onFocusedDockWidgetChanged(const ads::CDockWidget * /*old*/, const ads::CDockWidget *now)
+{
+    if (now) {
+        if (auto *editor = qobject_cast<ScintillaNext *>(now->widget())) {
+            currentEditor = editor;
+            latestDockArea = now->dockAreaWidget();
+            editor->grabFocus();
+            emit editorActivated(editor);
+            return;
+        }
+    }
+
+    ads::CDockAreaWidget *fallbackArea = nullptr;
+    currentEditor = findFallbackEditor(dockManager, fallbackArea);
+    if (fallbackArea) {
+        latestDockArea = fallbackArea;
+    }
+    if (currentEditor) {
+        currentEditor->grabFocus();
+        emit editorActivated(currentEditor.data());
+    }
 }
 
 
@@ -139,7 +139,7 @@ ScintillaNext *DockedEditor::getCurrentEditor() const
 
     for (const ads::CDockAreaWidget* areaWidget : dockManager->openedDockAreas()) {
         if (!areaWidget) { continue; }
-        if (ads::CDockWidget* currentDock = areaWidget->currentDockWidget()) {
+        if (const ads::CDockWidget* currentDock = areaWidget->currentDockWidget()) {
             if (auto *ed = qobject_cast<ScintillaNext *>(currentDock->widget())) {
                 return ed;
             }
@@ -181,21 +181,19 @@ QVector<ScintillaNext *> DockedEditor::editors() const
     return editors;
 }
 
-void DockedEditor::switchToEditor(const ScintillaNext *editor)
+void DockedEditor::switchToEditor(const ScintillaNext *editor) const
 {
-    auto *dockWidget = qobject_cast<ads::CDockWidget *>(editor->parentWidget());
-
-    if (dockWidget == nullptr) {
-        qWarning() << "Expected editor's parent to be CDockWidget";
+    if (auto *dockWidget = qobject_cast<ads::CDockWidget *>(editor->parentWidget())) {
+        dockWidget->raise();
     }
     else {
-        dockWidget->raise();
+        qWarning() << "Expected editor's parent to be CDockWidget";
     }
 }
 
 void DockedEditor::dockWidgetCloseRequested()
 {
-    auto *dockWidget = qobject_cast<ads::CDockWidget *>(sender());
+    const auto *dockWidget = qobject_cast<const ads::CDockWidget *>(sender());
     if (!dockWidget) {
         return;
     }
@@ -207,7 +205,7 @@ void DockedEditor::dockWidgetCloseRequested()
 
 ads::CDockAreaWidget *DockedEditor::currentDockArea() const
 {
-    if (ads::CDockWidget *focused = dockManager->focusedDockWidget()) {
+    if (const ads::CDockWidget *focused = dockManager->focusedDockWidget()) {
         if (ads::CDockAreaWidget *area = focused->dockAreaWidget()) {
             return area;
         }
@@ -249,9 +247,7 @@ void DockedEditor::addEditor(ScintillaNext *editor)
     dockWidget->setFeature(ads::CDockWidget::DockWidgetFeature::DockWidgetFloatable, false);
 
     dockWidget->tabWidget()->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(dockWidget->tabWidget(), &QWidget::customContextMenuRequested, this, [=, this](const QPoint &pos) {
-        Q_UNUSED(pos)
-
+    connect(dockWidget->tabWidget(), &QWidget::customContextMenuRequested, this, [this, editor](const QPoint & /*pos*/) {
         emit contextMenuRequestedForEditor(editor);
     });
 
@@ -263,22 +259,21 @@ void DockedEditor::addEditor(ScintillaNext *editor)
     }
     else {
         dockWidget->tabWidget()->setIcon(QIcon(editor->canSaveToDisk() ? ":/icons/unsaved.png" : ":/icons/saved.png"));
-        connect(editor, &ScintillaNext::savePointChanged, dockWidget, [=, this](bool dirty) {
-            Q_UNUSED(dirty)
+        connect(editor, &ScintillaNext::savePointChanged, dockWidget, [editor, dockWidget](bool /*dirty*/) {
             const bool actuallyDirty = editor->canSaveToDisk();
-            const QString iconPath = actuallyDirty ? ":/icons/unsaved.png" : ":/icons/saved.png";
+            const QString iconPath = actuallyDirty ? QStringLiteral(":/icons/unsaved.png") : QStringLiteral(":/icons/saved.png");
             dockWidget->tabWidget()->setIcon(QIcon(iconPath));
         });
     }
 
     connect(editor, &ScintillaNext::closed, dockWidget, &ads::CDockWidget::closeDockWidget);
-    connect(editor, &ScintillaNext::closed, this, [=, this]() {
+    connect(editor, &ScintillaNext::closed, this, [this, editor]() {
         if (currentEditor == editor) {
             currentEditor = nullptr;
         }
         emit editorClosed(editor);
     });
-    connect(editor, &ScintillaNext::renamed, this, [=, this]() { editorRenamed(editor); });
+    connect(editor, &ScintillaNext::renamed, this, [this, editor]() { editorRenamed(editor); });
 
     connect(dockWidget, &ads::CDockWidget::closeRequested, this, &DockedEditor::dockWidgetCloseRequested);
 
@@ -287,18 +282,17 @@ void DockedEditor::addEditor(ScintillaNext *editor)
     emit editorAdded(editor);
 }
 
-void DockedEditor::editorRenamed(ScintillaNext *editor)
+void DockedEditor::editorRenamed(const ScintillaNext *editor) const
 {
     Q_ASSERT(editor != Q_NULLPTR);
 
-    auto *dockWidget = qobject_cast<ads::CDockWidget *>(editor->parentWidget());
-
-    dockWidget->setWindowTitle(editor->getName());
-
-    dockWidget->tabWidget()->setToolTip(editor->getToolTip());
+    if (auto *dockWidget = qobject_cast<ads::CDockWidget *>(editor->parentWidget())) {
+        dockWidget->setWindowTitle(editor->getName());
+        dockWidget->tabWidget()->setToolTip(editor->getToolTip());
+    }
 }
 
-void DockedEditor::splitToRight(ScintillaNext *editor)
+void DockedEditor::splitToRight(const ScintillaNext *editor)
 {
     if (!editor) { return; }
 
@@ -311,7 +305,7 @@ void DockedEditor::splitToRight(ScintillaNext *editor)
     }
 }
 
-void DockedEditor::splitToBottom(ScintillaNext *editor)
+void DockedEditor::splitToBottom(const ScintillaNext *editor)
 {
     if (!editor) { return; }
 

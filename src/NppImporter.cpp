@@ -1,8 +1,9 @@
 /*
  * This file is part of Notepad Next (macOS Edition).
  * Copyright 2019-2026 Justin Dailey
- * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
+ * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -180,13 +181,13 @@ NppImporter::NppImporter(const QString &configPath, ScintillaEdit *_editor) :
         sortedLanguages.append(qMakePair(key, &languages[key]));
     }
     // And sort it based on the values
-    std::sort(sortedLanguages.begin(), sortedLanguages.end(), [](const QPair<QString, const Language *> &a, const QPair<QString, const Language *> &b) {
+    std::ranges::sort(sortedLanguages, [](const auto &a, const auto &b) {
         return QString::compare(a.second->shortName, b.second->shortName, Qt::CaseInsensitive) < 0;
     });
 
     // Store the sorted keys
-    for (const QPair<QString, const Language *> &pair : sortedLanguages) {
-        sortedLanguageKeys.append(pair.first);
+    for (const auto &[key, lang] : sortedLanguages) {
+        sortedLanguageKeys.append(key);
     }
 }
 
@@ -318,22 +319,21 @@ void NppImporter::readGlobalStyles(QXmlStreamReader &xml)
 
     while (xml.readNextStartElement()) {
         auto attrs = xml.attributes();
-        int styleID = attrs.value("styleID").toInt();
-        if (styleID >= 32 && styleID <= 39) {
+        if (const int styleID = attrs.value("styleID").toInt(); styleID >= 32 && styleID <= 39) {
             int fgColor = attrs.value("fgColor").toInt(nullptr, 16);
             int bgColor = attrs.value("bgColor").toInt(nullptr, 16);
 
             editor->styleSetFore(styleID, color(fgColor));
             editor->styleSetBack(styleID, color(bgColor));
 
-            if (attrs.hasAttribute("fontName") && attrs.value("fontName").length() > 0) {
+            if (attrs.hasAttribute("fontName") && !attrs.value("fontName").isEmpty()) {
                 editor->styleSetFont(styleID, attrs.value("fontName").toLocal8Bit().constData());
             }
-            if (attrs.hasAttribute("fontSize") && attrs.value("fontSize").length() > 0) {
+            if (attrs.hasAttribute("fontSize") && !attrs.value("fontSize").isEmpty()) {
                 int fontSize = attrs.value("fontSize").toInt();
                 editor->styleSetSize(styleID, fontSize);
             }
-            if (attrs.hasAttribute("fontStyle") && attrs.value("fontStyle").length() > 0) {
+            if (attrs.hasAttribute("fontStyle") && !attrs.value("fontStyle").isEmpty()) {
                 int fontStyle = attrs.value("fontStyle").toInt();
                 const auto uFontStyle = static_cast<unsigned int>(fontStyle);
                 editor->styleSetBold(styleID, static_cast<int>(uFontStyle & static_cast<unsigned int>(FONTSTYLE_BOLD)));
@@ -381,8 +381,7 @@ void NppImporter::readGlobalStyles(QXmlStreamReader &xml)
 void NppImporter::readGUIConfigs(QXmlStreamReader &xml)
 {
     while (xml.readNextStartElement()) {
-        auto attrs = xml.attributes();
-        if (attrs.value("name") == QStringLiteral("ScintillaPrimaryView")) {
+        if (auto attrs = xml.attributes(); attrs.value("name") == QStringLiteral("ScintillaPrimaryView")) {
             if (attrs.value("indentGuideLine") == QStringLiteral("show")) {
                 editor->setIndentationGuides(SC_IV_LOOKBOTH);
             }

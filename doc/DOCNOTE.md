@@ -3,7 +3,7 @@
 - **Project**: NotepadNext For MacOS
 - **Target Release**: `0.15-07`
 - **Date**: October 26, 2026
-- **Maintainer / Builder**: Harry DS Alsyundawy ([@alsyundawy](https://github.com/alsyundawy))
+- **Maintainer / Builder**: Harry Dertin Sutisna ([@alsyundawy](https://github.com/alsyundawy)) | ALSYUNDAWY IT SOLUSTION
 - **Upstream Project**: [dail8859/NotepadNext](https://github.com/dail8859/NotepadNext)
 - **Comparative Whitepaper**: [UPSTREAM_COMPARISON.md](UPSTREAM_COMPARISON.md)
 
@@ -49,7 +49,10 @@ The table below details the cumulative architectural evolution and feature set s
 | **System File Associations**           | Default macOS TextEdit bindings                          | **`NotepadNext-Default-Editor.sh` (470+ Extensions, 38 UTIs)**               | Full LaunchServices system integration, Gatekeeper unquarantine, sub-second cache rebuild (`v0.15-01`).                                                                 |
 | **App Branding & Packaging**           | Generic low-res raster icon                              | **macOS Squircle Retina ICNS + Universal 2 DMG Distribution**                | Emerald gradient squircle, 3D stylus, native ICNS (`1024x1024`), multi-arch Universal 2 DMG (`arm64` + `x86_64`) (`v0.15-04`).                                          |
 | **Localization & Linguistic Rigor**    | Fragmented, incomplete community translations            | **100% Complete Bahasa Indonesia & English (0 Unfinished)**                  | Strictly standardized per EYD V, PUEBI, PASTI Badan Bahasa, and Mozilla L10n; eliminated parenthetical artifacts (`v0.15-04` - `v0.15-07`).                             |
-| **Static Verification & Clean Code**   | Basic CI checks                                          | **Zero-Defect 13-Pillar Audit (Trunk, Cppcheck, 36 SonarLint Fixes)**        | ISO 5055, OWASP Top 10, 100% clean across all 88 translation units without warnings (`v0.15-04` - `v0.15-07`).                                                          |
+| **Linux Packaging & CI/CD**            | Upstream AppImage script only                            | **Native CPack Debian (`.deb`) & RPM (`.rpm`) Packages**                    | Built-in CPack configuration in `cmake/PackagingLinux.cmake` supporting Ubuntu 22.04/24.04 and Fedora with GitHub Actions CI matrix (`v0.15-07`). |
+| **Zoom Indicator UI**                  | Intrusive central screen-blocking OSD widget             | **Non-Intrusive Status Bar Zoom Message (`statusBar()->showMessage`)**       | Clean unobtrusive feedback in status bar; fixed macOS Qt 6 palette contrast bug in `FadingIndicator` (`v0.15-07`).                                                      |
+| **C++26 Modernization & Safety**       | Raw UI pointers subject to incomplete deletion warnings  | **`std::unique_ptr` UI Lifetime + C++20 `if constexpr` Enum Serialization**   | Zero compiler diagnostics in C++26 mode, automatic enum serialization in `ApplicationSettings` (`v0.15-07`).                                                              |
+| **Static Verification & Clean Code**   | Basic CI checks                                          | **Zero-Defect 13-Pillar Audit (Trunk, Cppcheck, Clangd, SonarLint)**         | ISO 5055, OWASP Top 10, 100% clean across all 88 translation units without warnings (`v0.15-04` - `v0.15-07`).                                                          |
 
 ---
 

@@ -7,6 +7,31 @@ Format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) a
 
 ## [0.15-07] - 2026-10-26
 
+### 📦 Cross-Platform Packaging & Linux Deployment / Pemaketan Lintas Platform & Rilis Linux
+
+- 🇬🇧 **Native Debian (.deb) & Red Hat (.rpm) Packaging**: Implemented native CPack packaging infrastructure in `cmake/PackagingLinux.cmake` supporting Ubuntu 22.04 LTS, Ubuntu 24.04 LTS, Debian, Fedora, and openSUSE with complete `.desktop` desktop entry, multi-resolution scalable vector icons (`NotepadNext.svg`), and AppStream metadata.
+- 🇮🇩 **Pemaketan Native Debian (.deb) & Red Hat (.rpm)**: Mengimplementasikan infrastruktur pemaketan CPack native pada `cmake/PackagingLinux.cmake` mendukung Ubuntu 22.04 LTS, Ubuntu 24.04 LTS, Debian, Fedora, dan openSUSE dilengkapi berkas desktop `.desktop`, ikon vektor skalabel (`NotepadNext.svg`), serta metadata AppStream.
+- 🇬🇧 **Multi-Platform CI/CD Release Matrix**: Added dedicated Linux runner matrix across Qt 6.5, 6.8, 6.10, and 6.11 generating automated `.deb` and `.rpm` release artifacts in `.github/workflows/release.yml`, with unified release asset publishing.
+- 🇮🇩 **Matriks Rilis CI/CD Multi-Platform**: Menambahkan matriks runner Linux khusus untuk Qt 6.5, 6.8, 6.10, dan 6.11 yang memproduksi paket rilis `.deb` dan `.rpm` otomatis pada `.github/workflows/release.yml`, terintegrasi dengan publikasi aset rilis GitHub.
+
+### 🎨 UI/UX & Quality-of-Life Polish / Pemolesan UI/UX & Kualitas Penggunaan
+
+- 🇬🇧 **Non-Intrusive Status Bar Zoom Indicator**: Replaced screen-blocking On-Screen Display (OSD) popup with clean, non-intrusive `statusBar()->showMessage()` feedback, preventing popup boxes from obscuring the document buffer while zooming.
+- 🇮🇩 **Indikator Zoom Status Bar Non-Intrusif**: Mengganti pop-up OSD yang menutupi layar dengan pesan `statusBar()->showMessage()` yang bersih dan elegan pada status bar, mencegah kotak pop-up menghalangi pandangan teks editor saat zooming.
+- 🇬🇧 **FadingIndicator Palette & Contrast Fix**: Fixed macOS Qt 6 palette manipulation in `FadingIndicator` with crisp, high-contrast text rendering and subtle rounded backdrop geometry.
+- 🇮🇩 **Perbaikan Palet & Kontras FadingIndicator**: Memperbaiki manipulasi palet macOS Qt 6 pada `FadingIndicator` dengan teks kontras tinggi yang tajam dan latar belakang berpenampilan rapi.
+
+### 🛠️ C++26 Safety, Modernization & Linter Zero-Error / Keamanan C++26 & Kebersihan Linter
+
+- 🇬🇧 **C++26 Incomplete Type Deletion Prevention**: Migrated raw pointers `Ui::PreferencesDialog *ui` and `Ui::MacroRunDialog *ui` to `std::unique_ptr` with default destructors in translation units, eliminating C++26 deletion warnings and undefined behavior risks.
+- 🇮🇩 **Pencegahan Penghapusan Tipe Inkomplit C++26**: Memigrasikan raw pointer `Ui::PreferencesDialog *ui` dan `Ui::MacroRunDialog *ui` ke `std::unique_ptr` dengan destruktor default pada unit translasi, menghapus warning C++26 dan mencegah risiko undefined behavior.
+- 🇬🇧 **Scoped Enum Template Serialization**: Enhanced `ApplicationSettings` template getters/setters with C++20 `if constexpr (std::is_enum_v<T>)` to support scoped `enum class` types seamlessly.
+- 🇮🇩 **Serialisasi Template Scoped Enum**: Meningkatkan fungsi template `ApplicationSettings` dengan `if constexpr (std::is_enum_v<T>)` C++20 untuk mendukung `enum class` secara aman dan otomatis.
+- 🇬🇧 **IDE & SonarQube Clean Validation**: Configured `.vscode/c_cpp_properties.json` and `.clangd` with exact Qt 6.12 include paths and unified CMake compilation database, achieving 0 linter errors and 0 warnings.
+- 🇮🇩 **Validasi Bersih IDE & SonarQube**: Mengonfigurasi `.vscode/c_cpp_properties.json` dan `.clangd` dengan jalur include Qt 6.12 dan database kompilasi CMake, mencapai 0 error dan 0 warning.
+- 🇬🇧 **Copyright & Attribution Standardization**: Standardized all project source headers with Harry Dertin Sutisna (`ALSYUNDAWY IT SOLUSTION`) and Justin Dailey.
+- 🇮🇩 **Standarisasi Hak Cipta & Atribusi**: Menstandarisasikan seluruh header sumber proyek dengan nama Harry Dertin Sutisna (`ALSYUNDAWY IT SOLUSTION`) dan Justin Dailey.
+
 ### 🛡️ Security Hardening & 2025–2026 CVE Defenses / Pertahanan Keamanan & Mitigasi CVE 2025–2026
 
 - 🇬🇧 **Auto-Updater Cryptographic Integrity (CVE-2025-15556 / CWE-494)**: Enforced strict HTTPS URL pinning for `updates.json`, integrated SHA-256 cryptographic package integrity checking via `QCryptographicHash`, and added checksum verification indicators in `UpdateDialog`.

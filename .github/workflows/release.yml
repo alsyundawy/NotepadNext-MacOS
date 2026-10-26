@@ -13,12 +13,114 @@ env:
   QT_RELEASE_VER: "6.5"
 
 jobs:
-  build:
+  # ─── Linux Ubuntu Matrix (.deb & .rpm) ─────────────────────────────
+  build-linux:
+    name: build (linux, ${{ matrix.qt_version }})
+    runs-on: ${{ matrix.runs_on }}
+    timeout-minutes: 60
     strategy:
       fail-fast: false
       matrix:
         include:
-          # ─── macOS Intel ───────────────────────────────────────────
+          - runs_on: ubuntu-22.04
+            platform: linux
+            arch: x64
+            cmake_arch: x86_64
+            qt_arch: gcc_64
+            qt_version: "6.5"
+
+          - runs_on: ubuntu-22.04
+            platform: linux
+            arch: x64
+            cmake_arch: x86_64
+            qt_arch: linux_gcc_64
+            qt_version: "6.8"
+
+          - runs_on: ubuntu-24.04
+            platform: linux
+            arch: x64
+            cmake_arch: x86_64
+            qt_arch: linux_gcc_64
+            qt_version: "6.10"
+
+          - runs_on: ubuntu-24.04
+            platform: linux
+            arch: x64
+            cmake_arch: x86_64
+            qt_arch: linux_gcc_64
+            qt_version: "6.11"
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install Linux Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            build-essential cmake ninja-build pkg-config \
+            libgl1-mesa-dev libxkbcommon-dev libxkbcommon-x11-0 \
+            libfontconfig1-dev libfreetype6-dev \
+            libxcb-cursor0 libxcb-glx0 libxcb-icccm4 libxcb-image0 \
+            libxcb-keysyms1 libxcb-randr0 libxcb-render0 \
+            libxcb-render-util0 libxcb-shape0 libxcb-sync1 libxcb-xfixes0 \
+            rpm dpkg-dev
+          if [ "${{ matrix.runs_on }}" = "ubuntu-22.04" ]; then
+            sudo apt-get install -y --no-install-recommends g++-12 gcc-12
+            sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 100 --slave /usr/bin/g++ g++ /usr/bin/g++-12
+          fi
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@a9c63c7c123f3069cff414e7e482d95dfa9d8125 # v4.4.1
+        with:
+          version: ${{ matrix.qt_version }}
+          host: linux
+          target: desktop
+          arch: ${{ matrix.qt_arch }}
+          modules: qt5compat
+          cache: true
+
+      - name: Set Distribution (linux)
+        shell: bash
+        run: echo "DISTRIBUTION=native" >> "$GITHUB_ENV"
+
+      - name: Configure (CMake)
+        shell: bash
+        run: |
+          echo "Configure: run=$GITHUB_RUN_ID runner=${{ matrix.runs_on }} qt=${{ matrix.qt_version }}"
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DAPP_DISTRIBUTION="${DISTRIBUTION}"
+
+      - name: Build
+        shell: bash
+        run: cmake --build build --parallel
+
+      - name: Build Linux Targets (deb, rpm)
+        shell: bash
+        run: |
+          cmake --build build --target deb || true
+          cmake --build build --target rpm || true
+
+      - name: Upload Linux Packages (.deb, .rpm)
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: NotepadNext-Linux-${{ matrix.arch }}-Qt${{ matrix.qt_version }}
+          path: |
+            build/*.deb
+            build/*.rpm
+          if-no-files-found: warn
+          retention-days: 90
+
+  # ─── macOS Intel x64 Matrix ────────────────────────────────────────
+  build-macos-x64:
+    name: build (macos-x64, ${{ matrix.qt_version }})
+    runs-on: ${{ matrix.runs_on }}
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
           - runs_on: macos-15-intel
             platform: mac
             arch: x64
@@ -59,7 +161,62 @@ jobs:
             qt_version: "6.12"
             deployment_target: "15.0"
 
-          # ─── macOS Apple Silicon ───────────────────────────────────
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install Qt (mac)
+        uses: jdpurcell/install-qt-action@d715fb7cdd4e5661191a794764231398e2c952f2 # v5
+        with:
+          version: ${{ matrix.qt_version }}
+          host: mac
+          target: desktop
+          arch: ${{ matrix.qt_arch }}
+          modules: qt5compat
+          cache: true
+
+      - name: Set Distribution (mac)
+        shell: bash
+        run: echo "DISTRIBUTION=dmg" >> "$GITHUB_ENV"
+
+      - name: Configure (CMake)
+        shell: bash
+        run: |
+          echo "Configure: run=$GITHUB_RUN_ID runner=${{ matrix.runs_on }} qt=${{ matrix.qt_version }} deployment=${{ matrix.deployment_target }}"
+          CMAKE_OPTS=(-S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DAPP_DISTRIBUTION="${DISTRIBUTION}" -DCMAKE_OSX_DEPLOYMENT_TARGET="${{ matrix.deployment_target }}")
+          CMAKE_OPTS+=(-DCMAKE_OSX_ARCHITECTURES="${{ matrix.cmake_arch }}" -DMAC_ARCH_SUFFIX="${{ matrix.arch }}")
+          echo "CMake options: ${CMAKE_OPTS[*]}"
+          cmake "${CMAKE_OPTS[@]}"
+
+      - name: Build
+        shell: bash
+        run: cmake --build build --parallel
+
+      - name: Build MacOS Targets (dmg)
+        shell: bash
+        run: cmake --build build --target dmg --parallel
+
+      - name: Upload MacOS dmg
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: NotepadNext-macOS-${{ matrix.arch }}-Qt${{ matrix.qt_version }}
+          path: build/NotepadNext*.dmg
+          if-no-files-found: warn
+          retention-days: 90
+
+  # ─── macOS Apple Silicon arm64 Matrix ──────────────────────────────
+  build-macos-arm64:
+    name: build (macos-arm64, ${{ matrix.qt_version }})
+    needs: [build-macos-x64]
+    if: always() && !cancelled() && !contains(needs.build-macos-x64.result, 'failure')
+    runs-on: ${{ matrix.runs_on }}
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
           - runs_on: macos-15
             platform: mac
             arch: arm64
@@ -100,18 +257,13 @@ jobs:
             qt_version: "6.12"
             deployment_target: "15.0"
 
-    runs-on: ${{ matrix.runs_on }}
-    timeout-minutes: 60
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
-      # ─── Install Qt ────────────────────────────────────────────────────
       - name: Install Qt (mac)
-        if: matrix.platform == 'mac'
         uses: jdpurcell/install-qt-action@d715fb7cdd4e5661191a794764231398e2c952f2 # v5
         with:
           version: ${{ matrix.qt_version }}
@@ -121,53 +273,47 @@ jobs:
           modules: qt5compat
           cache: true
 
-      # ─── Set DISTRIBUTION ──────────────────────────────────────────────
       - name: Set Distribution (mac)
-        if: matrix.platform == 'mac'
         shell: bash
         run: echo "DISTRIBUTION=dmg" >> "$GITHUB_ENV"
 
-      # ─── CMake Configure ───────────────────────────────────────────────
       - name: Configure (CMake)
         shell: bash
         run: |
           echo "Configure: run=$GITHUB_RUN_ID runner=${{ matrix.runs_on }} qt=${{ matrix.qt_version }} deployment=${{ matrix.deployment_target }}"
           CMAKE_OPTS=(-S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DAPP_DISTRIBUTION="${DISTRIBUTION}" -DCMAKE_OSX_DEPLOYMENT_TARGET="${{ matrix.deployment_target }}")
-          if [ "${{ matrix.platform }}" = "mac" ]; then
-            CMAKE_OPTS+=(-DCMAKE_OSX_ARCHITECTURES="${{ matrix.cmake_arch }}" -DMAC_ARCH_SUFFIX="${{ matrix.arch }}")
-          fi
+          CMAKE_OPTS+=(-DCMAKE_OSX_ARCHITECTURES="${{ matrix.cmake_arch }}" -DMAC_ARCH_SUFFIX="${{ matrix.arch }}")
           echo "CMake options: ${CMAKE_OPTS[*]}"
           cmake "${CMAKE_OPTS[@]}"
 
-      # ─── Build ─────────────────────────────────────────────────────────
       - name: Build
         shell: bash
         run: cmake --build build --parallel
 
       - name: Build MacOS Targets (dmg)
-        if: matrix.platform == 'mac'
         shell: bash
         run: cmake --build build --target dmg --parallel
 
-      # ─── Upload Artifacts ──────────────────────────────────────────────
       - name: Upload MacOS dmg
-        if: matrix.platform == 'mac'
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: NotepadNext-macOS-${{ matrix.arch }}-Qt${{ matrix.qt_version }}
           path: build/NotepadNext*.dmg
           if-no-files-found: warn
+          retention-days: 90
 
-  # GitHub Release job — only runs on tag pushes
+  # ─── GitHub Release Job ────────────────────────────────────────────
   github:
     name: GitHub Release
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    needs: [build]
+    needs: [build-linux, build-macos-x64, build-macos-arm64]
     if: >
       github.repository == 'alsyundawy/NotepadNext-MacOS' &&
-      github.event_name == 'push' &&
-      github.ref_type == 'tag'
+      (
+        (github.event_name == 'push' && github.ref_type == 'tag') ||
+        github.event_name == 'workflow_dispatch'
+      )
     permissions:
       contents: write
     steps:
@@ -175,12 +321,22 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          fetch-depth: 0
+
+      - name: Resolve Release Tag
+        shell: bash
+        run: |
+          TAG="${{ github.ref_name }}"
+          if [ "${{ github.ref_type }}" != "tag" ]; then
+            TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.15-07")
+          fi
+          echo "Resolved release tag: ${TAG}"
+          echo "RELEASE_TAG=${TAG}" >> "$GITHUB_ENV"
 
       - name: Create or Verify Release
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RELEASE_TAG: ${{ github.ref_name }}
         run: |
           gh release view "$RELEASE_TAG" >/dev/null 2>&1 || \
           gh release create "$RELEASE_TAG" \
@@ -190,43 +346,31 @@ jobs:
       - name: Download all artifacts
         uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
 
-      - name: Upload Release Assets
-        # For each arch (x64, arm64), upload only the canonical DMG from
-        # the default QT_RELEASE_VER build. The DMG is already named
-        # NotepadNext-v{VERSION}-{arch}.dmg by PackagingMac.cmake, so we
-        # just upload it directly — no extra zip/rename steps needed.
+      - name: Upload Release Assets (macOS DMG)
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RELEASE_TAG: ${{ github.ref_name }}
         run: |
-          echo "=== Downloaded artifact directories ==="
-          ls -la
-          for arch in x64 arm64; do
-            dir="NotepadNext-macOS-${arch}-Qt${QT_RELEASE_VER}"
-            echo "Looking for canonical release dir: ${dir}"
-            if [ -d "${dir}" ]; then
-              found_any=false
-              for dmg_file in "${dir}"/NotepadNext-*.dmg; do
-                if [ -f "${dmg_file}" ]; then
-                  echo "Uploading ${dmg_file} → release ${RELEASE_TAG}"
-                  gh release upload "${RELEASE_TAG}" "${dmg_file}" --clobber
-                  found_any=true
-                fi
-              done
-              if [ "$found_any" = "false" ]; then
-                echo "WARNING: No DMG found in ${dir}, skipping ${arch}"
-              fi
-            else
-              echo "WARNING: Directory ${dir} not found — skipping ${arch}"
-            fi
+          echo "=== Scanning and Uploading all macOS DMG artifacts ==="
+          find . -name "NotepadNext-*.dmg" | while IFS= read -r dmg_file; do
+            echo "Uploading macOS DMG: ${dmg_file} → release ${RELEASE_TAG}"
+            gh release upload "${RELEASE_TAG}" "${dmg_file}" --clobber || true
+          done
+
+      - name: Upload Linux Packages (.deb, .rpm)
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          find . \( -name "*.deb" -o -name "*.rpm" \) | while IFS= read -r pkg; do
+            echo "Uploading Linux package: ${pkg}"
+            gh release upload "${RELEASE_TAG}" "${pkg}" --clobber || true
           done
 
       - name: Upload Default Editor Script
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RELEASE_TAG: ${{ github.ref_name }}
         run: |
           if [ -f "scripts/NotepadNext-Default-Editor.sh" ]; then
             echo "Uploading scripts/NotepadNext-Default-Editor.sh to release ${RELEASE_TAG}"

@@ -1,8 +1,9 @@
 /*
  * This file is part of Notepad Next (macOS Edition).
  * Copyright 2019-2026 Justin Dailey
- * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
+ * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,9 +47,9 @@ static void AddCharEscaped(QTextStream &stream, int ch)
 static QColor ScintillaColorToQColor(int color)
 {
     const auto uColor = static_cast<unsigned int>(color);
-    const int r = static_cast<int>(uColor & 0xFFU);
-    const int g = static_cast<int>((uColor >> 8U) & 0xFFU);
-    const int b = static_cast<int>((uColor >> 16U) & 0xFFU);
+    const auto r = static_cast<int>(uColor & 0xFFU);
+    const auto g = static_cast<int>((uColor >> 8U) & 0xFFU);
+    const auto b = static_cast<int>((uColor >> 16U) & 0xFFU);
 
     return QColor::fromRgb(r, g, b);
 }
@@ -63,7 +64,7 @@ void RtfConverter::convertRange(QTextStream &stream, int start, int end)
     int prevStyle = -1;
 
     for (int i = start; i < end; ++i) {
-        if (const int newStyle = static_cast<int>(editor->styleAt(i)); newStyle != prevStyle) {
+        if (const auto newStyle = static_cast<int>(editor->styleAt(i)); newStyle != prevStyle) {
             const QColor c = ScintillaColorToQColor(static_cast<int>(editor->styleFore(newStyle)));
 
             if (!styleColors.contains(c)) {
@@ -85,7 +86,7 @@ void RtfConverter::convertRange(QTextStream &stream, int start, int end)
         }
 
         // Output the character
-        const int ch = static_cast<int>(editor->charAt(i));
+        const auto ch = static_cast<int>(editor->charAt(i));
         if (ch == '\r'){
             if (static_cast<int>(editor->charAt(i + 1)) != '\n') {
                 AddCharEscaped(rtf_stream, ch);

@@ -1,8 +1,9 @@
 /*
  * This file is part of Notepad Next (macOS Edition).
  * Copyright 2019-2026 Justin Dailey
- * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
+ * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,13 +30,11 @@ MacroStepTableModel::MacroStepTableModel(Macro *m, QObject *parent) :
 
 QVariant MacroStepTableModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if (role == Qt::DisplayRole) {
-        if (orientation == Qt::Horizontal) {
-            if (section == 0) {
-                return tr("Name");
-            } else if (section == 1) {
-                return tr("Text");
-            }
+    if (role == Qt::DisplayRole && orientation == Qt::Horizontal) {
+        if (section == 0) {
+            return tr("Name");
+        } else if (section == 1) {
+            return tr("Text");
         }
     }
 
@@ -130,10 +129,8 @@ bool MacroStepTableModel::insertRows(int row, int count, const QModelIndex &pare
     return true;
 }
 
-bool MacroStepTableModel::removeRows(int row, int count, const QModelIndex &parent)
+bool MacroStepTableModel::removeRows(int row, int count, const QModelIndex &/*parent*/)
 {
-    Q_UNUSED(parent);
-
     beginRemoveRows(QModelIndex(), row, row + count - 1);
 
     macro->getSteps().remove(row, count);

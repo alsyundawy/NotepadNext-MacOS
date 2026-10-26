@@ -1,8 +1,9 @@
 /*
  * This file is part of Notepad Next (macOS Edition).
  * Copyright 2019-2026 Justin Dailey
- * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
+ * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -61,7 +62,7 @@ QStringList TranslationManager::availableTranslations() const
     return translations;
 }
 
-QString TranslationManager::FormatLocaleTerritoryAndLanguage(QLocale &locale)
+QString TranslationManager::FormatLocaleTerritoryAndLanguage(const QLocale &locale)
 {
 #if QT_VERSION < QT_VERSION_CHECK(6, 2, 0)
     const QString territory = QLocale::countryToString(locale.country());
@@ -85,13 +86,12 @@ void TranslationManager::loadTranslation(const QLocale &locale)
     const QStringList filenames{QStringList{QApplication::applicationName(), "qt", "qtbase"}};
 
     for (const auto& filename : filenames) {
-        std::unique_ptr<QTranslator> translator = std::make_unique<QTranslator>();
+        auto translator = std::make_unique<QTranslator>();
 
-        if (translator->load(locale, filename, QStringLiteral("_"), path)) {
-            if (QCoreApplication::installTranslator(translator.get())) {
-                qInfo() << "Loaded translation" << translator.get()->filePath();
-                translators.append(translator.release());
-            }
+        if (translator->load(locale, filename, QStringLiteral("_"), path) &&
+            QCoreApplication::installTranslator(translator.get())) {
+            qInfo() << "Loaded translation" << translator.get()->filePath();
+            translators.append(translator.release());
         }
     }
 }

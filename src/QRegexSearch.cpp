@@ -1,8 +1,9 @@
 /*
  * This file is part of Notepad Next (macOS Edition).
  * Copyright 2019-2026 Justin Dailey
- * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
+ * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,28 +25,19 @@
 #include <QRegularExpression>
 
 using namespace Scintilla;
+using namespace Scintilla::Internal;
 
 #ifdef SCI_OWNREGEX
-RegexSearchBase *Scintilla::Internal::CreateRegexSearch(CharClassify *charClassTable)
+RegexSearchBase *Scintilla::Internal::CreateRegexSearch([[maybe_unused]] CharClassify *charClassTable) // NOSONAR
 {
-    Q_UNUSED(charClassTable);
-
     qInfo(Q_FUNC_INFO);
 
     return new QRegexSearch();
 }
 #endif
 
-QRegexSearch::QRegexSearch()
+Sci::Position QRegexSearch::FindText(Document *doc, Sci::Position minPos, Sci::Position maxPos, const char *s, [[maybe_unused]] bool caseSensitive, [[maybe_unused]] bool word, [[maybe_unused]] bool wordStart, Scintilla::FindOption flags, Sci::Position *length)
 {
-
-}
-
-Sci::Position QRegexSearch::FindText(Document *doc, Sci::Position minPos, Sci::Position maxPos, const char *s, bool caseSensitive, bool word, bool wordStart, Scintilla::FindOption flags, Sci::Position *length)
-{
-    Q_UNUSED(caseSensitive);
-    Q_UNUSED(word)
-    Q_UNUSED(wordStart)
     // -----------------------------------------------------------------------------------------------------------------------
     // NOTE: This section of code has to be very careful about what units of measure is being used. Scintilla wants to operate
     // in units of bytes (e.g. position 3 is 3 bytes into the text). Qt wants to operate in units of UTF16 chars. The trouble is
@@ -108,10 +100,8 @@ Sci::Position QRegexSearch::FindText(Document *doc, Sci::Position minPos, Sci::P
     return positionStart;
 }
 
-const char *QRegexSearch::SubstituteByPosition(Document *doc, const char *text, Sci::Position *length)
+const char *QRegexSearch::SubstituteByPosition([[maybe_unused]] Document *doc, const char *text, Sci::Position *length)
 {
-    Q_UNUSED(doc);
-
     qInfo(Q_FUNC_INFO);
 
     Q_ASSERT(match.isValid());
@@ -127,9 +117,11 @@ const char *QRegexSearch::SubstituteByPosition(Document *doc, const char *text, 
     // since users expect those to work in a regex replacement too.
     QByteArray result;
 
-    for (Sci::Position i = 0; i < *length; i++) {
+    Sci::Position i = 0;
+    while (i < *length) {
         if (text[i] == '\\' && i + 1 < *length) {
-            const char next = text[++i];
+            const char next = text[i + 1];
+            i += 2;
 
             if (next >= '0' && next <= '9') {
                 result += match.captured(next - '0').toUtf8();
@@ -157,6 +149,7 @@ const char *QRegexSearch::SubstituteByPosition(Document *doc, const char *text, 
         }
         else {
             result += text[i];
+            ++i;
         }
     }
 

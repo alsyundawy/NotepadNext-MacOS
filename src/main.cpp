@@ -1,8 +1,9 @@
 /*
  * This file is part of Notepad Next (macOS Edition).
  * Copyright 2019-2026 Justin Dailey
- * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
+ * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,10 +48,14 @@ int main(int argc, char *argv[])
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
 
+    // Force icons to be shown in all menus and context menus on macOS (Qt 6.7+ hides them by default per macOS HIG)
+    QCoreApplication::setAttribute(Qt::AA_DontShowIconsInMenus, false);
+
     // Default settings format
     QSettings::setDefaultFormat(QSettings::IniFormat);
 
     NotepadNextApplication app(argc, argv);
+    NotepadNextApplication::setAttribute(Qt::AA_DontShowIconsInMenus, false);
 
     // Log some debug info
     qInfo("=============================");
@@ -63,7 +68,7 @@ int main(int argc, char *argv[])
     if(app.isPrimary()) {
         app.init();
 
-        return app.exec();
+        return NotepadNextApplication::exec();
     }
     else {
         qInfo() << "Primary instance already running. PID:" << app.primaryPid();
@@ -72,7 +77,7 @@ int main(int argc, char *argv[])
 
         qInfo() << "Secondary instance closing...";
 
-        app.exit(0);
+        NotepadNextApplication::exit(0);
 
         return 0;
     }

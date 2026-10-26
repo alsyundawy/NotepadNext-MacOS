@@ -7,10 +7,11 @@ project(NotepadNext
 )
 
 set(APP_VERSION "0.15-07")
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(APP_DISTRIBUTION "" CACHE STRING "Distribution type")
 string(TIMESTAMP CURRENT_YEAR "%Y")
 set(APP_COPYRIGHT "Copyright 2019-${CURRENT_YEAR} Justin Dailey")
-set(APP_COPYRIGHT_BUILDER "Copyright ${CURRENT_YEAR} HARRY DS ALSYUNDAWY (MacOS-Builder)")
+set(APP_COPYRIGHT_BUILDER "Copyright ${CURRENT_YEAR} Harry Dertin Sutisna <alsyundawy@gmail.com>")
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)

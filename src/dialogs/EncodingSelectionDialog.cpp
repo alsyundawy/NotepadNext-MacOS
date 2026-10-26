@@ -1,8 +1,9 @@
 /*
  * This file is part of Notepad Next (macOS Edition).
  * Copyright 2019-2026 Justin Dailey
- * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
+ * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -52,17 +53,18 @@ void EncodingSelectionDialog::updateCurrentDocInfo() {
 
     ui->labelActiveEncoding->setText(m_editor->encodingName());
 
+    using enum ScintillaNext::BomType;
     switch (m_editor->bom()) {
-        case ScintillaNext::BomType::Utf8:
+        case Utf8:
             ui->labelBomStatus->setText(tr("Present (UTF-8 BOM, 3 bytes)"));
             break;
-        case ScintillaNext::BomType::Utf16LE:
+        case Utf16LE:
             ui->labelBomStatus->setText(tr("Present (UTF-16LE BOM, 2 bytes)"));
             break;
-        case ScintillaNext::BomType::Utf16BE:
+        case Utf16BE:
             ui->labelBomStatus->setText(tr("Present (UTF-16BE BOM, 2 bytes)"));
             break;
-        case ScintillaNext::BomType::None:
+        case None:
         default:
             ui->labelBomStatus->setText(tr("None"));
             break;
@@ -70,7 +72,7 @@ void EncodingSelectionDialog::updateCurrentDocInfo() {
 
     // Run quick detection on sample to show detection method and confidence
     const QByteArray sample =
-        QByteArray::fromRawData(reinterpret_cast<const char *>(m_editor->characterPointer()), qMin(m_editor->textLength(), 4096)); // NOLINT(performance-no-int-to-ptr)
+        QByteArray::fromRawData(reinterpret_cast<const char *>(m_editor->characterPointer()), qMin(m_editor->textLength(), 4096)); // NOSONAR(cpp:S3630,cpp:S5416)
     auto res = EncodingDetector::detect(sample);
     ui->labelDetectionMethod->setText(
         QStringLiteral("%1 (Confidence: %2%)").arg(res.detectionMethod).arg(res.confidence));
@@ -102,7 +104,7 @@ void EncodingSelectionDialog::populateList() {
     }
 }
 
-void EncodingSelectionDialog::onFilterChanged(const QString &text) {
+void EncodingSelectionDialog::onFilterChanged(const QString &text) const {
     const QString filter = text.trimmed().toLower();
     for (int i = 0; i < ui->listEncodings->count(); ++i) {
         QListWidgetItem *item = ui->listEncodings->item(i);
@@ -118,26 +120,25 @@ void EncodingSelectionDialog::onFilterChanged(const QString &text) {
 }
 
 QString EncodingSelectionDialog::selectedEncoding() const {
-    QListWidgetItem *item = ui->listEncodings->currentItem();
-    if (item && (item->flags() & Qt::ItemIsEnabled)) {
+    if (const auto *item = ui->listEncodings->currentItem(); item && (item->flags() & Qt::ItemIsEnabled)) {
         return item->data(Qt::UserRole).toString();
     }
     return QStringLiteral("UTF-8");
 }
 
 ScintillaNext::BomType EncodingSelectionDialog::selectedBom() const {
+    using enum ScintillaNext::BomType;
     const QString enc = selectedEncoding().toUpper();
     if (enc == QStringLiteral("UTF-8")) {
-        return (m_editor && m_editor->bom() == ScintillaNext::BomType::Utf8) ? ScintillaNext::BomType::Utf8
-                                                                             : ScintillaNext::BomType::None;
+        return (m_editor && m_editor->bom() == Utf8) ? Utf8 : None;
     }
     if (enc == QStringLiteral("UTF-16LE")) {
-        return ScintillaNext::BomType::Utf16LE;
+        return Utf16LE;
     }
     if (enc == QStringLiteral("UTF-16BE")) {
-        return ScintillaNext::BomType::Utf16BE;
+        return Utf16BE;
     }
-    return ScintillaNext::BomType::None;
+    return None;
 }
 
 bool EncodingSelectionDialog::isReopenMode() const {
@@ -174,22 +175,22 @@ void EncodingSelectionDialog::onApply() {
     }
 
     const QString enc = selectedEncoding();
-    const bool reopen = isReopenMode();
 
-    if (reopen) {
+    if (const bool reopen = isReopenMode(); reopen) {
         if (!m_editor->isFile()) {
             QMessageBox::information(this, tr("Notepad Next"), tr("Cannot reopen unsaved new buffer from disk."));
             return;
         }
         m_editor->reloadWithEncoding(enc);
     } else {
-        ScintillaNext::BomType bom = ScintillaNext::BomType::None;
-        if (enc.compare("UTF-8", Qt::CaseInsensitive) == 0 && m_editor->bom() == ScintillaNext::BomType::Utf8) {
-            bom = ScintillaNext::BomType::Utf8;
+        using enum ScintillaNext::BomType;
+        auto bom = None;
+        if (enc.compare("UTF-8", Qt::CaseInsensitive) == 0 && m_editor->bom() == Utf8) {
+            bom = Utf8;
         } else if (enc.compare("UTF-16LE", Qt::CaseInsensitive) == 0) {
-            bom = ScintillaNext::BomType::Utf16LE;
+            bom = Utf16LE;
         } else if (enc.compare("UTF-16BE", Qt::CaseInsensitive) == 0) {
-            bom = ScintillaNext::BomType::Utf16BE;
+            bom = Utf16BE;
         }
         m_editor->convertToEncoding(enc, bom);
     }

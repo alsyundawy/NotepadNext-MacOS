@@ -1,8 +1,9 @@
 /*
  * This file is part of Notepad Next (macOS Edition).
  * Copyright 2019-2026 Justin Dailey
- * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
+ * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,29 +31,27 @@ DefaultDirectoryManager::DefaultDirectoryManager(MainWindow *window, Application
 
 QString DefaultDirectoryManager::getDefaultDirectory() const
 {
-    ApplicationSettings::DefaultDirectoryBehaviorEnum e = settings->defaultDirectoryBehavior();
-
-    if (e == ApplicationSettings::FollowCurrentDocument) {
+    if (const auto e = settings->defaultDirectoryBehavior(); e == ApplicationSettings::DefaultDirectoryBehaviorEnum::FollowCurrentDocument) {
         const ScintillaNext *editor = window->currentEditor();
         return editor->isFile() ? editor->getPath() : settings->defaultDirectory();
     }
-    else if (e == ApplicationSettings::RememberLastUsed || e == ApplicationSettings::HardCoded) {
+    else if (const auto e = settings->defaultDirectoryBehavior(); e == ApplicationSettings::DefaultDirectoryBehaviorEnum::RememberLastUsed || e == ApplicationSettings::DefaultDirectoryBehaviorEnum::HardCoded) {
         return settings->defaultDirectory();
     }
 
     return QString();
 }
 
-void DefaultDirectoryManager::editorActivated(ScintillaNext *editor)
+void DefaultDirectoryManager::editorActivated(const ScintillaNext *editor)
 {
-    if (settings->defaultDirectoryBehavior() == ApplicationSettings::FollowCurrentDocument && editor->isFile()) {
+    if (settings->defaultDirectoryBehavior() == ApplicationSettings::DefaultDirectoryBehaviorEnum::FollowCurrentDocument && editor->isFile()) {
         settings->setDefaultDirectory(editor->getPath());
     }
 }
 
 void DefaultDirectoryManager::fileDialogAccepted(const QString &filePath)
 {
-    if (settings->defaultDirectoryBehavior() == ApplicationSettings::RememberLastUsed && !filePath.isEmpty()) {
+    if (settings->defaultDirectoryBehavior() == ApplicationSettings::DefaultDirectoryBehaviorEnum::RememberLastUsed && !filePath.isEmpty()) {
         settings->setDefaultDirectory(QFileInfo(filePath).absolutePath());
     }
 }

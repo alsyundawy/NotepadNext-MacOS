@@ -1,8 +1,9 @@
 /*
  * This file is part of Notepad Next (macOS Edition).
  * Copyright 2019-2026 Justin Dailey
- * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
+ * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,21 +39,21 @@ ColumnEditorDialog::ColumnEditorDialog(MainWindow *parent) :
     ui->sbxStep->setMaximum(std::numeric_limits<int>::max());
     ui->sbxStep->setMinimum(std::numeric_limits<int>::min());
 
-    connect(ui->gbxText, &QGroupBox::toggled, ui->gbxNumbers, [=, this](bool on) {
+    connect(ui->gbxText, &QGroupBox::toggled, ui->gbxNumbers, [this](bool on) {
         ui->gbxNumbers->setChecked(!on);
     });
 
-    connect(ui->gbxNumbers, &QGroupBox::toggled, ui->gbxText, [=, this](bool on) {
+    connect(ui->gbxNumbers, &QGroupBox::toggled, ui->gbxText, [this](bool on) {
         ui->gbxText->setChecked(!on);
     });
 
-    connect(ui->buttonBox, &QDialogButtonBox::accepted, this, [=, this]() {
+    connect(ui->buttonBox, &QDialogButtonBox::accepted, this, [this]() {
         if (ui->gbxText->isChecked() && !ui->txtText->text().isEmpty()) {
-            insertTextStartingAtCurrentColumn([=, this]() { return ui->txtText->text(); });
+            insertTextStartingAtCurrentColumn([this]() { return ui->txtText->text(); });
         }
         else if (ui->gbxNumbers->isChecked()) {
             int currentValue = ui->sbxStart->value();
-            insertTextStartingAtCurrentColumn([&currentValue, this]() {
+            insertTextStartingAtCurrentColumn([this, &currentValue]() {
                 const QString s = QString::number(currentValue);
                 currentValue += ui->sbxStep->value();
                 return s;
@@ -68,7 +69,7 @@ ColumnEditorDialog::~ColumnEditorDialog()
     delete ui;
 }
 
-void ColumnEditorDialog::insertTextStartingAtCurrentColumn(const std::function<QString ()> &f)
+void ColumnEditorDialog::insertTextStartingAtCurrentColumn(const std::function<QString ()> &f) // NOSONAR(cpp:S5205)
 {
     ScintillaNext *editor = parent->currentEditor();
 
@@ -79,7 +80,7 @@ void ColumnEditorDialog::insertTextStartingAtCurrentColumn(const std::function<Q
         const auto currentColumn = static_cast<int>(editor->column(currentPos)) + static_cast<int>(editor->selectionNCaretVirtualSpace(0));
 
         const UndoAction ua(editor);
-        for (int line = static_cast<int>(editor->lineFromPosition(currentPos)); line < static_cast<int>(editor->lineCount()); ++line) {
+        for (auto line = static_cast<int>(editor->lineFromPosition(currentPos)); line < static_cast<int>(editor->lineCount()); ++line) {
             insertTextAtColumn(editor, line, currentColumn, f());
         }
     }
@@ -99,13 +100,12 @@ void ColumnEditorDialog::insertTextStartingAtCurrentColumn(const std::function<Q
     }
 }
 
-void ColumnEditorDialog::insertTextAtColumn(ScintillaNext *editor, int line, int column, const QString &str)
+void ColumnEditorDialog::insertTextAtColumn(ScintillaNext *editor, int line, int column, const QString &str) const
 {
     const auto lineEndPosition = static_cast<int>(editor->lineEndPosition(line));
-    const auto lineEndColumn = static_cast<int>(editor->column(lineEndPosition));
 
     // If the line does not end past the needed column, then use the left over as virtual space
-    if (lineEndColumn < column) {
+    if (const auto lineEndColumn = static_cast<int>(editor->column(lineEndPosition)); lineEndColumn < column) {
         editor->setTargetRange(lineEndPosition, lineEndPosition);
 
         editor->setTargetStartVirtualSpace(column - lineEndColumn);

@@ -1,8 +1,9 @@
 /*
  * This file is part of Notepad Next (macOS Edition).
  * Copyright 2019-2026 Justin Dailey
- * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
+ * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,14 +68,12 @@ void MacroManager::stopRecording()
 
     _isRecording = false;
 
-    Macro *m = recorder.stopRecording();
-
-    if (m->size() == 0) {
+    if (Macro *m = recorder.stopRecording(); m->size() == 0) {
         // If there were no actions recorded, delete it
         delete m;
     }
     else {
-        if (isCurrentMacroSaved == false) {
+        if (!isCurrentMacroSaved) {
             // The previous current macro wasn't saved and we are getting ready to point to something else, delete it
             delete currentMacro;
         }
@@ -125,7 +124,7 @@ void MacroManager::saveSettings() const
     }
 }
 
-void MacroManager::replayCurrentMacro(ScintillaNext *editor)
+void MacroManager::replayCurrentMacro(ScintillaNext *editor) const
 {
     qInfo(Q_FUNC_INFO);
 

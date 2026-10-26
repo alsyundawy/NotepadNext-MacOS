@@ -1,8 +1,9 @@
 /*
  * This file is part of Notepad Next (macOS Edition).
  * Copyright 2019-2026 Justin Dailey
- * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
+ * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +33,7 @@ BookMarkDecorator::BookMarkDecorator(ScintillaNext *editor) :
     editor->markerSetFore(MARK_BOOKMARK, 0xFF2020);
     editor->markerSetBack(MARK_BOOKMARK, 0xFF2020);
 
-    const int mask = editor->marginMaskN(MARGIN);
+    const int mask = static_cast<int>(editor->marginMaskN(MARGIN));
     editor->setMarginMaskN(MARGIN, static_cast<int>(1U << static_cast<unsigned int>(MARK_BOOKMARK)) | mask);
 
     editor->setMarginSensitiveN(MARGIN, true);
@@ -68,7 +69,7 @@ void BookMarkDecorator::toggleBookmark(int line)
 
 int BookMarkDecorator::nextBookmarkAfter(int line)
 {
-    int nextMarkedLine = static_cast<int>(editor->markerNext(line, 1U << static_cast<unsigned int>(MARK_BOOKMARK)));
+    const auto nextMarkedLine = static_cast<int>(editor->markerNext(line, 1U << static_cast<unsigned int>(MARK_BOOKMARK)));
 
     if (nextMarkedLine == -1) {
         return static_cast<int>(editor->markerNext(0, 1U << static_cast<unsigned int>(MARK_BOOKMARK)));
@@ -80,7 +81,7 @@ int BookMarkDecorator::nextBookmarkAfter(int line)
 
 int BookMarkDecorator::previousBookMarkBefore(int line)
 {
-    int prevMarkedLine = static_cast<int>(editor->markerPrevious(line, 1U << static_cast<unsigned int>(MARK_BOOKMARK)));
+    const auto prevMarkedLine = static_cast<int>(editor->markerPrevious(line, 1U << static_cast<unsigned int>(MARK_BOOKMARK)));
 
     if (prevMarkedLine == -1) {
         return static_cast<int>(editor->markerPrevious(editor->lineCount(), 1U << static_cast<unsigned int>(MARK_BOOKMARK)));
@@ -151,13 +152,13 @@ void BookMarkDecorator::deleteBookMarkedLines()
 
     forever {
         // Since every time a bookmark is found it is deleted, the search can restart from the beginning again to find the next bookmark
-        const int line = static_cast<int>(editor->markerNext(0, 1U << static_cast<unsigned int>(MARK_BOOKMARK)));
+        const auto line = static_cast<int>(editor->markerNext(0, 1U << static_cast<unsigned int>(MARK_BOOKMARK)));
 
         if (line != -1) {
             removeBookmark(line);
 
-            const int lineStart = static_cast<int>(editor->positionFromLine(line));
-            const int lineLength = static_cast<int>(editor->lineLength(line));
+            const auto lineStart = static_cast<int>(editor->positionFromLine(line));
+            const auto lineLength = static_cast<int>(editor->lineLength(line));
             editor->deleteRange(lineStart, lineLength);
         }
         else {
@@ -168,10 +169,8 @@ void BookMarkDecorator::deleteBookMarkedLines()
 
 void BookMarkDecorator::notify(const Scintilla::NotificationData *pscn)
 {
-    if (pscn->nmhdr.code == Scintilla::Notification::MarginClick) {
-        if (pscn->margin == MARGIN) {
-            int line = static_cast<int>(editor->lineFromPosition(pscn->position));
-            toggleBookmark(line);
-        }
+    if (pscn->nmhdr.code == Scintilla::Notification::MarginClick && pscn->margin == MARGIN) {
+        const auto line = static_cast<int>(editor->lineFromPosition(pscn->position));
+        toggleBookmark(line);
     }
 }

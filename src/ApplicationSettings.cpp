@@ -1,8 +1,9 @@
 /*
  * This file is part of Notepad Next (macOS Edition).
  * Copyright 2019-2026 Justin Dailey
- * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
+ * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -57,7 +58,7 @@ CREATE_SETTING(App, RestorePreviousSession, restorePreviousSession, bool, false)
 CREATE_SETTING(App, RestoreUnsavedFiles, restoreUnsavedFiles, bool, false)
 CREATE_SETTING(App, RestoreTempFiles, restoreTempFiles, bool, false)
 
-CREATE_SETTING(App, DefaultDirectoryBehavior, defaultDirectoryBehavior, ApplicationSettings::DefaultDirectoryBehaviorEnum, ApplicationSettings::FollowCurrentDocument)
+CREATE_SETTING(App, DefaultDirectoryBehavior, defaultDirectoryBehavior, ApplicationSettings::DefaultDirectoryBehaviorEnum, ApplicationSettings::DefaultDirectoryBehaviorEnum::FollowCurrentDocument)
 CREATE_SETTING(App, DefaultDirectory, defaultDirectory, QString, QString())
 
 CREATE_SETTING(App, Translation, translation, QString, QStringLiteral(""))

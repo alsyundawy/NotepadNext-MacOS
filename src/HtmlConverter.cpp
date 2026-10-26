@@ -1,8 +1,9 @@
 /*
  * This file is part of Notepad Next (macOS Edition).
  * Copyright 2019-2026 Justin Dailey
- * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
+ * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,14 +28,14 @@
 static QByteArray ScintillaColorToCssColor(int color)
 {
     const auto uColor = static_cast<unsigned int>(color);
-    const int r = static_cast<int>(uColor & 0xFFU);
-    const int g = static_cast<int>((uColor >> 8U) & 0xFFU);
-    const int b = static_cast<int>((uColor >> 16U) & 0xFFU);
+    const auto r = static_cast<int>(uColor & 0xFFU);
+    const auto g = static_cast<int>((uColor >> 8U) & 0xFFU);
+    const auto b = static_cast<int>((uColor >> 16U) & 0xFFU);
 
     return QStringLiteral("rgb(%1, %2, %3)").arg(r).arg(g).arg(b).toLatin1();
 }
 
-static void StyleToCss(QTextStream &stream, ScintillaNext *editor, int style)
+static void StyleToCss(QTextStream &stream, const ScintillaNext *editor, int style)
 {
     stream << ".s" << style << " {" << Qt::endl;
     stream << "  font-family: '" << editor->styleFont(style) << "';" << Qt::endl;
@@ -85,16 +86,14 @@ void HtmlConverter::convertRange(QTextStream &stream, int start, int end)
     int currentStyle = -1;
 
     for (int i = start; i < end; ++i) {
-        int style = static_cast<int>(editor->styleAt(i));
-
-        if (style != currentStyle) {
+        if (const auto style = static_cast<int>(editor->styleAt(i)); style != currentStyle) {
             currentStyle = style;
             usedStyles.insert(currentStyle);
 
             html_stream << "</span><span class=\"s" << currentStyle << "\">";
         }
 
-        const int ch = static_cast<int>(editor->charAt(i));
+        const auto ch = static_cast<int>(editor->charAt(i));
         if (ch == '\r'){
             if (editor->charAt(i + 1) != '\n') {
                 AddCharEscaped(html_stream, ch);
@@ -117,7 +116,7 @@ void HtmlConverter::convertRange(QTextStream &stream, int start, int end)
 
 
     // Generate the entire document
-    stream << "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd\">" << Qt::endl;
+    stream << R"(<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd">)" << Qt::endl;
     stream << "<html>" << Qt::endl;
     stream << "<head>" << Qt::endl;
     stream << "<meta http-equiv=Content-Type content=\"text/html; charset=UTF-8\">" << Qt::endl;

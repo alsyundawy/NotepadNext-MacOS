@@ -1,8 +1,9 @@
 /*
  * This file is part of Notepad Next (macOS Edition).
  * Copyright 2019-2026 Justin Dailey
- * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
+ * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -55,22 +56,25 @@ SearchResultsDock::SearchResultsDock(QWidget *parent) :
 
         // Create the menu and show it
         QMenu menu(this);
-        menu.addAction(tr("Copy"), this, &SearchResultsDock::copySelectedSearchResultsToClipboard);
+        auto *actCopy = menu.addAction(QIcon(QStringLiteral(":/icons/copy.png")), tr("Copy"), this, &SearchResultsDock::copySelectedSearchResultsToClipboard);
+        actCopy->setIconVisibleInMenu(true);
         menu.addSeparator();
         menu.addAction(tr("Collapse All"), this, &SearchResultsDock::collapseAll);
         menu.addAction(tr("Expand All"), this, &SearchResultsDock::expandAll);
         menu.addSeparator();
-        menu.addAction(tr("Delete Entry"), this, [=, this]() { deleteEntry(item); });
+        auto *actDelEntry = menu.addAction(QIcon(QStringLiteral(":/icons/bin_closed.png")), tr("Delete Entry"), this, [this, item]() { deleteEntry(item); });
+        actDelEntry->setIconVisibleInMenu(true);
         menu.addSeparator();
-        menu.addAction(tr("Delete All"), this, &SearchResultsDock::deleteAll);
+        auto *actDelAll = menu.addAction(QIcon(QStringLiteral(":/icons/bin.png")), tr("Delete All"), this, &SearchResultsDock::deleteAll);
+        actDelAll->setIconVisibleInMenu(true);
 
         menu.exec(QCursor::pos());
     });
 
     ui->treeWidget->setItemDelegate(new SearchResultHighlighterDelegate(ui->treeWidget));
 
-    ApplicationSettings *settings = qobject_cast<NotepadNextApplication*>(qApp)->getSettings();
-    auto updateTreeWidgetFont = [=, this]() {
+    const ApplicationSettings *settings = qobject_cast<NotepadNextApplication*>(qApp)->getSettings();
+    auto updateTreeWidgetFont = [this, settings]() {
         QFont f(settings->fontName(), settings->fontSize());
         ui->treeWidget->setFont(f);
         ui->treeWidget->resizeColumnToContents(0);
@@ -190,10 +194,8 @@ void SearchResultsDock::deleteAll()
     ui->treeWidget->clear();
 }
 
-void SearchResultsDock::itemActivated(QTreeWidgetItem *item, int column)
+void SearchResultsDock::itemActivated(const QTreeWidgetItem *item, int /*column*/)
 {
-    Q_UNUSED(column);
-
     // Result entries have no children
     // Make sure the entry has a parent since search entries can have no children
     if (item->childCount() == 0 && item->parent() != Q_NULLPTR) {
@@ -243,9 +245,7 @@ void SearchResultsDock::copySelectedSearchResultsToClipboard()
     QTreeWidgetItemIterator it(ui->treeWidget);
 
     while (*it) {
-        const QTreeWidgetItem *item = *it;
-
-        if (item->isSelected()) {
+        if (const QTreeWidgetItem *item = *it; item->isSelected()) {
             results.append(QStringLiteral("%1 %2").arg(item->text(0), item->text(1)));
         }
 

@@ -1,8 +1,9 @@
 /*
  * This file is part of Notepad Next (macOS Edition).
  * Copyright 2019-2026 Justin Dailey
- * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
+ * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +22,7 @@
 #pragma once
 
 #include <functional>
+#include <type_traits>
 
 #include <QObject>
 #include <QSettings>
@@ -70,7 +72,7 @@ class ApplicationSettings : public QSettings
 public:
     explicit ApplicationSettings(QObject *parent = nullptr);
 
-    enum DefaultDirectoryBehaviorEnum {
+    enum class DefaultDirectoryBehaviorEnum {
         FollowCurrentDocument,
         RememberLastUsed,
         HardCoded
@@ -79,7 +81,13 @@ public:
 
     template <typename T>
     T get(const char *key, const T &defaultValue) const
-    { return value(QLatin1String(key), defaultValue).template value<T>(); }
+    {
+        if constexpr (std::is_enum_v<T>) {
+            return static_cast<T>(value(QLatin1String(key), static_cast<int>(defaultValue)).toInt());
+        } else {
+            return value(QLatin1String(key), defaultValue).template value<T>();
+        }
+    }
 
     template <typename T>
     T get(const ApplicationSetting<T> &setting) const
@@ -87,7 +95,13 @@ public:
 
     template <typename T>
     void set(const ApplicationSetting<T> &setting, const T &value)
-    { setValue(QLatin1String(setting.key()), value); }
+    {
+        if constexpr (std::is_enum_v<T>) {
+            setValue(QLatin1String(setting.key()), static_cast<int>(value));
+        } else {
+            setValue(QLatin1String(setting.key()), value);
+        }
+    }
 
     DEFINE_SETTING(ShowMenuBar, showMenuBar, bool)
     DEFINE_SETTING(ShowToolBar, showToolBar, bool)

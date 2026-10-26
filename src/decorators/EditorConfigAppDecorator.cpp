@@ -1,8 +1,9 @@
 /*
  * This file is part of Notepad Next (macOS Edition).
  * Copyright 2019-2026 Justin Dailey
- * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
+ * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,14 +29,19 @@
 class PreventUnfolding
 {
 public:
-    explicit PreventUnfolding(ScintillaNext *editor) : editor(editor) {
-        foldFlags = static_cast<int>(editor->automaticFold());
+    explicit PreventUnfolding(ScintillaNext *editor)
+        : editor(editor), foldFlags(static_cast<int>(editor->automaticFold())) {
         editor->setAutomaticFold(0);
     }
 
     ~PreventUnfolding() {
         editor->setAutomaticFold(foldFlags);
     }
+
+    PreventUnfolding(const PreventUnfolding &) = delete;
+    PreventUnfolding &operator=(const PreventUnfolding &) = delete;
+    PreventUnfolding(PreventUnfolding &&) = delete;
+    PreventUnfolding &operator=(PreventUnfolding &&) = delete;
 
 private:
     ScintillaNext *editor;
@@ -46,74 +52,71 @@ private:
 EditorConfigAppDecorator::EditorConfigAppDecorator(NotepadNextApplication *app)
      : ApplicationDecorator(app)
 {
-    EditorManager *manager = app->getEditorManager();
+    const auto *manager = app->getEditorManager();
 
     connect(manager, &EditorManager::editorCreated, this, &EditorConfigAppDecorator::doEditorConfig);
     // TODO: on editor reload
 }
 
-void EditorConfigAppDecorator::doEditorConfig(ScintillaNext *editor)
+void EditorConfigAppDecorator::doEditorConfig(ScintillaNext *editor) const
 {
-    if (this->isEnabled()) {
-        if (editor->isFile()) {
-            EditorConfigSettings settings = EditorConfig::getFileSettings(editor->getFilePath());
+    if (this->isEnabled() && editor->isFile()) {
+        EditorConfigSettings settings = EditorConfig::getFileSettings(editor->getFilePath());
 
-            qDebug() << "EditorConfig settings for:" << editor->getFilePath();
-            for (const auto &setting : settings.toStdMap()) {
-                qDebug() << setting.first << "=" << setting.second;
+        qDebug() << "EditorConfig settings for:" << editor->getFilePath();
+        for (const auto &[key, val] : settings.toStdMap()) {
+            qDebug() << key << "=" << val;
+        }
+
+        if (settings.contains(QStringLiteral("indent_style"))) {
+            if (settings[QStringLiteral("indent_style")] == QStringLiteral("tab")) {
+                editor->setUseTabs(true);
+            } else if (settings[QStringLiteral("indent_style")] == QStringLiteral("space")) {
+                editor->setUseTabs(false);
             }
 
-            if (settings.contains(QStringLiteral("indent_style"))) {
-                if (settings[QStringLiteral("indent_style")] == QStringLiteral("tab")) {
-                    editor->setUseTabs(true);
-                } else if (settings[QStringLiteral("indent_style")] == QStringLiteral("space")) {
-                    editor->setUseTabs(false);
-                }
+            // Set a flag so that the tab/spaces won't get overridden
+            editor->QObject::setProperty("nn_skip_usetabs", "EditorConfig");
+        }
 
-                // Set a flag so that the tab/spaces won't get overridden
-                editor->QObject::setProperty("nn_skip_usetabs", "EditorConfig");
+        if (settings.contains(QStringLiteral("indent_size")) && settings[QStringLiteral("indent_size")].toInt() > 0) {
+            editor->setIndent(settings[QStringLiteral("indent_size")].toInt());
+        }
+
+        if (settings.contains(QStringLiteral("tab_width")) && settings[QStringLiteral("tab_width")].toInt() > 0) {
+            editor->setTabWidth(settings[QStringLiteral("tab_width")].toInt());
+
+            // Set a flag so that the tab width won't get overridden
+            editor->QObject::setProperty("nn_skip_tabwidth", "EditorConfig");
+        }
+
+        if (settings.contains(QStringLiteral("end_of_line"))) {
+            if (settings[QStringLiteral("end_of_line")] == QStringLiteral("lf")) {
+                editor->setEOLMode(SC_EOL_LF);
+            } else if (settings[QStringLiteral("end_of_line")] == QStringLiteral("cr")) {
+                editor->setEOLMode(SC_EOL_CR);
+            } else if (settings[QStringLiteral("end_of_line")] == QStringLiteral("crlf")) {
+                editor->setEOLMode(SC_EOL_CRLF);
             }
+        }
 
-            if (settings.contains(QStringLiteral("indent_size")) && settings[QStringLiteral("indent_size")].toInt() > 0) {
-                editor->setIndent(settings[QStringLiteral("indent_size")].toInt());
+        if (settings.contains(QStringLiteral("trim_trailing_whitespace")) &&
+            settings[QStringLiteral("trim_trailing_whitespace")] == QStringLiteral("true")) {
+            connect(editor, &ScintillaNext::aboutToSave, this, &EditorConfigAppDecorator::trimTrailingWhitespace);
+        }
+
+        if (settings.contains(QStringLiteral("insert_final_newline"))) {
+            if (settings[QStringLiteral("insert_final_newline")] == QStringLiteral("true")) {
+                connect(editor, &ScintillaNext::aboutToSave, this, &EditorConfigAppDecorator::ensureFinalNewline);
             }
-
-            if (settings.contains(QStringLiteral("tab_width")) && settings[QStringLiteral("tab_width")].toInt() > 0) {
-                editor->setTabWidth(settings[QStringLiteral("tab_width")].toInt());
-
-                // Set a flag so that the tab width won't get overridden
-                editor->QObject::setProperty("nn_skip_tabwidth", "EditorConfig");
-            }
-
-            if (settings.contains(QStringLiteral("end_of_line"))) {
-                if (settings[QStringLiteral("end_of_line")] == QStringLiteral("lf")) {
-                    editor->setEOLMode(SC_EOL_LF);
-                } else if (settings[QStringLiteral("end_of_line")] == QStringLiteral("cr")) {
-                    editor->setEOLMode(SC_EOL_CR);
-                } else if (settings[QStringLiteral("end_of_line")] == QStringLiteral("crlf")) {
-                    editor->setEOLMode(SC_EOL_CRLF);
-                }
-            }
-
-            if (settings.contains(QStringLiteral("trim_trailing_whitespace"))) {
-                if (settings[QStringLiteral("trim_trailing_whitespace")] == QStringLiteral("true")) {
-                    connect(editor, &ScintillaNext::aboutToSave, this, &EditorConfigAppDecorator::trimTrailingWhitespace);
-                }
-            }
-
-            if (settings.contains(QStringLiteral("insert_final_newline"))) {
-                if (settings[QStringLiteral("insert_final_newline")] == QStringLiteral("true")) {
-                    connect(editor, &ScintillaNext::aboutToSave, this, &EditorConfigAppDecorator::ensureFinalNewline);
-                }
-                else if (settings[QStringLiteral("insert_final_newline")] == QStringLiteral("false")) {
-                    connect(editor, &ScintillaNext::aboutToSave, this, &EditorConfigAppDecorator::ensureNoFinalNewline);
-                }
+            else if (settings[QStringLiteral("insert_final_newline")] == QStringLiteral("false")) {
+                connect(editor, &ScintillaNext::aboutToSave, this, &EditorConfigAppDecorator::ensureNoFinalNewline);
             }
         }
     }
 }
 
-void EditorConfigAppDecorator::trimTrailingWhitespace()
+void EditorConfigAppDecorator::trimTrailingWhitespace() const
 {
     auto *editor = qobject_cast<ScintillaNext *>(sender());
     Finder f(editor);
@@ -125,7 +128,7 @@ void EditorConfigAppDecorator::trimTrailingWhitespace()
     f.replaceAll("");
 }
 
-void EditorConfigAppDecorator::ensureFinalNewline()
+void EditorConfigAppDecorator::ensureFinalNewline() const
 {
     auto *editor = qobject_cast<ScintillaNext *>(sender());
     const PreventUnfolding pu(editor);
@@ -149,7 +152,7 @@ void EditorConfigAppDecorator::ensureFinalNewline()
     }
 }
 
-void EditorConfigAppDecorator::ensureNoFinalNewline()
+void EditorConfigAppDecorator::ensureNoFinalNewline() const
 {
     auto *editor = qobject_cast<ScintillaNext *>(sender());
     const PreventUnfolding pu(editor);

@@ -1,8 +1,9 @@
 /*
  * This file is part of Notepad Next (macOS Edition).
  * Copyright 2019-2026 Justin Dailey
- * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
+ * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,12 +27,12 @@
 
 MacroRunDialog::MacroRunDialog(QWidget *parent, MacroManager *mm) :
     QDialog(parent, Qt::Tool),
-    ui(new Ui::MacroRunDialog),
+    ui(std::make_unique<Ui::MacroRunDialog>()),
     macroManager(mm)
 {
     ui->setupUi(this);
 
-    connect(ui->buttonRun, &QPushButton::clicked, this, [=, this]() {
+    connect(ui->buttonRun, &QPushButton::clicked, this, [this]() {
         auto *selectedMacro = ui->comboBox->currentData().value<Macro*>();
         int times = -1; // for end of file
 
@@ -43,10 +44,7 @@ MacroRunDialog::MacroRunDialog(QWidget *parent, MacroManager *mm) :
     });
 }
 
-MacroRunDialog::~MacroRunDialog()
-{
-    delete ui;
-}
+MacroRunDialog::~MacroRunDialog() = default;
 
 void MacroRunDialog::showEvent(QShowEvent *event)
 {

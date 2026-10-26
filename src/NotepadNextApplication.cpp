@@ -1,8 +1,9 @@
 /*
  * This file is part of Notepad Next (macOS Edition).
  * Copyright 2019-2026 Justin Dailey
- * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
+ * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -247,15 +248,15 @@ SessionManager *NotepadNextApplication::getSessionManager() const
     SessionManager::SessionFileTypes fileTypes;
 
     if (settings->restorePreviousSession()) {
-        fileTypes |= SessionManager::SavedFile;
+        fileTypes |= SessionManager::SessionFileType::SavedFile;
     }
 
     if (settings->restoreUnsavedFiles()) {
-        fileTypes |= SessionManager::UnsavedFile;
+        fileTypes |= SessionManager::SessionFileType::UnsavedFile;
     }
 
     if (settings->restoreTempFiles()) {
-        fileTypes |= SessionManager::TempFile;
+        fileTypes |= SessionManager::SessionFileType::TempFile;
     }
 
     // Update the file types supported in case something has changed in the settings
@@ -554,17 +555,15 @@ MainWindow *NotepadNextApplication::activeMainWindow() const
             return mw;
         }
     }
-    const auto activeIt = std::find_if(m_windows.cbegin(), m_windows.cend(), [](const auto &mw) {
-        return mw && mw->isActiveWindow();
-    });
-    if (activeIt != m_windows.cend()) {
+    if (const auto activeIt = std::ranges::find_if(m_windows, [](const auto &mw) {
+            return mw && mw->isActiveWindow();
+        }); activeIt != m_windows.cend()) {
         return activeIt->data();
     }
 
-    const auto validIt = std::find_if(m_windows.cbegin(), m_windows.cend(), [](const auto &mw) {
-        return mw != nullptr;
-    });
-    if (validIt != m_windows.cend()) {
+    if (const auto validIt = std::ranges::find_if(m_windows, [](const auto &mw) {
+            return mw != nullptr;
+        }); validIt != m_windows.cend()) {
         return validIt->data();
     }
     return nullptr;
@@ -572,7 +571,7 @@ MainWindow *NotepadNextApplication::activeMainWindow() const
 
 void NotepadNextApplication::saveSession()
 {
-    MainWindow *target = activeMainWindow();
+    const MainWindow *target = activeMainWindow();
     if (!target) {
         return;
     }

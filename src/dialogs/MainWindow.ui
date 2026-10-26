@@ -635,6 +635,10 @@
    </property>
   </action>
   <action name="actionPasteWithoutFormat">
+   <property name="icon">
+    <iconset resource="../resources.qrc">
+     <normaloff>:/icons/paste.png</normaloff>:/icons/paste.png</iconset>
+   </property>
    <property name="text">
     <string>Paste Plain Text</string>
    </property>
@@ -646,6 +650,10 @@
    </property>
   </action>
   <action name="actionDelete">
+   <property name="icon">
+    <iconset resource="../resources.qrc">
+     <normaloff>:/icons/bin_closed.png</normaloff>:/icons/bin_closed.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Delete</string>
    </property>
@@ -654,16 +662,28 @@
    </property>
   </action>
   <action name="actionCopyFullPath">
+   <property name="icon">
+    <iconset resource="../resources.qrc">
+     <normaloff>:/icons/copy.png</normaloff>:/icons/copy.png</iconset>
+   </property>
    <property name="text">
     <string>Copy Full Path</string>
    </property>
   </action>
   <action name="actionCopyFileName">
+   <property name="icon">
+    <iconset resource="../resources.qrc">
+     <normaloff>:/icons/copy.png</normaloff>:/icons/copy.png</iconset>
+   </property>
    <property name="text">
     <string>Copy File Name</string>
    </property>
   </action>
   <action name="actionCopyFileDirectory">
+   <property name="icon">
+    <iconset resource="../resources.qrc">
+     <normaloff>:/icons/copy.png</normaloff>:/icons/copy.png</iconset>
+   </property>
    <property name="text">
     <string>Copy File Directory</string>
    </property>
@@ -684,6 +704,10 @@
    </property>
   </action>
   <action name="actionSaveAs">
+   <property name="icon">
+    <iconset resource="../resources.qrc">
+     <normaloff>:/icons/saved.png</normaloff>:/icons/saved.png</iconset>
+   </property>
    <property name="text">
     <string>Save &amp;As...</string>
    </property>
@@ -692,6 +716,10 @@
    </property>
   </action>
   <action name="actionSaveCopyAs">
+   <property name="icon">
+    <iconset resource="../resources.qrc">
+     <normaloff>:/icons/saved.png</normaloff>:/icons/saved.png</iconset>
+   </property>
    <property name="text">
     <string>Save a Copy As...</string>
    </property>
@@ -709,6 +737,10 @@
    </property>
   </action>
   <action name="actionSelectAll">
+   <property name="icon">
+    <iconset resource="../resources.qrc">
+     <normaloff>:/icons/list_with_icons.svg</normaloff>:/icons/list_with_icons.svg</iconset>
+   </property>
    <property name="text">
     <string>Select A&amp;ll</string>
    </property>
@@ -735,6 +767,10 @@
    </property>
   </action>
   <action name="actionRename">
+   <property name="icon">
+    <iconset resource="../resources.qrc">
+     <normaloff>:/icons/table_edit.png</normaloff>:/icons/table_edit.png</iconset>
+   </property>
    <property name="text">
     <string>Rename...</string>
    </property>
@@ -865,16 +901,28 @@
    </property>
   </action>
   <action name="actionCloseAllExceptActive">
+   <property name="icon">
+    <iconset resource="../resources.qrc">
+     <normaloff>:/icons/table_row_delete.png</normaloff>:/icons/table_row_delete.png</iconset>
+   </property>
    <property name="text">
     <string>Close All Except Active Document</string>
    </property>
   </action>
   <action name="actionCloseAllToLeft">
+   <property name="icon">
+    <iconset resource="../resources.qrc">
+     <normaloff>:/icons/table_delete.png</normaloff>:/icons/table_delete.png</iconset>
+   </property>
    <property name="text">
     <string>Close All to the Left</string>
    </property>
   </action>
   <action name="actionCloseAllToRight">
+   <property name="icon">
+    <iconset resource="../resources.qrc">
+     <normaloff>:/icons/table_delete.png</normaloff>:/icons/table_delete.png</iconset>
+   </property>
    <property name="text">
     <string>Close All to the Right</string>
    </property>
@@ -1287,6 +1335,10 @@
    </property>
   </action>
   <action name="actionCopyURL">
+   <property name="icon">
+    <iconset resource="../resources.qrc">
+     <normaloff>:/icons/copy.png</normaloff>:/icons/copy.png</iconset>
+   </property>
    <property name="text">
     <string>Copy URL</string>
    </property>

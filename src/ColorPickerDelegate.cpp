@@ -1,8 +1,9 @@
 /*
  * This file is part of Notepad Next (macOS Edition).
  * Copyright 2019-2026 Justin Dailey
- * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
+ * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,8 +49,8 @@ void ColorPickerDelegate::setEditorData(QWidget *editor, const QModelIndex &inde
 
 void ColorPickerDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
-    auto *colorDialog = static_cast<QColorDialog*>(editor);
-    QColor color = colorDialog->selectedColor();
+    const auto *colorDialog = static_cast<const QColorDialog*>(editor);
+    const QColor color = colorDialog->selectedColor();
 
     if (color.isValid()) {
         model->setData(index, color, Qt::EditRole);

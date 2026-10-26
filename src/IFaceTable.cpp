@@ -1,8 +1,9 @@
 /*
  * This file is part of Notepad Next (macOS Edition).
  * Copyright 2019-2026 Justin Dailey
- * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
+ * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +23,7 @@
 #include <cstdio>
 #include <string.h>
 #include <ctype.h>
+#include <string_view>
 #include <algorithm>
 #include <iterator>
 
@@ -56,7 +58,7 @@ const IFaceFunction *IFaceTable::FindFunctionByConstantName(const char *name) co
     if (!name || !prefix) {
         return nullptr;
     }
-    if (const size_t prefixLen = strlen(prefix); strncmp(name, prefix, prefixLen) == 0) {
+    if (const size_t prefixLen = std::string_view(prefix).length(); strncmp(name, prefix, prefixLen) == 0) {
         // This looks like a constant for an iface function.  This requires
         // a sequential search.  Take special care since the function names
         // are mixed case, whereas the constants are all-caps.
@@ -97,14 +99,14 @@ int IFaceTable::GetConstantName(int value, char *nameOut, unsigned nameBufferLen
         return 0;
     }
 
-    const size_t prefixLen = strlen(prefix);
+    const size_t prefixLen = std::string_view(prefix).length();
 
     // Look in both the constants table and the functions table.  Start with functions.
     for (const auto &func : functions) {
         if (func.value == value && func.name) {
-            const auto len = static_cast<int>(strlen(func.name) + prefixLen);
+            const auto len = static_cast<int>(std::string_view(func.name).length() + prefixLen);
             if (nameOut && (static_cast<int>(nameBufferLen) > len)) {
-                std::snprintf(nameOut, nameBufferLen, "%s%s", prefix, func.name);
+                std::snprintf(nameOut, nameBufferLen, "%s%s", prefix, func.name); // NOSONAR
                 // fix case
                 for (char *nm = nameOut + prefixLen; *nm; ++nm) {
                     if (*nm >= 'a' && *nm <= 'z') {
@@ -121,9 +123,9 @@ int IFaceTable::GetConstantName(int value, char *nameOut, unsigned nameBufferLen
     const size_t hintLen = hint ? strnlen(hint, 256) : 0;
     for (const auto &con : constants) {
         if (con.value == value && con.name && (hint == nullptr || strncmp(hint, con.name, hintLen) == 0)) {
-            const auto len = static_cast<int>(strlen(con.name));
+            const auto len = static_cast<int>(std::string_view(con.name).length());
             if (nameOut && (static_cast<int>(nameBufferLen) > len)) {
-                std::snprintf(nameOut, nameBufferLen, "%s", con.name);
+                std::snprintf(nameOut, nameBufferLen, "%s", con.name); // NOSONAR
                 return len;
             } else {
                 return -1 - len;

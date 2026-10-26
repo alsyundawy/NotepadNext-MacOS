@@ -232,12 +232,13 @@ target_include_directories(NotepadNext
         ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-if(WIN32)
-	configure_file(
-		"${CMAKE_SOURCE_DIR}/deploy/windows/version.rc.in"
-		"${CMAKE_BINARY_DIR}/version.rc"
-		@ONLY
-	)
+configure_file(
+	"${CMAKE_SOURCE_DIR}/deploy/windows/version.rc.in"
+	"${CMAKE_BINARY_DIR}/version.rc"
+	@ONLY
+)
+
+if(WIN32 AND EXISTS "${CMAKE_BINARY_DIR}/version.rc")
 	target_sources(NotepadNext PRIVATE "${CMAKE_BINARY_DIR}/version.rc")
 	configure_file(
 		"${CMAKE_SOURCE_DIR}/icon/NotepadNext.ico"

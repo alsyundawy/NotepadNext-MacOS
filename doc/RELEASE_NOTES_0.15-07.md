@@ -4,7 +4,7 @@
 > **Release Version**: `0.15-07`<br/>
 > **Official Baseline**: `dail8859/NotepadNext v0.15` (Tag: `v0.15`)<br/>
 > **Date**: October 26, 2026<br/>
-> **Maintainer & Builder**: Harry DS Alsyundawy ([@alsyundawy](https://github.com/alsyundawy))<br/>
+> **Maintainer & Builder**: Harry Dertin Sutisna ([@alsyundawy](https://github.com/alsyundawy)) | ALSYUNDAWY IT SOLUSTION<br/>
 > **Upstream Repository**: [dail8859/NotepadNext](https://github.com/dail8859/NotepadNext)<br/>
 > **macOS Edition Repository**: [alsyundawy/NotepadNext-MacOS](https://github.com/alsyundawy/NotepadNext-MacOS)<br/>
 > **Comprehensive Whitepaper**: [UPSTREAM_COMPARISON.md](UPSTREAM_COMPARISON.md)
@@ -60,7 +60,21 @@ Key innovations introduced in `0.15-07`:
 8. **LLVM Clang-Tidy, Cppcheck, Clangd Zero-Defect Audit & <30MB DMG Packaging**:
    - Passed multi-linter verification across all 88 translation units with 0 errors and 0 warnings.
    - Resolved null pointer dereference in `QuickFindWidget.cpp` and modernized raw loops with `std::find_if` in `NotepadNextApplication.cpp`.
-   - Pruned heavy unused dynamic Qt frameworks (`QtPdf`, `QtQml`, `QtQuick`, `QtVirtualKeyboard`, `QtOpenGL`, `platforminputcontexts`, unneeded `imageformats`), reducing DMG file size to ~28 MB (28,144,826 bytes), strictly meeting the <30 MB size invariant.
+   - Pruned heavy unused dynamic Qt frameworks (`QtPdf`, `QtQml`, `QtQuick`, `QtVirtualKeyboard`, `QtOpenGL`, `platforminputcontexts`, unneeded `imageformats`), reducing DMG file size to ~27 MB, strictly meeting the <30 MB size invariant.
+
+9. **Native Linux Packaging (`.deb`, `.rpm`) & Multi-Version CI/CD Matrix**:
+   - Implemented native CPack configuration in `cmake/PackagingLinux.cmake` generating `.deb` packages for Ubuntu (22.04 LTS & 24.04 LTS) and Debian, and `.rpm` packages for Fedora/openSUSE.
+   - Included full freedesktop desktop specification: `NotepadNext.desktop`, scalable SVG app icon, and AppStream `com.github.alsyundawy.NotepadNext.metainfo.xml`.
+   - Added automated multi-arch GitHub Actions CI/CD matrix across Qt 6.5, 6.8, 6.10, and 6.11 uploading native Linux packages alongside macOS DMGs.
+
+10. **Non-Intrusive Status Bar Zoom Indicator & UI Polish**:
+    - Replaced screen-blocking On-Screen Display (OSD) popup widget with non-intrusive status bar feedback (`statusBar()->showMessage(msg, 2000)`).
+    - Fixed Qt 6 macOS palette manipulation in `FadingIndicator` ensuring crisp white text with subtle rounded backdrop.
+
+11. **C++26 Modernization & Full IDE Linter Integration**:
+    - Migrated raw UI pointers in `PreferencesDialog` and `MacroRunDialog` to `std::unique_ptr` with defaulted destructors in translation units, eliminating C++26 incomplete type deletion warnings.
+    - Added C++20 `if constexpr (std::is_enum_v<T>)` serialization in `ApplicationSettings` for seamless scoped enum support.
+    - Configured `.vscode/c_cpp_properties.json` and `.clangd` with exact Qt 6.12 include paths, resolving all 1200+ false-positive diagnostics in Antigravity IDE and SonarLint.
 
 ---
 

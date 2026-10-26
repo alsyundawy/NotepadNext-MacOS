@@ -1,8 +1,9 @@
 /*
  * This file is part of Notepad Next (macOS Edition).
  * Copyright 2019-2026 Justin Dailey
- * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
+ * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,30 +29,30 @@ ScintillaCommenter::ScintillaCommenter(ScintillaNext *editor) :
 
 void ScintillaCommenter::toggleSelection()
 {
-    editor->forEachLineInSelection(static_cast<int>(editor->mainSelection()), [&](int line) {
+    editor->forEachLineInSelection(static_cast<int>(editor->mainSelection()), [this](int line) {
         toggleLine(line);
     });
 }
 
 void ScintillaCommenter::commentSelection()
 {
-    editor->forEachLineInSelection(static_cast<int>(editor->mainSelection()), [&](int line) {
+    editor->forEachLineInSelection(static_cast<int>(editor->mainSelection()), [this](int line) {
         commentLine(line);
     });
 }
 
 void ScintillaCommenter::uncommentSelection()
 {
-    editor->forEachLineInSelection(static_cast<int>(editor->mainSelection()), [&](int line) {
+    editor->forEachLineInSelection(static_cast<int>(editor->mainSelection()), [this](int line) {
         uncommentLine(line);
     });
 }
 
 void ScintillaCommenter::toggleLine(int line)
 {
-    const int commentLen = static_cast<int>(editor->languageSingleLineComment.length());
-    const int indentPos = static_cast<int>(editor->lineIndentPosition(line));
-    const int lineEnd = static_cast<int>(qMin(indentPos + commentLen, static_cast<int>(editor->lineEndPosition(line))));
+    const auto commentLen = static_cast<int>(editor->languageSingleLineComment.length());
+    const auto indentPos = static_cast<int>(editor->lineIndentPosition(line));
+    const auto lineEnd = static_cast<int>(qMin(indentPos + commentLen, static_cast<int>(editor->lineEndPosition(line))));
     const QByteArray commentText = editor->get_text_range(indentPos, lineEnd);
 
     if (commentText == editor->languageSingleLineComment) {
@@ -72,8 +73,8 @@ void ScintillaCommenter::toggleLine(int line)
 
 void ScintillaCommenter::commentLine(int line)
 {
-    const int commentLen = static_cast<int>(editor->languageSingleLineComment.length());
-    const int indentPos = static_cast<int>(editor->lineIndentPosition(line));
+    const auto commentLen = static_cast<int>(editor->languageSingleLineComment.length());
+    const auto indentPos = static_cast<int>(editor->lineIndentPosition(line));
 
     // Don't comment lines with only indentation
     if (indentPos == static_cast<int>(editor->lineEndPosition(line))) {
@@ -87,9 +88,9 @@ void ScintillaCommenter::commentLine(int line)
 
 void ScintillaCommenter::uncommentLine(int line)
 {
-    const int commentLen = static_cast<int>(editor->languageSingleLineComment.length());
-    const int indentPos = static_cast<int>(editor->lineIndentPosition(line));
-    const int lineEnd = static_cast<int>(qMin(indentPos + commentLen, static_cast<int>(editor->lineEndPosition(line))));
+    const auto commentLen = static_cast<int>(editor->languageSingleLineComment.length());
+    const auto indentPos = static_cast<int>(editor->lineIndentPosition(line));
+    const auto lineEnd = static_cast<int>(qMin(indentPos + commentLen, static_cast<int>(editor->lineEndPosition(line))));
     const QByteArray commentText = editor->get_text_range(indentPos, lineEnd);
 
     if (commentText == editor->languageSingleLineComment) {

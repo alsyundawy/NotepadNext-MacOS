@@ -1,8 +1,9 @@
 /*
  * This file is part of Notepad Next (macOS Edition).
  * Copyright 2019-2026 Justin Dailey
- * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
+ * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,16 +19,6 @@
  * along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-/*
- * This file is part of NotepadNext.
- * Copyright 2026 Harry DS Alsyundawy (NotepadNext Maintainer)
- *
- * NotepadNext is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- */
-
 #include "ThemeSwitcherDialog.h"
 #include <QtGlobal>
 
@@ -38,6 +29,7 @@
 #include "dialogs/MainWindow.h"
 #include "features/ThemeManager.h"
 #include "features/ThemePaletteData.h"
+#include <array>
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -54,7 +46,7 @@ ThemeSwitcherDialog::ThemeSwitcherDialog(MainWindow *mainWindow, QWidget *parent
     populateTable();
 }
 
-ThemeSwitcherDialog::~ThemeSwitcherDialog() {}
+ThemeSwitcherDialog::~ThemeSwitcherDialog() = default;
 
 void ThemeSwitcherDialog::setupUi() {
     setWindowTitle(tr("Theme Switcher — NotepadNext"));
@@ -149,9 +141,7 @@ void ThemeSwitcherDialog::populateTable(const QString &filterText, int modeFilte
     QString activeId = curPal ? QString::fromLatin1(curPal->id) : ThemeManager::instance()->currentPaletteId();
     int selectedRow = -1;
 
-    for (size_t i = 0; i < kTotalThemePaletteCount; ++i) {
-        const ThemePalette &p = kAllThemePalettes[i];
-
+    for (const auto &p : kAllThemePalettes) {
         // Mode filter: 1 = Light only, 2 = Dark only
         if (modeFilter == 1 && p.isDark) {
             continue;
@@ -189,11 +179,11 @@ void ThemeSwitcherDialog::populateTable(const QString &filterText, int modeFilte
         QPainter painter(&pix);
         painter.setRenderHint(QPainter::Antialiasing, true);
 
-        const char *colors[] = {p.win, p.card, p.border, p.txtPri, p.blue, p.cyan};
-        for (int c = 0; c < 6; ++c) {
+        const std::array colors = {p.win, p.card, p.border, p.txtPri, p.blue, p.cyan};
+        for (size_t c = 0; c < colors.size(); ++c) {
             painter.setBrush(QColor(colors[c]));
             painter.setPen(Qt::NoPen);
-            painter.drawRoundedRect(c * 26 + 2, 2, 22, 18, 4, 4);
+            painter.drawRoundedRect(static_cast<int>(c * 26 + 2), 2, 22, 18, 4, 4);
         }
         painter.end();
 
@@ -217,9 +207,8 @@ void ThemeSwitcherDialog::filterThemes() {
     populateTable(m_searchEdit->text(), filterId);
 }
 
-void ThemeSwitcherDialog::onThemeSelected(int row, int column) { // NOLINT(bugprone-easily-swappable-parameters)
-    Q_UNUSED(column)
-    QTableWidgetItem *item = m_table->item(row, 0);
+void ThemeSwitcherDialog::onThemeSelected(int row, int /*column*/) { // NOLINT(bugprone-easily-swappable-parameters)
+    const auto *item = m_table->item(row, 0);
     if (!item) {
         return;
     }
@@ -229,10 +218,8 @@ void ThemeSwitcherDialog::onThemeSelected(int row, int column) { // NOLINT(bugpr
 }
 
 void ThemeSwitcherDialog::applyAndClose() {
-    int row = m_table->currentRow();
-    if (row >= 0) {
-        QTableWidgetItem *item = m_table->item(row, 0);
-        if (item) {
+    if (int row = m_table->currentRow(); row >= 0) {
+        if (const auto *item = m_table->item(row, 0)) {
             QString palId = item->data(Qt::UserRole).toString();
             ThemeManager::instance()->setPalette(palId, m_mainWindow);
         }

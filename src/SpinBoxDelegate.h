@@ -1,8 +1,9 @@
 /*
  * This file is part of Notepad Next (macOS Edition).
  * Copyright 2019-2026 Justin Dailey
- * Copyright 2026 Harry DS Alsyundawy <alsyundawy@gmail.com>
+ * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
+ * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,10 +22,11 @@
 #ifndef SPINBOXDELEGATE_H
 #define SPINBOXDELEGATE_H
 
+#include <functional>
 #include <QSpinBox>
 #include <QStyledItemDelegate>
 
-typedef QSpinBox*(*QSpinBoxFactory)();
+using QSpinBoxFactory = std::function<QSpinBox*()>;
 
 class SpinBoxDelegate : public QStyledItemDelegate
 {
