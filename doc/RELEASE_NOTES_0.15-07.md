@@ -102,6 +102,9 @@ Key innovations introduced in `0.15-07`:
 | **System File Associations**           | Default macOS TextEdit bindings                          | **`NotepadNext-Default-Editor.sh` (470+ Extensions, 38 UTIs)**               | Full LaunchServices system integration, Gatekeeper unquarantine, sub-second cache rebuild (`v0.15-01`).                                                                 |
 | **App Branding & Packaging**           | Generic low-res raster icon                              | **macOS Squircle Retina ICNS + Universal 2 DMG Distribution**                | Emerald gradient squircle, 3D stylus, native ICNS (`1024x1024`), multi-arch Universal 2 DMG (`arm64` + `x86_64`) (`v0.15-04`).                                          |
 | **Localization & Linguistic Rigor**    | Fragmented, incomplete community translations            | **100% Complete Bahasa Indonesia & English (0 Unfinished)**                  | Strictly standardized per EYD V, PUEBI, PASTI Badan Bahasa, and Mozilla L10n; eliminated parenthetical artifacts (`v0.15-04` - `v0.15-07`).                             |
+| **Linux Packaging & CI/CD**            | Upstream AppImage script only                            | **Native CPack Debian (`.deb`) & RPM (`.rpm`) Packages**                    | Built-in CPack configuration in `cmake/PackagingLinux.cmake` supporting Ubuntu 22.04/24.04 and Fedora with GitHub Actions CI matrix (`v0.15-07`). |
+| **Zoom Indicator UI**                  | Intrusive central screen-blocking OSD widget             | **Non-Intrusive Status Bar Zoom Message (`statusBar()->showMessage`)**       | Clean unobtrusive feedback in status bar; fixed macOS Qt 6 palette contrast bug in `FadingIndicator` (`v0.15-07`).                                                      |
+| **C++26 Modernization & Safety**       | Raw UI pointers subject to incomplete deletion warnings  | **`std::unique_ptr` UI Lifetime + C++20 `if constexpr` Enum Serialization**   | Zero compiler diagnostics in C++26 mode, automatic enum serialization in `ApplicationSettings` (`v0.15-07`).                                                              |
 | **Static Verification & Clean Code**   | Basic CI checks                                          | **Zero-Defect 13-Pillar Audit (Trunk, Cppcheck, 36 SonarLint Fixes)**        | ISO 5055, OWASP Top 10, 100% clean across all 88 translation units without warnings (`v0.15-04` - `v0.15-07`).                                                          |
 
 ---
@@ -123,12 +126,24 @@ All 13 pillars of enterprise verification were executed and validated with empir
 
 ## 📦 Distribution Packages
 
+### macOS Distribution (`.dmg`)
 - **Version**: `0.15-07`
 - **Architectures**: Universal 2 (`arm64` Apple Silicon + `x86_64` Intel 64-bit)
 - **Minimum OS Version**: macOS 11.0 (Big Sur) through macOS 15.0+ (Sequoia)
 - **Artifacts**:
-  - `NotepadNext-v0.15-07-arm64.dmg` (~27.9 MB, Apple Silicon M1/M2/M3/M4)
-  - `NotepadNext-v0.15-07-x64.dmg` (~27.9 MB, Intel x86_64)
-  - `NotepadNext-v0.15-arm64.dmg` (~27.9 MB, alias)
-  - `NotepadNext-v0.15-x64.dmg` (~27.9 MB, alias)
+  - `NotepadNext-v0.15-07-arm64.dmg` (~25 MB, Apple Silicon M1/M2/M3/M4)
+  - `NotepadNext-v0.15-07-x64.dmg` (~25 MB, Intel x86_64)
+  - `NotepadNext-v0.15-arm64.dmg` (~25 MB, canonical alias)
+  - `NotepadNext-v0.15-x64.dmg` (~25 MB, canonical alias)
   - `NotepadNext-Default-Editor.sh` (system integration script)
+
+### Linux Distribution (`.deb` & `.rpm`)
+- **Version**: `0.15-07`
+- **Architectures**: `x86_64` / `amd64` and `aarch64` / `arm64`
+- **Supported Distributions**: Ubuntu 22.04 LTS / 24.04 LTS, Debian 12 / 13, Fedora 40 / 41 / 42, openSUSE, RHEL
+- **Artifacts**:
+  - `notepadnext_0.15-07_amd64.deb` (Debian / Ubuntu / Linux Mint)
+  - `notepadnext_0.15-07_arm64.deb` (Debian ARM / Ubuntu ARM / Raspberry Pi)
+  - `notepadnext-0.15-07-1.x86_64.rpm` (Fedora / RHEL / openSUSE)
+  - `notepadnext-0.15-07-1.aarch64.rpm` (Fedora ARM / openSUSE ARM)
+  - `SHA256SUMS.txt` (cryptographic verification digests)

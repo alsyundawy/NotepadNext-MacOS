@@ -81,36 +81,40 @@ chmod +x NotepadNext-Default-Editor.sh
 
 ## Installation
 
-> 🇬🇧 NotepadNext application builds are available for macOS. You can download the latest build directly from the [Releases](https://github.com/alsyundawy/NotepadNext-MacOS/releases) page. Choose the latest release, then check the **Assets** section at the bottom to download the `.dmg` or `.zip` file matching your Mac architecture.
+> 🇬🇧 NotepadNext application builds are available for macOS and Linux. You can download the latest build directly from the [Releases](https://github.com/alsyundawy/NotepadNext-MacOS/releases) page. Choose the latest release, then check the **Assets** section at the bottom to download the `.dmg`, `.deb`, or `.rpm` file matching your operating system and hardware architecture.
 >
-> 🇮🇩 Build aplikasi NotepadNext tersedia untuk macOS. Anda dapat mengunduh build terbaru langsung dari halaman [Releases](https://github.com/alsyundawy/NotepadNext-MacOS/releases). Pilih rilis terbaru, lalu lihat bagian **Assets** di bagian bawah untuk mendownload file `.dmg` atau `.zip` yang sesuai dengan arsitektur Mac Anda.
+> 🇮🇩 Build aplikasi NotepadNext tersedia untuk macOS dan Linux. Anda dapat mengunduh build terbaru langsung dari halaman [Releases](https://github.com/alsyundawy/NotepadNext-MacOS/releases). Pilih rilis terbaru, lalu lihat bagian **Assets** di bagian bawah untuk mendownload file `.dmg`, `.deb`, atau `.rpm` yang sesuai dengan sistem operasi dan arsitektur perangkat Anda.
 
-Available packages for Apple Silicon (`arm64`):
+### macOS Packages (`.dmg`)
+
+Available canonical and matrix DMG packages for Apple Silicon (`arm64`):
 
 | Package / Paket                      | Architecture / Arsitektur | Minimum macOS       | Qt Version / Versi Qt |
 | :----------------------------------- | :------------------------ | :------------------ | :-------------------- |
-| `NotepadNext-macOS-arm64-Qt6.5.zip`  | Apple Silicon (arm64)     | macOS 12.0 Monterey | Qt 6.5                |
-| `NotepadNext-macOS-arm64-Qt6.8.zip`  | Apple Silicon (arm64)     | macOS 13.0 Ventura  | Qt 6.8                |
-| `NotepadNext-macOS-arm64-Qt6.10.zip` | Apple Silicon (arm64)     | macOS 14.0 Sonoma   | Qt 6.10               |
-| `NotepadNext-macOS-arm64-Qt6.11.zip` | Apple Silicon (arm64)     | macOS 15.0 Sequoia  | Qt 6.11               |
-| `NotepadNext-macOS-arm64-Qt6.12.zip` | Apple Silicon (arm64)     | macOS 15.0 Sequoia  | Qt 6.12               |
+| `NotepadNext-v0.15-07-arm64.dmg`     | Apple Silicon (arm64)     | macOS 12.0 Monterey | Qt 6.5 (Canonical)    |
+| `NotepadNext-macOS-arm64-Qt6.5.dmg`  | Apple Silicon (arm64)     | macOS 12.0 Monterey | Qt 6.5                |
+| `NotepadNext-macOS-arm64-Qt6.8.dmg`  | Apple Silicon (arm64)     | macOS 13.0 Ventura  | Qt 6.8                |
+| `NotepadNext-macOS-arm64-Qt6.10.dmg` | Apple Silicon (arm64)     | macOS 14.0 Sonoma   | Qt 6.10               |
+| `NotepadNext-macOS-arm64-Qt6.11.dmg` | Apple Silicon (arm64)     | macOS 15.0 Sequoia  | Qt 6.11               |
+| `NotepadNext-macOS-arm64-Qt6.12.dmg` | Apple Silicon (arm64)     | macOS 15.0 Sequoia  | Qt 6.12               |
 
-Available packages for Intel (`x86_64`):
+Available canonical and matrix DMG packages for Intel (`x86_64`):
 
 | Package / Paket                    | Architecture / Arsitektur | Minimum macOS       | Qt Version / Versi Qt |
 | :--------------------------------- | :------------------------ | :------------------ | :-------------------- |
-| `NotepadNext-macOS-x64-Qt6.5.zip`  | Intel (x86_64)            | macOS 11.0 Big Sur  | Qt 6.5                |
-| `NotepadNext-macOS-x64-Qt6.8.zip`  | Intel (x86_64)            | macOS 12.0 Monterey | Qt 6.8                |
-| `NotepadNext-macOS-x64-Qt6.10.zip` | Intel (x86_64)            | macOS 13.0 Ventura  | Qt 6.10               |
-| `NotepadNext-macOS-x64-Qt6.11.zip` | Intel (x86_64)            | macOS 14.0 Sonoma   | Qt 6.11               |
-| `NotepadNext-macOS-x64-Qt6.12.zip` | Intel (x86_64)            | macOS 15.0 Sequoia  | Qt 6.12               |
+| `NotepadNext-v0.15-07-x64.dmg`     | Intel (x86_64)            | macOS 11.0 Big Sur  | Qt 6.5 (Canonical)    |
+| `NotepadNext-macOS-x64-Qt6.5.dmg`  | Intel (x86_64)            | macOS 11.0 Big Sur  | Qt 6.5                |
+| `NotepadNext-macOS-x64-Qt6.8.dmg`  | Intel (x86_64)            | macOS 12.0 Monterey | Qt 6.8                |
+| `NotepadNext-macOS-x64-Qt6.10.dmg` | Intel (x86_64)            | macOS 13.0 Ventura  | Qt 6.10               |
+| `NotepadNext-macOS-x64-Qt6.11.dmg` | Intel (x86_64)            | macOS 14.0 Sonoma   | Qt 6.11               |
+| `NotepadNext-macOS-x64-Qt6.12.dmg` | Intel (x86_64)            | macOS 15.0 Sequoia  | Qt 6.12               |
 
 To resolve Gatekeeper quarantine warnings on macOS:
 
 ```bash
-sudo xattr -cr "NotepadNext-v0.15.dmg"
-sudo xattr -rd com.apple.quarantine "NotepadNext-v0.15.dmg"
-sudo codesign --force --deep --sign - "NotepadNext-v0.15.dmg"
+sudo xattr -cr "NotepadNext-v0.15-07-arm64.dmg"
+sudo xattr -rd com.apple.quarantine "NotepadNext-v0.15-07-arm64.dmg"
+sudo codesign --force --deep --sign - "NotepadNext-v0.15-07-arm64.dmg"
 ```
 
 To install using Homebrew:
@@ -118,6 +122,30 @@ To install using Homebrew:
 ```bash
 brew tap alsyundawy/notepadnext
 brew install --no-quarantine notepadnext
+```
+
+### Linux Packages (`.deb` & `.rpm`)
+
+Available native Linux CPack distribution packages:
+
+| Package / Paket                       | Format | Distribution / Distribusi                 | Architecture / Arsitektur |
+| :------------------------------------ | :----- | :---------------------------------------- | :------------------------ |
+| `notepadnext_0.15-07_amd64.deb`       | DEB    | Ubuntu 22.04 / 24.04, Debian 12/13, Mint | x86_64 / amd64            |
+| `notepadnext_0.15-07_arm64.deb`       | DEB    | Ubuntu ARM, Debian ARM, Raspberry Pi OS   | arm64 / aarch64           |
+| `notepadnext-0.15-07-1.x86_64.rpm`    | RPM    | Fedora 40/41/42, RHEL 9/10, openSUSE      | x86_64                    |
+| `notepadnext-0.15-07-1.aarch64.rpm`   | RPM    | Fedora ARM, openSUSE ARM                  | aarch64                   |
+
+Install on Debian / Ubuntu:
+
+```bash
+sudo apt update
+sudo apt install ./notepadnext_0.15-07_amd64.deb
+```
+
+Install on Fedora / RHEL / CentOS:
+
+```bash
+sudo dnf install ./notepadnext-0.15-07-1.x86_64.rpm
 ```
 
 ---

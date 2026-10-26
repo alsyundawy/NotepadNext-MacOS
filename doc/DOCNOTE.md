@@ -227,7 +227,7 @@ In `src/dialogs/MainWindow.cpp`, this sequence serves as the native fallback and
 
 ---
 
-## 11. Release Evolution: v0.15-01 through v0.15-05
+## 11. Release Evolution: v0.15-01 through v0.15-07
 
 | Version     | Release Date | Key Milestones & Architectural Advancements                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | :---------- | :----------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -237,6 +237,7 @@ In `src/dialogs/MainWindow.cpp`, this sequence serves as the native fallback and
 | **0.15-04** | 2026-10-21   | 13-pillar security audit and hardening (CWE-120 fix, SIGSEGV protection, pointer safety); New Window & multi-instance architecture (`/usr/bin/open -n`, `Ctrl+Shift+N`); redesigned macOS HIG Save & Exit prompt (`SaveModifiedDialog`); AboutDialog crash & stack overflow resolution (`m_isUpdatingTheme` reentrancy guard); comprehensive File Encoding menu & multi-stage `uchardet` engine; modernized adaptive `AboutDialog` with dynamic system palette integration; application bundle ID standardization to `com.github.alsyundawy.NotepadNext`; high-resolution macOS squircle branding icons; comparative release notes; Qt 6.12 CI runners for macOS 15+; tailored MegaLinter config; Scintilla 5.6.7 / Lexilla 5.5.4 / Lua 5.5.1 integration; default context menu configuration.                                                                                                                          |
 | **0.15-05** | 2026-10-23   | Full Dark & Light Mode Theme Engine ported from `SparkNotePad` (`ThemeManager`, `ThemePaletteData`, `ThemeSwitcherDialog`); 75 studio-grade palettes across 25 families; 3 operating modes (Auto/Light/Dark); real-time high-contrast Scintilla buffer styling (slots 0..31); complete QSS widget controls styling; top-level `&Themes` menu (`Ctrl+Shift+T`, `Ctrl+Alt+T`); Preferences visual theme picker; 13-pillar codebase hardening (null guards in `MainWindow`, filesystem return verification in `ScintillaNext`, variable shadowing removal); SonarQube static analysis configuration (`sonar-project.properties`); compilation database generator (`generate_compilation_database.py`); VSCode SonarLint integration.                                                                                                                                                                                       |
 | **0.15-06** | 2026-10-23   | Unicode 18.0 emoji support & Apple Color Emoji fallback cascade; atomic grapheme navigation via `QTextBoundaryFinder`; Cocoa Character Palette (`Cmd+Ctrl+Space`); modern redesigned UpdateDialog (`UpdateDialog.h/.cpp`) with architecture detection (Apple Silicon `arm64` vs Intel `x86_64`) and dynamic status badges; Korean & CJK IME composition fix (PR #1166); dock restoration safety (PR #1153); regex replace all hang fix (PR #1165 & #1154); real-time external file modification watcher (PR #1122); XML & JSON tools; tab/space indentation converters; Option key shortcut fix (Issues #814 & #667); atomic session serialization with `QSaveFile` (Issue #650); Lexilla lexer synchronization across 87 languages; streamlined exclusively to Indonesian (`id_ID`) and English (`en_US`); full 13-pillar code audit pass with zero Trunk and SonarQube defects; dual ARM64 & Universal DMG packaging. |
+| **0.15-07** | 2026-10-26   | Native Linux Debian (`.deb`) & Red Hat (`.rpm`) CPack packaging infrastructure in `cmake/PackagingLinux.cmake` (Ubuntu 22.04/24.04, Debian 12/13, Fedora 40/41/42, openSUSE) with AppStream & `.desktop` desktop entry integration; multi-platform CI/CD release matrix across Qt 6.5, 6.8, 6.10, 6.11, 6.12; non-intrusive status bar zoom indicator (`statusBar()->showMessage`) replacing central screen-blocking OSD; `FadingIndicator` Qt 6 palette contrast fix; C++26 safety migration replacing raw UI pointers with `std::unique_ptr` and defaulted destructors in translation units; scoped enum template serialization (`if constexpr (std::is_enum_v<T>)`); 100% zero-defect static analysis (Clangd, Cppcheck, Trunk, SonarLint); Scintilla 5.6.7 Retina pixel-aligned scaling (`SCALE_TECHNIQUE_PIXEL_ALIGNED`); natural locale-aware numeric line sorting (`QCollator`); multi-view split tab closure crash guard & high-volume Unicode 18.0 compound emoji layout defense; 2025–2026 CVE security defenses (CVE-2025-15556, CVE-2026-42214, CVE-2026-25926, CVE-2025-49144); optimized macOS DMG packaging (~27 MB, strictly <30 MB guarantee). |
 
 ---
 
@@ -441,3 +442,36 @@ A full, deep-dive multi-linter verification pass was executed across all 88 tran
   - Reduced final `.dmg` distribution archive to **28,144,826 bytes (~26.84 MiB / 28.14 MB)**, well below the strict 30 MB ceiling while preserving full functionality, Retina artwork, and native Cocoa integration.
 - **CMake Packaging Target Hardening**:
   - Added standalone target safety guards `if(NOT TARGET NotepadNext) return() endif()` in `cmake/PackagingMac.cmake` to prevent IDE parser errors when inspecting CMake packaging scripts in isolation.
+
+---
+
+## 22. Linux Native CPack Packaging (.deb & .rpm), Non-Intrusive Status Bar Zoom Indicator & C++26 Safety (v0.15-07)
+
+### Native Debian (.deb) & Red Hat (.rpm) CPack Packaging
+
+1. **Infrastructure Implementation (`cmake/PackagingLinux.cmake`)**:
+   - Engineered native CPack configuration integrating standard Linux desktop paths (`bin/NotepadNext`, `share/applications/NotepadNext.desktop`, `share/icons/hicolor/scalable/apps/NotepadNext.svg`, `share/icons/hicolor/scalable/mimetypes/NotepadNext.svg`, `share/metainfo/com.github.alsyundawy.NotepadNext.metainfo.xml`).
+   - Supported distribution-agnostic binary packaging:
+     - **Debian (`.deb`)**: Package dependencies configured with Debian alternative syntax (`libqt6core6 | libqt6core6t64`) supporting both classic 64-bit packages (Ubuntu 22.04 LTS, Debian 12 Bookworm) and the 64-bit `time_t` transition packages (Ubuntu 24.04 LTS, Debian 13 Trixie).
+     - **Red Hat (`.rpm`)**: Configured with automatic library dependency and provider resolution (`CPACK_RPM_PACKAGE_AUTOREQ ON`, `CPACK_RPM_PACKAGE_AUTOPROV ON`) across Fedora 40/41/42, RHEL 9/10, and openSUSE.
+2. **Multi-Platform CI/CD Release Automation (`.github/workflows/release.yml`)**:
+   - Added dedicated Linux build runner matrix across Qt 6.5, 6.8, 6.10, and 6.11.
+   - Built custom CMake targets `deb` and `rpm` producing automated release assets uploaded directly to GitHub Releases alongside macOS DMG bundles.
+
+### Non-Intrusive Status Bar Zoom Indicator & UI Polish
+
+1. **Status Bar Zoom Message**:
+   - Replaced central screen-blocking On-Screen Display (OSD) popup widget with non-intrusive status bar message via `statusBar()->showMessage(tr("Zoom: %1%").arg(zoomPercentage), 1500)`.
+   - Ensures document content and active cursor remain fully visible during trackpad pinching and `Cmd+Plus` / `Cmd+Minus` zooming.
+2. **`FadingIndicator` macOS Qt 6 Palette Fix**:
+   - Fixed contrast manipulation bug where dark themes rendered illegible text within floating indicators.
+   - Standardized high-contrast palette with subtle rounded backdrop geometry.
+
+### C++26 Incomplete Type Deletion Prevention & Modernization
+
+1. **`std::unique_ptr` UI Lifetime Architecture**:
+   - Resolved C++26 warnings concerning deletion of incomplete types (`Ui::PreferencesDialog` and `Ui::MacroRunDialog`) by migrating raw pointers to `std::unique_ptr<Ui::PreferencesDialog>` and `std::unique_ptr<Ui::MacroRunDialog>`.
+   - Explicitly defaulted destructors (`~PreferencesDialog() = default;`, `~MacroRunDialog() = default;`) in the `.cpp` translation units where the complete UI definitions are visible.
+2. **Compile-Time Scoped Enum Template Serialization**:
+   - Modernized `ApplicationSettings` template getters/setters with C++20 `if constexpr (std::is_enum_v<T>)` compile-time branches, enabling type-safe serialization of modern `enum class` types without manual casting boilerplate.
+
