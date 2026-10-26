@@ -112,17 +112,23 @@ text/plain=com.github.alsyundawy.NotepadNext.desktop;NotepadNext.desktop;
 To make Notepad Next the default editor for terminal operations (e.g., `git commit`, `crontab -e`, `sudoedit`), the script configures:
 
 1. **Debian / Ubuntu Alternatives System**:
+
    ```bash
    update-alternatives --install /usr/bin/editor editor /usr/bin/NotepadNext 100
    update-alternatives --set editor /usr/bin/NotepadNext
    ```
+
 2. **RHEL / Fedora / SUSE Alternatives System**:
+
    ```bash
    alternatives --install /usr/bin/editor editor /usr/bin/NotepadNext 100
    alternatives --set editor /usr/bin/NotepadNext
    ```
+
 3. **User Environment Variables**:
+
    Appends or exports `EDITOR` and `VISUAL` in `~/.bashrc` and `~/.profile`:
+
    ```bash
    export EDITOR="NotepadNext"
    export VISUAL="NotepadNext"
@@ -181,7 +187,7 @@ Options:
   --dry-run         Simulate changes without modifying any files
 ```
 
-### Example Commands:
+### Example Commands
 
 ```bash
 # 1. Apply to current user
