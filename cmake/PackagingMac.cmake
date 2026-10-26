@@ -90,6 +90,8 @@ if(MAC_DMG_LEGACY_NAME)
         COMMAND ${MACDEPLOYQT_EXECUTABLE}
             ${INSTALL_DIR}/NotepadNext.app
         ${PRUNE_UNUSED_QT_FILES}
+        COMMAND /usr/bin/sync
+        COMMAND /bin/sleep 2
         COMMAND ${HDIUTIL_EXECUTABLE} create
             -volname "NotepadNext"
             -srcfolder ${INSTALL_DIR}/NotepadNext.app
@@ -105,6 +107,8 @@ else()
         COMMAND ${MACDEPLOYQT_EXECUTABLE}
             ${INSTALL_DIR}/NotepadNext.app
         ${PRUNE_UNUSED_QT_FILES}
+        COMMAND /usr/bin/sync
+        COMMAND /bin/sleep 2
         COMMAND ${HDIUTIL_EXECUTABLE} create
             -volname "NotepadNext"
             -srcfolder ${INSTALL_DIR}/NotepadNext.app
