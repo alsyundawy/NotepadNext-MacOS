@@ -348,21 +348,27 @@ bool ScintillaNext::isFile() const
 
 QFileInfo ScintillaNext::getFileInfo() const
 {
-    Q_ASSERT(isFile());
+    if (!isFile()) {
+        return QFileInfo();
+    }
 
     return fileInfo;
 }
 
 QString ScintillaNext::getPath() const
 {
-    Q_ASSERT(isFile());
+    if (!isFile()) {
+        return QString();
+    }
 
     return QDir::toNativeSeparators(fileInfo.canonicalPath());
 }
 
 QString ScintillaNext::getFilePath() const
 {
-    Q_ASSERT(isFile());
+    if (!isFile()) {
+        return QString();
+    }
 
     return QDir::toNativeSeparators(fileInfo.canonicalFilePath());
 }
@@ -406,7 +412,9 @@ QFileDevice::FileError ScintillaNext::save()
 {
     qInfo(Q_FUNC_INFO);
 
-    Q_ASSERT(isFile());
+    if (!isFile()) {
+        return QFileDevice::OpenError;
+    }
 
     emit aboutToSave();
 
@@ -429,7 +437,9 @@ QFileDevice::FileError ScintillaNext::save()
 
 void ScintillaNext::reload()
 {
-    Q_ASSERT(isFile());
+    if (!isFile()) {
+        return;
+    }
 
     // Ensure the file still exists.
     if (!QFile::exists(fileInfo.canonicalFilePath())) {
@@ -578,8 +588,6 @@ ScintillaNext::FileStateChange ScintillaNext::checkFileForStateChange()
     }
 
     qInfo("type() = %d", bufferType);
-    Q_ASSERT(false);
-
     return FileStateChange::NoChange;
 }
 
@@ -900,7 +908,9 @@ bool ScintillaNext::readFromDisk(QFile &file, const QString &forcedEncoding)
 
 QDateTime ScintillaNext::fileTimestamp()
 {
-    Q_ASSERT(bufferType != BufferType::New);
+    if (bufferType == BufferType::New) {
+        return QDateTime();
+    }
 
     fileInfo.refresh();
     qInfo("%s last modified %s", qUtf8Printable(fileInfo.fileName()), qUtf8Printable(fileInfo.lastModified().toString()));
@@ -917,7 +927,10 @@ void ScintillaNext::setFileInfo(const QString &filePath)
     fileInfo.setFile(filePath);
     fileInfo.makeAbsolute();
 
-    Q_ASSERT(fileInfo.exists());
+    if (!fileInfo.exists()) {
+        qWarning("setFileInfo: file does not exist: %s", qUtf8Printable(filePath));
+        return;
+    }
 
     name = fileInfo.fileName();
     bufferType = BufferType::File;

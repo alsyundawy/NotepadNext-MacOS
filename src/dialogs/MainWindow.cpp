@@ -1692,7 +1692,7 @@ void MainWindow::reloadFile()
 {
     auto editor = currentEditor();
 
-    if (!editor->isFile() && !editor->isSavedToDisk()) {
+    if (!editor || !editor->isFile()) {
         return;
     }
 
@@ -2031,7 +2031,9 @@ void MainWindow::moveCurrentFileToTrash()
 
 void MainWindow::moveFileToTrash(const ScintillaNext *editor)
 {
-    Q_ASSERT(editor->isFile());
+    if (!editor || !editor->isFile()) {
+        return;
+    }
 
     const QString filePath = editor->getFilePath();
     auto reply = QMessageBox::question(this, tr("Delete File"), tr("Are you sure you want to move <b>%1</b> to the trash?").arg(filePath));

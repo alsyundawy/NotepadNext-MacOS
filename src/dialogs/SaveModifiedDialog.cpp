@@ -104,7 +104,10 @@ void SaveModifiedDialog::setupUi()
         cardLayout->setContentsMargins(12, 10, 12, 10);
         cardLayout->setSpacing(4);
 
-        QString filePath = (m_editors.first() && !m_editors.first().isNull()) ? m_editors.first()->getFilePath() : QString();
+        QString filePath;
+        if (m_editors.first() && !m_editors.first().isNull() && m_editors.first()->isFile()) {
+            filePath = m_editors.first()->getFilePath();
+        }
         if (filePath.isEmpty()) {
             filePath = tr("New unsaved document");
         }
@@ -124,7 +127,7 @@ void SaveModifiedDialog::setupUi()
                 continue;
             }
             QString name = editor->getName();
-            QString path = editor->getFilePath();
+            QString path = editor->isFile() ? editor->getFilePath() : QString();
             QString labelText = path.isEmpty() ? QStringLiteral("📄 %1  [New]").arg(name)
                                                : QStringLiteral("📄 %1  (%2)").arg(name, path);
             auto *item = new QListWidgetItem(labelText, m_fileListWidget);
