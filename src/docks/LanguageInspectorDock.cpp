@@ -131,6 +131,10 @@ void LanguageInspectorDock::connectToEditor(ScintillaNext *editor)
 {
     disconnectFromEditor();
 
+    if (!editor) {
+        return;
+    }
+
     editorConnection = connect(editor, &ScintillaNext::updateUi, this, &LanguageInspectorDock::updatePositionInfo);
     documentConnection = connect(editor, &ScintillaNext::lexerChanged, this, [=, this]() { updateLexerInfo(editor); });
 

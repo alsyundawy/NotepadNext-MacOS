@@ -10,7 +10,7 @@ permissions:
 
 env:
   # Qt version used for the canonical release DMG (must match one of the matrix qt_version values)
-  QT_RELEASE_VER: "6.5"
+  QT_RELEASE_VER: "6.8"
 
 jobs:
   # ─── Linux Ubuntu Matrix (.deb & .rpm) ─────────────────────────────
@@ -49,6 +49,13 @@ jobs:
             cmake_arch: x86_64
             qt_arch: linux_gcc_64
             qt_version: "6.11"
+
+          - runs_on: ubuntu-24.04
+            platform: linux
+            arch: x64
+            cmake_arch: x86_64
+            qt_arch: linux_gcc_64
+            qt_version: "6.12"
 
     steps:
       - name: Checkout Repository
@@ -90,7 +97,7 @@ jobs:
         shell: bash
         run: |
           echo "Configure: run=$GITHUB_RUN_ID runner=${{ matrix.runs_on }} qt=${{ matrix.qt_version }}"
-          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DAPP_DISTRIBUTION="${DISTRIBUTION}"
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DAPP_DISTRIBUTION="${DISTRIBUTION}" -DPKG_QT_SUFFIX="qt${{ matrix.qt_version }}"
 
       - name: Build
         shell: bash
@@ -101,6 +108,14 @@ jobs:
         run: |
           cmake --build build --target deb || true
           cmake --build build --target rpm || true
+          if [ "${{ matrix.qt_version }}" = "${{ env.QT_RELEASE_VER }}" ]; then
+            for f in build/*-qt${{ matrix.qt_version }}_*.deb; do
+              [ -f "$f" ] && cp -v "$f" "${f//-qt${{ matrix.qt_version }}/}" || true
+            done
+            for f in build/*-qt${{ matrix.qt_version }}-1.*.rpm; do
+              [ -f "$f" ] && cp -v "$f" "${f//-qt${{ matrix.qt_version }}/}" || true
+            done
+          fi
 
       - name: Upload Linux Packages (.deb, .rpm)
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
@@ -186,7 +201,7 @@ jobs:
         run: |
           echo "Configure: run=$GITHUB_RUN_ID runner=${{ matrix.runs_on }} qt=${{ matrix.qt_version }} deployment=${{ matrix.deployment_target }}"
           CMAKE_OPTS=(-S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DAPP_DISTRIBUTION="${DISTRIBUTION}" -DCMAKE_OSX_DEPLOYMENT_TARGET="${{ matrix.deployment_target }}")
-          CMAKE_OPTS+=(-DCMAKE_OSX_ARCHITECTURES="${{ matrix.cmake_arch }}" -DMAC_ARCH_SUFFIX="${{ matrix.arch }}")
+          CMAKE_OPTS+=(-DCMAKE_OSX_ARCHITECTURES="${{ matrix.cmake_arch }}" -DMAC_ARCH_SUFFIX="${{ matrix.arch }}" -DPKG_QT_SUFFIX="qt${{ matrix.qt_version }}")
           echo "CMake options: ${CMAKE_OPTS[*]}"
           cmake "${CMAKE_OPTS[@]}"
 
@@ -196,7 +211,13 @@ jobs:
 
       - name: Build MacOS Targets (dmg)
         shell: bash
-        run: cmake --build build --target dmg --parallel
+        run: |
+          cmake --build build --target dmg --parallel
+          if [ "${{ matrix.qt_version }}" = "${{ env.QT_RELEASE_VER }}" ]; then
+            for f in build/*-qt${{ matrix.qt_version }}-*.dmg; do
+              [ -f "$f" ] && cp -v "$f" "${f//-qt${{ matrix.qt_version }}/}" || true
+            done
+          fi
 
       - name: Upload MacOS dmg
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
@@ -282,7 +303,7 @@ jobs:
         run: |
           echo "Configure: run=$GITHUB_RUN_ID runner=${{ matrix.runs_on }} qt=${{ matrix.qt_version }} deployment=${{ matrix.deployment_target }}"
           CMAKE_OPTS=(-S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DAPP_DISTRIBUTION="${DISTRIBUTION}" -DCMAKE_OSX_DEPLOYMENT_TARGET="${{ matrix.deployment_target }}")
-          CMAKE_OPTS+=(-DCMAKE_OSX_ARCHITECTURES="${{ matrix.cmake_arch }}" -DMAC_ARCH_SUFFIX="${{ matrix.arch }}")
+          CMAKE_OPTS+=(-DCMAKE_OSX_ARCHITECTURES="${{ matrix.cmake_arch }}" -DMAC_ARCH_SUFFIX="${{ matrix.arch }}" -DPKG_QT_SUFFIX="qt${{ matrix.qt_version }}")
           echo "CMake options: ${CMAKE_OPTS[*]}"
           cmake "${CMAKE_OPTS[@]}"
 
@@ -292,7 +313,13 @@ jobs:
 
       - name: Build MacOS Targets (dmg)
         shell: bash
-        run: cmake --build build --target dmg --parallel
+        run: |
+          cmake --build build --target dmg --parallel
+          if [ "${{ matrix.qt_version }}" = "${{ env.QT_RELEASE_VER }}" ]; then
+            for f in build/*-qt${{ matrix.qt_version }}-*.dmg; do
+              [ -f "$f" ] && cp -v "$f" "${f//-qt${{ matrix.qt_version }}/}" || true
+            done
+          fi
 
       - name: Upload MacOS dmg
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2

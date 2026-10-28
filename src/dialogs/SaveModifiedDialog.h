@@ -26,6 +26,7 @@
 
 #include <QDialog>
 #include <QVector>
+#include <QPointer>
 
 class ScintillaNext;
 class QLabel;
@@ -60,7 +61,7 @@ private slots:
 private:
     void setupUi();
 
-    QVector<ScintillaNext *> m_editors;
+    QVector<QPointer<ScintillaNext>> m_editors;
     UserAction m_action = UserAction::Cancel;
     bool m_isUpdatingTheme = false;
 

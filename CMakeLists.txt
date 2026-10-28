@@ -66,6 +66,11 @@ if(APPLE)
         endif()
     endforeach()
 
+    # Prevent -isystem /usr/include from breaking clang libc++ search path
+    if(TARGET Cups::Cups)
+        set_target_properties(Cups::Cups PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "")
+    endif()
+
     # 2. Provide a stub AGL framework fallback so -framework AGL never causes linker failure
     set(DUMMY_FRAMEWORK_DIR "${CMAKE_BINARY_DIR}/dummy_frameworks")
     set(DUMMY_AGL_DIR "${DUMMY_FRAMEWORK_DIR}/AGL.framework")

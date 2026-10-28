@@ -97,6 +97,7 @@ public slots:
     bool saveCurrentFile();
     bool saveFile(ScintillaNext *editor);
 
+    bool saveFileAsDialog(ScintillaNext *editor);
     bool saveCurrentFileAsDialog();
     bool saveCurrentFileAs(const QString &fileName);
     bool saveFileAs(ScintillaNext *editor, const QString &fileName);

@@ -127,6 +127,10 @@ void EditorInspectorDock::connectToEditor(ScintillaNext *editor)
 {
     disconnectFromEditor();
 
+    if (!editor) {
+        return;
+    }
+
     editorConnection = connect(editor, &ScintillaNext::updateUi, this, &EditorInspectorDock::editorUIUpdated);
 
     updateEditorInfo(editor);

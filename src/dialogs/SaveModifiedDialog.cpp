@@ -35,8 +35,13 @@
 #include <QApplication>
 
 SaveModifiedDialog::SaveModifiedDialog(const QVector<ScintillaNext *> &editors, QWidget *parent)
-    : QDialog(parent), m_editors(editors)
+    : QDialog(parent)
 {
+    for (auto *e : editors) {
+        if (e) {
+            m_editors.append(e);
+        }
+    }
     setupUi();
     updateThemeColors();
 }
@@ -81,7 +86,7 @@ void SaveModifiedDialog::setupUi()
     m_headingLabel->setFont(headingFont);
 
     if (count == 1) {
-        QString docName = m_editors.first() ? m_editors.first()->getName() : tr("Untitled");
+        QString docName = (m_editors.first() && !m_editors.first().isNull()) ? m_editors.first()->getName() : tr("Untitled");
         m_headingLabel->setText(tr("Do you want to save the changes made to the document \"%1\"?").arg(docName));
     } else {
         m_headingLabel->setText(tr("There are %n documents with unsaved changes. Save them before closing?", "", count));
@@ -99,7 +104,7 @@ void SaveModifiedDialog::setupUi()
         cardLayout->setContentsMargins(12, 10, 12, 10);
         cardLayout->setSpacing(4);
 
-        QString filePath = m_editors.first() ? m_editors.first()->getFilePath() : QString();
+        QString filePath = (m_editors.first() && !m_editors.first().isNull()) ? m_editors.first()->getFilePath() : QString();
         if (filePath.isEmpty()) {
             filePath = tr("New unsaved document");
         }
@@ -114,8 +119,8 @@ void SaveModifiedDialog::setupUi()
         m_fileListWidget->setFixedHeight(120);
         m_fileListWidget->setSelectionMode(QAbstractItemView::NoSelection);
 
-        for (const auto *editor : m_editors) {
-            if (!editor) {
+        for (const auto &editor : m_editors) {
+            if (!editor || editor.isNull()) {
                 continue;
             }
             QString name = editor->getName();

@@ -31,11 +31,15 @@ DefaultDirectoryManager::DefaultDirectoryManager(MainWindow *window, Application
 
 QString DefaultDirectoryManager::getDefaultDirectory() const
 {
-    if (const auto e = settings->defaultDirectoryBehavior(); e == ApplicationSettings::DefaultDirectoryBehaviorEnum::FollowCurrentDocument) {
+    const auto behavior = settings->defaultDirectoryBehavior();
+    if (behavior == ApplicationSettings::DefaultDirectoryBehaviorEnum::FollowCurrentDocument) {
         const ScintillaNext *editor = window->currentEditor();
-        return editor->isFile() ? editor->getPath() : settings->defaultDirectory();
+        if (editor && editor->isFile()) {
+            return editor->getPath();
+        }
+        return settings->defaultDirectory();
     }
-    else if (const auto e = settings->defaultDirectoryBehavior(); e == ApplicationSettings::DefaultDirectoryBehaviorEnum::RememberLastUsed || e == ApplicationSettings::DefaultDirectoryBehaviorEnum::HardCoded) {
+    else if (behavior == ApplicationSettings::DefaultDirectoryBehaviorEnum::RememberLastUsed || behavior == ApplicationSettings::DefaultDirectoryBehaviorEnum::HardCoded) {
         return settings->defaultDirectory();
     }
 

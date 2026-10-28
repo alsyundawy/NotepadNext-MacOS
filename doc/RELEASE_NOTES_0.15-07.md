@@ -40,16 +40,19 @@ Key innovations introduced in `0.15-07`:
    - **Tab Label Middle-Ellipsis (`elideMode`)**: Configurable tab title truncation maintaining clean tab geometry even with 30+ open files.
    - **Horizon Dark Theme Contrast Fine-Tuning**: Optimized high-contrast palette for Apple Retina displays.
 
-4. **Multi-View Split & High-Volume Text Stability**:
+4. **Multi-View Split & Tab Lifecycle Stability**:
+   - **Resolution of Random Crash When Closing Unsaved Tabs**: Fixed Use-After-Free race condition in `DockedEditor.cpp` where `QObject::destroyed(obj)` re-registered deallocated editor into `currentEditor`, guarded `MainWindow::updateEditorPositionBasedUi()` against null dock areas, added null safety to `DockedEditor::switchToEditor()`, and wrapped closing tabs with `QPointer<ScintillaNext>` in `MainWindow::closeFile()`.
    - **Multi-View Split Closure & Select-All Guard**: Fixed crashes during tab closure in split vertical/horizontal views and stabilized multi-pane selection bounds.
    - **High-Volume Lines & Emoji Crash Defense**: Hardened Scintilla's `PlatQt.cpp` text measurement and drawing routines with strict boundary checks, preventing crashes on files with tens of thousands of lines containing compound Unicode 18.0 emojis and ZWJ sequences.
    - **Cursor Selection Contrast & Multi-Word Selection**: Refined text selection shaders and boundary detection for smooth word and sentence dragging.
 
 5. **100% Zero-Defect SonarLint & IDE Diagnostics Resolution**:
-   - Resolved all 36 flagged IDE / SonarLint warnings across `AboutDialog`, `HighlightedScrollBar`, `RecentFilesListManager`, `RecentFilesListMenuBuilder`, `RtfConverter`, and `EditorInfoStatusBar` (defaulted destructors `= default`, C++17 `if` init-statements, explicit lambda captures `[this]`, C++20 `using enum Scintilla::Update`, default cases in switch statements, pointer-to-const parameter qualifiers, extraction of nested ternary operators, and explicit `static_cast<int>` on `sptr_t` and `qsizetype`).
+   - **Clangd 1,288 Header Parsing Error Elimination**: Injected `PathMatch: .*\.h$` rule with `-xc++-header` in `.clangd` and generated complete 759 KB `compile_commands.json`, eliminating C-mode syntax failures on `-std=c++20`.
+   - **SonarQube / SonarLint 756 Error Remediation**: Added exclusions in `sonar-project.properties` (`thirdparty/**`, `.cpm-cache/**`, `build/**`, `i18n/**`, `**/*.ts`, `src/stylesheets/**`) preventing `.ts` XML files from misclassifying as TypeScript.
+   - Resolved all flagged warnings across `AboutDialog`, `HighlightedScrollBar`, `RecentFilesListManager`, `RecentFilesListMenuBuilder`, `RtfConverter`, and `EditorInfoStatusBar`.
 
 6. **Upstream PR Harmonization**:
-   - Ported and harmonized upstream PR #8a0a615 (Trim Trailing Whitespace buffer operation with full Indonesian localization), PR #e08fc92 (defensive message handler deregistration in `DebugManager`), and PR #90d6174 (centralized tooltip generation in `ScintillaNext::getToolTip`).
+   - Ported and harmonized upstream PR #8a0a615 (Trim Trailing Whitespace buffer operation with full Indonesian localization), PR #e08fc92 (defensive message handler deregistration in `DebugManager`), PR #90d6174 (centralized tooltip generation in `ScintillaNext::getToolTip`), PR #ef75daf (Replace All progress advancement on zero-length regex matches), and PR #be1e274 (Default Language setting for new documents in `PreferencesDialog`).
 
 7. **100% Complete Bilingual Localization & Linguistic Rigor**:
    - 100% complete Bahasa Indonesia (`id_ID`) and English (`en_US`) catalogs with 0 unfinished strings (646/646 entries).
@@ -62,10 +65,9 @@ Key innovations introduced in `0.15-07`:
    - Resolved null pointer dereference in `QuickFindWidget.cpp` and modernized raw loops with `std::find_if` in `NotepadNextApplication.cpp`.
    - Pruned heavy unused dynamic Qt frameworks (`QtPdf`, `QtQml`, `QtQuick`, `QtVirtualKeyboard`, `QtOpenGL`, `platforminputcontexts`, unneeded `imageformats`), reducing DMG file size to ~27 MB, strictly meeting the <30 MB size invariant.
 
-9. **Native Linux Packaging (`.deb`, `.rpm`) & Multi-Version CI/CD Matrix**:
-   - Implemented native CPack configuration in `cmake/PackagingLinux.cmake` generating `.deb` packages for Ubuntu (22.04 LTS & 24.04 LTS) and Debian, and `.rpm` packages for Fedora/openSUSE.
-   - Included full freedesktop desktop specification: `NotepadNext.desktop`, scalable SVG app icon, and AppStream `com.github.alsyundawy.NotepadNext.metainfo.xml`.
-   - Added automated multi-arch GitHub Actions CI/CD matrix across Qt 6.5, 6.8, 6.10, and 6.11 uploading native Linux packages alongside macOS DMGs.
+9. **Native Linux Packaging (`.deb`, `.rpm`) & Complete Qt 6.5–6.12 CI/CD Matrix**:
+   - Synchronized `cmake/PackagingLinux.cmake` with `SparkNotePad`, generating native Debian/Ubuntu (`.deb`) and Red Hat/Fedora (`.rpm`) packages with multi-Qt tagging (`PKG_QT_SUFFIX`), dual 64-bit RPM SONAME resolves, and AppStream metadata.
+   - Updated `.github/workflows/release.yml` with automated runner matrix supporting Qt 6.5, 6.8 LTS, 6.10, 6.11, and 6.12 across Linux (Ubuntu 22.04 & 24.04), macOS Intel x64, and macOS Apple Silicon arm64.
 
 10. **Non-Intrusive Status Bar Zoom Indicator & UI Polish**:
     - Replaced screen-blocking On-Screen Display (OSD) popup widget with non-intrusive status bar feedback (`statusBar()->showMessage(msg, 2000)`).

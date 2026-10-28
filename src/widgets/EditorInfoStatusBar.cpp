@@ -73,6 +73,16 @@ EditorInfoStatusBar::EditorInfoStatusBar(QMainWindow *window) :
 
 void EditorInfoStatusBar::refresh(ScintillaNext *editor)
 {
+    if (!editor) {
+        if (docSize) docSize->clear();
+        if (docPos) docPos->clear();
+        if (docType) docType->clear();
+        if (eolFormat) eolFormat->clear();
+        if (unicodeType) unicodeType->clear();
+        if (overType) overType->clear();
+        return;
+    }
+
     updateDocumentSize(editor);
     updateSelectionInfo(editor);
     updateLanguage(editor);
@@ -87,6 +97,11 @@ void EditorInfoStatusBar::connectToEditor(ScintillaNext *editor)
     disconnect(editorUiUpdated);
     disconnect(documentLexerChanged);
 
+    if (!editor) {
+        refresh(nullptr);
+        return;
+    }
+
     // Connect to the new editor
     editorUiUpdated = connect(editor, &ScintillaNext::updateUi, this, &EditorInfoStatusBar::editorUpdated);
     documentLexerChanged = connect(editor, &ScintillaNext::lexerChanged, this, [this, editor]() { updateLanguage(editor); });
@@ -97,6 +112,9 @@ void EditorInfoStatusBar::connectToEditor(ScintillaNext *editor)
 void EditorInfoStatusBar::editorUpdated(Scintilla::Update updated)
 {
     auto *editor = qobject_cast<ScintillaNext *>(sender());
+    if (!editor) {
+        return;
+    }
 
     using enum Scintilla::Update;
     if (Scintilla::FlagSet(updated, Text)) {

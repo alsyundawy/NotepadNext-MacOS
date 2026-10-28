@@ -1556,6 +1556,9 @@ ScintillaNext *MainWindow::getInitialEditor()
 {
     if (editorCount() == 1) {
         ScintillaNext *editor = currentEditor();
+        if (!editor) {
+            return Q_NULLPTR;
+        }
 
         // If the editor:
         //   is a temporary file
@@ -1717,11 +1720,14 @@ void MainWindow::closeFile(ScintillaNext *editor)
         return;
     }
 
+    QPointer<ScintillaNext> pEditor = editor;
     if (!checkEditorsBeforeClose({editor})) {
         return;
     }
 
-    editor->close();
+    if (pEditor) {
+        pEditor->close();
+    }
 
     // If the last document was closed, figure out what to do next. Defer to next event loop iteration
     // to allow Qt-Advanced-Docking-System tab-close signal handler to finish unwinding.
@@ -1744,7 +1750,9 @@ void MainWindow::closeAllFiles()
 
     // Ask the manager to close the editors the dockedEditor knows about
     for (ScintillaNext *editor : editors()) {
-        editor->close();
+        if (editor) {
+            editor->close();
+        }
     }
 
     QTimer::singleShot(0, this, [this]() {
@@ -1763,42 +1771,62 @@ void MainWindow::closeAllExceptActive()
 
     if (checkEditorsBeforeClose(editor_list)) {
         for (ScintillaNext *editor : editor_list) {
-            editor->close();
+            if (editor) {
+                editor->close();
+            }
         }
     }
 }
 
 void MainWindow::closeAllToLeft()
 {
-    const int index = dockedEditor->currentDockArea()->currentIndex();
+    ads::CDockAreaWidget *dockArea = dockedEditor->currentDockArea();
+    if (!dockArea) {
+        return;
+    }
+    const int index = dockArea->currentIndex();
     QVector<ScintillaNext *> tabEditors;
 
     for (int i = 0; i < index; ++i) {
-        auto editor = qobject_cast<ScintillaNext *>(dockedEditor->currentDockArea()->dockWidget(i)->widget());
-        tabEditors.append(editor);
+        if (const auto *dw = dockArea->dockWidget(i)) {
+            if (auto editor = qobject_cast<ScintillaNext *>(dw->widget())) {
+                tabEditors.append(editor);
+            }
+        }
     }
 
     if (checkEditorsBeforeClose(tabEditors)) {
         for (ScintillaNext *editor : tabEditors) {
-            editor->close();
+            if (editor) {
+                editor->close();
+            }
         }
     }
 }
 
 void MainWindow::closeAllToRight()
 {
-    const int index = dockedEditor->currentDockArea()->currentIndex();
-    const int total = dockedEditor->currentDockArea()->dockWidgetsCount();
+    ads::CDockAreaWidget *dockArea = dockedEditor->currentDockArea();
+    if (!dockArea) {
+        return;
+    }
+    const int index = dockArea->currentIndex();
+    const int total = dockArea->dockWidgetsCount();
     QVector<ScintillaNext *> tabEditors;
 
     for (int i = index + 1; i < total; ++i) {
-        auto editor = qobject_cast<ScintillaNext *>(dockedEditor->currentDockArea()->dockWidget(i)->widget());
-        tabEditors.append(editor);
+        if (const auto *dw = dockArea->dockWidget(i)) {
+            if (auto editor = qobject_cast<ScintillaNext *>(dw->widget())) {
+                tabEditors.append(editor);
+            }
+        }
     }
 
     if (checkEditorsBeforeClose(tabEditors)) {
         for (ScintillaNext *editor : tabEditors) {
-            editor->close();
+            if (editor) {
+                editor->close();
+            }
         }
     }
 }
@@ -1810,6 +1838,10 @@ bool MainWindow::saveCurrentFile()
 
 bool MainWindow::saveFile(ScintillaNext *editor)
 {
+    if (!editor) {
+        return false;
+    }
+
     if (editor->isSavedToDisk()) {
         return true;
     }
@@ -1817,7 +1849,7 @@ bool MainWindow::saveFile(ScintillaNext *editor)
     if (!editor->isFile()) {
         // Switch to the editor and show the saveas dialog
         dockedEditor->switchToEditor(editor);
-        return saveCurrentFileAsDialog();
+        return saveFileAsDialog(editor);
     }
     else {
         QFileDevice::FileError error = editor->save();
@@ -1831,11 +1863,13 @@ bool MainWindow::saveFile(ScintillaNext *editor)
     }
 }
 
-bool MainWindow::saveCurrentFileAsDialog()
+bool MainWindow::saveFileAsDialog(ScintillaNext *editor)
 {
-    const QString filter = app->getFileDialogFilter();
-    ScintillaNext *editor = currentEditor();
+    if (!editor) {
+        return false;
+    }
 
+    const QString filter = app->getFileDialogFilter();
     QString selectedFilter = app->getFileDialogFilterForLanguage(editor->languageName);
     QString fileName = FileDialogHelpers::getSaveFileName(this, QString(), defaultDirectoryManager->getDefaultDirectory(), filter, &selectedFilter);
 
@@ -1845,9 +1879,12 @@ bool MainWindow::saveCurrentFileAsDialog()
 
     emit fileDialogAccepted(fileName);
 
-    // Note: User cancellation returns early on empty fileName; saveFileAs reports save failure.
-
     return saveFileAs(editor, fileName);
+}
+
+bool MainWindow::saveCurrentFileAsDialog()
+{
+    return saveFileAsDialog(currentEditor());
 }
 
 bool MainWindow::saveCurrentFileAs(const QString &fileName)
@@ -2235,7 +2272,7 @@ bool MainWindow::isAnyUnsaved() const
 {
     const auto allEditors = editors();
     return std::ranges::any_of(allEditors, [](const ScintillaNext *e) {
-        return !e->isSavedToDisk();
+        return e && !e->isSavedToDisk();
     });
 }
 
@@ -2290,8 +2327,16 @@ void MainWindow::updateSaveStatusBasedUi(const ScintillaNext *editor)
 
 void MainWindow::updateEditorPositionBasedUi()
 {
-    const int index = dockedEditor->currentDockArea()->currentIndex();
-    const int total = dockedEditor->currentDockArea()->dockWidgetsCount();
+    const auto *dockArea = dockedEditor->currentDockArea();
+    if (!dockArea) {
+        ui->actionCloseAllToLeft->setEnabled(false);
+        ui->actionCloseAllToRight->setEnabled(false);
+        ui->actionCloseAllExceptActive->setEnabled(false);
+        return;
+    }
+
+    const int index = dockArea->currentIndex();
+    const int total = dockArea->dockWidgetsCount();
 
     ui->actionCloseAllToLeft->setEnabled(index > 0);
     ui->actionCloseAllToRight->setEnabled(index < (total - 1));
