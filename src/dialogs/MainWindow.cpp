@@ -184,14 +184,14 @@ MainWindow::MainWindow(NotepadNextApplication *app) : // NOSONAR
     // Split editor actions
     connect(ui->actionSplitHorizontal, &QAction::triggered, this, [this]() {
         newFile();
-        ScintillaNext *newEditor = currentEditor();
+        const ScintillaNext *newEditor = currentEditor();
         if (newEditor) {
             dockedEditor->splitToRight(newEditor);
         }
     });
     connect(ui->actionSplitVertical, &QAction::triggered, this, [this]() {
         newFile();
-        ScintillaNext *newEditor = currentEditor();
+        const ScintillaNext *newEditor = currentEditor();
         if (newEditor) {
             dockedEditor->splitToBottom(newEditor);
         }
@@ -1780,7 +1780,7 @@ void MainWindow::closeAllExceptActive()
 
 void MainWindow::closeAllToLeft()
 {
-    ads::CDockAreaWidget *dockArea = dockedEditor->currentDockArea();
+    const ads::CDockAreaWidget *dockArea = dockedEditor->currentDockArea();
     if (!dockArea) {
         return;
     }
@@ -1806,7 +1806,7 @@ void MainWindow::closeAllToLeft()
 
 void MainWindow::closeAllToRight()
 {
-    ads::CDockAreaWidget *dockArea = dockedEditor->currentDockArea();
+    const ads::CDockAreaWidget *dockArea = dockedEditor->currentDockArea();
     if (!dockArea) {
         return;
     }
@@ -2745,7 +2745,7 @@ void MainWindow::restoreWindowState()
     }
 }
 
-void MainWindow::switchToEditor(const ScintillaNext *editor)
+void MainWindow::switchToEditor(const ScintillaNext *editor) const
 {
     dockedEditor->switchToEditor(editor);
 }

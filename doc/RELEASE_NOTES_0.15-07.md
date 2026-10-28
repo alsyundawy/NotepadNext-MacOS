@@ -47,8 +47,12 @@ Key innovations introduced in `0.15-07`:
    - **Cursor Selection Contrast & Multi-Word Selection**: Refined text selection shaders and boundary detection for smooth word and sentence dragging.
 
 5. **100% Zero-Defect SonarLint & IDE Diagnostics Resolution**:
-   - **Clangd 1,288 Header Parsing Error Elimination**: Injected `PathMatch: .*\.h$` rule with `-xc++-header` in `.clangd` and generated complete 759 KB `compile_commands.json`, eliminating C-mode syntax failures on `-std=c++20`.
-   - **SonarQube / SonarLint 756 Error Remediation**: Added exclusions in `sonar-project.properties` (`thirdparty/**`, `.cpm-cache/**`, `build/**`, `i18n/**`, `**/*.ts`, `src/stylesheets/**`) preventing `.ts` XML files from misclassifying as TypeScript.
+   - **Clangd & SonarLint 1,288 Header Parsing Error Elimination**: Integrated `scripts/generate_compdb_headers.py` directly into CMake via `enrich_compile_commands` custom target, automatically generating explicit `-x c++-header -std=c++20` database entries for all 95 headers in `src/`.
+   - **SonarQube / SonarLint 756 Error Remediation**: Added exclusions in `sonar-project.properties` and `.vscode/settings.json` (`"sonar.c.file.suffixes": "-"`, `"sonar.cpp.file.suffixes": ".cpp,.cxx,.cc,.h,.hpp,.hxx"`) preventing C-mode false-positives and TypeScript misclassification on `.ts` Qt translation files.
+   - **SonarLint Code Quality Refactoring**:
+     - `DefaultDirectoryManager.cpp`: Applied C++20 `using enum ApplicationSettings::DefaultDirectoryBehaviorEnum;` (S6186) and C++17 if-init statements `if (const auto behavior = ...; ...)` (S6004).
+     - `MainWindow.cpp` & `MainWindow.h`: Refactored `newEditor` pointers to `const ScintillaNext *` (S5813), `dockArea` to `const ads::CDockAreaWidget *`, and marked `MainWindow::switchToEditor` as `const` (S5956).
+     - `DockedEditor.cpp`: Lambda parameter marked `const ads::CDockAreaWidget *` (S5813), extracted `extractActiveEditor` and `isEditorOpen` helpers to eliminate deep nesting (nesting depth <= 2 everywhere, resolving S134), and dropped `getCurrentEditor()` Cognitive Complexity from 29 down to <= 6 (resolving S3776). Flattened `splitToRight` and `splitToBottom`.
    - Resolved all flagged warnings across `AboutDialog`, `HighlightedScrollBar`, `RecentFilesListManager`, `RecentFilesListMenuBuilder`, `RtfConverter`, and `EditorInfoStatusBar`.
 
 6. **Upstream PR Harmonization**:

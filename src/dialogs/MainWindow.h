@@ -154,7 +154,7 @@ public slots:
 
     void restoreWindowState();
 
-    void switchToEditor(const ScintillaNext *editor);
+    void switchToEditor(const ScintillaNext *editor) const;
 
 signals:
     void editorActivated(ScintillaNext *editor);

@@ -89,4 +89,17 @@ set(CPM_SOURCE_CACHE "${CMAKE_SOURCE_DIR}/.cpm-cache" CACHE PATH "CPM source cac
 add_subdirectory(thirdparty)
 add_subdirectory(src)
 
+# Automatically enrich compile_commands.json with header files for Clangd and Sonar analyzers
+find_package(Python3 COMPONENTS Interpreter QUIET)
+if(Python3_Interpreter_FOUND)
+    add_custom_target(enrich_compile_commands ALL
+        COMMAND ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/scripts/generate_compdb_headers.py
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        COMMENT "Enriching compile_commands.json with C++ header entries for IDE and Sonar analyzers"
+    )
+    if(TARGET NotepadNext)
+        add_dependencies(NotepadNext enrich_compile_commands)
+    endif()
+endif()
+
 include(${CMAKE_SOURCE_DIR}/cmake/Packaging.cmake)

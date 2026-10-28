@@ -71,7 +71,7 @@ DockedEditor::DockedEditor(QWidget *parent) : QObject(parent)
 
     connect(dockManager, &ads::CDockManager::focusedDockWidgetChanged, this, &DockedEditor::onFocusedDockWidgetChanged);
 
-    connect(dockManager, &ads::CDockManager::dockAreaCreated, this, [this](ads::CDockAreaWidget* DockArea) {
+    connect(dockManager, &ads::CDockManager::dockAreaCreated, this, [this](const ads::CDockAreaWidget* DockArea) {
         const auto *titleBar = qobject_cast<const DockedEditorTitleBar *>(DockArea->titleBar());
         connect(titleBar, &DockedEditorTitleBar::doubleClicked, this, &DockedEditor::titleBarDoubleClicked);
 
@@ -82,26 +82,37 @@ DockedEditor::DockedEditor(QWidget *parent) : QObject(parent)
 }
 
 namespace {
+ScintillaNext *extractActiveEditor(const ads::CDockWidget *dockWidget)
+{
+    if (!dockWidget || dockWidget->isClosed()) {
+        return nullptr;
+    }
+    return qobject_cast<ScintillaNext *>(dockWidget->widget());
+}
+
+bool isEditorOpen(const ScintillaNext *editor)
+{
+    if (!editor) {
+        return false;
+    }
+    const auto *dockWidget = qobject_cast<const ads::CDockWidget *>(editor->parentWidget());
+    return !dockWidget || !dockWidget->isClosed();
+}
+
 ScintillaNext *findFallbackEditor(const ads::CDockManager *mgr, ads::CDockAreaWidget *&targetArea)
 {
     for (ads::CDockAreaWidget *areaWidget : mgr->openedDockAreas()) {
         if (!areaWidget) {
             continue;
         }
-        if (const ads::CDockWidget *currentDock = areaWidget->currentDockWidget()) {
-            if (!currentDock->isClosed()) {
-                if (auto *ed = qobject_cast<ScintillaNext *>(currentDock->widget())) {
-                    targetArea = areaWidget;
-                    return ed;
-                }
-            }
+        if (auto *ed = extractActiveEditor(areaWidget->currentDockWidget())) {
+            targetArea = areaWidget;
+            return ed;
         }
         for (const ads::CDockWidget *dockWidget : areaWidget->dockWidgets()) {
-            if (dockWidget && !dockWidget->isClosed()) {
-                if (auto *ed = qobject_cast<ScintillaNext *>(dockWidget->widget())) {
-                    targetArea = areaWidget;
-                    return ed;
-                }
+            if (auto *ed = extractActiveEditor(dockWidget)) {
+                targetArea = areaWidget;
+                return ed;
             }
         }
     }
@@ -135,30 +146,20 @@ void DockedEditor::onFocusedDockWidgetChanged(const ads::CDockWidget * /*old*/, 
 
 ScintillaNext *DockedEditor::getCurrentEditor() const
 {
-    if (currentEditor) {
-        if (const auto *dockWidget = qobject_cast<const ads::CDockWidget *>(currentEditor->parentWidget())) {
-            if (!dockWidget->isClosed()) {
-                return currentEditor.data();
-            }
-        } else {
-            return currentEditor.data();
-        }
+    if (isEditorOpen(currentEditor.data())) {
+        return currentEditor.data();
     }
 
-    for (const ads::CDockAreaWidget* areaWidget : dockManager->openedDockAreas()) {
-        if (!areaWidget) { continue; }
-        if (const ads::CDockWidget* currentDock = areaWidget->currentDockWidget()) {
-            if (!currentDock->isClosed()) {
-                if (auto *ed = qobject_cast<ScintillaNext *>(currentDock->widget())) {
-                    return ed;
-                }
-            }
+    for (const ads::CDockAreaWidget *areaWidget : dockManager->openedDockAreas()) {
+        if (!areaWidget) {
+            continue;
         }
-        for (const ads::CDockWidget* dockWidget : areaWidget->dockWidgets()) {
-            if (dockWidget && !dockWidget->isClosed()) {
-                if (auto *ed = qobject_cast<ScintillaNext *>(dockWidget->widget())) {
-                    return ed;
-                }
+        if (auto *ed = extractActiveEditor(areaWidget->currentDockWidget())) {
+            return ed;
+        }
+        for (const ads::CDockWidget *dockWidget : areaWidget->dockWidgets()) {
+            if (auto *ed = extractActiveEditor(dockWidget)) {
+                return ed;
             }
         }
     }
@@ -183,16 +184,13 @@ QVector<ScintillaNext *> DockedEditor::editors() const
 {
     QVector<ScintillaNext *> editors;
 
-    // For each area, for each widget, append it to our list
-    for (const ads::CDockAreaWidget* areaWidget : dockManager->openedDockAreas()) {
+    for (const ads::CDockAreaWidget *areaWidget : dockManager->openedDockAreas()) {
         if (!areaWidget) {
             continue;
         }
-        for (const ads::CDockWidget* dockWidget : areaWidget->dockWidgets()) {
-            if (dockWidget && !dockWidget->isClosed()) {
-                if (auto *ed = qobject_cast<ScintillaNext *>(dockWidget->widget())) {
-                    editors.append(ed);
-                }
+        for (const ads::CDockWidget *dockWidget : areaWidget->dockWidgets()) {
+            if (auto *ed = extractActiveEditor(dockWidget)) {
+                editors.append(ed);
             }
         }
     }
@@ -330,26 +328,26 @@ void DockedEditor::editorRenamed(const ScintillaNext *editor) const
 
 void DockedEditor::splitToRight(const ScintillaNext *editor)
 {
-    if (!editor) { return; }
+    if (!editor) {
+        return;
+    }
 
     auto *newDockWidget = qobject_cast<ads::CDockWidget *>(editor->parentWidget());
-    if (newDockWidget) {
-        ads::CDockAreaWidget *currentArea = currentDockArea();
-        if (currentArea) {
-            latestDockArea = dockManager->addDockWidget(ads::RightDockWidgetArea, newDockWidget, currentArea);
-        }
+    ads::CDockAreaWidget *currentArea = currentDockArea();
+    if (newDockWidget && currentArea) {
+        latestDockArea = dockManager->addDockWidget(ads::RightDockWidgetArea, newDockWidget, currentArea);
     }
 }
 
 void DockedEditor::splitToBottom(const ScintillaNext *editor)
 {
-    if (!editor) { return; }
+    if (!editor) {
+        return;
+    }
 
     auto *newDockWidget = qobject_cast<ads::CDockWidget *>(editor->parentWidget());
-    if (newDockWidget) {
-        ads::CDockAreaWidget *currentArea = currentDockArea();
-        if (currentArea) {
-            latestDockArea = dockManager->addDockWidget(ads::BottomDockWidgetArea, newDockWidget, currentArea);
-        }
+    ads::CDockAreaWidget *currentArea = currentDockArea();
+    if (newDockWidget && currentArea) {
+        latestDockArea = dockManager->addDockWidget(ads::BottomDockWidgetArea, newDockWidget, currentArea);
     }
 }

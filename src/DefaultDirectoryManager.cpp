@@ -31,15 +31,15 @@ DefaultDirectoryManager::DefaultDirectoryManager(MainWindow *window, Application
 
 QString DefaultDirectoryManager::getDefaultDirectory() const
 {
-    const auto behavior = settings->defaultDirectoryBehavior();
-    if (behavior == ApplicationSettings::DefaultDirectoryBehaviorEnum::FollowCurrentDocument) {
-        const ScintillaNext *editor = window->currentEditor();
-        if (editor && editor->isFile()) {
+    using enum ApplicationSettings::DefaultDirectoryBehaviorEnum;
+
+    if (const auto behavior = settings->defaultDirectoryBehavior(); behavior == FollowCurrentDocument) {
+        if (const ScintillaNext *editor = window->currentEditor(); editor && editor->isFile()) {
             return editor->getPath();
         }
         return settings->defaultDirectory();
     }
-    else if (behavior == ApplicationSettings::DefaultDirectoryBehaviorEnum::RememberLastUsed || behavior == ApplicationSettings::DefaultDirectoryBehaviorEnum::HardCoded) {
+    else if (behavior == RememberLastUsed || behavior == HardCoded) {
         return settings->defaultDirectory();
     }
 
@@ -48,14 +48,16 @@ QString DefaultDirectoryManager::getDefaultDirectory() const
 
 void DefaultDirectoryManager::editorActivated(const ScintillaNext *editor)
 {
-    if (settings->defaultDirectoryBehavior() == ApplicationSettings::DefaultDirectoryBehaviorEnum::FollowCurrentDocument && editor->isFile()) {
+    using enum ApplicationSettings::DefaultDirectoryBehaviorEnum;
+    if (settings->defaultDirectoryBehavior() == FollowCurrentDocument && editor && editor->isFile()) {
         settings->setDefaultDirectory(editor->getPath());
     }
 }
 
 void DefaultDirectoryManager::fileDialogAccepted(const QString &filePath)
 {
-    if (settings->defaultDirectoryBehavior() == ApplicationSettings::DefaultDirectoryBehaviorEnum::RememberLastUsed && !filePath.isEmpty()) {
+    using enum ApplicationSettings::DefaultDirectoryBehaviorEnum;
+    if (settings->defaultDirectoryBehavior() == RememberLastUsed && !filePath.isEmpty()) {
         settings->setDefaultDirectory(QFileInfo(filePath).absolutePath());
     }
 }
