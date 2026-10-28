@@ -11,15 +11,47 @@ def main():
         print("compile_commands.json not found at", compdb_path)
         return
 
-    with open(compdb_path, "r") as f:
-        entries = json.load(f)
+    try:
+        with open(compdb_path, "r", encoding="utf-8") as f:
+            content = f.read().strip()
+            if not content:
+                print("Notice: compile_commands.json is empty, skipping enrichment.")
+                return
+            entries = json.loads(content)
+    except Exception as err:
+        print(
+            f"Notice: unable to parse compile_commands.json ({err}), skipping enrichment."
+        )
+        return
 
-    existing_files = {e["file"] for e in entries}
-    file_map = {e["file"]: e for e in entries}
+    if not isinstance(entries, list) or not entries:
+        print(
+            "Notice: compile_commands.json has no valid entries, skipping enrichment."
+        )
+        return
+
+    existing_files = {
+        e.get("file") for e in entries if isinstance(e, dict) and "file" in e
+    }
+    file_map = {e["file"]: e for e in entries if isinstance(e, dict) and "file" in e}
 
     default_sample = next(
-        (e for e in entries if "MainWindow.cpp" in e["file"]), entries[0]
+        (
+            e
+            for e in entries
+            if isinstance(e, dict) and "MainWindow.cpp" in e.get("file", "")
+        ),
+        entries[0] if entries else None,
     )
+    if (
+        not default_sample
+        or not isinstance(default_sample, dict)
+        or "command" not in default_sample
+    ):
+        print(
+            "Notice: compile_commands.json does not contain valid compilation sample, skipping."
+        )
+        return
 
     src_dir = os.path.join(repo_root, "src")
     headers = glob.glob(os.path.join(src_dir, "**", "*.h"), recursive=True) + glob.glob(
