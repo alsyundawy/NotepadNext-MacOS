@@ -80,3 +80,4 @@ build.ninja
 /compile_commands.json
 .cache/
 .clangd
+*.dmg
