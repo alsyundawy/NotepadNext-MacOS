@@ -73,7 +73,11 @@ Key innovations introduced in `0.15-07`:
    - Synchronized `cmake/PackagingLinux.cmake` with `SparkNotePad`, generating native Debian/Ubuntu (`.deb`) and Red Hat/Fedora (`.rpm`) packages with multi-Qt tagging (`PKG_QT_SUFFIX`), dual 64-bit RPM SONAME resolves, and AppStream metadata.
    - Updated `.github/workflows/release.yml` with automated runner matrix supporting Qt 6.5, 6.8 LTS, 6.10, 6.11, and 6.12 across Linux (Ubuntu 22.04 & 24.04), macOS Intel x64, and macOS Apple Silicon arm64.
 
-10. **Non-Intrusive Status Bar Zoom Indicator & UI Polish**:
+10. **Pixel-Crisp Notepad++ Mirror Toolbar Tooltips & UI Polish**:
+    - Completely redesigned toolbar tooltips to mirror Notepad++'s clean UX with smooth 6px rounded corners on every edge (`border-radius: 6px;`).
+    - Compact box geometry tightly fitted to font size via `lbl->setMargin(0)` and `qproperty-margin: 0;` with `padding: 2px 6px;` (collapsing box height from 34px to 20px).
+    - Native Cocoa `NSWindow` transparency (`[window setOpaque:NO]`, `[window setBackgroundColor:[NSColor clearColor]]`, `[window invalidateShadow]`) preventing opaque black rectangular window artifacts on macOS.
+    - Redundant keyboard shortcut suppression (e.g., `(Ctrl+S)`, `(⌘S)`) and accelerator mnemonic stripping via `ToolbarTooltipFilter`.
     - Replaced screen-blocking On-Screen Display (OSD) popup widget with non-intrusive status bar feedback (`statusBar()->showMessage(msg, 2000)`).
     - Fixed Qt 6 macOS palette manipulation in `FadingIndicator` ensuring crisp white text with subtle rounded backdrop.
 
@@ -119,6 +123,7 @@ Key innovations introduced in `0.15-07`:
 | **Localization & Linguistic Rigor**    | Fragmented, incomplete community translations            | **100% Complete Bahasa Indonesia & English (0 Unfinished)**                  | Strictly standardized per EYD V, PUEBI, PASTI Badan Bahasa, and Mozilla L10n; eliminated parenthetical artifacts (`v0.15-04` - `v0.15-07`).                             |
 | **Linux Packaging & CI/CD**            | Upstream AppImage script only                            | **Native CPack Debian (`.deb`) & RPM (`.rpm`) Packages**                     | Built-in CPack configuration in `cmake/PackagingLinux.cmake` supporting Ubuntu 22.04/24.04 and Fedora with GitHub Actions CI matrix (`v0.15-07`).                       |
 | **Zoom Indicator UI**                  | Intrusive central screen-blocking OSD widget             | **Non-Intrusive Status Bar Zoom Message (`statusBar()->showMessage`)**       | Clean unobtrusive feedback in status bar; fixed macOS Qt 6 palette contrast bug in `FadingIndicator` (`v0.15-07`).                                                      |
+| **Toolbar Tooltip Precision**          | Inconsistent descriptions & intrusive shortcut suffixes appended by Qt | **Pixel-Crisp Notepad++ Mirror Tooltips via `ToolbarTooltipFilter`** | 100% exact Notepad++ tooltips without shortcut suffixes, smooth 6px rounded corners, font-fitting compact box (0 margin), and native Cocoa `NSWindow` transparency (`v0.15-07`). |
 | **C++26 Modernization & Safety**       | Raw UI pointers subject to incomplete deletion warnings  | **`std::unique_ptr` UI Lifetime + C++20 `if constexpr` Enum Serialization**  | Zero compiler diagnostics in C++26 mode, automatic enum serialization in `ApplicationSettings` (`v0.15-07`).                                                            |
 | **Static Verification & Clean Code**   | Basic CI checks                                          | **Zero-Defect 13-Pillar Audit (Trunk, Cppcheck, 36 SonarLint Fixes)**        | ISO 5055, OWASP Top 10, 100% clean across all 88 translation units without warnings (`v0.15-04` - `v0.15-07`).                                                          |
 
