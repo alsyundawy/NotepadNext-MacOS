@@ -22,11 +22,14 @@
 #include "ToolbarTooltipFilter.h"
 
 #include <QAction>
+#include <QApplication>
 #include <QEvent>
 #include <QHelpEvent>
+#include <QLabel>
 #include <QToolBar>
 #include <QToolButton>
 #include <QToolTip>
+#include <QWidget>
 
 ToolbarTooltipFilter::ToolbarTooltipFilter(QObject *parent) : QObject(parent) {}
 
@@ -54,10 +57,34 @@ bool ToolbarTooltipFilter::eventFilter(QObject *obj, QEvent *event) {
       if (!tip.isEmpty()) {
         auto *helpEvent = static_cast<QHelpEvent *>(event);
         QToolTip::showText(helpEvent->globalPos(), tip, button);
+
+        // Ensure macOS top-level tooltip window is translucent and margin-free
+        // so that rounded corners clip cleanly and the box tightly fits the font size.
+        const auto topWidgets = QApplication::topLevelWidgets();
+        for (QWidget *topWidget : topWidgets) {
+          if (topWidget && (topWidget->inherits("QTipLabel") ||
+              (topWidget->windowFlags() & Qt::WindowType_Mask) == Qt::ToolTip)) {
+            topWidget->setAttribute(Qt::WA_TranslucentBackground, true);
+            if (auto *lbl = qobject_cast<QLabel *>(topWidget)) {
+              lbl->setMargin(0);
+            }
+          }
+        }
         return true;
+      }
+    }
+  } else if (event->type() == QEvent::Show || event->type() == QEvent::Polish) {
+    if (auto *widget = qobject_cast<QWidget *>(obj)) {
+      if (widget->inherits("QTipLabel") ||
+          (widget->windowFlags() & Qt::WindowType_Mask) == Qt::ToolTip) {
+        widget->setAttribute(Qt::WA_TranslucentBackground, true);
+        if (auto *lbl = qobject_cast<QLabel *>(widget)) {
+          lbl->setMargin(0);
+        }
       }
     }
   }
 
   return QObject::eventFilter(obj, event);
 }
+

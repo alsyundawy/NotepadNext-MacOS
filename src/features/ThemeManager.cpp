@@ -788,14 +788,15 @@ QMenu::separator {
     margin: 4px 6px;
 }
 
-/* Tooltips (Notepad++ Pixel-Crisp Mirror) */
+/* Tooltips (Rounded & Compact Font Fit) */
 QToolTip {
     background-color: %11;
     color: %12;
     border: 1px solid %13;
-    border-radius: 2px;
-    padding: 1px 4px;
+    border-radius: 4px;
+    padding: 2px 5px;
     font-size: 11px;
+    qproperty-margin: 0;
 }
 
 /* Status Bar */
