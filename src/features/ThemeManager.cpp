@@ -465,6 +465,11 @@ QString ThemeManager::getThemeStyleSheet() const {
     QString tbText = darkActive ? txtPri : QStringLiteral("#e6edf3");
     QString tbHover = darkActive ? border : QStringLiteral("rgba(255, 255, 255, 0.12)");
 
+    // Notepad++ Tooltip Mirror: Pixel-crisp 1px solid rectangular tooltip
+    QString ttBg = darkActive ? card : QStringLiteral("#ffffff");
+    QString ttText = darkActive ? txtPri : QStringLiteral("#000000");
+    QString ttBorder = darkActive ? border : QStringLiteral("#767676");
+
     const QString templateStr = QString::fromUtf8(R"(
 /* Universal Base Typography & Text */
 QWidget {
@@ -783,14 +788,14 @@ QMenu::separator {
     margin: 4px 6px;
 }
 
-/* Tooltips */
+/* Tooltips (Notepad++ Pixel-Crisp Mirror) */
 QToolTip {
-    background-color: %5;
-    color: %2;
-    border: 1px solid %3;
-    border-radius: 4px;
-    padding: 4px 8px;
-    font-size: 12px;
+    background-color: %11;
+    color: %12;
+    border: 1px solid %13;
+    border-radius: 0px;
+    padding: 2px 5px;
+    font-size: 11px;
 }
 
 /* Status Bar */
@@ -967,5 +972,6 @@ QToolBar::separator {
 }
 )");
 
-    return templateStr.arg(win, txtPri, border, txtSec, card, accent, tbBg, tbBorder, tbText).arg(tbHover);
+    return templateStr.arg(win, txtPri, border, txtSec, card, accent, tbBg, tbBorder, tbText)
+        .arg(tbHover, ttBg, ttText, ttBorder);
 }

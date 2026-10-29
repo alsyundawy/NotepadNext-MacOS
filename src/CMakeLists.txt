@@ -51,6 +51,7 @@ qt_add_executable(NotepadNext
 	UndoAction.h
 	XmlFormatter.h
 	ZoomEventWatcher.h
+	ToolbarTooltipFilter.h
 	resources.qrc
 	scripts.qrc
 	ApplicationSettings.cpp
@@ -97,6 +98,7 @@ qt_add_executable(NotepadNext
 	UndoAction.cpp
 	XmlFormatter.cpp
 	ZoomEventWatcher.cpp
+	ToolbarTooltipFilter.cpp
 	decorators/ApplicationDecorator.cpp
 	decorators/ApplicationDecorator.h
 	decorators/AutoCompletion.cpp

@@ -500,7 +500,7 @@
     <string>&amp;New</string>
    </property>
    <property name="toolTip">
-    <string>Create a new file</string>
+    <string>New</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+N</string>
@@ -530,6 +530,9 @@
    </property>
    <property name="text">
     <string>&amp;Open...</string>
+   </property>
+   <property name="toolTip">
+    <string>Open</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+O</string>
@@ -578,6 +581,9 @@
    <property name="text">
     <string>&amp;Undo</string>
    </property>
+   <property name="toolTip">
+    <string>Undo</string>
+   </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Z</string>
    </property>
@@ -590,6 +596,9 @@
    </property>
    <property name="text">
     <string>&amp;Redo</string>
+   </property>
+   <property name="toolTip">
+    <string>Redo</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Y</string>
@@ -604,6 +613,9 @@
    <property name="text">
     <string>Cu&amp;t</string>
    </property>
+   <property name="toolTip">
+    <string>Cut</string>
+   </property>
    <property name="shortcut">
     <string notr="true">Ctrl+X</string>
    </property>
@@ -617,6 +629,9 @@
    <property name="text">
     <string>&amp;Copy</string>
    </property>
+   <property name="toolTip">
+    <string>Copy</string>
+   </property>
    <property name="shortcut">
     <string notr="true">Ctrl+C</string>
    </property>
@@ -629,6 +644,9 @@
    </property>
    <property name="text">
     <string>&amp;Paste</string>
+   </property>
+   <property name="toolTip">
+    <string>Paste</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+V</string>
@@ -697,7 +715,7 @@
     <string>&amp;Close</string>
    </property>
    <property name="toolTip">
-    <string>Close the current file</string>
+    <string>Close</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+W</string>
@@ -731,6 +749,9 @@
    </property>
    <property name="text">
     <string>Sav&amp;e All</string>
+   </property>
+   <property name="toolTip">
+    <string>Save All</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Shift+S</string>
@@ -894,7 +915,7 @@
     <string>Clos&amp;e All</string>
    </property>
    <property name="toolTip">
-    <string>Close All files</string>
+    <string>Close All</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Shift+W</string>
@@ -936,6 +957,9 @@
    <property name="text">
     <string>Zoom &amp;In</string>
    </property>
+   <property name="toolTip">
+    <string>Zoom In</string>
+   </property>
    <property name="shortcut">
     <string notr="true">Ctrl++</string>
    </property>
@@ -948,6 +972,9 @@
    </property>
    <property name="text">
     <string>Zoom &amp;Out</string>
+   </property>
+   <property name="toolTip">
+    <string>Zoom Out</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+-</string>
@@ -1009,6 +1036,9 @@
    <property name="text">
     <string>Show All Characters</string>
    </property>
+   <property name="toolTip">
+    <string>Show All Characters</string>
+   </property>
   </action>
   <action name="actionShowIndentGuide">
    <property name="checkable">
@@ -1020,6 +1050,9 @@
     </iconset>
    </property>
    <property name="text">
+    <string>Show Indent Guide</string>
+   </property>
+   <property name="toolTip">
     <string>Show Indent Guide</string>
    </property>
   </action>
@@ -1042,6 +1075,9 @@
    </property>
    <property name="text">
     <string>Word Wrap</string>
+   </property>
+   <property name="toolTip">
+    <string>Word wrap</string>
    </property>
   </action>
   <action name="actionRestoreRecentlyClosedFile">
@@ -1070,6 +1106,9 @@
    </property>
    <property name="text">
     <string>&amp;Find...</string>
+   </property>
+   <property name="toolTip">
+    <string>Find...</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+F</string>
@@ -1105,6 +1144,9 @@
    <property name="text">
     <string>&amp;Replace...</string>
    </property>
+   <property name="toolTip">
+    <string>Replace...</string>
+   </property>
    <property name="shortcut">
     <string notr="true">Ctrl+H</string>
    </property>
@@ -1132,6 +1174,9 @@
    <property name="text">
     <string>Start Recording</string>
    </property>
+   <property name="toolTip">
+    <string>Start Recording</string>
+   </property>
   </action>
   <action name="actionPlayback">
    <property name="enabled">
@@ -1142,6 +1187,9 @@
      <normaloff>:/icons/playRecord.png</normaloff>:/icons/playRecord.png</iconset>
    </property>
    <property name="text">
+    <string>Playback</string>
+   </property>
+   <property name="toolTip">
     <string>Playback</string>
    </property>
    <property name="shortcut">
@@ -1171,6 +1219,9 @@
    <property name="text">
     <string>Run a Macro Multiple Times...</string>
    </property>
+   <property name="toolTip">
+    <string>Run a Macro Multiple Times...</string>
+   </property>
   </action>
   <action name="actionPreferences">
    <property name="icon">
@@ -1181,7 +1232,7 @@
     <string>Preferences...</string>
    </property>
    <property name="toolTip">
-    <string>Preferences</string>
+    <string>Preferences...</string>
    </property>
    <property name="menuRole">
     <enum>QAction::PreferencesRole</enum>
@@ -1234,6 +1285,9 @@
      <normaloff>:/icons/printer.png</normaloff>:/icons/printer.png</iconset>
    </property>
    <property name="text">
+    <string>Print...</string>
+   </property>
+   <property name="toolTip">
     <string>Print...</string>
    </property>
    <property name="shortcut">

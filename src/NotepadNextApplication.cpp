@@ -30,6 +30,7 @@
 #include "TranslationManager.h"
 #include "ApplicationSettings.h"
 #include "features/ThemeManager.h"
+#include "ToolbarTooltipFilter.h"
 
 #include "LuaState.h"
 #include "lua.hpp"
@@ -157,6 +158,8 @@ bool NotepadNextApplication::init()
     ecad->setEnabled(true);
     auto *mad = new MarkerAppDecorator(this);
     mad->setEnabled(true);
+
+    installEventFilter(new ToolbarTooltipFilter(this));
 
     luaState->executeFile(":/scripts/init.lua");
     LuaExtension::Instance().Initialise(luaState->L, Q_NULLPTR);
