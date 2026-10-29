@@ -793,8 +793,8 @@ QToolTip {
     background-color: %11;
     color: %12;
     border: 1px solid %13;
-    border-radius: 0px;
-    padding: 2px 5px;
+    border-radius: 2px;
+    padding: 1px 4px;
     font-size: 11px;
 }
 
