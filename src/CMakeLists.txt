@@ -268,6 +268,7 @@ target_link_libraries(NotepadNext
 )
 
 if(APPLE)
+    target_link_libraries(NotepadNext PRIVATE "-framework Cocoa")
     target_link_directories(NotepadNext PRIVATE "${CMAKE_BINARY_DIR}/dummy_frameworks")
 endif()
 
