@@ -12,7 +12,8 @@
 
 NotepadNext-MacOS **v0.15-02** hardens automation pipelines, eliminates token leak risks in CI workflows, sanitizes Git bot identities, and stabilizes DMG packaging across architectures.
 
-### Key Highlights:
+### Key Highlights
+
 1. **CI Security Hardening**: Restriced GitHub token permissions and secured release workflows.
 2. **Translation Pipeline Fix**: Addressed identity issues in `lupdate.yml`.
 3. **Local DMG Build & Verification**: Built `NotepadNext-v0.15-02-x64.dmg` locally and verified with Apple `hdiutil verify`.
