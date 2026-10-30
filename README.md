@@ -2,14 +2,16 @@
   <a href="https://github.com/alsyundawy/NotepadNext-MacOS">
     <img src="icon/icon_256x256.png" width="128" height="128" alt="NotepadNext App Icon" />
   </a>
-  <h1>🍎 NotepadNext For MacOS — Notepad++ Like</h1>
+  <h1>🍎 🐧 NotepadNext For MacOS & Linux — Notepad++ Like</h1>
 </div>
 
-> 🇬🇧 A cross-platform reimplementation of Notepad++ — built natively for macOS.
+> 🇬🇧 A cross-platform reimplementation of Notepad++ — built natively for macOS (DMG) and Linux (.deb / .rpm).
 >
-> 🇮🇩 Implementasi ulang Notepad++ lintas platform — dibangun secara native untuk macOS.
+> 🇮🇩 Implementasi ulang Notepad++ lintas platform — dibangun secara native untuk macOS (DMG) dan Linux (.deb / .rpm).
 
 [![Release Notes v0.15-07](https://img.shields.io/badge/Release%20Notes-v0.15--07%20vs%20v0.15%20Official-success.svg)](doc/RELEASE_NOTES_0.15-07.md)
+[![Platform: macOS & Linux](https://img.shields.io/badge/Platform-macOS%20%7C%20Linux-black.svg?logo=apple&logoColor=white)](#installation)
+[![Packages: DMG | DEB | RPM](https://img.shields.io/badge/Packages-DMG%20%7C%20DEB%20%7C%20RPM-blue.svg)](#installation)
 
 ![Build Notepad Next](https://github.com/alsyundawy/NotepadNext-MacOS/workflows/Build%20Notepad%20Next/badge.svg)
 [![Latest Version](https://img.shields.io/github/v/release/alsyundawy/NotepadNext-MacOS)](https://github.com/alsyundawy/NotepadNext-MacOS/releases)
@@ -35,9 +37,9 @@
 
 ## Overview
 
-> 🇬🇧 **NotepadNext For MacOS** is a native macOS reimplementation of Notepad++ built with modern Qt 6. It provides fast editing performance, syntax highlighting across 470+ file formats, tabbed document workflows, Gatekeeper support, and native Indonesian & English localization.
+> 🇬🇧 **NotepadNext For MacOS & Linux** is a native cross-platform reimplementation of Notepad++ built with modern Qt 6 (supporting Qt 6.5 through 6.12). In addition to first-class macOS builds (Apple Silicon & Intel DMG), it officially provides production-ready Linux CPack distribution packages (.deb for Debian/Ubuntu and .rpm for Fedora/RHEL/openSUSE), native desktop environment MIME integration, 470+ syntax highlighters, tabbed document workflows, Gatekeeper support, and native Indonesian & English localization.
 >
-> 🇮🇩 **NotepadNext For MacOS** adalah implementasi ulang native Notepad++ untuk macOS yang dibangun menggunakan Qt 6 modern. Aplikasi ini menghadirkan kecepatan tinggi, penyorotan sintaks untuk 470+ format file, manajemen multi-tab dokumen, integrasi sistem macOS, serta pelokalan penuh Bahasa Indonesia dan Bahasa Inggris.
+> 🇮🇩 **NotepadNext For MacOS & Linux** adalah implementasi ulang native lintas platform dari Notepad++ yang dibangun menggunakan Qt 6 modern (mendukung Qt 6.5 hingga 6.12). Selain build native macOS (Apple Silicon & Intel DMG), repositori ini kini secara resmi menyediakan paket distribusi Linux CPack siap pakai (.deb untuk Debian/Ubuntu dan .rpm untuk Fedora/RHEL/openSUSE), integrasi MIME desktop Linux, penyorotan sintaks untuk 470+ format file, manajemen multi-tab dokumen, integrasi sistem macOS, serta pelokalan penuh Bahasa Indonesia dan Bahasa Inggris.
 
 ### 🌟 Latest Release Highlights (v0.15-07)
 
@@ -80,7 +82,7 @@ chmod +x NotepadNext-Default-Editor.sh
 
 # Linux (Debian, Ubuntu, Fedora, RHEL, openSUSE, Arch, etc.):
 chmod +x NotepadNext-Default-Editor-Linux.sh
-./NotepadNext-Default-Editor-Linux.sh set
+./NotepadNext-Default-Editor-Linux.sh -f
 ```
 
 ---
@@ -141,18 +143,37 @@ Available native Linux CPack distribution packages:
 | `notepadnext-0.15-07-1.x86_64.rpm`  | RPM    | Fedora 40/41/42, RHEL 9/10, openSUSE     | x86_64                    |
 | `notepadnext-0.15-07-1.aarch64.rpm` | RPM    | Fedora ARM, openSUSE ARM                 | aarch64                   |
 
-Install on Debian / Ubuntu:
+Install on Debian / Ubuntu / Linux Mint (`.deb`):
 
 ```bash
+# Menggunakan APT (disarankan, otomatis menangani dependensi)
 sudo apt update
 sudo apt install ./notepadnext_0.15-07_amd64.deb
+
+# Atau via dpkg langsung
+sudo dpkg -i ./notepadnext_0.15-07_amd64.deb
+sudo apt-get install -f # pasang dependensi jika belum lengkap
 ```
 
-Install on Fedora / RHEL / CentOS:
+Install on Fedora / RHEL / Rocky / AlmaLinux (`.rpm`):
 
 ```bash
 sudo dnf install ./notepadnext-0.15-07-1.x86_64.rpm
 ```
+
+Install on openSUSE (`.rpm`):
+
+```bash
+sudo zypper install ./notepadnext-0.15-07-1.x86_64.rpm
+```
+
+> 📖 **Comprehensive Guides & Technical Architecture:**
+>
+> - 📦 **[Linux Packaging Guide (.deb & .rpm)](doc/LINUX_DEB_RPM_PACKAGING.md)**: Dependency architecture, 64-bit `time_t` transition (`t64`), and DNF vs. APT deep dive.
+> - 🐧 **[Native Linux Compilation Guide](doc/BUILD_UBUNTU_DEBIAN.md)**: Native build instructions for Ubuntu 22.04/24.04/26.04 and Debian 12/13.
+> - 🌐 **[Platform & OS Support Matrix](doc/PLATFORM_SUPPORT.md)**: Detailed compatibility across macOS (11–26), Linux distributions, and FreeBSD.
+> - 🍏 **[macOS Codesign & Quarantine Guide](doc/MACOS_CODESIGN_AND_NOTARIZATION.md)**: Gatekeeper unblocking, ad-hoc signing, and Developer ID notarization.
+> - 🍺 **[Homebrew Distribution Guide](doc/HOMEBREW_DISTRIBUTION.md)**: Installing and managing NotepadNext via Homebrew Casks.
 
 ---
 
@@ -160,19 +181,27 @@ sudo dnf install ./notepadnext-0.15-07-1.x86_64.rpm
 
 > 🇬🇧 **System Requirements & Dependencies:**
 >
-> - **Operating System**: macOS 11.0 (Big Sur) or higher.
-> - **Architectures**: Apple Silicon (`arm64`) and Intel (`x86_64`).
-> - **Framework**: Qt 6.5, 6.8, 6.10, 6.11, or 6.12 with `Qt6Core5Compat`.
-> - **Build Tools**: CMake 3.21+, Ninja, and C++20 compiler (`AppleClang`).
-> - **Automation Helper**: `duti` (optional, for LaunchServices file associations).
+> - **Operating Systems**:
+>   - **macOS**: macOS 11.0 (Big Sur) or higher (Apple Silicon `arm64` & Intel `x86_64`).
+>   - **Linux**: Ubuntu 22.04 / 24.04 LTS, Debian 12 / 13, Fedora 40 / 41 / 42, RHEL 9 / 10, openSUSE 15.6 / Tumbleweed, Arch Linux (`x86_64` & `aarch64`).
+> - **Packaging Formats**: macOS Application Bundle (`.dmg`), Debian Package (`.deb`), Red Hat Package Manager (`.rpm`).
+> - **GUI Framework**: Qt 6.5, 6.8 LTS, 6.10, 6.11, or 6.12 with `Qt6Core5Compat`.
+> - **Build Tools**: CMake 3.21+, Ninja, and C++20 compiler (`AppleClang`, `GCC 11+`, or `Clang 14+`).
+> - **System Integration Helpers**:
+>   - macOS: `duti` (optional, for LaunchServices file associations).
+>   - Linux: `xdg-utils`, `update-alternatives` (Debian/Ubuntu), or `alternatives` (Fedora/RHEL/openSUSE).
 >
 > 🇮🇩 **Kebutuhan Sistem & Dependensi:**
 >
-> - **Sistem Operasi**: macOS 11.0 (Big Sur) ke atas.
-> - **Arsitektur**: Apple Silicon (`arm64`) dan Intel (`x86_64`).
-> - **Framework**: Qt 6.5, 6.8, 6.10, 6.11, atau 6.12 dengan `Qt6Core5Compat`.
-> - **Build Tools**: CMake 3.21+, Ninja, dan C++20 compiler (`AppleClang`).
-> - **Otomatisasi**: `duti` (opsional, untuk pemetaan asosiasi file LaunchServices).
+> - **Sistem Operasi**:
+>   - **macOS**: macOS 11.0 (Big Sur) ke atas (Apple Silicon `arm64` & Intel `x86_64`).
+>   - **Linux**: Ubuntu 22.04 / 24.04 LTS, Debian 12 / 13, Fedora 40 / 41 / 42, RHEL 9 / 10, openSUSE 15.6 / Tumbleweed, Arch Linux (`x86_64` & `aarch64`).
+> - **Format Paket**: macOS Application Bundle (`.dmg`), Debian Package (`.deb`), Red Hat Package Manager (`.rpm`).
+> - **Framework GUI**: Qt 6.5, 6.8 LTS, 6.10, 6.11, atau 6.12 dengan `Qt6Core5Compat`.
+> - **Build Tools**: CMake 3.21+, Ninja, dan C++20 compiler (`AppleClang`, `GCC 11+`, atau `Clang 14+`).
+> - **Integrasi Sistem**:
+>   - macOS: `duti` (opsional, untuk pemetaan asosiasi file LaunchServices).
+>   - Linux: `xdg-utils`, `update-alternatives` (Debian/Ubuntu), atau `alternatives` (Fedora/RHEL/openSUSE).
 
 ---
 
@@ -230,28 +259,27 @@ defaults -currentHost write -g AppleFontSmoothing -int 0
 
 ```bash
 # 1. Terapkan untuk user aktif (default, ~/.config/mimeapps.list)
-./NotepadNext-Default-Editor-Linux.sh set
+./NotepadNext-Default-Editor-Linux.sh -f
 
 # 2. Terapkan untuk seluruh sistem (membutuhkan sudo, /etc/xdg/mimeapps.list)
-sudo ./NotepadNext-Default-Editor-Linux.sh set --system
+sudo ./NotepadNext-Default-Editor-Linux.sh --system -f
 
 # 3. Cek status asosiasi MIME saat ini
-./NotepadNext-Default-Editor-Linux.sh status
+./NotepadNext-Default-Editor-Linux.sh --status
 
 # 4. Pulihkan konfigurasi MIME awal dari backup
-./NotepadNext-Default-Editor-Linux.sh restore
+./NotepadNext-Default-Editor-Linux.sh --restore
 ```
 
-| Option / Opsi | Description / Deskripsi                                              |
-| :------------ | :------------------------------------------------------------------- |
-| `set`         | Configure Notepad Next as default editor across 120+ MIME types      |
-| `status`      | Audit and display current MIME associations and default editor paths |
-| `restore`     | Restore original MIME configurations from the latest backup          |
-| `--user`      | Target current user only (`~/.config/mimeapps.list`, default)        |
-| `--system`    | Target system-wide configuration (`/etc/xdg/mimeapps.list`)          |
-| `--dry-run`   | Simulate configuration changes without writing files                 |
-| `--no-color`  | Disable ANSI terminal colors                                         |
-| `--verbose`   | Output detailed diagnostic logging                                   |
+| Option / Opsi     | Description / Deskripsi                                                      |
+| :---------------- | :--------------------------------------------------------------------------- |
+| `-f`, `--force`   | Configure Notepad Next as default editor non-interactively (120+ MIME types) |
+| `-s`, `--system`  | Target system-wide configuration (`/etc/xdg/mimeapps.list`, requires sudo)   |
+| `-u`, `--user`    | Target current user profile only (`~/.config/mimeapps.list`, default)        |
+| `-d`, `--dry-run` | Simulate configuration changes without writing files                         |
+| `--status`        | Audit and display current MIME associations and default editor paths         |
+| `--restore`       | Restore original MIME configurations from the latest backup                  |
+| `-h`, `--help`    | Display usage options and help screen                                        |
 
 ---
 
@@ -259,11 +287,11 @@ sudo ./NotepadNext-Default-Editor-Linux.sh set --system
 
 > 🇬🇧 **Native Full Indonesian & English Localization Support.**
 >
-> NotepadNext For MacOS features built-in support for **Bahasa Indonesia (`id_ID`)** alongside **English (`en_US`)**, covering all interface components (Menu Bar, Toolbar, Settings dialogs, Find/Replace, Editor context menus, and Shortcuts).
+> NotepadNext For MacOS & Linux features built-in support for **Bahasa Indonesia (`id_ID`)** alongside **English (`en_US`)**, covering all interface components (Menu Bar, Toolbar, Settings dialogs, Find/Replace, Editor context menus, and Shortcuts).
 >
 > 🇮🇩 **Dukungan Pelokalan Penuh Bahasa Indonesia & Bahasa Inggris.**
 >
-> NotepadNext For MacOS kini menyediakan pelokalan lengkap untuk **Bahasa Indonesia (`id_ID`)** bersama **Bahasa Inggris (`en_US`)**, mencakup seluruh komponen antarmuka aplikasi (Menu Bar, Toolbar, Dialog Pengaturan, Pencarian/Penggantian, Menu Konteks Editor, dan Pintasan Tombol).
+> NotepadNext For MacOS & Linux kini menyediakan pelokalan lengkap untuk **Bahasa Indonesia (`id_ID`)** bersama **Bahasa Inggris (`en_US`)**, mencakup seluruh komponen antarmuka aplikasi (Menu Bar, Toolbar, Dialog Pengaturan, Pencarian/Penggantian, Menu Konteks Editor, dan Pintasan Tombol).
 
 ### Cara Mengaktifkan Bahasa Indonesia / How to Switch to Indonesian
 
@@ -322,36 +350,36 @@ sudo ./NotepadNext-Default-Editor-Linux.sh set --system
 
 > 🇬🇧 Contributions are welcome! You can contribute bug reports, code improvements, or UI translations:
 >
-> - **Translations**: Managed on Crowdin at [crowdin.com/project/notepadnext](https://crowdin.com/project/notepadnext) or via direct GitHub Pull Requests for macOS resources.
+> - **Translations**: Managed on Crowdin at [crowdin.com/project/notepadnext](https://crowdin.com/project/notepadnext) or via direct GitHub Pull Requests for macOS & Linux resources.
 > - **Pull Requests**: Please ensure all changes pass automated CI checks.
 >
 > 🇮🇩 Kontribusi sangat terbuka! Anda dapat mengirimkan laporan bug, perbaikan kode, atau penerjemahan antarmuka:
 >
-> - **Terjemahan**: Dikelola melalui Crowdin di [crowdin.com/project/notepadnext](https://crowdin.com/project/notepadnext) atau langsung melalui Pull Request GitHub.
+> - **Terjemahan**: Dikelola melalui Crowdin di [crowdin.com/project/notepadnext](https://crowdin.com/project/notepadnext) atau langsung melalui Pull Request GitHub untuk perbaikan macOS & Linux.
 > - **Pull Requests**: Pastikan semua perubahan lolos verifikasi CI otomatis.
 
 ---
 
 ## Credits
 
-> 🇬🇧 This repository is a **macOS-only build** of the original project by **[@dail8859](https://github.com/dail8859)**.
+> 🇬🇧 This repository is an enhanced **macOS & Linux edition** of the original project by **[@dail8859](https://github.com/dail8859)**.
 >
 > All credit for the original codebase goes to the original author.
 >
-> This fork is maintained at [https://github.com/alsyundawy/NotepadNext-MacOS](https://github.com/alsyundawy/NotepadNext-MacOS).
+> This edition is maintained at [https://github.com/alsyundawy/NotepadNext-MacOS](https://github.com/alsyundawy/NotepadNext-MacOS) to provide first-class macOS DMGs, native Linux DEB & RPM packages, deep desktop integrations, tab lifecycle stability fixes, and enterprise-grade code hardening.
 >
-> 🇮🇩 Repository ini merupakan **build khusus macOS** dari proyek asli oleh **[@dail8859](https://github.com/dail8859)**.
+> 🇮🇩 Repository ini merupakan **edisi khusus macOS & Linux** dari proyek asli oleh **[@dail8859](https://github.com/dail8859)**.
 >
 > Seluruh kredit untuk proyek aslinya diberikan kepada penulis asli.
 >
-> Fork ini dikelola di [https://github.com/alsyundawy/NotepadNext-MacOS](https://github.com/alsyundawy/NotepadNext-MacOS) untuk menyediakan build macOS (Apple Silicon & Intel).
+> Edisi ini dikelola di [https://github.com/alsyundawy/NotepadNext-MacOS](https://github.com/alsyundawy/NotepadNext-MacOS) untuk menyediakan paket native macOS (Apple Silicon & Intel DMG), paket distribusi Linux (.deb & .rpm), integrasi editor default sistem, perbaikan stabilitas tab, dan standardisasi kualitas kode bebas cacat.
 
-| Component / Komponen                         | Link / Tautan                                                                              |
-| :------------------------------------------- | :----------------------------------------------------------------------------------------- |
-| 🏠 **Original Repository / Repositori Asli** | [github.com/dail8859/NotepadNext](https://github.com/dail8859/NotepadNext)                 |
-| 👤 **Original Author / Penulis Asli**        | [@dail8859](https://github.com/dail8859)                                                   |
-| 🍎 **macOS Repository / Repositori macOS**   | [github.com/alsyundawy/NotepadNext-MacOS](https://github.com/alsyundawy/NotepadNext-MacOS) |
-| 👤 **macOS Maintainer / Pengembang macOS**   | [@alsyundawy](https://github.com/alsyundawy)                                               |
+| Component / Komponen                             | Link / Tautan                                                                              |
+| :----------------------------------------------- | :----------------------------------------------------------------------------------------- |
+| 🏠 **Original Repository / Repositori Asli**     | [github.com/dail8859/NotepadNext](https://github.com/dail8859/NotepadNext)                 |
+| 👤 **Original Author / Penulis Asli**            | [@dail8859](https://github.com/dail8859)                                                   |
+| 📦 **Edition Repository / Repositori Edisi Ini** | [github.com/alsyundawy/NotepadNext-MacOS](https://github.com/alsyundawy/NotepadNext-MacOS) |
+| 👤 **Lead Maintainer / Pengembang Utama**        | [@alsyundawy](https://github.com/alsyundawy)                                               |
 
 ---
 

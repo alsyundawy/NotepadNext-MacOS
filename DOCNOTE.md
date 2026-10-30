@@ -56,6 +56,11 @@ NotepadNext-MacOS **v0.15-07** delivers critical runtime crash fixes, IDE compil
    - **Cppcheck 2.22.0**: Zero errors with Qt library support across all 88 source files (`exit 0`).
    - **Clangd & SonarLint**: 100% clean check on all core components (`exit 0`).
 
+7. **Cross-Platform Documentation & Packaging Architecture Suite**:
+   - **5 Dedicated Guides Added**: Integrated and customized `doc/BUILD_UBUNTU_DEBIAN.md`, `doc/HOMEBREW_DISTRIBUTION.md`, `doc/LINUX_DEB_RPM_PACKAGING.md`, `doc/MACOS_CODESIGN_AND_NOTARIZATION.md`, and `doc/PLATFORM_SUPPORT.md`.
+   - **README.md Multi-Platform Expansion**: Added comprehensive Linux packaging details (DEB and RPM), documented script flags for `NotepadNext-Default-Editor-Linux.sh` (`-f`, `-s/--system`, `-d/--dry-run`, `--status`, `--restore`), updated download tables, and linked all new guides.
+   - **Markdownlint & Trunk Table Alignment**: Resolved all table pipe alignment issues (`MD060`) and verified with `markdownlint-cli` and `trunk check`.
+
 ---
 
 ## 2. Detailed Technical Changelog & File Diffs
