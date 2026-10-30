@@ -6,21 +6,37 @@ SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
 REPO_ROOT="$(cd -- "${SCRIPT_DIR}/.." && pwd -P)"
 cd "${REPO_ROOT}"
 
-echo "=== Starting Automated Local DMG Build & Push Pipeline (0.15-03 to 0.15-07) ==="
+echo "=== Starting Automated Local DMG Build Pipeline (0.14-01 to master) ==="
 
 QT_DIR="/Users/alsyundawy/Qt/6.12.0/macos"
-BRANCHES=("0.15-03" "0.15-04" "0.15-05" "0.15-06" "0.15-07")
+BRANCHES=(
+    "0.14-01"
+    "0.14-02"
+    "0.14-03"
+    "0.14-04"
+    "0.14-05"
+    "0.14-06"
+    "0.14-07"
+    "0.15-01"
+    "0.15-02"
+    "0.15-03"
+    "0.15-04"
+    "0.15-05"
+    "0.15-06"
+    "0.15-07"
+    "master"
+)
 
 for BRANCH in "${BRANCHES[@]}"; do
     echo "=================================================="
     echo "Processing Branch: ${BRANCH}"
     echo "=================================================="
-    
+
     # 1. Switch to branch
     git switch "${BRANCH}"
-    
+
     # 2. Check and apply OptionSet.h fix if cstdlib is missing
-    if ! grep -q "cstdlib" thirdparty/lexilla/lexlib/OptionSet.h; then
+    if [[ -f thirdparty/lexilla/lexlib/OptionSet.h ]] && ! grep -q "cstdlib" thirdparty/lexilla/lexlib/OptionSet.h; then
         echo "[*] Adding missing <cstdlib> include to OptionSet.h"
         python3 -c '
 path = "thirdparty/lexilla/lexlib/OptionSet.h"
@@ -37,7 +53,7 @@ if target in content and "#include <cstdlib>" not in content:
     fi
 
     # 3. Check and modernize PackagingMac.cmake if outdated
-    if grep -q "COMMAND \${MACDEPLOYQT_EXECUTABLE}.*-dmg" cmake/PackagingMac.cmake; then
+    if [[ -f cmake/PackagingMac.cmake ]] && grep -q "COMMAND \${MACDEPLOYQT_EXECUTABLE}.*-dmg" cmake/PackagingMac.cmake; then
         echo "[*] Modernizing cmake/PackagingMac.cmake"
         git checkout master -- cmake/PackagingMac.cmake
     fi
@@ -58,8 +74,10 @@ if target in content and "#include <cstdlib>" not in content:
 
     DMG_PATH="build/NotepadNext-v${BRANCH}-x64.dmg"
     if [[ ! -f "${DMG_PATH}" ]]; then
-        # Try generic name if versioned suffix differs
-        DMG_PATH="build/NotepadNext-v0.15-x64.dmg"
+        FOUND_DMG=$(find build -maxdepth 1 -name "NotepadNext*.dmg" | head -n 1)
+        if [[ -n "${FOUND_DMG}" ]]; then
+            DMG_PATH="${FOUND_DMG}"
+        fi
     fi
 
     echo "[*] Verifying DMG: ${DMG_PATH}"
@@ -83,7 +101,7 @@ if target in content and "#include <cstdlib>" not in content:
     echo "=== Branch ${BRANCH} Completed Successfully! ==="
 done
 
-# Switch to master
+# Switch back to master
 echo "=================================================="
 echo "Returning to master"
 echo "=================================================="
@@ -92,13 +110,7 @@ git switch master
 # Update SHA256SUMS
 echo "[*] Regenerating SHA256SUMS for all DMGs"
 cd build-dmg
-shasum -a 256 NotepadNext-v0.15-01-x64.dmg \
-           NotepadNext-v0.15-02-x64.dmg \
-           NotepadNext-v0.15-03-x64.dmg \
-           NotepadNext-v0.15-04-x64.dmg \
-           NotepadNext-v0.15-05-x64.dmg \
-           NotepadNext-v0.15-06-x64.dmg \
-           NotepadNext-v0.15-07-x64.dmg > SHA256SUMS
+shasum -a 256 NotepadNext*.dmg > SHA256SUMS
 cd ..
 
 echo "=== ALL LOCAL DMGS BUILT, VERIFIED, AND SYNCED SUCCESSFULLY! ==="
