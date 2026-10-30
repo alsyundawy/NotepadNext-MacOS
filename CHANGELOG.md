@@ -21,6 +21,8 @@ Format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) a
 - 🇮🇩 **Pewarnaan UI Menyeluruh via QSS**: Cakupan stylesheet Qt lengkap untuk menu, bilah menu, bilah alat, bilah status, dock, bilah tab, kotak kombo, spinbox, tombol tekan, dan header dialog dengan ikon centang SVG native (`checkmark.svg`).
 - 🇬🇧 **Dedicated Themes Menu & Preferences Integration**: Added top-level `&Themes` menu to `MainWindow` with one-click toggling (`Ctrl+Alt+T` / `Cmd+Alt+T`), Light/Dark submenus, and Family submenus. Integrated a modern `Themes & Visual Styling` panel at the top of the General Preferences page.
 - 🇮🇩 **Menu Tema Terdedikasi & Integrasi Pengaturan**: Menambahkan menu utama `&Themes` pada `MainWindow` dengan tombol pintas (`Ctrl+Alt+T` / `Cmd+Alt+T`), submenu Terang/Gelap, dan submenu Famili Tema. Mengintegrasikan panel `Themes & Visual Styling` modern pada bagian teratas dialog Pengaturan Umum.
+- 🇬🇧 **Local DMG Build & Verification**: Successfully built and cryptographically verified native macOS DMG (`NotepadNext-v0.15-05-x64.dmg`) locally with `hdiutil verify`.
+- 🇮🇩 **Build & Verifikasi DMG Lokal**: Berhasil mengompilasi dan memverifikasi integritas berkas DMG macOS (`NotepadNext-v0.15-05-x64.dmg`) secara lokal dengan `hdiutil verify`.
 
 ### 🔄 Auto-Update & Help Menu Integration / Integrasi Pembaruan Otomatis & Menu Bantuan
 
