@@ -12,7 +12,8 @@
 
 NotepadNext-MacOS **v0.15-03** focuses on Find/Replace UI ergonomics, restoring crucial toolbar controls, absorbing upstream core enhancements, and providing clean native DMG packaging for macOS.
 
-### Key Highlights:
+### Key Highlights
+
 1. **Find & Mark Input Field Ergonomics**: Cleaned up Find and Mark tabs to utilize a single consistent search box.
 2. **Toolbar Accessibility**: Added dedicated Preferences and Exit actions directly on the main toolbar.
 3. **Indonesian Language Polish**: Comprehensive review of Indonesian locale strings.
