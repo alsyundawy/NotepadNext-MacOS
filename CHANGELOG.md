@@ -20,6 +20,8 @@ Format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) a
 - 🇮🇩 **Penyederhanaan Bahasa Indonesia & Inggris**: Menghapus seluruh file terjemahan usang di folder `i18n/`, dan memfokuskan dukungan penuh eksklusif pada Bahasa Indonesia (`id_ID`) dengan cakupan 100% (419 pesan XML terverifikasi) dan Bahasa Inggris (`en_US`).
 - 🇬🇧 **Dynamic Language Selector**: Preferences dialog cleanly enumerates `<System Default>`, `Bahasa Indonesia (id_ID)`, and `English (en_US)` without clutter.
 - 🇮🇩 **Pemilih Bahasa Dinamis**: Dialog pengaturan secara otomatis menyajikan pilihan `<System Default>`, `Bahasa Indonesia (id_ID)`, dan `English (en_US)` secara ringkas dan rapi.
+- 🇬🇧 **Local DMG Build & Verification**: Successfully built and cryptographically verified native macOS DMG (`NotepadNext-v0.15-04-x64.dmg`) locally with `hdiutil verify`.
+- 🇮🇩 **Build & Verifikasi DMG Lokal**: Berhasil mengompilasi dan memverifikasi integritas berkas DMG macOS (`NotepadNext-v0.15-04-x64.dmg`) secara lokal dengan `hdiutil verify`.
 
 ### 🛡️ 13-Pillar Codebase Hardening & Bug Fixes / Penguatan Kode & Perbaikan Bug
 
