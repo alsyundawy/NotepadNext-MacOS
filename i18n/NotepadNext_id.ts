@@ -160,7 +160,7 @@
         <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.ui" line="161" />
         <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.cpp" line="143" />
         <source>Stop</source>
-        <translation>Berhenti</translation>
+        <translation>Hentikan</translation>
     </message>
     <message>
         <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.cpp" line="145" />
@@ -176,7 +176,7 @@
     <message>
         <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.cpp" line="251" />
         <source>Error</source>
-        <translation>Kesalahan</translation>
+        <translation>Galat</translation>
     </message>
     <message>
         <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.cpp" line="251" />
@@ -517,7 +517,7 @@
     <message>
         <location filename="../src/docks/EditorInspectorDock.cpp" line="106" />
         <source>Fold Level</source>
-        <translation>Fold Level</translation>
+        <translation>Tingkat Lipatan</translation>
     </message>
     <message>
         <location filename="../src/docks/EditorInspectorDock.cpp" line="107" />
@@ -527,12 +527,12 @@
     <message>
         <location filename="../src/docks/EditorInspectorDock.cpp" line="108" />
         <source>Fold Parent</source>
-        <translation>Fold Parent</translation>
+        <translation>Induk Lipatan</translation>
     </message>
     <message>
         <location filename="../src/docks/EditorInspectorDock.cpp" line="109" />
         <source>Last Child</source>
-        <translation>Last Child</translation>
+        <translation>Anak Terakhir</translation>
     </message>
     <message>
         <location filename="../src/docks/EditorInspectorDock.cpp" line="110" />
@@ -542,22 +542,22 @@
     <message>
         <location filename="../src/docks/EditorInspectorDock.cpp" line="176" />
         <source>Caret</source>
-        <translation>Caret</translation>
+        <translation>Kursor</translation>
     </message>
     <message>
         <location filename="../src/docks/EditorInspectorDock.cpp" line="180" />
         <source>Anchor</source>
-        <translation>Anchor</translation>
+        <translation>Jangkar</translation>
     </message>
     <message>
         <location filename="../src/docks/EditorInspectorDock.cpp" line="184" />
         <source>Caret Virtual Space</source>
-        <translation>Caret Virtual Space</translation>
+        <translation>Spasi Virtual Kursor</translation>
     </message>
     <message>
         <location filename="../src/docks/EditorInspectorDock.cpp" line="188" />
         <source>Anchor Virtual Space</source>
-        <translation>Anchor Virtual Space</translation>
+        <translation>Spasi Virtual Jangkar</translation>
     </message>
 </context>
 <context>
@@ -924,7 +924,7 @@
     <message>
         <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="119" />
         <source>Type</source>
-        <translation>Tipe</translation>
+        <translation>Jenis</translation>
     </message>
     <message>
         <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="130" />
@@ -967,7 +967,7 @@
     <message>
         <location filename="../src/docks/LanguageInspectorDock.ui" line="105" />
         <source>Type</source>
-        <translation>Tipe</translation>
+        <translation>Jenis</translation>
     </message>
     <message>
         <location filename="../src/docks/LanguageInspectorDock.ui" line="110" />
@@ -1267,7 +1267,7 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="292" />
         <source>&amp;Zoom</source>
-        <translation>&amp;Zoom</translation>
+        <translation>&amp;Perbesaran</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="301" />
@@ -1277,12 +1277,12 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="312" />
         <source>Fold Level</source>
-        <translation>Fold Level</translation>
+        <translation>Tingkat Lipatan</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="326" />
         <source>Unfold Level</source>
-        <translation>Unfold Level</translation>
+        <translation>Buka Tingkat Lipatan</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="358" />
@@ -1306,7 +1306,7 @@
     </message>
     <message>
         <source>Encoding</source>
-        <translation type="vanished">Encoding</translation>
+        <translation type="vanished">Pengodean</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="435" />
@@ -1355,12 +1355,12 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="582" />
         <source>&amp;Undo</source>
-        <translation>&amp;Undo</translation>
+        <translation>&amp;Urungkan</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="598" />
         <source>&amp;Redo</source>
-        <translation>&amp;Redo</translation>
+        <translation>&amp;Ulangi</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="614" />
@@ -1469,22 +1469,22 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="834" />
         <source>UPPER CASE</source>
-        <translation>UPPER CASE</translation>
+        <translation>HURUF BESAR</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="837" />
         <source>Convert text to upper case</source>
-        <translation>Ubah teks ke UPPER CASE</translation>
+        <translation>Ubah teks ke huruf besar</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="842" />
         <source>lower case</source>
-        <translation>lower case</translation>
+        <translation>huruf kecil</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="845" />
         <source>Convert text to lower case</source>
-        <translation>Ubah teks ke lower case</translation>
+        <translation>Ubah teks ke huruf kecil</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="850" />
@@ -1568,17 +1568,17 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="958" />
         <source>Zoom &amp;In</source>
-        <translation>Zoom &amp;In</translation>
+        <translation>Perbesar (&amp;+)</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="974" />
         <source>Zoom &amp;Out</source>
-        <translation>Zoom &amp;Out</translation>
+        <translation>Perkecil (&amp;-)</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="985" />
         <source>Reset Zoom</source>
-        <translation>Reset Zoom</translation>
+        <translation>Atur Ulang Zoom</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="993" />
@@ -1615,7 +1615,7 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1064" />
         <source>Show Wrap Symbol</source>
-        <translation>Tampilkan Simbol Wrap</translation>
+        <translation>Tampilkan Simbol Bungkus Teks</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1077" />
@@ -1665,7 +1665,7 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1159" />
         <source>Full Screen</source>
-        <translation>Full Screen</translation>
+        <translation>Layar Penuh</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1175" />
@@ -1678,7 +1678,7 @@
         <location filename="../src/dialogs/MainWindow.ui" line="1190" />
         <location filename="../src/dialogs/MainWindow.ui" line="1193" />
         <source>Playback</source>
-        <translation>Playback</translation>
+        <translation>Putar Ulang</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1208" />
@@ -1700,7 +1700,7 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1243" />
         <source>Quick Find</source>
-        <translation>Quick Find</translation>
+        <translation>Cari Cepat</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1251" />
@@ -1766,7 +1766,7 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1348" />
         <source>Column Mode...</source>
-        <translation>Column Mode...</translation>
+        <translation>Mode Kolom...</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1353" />
@@ -1952,42 +1952,42 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1497" />
         <source>Fold Level 1</source>
-        <translation>Fold Level 1</translation>
+        <translation>Lipat Tingkat 1</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1505" />
         <source>Fold Level 2</source>
-        <translation>Fold Level 2</translation>
+        <translation>Lipat Tingkat 2</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1513" />
         <source>Fold Level 3</source>
-        <translation>Fold Level 3</translation>
+        <translation>Lipat Tingkat 3</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1521" />
         <source>Fold Level 4</source>
-        <translation>Fold Level 4</translation>
+        <translation>Lipat Tingkat 4</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1529" />
         <source>Unfold Level 1</source>
-        <translation>Unfold Level 1</translation>
+        <translation>Buka Lipatan Tingkat 1</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1537" />
         <source>Unfold Level 2</source>
-        <translation>Unfold Level 2</translation>
+        <translation>Buka Lipatan Tingkat 2</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1545" />
         <source>Unfold Level 3</source>
-        <translation>Unfold Level 3</translation>
+        <translation>Buka Lipatan Tingkat 3</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1553" />
         <source>Unfold Level 4</source>
-        <translation>Unfold Level 4</translation>
+        <translation>Buka Lipatan Tingkat 4</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1561" />
@@ -2002,52 +2002,52 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1577" />
         <source>Fold Level 5</source>
-        <translation>Fold Level 5</translation>
+        <translation>Lipat Tingkat 5</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1585" />
         <source>Fold Level 6</source>
-        <translation>Fold Level 6</translation>
+        <translation>Lipat Tingkat 6</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1593" />
         <source>Fold Level 7</source>
-        <translation>Fold Level 7</translation>
+        <translation>Lipat Tingkat 7</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1601" />
         <source>Fold Level 8</source>
-        <translation>Fold Level 8</translation>
+        <translation>Lipat Tingkat 8</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1609" />
         <source>Fold Level 9</source>
-        <translation>Fold Level 9</translation>
+        <translation>Lipat Tingkat 9</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1617" />
         <source>Unfold Level 5</source>
-        <translation>Unfold Level 5</translation>
+        <translation>Buka Lipatan Tingkat 5</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1625" />
         <source>Unfold Level 6</source>
-        <translation>Unfold Level 6</translation>
+        <translation>Buka Lipatan Tingkat 6</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1633" />
         <source>Unfold Level 7</source>
-        <translation>Unfold Level 7</translation>
+        <translation>Buka Lipatan Tingkat 7</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1641" />
         <source>Unfold Level 8</source>
-        <translation>Unfold Level 8</translation>
+        <translation>Buka Lipatan Tingkat 8</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1649" />
         <source>Unfold Level 9</source>
-        <translation>Unfold Level 9</translation>
+        <translation>Buka Lipatan Tingkat 9</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1657" />
@@ -2058,7 +2058,7 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1671" />
         <source>Debug Info...</source>
-        <translation>Debug Info...</translation>
+        <translation>Info Debug...</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1676" />
@@ -2134,12 +2134,12 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1767" />
         <source>Sort Lines Ascending (Case-Insensitive)</source>
-        <translation>Urutkan Baris Menaik (Case-Insensitive)</translation>
+        <translation>Urutkan Baris Menaik (Abaikan Huruf Besar/Kecil)</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1772" />
         <source>Sort Lines Descending (Case-Insensitive)</source>
-        <translation>Urutkan Baris Menurun (Case-Insensitive)</translation>
+        <translation>Urutkan Baris Menurun (Abaikan Huruf Besar/Kecil)</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1777" />
@@ -2159,7 +2159,7 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1792" />
         <source>Split Horizontal</source>
-        <translation>Split Horizontal</translation>
+        <translation>Bagi Horizontal</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1795" />
@@ -2169,7 +2169,7 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1803" />
         <source>Split Vertical</source>
-        <translation>Split Vertical</translation>
+        <translation>Bagi Vertikal</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1806" />
@@ -2244,7 +2244,7 @@
     <message>
         <location filename="../src/dialogs/MainWindow.cpp" line="1147" />
         <source>Debug Info</source>
-        <translation>Debug Info</translation>
+        <translation>Info Debug</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.cpp" line="1524" />
@@ -2345,12 +2345,12 @@
     <message>
         <location filename="../src/dialogs/MainWindow.cpp" line="2603" />
         <source>Fatal error</source>
-        <translation>Fatal error</translation>
+        <translation>Galat fatal</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.cpp" line="2604" />
         <source>Resource error</source>
-        <translation>Resource error</translation>
+        <translation>Galat sumber daya</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.cpp" line="2605" />
@@ -2360,17 +2360,17 @@
     <message>
         <location filename="../src/dialogs/MainWindow.cpp" line="2606" />
         <source>Abort error</source>
-        <translation>Abort error</translation>
+        <translation>Galat pembatalan</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.cpp" line="2607" />
         <source>Timeout error</source>
-        <translation>Timeout error</translation>
+        <translation>Galat batas waktu</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.cpp" line="2608" />
         <source>Unspecified error</source>
-        <translation>Unspecified error</translation>
+        <translation>Galat tidak ditentukan</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.cpp" line="2609" />
@@ -2385,12 +2385,12 @@
     <message>
         <location filename="../src/dialogs/MainWindow.cpp" line="2611" />
         <source>Position error</source>
-        <translation>Position error</translation>
+        <translation>Galat posisi</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.cpp" line="2612" />
         <source>Resize error</source>
-        <translation>Resize error</translation>
+        <translation>Galat pengubahan ukuran</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.cpp" line="2613" />
@@ -2405,7 +2405,7 @@
     <message>
         <location filename="../src/dialogs/MainWindow.cpp" line="2615" />
         <source>Unknown error (%1)</source>
-        <translation>Unknown error (%1)</translation>
+        <translation>Galat tidak diketahui (%1)</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.cpp" line="2618" />
@@ -2415,7 +2415,7 @@
     <message>
         <location filename="../src/dialogs/MainWindow.cpp" line="2619" />
         <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
-        <translation>Terjadi kesalahan saat menyimpan &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</translation>
+        <translation>Terjadi kesalahan saat menyimpan &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Galat: %2</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.cpp" line="2624" />
@@ -2819,7 +2819,7 @@
     <message>
         <location filename="../src/dialogs/PreferencesDialog.ui" line="195" />
         <source>Default Line Endings</source>
-        <translation>Default Line Endings</translation>
+        <translation>Akhir Baris Default</translation>
     </message>
     <message>
         <location filename="../src/dialogs/PreferencesDialog.ui" line="205" />
@@ -2829,7 +2829,7 @@
     <message>
         <location filename="../src/dialogs/PreferencesDialog.ui" line="217" />
         <source>Highlight URLs</source>
-        <translation>Highlight URL</translation>
+        <translation>Sorot URL</translation>
     </message>
     <message>
         <location filename="../src/dialogs/PreferencesDialog.ui" line="224" />
@@ -2839,7 +2839,7 @@
     <message>
         <location filename="../src/dialogs/PreferencesDialog.ui" line="231" />
         <source>Auto Completion</source>
-        <translation>Auto Completion</translation>
+        <translation>Penyelesaian Otomatis</translation>
     </message>
     <message>
         <location filename="../src/dialogs/PreferencesDialog.ui" line="238" />
@@ -3090,12 +3090,12 @@
     <message>
         <location filename="../src/docks/SearchResultsDock.cpp" line="62" />
         <source>Collapse All</source>
-        <translation>Collapse Semua</translation>
+        <translation>Ciutkan Semua</translation>
     </message>
     <message>
         <location filename="../src/docks/SearchResultsDock.cpp" line="63" />
         <source>Expand All</source>
-        <translation>Expand Semua</translation>
+        <translation>Bentangkan Semua</translation>
     </message>
     <message>
         <location filename="../src/docks/SearchResultsDock.cpp" line="65" />
@@ -3173,7 +3173,7 @@
     <message>
         <location filename="../src/dialogs/ThemeSwitcherDialog.cpp" line="92" />
         <source>Type</source>
-        <translation>Tipe</translation>
+        <translation>Jenis</translation>
     </message>
     <message>
         <location filename="../src/dialogs/ThemeSwitcherDialog.cpp" line="92" />
