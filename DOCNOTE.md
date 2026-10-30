@@ -51,10 +51,12 @@ NotepadNext-MacOS **v0.15-07** delivers critical runtime crash fixes, IDE compil
    - Updated `.github/workflows/release.yml` to include the complete matrix from Qt 6.5, 6.8 LTS, 6.10, 6.11, up to 6.12 across Linux (Ubuntu 22.04 and 24.04), macOS Intel x64, and macOS Apple Silicon arm64 runners.
 
 6. **Full Toolchain & Linter Zero-Error Verification**:
-   - **Compiler**: Built cleanly with LLVM Clang++ and CMake (`exit 0`).
+   - **Compiler**: Built cleanly with Clang++ and CMake (`exit 0`).
    - **Trunk**: All checks passed cleanly (`✔ No issues`).
-   - **Cppcheck 2.22.0**: Zero errors with Qt library support across all 88 source files (`exit 0`).
-   - **Clangd & SonarLint**: 100% clean check on all core components (`exit 0`).
+   - **Cppcheck 2.22.0**: Zero errors with Qt library support across all 89 source files (`exit 0`).
+   - **Clangd**: 100% clean check across all 89 C++ source files (`exit 0`, 0 errors).
+   - **Bandit & Security**: Zero vulnerabilities in Python tooling (`scripts/generate_compilation_database.py`).
+   - **Local DMG Suite**: Complete local build from 0.15-07 down to 0.15-01 in `build-dmg/`, verified with `hdiutil verify` and `SHA256SUMS`.
 
 7. **Cross-Platform Documentation & Packaging Architecture Suite**:
    - **5 Dedicated Guides Added**: Integrated and customized `doc/BUILD_UBUNTU_DEBIAN.md`, `doc/HOMEBREW_DISTRIBUTION.md`, `doc/LINUX_DEB_RPM_PACKAGING.md`, `doc/MACOS_CODESIGN_AND_NOTARIZATION.md`, and `doc/PLATFORM_SUPPORT.md`.

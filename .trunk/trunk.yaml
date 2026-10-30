@@ -31,7 +31,7 @@ lint:
         - doc/**
     - linters: [checkov]
       paths:
-        - .github/workflows/create_release.yml
+        - .github/workflows/**
   enabled:
     - actionlint@1.7.12
     - bandit@1.9.4
