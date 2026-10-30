@@ -27,6 +27,8 @@ BRANCHES=(
     "master"
 )
 
+mkdir -p build-dmg
+
 for BRANCH in "${BRANCHES[@]}"; do
     echo "=================================================="
     echo "Processing Branch: ${BRANCH}"
@@ -58,7 +60,10 @@ if target in content and "#include <cstdlib>" not in content:
         git checkout master -- cmake/PackagingMac.cmake
     fi
 
-    # 4. Configure & Build DMG
+    # 4. Clean previous build directory, configure & build DMG
+    echo "[*] Cleaning build directory..."
+    rm -rf build
+
     echo "[*] Configuring and building DMG target for ${BRANCH}..."
     cmake -S . -B build -G Ninja \
         -DCMAKE_BUILD_TYPE=Release \
@@ -84,7 +89,6 @@ if target in content and "#include <cstdlib>" not in content:
     hdiutil verify "${DMG_PATH}"
 
     echo "[*] Copying verified DMG to build-dmg/NotepadNext-v${BRANCH}-x64.dmg"
-    mkdir -p build-dmg
     cp -f "${DMG_PATH}" "build-dmg/NotepadNext-v${BRANCH}-x64.dmg"
 
     # 5. Commit and push fixes if there are modifications
@@ -93,7 +97,7 @@ if target in content and "#include <cstdlib>" not in content:
         git add -u
         git commit -m "fix(build): add cstdlib include in OptionSet.h and modernize macOS DMG packaging" || true
         echo "[*] Pushing branch ${BRANCH} to origin"
-        git push origin "refs/heads/${BRANCH}:refs/heads/${BRANCH}"
+        git push origin "refs/heads/${BRANCH}:refs/heads/${BRANCH}" || true
     else
         echo "[*] No file changes needed on branch ${BRANCH}"
     fi
