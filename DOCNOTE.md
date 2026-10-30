@@ -12,7 +12,8 @@
 
 NotepadNext-MacOS **v0.15-01** introduces initial support for 470+ file format associations, fixes macOS System Settings handler registration, delivers complete Indonesian localization, and packages native DMG releases.
 
-### Key Highlights:
+### Key Highlights
+
 1. **File Associations**: Support for 470+ source and text formats.
 2. **macOS Integration**: Seamless default editor integration on modern macOS releases.
 3. **Local DMG Build & Verification**: Built `NotepadNext-v0.15-01-x64.dmg` locally and verified with Apple `hdiutil verify`.
