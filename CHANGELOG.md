@@ -17,6 +17,8 @@ Format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) a
 - 🇮🇩 **Penelusuran Kluster Grafem Atomik (`QTextBoundaryFinder`)**: Menghubungkan navigasi dan penghapusan kursor menggunakan `QTextBoundaryFinder::Grapheme`. Emoji majemuk dengan Zero-Width-Joiner (`\u200D`), pemodifikasi warna kulit, dan bendera dihapus dan dilewati secara atomik tanpa menyisakan pasangan pengganti atau glif tanda tanya rusak.
 - 🇬🇧 **macOS Native Character Palette (`Cmd+Ctrl+Space`)**: Added `actionEmojiSymbols` under Edit menu with shortcut `Cmd+Ctrl+Space`, dispatching native Cocoa `[NSApp orderFrontCharacterPalette:nil]` via Objective-C runtime messaging.
 - 🇮🇩 **Palet Karakter Native macOS (`Cmd+Ctrl+Space`)**: Menambahkan menu `Emoji & Karakter Khusus` di bawah menu Edit dengan tombol pintas `Cmd+Ctrl+Space`, memanggil `orderFrontCharacterPalette` Cocoa secara langsung.
+- 🇬🇧 **Local DMG Build & Verification**: Successfully built and cryptographically verified native macOS DMG (`NotepadNext-v0.15-06-x64.dmg`) locally with `hdiutil verify`.
+- 🇮🇩 **Build & Verifikasi DMG Lokal**: Berhasil mengompilasi dan memverifikasi integritas berkas DMG macOS (`NotepadNext-v0.15-06-x64.dmg`) secara lokal dengan `hdiutil verify`.
 
 ### 🔔 Modern, Elegant & Informative Update Dialog / Desain Dialog Pembaruan Modern, Elegan & Informatif
 
