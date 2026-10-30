@@ -10,6 +10,9 @@
 #ifndef OPTIONSET_H
 #define OPTIONSET_H
 
+#include <cstdlib>
+#include <string>
+
 namespace Lexilla {
 
 inline std::string JoinWordListDescriptions(const char *const wordListDescriptions[]) {
