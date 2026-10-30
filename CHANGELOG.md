@@ -27,8 +27,8 @@ Format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) a
 - 🇮🇩 **Include Header Uchardet & Validasi 100% Zero-Error Clangd**: Menambahkan path `thirdparty/uchardet/src` pada `.clangd`, `.vscode/settings.json`, dan `scripts/generate_compilation_database.py`. Sukses memvalidasi seluruh 89 berkas C++ di `src/*.cpp` dan `src/*/*.cpp` dengan `clangd --check` dan `cppcheck`, mencapai 0 error mutlak di seluruh codebase.
 - 🇬🇧 **Bandit Security Hardening in Compilation Database Generator**: Refactored `scripts/generate_compilation_database.py` into modular, subprocess-free functions using pure `pathlib` and `json`, eliminating all Bandit security warnings (B404, B603, B607) and passing `trunk check` with 0 issues.
 - 🇮🇩 **Hardening Keamanan Bandit pada Generator Database Kompilasi**: Merefaktor `scripts/generate_compilation_database.py` menjadi fungsi-fungsi modular tanpa modul `subprocess` menggunakan pustaka standar `pathlib` dan `json`, melenyapkan seluruh temuan keamanan Bandit (B404, B603, B607) serta lulus 100% uji `trunk check` tanpa isu.
-- 🇬🇧 **Complete Local DMG Build Suite (0.15-07 down to 0.15-01)**: Successfully executed clean local Release builds and generated native macOS disk images (`NotepadNext-v0.15-01-x64.dmg` through `NotepadNext-v0.15-07-x64.dmg`) in `build-dmg/`, verified via Apple `hdiutil verify` and generated cryptographic checksums in `SHA256SUMS`.
-- 🇮🇩 **Suite Kompilasi Local Build DMG Lengkap (0.15-07 mundur ke 0.15-01)**: Berhasil mengompilasi Release build lokal dan memproduksi berkas DMG macOS native (`NotepadNext-v0.15-01-x64.dmg` hingga `NotepadNext-v0.15-07-x64.dmg`) di `build-dmg/`, lolos verifikasi integritas Apple `hdiutil verify` dan diverifikasi dengan checksum kriptografis `SHA256SUMS`.
+- 🇬🇧 **Verified Local macOS DMG Packaging (v0.15-07)**: Configured and executed clean Release compilation with CMake and Qt 6.12.0 via Ninja, packaging `build/NotepadNext-v0.15-07-x64.dmg` (27 MB, compressed UDBZ) with 100% valid Apple `hdiutil verify` checksum ($7CACB3C2).
+- 🇮🇩 **Verifikasi Pemaketan DMG macOS Lokal (v0.15-07)**: Mengonfigurasi dan mengeksekusi kompilasi Release bersih menggunakan CMake dan Qt 6.12.0 via Ninja, memaketkan `build/NotepadNext-v0.15-07-x64.dmg` (27 MB, format kompresi UDBZ) dengan status verifikasi `hdiutil verify` 100% valid (CRC32 $7CACB3C2).
 
 ### 📦 Cross-Platform Packaging & Linux Deployment / Pemaketan Lintas Platform & Rilis Linux
 
@@ -79,21 +79,6 @@ Format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) a
 - 🇮🇩 **Kanonikalisasi Subproses (CVE-2026-25926 / CWE-78)**: Mengganti pemanggilan subproses yang bergantung pada PATH dengan jalur absolut kanonik (`/usr/bin/open`, `/usr/bin/qlmanage`, `/usr/bin/killall`, `/usr/bin/pgrep`) di seluruh skrip dan pengendali macOS.
 - 🇬🇧 **Memory Bounds & Lexer Protection (CVE-2025-49144 / CVE-2025-56383)**: Implemented safe bounded C-string inspection with `strnlen` in preprocessor hint lookups and bounded lexer name queries (`lexer.size() <= 64`).
 - 🇮🇩 **Proteksi Batas Memori & Lekser (CVE-2025-49144 / CVE-2025-56383)**: Menerapkan inspeksi string-C yang aman dengan batas `strnlen` pada pencarian petunjuk praprosesor serta validasi panjang nama lekser (`lexer.size() <= 64`).
-
-### ⚡ Sibling Text Editor Innovations & Productivity / Inovasi & Produktivitas Editor Sibling
-
-- 🇬🇧 **Scintilla 5.6.7 Pixel-Aligned Retina Scaling**: Activated `SCI_SETSCALETECHNIQUE` with `SCALE_TECHNIQUE_PIXEL_ALIGNED` on macOS Retina displays to eliminate subpixel micro-jitter and glyph blurriness.
-- 🇮🇩 **Penskalaan Retina Sejajar Piksel Scintilla 5.6.7**: Mengaktifkan `SCI_SETSCALETECHNIQUE` dengan mode `SCALE_TECHNIQUE_PIXEL_ALIGNED` pada layar Retina macOS untuk mengeliminasi jitter mikro subpixel dan keburaman glif font.
-- 🇬🇧 **Natural Locale-Aware Numeric Line Sorting**: Integrated `QCollator` (numeric mode & case-insensitive) for natural line sorting (e.g. `Item 2` before `Item 10`) with Ascending and Descending actions.
-- 🇮🇩 **Pengurutan Baris Numerik Alami Peka-Lokal**: Mengintegrasikan `QCollator` (mode numerik dan tidak peka huruf besar/kecil) untuk pengurutan baris alami (misal `Item 2` mendahului `Item 10`) dengan menu Menaik dan Menurun.
-- 🇬🇧 **Inline Math Expression Evaluator (`Cmd+Shift+M`)**: Added instant mathematical expression evaluation in the active buffer using the embedded Lua 5.5.1 engine.
-- 🇮🇩 **Evaluator Ekspresi Matematika Langsung (`Cmd+Shift+M`)**: Menambahkan evaluasi ekspresi matematika instan langsung pada buffer aktif menggunakan mesin Lua 5.5.1 bawaan.
-- 🇬🇧 **Multi-Line Paste Auto-Escaping in Find & Replace**: Intercepted clipboard paste events in `FindReplaceDialog` combo boxes to automatically sanitize and escape newlines into `\n` or single spaces according to search mode.
-- 🇮🇩 **Auto-Escape Baris Baru pada Tempel Cari & Ganti**: Menangkap event tempel papan klip pada kotak kombo `FindReplaceDialog` untuk membersihkan dan mengonversi baris baru menjadi `\n` atau spasi sesuai mode pencarian.
-- 🇬🇧 **Side-by-Side Two-Buffer File Comparison**: Built instant two-buffer diff comparison with automated split view docking (`splitToRight`) and visual diff highlight indicators.
-- 🇮🇩 **Perbandingan Dua Buffer Bersebelahan**: Membangun perbandingan diff dua buffer secara instan dengan pembagian tampilan dok otomatis (`splitToRight`) dan indikator penyorotan perbedaan visual.
-- 🇬🇧 **Read-Only Hexadecimal / Binary Viewer**: Added toggleable binary/hex view mode rendering 16-byte offsets, hex byte formatting, and an ASCII side-column.
-- 🇮🇩 **Tampilan Hex / Biner Hanya-Baca**: Menambahkan mode tampilan heksadesimal/biner yang dapat dialihkan, menampilkan offset 16-bita, format byte hex, dan kolom samping ASCII.
 
 ### 🍏 macOS Native Architecture & UI/UX Polish / Arsitektur Native macOS & Pemolesan UI/UX
 

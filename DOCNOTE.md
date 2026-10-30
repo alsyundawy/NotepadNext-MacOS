@@ -1,9 +1,9 @@
-# NotepadNext-MacOS Release DocNote — v0.15-07
+# 📘 NotepadNext-MacOS Release DocNote — v0.15-07
 
 ```text
 ================================================================================
 Release Version     : 0.15-07 (Stability Hardening, Tab Lifecycle Fix, Multi-Qt Matrix & Linter Zero-Error)
-Release Date        : 2026-10-28
+Release Date        : 2026-10-31
 Lead Maintainer     : Harry Dertin Sutisna Alsyundawy (@alsyundawy)
 Organization        : ALSYUNDAWY IT SOLUTION (https://alsyundawy.com)
 Repository          : https://github.com/alsyundawy/NotepadNext-MacOS
@@ -11,7 +11,7 @@ Core Editing Engine : Scintilla 5.6.7 (Vendored) & Lexilla 5.5.4 (Vendored)
 Embedded Lua Core   : Sandboxed Lua 5.5.1
 Scripting Runtime   : Python 3.15+ Engine Bridge
 GUI Framework       : Qt 6.5 / 6.8 LTS / 6.10 / 6.11 / 6.12 (C++20 Standard)
-Target Platforms    : macOS 11.0–26.0 (Apple Silicon & Intel), Linux (Ubuntu, Debian, Fedora, RHEL, openSUSE), FreeBSD 13–15
+Target Platforms    : macOS 11.0–26.0 (Apple Silicon & Intel), Linux (Ubuntu, Debian, Fedora, RHEL, openSUSE)
 License             : GNU General Public License v3.0 (GPL-3.0-or-later)
 Architecture        : Native Scintilla reimplementation of Notepad++ for macOS & Linux
 ================================================================================
@@ -21,7 +21,7 @@ Architecture        : Native Scintilla reimplementation of Notepad++ for macOS &
 
 ## 1. Executive Summary: Release v0.15-07
 
-NotepadNext-MacOS **v0.15-07** delivers critical runtime crash fixes, IDE compiler database stabilization, complete multi-Qt Linux and macOS matrix synchronization, and rigorous zero-error linter compliance:
+NotepadNext-MacOS **v0.15-07** delivers critical runtime crash fixes, compiler database stabilization, complete multi-Qt Linux and macOS matrix synchronization, and rigorous zero-error linter compliance:
 
 1. **Resolution of Random Crash When Closing Unsaved Tabs**:
    - **Root Cause Investigation**: Identified crash triggers during tab closure:
@@ -44,24 +44,40 @@ NotepadNext-MacOS **v0.15-07** delivers critical runtime crash fixes, IDE compil
    - **`MainWindow.cpp` & `MainWindow.h`**: Converted `newEditor` pointers to `const ScintillaNext *` (S5813), `dockArea` to `const ads::CDockAreaWidget *`, and marked `MainWindow::switchToEditor` as a `const` member function in declaration and definition (S5956).
    - **`DockedEditor.cpp`**: Converted `dockAreaCreated` lambda parameter to `const ads::CDockAreaWidget *` (S5813). Extracted helper functions `extractActiveEditor` and `isEditorOpen` to decouple widget hierarchy traversal, eliminating deep nesting (nesting depth <= 2 across all methods, resolving S134) and dropping `getCurrentEditor()` Cognitive Complexity from 29 down to <= 6 (resolving S3776).
 
-4. **Synchronized Linux Packaging (`cmake/PackagingLinux.cmake`)**:
-   - Synchronized Linux packaging with `SparkNotePad/cmake/PackagingLinux.cmake` including multi-Qt version tagging (`PKG_QT_SUFFIX`), dual 64-bit RPM SONAME resolves, automated APT/DNF dependencies, AppStream metadata, and AppImage packaging targets.
+4. **Pixel-Crisp Toolbar Tooltips & Native Cocoa Window Transparency**:
+   - Enforced 6px rounded corners (`border-radius: 6px;`), compact geometry tight to font size (`lbl->setMargin(0)` and `qproperty-margin: 0; padding: 2px 6px;`).
+   - Integrated native Cocoa `NSWindow` transparency (`[window setOpaque:NO]`, `[window setBackgroundColor:[NSColor clearColor]]`, `[window invalidateShadow]`), eliminating opaque black window clipping artifacts on macOS.
+   - Suppressed redundant keyboard shortcut duplicates in tooltip labels via `ToolbarTooltipFilter`.
 
-5. **Complete Linux & macOS Release Matrix (Qt 6.5 to 6.12)**:
+5. **Synchronized Linux Packaging (`cmake/PackagingLinux.cmake`)**:
+   - Synchronized Linux packaging with `SparkNotePad/cmake/PackagingLinux.cmake` including multi-Qt version tagging (`PKG_QT_SUFFIX`), dual 64-bit RPM SONAME resolves, automated APT/DNF dependencies, AppStream metadata, and AppImage packaging targets.
+   - Created `NotepadNext-Default-Editor-Linux.sh` implementing standard Freedesktop XDG MIME handlers (120+ types), alternatives management, and shell `$EDITOR` integration.
+
+6. **Complete Linux & macOS Release Matrix (Qt 6.5 to 6.12)**:
    - Updated `.github/workflows/release.yml` to include the complete matrix from Qt 6.5, 6.8 LTS, 6.10, 6.11, up to 6.12 across Linux (Ubuntu 22.04 and 24.04), macOS Intel x64, and macOS Apple Silicon arm64 runners.
 
-6. **Full Toolchain & Linter Zero-Error Verification**:
-   - **Compiler**: Built cleanly with Clang++ and CMake (`exit 0`).
-   - **Trunk**: All checks passed cleanly (`✔ No issues`).
-   - **Cppcheck 2.22.0**: Zero errors with Qt library support across all 89 source files (`exit 0`).
-   - **Clangd**: 100% clean check across all 89 C++ source files (`exit 0`, 0 errors).
-   - **Bandit & Security**: Zero vulnerabilities in Python tooling (`scripts/generate_compilation_database.py`).
-   - **Local DMG Suite**: Complete local build from 0.15-07 down to 0.15-01 in `build-dmg/`, verified with `hdiutil verify` and `SHA256SUMS`.
+7. **Empirically Verified Local macOS Release Build & DMG Packaging**:
+   - Built locally via Ninja and Qt 6.12.0:
 
-7. **Cross-Platform Documentation & Packaging Architecture Suite**:
-   - **5 Dedicated Guides Added**: Integrated and customized `doc/BUILD_UBUNTU_DEBIAN.md`, `doc/HOMEBREW_DISTRIBUTION.md`, `doc/LINUX_DEB_RPM_PACKAGING.md`, `doc/MACOS_CODESIGN_AND_NOTARIZATION.md`, and `doc/PLATFORM_SUPPORT.md`.
-   - **README.md Multi-Platform Expansion**: Added comprehensive Linux packaging details (DEB and RPM), documented script flags for `NotepadNext-Default-Editor-Linux.sh` (`-f`, `-s/--system`, `-d/--dry-run`, `--status`, `--restore`), updated download tables, and linked all new guides.
-   - **Markdownlint & Trunk Table Alignment**: Resolved all table pipe alignment issues (`MD060`) and verified with `markdownlint-cli` and `trunk check`.
+     ```bash
+     cmake -S . -B build -G Ninja \
+         -DCMAKE_BUILD_TYPE=Release \
+         -DAPP_DISTRIBUTION=dmg \
+         -DCMAKE_PREFIX_PATH="/Users/alsyundawy/Qt/6.12.0/macos"
+     cmake --build build --target NotepadNext -j4
+     cmake --build build --target dmg
+     ```
+
+   - Generated native disk image: `build/NotepadNext-v0.15-07-x64.dmg` (27 MB, compressed UDBZ).
+   - Validated integrity with Apple `hdiutil verify`: Checksum status **VALID** (CRC32 `$7CACB3C2`).
+
+8. **Full Toolchain & Linter Zero-Error Verification**:
+   - **Compiler**: Built cleanly with Clang++ and CMake (`exit 0`).
+   - **MegaLinter CI**: 100% green across branches `0.15-01` through `0.15-07` and `master`.
+   - **Cppcheck**: Zero errors with Qt library support across all source files (`exit 0`).
+   - **Clangd**: 100% clean check across all C++ source files (`exit 0`, 0 errors).
+   - **ShellCheck & shfmt**: Zero warnings across all repository shell scripts.
+   - **Actionlint**: Validated all workflows in `.github/workflows/` (`exit 0`).
 
 ---
 
@@ -138,11 +154,11 @@ if (pEditor) {
 
 ### C. `src/widgets/EditorInfoStatusBar.cpp`
 
-- Corrected status bar label variables (`docSize`, `docPos`, `docType`, `eolFormat`, `unicodeType`, `overType`) when editor is null.
+- Guarded status bar label variables (`docSize`, `docPos`, `docType`, `eolFormat`, `unicodeType`, `overType`) when editor is null.
 
 ### D. `.clangd` & `compile_commands.json`
 
-- Injected `-xc++-header` for `.h` matching and exported full 759 KB `compile_commands.json`.
+- Injected `-x c++-header -std=c++20` for `.h` matching and exported full `compile_commands.json` via `scripts/generate_compdb_headers.py`.
 
 ### E. `.github/workflows/release.yml`
 
@@ -150,4 +166,18 @@ if (pEditor) {
 
 ### F. Upstream Harmonization (Commit `4361e31` / PR `#be1e274`)
 
-- Harmonized upstream Default Language preference for new documents (`PreferencesDialog` and `ApplicationSettings`) via linear cherry-pick, ensuring zero merge commit message overhead in Git history and completely omitting upstream translation churn.
+- Harmonized upstream Default Language preference for new documents (`PreferencesDialog` and `ApplicationSettings`) via linear cherry-pick, ensuring clean Git history without translation churn.
+
+---
+
+## 3. Cumulative Release Evolution Matrix (`0.15-01` to `0.15-07`)
+
+| Release       | Focus / Milestone             | Key Real Deliverables                                                                                                                                               |
+| :------------ | :---------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **`0.15-01`** | Upstream v0.15 Rebase         | 470+ file format mapping script, macOS System Settings registration fix, initial Indonesian L10n.                                                                   |
+| **`0.15-02`** | Runtime & Architecture        | Embedded Lua upgrade, horizontal wheel touchpad smoothing, per-architecture DMG release workflow.                                                                   |
+| **`0.15-03`** | UI Ergonomics                 | Find/Mark 1-box input layout, persistent toolbar Preferences & Exit icons, upstream v0.15 sync.                                                                     |
+| **`0.15-04`** | Brand & UI Architecture       | Squircle macOS icon, uchardet encoding detector, modern `SaveModifiedDialog`, adaptive `AboutDialog`, multi-instance support.                                       |
+| **`0.15-05`** | Theme Engine & Modernization  | Dark/Light mode theme manager with 75 palettes, SonarQube integration, toolbar actions polish.                                                                      |
+| **`0.15-06`** | Diagnostics & Platform Polish | Modernized card-based `UpdateDialog`, streamlined id/en i18n, Apple Silicon `arm64` release runner synchronization.                                                 |
+| **`0.15-07`** | Crash Fixes & Packaging       | Unsaved tab crash resolution (SIGABRT/UAF), Clangd compdb enrichment, native Cocoa transparent tooltips, Linux DEB/RPM CPack packaging, verified Qt 6.12 DMG build. |
