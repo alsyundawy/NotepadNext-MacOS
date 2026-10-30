@@ -1,70 +1,73 @@
 <?xml version='1.0' encoding='utf-8'?>
-<!DOCTYPE TS>
 <TS version="2.1" language="id_ID" sourcelanguage="en">
 <context>
     <name>AboutDialog</name>
     <message>
-        <location filename="../src/dialogs/AboutDialog.cpp" line="51" />
+        <location filename="../src/dialogs/AboutDialog.cpp" line="52" />
         <source>About Notepad Next</source>
         <translation>Tentang Notepad Next</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/AboutDialog.cpp" line="61" />
+        <location filename="../src/dialogs/AboutDialog.cpp" line="62" />
         <source>&amp;About</source>
         <translation>&amp;Tentang</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/AboutDialog.cpp" line="62" />
+        <location filename="../src/dialogs/AboutDialog.cpp" line="63" />
         <source>&amp;Maintainer</source>
         <translation>&amp;Pemelihara</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/AboutDialog.cpp" line="63" />
+        <location filename="../src/dialogs/AboutDialog.cpp" line="64" />
         <source>&amp;Credits &amp;&amp; Attribution</source>
         <translation>&amp;Kredit &amp;&amp; Atribusi</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/AboutDialog.cpp" line="64" />
+        <location filename="../src/dialogs/AboutDialog.cpp" line="65" />
         <source>&amp;Diagnostics</source>
         <translation>&amp;Diagnostik</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/AboutDialog.cpp" line="65" />
+        <location filename="../src/dialogs/AboutDialog.cpp" line="66" />
         <source>&amp;Shortcuts</source>
         <translation>&amp;Pintasan</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/AboutDialog.cpp" line="66" />
+        <location filename="../src/dialogs/AboutDialog.cpp" line="67" />
         <source>&amp;License</source>
         <translation>&amp;Lisensi</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/AboutDialog.cpp" line="220" />
-        <source>&lt;b style='color: %1;'&gt;Important Notice &amp;amp; Attribution:&lt;/b&gt;&lt;br/&gt;&lt;span style='color: %1;'&gt;Notepad Next for macOS is an independent open-source desktop text editor based on Justin Dailey's original NotepadNext, hardened and maintained for macOS and Apple Silicon by Harry DS Alsyundawy.&lt;/span&gt;</source>
-        <translation>&lt;b style='color: %1;'&gt;Pemberitahuan Penting &amp;amp; Atribusi:&lt;/b&gt;&lt;br/&gt;&lt;span style='color: %1;'&gt;Notepad Next untuk macOS adalah editor teks desktop sumber terbuka independen berdasarkan NotepadNext asli karya Justin Dailey, diperkuat dan dipelihara untuk macOS dan Apple Silicon oleh Harry DS Alsyundawy.&lt;/span&gt;</translation>
+        <location filename="../src/dialogs/AboutDialog.cpp" line="225" />
+        <source>&lt;b style='color: %1;'&gt;Important Notice &amp;amp; Attribution:&lt;/b&gt;&lt;br/&gt;&lt;span style='color: %1;'&gt;Notepad Next for macOS is an independent open-source desktop text editor based on Justin Dailey's original NotepadNext, hardened and maintained for macOS and Apple Silicon by Harry Dertin Sutisna.&lt;/span&gt;</source>
+        <translation>&lt;b style='color: %1;'&gt;Pemberitahuan Penting &amp;amp; Atribusi:&lt;/b&gt;&lt;br/&gt;&lt;span style='color: %1;'&gt;Notepad Next untuk macOS adalah editor teks desktop sumber terbuka independen yang berbasis pada NotepadNext asli karya Justin Dailey, diperkuat dan dipelihara untuk macOS dan Apple Silicon oleh Harry Dertin Sutisna.&lt;/span&gt;</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/AboutDialog.cpp" line="299" />
+        <source>&lt;b style='color: %1;'&gt;Important Notice &amp;amp; Attribution:&lt;/b&gt;&lt;br/&gt;&lt;span style='color: %1;'&gt;Notepad Next for macOS is an independent open-source desktop text editor based on Justin Dailey's original NotepadNext, hardened and maintained for macOS and Apple Silicon by Harry DS Alsyundawy.&lt;/span&gt;</source>
+        <translation type="vanished">&lt;b style='color: %1;'&gt;Pemberitahuan Penting &amp;amp; Atribusi:&lt;/b&gt;&lt;br/&gt;&lt;span style='color: %1;'&gt;Notepad Next untuk macOS adalah editor teks desktop sumber terbuka independen berdasarkan NotepadNext asli karya Justin Dailey, diperkuat dan dipelihara untuk macOS dan Apple Silicon oleh Harry DS Alsyundawy.&lt;/span&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/AboutDialog.cpp" line="304" />
         <source>&lt;div style='color: %1; line-height: 1.6;'&gt;&lt;h3 style='color: %1; margin-top: 0;'&gt;macOS Maintainer &amp;amp; Support Channels&lt;/h3&gt;&lt;p&gt;&lt;b&gt;Lead Architect &amp;amp; Maintainer:&lt;/b&gt; HARRY DERTIN SUTISNA ALSYUNDAWY (&lt;code&gt;@alsyundawy&lt;/code&gt;)&lt;br/&gt;&lt;b&gt;Organization:&lt;/b&gt; ALSYUNDAWY IT SOLUTION&lt;br/&gt;&lt;b&gt;Official Website:&lt;/b&gt; &lt;a style='color: %2;' href='https://alsyundawy.com'&gt;https://alsyundawy.com&lt;/a&gt;&lt;br/&gt;&lt;b&gt;Official Email:&lt;/b&gt; &lt;a style='color: %2;' href='mailto:alsyundawy@gmail.com'&gt;alsyundawy@gmail.com&lt;/a&gt;&lt;br/&gt;&lt;b&gt;GitHub Profile:&lt;/b&gt; &lt;a style='color: %2;' href='https://github.com/alsyundawy'&gt;@alsyundawy&lt;/a&gt;&lt;br/&gt;&lt;b&gt;Telegram Channel:&lt;/b&gt; &lt;a style='color: %2;' href='https://t.me/alsyundawy'&gt;@alsyundawy&lt;/a&gt;&lt;/p&gt;&lt;hr style='border: 0; border-top: 1px solid %3; margin: 16px 0;'/&gt;&lt;h4 style='color: %1;'&gt;Sponsorship &amp;amp; Donation Channels&lt;/h4&gt;&lt;p&gt;If you find Notepad Next for macOS useful for your development and daily workflow, consider supporting our ongoing development:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;💳 &lt;b&gt;PayPal:&lt;/b&gt; &lt;a style='color: %2;' href='https://www.paypal.me/alsyundawy'&gt;paypal.me/alsyundawy&lt;/a&gt;&lt;/li&gt;&lt;li&gt;🇮🇩 &lt;b&gt;QRIS (NMID: ID1020021153676):&lt;/b&gt; &lt;a style='color: %2;' href='https://github.com/user-attachments/assets/a0126f28-6dde-43da-ba14-d7c9a27de0df'&gt;View Official QRIS Barcode&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</source>
         <translation>&lt;div style='color: %1; line-height: 1.6;'&gt;&lt;h3 style='color: %1; margin-top: 0;'&gt;Kanal Dukungan &amp;amp; Pemelihara macOS&lt;/h3&gt;&lt;p&gt;&lt;b&gt;Arsitek Utama &amp;amp; Pemelihara:&lt;/b&gt; HARRY DERTIN SUTISNA ALSYUNDAWY (&lt;code&gt;@alsyundawy&lt;/code&gt;)&lt;br/&gt;&lt;b&gt;Organisasi:&lt;/b&gt; ALSYUNDAWY IT SOLUTION&lt;br/&gt;&lt;b&gt;Situs Web Resmi:&lt;/b&gt; &lt;a style='color: %2;' href='https://alsyundawy.com'&gt;https://alsyundawy.com&lt;/a&gt;&lt;br/&gt;&lt;b&gt;Email Resmi:&lt;/b&gt; &lt;a style='color: %2;' href='mailto:alsyundawy@gmail.com'&gt;alsyundawy@gmail.com&lt;/a&gt;&lt;br/&gt;&lt;b&gt;Profil GitHub:&lt;/b&gt; &lt;a style='color: %2;' href='https://github.com/alsyundawy'&gt;@alsyundawy&lt;/a&gt;&lt;br/&gt;&lt;b&gt;Kanal Telegram:&lt;/b&gt; &lt;a style='color: %2;' href='https://t.me/alsyundawy'&gt;@alsyundawy&lt;/a&gt;&lt;/p&gt;&lt;hr style='border: 0; border-top: 1px solid %3; margin: 16px 0;'/&gt;&lt;h4 style='color: %1;'&gt;Kanal Sponsor &amp;amp; Donasi&lt;/h4&gt;&lt;p&gt;Jika Anda merasa Notepad Next untuk macOS bermanfaat bagi pengembangan dan alur kerja harian Anda, pertimbangkan untuk mendukung pengembangan berkelanjutan kami:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;💳 &lt;b&gt;PayPal:&lt;/b&gt; &lt;a style='color: %2;' href='https://www.paypal.me/alsyundawy'&gt;paypal.me/alsyundawy&lt;/a&gt;&lt;/li&gt;&lt;li&gt;🇮🇩 &lt;b&gt;QRIS (NMID: ID1020021153676):&lt;/b&gt; &lt;a style='color: %2;' href='https://github.com/user-attachments/assets/a0126f28-6dde-43da-ba14-d7c9a27de0df'&gt;Lihat Barcode QRIS Resmi&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/AboutDialog.cpp" line="321" />
+        <location filename="../src/dialogs/AboutDialog.cpp" line="326" />
         <source>&lt;div style='color: %1; line-height: 1.6;'&gt;&lt;h3 style='color: %1; margin-top: 0;'&gt;Credits &amp;amp; Upstream Attribution&lt;/h3&gt;&lt;p&gt;Notepad Next for macOS stands on the shoulders of giants. We express our deepest gratitude to the following projects and authors:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;b&gt;Justin Dailey (dail8859):&lt;/b&gt; Original creator and lead developer of NotepadNext. Provided the cross-platform Qt scaffolding, docking framework, and core application design. (&lt;a style='color: %2;' href='https://github.com/dail8859/NotepadNext'&gt;github.com/dail8859/NotepadNext&lt;/a&gt;)&lt;/li&gt;&lt;li&gt;&lt;b&gt;Scintilla:&lt;/b&gt; Created by Neil Hodgson and contributors. The legendary core editing component providing high-performance text rendering, multi-caret editing, and fold margins. (&lt;a style='color: %2;' href='https://www.scintilla.org'&gt;scintilla.org&lt;/a&gt;)&lt;/li&gt;&lt;li&gt;&lt;b&gt;Lexilla:&lt;/b&gt; Created by Neil Hodgson and contributors. Provides syntax highlighting and styling lexers for over 100 programming languages. (&lt;a style='color: %2;' href='https://www.scintilla.org'&gt;scintilla.org/Lexilla.html&lt;/a&gt;)&lt;/li&gt;&lt;li&gt;&lt;b&gt;uchardet:&lt;/b&gt; Maintained by Freedesktop. Enables fast and robust universal character encoding detection.&lt;/li&gt;&lt;li&gt;&lt;b&gt;Qt Project:&lt;/b&gt; Developed by The Qt Company and the Qt Open Source Community. (&lt;a style='color: %2;' href='https://www.qt.io'&gt;qt.io&lt;/a&gt;)&lt;/li&gt;&lt;li&gt;&lt;b&gt;Qt Advanced Docking System (QADS):&lt;/b&gt; Advanced dock widget management for Qt.&lt;/li&gt;&lt;li&gt;&lt;b&gt;NoteSciPad:&lt;/b&gt; Contributed modern Scintilla 5.6.7 / Lexilla 5.5.4 integration and multi-instance UI patterns.&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</source>
         <translation>&lt;div style='color: %1; line-height: 1.6;'&gt;&lt;h3 style='color: %1; margin-top: 0;'&gt;Kredit &amp;amp; Atribusi Upstream&lt;/h3&gt;&lt;p&gt;Notepad Next untuk macOS berdiri di atas bahu para raksasa. Kami menyampaikan rasa terima kasih terdalam kami kepada proyek dan penulis berikut:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;b&gt;Justin Dailey (dail8859):&lt;/b&gt; Pencipta asli dan pengembang utama NotepadNext. Menyediakan perancah Qt lintas platform, kerangka kerja dok, dan desain aplikasi inti. (&lt;a style='color: %2;' href='https://github.com/dail8859/NotepadNext'&gt;github.com/dail8859/NotepadNext&lt;/a&gt;)&lt;/li&gt;&lt;li&gt;&lt;b&gt;Scintilla:&lt;/b&gt; Diciptakan oleh Neil Hodgson dan para kontributor. Komponen penyuntingan inti legendaris yang menyediakan perenderan teks berkinerja tinggi, penyuntingan multi-kursor, dan margin lipatan kode. (&lt;a style='color: %2;' href='https://www.scintilla.org'&gt;scintilla.org&lt;/a&gt;)&lt;/li&gt;&lt;li&gt;&lt;b&gt;Lexilla:&lt;/b&gt; Diciptakan oleh Neil Hodgson dan para kontributor. Menyediakan penyorotan sintaksis dan lekser penataan gaya untuk lebih dari 100 bahasa pemrograman. (&lt;a style='color: %2;' href='https://www.scintilla.org'&gt;scintilla.org/Lexilla.html&lt;/a&gt;)&lt;/li&gt;&lt;li&gt;&lt;b&gt;uchardet:&lt;/b&gt; Dipelihara oleh Freedesktop. Memungkinkan deteksi pengodean karakter universal yang cepat dan tangguh.&lt;/li&gt;&lt;li&gt;&lt;b&gt;Qt Project:&lt;/b&gt; Dikembangkan oleh The Qt Company dan Komunitas Sumber Terbuka Qt. (&lt;a style='color: %2;' href='https://www.qt.io'&gt;qt.io&lt;/a&gt;)&lt;/li&gt;&lt;li&gt;&lt;b&gt;Qt Advanced Docking System (QADS):&lt;/b&gt; Manajemen widget dok tingkat lanjut untuk Qt.&lt;/li&gt;&lt;li&gt;&lt;b&gt;NoteSciPad:&lt;/b&gt; Berkontribusi pada integrasi modern Scintilla 5.6.7 / Lexilla 5.5.4 dan pola UI multi-instans.&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/AboutDialog.cpp" line="339" />
+        <location filename="../src/dialogs/AboutDialog.cpp" line="344" />
         <source>&lt;div style='color: %1; line-height: 1.6;'&gt;&lt;h3 style='color: %1; margin-top: 0;'&gt;Key Productivity Shortcuts&lt;/h3&gt;&lt;table border='0' cellspacing='6' cellpadding='4' width='100%' style='color: %1;'&gt;&lt;tr&gt;&lt;td style='color: %2; font-weight: bold;'&gt;Ctrl / Cmd + N&lt;/td&gt;&lt;td&gt;Create New File&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='color: %2; font-weight: bold;'&gt;Ctrl / Cmd + Shift + N&lt;/td&gt;&lt;td&gt;Open New Window&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='color: %2; font-weight: bold;'&gt;Ctrl / Cmd + O&lt;/td&gt;&lt;td&gt;Open File&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='color: %2; font-weight: bold;'&gt;Ctrl / Cmd + S&lt;/td&gt;&lt;td&gt;Save File&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='color: %2; font-weight: bold;'&gt;Ctrl / Cmd + Shift + S&lt;/td&gt;&lt;td&gt;Save As...&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='color: %2; font-weight: bold;'&gt;Ctrl / Cmd + F&lt;/td&gt;&lt;td&gt;Find / Quick Find&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='color: %2; font-weight: bold;'&gt;Ctrl / Cmd + H&lt;/td&gt;&lt;td&gt;Find &amp;amp; Replace&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='color: %2; font-weight: bold;'&gt;Ctrl / Cmd + Shift + F&lt;/td&gt;&lt;td&gt;Find in Files / Workspace&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='color: %2; font-weight: bold;'&gt;Ctrl / Cmd + D&lt;/td&gt;&lt;td&gt;Duplicate Current Line or Selection&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='color: %2; font-weight: bold;'&gt;Ctrl / Cmd + /&lt;/td&gt;&lt;td&gt;Toggle Single-Line Comment&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='color: %2; font-weight: bold;'&gt;Ctrl / Cmd + Shift + /&lt;/td&gt;&lt;td&gt;Toggle Block / Stream Comment&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='color: %2; font-weight: bold;'&gt;Ctrl / Cmd + Shift + U&lt;/td&gt;&lt;td&gt;Convert Selection to UPPERCASE&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='color: %2; font-weight: bold;'&gt;Ctrl / Cmd + U&lt;/td&gt;&lt;td&gt;Convert Selection to lowercase&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='color: %2; font-weight: bold;'&gt;Ctrl+Alt+Shift+E&lt;/td&gt;&lt;td&gt;Encoding Information &amp;amp; Conversion Dialog&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='color: %2; font-weight: bold;'&gt;Ctrl+Alt+U&lt;/td&gt;&lt;td&gt;Convert Document Encoding to UTF-8&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='color: %2; font-weight: bold;'&gt;Ctrl+Alt+A&lt;/td&gt;&lt;td&gt;Convert Document Encoding to ANSI&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='color: %2; font-weight: bold;'&gt;Alt + Click &amp;amp; Drag&lt;/td&gt;&lt;td&gt;Column / Rectangular Box Selection&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</source>
         <translation>&lt;div style='color: %1; line-height: 1.6;'&gt;&lt;h3 style='color: %1; margin-top: 0;'&gt;Pintasan Produktivitas Utama&lt;/h3&gt;&lt;table border='0' cellspacing='6' cellpadding='4' width='100%' style='color: %1;'&gt;&lt;tr&gt;&lt;td style='color: %2; font-weight: bold;'&gt;Ctrl / Cmd + N&lt;/td&gt;&lt;td&gt;Buat Berkas Baru&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='color: %2; font-weight: bold;'&gt;Ctrl / Cmd + Shift + N&lt;/td&gt;&lt;td&gt;Buka Jendela Baru&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='color: %2; font-weight: bold;'&gt;Ctrl / Cmd + O&lt;/td&gt;&lt;td&gt;Buka Berkas&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='color: %2; font-weight: bold;'&gt;Ctrl / Cmd + S&lt;/td&gt;&lt;td&gt;Simpan Berkas&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='color: %2; font-weight: bold;'&gt;Ctrl / Cmd + Shift + S&lt;/td&gt;&lt;td&gt;Simpan Sebagai...&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='color: %2; font-weight: bold;'&gt;Ctrl / Cmd + F&lt;/td&gt;&lt;td&gt;Cari / Cari Cepat&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='color: %2; font-weight: bold;'&gt;Ctrl / Cmd + H&lt;/td&gt;&lt;td&gt;Cari &amp;amp; Ganti&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='color: %2; font-weight: bold;'&gt;Ctrl / Cmd + Shift + F&lt;/td&gt;&lt;td&gt;Cari di Berkas / Ruang Kerja&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='color: %2; font-weight: bold;'&gt;Ctrl / Cmd + D&lt;/td&gt;&lt;td&gt;Duplikasi Baris atau Pilihan Saat Ini&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='color: %2; font-weight: bold;'&gt;Ctrl / Cmd + /&lt;/td&gt;&lt;td&gt;Alihkan Komentar Baris Tunggal&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='color: %2; font-weight: bold;'&gt;Ctrl / Cmd + Shift + /&lt;/td&gt;&lt;td&gt;Alihkan Komentar Blok&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='color: %2; font-weight: bold;'&gt;Ctrl / Cmd + Shift + U&lt;/td&gt;&lt;td&gt;Ubah Pilihan ke HURUF BESAR&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='color: %2; font-weight: bold;'&gt;Ctrl / Cmd + U&lt;/td&gt;&lt;td&gt;Ubah Pilihan ke huruf kecil&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='color: %2; font-weight: bold;'&gt;Ctrl+Alt+Shift+E&lt;/td&gt;&lt;td&gt;Dialog Informasi &amp;amp; Konversi Pengodean&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='color: %2; font-weight: bold;'&gt;Ctrl+Alt+U&lt;/td&gt;&lt;td&gt;Konversi Pengodean Dokumen ke UTF-8&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='color: %2; font-weight: bold;'&gt;Ctrl+Alt+A&lt;/td&gt;&lt;td&gt;Konversi Pengodean Dokumen ke ANSI&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style='color: %2; font-weight: bold;'&gt;Alt + Click &amp;amp; Drag&lt;/td&gt;&lt;td&gt;Pilihan Kolom / Kotak Persegi Panjang&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/AboutDialog.cpp" line="366" />
+        <location filename="../src/dialogs/AboutDialog.cpp" line="371" />
         <source>&lt;div style='color: %1; line-height: 1.6;'&gt;&lt;h3 style='color: %1; margin-top: 0;'&gt;GNU General Public License v3.0&lt;/h3&gt;&lt;p&gt;Notepad Next is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.&lt;/p&gt;&lt;p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.&lt;/p&gt;&lt;p&gt;For complete license details, visit: &lt;a style='color: %2;' href='https://www.gnu.org/licenses/'&gt;https://www.gnu.org/licenses/&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</source>
         <translation>&lt;div style='color: %1; line-height: 1.6;'&gt;&lt;h3 style='color: %1; margin-top: 0;'&gt;GNU General Public License v3.0&lt;/h3&gt;&lt;p&gt;Notepad Next adalah perangkat lunak bebas: Anda dapat mendistribusikannya kembali dan/atau memodifikasinya di bawah ketentuan GNU General Public License sebagaimana diterbitkan oleh Free Software Foundation, baik versi 3 dari Lisensi tersebut, atau (sesuai pilihan Anda) versi yang lebih baru.&lt;/p&gt;&lt;p&gt;Program ini didistribusikan dengan harapan dapat bermanfaat, namun TANPA JAMINAN APAPUN; bahkan tanpa jaminan tersirat tentang KELAYAKAN UNTUK DIPERDAGANGKAN atau KESESUAIAN UNTUK TUJUAN TERTENTU. Lihat Lisensi Publik Umum GNU untuk rincian selengkapnya.&lt;/p&gt;&lt;p&gt;Untuk rincian lisensi lengkap, kunjungi: &lt;a style='color: %2;' href='https://www.gnu.org/licenses/'&gt;https://www.gnu.org/licenses/&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/AboutDialog.cpp" line="464" />
+        <location filename="../src/dialogs/AboutDialog.cpp" line="469" />
         <source>Copy Diagnostics to Clipboard</source>
         <translation>Salin Diagnostik ke Papan Klip</translation>
     </message>
@@ -297,42 +300,42 @@
 <context>
     <name>EditorInfoStatusBar</name>
     <message>
-        <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="49" />
+        <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="50" />
         <source>Encoding / BOM (Click to view or convert)</source>
         <translation>Pengodean / BOM (Klik untuk melihat atau mengonversi)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="110" />
+        <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="131" />
         <source>Length: %L1    Lines: %L2</source>
         <translation>Panjang: %L1    Baris: %L2</translation>
     </message>
     <message>
-        <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="119" />
+        <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="144" />
         <source>Sel: N/A</source>
         <translation>Pilih: -</translation>
     </message>
     <message>
-        <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="129" />
+        <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="162" />
         <source>Sel: %L1 | %L2</source>
         <translation>Pilih: %L1 | %L2</translation>
     </message>
     <message>
-        <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="133" />
+        <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="166" />
         <source>Ln: %L1    Col: %L2    </source>
         <translation>Baris: %L1    Kolom: %L2    </translation>
     </message>
     <message>
-        <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="149" />
+        <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="182" />
         <source>Macintosh (CR)</source>
         <translation>Macintosh (CR)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="152" />
+        <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="185" />
         <source>Windows (CR LF)</source>
         <translation>Windows (CR LF)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="155" />
+        <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="188" />
         <source>Unix (LF)</source>
         <translation>Unix (LF)</translation>
     </message>
@@ -357,13 +360,13 @@
         <translation type="vanished">UTF-16BE BOM</translation>
     </message>
     <message>
-        <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="172" />
+        <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="208" />
         <source>OVR</source>
         <extracomment>This is a short abbreviation to indicate characters will be replaced when typing</extracomment>
         <translation>OVR</translation>
     </message>
     <message>
-        <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="176" />
+        <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="212" />
         <source>INS</source>
         <extracomment>This is a short abbreviation to indicate characters will be inserted when typing</extracomment>
         <translation>INS</translation>
@@ -377,182 +380,182 @@
         <translation>Pemeriksa Editor</translation>
     </message>
     <message>
-        <location filename="../src/docks/EditorInspectorDock.cpp" line="39" />
+        <location filename="../src/docks/EditorInspectorDock.cpp" line="40" />
         <source>Position Information</source>
         <translation>Informasi Posisi</translation>
     </message>
     <message>
-        <location filename="../src/docks/EditorInspectorDock.cpp" line="42" />
+        <location filename="../src/docks/EditorInspectorDock.cpp" line="43" />
         <source>Current Position</source>
         <translation>Posisi Saat Ini</translation>
     </message>
     <message>
-        <location filename="../src/docks/EditorInspectorDock.cpp" line="43" />
+        <location filename="../src/docks/EditorInspectorDock.cpp" line="44" />
         <source>Current Position (x, y)</source>
         <translation>Posisi Saat Ini (x, y)</translation>
     </message>
     <message>
-        <location filename="../src/docks/EditorInspectorDock.cpp" line="44" />
+        <location filename="../src/docks/EditorInspectorDock.cpp" line="45" />
         <source>Column</source>
         <translation>Kolom</translation>
     </message>
     <message>
-        <location filename="../src/docks/EditorInspectorDock.cpp" line="46" />
+        <location filename="../src/docks/EditorInspectorDock.cpp" line="47" />
         <source>Current Style</source>
         <translation>Style Saat Ini</translation>
     </message>
     <message>
-        <location filename="../src/docks/EditorInspectorDock.cpp" line="47" />
+        <location filename="../src/docks/EditorInspectorDock.cpp" line="48" />
         <source>Current Line</source>
         <translation>Baris Saat Ini</translation>
     </message>
     <message>
-        <location filename="../src/docks/EditorInspectorDock.cpp" line="48" />
+        <location filename="../src/docks/EditorInspectorDock.cpp" line="49" />
         <source>Line Length</source>
         <translation>Panjang Baris</translation>
     </message>
     <message>
-        <location filename="../src/docks/EditorInspectorDock.cpp" line="49" />
+        <location filename="../src/docks/EditorInspectorDock.cpp" line="50" />
         <source>Line End Position</source>
         <translation>Posisi Akhir Baris</translation>
     </message>
     <message>
-        <location filename="../src/docks/EditorInspectorDock.cpp" line="50" />
+        <location filename="../src/docks/EditorInspectorDock.cpp" line="51" />
         <source>Line Indentation</source>
         <translation>Indentasi Baris</translation>
     </message>
     <message>
-        <location filename="../src/docks/EditorInspectorDock.cpp" line="51" />
+        <location filename="../src/docks/EditorInspectorDock.cpp" line="52" />
         <source>Line Indent Position</source>
         <translation>Posisi Indent Baris</translation>
     </message>
     <message>
-        <location filename="../src/docks/EditorInspectorDock.cpp" line="55" />
+        <location filename="../src/docks/EditorInspectorDock.cpp" line="56" />
         <source>Selection Information</source>
         <translation>Informasi Seleksi</translation>
     </message>
     <message>
-        <location filename="../src/docks/EditorInspectorDock.cpp" line="58" />
+        <location filename="../src/docks/EditorInspectorDock.cpp" line="59" />
         <source>Mode</source>
         <translation>Mode</translation>
     </message>
     <message>
-        <location filename="../src/docks/EditorInspectorDock.cpp" line="72" />
+        <location filename="../src/docks/EditorInspectorDock.cpp" line="73" />
         <source>Is Rectangle</source>
         <translation>Kotak / Persegi Panjang</translation>
     </message>
     <message>
-        <location filename="../src/docks/EditorInspectorDock.cpp" line="73" />
+        <location filename="../src/docks/EditorInspectorDock.cpp" line="74" />
         <source>Selection Empty</source>
         <translation>Seleksi Kosong</translation>
     </message>
     <message>
-        <location filename="../src/docks/EditorInspectorDock.cpp" line="74" />
+        <location filename="../src/docks/EditorInspectorDock.cpp" line="75" />
         <source>Main Selection</source>
         <translation>Seleksi Utama</translation>
     </message>
     <message>
-        <location filename="../src/docks/EditorInspectorDock.cpp" line="75" />
+        <location filename="../src/docks/EditorInspectorDock.cpp" line="76" />
         <source># of Selections</source>
         <translation>Jumlah Seleksi</translation>
     </message>
     <message>
-        <location filename="../src/docks/EditorInspectorDock.cpp" line="78" />
+        <location filename="../src/docks/EditorInspectorDock.cpp" line="79" />
         <source>Multiple Selections</source>
         <translation>Multi Seleksi</translation>
     </message>
     <message>
-        <location filename="../src/docks/EditorInspectorDock.cpp" line="83" />
+        <location filename="../src/docks/EditorInspectorDock.cpp" line="84" />
         <source>Document Information</source>
         <translation>Informasi Dokumen</translation>
     </message>
     <message>
-        <location filename="../src/docks/EditorInspectorDock.cpp" line="86" />
+        <location filename="../src/docks/EditorInspectorDock.cpp" line="87" />
         <source>Length</source>
         <translation>Panjang</translation>
     </message>
     <message>
-        <location filename="../src/docks/EditorInspectorDock.cpp" line="87" />
+        <location filename="../src/docks/EditorInspectorDock.cpp" line="88" />
         <source>Line Count</source>
         <translation>Jumlah Baris</translation>
     </message>
     <message>
-        <location filename="../src/docks/EditorInspectorDock.cpp" line="91" />
+        <location filename="../src/docks/EditorInspectorDock.cpp" line="92" />
         <source>View Information</source>
         <translation>Informasi Tampilan</translation>
     </message>
     <message>
-        <location filename="../src/docks/EditorInspectorDock.cpp" line="94" />
+        <location filename="../src/docks/EditorInspectorDock.cpp" line="95" />
         <source>Lines on Screen</source>
         <translation>Baris di Layar</translation>
     </message>
     <message>
-        <location filename="../src/docks/EditorInspectorDock.cpp" line="95" />
+        <location filename="../src/docks/EditorInspectorDock.cpp" line="96" />
         <source>First Visible Line</source>
         <translation>Baris Pertama yang Terlihat</translation>
     </message>
     <message>
-        <location filename="../src/docks/EditorInspectorDock.cpp" line="96" />
+        <location filename="../src/docks/EditorInspectorDock.cpp" line="97" />
         <source>X Offset</source>
         <translation>X Offset</translation>
     </message>
     <message>
-        <location filename="../src/docks/EditorInspectorDock.cpp" line="100" />
+        <location filename="../src/docks/EditorInspectorDock.cpp" line="101" />
         <source>Fold Information</source>
         <translation>Informasi Fold</translation>
     </message>
     <message>
-        <location filename="../src/docks/EditorInspectorDock.cpp" line="103" />
+        <location filename="../src/docks/EditorInspectorDock.cpp" line="104" />
         <source>Visible From Doc Line</source>
         <translation>Terlihat Dari Baris Dokumen</translation>
     </message>
     <message>
-        <location filename="../src/docks/EditorInspectorDock.cpp" line="104" />
+        <location filename="../src/docks/EditorInspectorDock.cpp" line="105" />
         <source>Doc Line From Visible</source>
         <translation>Baris Dokumen Dari Yang Terlihat</translation>
     </message>
     <message>
-        <location filename="../src/docks/EditorInspectorDock.cpp" line="105" />
+        <location filename="../src/docks/EditorInspectorDock.cpp" line="106" />
         <source>Fold Level</source>
         <translation>Fold Level</translation>
     </message>
     <message>
-        <location filename="../src/docks/EditorInspectorDock.cpp" line="106" />
+        <location filename="../src/docks/EditorInspectorDock.cpp" line="107" />
         <source>Is Fold Header</source>
         <translation>Fold Header</translation>
     </message>
     <message>
-        <location filename="../src/docks/EditorInspectorDock.cpp" line="107" />
+        <location filename="../src/docks/EditorInspectorDock.cpp" line="108" />
         <source>Fold Parent</source>
         <translation>Fold Parent</translation>
     </message>
     <message>
-        <location filename="../src/docks/EditorInspectorDock.cpp" line="108" />
+        <location filename="../src/docks/EditorInspectorDock.cpp" line="109" />
         <source>Last Child</source>
         <translation>Last Child</translation>
     </message>
     <message>
-        <location filename="../src/docks/EditorInspectorDock.cpp" line="109" />
+        <location filename="../src/docks/EditorInspectorDock.cpp" line="110" />
         <source>Contracted Fold Next</source>
         <translation>Contracted Fold Berikutnya</translation>
     </message>
     <message>
-        <location filename="../src/docks/EditorInspectorDock.cpp" line="171" />
+        <location filename="../src/docks/EditorInspectorDock.cpp" line="176" />
         <source>Caret</source>
         <translation>Caret</translation>
     </message>
     <message>
-        <location filename="../src/docks/EditorInspectorDock.cpp" line="175" />
+        <location filename="../src/docks/EditorInspectorDock.cpp" line="180" />
         <source>Anchor</source>
         <translation>Anchor</translation>
     </message>
     <message>
-        <location filename="../src/docks/EditorInspectorDock.cpp" line="179" />
+        <location filename="../src/docks/EditorInspectorDock.cpp" line="184" />
         <source>Caret Virtual Space</source>
         <translation>Caret Virtual Space</translation>
     </message>
     <message>
-        <location filename="../src/docks/EditorInspectorDock.cpp" line="183" />
+        <location filename="../src/docks/EditorInspectorDock.cpp" line="188" />
         <source>Anchor Virtual Space</source>
         <translation>Anchor Virtual Space</translation>
     </message>
@@ -587,7 +590,7 @@
     </message>
     <message>
         <location filename="../src/dialogs/EncodingSelectionDialog.ui" line="52" />
-        <location filename="../src/dialogs/EncodingSelectionDialog.cpp" line="66" />
+        <location filename="../src/dialogs/EncodingSelectionDialog.cpp" line="69" />
         <source>None</source>
         <translation>Tidak ada</translation>
     </message>
@@ -637,27 +640,27 @@
         <translation>ANSI (Win-1252)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/EncodingSelectionDialog.cpp" line="56" />
+        <location filename="../src/dialogs/EncodingSelectionDialog.cpp" line="59" />
         <source>Present (UTF-8 BOM, 3 bytes)</source>
         <translation>Ada (BOM UTF-8, 3 bita)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/EncodingSelectionDialog.cpp" line="59" />
+        <location filename="../src/dialogs/EncodingSelectionDialog.cpp" line="62" />
         <source>Present (UTF-16LE BOM, 2 bytes)</source>
         <translation>Ada (BOM UTF-16LE, 2 bita)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/EncodingSelectionDialog.cpp" line="62" />
+        <location filename="../src/dialogs/EncodingSelectionDialog.cpp" line="65" />
         <source>Present (UTF-16BE BOM, 2 bytes)</source>
         <translation>Ada (BOM UTF-16BE, 2 bita)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/EncodingSelectionDialog.cpp" line="177" />
+        <location filename="../src/dialogs/EncodingSelectionDialog.cpp" line="181" />
         <source>Notepad Next</source>
         <translation>Notepad Next</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/EncodingSelectionDialog.cpp" line="177" />
+        <location filename="../src/dialogs/EncodingSelectionDialog.cpp" line="181" />
         <source>Cannot reopen unsaved new buffer from disk.</source>
         <translation>Tidak dapat membuka kembali buffer baru yang belum disimpan dari disk.</translation>
     </message>
@@ -685,7 +688,7 @@
     <message>
         <location filename="../src/dialogs/FindReplaceDialog.ui" line="20" />
         <location filename="../src/dialogs/FindReplaceDialog.ui" line="247" />
-        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="72" />
+        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="73" />
         <source>Find</source>
         <translation>Cari</translation>
     </message>
@@ -825,76 +828,76 @@
         <translation>Dalam &amp;pilihan</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="73" />
+        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="74" />
         <source>Replace</source>
         <translation>Ganti</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="74" />
+        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="75" />
         <source>Mark</source>
         <translation>Tandai</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="179" />
-        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="403" />
+        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="180" />
+        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="406" />
         <source>Replaced %Ln matches</source>
         <translation>
             <numerusform>Diganti %Ln kecocokan</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="287" />
+        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="290" />
         <source>The end of the document has been reached. Found 1st occurrence from the top.</source>
         <translation>Sudah mencapai akhir dokumen. Ditemukan kecocokan pertama dari atas.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="298" />
+        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="301" />
         <source>No matches found.</source>
         <translation>Tidak ada kecocokan yang ditemukan.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="372" />
+        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="375" />
         <source>1 occurrence was replaced</source>
         <translation>1 kecocokan berhasil diganti</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="381" />
+        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="384" />
         <source>No more occurrences were found</source>
         <translation>Tidak ditemukan kecocokan lainnya</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="425" />
+        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="428" />
         <source>Found %Ln matches</source>
         <translation>
             <numerusform>Ditemukan %Ln kecocokan</numerusform>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="861" />
+        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="872" />
         <source>Mark: %Ln match in selection</source>
         <translation>
             <numerusform>Tandai: %Ln kecocokan dalam pilihan</numerusform>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="864" />
+        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="875" />
         <source>Mark: %Ln match in entire file</source>
         <translation>
             <numerusform>Tandai: %Ln kecocokan di seluruh berkas</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="902" />
+        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="913" />
         <source>All marks cleared</source>
         <translation>Semua tanda telah dihapus</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="926" />
+        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="937" />
         <source>No marks to copy</source>
         <translation>Tidak ada teks yang ditandai untuk disalin</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="931" />
+        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="942" />
         <source>Copied %Ln marked text(s)</source>
         <translation>
             <numerusform>Menyalin %Ln teks yang ditandai</numerusform>
@@ -998,7 +1001,7 @@
         <translation>TextLabel</translation>
     </message>
     <message>
-        <location filename="../src/docks/LanguageInspectorDock.cpp" line="154" />
+        <location filename="../src/docks/LanguageInspectorDock.cpp" line="159" />
         <source>Position %1 Style %2</source>
         <translation>Posisi %1 Style %2</translation>
     </message>
@@ -1064,17 +1067,17 @@
         <translation>Hapus Makro Terpilih</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MacroEditorDialog.cpp" line="126" />
+        <location filename="../src/dialogs/MacroEditorDialog.cpp" line="127" />
         <source>Delete Macro</source>
         <translation>Hapus Makro</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MacroEditorDialog.cpp" line="126" />
+        <location filename="../src/dialogs/MacroEditorDialog.cpp" line="127" />
         <source>Are you sure you want to delete &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>Apakah Anda yakin ingin menghapus &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MacroEditorDialog.cpp" line="146" />
+        <location filename="../src/dialogs/MacroEditorDialog.cpp" line="147" />
         <source>(Copy)</source>
         <translation>(Salinan)</translation>
     </message>
@@ -1187,7 +1190,7 @@
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="69" />
-        <location filename="../src/dialogs/MainWindow.cpp" line="1897" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="1960" />
         <source>Export As</source>
         <translation>Export Sebagai</translation>
     </message>
@@ -1222,82 +1225,82 @@
         <translation>Operasi Baris</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="164" />
+        <location filename="../src/dialogs/MainWindow.ui" line="170" />
         <source>Comment/Uncomment</source>
         <translation>Comment / Uncomment</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="172" />
+        <location filename="../src/dialogs/MainWindow.ui" line="178" />
         <source>Copy As</source>
         <translation>Salin Sebagai</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="179" />
+        <location filename="../src/dialogs/MainWindow.ui" line="185" />
         <source>Encoding/Decoding</source>
         <translation>Encoding / Decoding</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="227" />
+        <location filename="../src/dialogs/MainWindow.ui" line="234" />
         <source>Search</source>
         <translation>Pencarian</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="231" />
+        <location filename="../src/dialogs/MainWindow.ui" line="238" />
         <source>Bookmarks</source>
         <translation>Markah</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="248" />
+        <location filename="../src/dialogs/MainWindow.ui" line="255" />
         <source>Mark All Occurrences</source>
         <translation>Tandai Semua Kemunculan</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="256" />
+        <location filename="../src/dialogs/MainWindow.ui" line="263" />
         <source>Clear Marks</source>
         <translation>Hapus Tanda</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="281" />
+        <location filename="../src/dialogs/MainWindow.ui" line="288" />
         <source>&amp;View</source>
         <translation>&amp;Tampilan</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="285" />
+        <location filename="../src/dialogs/MainWindow.ui" line="292" />
         <source>&amp;Zoom</source>
         <translation>&amp;Zoom</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="294" />
+        <location filename="../src/dialogs/MainWindow.ui" line="301" />
         <source>Show Symbol</source>
         <translation>Tampilkan Simbol</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="305" />
+        <location filename="../src/dialogs/MainWindow.ui" line="312" />
         <source>Fold Level</source>
         <translation>Fold Level</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="319" />
+        <location filename="../src/dialogs/MainWindow.ui" line="326" />
         <source>Unfold Level</source>
         <translation>Unfold Level</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="351" />
+        <location filename="../src/dialogs/MainWindow.ui" line="358" />
         <source>Language</source>
         <translation>Bahasa</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="356" />
+        <location filename="../src/dialogs/MainWindow.ui" line="363" />
         <source>Settings</source>
         <translation>Pengaturan</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="362" />
+        <location filename="../src/dialogs/MainWindow.ui" line="369" />
         <source>Macro</source>
         <translation>Makro</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="373" />
+        <location filename="../src/dialogs/MainWindow.ui" line="380" />
         <source>Help</source>
         <translation>Bantuan</translation>
     </message>
@@ -1306,880 +1309,955 @@
         <translation type="vanished">Encoding</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="428" />
+        <location filename="../src/dialogs/MainWindow.ui" line="435" />
         <source>Main Tool Bar</source>
         <translation>Bilah Alat Utama</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="493" />
+        <location filename="../src/dialogs/MainWindow.ui" line="500" />
         <source>&amp;New</source>
         <translation>&amp;Baru</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="496" />
         <source>Create a new file</source>
-        <translation>Buat berkas baru</translation>
+        <translation type="vanished">Buat berkas baru</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="509" />
+        <location filename="../src/dialogs/MainWindow.ui" line="516" />
         <source>New &amp;Window</source>
         <translation>&amp;Jendela Baru</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="512" />
+        <location filename="../src/dialogs/MainWindow.ui" line="519" />
         <source>Open a new Notepad Next window</source>
         <translation>Buka jendela Notepad Next baru</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="525" />
+        <location filename="../src/dialogs/MainWindow.ui" line="532" />
         <source>&amp;Open...</source>
         <translation>&amp;Buka...</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="541" />
+        <location filename="../src/dialogs/MainWindow.ui" line="551" />
         <source>&amp;Save</source>
         <translation>&amp;Simpan</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="544" />
+        <location filename="../src/dialogs/MainWindow.ui" line="554" />
         <source>Save</source>
         <translation>Simpan</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="556" />
+        <location filename="../src/dialogs/MainWindow.ui" line="566" />
         <source>E&amp;xit</source>
         <translation>K&amp;eluar</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="572" />
+        <location filename="../src/dialogs/MainWindow.ui" line="582" />
         <source>&amp;Undo</source>
         <translation>&amp;Undo</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="585" />
+        <location filename="../src/dialogs/MainWindow.ui" line="598" />
         <source>&amp;Redo</source>
         <translation>&amp;Redo</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="598" />
+        <location filename="../src/dialogs/MainWindow.ui" line="614" />
         <source>Cu&amp;t</source>
         <translation>Po&amp;tong</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="611" />
+        <location filename="../src/dialogs/MainWindow.ui" line="630" />
         <source>&amp;Copy</source>
         <translation>&amp;Salin</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="624" />
+        <location filename="../src/dialogs/MainWindow.ui" line="646" />
         <source>&amp;Paste</source>
         <translation>&amp;Tempel</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="635" />
+        <location filename="../src/dialogs/MainWindow.ui" line="664" />
         <source>Paste clipboard text without formatting</source>
         <translation>Tempel teks papan klip tanpa pemformatan</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="643" />
+        <location filename="../src/dialogs/MainWindow.ui" line="676" />
         <source>&amp;Delete</source>
         <translation>&amp;Hapus</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="651" />
+        <location filename="../src/dialogs/MainWindow.ui" line="688" />
         <source>Copy Full Path</source>
         <translation>Salin Full Path</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="656" />
+        <location filename="../src/dialogs/MainWindow.ui" line="697" />
         <source>Copy File Name</source>
         <translation>Salin Nama Berkas</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="661" />
+        <location filename="../src/dialogs/MainWindow.ui" line="706" />
         <source>Copy File Directory</source>
         <translation>Salin Direktori Berkas</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="670" />
+        <location filename="../src/dialogs/MainWindow.ui" line="715" />
         <source>&amp;Close</source>
         <translation>&amp;Tutup</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="673" />
         <source>Close the current file</source>
-        <translation>Tutup berkas saat ini</translation>
+        <translation type="vanished">Tutup berkas saat ini</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="681" />
+        <location filename="../src/dialogs/MainWindow.ui" line="730" />
         <source>Save &amp;As...</source>
         <translation>Simpan Seb&amp;agai...</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="689" />
+        <location filename="../src/dialogs/MainWindow.ui" line="742" />
         <source>Save a Copy As...</source>
         <translation>Simpan Salinan Sebagai...</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="698" />
+        <location filename="../src/dialogs/MainWindow.ui" line="751" />
         <source>Sav&amp;e All</source>
         <translation>Simpan S&amp;emua</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="706" />
+        <location filename="../src/dialogs/MainWindow.ui" line="766" />
         <source>Select A&amp;ll</source>
         <translation>Pilih Semu&amp;a</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="718" />
+        <location filename="../src/dialogs/MainWindow.ui" line="778" />
         <source>Increase Indent</source>
         <translation>Tambah Indentasi</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="727" />
+        <location filename="../src/dialogs/MainWindow.ui" line="787" />
         <source>Decrease Indent</source>
         <translation>Kurangi Indentasi</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="732" />
+        <location filename="../src/dialogs/MainWindow.ui" line="796" />
         <source>Rename...</source>
         <translation>Ganti Nama...</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="741" />
+        <location filename="../src/dialogs/MainWindow.ui" line="805" />
         <source>Re&amp;load</source>
         <translation>Muat &amp;Ulang</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="749" />
+        <location filename="../src/dialogs/MainWindow.ui" line="813" />
         <source>Windows (CR LF)</source>
         <translation>Windows (CR LF)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="757" />
+        <location filename="../src/dialogs/MainWindow.ui" line="821" />
         <source>Unix (LF)</source>
         <translation>Unix (LF)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="765" />
+        <location filename="../src/dialogs/MainWindow.ui" line="829" />
         <source>Macintosh (CR)</source>
         <translation>Macintosh (CR)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="770" />
+        <location filename="../src/dialogs/MainWindow.ui" line="834" />
         <source>UPPER CASE</source>
         <translation>UPPER CASE</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="773" />
+        <location filename="../src/dialogs/MainWindow.ui" line="837" />
         <source>Convert text to upper case</source>
         <translation>Ubah teks ke UPPER CASE</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="778" />
+        <location filename="../src/dialogs/MainWindow.ui" line="842" />
         <source>lower case</source>
         <translation>lower case</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="781" />
+        <location filename="../src/dialogs/MainWindow.ui" line="845" />
         <source>Convert text to lower case</source>
         <translation>Ubah teks ke lower case</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="786" />
+        <location filename="../src/dialogs/MainWindow.ui" line="850" />
         <source>Title Case</source>
         <translation>Huruf Judul</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="789" />
+        <location filename="../src/dialogs/MainWindow.ui" line="853" />
         <source>Convert text to title case</source>
         <translation>Ubah teks ke huruf judul</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="794" />
+        <location filename="../src/dialogs/MainWindow.ui" line="858" />
         <source>Sentence case</source>
         <translation>Huruf kalimat</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="797" />
+        <location filename="../src/dialogs/MainWindow.ui" line="861" />
         <source>Convert text to sentence case</source>
         <translation>Ubah teks ke huruf kalimat</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="802" />
+        <location filename="../src/dialogs/MainWindow.ui" line="866" />
         <source>iNVERT cASE</source>
         <translation>bALIK kASUS</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="805" />
+        <location filename="../src/dialogs/MainWindow.ui" line="869" />
         <source>Invert text case</source>
         <translation>Balik kapitalisasi teks</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="810" />
+        <location filename="../src/dialogs/MainWindow.ui" line="874" />
         <source>Duplicate Current Line</source>
         <translation>Duplikasi Baris Saat Ini</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="818" />
+        <location filename="../src/dialogs/MainWindow.ui" line="882" />
         <source>Split Lines</source>
         <translation>Pisahkan Baris</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="823" />
+        <location filename="../src/dialogs/MainWindow.ui" line="887" />
         <source>Join Lines</source>
         <translation>Gabungkan Baris</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="831" />
+        <location filename="../src/dialogs/MainWindow.ui" line="895" />
         <source>Move Selected Lines Up</source>
         <translation>Pindahkan Baris Terpilih ke Atas</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="839" />
+        <location filename="../src/dialogs/MainWindow.ui" line="903" />
         <source>Move Selected Lines Down</source>
         <translation>Pindahkan Baris Terpilih ke Bawah</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="851" />
+        <location filename="../src/dialogs/MainWindow.ui" line="915" />
         <source>Clos&amp;e All</source>
         <translation>Tutup S&amp;emua</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="854" />
         <source>Close All files</source>
-        <translation>Tutup semua berkas</translation>
+        <translation type="vanished">Tutup semua berkas</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="862" />
+        <location filename="../src/dialogs/MainWindow.ui" line="930" />
         <source>Close All Except Active Document</source>
         <translation>Tutup Semua Kecuali Dokumen Aktif</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="867" />
+        <location filename="../src/dialogs/MainWindow.ui" line="939" />
         <source>Close All to the Left</source>
         <translation>Tutup Semua di Sebelah Kiri</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="872" />
+        <location filename="../src/dialogs/MainWindow.ui" line="948" />
         <source>Close All to the Right</source>
         <translation>Tutup Semua di Sebelah Kanan</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="882" />
+        <location filename="../src/dialogs/MainWindow.ui" line="958" />
         <source>Zoom &amp;In</source>
         <translation>Zoom &amp;In</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="895" />
+        <location filename="../src/dialogs/MainWindow.ui" line="974" />
         <source>Zoom &amp;Out</source>
         <translation>Zoom &amp;Out</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="903" />
+        <location filename="../src/dialogs/MainWindow.ui" line="985" />
         <source>Reset Zoom</source>
         <translation>Reset Zoom</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="911" />
+        <location filename="../src/dialogs/MainWindow.ui" line="993" />
         <source>About Qt</source>
         <translation>Tentang Qt</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="923" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1005" />
         <source>About Notepad Next</source>
         <translation>Tentang Notepad Next</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="934" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1016" />
         <source>Show Whitespace</source>
         <translation>Tampilkan Whitespace</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="942" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1024" />
         <source>Show End of Line</source>
         <translation>Tampilkan End of Line</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="955" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1037" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1040" />
         <source>Show All Characters</source>
         <translation>Tampilkan Semua Karakter</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="968" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1053" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1056" />
         <source>Show Indent Guide</source>
         <translation>Tampilkan Indent Guide</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="976" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1064" />
         <source>Show Wrap Symbol</source>
         <translation>Tampilkan Simbol Wrap</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="989" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1077" />
         <source>Word Wrap</source>
         <translation>Bungkus Teks</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="994" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1085" />
         <source>Restore Recently Closed File</source>
         <translation>Buka Kembali Berkas yang Baru Ditutup</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1002" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1093" />
         <source>Open All Recent Files</source>
         <translation>Buka Semua Berkas Terakhir</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1007" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1098" />
         <source>Clear Recent Files List</source>
         <translation>Bersihkan Daftar Berkas Terakhir</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1017" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1108" />
         <source>&amp;Find...</source>
         <translation>&amp;Cari...</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1025" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1119" />
         <source>Find in Files...</source>
         <translation>Cari di Berkas...</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1030" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1124" />
         <source>Find &amp;Next</source>
         <translation>Cari Beri&amp;kutnya</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1038" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1132" />
         <source>Find &amp;Previous</source>
         <translation>Cari Sebe&amp;lumnya</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1051" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1145" />
         <source>&amp;Replace...</source>
         <translation>&amp;Ganti...</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1062" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1159" />
         <source>Full Screen</source>
         <translation>Full Screen</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1078" />
-        <location filename="../src/dialogs/MainWindow.cpp" line="968" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1175" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1178" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="974" />
         <source>Start Recording</source>
         <translation>Mulai Merekam</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1090" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1190" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1193" />
         <source>Playback</source>
         <translation>Playback</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1105" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1208" />
         <source>Save Current Recorded Macro...</source>
         <translation>Simpan Rekaman Makro Saat Ini...</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1117" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1220" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1223" />
         <source>Run a Macro Multiple Times...</source>
         <translation>Jalankan Makro Berulang Kali...</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1126" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1232" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1235" />
         <source>Preferences...</source>
         <translation>Preferensi...</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1137" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1243" />
         <source>Quick Find</source>
         <translation>Quick Find</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1145" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1251" />
         <source>Select Next Instance</source>
         <translation>Pilih Kemunculan Berikutnya</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1157" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1263" />
         <source>Move to Trash...</source>
         <translation>Pindahkan ke Tempat Sampah...</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1160" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1266" />
         <source>Move to Trash</source>
         <translation>Pindahkan ke Tempat Sampah</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1165" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1271" />
         <source>Check for Updates...</source>
         <translation>Periksa Pembaruan...</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1170" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1276" />
         <source>&amp;Go to Line...</source>
         <translation>Ke &amp;Baris...</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1182" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1288" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1291" />
         <source>Print...</source>
         <translation>Cetak...</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1190" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1299" />
         <source>Open Folder as Workspace...</source>
         <translation>Buka Folder sebagai Workspace...</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1195" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1304" />
         <source>Toggle Single Line Comment</source>
         <translation>Beri/Hapus Komentar Baris Tunggal</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1203" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1312" />
         <source>Single Line Comment</source>
         <translation>Comment Satu Baris</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1211" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1320" />
         <source>Single Line Uncomment</source>
         <translation>Uncomment Satu Baris</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1226" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1335" />
         <source>Edit Macros...</source>
         <translation>Edit Makro...</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1234" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1343" />
         <source>This is not currently implemented</source>
         <translation>Fitur ini belum diimplementasikan</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1239" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1348" />
         <source>Column Mode...</source>
         <translation>Column Mode...</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1244" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1353" />
         <source>Export as HTML...</source>
         <translation>Export sebagai HTML...</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1249" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1358" />
         <source>Export as RTF...</source>
         <translation>Export sebagai RTF...</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1254" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1363" />
         <source>Copy as HTML</source>
         <translation>Salin sebagai HTML</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1259" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1368" />
         <source>Copy as RTF</source>
         <translation>Salin sebagai RTF</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1264" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1373" />
         <source>Base 64 Encode</source>
         <translation>Base64 Encode</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1269" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1378" />
         <source>URL Encode</source>
         <translation>URL Encode</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1274" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1383" />
         <source>Base 64 Decode</source>
         <translation>Base64 Decode</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1279" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1388" />
         <source>URL Decode</source>
         <translation>URL Decode</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1284" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1397" />
         <source>Copy URL</source>
         <translation>Salin URL</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1289" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1402" />
         <source>Remove Empty Lines</source>
         <translation>Hapus Baris Kosong</translation>
     </message>
     <message>
+        <location filename="../src/dialogs/MainWindow.ui" line="164" />
         <source>Blank Operations</source>
         <translation>Operasi Spasi Kosong</translation>
     </message>
     <message>
+        <location filename="../src/dialogs/MainWindow.ui" line="503" />
+        <source>New</source>
+        <translation>Baru</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.ui" line="535" />
+        <source>Open</source>
+        <translation>Buka</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.ui" line="585" />
+        <source>Undo</source>
+        <translation>Urungkan</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.ui" line="601" />
+        <source>Redo</source>
+        <translation>Ulangi</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.ui" line="617" />
+        <source>Cut</source>
+        <translation>Potong</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.ui" line="633" />
+        <source>Copy</source>
+        <translation>Salin</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.ui" line="649" />
+        <source>Paste</source>
+        <translation>Tempel</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.ui" line="718" />
+        <source>Close</source>
+        <translation>Tutup</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.ui" line="918" />
+        <source>Close All</source>
+        <translation>Tutup Semua</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.ui" line="961" />
+        <source>Zoom In</source>
+        <translation>Perbesar</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.ui" line="977" />
+        <source>Zoom Out</source>
+        <translation>Perkecil</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.ui" line="1080" />
+        <source>Word wrap</source>
+        <translation>Bungkus Teks</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.ui" line="1111" />
+        <source>Find...</source>
+        <translation>Cari...</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.ui" line="1148" />
+        <source>Replace...</source>
+        <translation>Ganti...</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.ui" line="1407" />
         <source>Trim Trailing Space</source>
         <translation>Pangkas Spasi di Akhir</translation>
     </message>
-
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1298" />
-        <location filename="../src/dialogs/MainWindow.ui" line="1301" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1416" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1419" />
         <source>Show in Explorer</source>
         <translation>Tampilkan di Finder</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1310" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1428" />
         <source>Open %1 Here</source>
         <translation>Buka %1 di Sini</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1315" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1433" />
         <source>Toggle Bookmark</source>
         <translation>Beri/Hapus Markah</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1323" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1441" />
         <source>Search and Bookmark Lines...</source>
         <translation>Cari dan Markahi Baris...</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1331" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1449" />
         <source>Next Bookmark</source>
         <translation>Markah Berikutnya</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1339" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1457" />
         <source>Previous Bookmark</source>
         <translation>Markah Sebelumnya</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1347" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1465" />
         <source>Clear Bookmarks</source>
         <translation>Hapus Semua Markah</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1352" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1470" />
         <source>Invert Bookmarks</source>
         <translation>Balikkan Markah</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1357" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1475" />
         <source>Next Tab</source>
         <translation>Tab Berikutnya</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1368" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1486" />
         <source>Previous Tab</source>
         <translation>Tab Sebelumnya</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1379" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1497" />
         <source>Fold Level 1</source>
         <translation>Fold Level 1</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1387" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1505" />
         <source>Fold Level 2</source>
         <translation>Fold Level 2</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1395" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1513" />
         <source>Fold Level 3</source>
         <translation>Fold Level 3</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1403" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1521" />
         <source>Fold Level 4</source>
         <translation>Fold Level 4</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1411" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1529" />
         <source>Unfold Level 1</source>
         <translation>Unfold Level 1</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1419" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1537" />
         <source>Unfold Level 2</source>
         <translation>Unfold Level 2</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1427" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1545" />
         <source>Unfold Level 3</source>
         <translation>Unfold Level 3</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1435" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1553" />
         <source>Unfold Level 4</source>
         <translation>Unfold Level 4</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1443" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1561" />
         <source>Fold All</source>
         <translation>Fold Semua</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1451" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1569" />
         <source>Unfold All</source>
         <translation>Unfold Semua</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1459" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1577" />
         <source>Fold Level 5</source>
         <translation>Fold Level 5</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1467" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1585" />
         <source>Fold Level 6</source>
         <translation>Fold Level 6</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1475" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1593" />
         <source>Fold Level 7</source>
         <translation>Fold Level 7</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1483" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1601" />
         <source>Fold Level 8</source>
         <translation>Fold Level 8</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1491" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1609" />
         <source>Fold Level 9</source>
         <translation>Fold Level 9</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1499" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1617" />
         <source>Unfold Level 5</source>
         <translation>Unfold Level 5</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1507" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1625" />
         <source>Unfold Level 6</source>
         <translation>Unfold Level 6</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1515" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1633" />
         <source>Unfold Level 7</source>
         <translation>Unfold Level 7</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1523" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1641" />
         <source>Unfold Level 8</source>
         <translation>Unfold Level 8</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1531" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1649" />
         <source>Unfold Level 9</source>
         <translation>Unfold Level 9</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1539" />
-        <location filename="../src/dialogs/MainWindow.ui" line="1542" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1657" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1660" />
         <source>Toggle Overtype</source>
         <translation>Alihkan Mode Sisip/Timpa</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1553" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1671" />
         <source>Debug Info...</source>
         <translation>Debug Info...</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1558" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1676" />
         <source>Cut Bookmarked Lines</source>
         <translation>Potong Baris Bermarkah</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1563" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1681" />
         <source>Copy Bookmarked Lines</source>
         <translation>Salin Baris Bermarkah</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1568" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1686" />
         <source>Delete Bookmarked Lines</source>
         <translation>Hapus Baris Bermarkah</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1573" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1691" />
         <source>Mark Style 1</source>
         <translation>Tandai Style 1</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1581" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1699" />
         <source>Mark Style 2</source>
         <translation>Tandai Style 2</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1589" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1707" />
         <source>Clear Style 1</source>
         <translation>Hapus Style 1</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1597" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1715" />
         <source>Clear Style 2</source>
         <translation>Hapus Style 2</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1605" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1723" />
         <source>Mark Style 3</source>
         <translation>Tandai Style 3</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1613" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1731" />
         <source>Clear Style 3</source>
         <translation>Hapus Style 3</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1621" />
-        <location filename="../src/dialogs/MainWindow.ui" line="1624" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1739" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1742" />
         <source>Clear All Styles</source>
         <translation>Hapus Semua Style</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1629" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1747" />
         <source>Remove Duplicate Lines</source>
         <translation>Hapus Baris Duplikat</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1634" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1752" />
         <source>Remove Consecutive Duplicate Lines</source>
         <translation>Hapus Baris Duplikat Berurutan</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1639" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1757" />
         <source>Sort Lines Ascending</source>
         <translation>Urutkan Baris Menaik (A-Z)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1644" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1762" />
         <source>Sort Lines Descending</source>
         <translation>Urutkan Baris Menurun (Z-A)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1649" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1767" />
         <source>Sort Lines Ascending (Case-Insensitive)</source>
         <translation>Urutkan Baris Menaik (Case-Insensitive)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1654" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1772" />
         <source>Sort Lines Descending (Case-Insensitive)</source>
         <translation>Urutkan Baris Menurun (Case-Insensitive)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1659" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1777" />
         <source>Sort Lines by Length Ascending</source>
         <translation>Urutkan Baris Berdasarkan Panjang (Menaik)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1664" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1782" />
         <source>Sort Lines by Length Descending</source>
         <translation>Urutkan Baris Berdasarkan Panjang (Menurun)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1669" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1787" />
         <source>Reverse Line Order</source>
         <translation>Balik Urutan Baris</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1674" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1792" />
         <source>Split Horizontal</source>
         <translation>Split Horizontal</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1677" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1795" />
         <source>Split editor horizontally (left/right)</source>
         <translation>Bagi editor secara horizontal (kiri/kanan)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1685" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1803" />
         <source>Split Vertical</source>
         <translation>Split Vertical</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1688" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1806" />
         <source>Split editor vertically (top/bottom)</source>
         <translation>Bagi editor secara vertikal (atas/bawah)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1696" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1814" />
         <source>Select and Find Next</source>
         <translation>Pilih dan Cari Berikutnya</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1704" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1822" />
         <source>Select and Find Previous</source>
         <translation>Pilih dan Cari Sebelumnya</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1839" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1957" />
         <source>Sort Lines Naturally Ascending</source>
         <translation>Urutkan Baris Secara Alami Menaik</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1844" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1962" />
         <source>Sort Lines Naturally Descending</source>
         <translation>Urutkan Baris Secara Alami Menurun</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1849" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1967" />
         <source>Evaluate Math Expression</source>
         <translation>Evaluasi Ekspresi Matematika</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1852" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1970" />
         <source>Ctrl+Shift+M</source>
         <translation>Ctrl+Shift+M</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1857" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1975" />
         <source>Compare Two Open Buffers</source>
         <translation>Bandingkan Dua Buffer Terbuka</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1862" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1980" />
         <source>Toggle Hex / Binary View</source>
         <translation>Alihkan Tampilan Hex / Biner</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="622" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="626" />
         <source>Go to line</source>
         <translation>Buka baris</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="622" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="626" />
         <source>Line Number (1 - %1)</source>
         <translation>Nomor Baris (1 - %1)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="959" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="965" />
         <source>Stop Recording</source>
         <translation>Hentikan Perekaman</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1095" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="1102" />
         <source>Notepad Next</source>
         <translation>Notepad Next</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1096" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="1103" />
         <source>Cannot reopen unsaved new buffer from disk.</source>
         <translation>Tidak dapat membuka kembali buffer baru yang belum disimpan dari disk.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1140" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="1147" />
         <source>Debug Info</source>
         <translation>Debug Info</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1510" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="1524" />
         <source>New %1</source>
         <translation>Baru %1</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1585" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="1595" />
         <source>Create File</source>
         <translation>Buat Berkas</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1585" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="1595" />
         <source>&lt;b&gt;%1&lt;/b&gt; does not exist. Do you want to create it?</source>
         <translation>&lt;b&gt;%1&lt;/b&gt; tidak ditemukan. Apakah Anda ingin membuatnya?</translation>
     </message>
@@ -2188,164 +2266,164 @@
         <translation type="vanished">Simpan Berkas</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1658" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="1676" />
         <source>Open Folder as Workspace</source>
         <translation>Buka Folder sebagai Workspace</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1682" />
-        <location filename="../src/dialogs/MainWindow.cpp" line="2495" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="1700" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="2575" />
         <source>Reload File</source>
         <translation>Muat Ulang Berkas</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1682" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="1700" />
         <source>Are you sure you want to reload &lt;b&gt;%1&lt;/b&gt;? Any unsaved changes will be lost.</source>
         <translation>Apakah Anda yakin ingin memuat ulang &lt;b&gt;%1&lt;/b&gt;? Perubahan yang belum disimpan akan hilang.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1853" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="1916" />
         <source>Save a Copy As</source>
         <translation>Simpan Salinan Sebagai</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1938" />
-        <location filename="../src/dialogs/MainWindow.cpp" line="1954" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="2001" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="2017" />
         <source>Rename</source>
         <translation>Ganti Nama</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1954" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="2017" />
         <source>Name:</source>
         <translation>Nama:</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1974" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="2039" />
         <source>Delete File</source>
         <translation>Hapus Berkas</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1974" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="2039" />
         <source>Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</source>
         <translation>Apakah Anda yakin ingin memindahkan &lt;b&gt;%1&lt;/b&gt; ke tempat sampah?</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1984" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="2049" />
         <source>Error Deleting File</source>
         <translation>Gagal Menghapus Berkas</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1984" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="2049" />
         <source>Something went wrong deleting &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>Terjadi kesalahan saat menghapus &lt;b&gt;%1&lt;/b&gt;.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2196" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="2261" />
         <source>Administrator</source>
         <translation>Administrator</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2488" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="2568" />
         <source>&lt;b&gt;%1&lt;/b&gt; has been modified by another program. Do you want to reload it?</source>
         <translation>&lt;b&gt;%1&lt;/b&gt; telah dimodifikasi oleh program lain. Apakah Anda ingin memuatnya ulang?</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2491" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="2571" />
         <source>&lt;br&gt;&lt;br&gt;&lt;b&gt;Warning:&lt;/b&gt; you have unsaved changes in this tab. Reloading will discard them permanently.</source>
         <translation>&lt;br&gt;&lt;br&gt;&lt;b&gt;Peringatan:&lt;/b&gt; Anda memiliki perubahan yang belum disimpan pada tab ini. Memuat ulang akan membuangnya secara permanen.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2521" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="2601" />
         <source>Read error</source>
         <translation>Kesalahan membaca berkas</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2522" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="2602" />
         <source>Write error</source>
         <translation>Kesalahan menulis berkas</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2523" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="2603" />
         <source>Fatal error</source>
         <translation>Fatal error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2524" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="2604" />
         <source>Resource error</source>
         <translation>Resource error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2525" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="2605" />
         <source>Open error</source>
         <translation>Kesalahan membuka berkas</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2526" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="2606" />
         <source>Abort error</source>
         <translation>Abort error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2527" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="2607" />
         <source>Timeout error</source>
         <translation>Timeout error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2528" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="2608" />
         <source>Unspecified error</source>
         <translation>Unspecified error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2529" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="2609" />
         <source>Remove error</source>
         <translation>Kesalahan menghapus berkas</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2530" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="2610" />
         <source>Rename error</source>
         <translation>Kesalahan mengganti nama berkas</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2531" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="2611" />
         <source>Position error</source>
         <translation>Position error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2532" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="2612" />
         <source>Resize error</source>
         <translation>Resize error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2533" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="2613" />
         <source>Permissions error</source>
         <translation>Kesalahan izin akses berkas</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2534" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="2614" />
         <source>Copy error</source>
         <translation>Kesalahan menyalin berkas</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2535" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="2615" />
         <source>Unknown error (%1)</source>
         <translation>Unknown error (%1)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2538" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="2618" />
         <source>Error Saving File</source>
         <translation>Gagal Menyimpan Berkas</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2539" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="2619" />
         <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
         <translation>Terjadi kesalahan saat menyimpan &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2545" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="2624" />
         <source>Zoom: %1%</source>
         <translation>Zoom: %1%</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="3155" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="3243" />
         <source>Show / Hide Notepad Next</source>
         <translation>Tampilkan / Sembunyikan Notepad Next</translation>
     </message>
@@ -2354,8 +2432,9 @@
         <translation type="vanished">Simpan perubahan pada &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
     <message>
+        <location filename="../src/dialogs/MainWindow.ui" line="754" />
         <source>Save All</source>
-        <translation type="vanished">Simpan Semua</translation>
+        <translation>Simpan Semua</translation>
     </message>
     <message>
         <source>Discard All</source>
@@ -2370,237 +2449,237 @@
         <translation type="vanished">Tidak ada pembaruan yang tersedia saat ini.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1415" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="1429" />
         <source>&amp;Themes</source>
         <translation>&amp;Tema</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1423" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="1437" />
         <source>Open Theme Switcher...</source>
         <translation>Buka Pengalih Tema...</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1434" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="1448" />
         <source>Light Themes Only</source>
         <translation>Tema Terang Saja</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1438" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="1452" />
         <source>Dark Themes Only</source>
         <translation>Tema Gelap Saja</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1444" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="1458" />
         <source>Themes by Family</source>
         <translation>Tema Berdasarkan Keluarga</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1457" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="1471" />
         <source>Reset to Default (Light Mode - NotepadNext)</source>
         <translation>Atur Ulang ke Default (Mode Terang - NotepadNext)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1464" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="1478" />
         <source>Default Dark Mode (Horizon Dark)</source>
         <translation>Mode Gelap Default (Horizon Dark)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1471" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="1485" />
         <source>Toggle Dark / Light Mode</source>
         <translation>Alihkan Mode Gelap / Terang</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1365" />
-        <location filename="../src/dialogs/MainWindow.cpp" line="1385" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="1378" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="1398" />
         <source>Theme applied: %1</source>
         <translation>Tema diterapkan: %1</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="286" />
-        <location filename="../src/dialogs/MainWindow.cpp" line="307" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="287" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="308" />
         <source>JSON Error: %1 (offset %2)</source>
         <translation>Kesalahan JSON: %1 (posisi %2)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1460" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="1474" />
         <source>Theme reset to default Light Mode (NotepadNext)</source>
         <translation>Tema diatur ulang ke Mode Terang default (NotepadNext)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1467" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="1481" />
         <source>Theme set to Dark Mode (Horizon Dark)</source>
         <translation>Tema diatur ke Mode Gelap (Horizon Dark)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1476" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="1490" />
         <source>Switched to Dark Mode</source>
         <translation>Beralih ke Mode Gelap</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1476" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="1490" />
         <source>Switched to Light Mode</source>
         <translation>Beralih ke Mode Terang</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="189" />
+        <location filename="../src/dialogs/MainWindow.ui" line="195" />
         <source>XML Tools</source>
         <translation>Alat XML</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1814" />
-        <location filename="../src/dialogs/MainWindow.cpp" line="266" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1932" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="267" />
         <source>Pretty Print XML</source>
         <translation>Format Rapi XML</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="195" />
+        <location filename="../src/dialogs/MainWindow.ui" line="201" />
         <source>JSON Tools</source>
         <translation>Alat JSON</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="384" />
+        <location filename="../src/dialogs/MainWindow.ui" line="391" />
         <source>&amp;Encoding</source>
         <translation>&amp;Pengodean</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="388" />
+        <location filename="../src/dialogs/MainWindow.ui" line="395" />
         <source>Reopen with Encoding</source>
         <translation>Buka Ulang dengan Pengodean</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1712" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1830" />
         <source>Encoding &amp;Information &amp;&amp; Conversion...</source>
         <translation>&amp;Informasi &amp;&amp; Konversi Pengodean...</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1715" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1833" />
         <source>Show detected encoding details, confidence, and conversion options</source>
         <translation>Tampilkan rincian pengodean yang terdeteksi, tingkat keyakinan, dan opsi konversi</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1718" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1836" />
         <source>Ctrl+Alt+Shift+E</source>
         <translation>Ctrl+Alt+Shift+E</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1723" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1841" />
         <source>Convert to &amp;UTF-8</source>
         <translation>Konversi ke &amp;UTF-8</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1726" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1844" />
         <source>Ctrl+Alt+U</source>
         <translation>Ctrl+Alt+U</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1731" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1849" />
         <source>Convert to UTF-8 with &amp;BOM</source>
         <translation>Konversi ke UTF-8 dengan &amp;BOM</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1736" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1854" />
         <source>Convert to &amp;ANSI (Windows-1252)</source>
         <translation>Konversi ke &amp;ANSI (Windows-1252)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1739" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1857" />
         <source>Ctrl+Alt+A</source>
         <translation>Ctrl+Alt+A</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1744" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1862" />
         <source>Convert to UTF-16 &amp;LE</source>
         <translation>Konversi ke UTF-16 &amp;LE</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1749" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1867" />
         <source>Convert to UTF-16 &amp;BE</source>
         <translation>Konversi ke UTF-16 &amp;BE</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1754" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1872" />
         <source>UTF-8</source>
         <translation>UTF-8</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1759" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1877" />
         <source>ANSI / Windows-1252</source>
         <translation>ANSI / Windows-1252</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1764" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1882" />
         <source>UTF-16 LE</source>
         <translation>UTF-16 LE</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1769" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1887" />
         <source>UTF-16 BE</source>
         <translation>UTF-16 BE</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1774" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1892" />
         <source>Shift-JIS (Japanese)</source>
         <translation>Shift-JIS (Jepang)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1779" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1897" />
         <source>GB18030 / GBK (Chinese)</source>
         <translation>GB18030 / GBK (Tionghoa)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1784" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1902" />
         <source>Big5 (Traditional Chinese)</source>
         <translation>Big5 (Tionghoa Tradisional)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1789" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1907" />
         <source>EUC-KR (Korean)</source>
         <translation>EUC-KR (Korea)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1794" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1912" />
         <source>Windows-1251 (Cyrillic)</source>
         <translation>Windows-1251 (Sirilik)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1799" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1917" />
         <source>Windows-1250 (Central European)</source>
         <translation>Windows-1250 (Eropa Tengah)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1804" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1922" />
         <source>OEM-US (DOS CP437)</source>
         <translation>OEM-US (DOS CP437)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1809" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1927" />
         <source>&amp;More Encodings...</source>
         <translation>Pengodean &amp;Lainnya...</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1819" />
-        <location filename="../src/dialogs/MainWindow.cpp" line="286" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1937" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="287" />
         <source>Format JSON</source>
         <translation>Format Rapi JSON</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1824" />
-        <location filename="../src/dialogs/MainWindow.cpp" line="307" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1942" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="308" />
         <source>Minify JSON</source>
         <translation>Minifikasi JSON</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1829" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1947" />
         <source>Convert Tabs to Spaces</source>
         <translation>Konversi Tab ke Spasi</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1834" />
+        <location filename="../src/dialogs/MainWindow.ui" line="1952" />
         <source>Convert Spaces to Tabs</source>
         <translation>Konversi Spasi ke Tab</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="632" />
+        <location filename="../src/dialogs/MainWindow.ui" line="661" />
         <source>Paste Plain Text</source>
         <translation>Tempel Teks Polos</translation>
     </message>
@@ -2609,12 +2688,11 @@
         <translation type="vanished">Cetak</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1129" />
         <source>Preferences</source>
-        <translation>Preferensi...</translation>
+        <translation type="vanished">Preferensi...</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="559" />
+        <location filename="../src/dialogs/MainWindow.ui" line="569" />
         <source>Exit</source>
         <translation>Keluar</translation>
     </message>
@@ -2631,7 +2709,7 @@
         <translation type="vanished">Format Berkas</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="330" />
+        <location filename="../src/dialogs/MainWindow.cpp" line="331" />
         <source>Emoji &amp; Symbols</source>
         <translation>Emoji &amp; Simbol</translation>
     </message>
@@ -2744,113 +2822,118 @@
         <translation>Default Line Endings</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.ui" line="207" />
+        <location filename="../src/dialogs/PreferencesDialog.ui" line="205" />
+        <source>Default Language</source>
+        <translation>Bahasa Default</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/PreferencesDialog.ui" line="217" />
         <source>Highlight URLs</source>
         <translation>Highlight URL</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.ui" line="214" />
+        <location filename="../src/dialogs/PreferencesDialog.ui" line="224" />
         <source>Show Line Numbers</source>
         <translation>Tampilkan Nomor Baris</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.ui" line="221" />
+        <location filename="../src/dialogs/PreferencesDialog.ui" line="231" />
         <source>Auto Completion</source>
         <translation>Auto Completion</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.ui" line="228" />
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="134" />
+        <location filename="../src/dialogs/PreferencesDialog.ui" line="238" />
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="144" />
         <source>Default Directory</source>
         <translation>Direktori Default</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.ui" line="234" />
+        <location filename="../src/dialogs/PreferencesDialog.ui" line="244" />
         <source>Follow Current Document</source>
         <translation>Ikuti Dokumen Saat Ini</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.ui" line="241" />
+        <location filename="../src/dialogs/PreferencesDialog.ui" line="251" />
         <source>Last Used Directory</source>
         <translation>Direktori Terakhir Digunakan</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.ui" line="260" />
+        <location filename="../src/dialogs/PreferencesDialog.ui" line="270" />
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.ui" line="291" />
+        <location filename="../src/dialogs/PreferencesDialog.ui" line="301" />
         <source>TextLabel</source>
         <translation>TextLabel</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.ui" line="303" />
+        <location filename="../src/dialogs/PreferencesDialog.ui" line="313" />
         <source>An application restart is required to apply certain settings.</source>
         <translation>Restart aplikasi diperlukan untuk menerapkan beberapa pengaturan.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="68" />
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="69" />
         <source>Warning</source>
         <translation>Peringatan</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="68" />
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="69" />
         <source>This feature is experimental and it should not be considered safe for critically important work. It may lead to possible data loss. Use at your own risk.</source>
         <translation>Fitur ini bersifat eksperimental dan belum sepenuhnya aman untuk pekerjaan yang sangat penting. Risiko kehilangan data bisa terjadi. Gunakan dengan risiko Anda sendiri.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="97" />
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="98" />
         <source>System Default</source>
         <translation>Default Sistem</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="98" />
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="99" />
         <source>Windows (CR LF)</source>
         <translation>Windows (CR LF)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="99" />
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="100" />
         <source>Linux (LF)</source>
         <translation>Linux (LF)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="100" />
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="101" />
         <source>Macintosh (CR)</source>
         <translation>Macintosh (CR)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="197" />
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="206" />
         <source>&lt;System Default&gt;</source>
         <translation>&lt;Default Sistem&gt;</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="216" />
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="225" />
         <source>Themes &amp; Visual Styling</source>
         <translation>Tema &amp; Gaya Visual</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="239" />
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="248" />
         <source>Dark</source>
         <translation>Gelap</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="239" />
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="248" />
         <source>Light</source>
         <translation>Terang</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="261" />
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="270" />
         <source>Toggle Dark/Light</source>
         <translation>Alihkan Gelap/Terang</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="262" />
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="271" />
         <source>Quickly switch between active dark and light modes</source>
         <translation>Beralih cepat antara mode gelap dan terang aktif</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="274" />
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="283" />
         <source>Active Theme:</source>
         <translation>Tema Aktif:</translation>
     </message>
@@ -2921,7 +3004,7 @@
         <translation>. *</translation>
     </message>
     <message>
-        <location filename="../src/widgets/QuickFindWidget.cpp" line="245" />
+        <location filename="../src/widgets/QuickFindWidget.cpp" line="246" />
         <source>%L1/%L2</source>
         <translation>%L1/%L2</translation>
     </message>
@@ -2929,59 +3012,59 @@
 <context>
     <name>SaveModifiedDialog</name>
     <message>
-        <location filename="../src/dialogs/SaveModifiedDialog.cpp" line="45" />
+        <location filename="../src/dialogs/SaveModifiedDialog.cpp" line="51" />
         <source>Save Changes</source>
         <translation>Simpan Perubahan</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/SaveModifiedDialog.cpp" line="83" />
+        <location filename="../src/dialogs/SaveModifiedDialog.cpp" line="89" />
         <source>Untitled</source>
         <translation>Tanpa Judul</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/SaveModifiedDialog.cpp" line="84" />
+        <location filename="../src/dialogs/SaveModifiedDialog.cpp" line="90" />
         <source>Do you want to save the changes made to the document "%1"?</source>
         <translation>Apakah Anda ingin menyimpan perubahan yang dibuat pada dokumen "%1"?</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/dialogs/SaveModifiedDialog.cpp" line="86" />
+        <location filename="../src/dialogs/SaveModifiedDialog.cpp" line="92" />
         <source>There are %n documents with unsaved changes. Save them before closing?</source>
         <translation>
             <numerusform>Ada %n dokumen dengan perubahan yang belum disimpan. Simpan sebelum menutup?</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../src/dialogs/SaveModifiedDialog.cpp" line="90" />
+        <location filename="../src/dialogs/SaveModifiedDialog.cpp" line="96" />
         <source>Your changes will be permanently lost if you don't save them.</source>
         <translation>Perubahan Anda akan hilang secara permanen jika Anda tidak menyimpannya.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/SaveModifiedDialog.cpp" line="103" />
+        <location filename="../src/dialogs/SaveModifiedDialog.cpp" line="112" />
         <source>New unsaved document</source>
         <translation>Dokumen baru yang belum disimpan</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/SaveModifiedDialog.cpp" line="135" />
+        <location filename="../src/dialogs/SaveModifiedDialog.cpp" line="146" />
         <source>Don't Save All</source>
         <translation>Jangan Simpan Semua</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/SaveModifiedDialog.cpp" line="135" />
+        <location filename="../src/dialogs/SaveModifiedDialog.cpp" line="146" />
         <source>Don't Save</source>
         <translation>Jangan Simpan</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/SaveModifiedDialog.cpp" line="142" />
+        <location filename="../src/dialogs/SaveModifiedDialog.cpp" line="153" />
         <source>Cancel</source>
         <translation>Batal</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/SaveModifiedDialog.cpp" line="146" />
+        <location filename="../src/dialogs/SaveModifiedDialog.cpp" line="157" />
         <source>Save All</source>
         <translation>Simpan Semua</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/SaveModifiedDialog.cpp" line="146" />
+        <location filename="../src/dialogs/SaveModifiedDialog.cpp" line="157" />
         <source>Save</source>
         <translation>Simpan</translation>
     </message>
@@ -3000,27 +3083,27 @@
         <translation>Salin Semua Hasil ke Papan Klip</translation>
     </message>
     <message>
-        <location filename="../src/docks/SearchResultsDock.cpp" line="58" />
+        <location filename="../src/docks/SearchResultsDock.cpp" line="59" />
         <source>Copy</source>
         <translation>Salin</translation>
     </message>
     <message>
-        <location filename="../src/docks/SearchResultsDock.cpp" line="60" />
+        <location filename="../src/docks/SearchResultsDock.cpp" line="62" />
         <source>Collapse All</source>
         <translation>Collapse Semua</translation>
     </message>
     <message>
-        <location filename="../src/docks/SearchResultsDock.cpp" line="61" />
+        <location filename="../src/docks/SearchResultsDock.cpp" line="63" />
         <source>Expand All</source>
         <translation>Expand Semua</translation>
     </message>
     <message>
-        <location filename="../src/docks/SearchResultsDock.cpp" line="63" />
+        <location filename="../src/docks/SearchResultsDock.cpp" line="65" />
         <source>Delete Entry</source>
         <translation>Hapus Entri</translation>
     </message>
     <message>
-        <location filename="../src/docks/SearchResultsDock.cpp" line="65" />
+        <location filename="../src/docks/SearchResultsDock.cpp" line="68" />
         <source>Delete All</source>
         <translation>Hapus Semua</translation>
     </message>
@@ -3028,17 +3111,17 @@
 <context>
     <name>TabsQuickActionsBar</name>
     <message>
-        <location filename="../src/widgets/TabsQuickActionsBar.cpp" line="41" />
+        <location filename="../src/widgets/TabsQuickActionsBar.cpp" line="42" />
         <source>Create a new file</source>
         <translation>Buat berkas baru</translation>
     </message>
     <message>
-        <location filename="../src/widgets/TabsQuickActionsBar.cpp" line="44" />
+        <location filename="../src/widgets/TabsQuickActionsBar.cpp" line="45" />
         <source>Show opened files list</source>
         <translation>Tampilkan daftar berkas terbuka</translation>
     </message>
     <message>
-        <location filename="../src/widgets/TabsQuickActionsBar.cpp" line="50" />
+        <location filename="../src/widgets/TabsQuickActionsBar.cpp" line="51" />
         <source>Close the current file</source>
         <translation>Tutup berkas saat ini</translation>
     </message>
@@ -3046,69 +3129,69 @@
 <context>
     <name>ThemeSwitcherDialog</name>
     <message>
-        <location filename="../src/dialogs/ThemeSwitcherDialog.cpp" line="60" />
+        <location filename="../src/dialogs/ThemeSwitcherDialog.cpp" line="52" />
         <source>Theme Switcher — NotepadNext</source>
         <translation>Pemilih Tema — NotepadNext</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/ThemeSwitcherDialog.cpp" line="67" />
+        <location filename="../src/dialogs/ThemeSwitcherDialog.cpp" line="59" />
         <source>&lt;h2&gt;Select Visual Theme&lt;/h2&gt;&lt;p style='opacity: 0.8;'&gt;Choose from %1 professional themes across curated families with real-time preview.&lt;/p&gt;</source>
         <translation>&lt;h2&gt;Pilih Tema Visual&lt;/h2&gt;&lt;p style='opacity: 0.8;'&gt;Pilih dari %1 tema profesional dari kelompok pilihan dengan pratinjau langsung.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/ThemeSwitcherDialog.cpp" line="78" />
+        <location filename="../src/dialogs/ThemeSwitcherDialog.cpp" line="70" />
         <source>Search theme by name or family (e.g. catppuccin, dracula, nord, light)...</source>
         <translation>Cari tema berdasarkan nama atau famili (misal catppuccin, dracula, nord, light)...</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/ThemeSwitcherDialog.cpp" line="83" />
+        <location filename="../src/dialogs/ThemeSwitcherDialog.cpp" line="75" />
         <source>All (%1)</source>
         <translation>Semua (%1)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/ThemeSwitcherDialog.cpp" line="84" />
-        <location filename="../src/dialogs/ThemeSwitcherDialog.cpp" line="181" />
+        <location filename="../src/dialogs/ThemeSwitcherDialog.cpp" line="76" />
+        <location filename="../src/dialogs/ThemeSwitcherDialog.cpp" line="173" />
         <source>Light</source>
         <translation>Terang</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/ThemeSwitcherDialog.cpp" line="85" />
-        <location filename="../src/dialogs/ThemeSwitcherDialog.cpp" line="181" />
+        <location filename="../src/dialogs/ThemeSwitcherDialog.cpp" line="77" />
+        <location filename="../src/dialogs/ThemeSwitcherDialog.cpp" line="173" />
         <source>Dark</source>
         <translation>Gelap</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/ThemeSwitcherDialog.cpp" line="100" />
+        <location filename="../src/dialogs/ThemeSwitcherDialog.cpp" line="92" />
         <source>Theme Name</source>
         <translation>Nama Tema</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/ThemeSwitcherDialog.cpp" line="100" />
+        <location filename="../src/dialogs/ThemeSwitcherDialog.cpp" line="92" />
         <source>Family</source>
         <translation>Famili</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/ThemeSwitcherDialog.cpp" line="100" />
+        <location filename="../src/dialogs/ThemeSwitcherDialog.cpp" line="92" />
         <source>Type</source>
         <translation>Tipe</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/ThemeSwitcherDialog.cpp" line="100" />
+        <location filename="../src/dialogs/ThemeSwitcherDialog.cpp" line="92" />
         <source>Preview Swatches</source>
         <translation>Contoh Warna Pratinjau</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/ThemeSwitcherDialog.cpp" line="117" />
+        <location filename="../src/dialogs/ThemeSwitcherDialog.cpp" line="109" />
         <source>&lt;small style='opacity: 0.8;'&gt;Tip: Press Esc to revert or Ctrl+Shift+T to open again.&lt;/small&gt;</source>
         <translation>&lt;small style='opacity: 0.8;'&gt;Kiat: Tekan Esc untuk mengembalikan atau Ctrl+Shift+T untuk membuka kembali.&lt;/small&gt;</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/ThemeSwitcherDialog.cpp" line="121" />
+        <location filename="../src/dialogs/ThemeSwitcherDialog.cpp" line="113" />
         <source>Cancel</source>
         <translation>Batal</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/ThemeSwitcherDialog.cpp" line="122" />
+        <location filename="../src/dialogs/ThemeSwitcherDialog.cpp" line="114" />
         <source>Apply Theme</source>
         <translation>Terapkan Tema</translation>
     </message>
@@ -3116,109 +3199,109 @@
 <context>
     <name>UpdateDialog</name>
     <message>
-        <location filename="../src/dialogs/UpdateDialog.cpp" line="89" />
+        <location filename="../src/dialogs/UpdateDialog.cpp" line="90" />
         <source>Software Update</source>
         <translation>Pembaruan Perangkat Lunak</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/UpdateDialog.cpp" line="182" />
+        <location filename="../src/dialogs/UpdateDialog.cpp" line="183" />
         <source>🚀 Update Available</source>
         <translation>🚀 Pembaruan Tersedia</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/UpdateDialog.cpp" line="183" />
+        <location filename="../src/dialogs/UpdateDialog.cpp" line="184" />
         <source>Notepad Next %1 is Available</source>
         <translation>Notepad Next %1 Telah Tersedia</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/UpdateDialog.cpp" line="184" />
+        <location filename="../src/dialogs/UpdateDialog.cpp" line="185" />
         <source>A newer version is ready with improvements and fixes.</source>
         <translation>Versi yang lebih baru siap diunduh dengan berbagai penyempurnaan dan perbaikan.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/UpdateDialog.cpp" line="186" />
-        <location filename="../src/dialogs/UpdateDialog.cpp" line="198" />
+        <location filename="../src/dialogs/UpdateDialog.cpp" line="187" />
+        <location filename="../src/dialogs/UpdateDialog.cpp" line="199" />
         <source>Installed Version:</source>
         <translation>Versi Terpasang:</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/UpdateDialog.cpp" line="187" />
+        <location filename="../src/dialogs/UpdateDialog.cpp" line="188" />
         <source>Latest Version:</source>
         <translation>Versi Terbaru:</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/UpdateDialog.cpp" line="188" />
+        <location filename="../src/dialogs/UpdateDialog.cpp" line="189" />
         <source>Target Architecture:</source>
         <translation>Arsitektur Target:</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/UpdateDialog.cpp" line="190" />
+        <location filename="../src/dialogs/UpdateDialog.cpp" line="191" />
         <source>SHA-256 Checksum:</source>
         <translation>Checksum SHA-256:</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/UpdateDialog.cpp" line="192" />
+        <location filename="../src/dialogs/UpdateDialog.cpp" line="193" />
         <source>Check Timestamp:</source>
         <translation>Waktu Pemeriksaan:</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/UpdateDialog.cpp" line="194" />
+        <location filename="../src/dialogs/UpdateDialog.cpp" line="195" />
         <source>ℹ Check Offline</source>
         <translation>ℹ Pemeriksaan Offline</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/UpdateDialog.cpp" line="195" />
+        <location filename="../src/dialogs/UpdateDialog.cpp" line="196" />
         <source>Unable to Reach Update Server</source>
         <translation>Tidak Dapat Menghubungi Server Pembaruan</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/UpdateDialog.cpp" line="196" />
+        <location filename="../src/dialogs/UpdateDialog.cpp" line="197" />
         <source>Could not verify the latest version definition. Check your connection or visit GitHub.</source>
         <translation>Tidak dapat memverifikasi definisi versi terbaru. Periksa koneksi Anda atau kunjungi GitHub.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/UpdateDialog.cpp" line="199" />
-        <location filename="../src/dialogs/UpdateDialog.cpp" line="207" />
+        <location filename="../src/dialogs/UpdateDialog.cpp" line="200" />
+        <location filename="../src/dialogs/UpdateDialog.cpp" line="208" />
         <source>System Architecture:</source>
         <translation>Arsitektur Sistem:</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/UpdateDialog.cpp" line="200" />
+        <location filename="../src/dialogs/UpdateDialog.cpp" line="201" />
         <source>Status:</source>
         <translation>Status:</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/UpdateDialog.cpp" line="200" />
+        <location filename="../src/dialogs/UpdateDialog.cpp" line="201" />
         <source>Network unreachable or server offline</source>
         <translation>Jaringan tidak terjangkau atau server offline</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/UpdateDialog.cpp" line="202" />
+        <location filename="../src/dialogs/UpdateDialog.cpp" line="203" />
         <source>✓ Up to Date</source>
         <translation>✓ Sudah Terbaru</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/UpdateDialog.cpp" line="203" />
+        <location filename="../src/dialogs/UpdateDialog.cpp" line="204" />
         <source>You're Running the Latest Release!</source>
         <translation>Anda Menggunakan Rilis Terbaru!</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/UpdateDialog.cpp" line="204" />
+        <location filename="../src/dialogs/UpdateDialog.cpp" line="205" />
         <source>Notepad Next is completely up to date with full macOS optimization.</source>
         <translation>Notepad Next sudah sepenuhnya menggunakan versi terbaru dengan optimasi penuh untuk macOS.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/UpdateDialog.cpp" line="206" />
+        <location filename="../src/dialogs/UpdateDialog.cpp" line="207" />
         <source>Current Version:</source>
         <translation>Versi Saat Ini:</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/UpdateDialog.cpp" line="208" />
+        <location filename="../src/dialogs/UpdateDialog.cpp" line="209" />
         <source>Release Channel:</source>
         <translation>Saluran Rilis:</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/UpdateDialog.cpp" line="208" />
+        <location filename="../src/dialogs/UpdateDialog.cpp" line="209" />
         <source>Official GitHub Stable (0.15-07)</source>
         <translation>Rilis Stabil GitHub Resmi (0.15-07)</translation>
     </message>
@@ -3227,32 +3310,32 @@
         <translation type="vanished">Rilis Stabil Resmi GitHub (0.15-06)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/UpdateDialog.cpp" line="209" />
+        <location filename="../src/dialogs/UpdateDialog.cpp" line="210" />
         <source>Last Checked:</source>
         <translation>Terakhir Diperiksa:</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/UpdateDialog.cpp" line="219" />
+        <location filename="../src/dialogs/UpdateDialog.cpp" line="220" />
         <source>&lt;p&gt;&lt;strong&gt;Release Highlights:&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;For complete changelog and download packages, visit: &lt;a href="%1"&gt;%1&lt;/a&gt;&lt;/p&gt;</source>
         <translation>&lt;p&gt;&lt;strong&gt;Sorotan Rilis:&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Untuk log perubahan lengkap dan paket unduhan, kunjungi: &lt;a href="%1"&gt;%1&lt;/a&gt;&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/UpdateDialog.cpp" line="229" />
+        <location filename="../src/dialogs/UpdateDialog.cpp" line="230" />
         <source>Release Notes</source>
         <translation>Catatan Rilis</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/UpdateDialog.cpp" line="239" />
+        <location filename="../src/dialogs/UpdateDialog.cpp" line="240" />
         <source>Remind Me Later</source>
         <translation>Ingatkan Nanti</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/UpdateDialog.cpp" line="243" />
+        <location filename="../src/dialogs/UpdateDialog.cpp" line="244" />
         <source>Download Update</source>
         <translation>Unduh Pembaruan</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/UpdateDialog.cpp" line="252" />
+        <location filename="../src/dialogs/UpdateDialog.cpp" line="253" />
         <source>OK</source>
         <translation>OK</translation>
     </message>
