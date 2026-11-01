@@ -1,31 +1,32 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-# Scripts directory and repo root
-SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
-REPO_ROOT="$(cd -- "${SCRIPT_DIR}/.." && pwd -P)"
+# Repo root detection
+if git rev-parse --show-toplevel &>/dev/null; then
+    REPO_ROOT="$(git rev-parse --show-toplevel)"
+else
+    SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
+    REPO_ROOT="$(cd -- "${SCRIPT_DIR}/.." && pwd -P)"
+fi
 cd "${REPO_ROOT}"
 
-echo "=== Starting Automated Local DMG Build Pipeline (0.14-01 to master) ==="
+echo "=== Starting Automated Local DMG Build Pipeline (NotepadNext-MacOS) ==="
 
 QT_DIR="/Users/alsyundawy/Qt/6.12.0/macos"
-BRANCHES=(
-    "0.14-01"
-    "0.14-02"
-    "0.14-03"
-    "0.14-04"
-    "0.14-05"
-    "0.14-06"
-    "0.14-07"
-    "0.15-01"
-    "0.15-02"
-    "0.15-03"
-    "0.15-04"
-    "0.15-05"
-    "0.15-06"
-    "0.15-07"
-    "master"
-)
+
+if [[ $# -gt 0 ]]; then
+    BRANCHES=("$@")
+else
+    BRANCHES=(
+        "0.15-01"
+        "0.15-02"
+        "0.15-03"
+        "0.15-04"
+        "0.15-05"
+        "0.15-06"
+        "0.15-07"
+    )
+fi
 
 mkdir -p build-dmg
 
@@ -34,33 +35,10 @@ for BRANCH in "${BRANCHES[@]}"; do
     echo "Processing Branch: ${BRANCH}"
     echo "=================================================="
 
-    # 1. Switch to branch
+    # 1. Switch to target branch
     git switch "${BRANCH}"
 
-    # 2. Check and apply OptionSet.h fix if cstdlib is missing
-    if [[ -f thirdparty/lexilla/lexlib/OptionSet.h ]] && ! grep -q "cstdlib" thirdparty/lexilla/lexlib/OptionSet.h; then
-        echo "[*] Adding missing <cstdlib> include to OptionSet.h"
-        python3 -c '
-path = "thirdparty/lexilla/lexlib/OptionSet.h"
-with open(path, "r", encoding="utf-8") as f:
-    content = f.read()
-target = "#ifndef OPTIONSET_H\n#define OPTIONSET_H\n"
-replacement = "#ifndef OPTIONSET_H\n#define OPTIONSET_H\n\n#include <cstdlib>\n#include <string>\n"
-if target in content and "#include <cstdlib>" not in content:
-    content = content.replace(target, replacement, 1)
-    with open(path, "w", encoding="utf-8") as f:
-        f.write(content)
-    print("Successfully patched OptionSet.h")
-'
-    fi
-
-    # 3. Check and modernize PackagingMac.cmake if outdated
-    if [[ -f cmake/PackagingMac.cmake ]] && grep -q "COMMAND \${MACDEPLOYQT_EXECUTABLE}.*-dmg" cmake/PackagingMac.cmake; then
-        echo "[*] Modernizing cmake/PackagingMac.cmake"
-        git checkout master -- cmake/PackagingMac.cmake
-    fi
-
-    # 4. Clean previous build directory, configure & build DMG
+    # 2. Clean previous build directory, configure & build DMG
     echo "[*] Cleaning build directory..."
     rm -rf build
 
@@ -91,17 +69,6 @@ if target in content and "#include <cstdlib>" not in content:
     echo "[*] Copying verified DMG to build-dmg/NotepadNext-v${BRANCH}-x64.dmg"
     cp -f "${DMG_PATH}" "build-dmg/NotepadNext-v${BRANCH}-x64.dmg"
 
-    # 5. Commit and push fixes if there are modifications
-    if [[ -n "$(git status --porcelain)" ]]; then
-        echo "[*] Staging and committing changes on branch ${BRANCH}"
-        git add -u
-        git commit -m "fix(build): add cstdlib include in OptionSet.h and modernize macOS DMG packaging" || true
-        echo "[*] Pushing branch ${BRANCH} to origin"
-        git push origin "refs/heads/${BRANCH}:refs/heads/${BRANCH}" || true
-    else
-        echo "[*] No file changes needed on branch ${BRANCH}"
-    fi
-
     echo "=== Branch ${BRANCH} Completed Successfully! ==="
 done
 
@@ -112,9 +79,10 @@ echo "=================================================="
 git switch master
 
 # Update SHA256SUMS
-echo "[*] Regenerating SHA256SUMS for all DMGs"
+echo "[*] Regenerating SHA256SUMS for all DMGs in build-dmg/"
 cd build-dmg
 shasum -a 256 NotepadNext*.dmg > SHA256SUMS
+cat SHA256SUMS
 cd ..
 
-echo "=== ALL LOCAL DMGS BUILT, VERIFIED, AND SYNCED SUCCESSFULLY! ==="
+echo "=== ALL LOCAL DMGS BUILT AND VERIFIED SUCCESSFULLY! ==="
