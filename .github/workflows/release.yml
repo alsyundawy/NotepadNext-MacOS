@@ -74,7 +74,7 @@ jobs:
 
   # ─── Linux Ubuntu Matrix (.deb & .rpm) ─────────────────────────────
   build-linux:
-    name: build (linux, ${{ matrix.qt_version }})
+    name: build (linux-${{ matrix.arch }}, ${{ matrix.qt_version }})
     needs: [init-release]
     runs-on: ${{ matrix.runs_on }}
     timeout-minutes: 60
@@ -84,10 +84,12 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          # ─── Linux x64 (AMD64) ─────────────────────────────────────
           - runs_on: ubuntu-22.04
             platform: linux
             arch: x64
             cmake_arch: x86_64
+            qt_host: linux
             qt_arch: gcc_64
             qt_version: "6.5"
 
@@ -95,6 +97,7 @@ jobs:
             platform: linux
             arch: x64
             cmake_arch: x86_64
+            qt_host: linux
             qt_arch: linux_gcc_64
             qt_version: "6.8"
 
@@ -102,6 +105,7 @@ jobs:
             platform: linux
             arch: x64
             cmake_arch: x86_64
+            qt_host: linux
             qt_arch: linux_gcc_64
             qt_version: "6.10"
 
@@ -109,6 +113,7 @@ jobs:
             platform: linux
             arch: x64
             cmake_arch: x86_64
+            qt_host: linux
             qt_arch: linux_gcc_64
             qt_version: "6.11"
 
@@ -116,7 +121,41 @@ jobs:
             platform: linux
             arch: x64
             cmake_arch: x86_64
+            qt_host: linux
             qt_arch: linux_gcc_64
+            qt_version: "6.12"
+
+          # ─── Linux ARM64 (AArch64) ─────────────────────────────────
+          - runs_on: ubuntu-24.04-arm
+            platform: linux
+            arch: arm64
+            cmake_arch: aarch64
+            qt_host: linux_arm64
+            qt_arch: linux_gcc_arm64
+            qt_version: "6.8"
+
+          - runs_on: ubuntu-24.04-arm
+            platform: linux
+            arch: arm64
+            cmake_arch: aarch64
+            qt_host: linux_arm64
+            qt_arch: linux_gcc_arm64
+            qt_version: "6.10"
+
+          - runs_on: ubuntu-24.04-arm
+            platform: linux
+            arch: arm64
+            cmake_arch: aarch64
+            qt_host: linux_arm64
+            qt_arch: linux_gcc_arm64
+            qt_version: "6.11"
+
+          - runs_on: ubuntu-24.04-arm
+            platform: linux
+            arch: arm64
+            cmake_arch: aarch64
+            qt_host: linux_arm64
+            qt_arch: linux_gcc_arm64
             qt_version: "6.12"
 
     steps:
@@ -145,7 +184,7 @@ jobs:
         uses: jurplel/install-qt-action@b344308e4483fc892e0d27b3cd1b173ebdd95f06 # v4.5.0
         with:
           version: ${{ matrix.qt_version }}
-          host: linux
+          host: ${{ matrix.qt_host || 'linux' }}
           target: desktop
           arch: ${{ matrix.qt_arch }}
           modules: qt5compat
