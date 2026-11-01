@@ -46,10 +46,16 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          CLEAN_VER="${RELEASE_TAG#v}"
+          TITLE="🍎 NotepadNext For MacOS — Notepad++ Like v${CLEAN_VER}"
+          NOTES_ARG=("--generate-notes")
+          if [ -f "doc/RELEASE_NOTES_${CLEAN_VER}.md" ]; then
+            NOTES_ARG=("--notes-file" "doc/RELEASE_NOTES_${CLEAN_VER}.md")
+          fi
           gh release view "$RELEASE_TAG" >/dev/null 2>&1 || \
           gh release create "$RELEASE_TAG" \
-            --title "$RELEASE_TAG" \
-            --generate-notes
+            --title "$TITLE" \
+            "${NOTES_ARG[@]}"
 
       - name: Upload Default Editor Scripts (macOS & Linux)
         shell: bash
@@ -216,6 +222,16 @@ jobs:
             for f in build/*-qt${{ matrix.qt_version }}-1.*.rpm; do
               [ -f "$f" ] && cp -v "$f" "${f//-qt${{ matrix.qt_version }}/}" || true
             done
+            RELEASE_TAG="${{ needs.init-release.outputs.release_tag }}"
+            CLEAN_TAG="${RELEASE_TAG#v}"
+            if [ -n "$CLEAN_TAG" ] && [ "$CLEAN_TAG" != "0.15" ]; then
+              for f in build/notepadnext_0.15_*.deb; do
+                [ -f "$f" ] && cp -v "$f" "${f//_0.15_/_${CLEAN_TAG}_}" || true
+              done
+              for f in build/notepadnext-0.15-1.*.rpm; do
+                [ -f "$f" ] && cp -v "$f" "${f//-0.15-1./-${CLEAN_TAG}-1.}" || true
+              done
+            fi
           fi
 
       - name: Release Linux Packages (.deb, .rpm)
@@ -347,6 +363,13 @@ jobs:
             for f in build/*-qt${{ matrix.qt_version }}-*.dmg; do
               [ -f "$f" ] && cp -v "$f" "${f//-qt${{ matrix.qt_version }}/}" || true
             done
+            RELEASE_TAG="${{ needs.init-release.outputs.release_tag }}"
+            CLEAN_TAG="${RELEASE_TAG#v}"
+            if [ -n "$CLEAN_TAG" ] && [ "$CLEAN_TAG" != "0.15" ]; then
+              for f in build/NotepadNext-v0.15-*.dmg; do
+                [ -f "$f" ] && cp -v "$f" "${f//-v0.15-/-v${CLEAN_TAG}-}" || true
+              done
+            fi
           fi
 
       - name: Release MacOS DMG (x64)
@@ -476,6 +499,13 @@ jobs:
             for f in build/*-qt${{ matrix.qt_version }}-*.dmg; do
               [ -f "$f" ] && cp -v "$f" "${f//-qt${{ matrix.qt_version }}/}" || true
             done
+            RELEASE_TAG="${{ needs.init-release.outputs.release_tag }}"
+            CLEAN_TAG="${RELEASE_TAG#v}"
+            if [ -n "$CLEAN_TAG" ] && [ "$CLEAN_TAG" != "0.15" ]; then
+              for f in build/NotepadNext-v0.15-*.dmg; do
+                [ -f "$f" ] && cp -v "$f" "${f//-v0.15-/-v${CLEAN_TAG}-}" || true
+              done
+            fi
           fi
 
       - name: Release MacOS DMG (arm64)

@@ -50,11 +50,11 @@ NotepadNext-MacOS **v0.15-07** delivers critical runtime crash fixes, compiler d
    - Suppressed redundant keyboard shortcut duplicates in tooltip labels via `ToolbarTooltipFilter`.
 
 5. **Synchronized Linux Packaging (`cmake/PackagingLinux.cmake`)**:
-   - Synchronized Linux packaging with `SparkNotePad/cmake/PackagingLinux.cmake` including multi-Qt version tagging (`PKG_QT_SUFFIX`), dual 64-bit RPM SONAME resolves, automated APT/DNF dependencies, AppStream metadata, and AppImage packaging targets.
+   - Synchronized Linux packaging with `SparkNotePad/cmake/PackagingLinux.cmake` including multi-Qt version tagging (`PKG_QT_SUFFIX`), dual 64-bit RPM SONAME resolves, automated APT/DNF dependencies, AppStream metadata, and support for both x86_64 (amd64) and ARM64 (aarch64).
    - Created `NotepadNext-Default-Editor-Linux.sh` implementing standard Freedesktop XDG MIME handlers (120+ types), alternatives management, and shell `$EDITOR` integration.
 
-6. **Complete Linux & macOS Release Matrix (Qt 6.5 to 6.12)**:
-   - Updated `.github/workflows/release.yml` to include the complete matrix from Qt 6.5, 6.8 LTS, 6.10, 6.11, up to 6.12 across Linux (Ubuntu 22.04 and 24.04), macOS Intel x64, and macOS Apple Silicon arm64 runners.
+6. **Complete Linux & macOS Release Matrix (Qt 6.5 to 6.12 for x64 & ARM64)**:
+   - Updated `.github/workflows/release.yml` to include the complete matrix from Qt 6.5, 6.8 LTS, 6.10, 6.11, up to 6.12 across Linux x64 (Ubuntu 22.04 & 24.04), native Linux ARM64 (Ubuntu 24.04 ARM on `ubuntu-24.04-arm`), macOS Intel x64, and macOS Apple Silicon arm64 runners.
 
 7. **Empirically Verified Local macOS Release Build & DMG Packaging**:
    - Built locally via Ninja and Qt 6.12.0:
