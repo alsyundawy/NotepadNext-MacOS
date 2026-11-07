@@ -36,6 +36,7 @@ NotepadNext-MacOS **v0.15-07** delivers critical runtime crash fixes, compiler d
      3. Added `QGuiApplication::styleHints()->setColorScheme(dark ? Qt::ColorScheme::Dark : Qt::ColorScheme::Light)` (with `Unknown` for `Auto`) on Qt >= 6.5.0 to force native Cocoa dialog and sheet appearance to follow the configured application theme.
      4. Added explicit CSS rules for `QMessageBox`, `QMessageBox QLabel`, and `QMessageBox QPushButton` (including hover, pressed, and default states) in `ThemeManager::getThemeStyleSheet()`.
      5. Refactored `SaveModifiedDialog` to derive colors directly from `ThemeManager::instance()->isDarkActive()` and `ThemeManager::instance()->currentPalette()`, and connected to `themeChanged` and `paletteChanged` signals for instant reactive updates.
+     6. Fortified `ThemeManager` in multi-window environments by converting `m_activeWindow` to `QPointer<MainWindow>` (preventing dangling pointers upon secondary window closure, CWE-416) and expanding `applyTheme()` to dynamically iterate and apply stylesheet and Scintilla colors across all open top-level `MainWindow` instances (`QApplication::topLevelWidgets()`). Added fallback to `&kAllThemePalettes[0]` in `currentPalette()`.
 
 2. **Resolution of Random Crash When Closing Unsaved Tabs**:
    - **Root Cause Investigation**: Identified crash triggers during tab closure:

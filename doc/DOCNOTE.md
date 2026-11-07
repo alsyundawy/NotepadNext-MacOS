@@ -321,6 +321,7 @@ In version `0.15-07`, an investigation into user reports that message dialog box
    - **Native Cocoa Color Scheme Synchronization**: On Qt >= 6.5.0, `applyTheme()` invokes `QGuiApplication::styleHints()->setColorScheme(dark ? Qt::ColorScheme::Dark : Qt::ColorScheme::Light)` (or `Qt::ColorScheme::Unknown` for Auto mode), synchronizing the Cocoa window manager appearance.
    - **Explicit QMessageBox CSS Rules**: Added dedicated CSS rules for `QMessageBox`, `QMessageBox QLabel`, and `QMessageBox QPushButton` (including hover, pressed, and default states) to `getThemeStyleSheet()`.
    - **Reactive SaveModifiedDialog**: Decoupled `SaveModifiedDialog` color computation from the window palette by binding directly to `ThemeManager::instance()->isDarkActive()` and `ThemeManager::instance()->currentPalette()`, with live reactive updates via `themeChanged` and `paletteChanged`.
+   - **Multi-Window Theme Propagation & Dangling Pointer Elimination**: Converted `ThemeManager::m_activeWindow` to `QPointer<MainWindow>` to eliminate dangling pointer and use-after-free hazards (CWE-416) on window close, and enhanced `ThemeManager::applyTheme()` to dynamically iterate and apply stylesheets and Scintilla colors across all open top-level `MainWindow` instances (`QApplication::topLevelWidgets()`). Added safe non-null fallback to `&kAllThemePalettes[0]` in `currentPalette()`.
 
 ---
 

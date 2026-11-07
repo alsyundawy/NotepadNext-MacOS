@@ -114,8 +114,9 @@ const ThemePalette *ThemeManager::currentPalette() const {
             return p;
         }
     }
-    return isDarkActive() ? findThemePaletteById(QStringLiteral("horizonDark"))
-                          : findThemePaletteById(QStringLiteral("notepadNext"));
+    const ThemePalette *def = isDarkActive() ? findThemePaletteById(QStringLiteral("horizonDark"))
+                                             : findThemePaletteById(QStringLiteral("notepadNext"));
+    return def ? def : &kAllThemePalettes[0];
 }
 
 void ThemeManager::setThemeMode(ThemeMode mode, MainWindow *window) {
@@ -140,7 +141,7 @@ void ThemeManager::setThemeMode(ThemeMode mode, MainWindow *window) {
         m_settings->setValue(QStringLiteral("App/ThemePalette"), m_currentPaletteId);
     }
 
-    applyTheme(window ? window : m_activeWindow);
+    applyTheme(window ? window : m_activeWindow.data());
 
     emit themeChanged(isDarkActive());
     emit paletteChanged(m_currentPaletteId);
@@ -168,7 +169,7 @@ void ThemeManager::setPalette(const QString &paletteId, MainWindow *window) {
                              p->isDark ? QStringLiteral("Dark") : QStringLiteral("Light"));
     }
 
-    applyTheme(window ? window : m_activeWindow);
+    applyTheme(window ? window : m_activeWindow.data());
 
     emit themeChanged(isDarkActive());
     emit paletteChanged(m_currentPaletteId);
@@ -181,7 +182,7 @@ void ThemeManager::toggleTheme(MainWindow *window) {
 
 void ThemeManager::onSystemColorSchemeChanged() {
     if (m_themeMode == ThemeMode::Auto) {
-        applyTheme(m_activeWindow);
+        applyTheme(m_activeWindow.data());
         emit themeChanged(isDarkActive());
     }
 }
@@ -258,13 +259,22 @@ void ThemeManager::applyTheme(MainWindow *window) {
         qApp->setStyleSheet(sheet);
     }
 
-    if (!m_activeWindow)
-        return;
+    bool anyWindowUpdated = false;
+    for (QWidget *widget : QApplication::topLevelWidgets()) {
+        if (auto *mw = qobject_cast<MainWindow *>(widget)) {
+            anyWindowUpdated = true;
+            mw->applyStyleSheet();
+            for (ScintillaNext *editor : mw->editors()) {
+                applyThemeToEditor(editor);
+            }
+        }
+    }
 
-    m_activeWindow->applyStyleSheet();
-
-    for (ScintillaNext *editor : m_activeWindow->editors()) {
-        applyThemeToEditor(editor);
+    if (!anyWindowUpdated && m_activeWindow) {
+        m_activeWindow->applyStyleSheet();
+        for (ScintillaNext *editor : m_activeWindow->editors()) {
+            applyThemeToEditor(editor);
+        }
     }
 }
 
