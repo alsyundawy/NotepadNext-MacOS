@@ -1242,7 +1242,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) : // NOSONAR
     ui->statusBar->setVisible(app->getSettings()->showStatusBar());
 
     setupLanguageMenu();
-    ThemeManager::instance()->initialize(app->getSettings());
+    ThemeManager::instance()->initialize(app->getSettings(), this);
     setupThemeMenu();
 
     applyStyleSheet();

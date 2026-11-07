@@ -115,6 +115,8 @@ bool NotepadNextApplication::init()
         settings->clear();
     }
 
+    ThemeManager::instance()->initialize(settings);
+
     // Translation files are stored as a qresource
     translationManager = new TranslationManager(this, QStringLiteral(":/i18n/"));
 

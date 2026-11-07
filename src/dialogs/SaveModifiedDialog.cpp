@@ -21,6 +21,7 @@
 
 #include "SaveModifiedDialog.h"
 #include "ScintillaNext.h"
+#include "features/ThemeManager.h"
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -44,6 +45,9 @@ SaveModifiedDialog::SaveModifiedDialog(const QVector<ScintillaNext *> &editors, 
     }
     setupUi();
     updateThemeColors();
+
+    connect(ThemeManager::instance(), &ThemeManager::themeChanged, this, &SaveModifiedDialog::updateThemeColors);
+    connect(ThemeManager::instance(), &ThemeManager::paletteChanged, this, &SaveModifiedDialog::updateThemeColors);
 }
 
 void SaveModifiedDialog::setupUi()
@@ -224,19 +228,24 @@ void SaveModifiedDialog::updateThemeColors()
     }
     m_isUpdatingTheme = true;
 
-    const QPalette pal = this->palette();
-    const QColor winColor = pal.color(QPalette::Window);
-    const bool dark = (winColor.lightness() < 128);
+    const bool dark = ThemeManager::instance()->isDarkActive();
+    const ThemePalette *pal = ThemeManager::instance()->currentPalette();
 
-    const QString winBg = winColor.name();
-    const QString cardBg = dark ? pal.color(QPalette::Base).name() : QStringLiteral("#f8fafc");
-    const QString borderCol = dark ? QStringLiteral("#3e3e42") : QStringLiteral("#cbd5e1");
-    const QString txtPri = pal.color(QPalette::WindowText).name();
-    const QString txtSec = dark ? QStringLiteral("#94a3b8") : QStringLiteral("#64748b");
-    const QString fallbackAccent = dark ? QStringLiteral("#38bdf8") : QStringLiteral("#0078d4");
-    const QString accentCol = (pal.color(QPalette::Highlight).isValid() && pal.color(QPalette::Highlight) != winColor)
-                                ? pal.color(QPalette::Highlight).name()
-                                : fallbackAccent;
+    QString winBg = dark ? QStringLiteral("#1e1e1e") : QStringLiteral("#f0f2f5");
+    QString cardBg = dark ? QStringLiteral("#25282c") : QStringLiteral("#fafbfc");
+    QString borderCol = dark ? QStringLiteral("#3e3e42") : QStringLiteral("#cbd5e1");
+    QString txtPri = dark ? QStringLiteral("#e0e0e0") : QStringLiteral("#24292f");
+    QString txtSec = dark ? QStringLiteral("#94a3b8") : QStringLiteral("#64748b");
+    QString accentCol = dark ? QStringLiteral("#38bdf8") : QStringLiteral("#0078d4");
+
+    if (pal) {
+        winBg = QString::fromLatin1(pal->win);
+        cardBg = QString::fromLatin1(pal->card);
+        borderCol = QString::fromLatin1(pal->border);
+        txtPri = QString::fromLatin1(pal->txtPri);
+        txtSec = QString::fromLatin1(pal->txtSec);
+        accentCol = QString::fromLatin1(pal->blue);
+    }
 
     const QString dialogStyle =
         QString(

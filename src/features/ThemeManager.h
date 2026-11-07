@@ -26,6 +26,7 @@
 #include <QString>
 #include <QColor>
 #include <QList>
+#include <cstdint>
 #include "ThemePaletteData.h"
 
 class MainWindow;
@@ -36,7 +37,7 @@ class ThemeManager : public QObject {
     Q_OBJECT
 
 public:
-    enum class ThemeMode { Auto = 0, Light = 1, Dark = 2 };
+    enum class ThemeMode : std::uint8_t { Auto = 0, Light = 1, Dark = 2 };
     Q_ENUM(ThemeMode)
 
     // Helper to construct Scintilla BGR colour from RGB components
@@ -51,7 +52,7 @@ public:
 
     static ThemeManager *instance();
 
-    void initialize(ApplicationSettings *settings);
+    void initialize(ApplicationSettings *settings, MainWindow *window = nullptr);
 
     ThemeMode themeMode() const { return m_themeMode; }
     void setThemeMode(ThemeMode mode, MainWindow *window = nullptr);

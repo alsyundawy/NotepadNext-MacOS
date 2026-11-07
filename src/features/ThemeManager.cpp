@@ -45,9 +45,12 @@ ThemeManager::ThemeManager(QObject *parent) : QObject(parent) {
 
 ThemeManager::~ThemeManager() = default;
 
-void ThemeManager::initialize(ApplicationSettings *settings) {
+void ThemeManager::initialize(ApplicationSettings *settings, MainWindow *window) {
     using enum ThemeMode;
     m_settings = settings;
+    if (window) {
+        m_activeWindow = window;
+    }
     if (m_settings) {
         if (const QString savedMode =
                 m_settings->value(QStringLiteral("App/ThemeMode"), QStringLiteral("Light")).toString().toLower();
@@ -60,13 +63,28 @@ void ThemeManager::initialize(ApplicationSettings *settings) {
         }
 
         QString savedPalette = m_settings->value(QStringLiteral("App/ThemePalette"), QString()).toString();
-        if (!savedPalette.isEmpty() && findThemePaletteById(savedPalette)) {
-            m_currentPaletteId = savedPalette;
+        if (!savedPalette.isEmpty()) {
+            if (const ThemePalette *p = findThemePaletteById(savedPalette)) {
+                if (m_themeMode == Dark && !p->isDark) {
+                    m_currentPaletteId = QStringLiteral("horizonDark");
+                } else if (m_themeMode == Light && p->isDark) {
+                    m_currentPaletteId = QStringLiteral("notepadNext");
+                } else {
+                    m_currentPaletteId = savedPalette;
+                }
+            } else {
+                m_currentPaletteId =
+                    (m_themeMode == Dark) ? QStringLiteral("horizonDark") : QStringLiteral("notepadNext");
+            }
         } else {
             m_currentPaletteId =
                 (m_themeMode == Dark) ? QStringLiteral("horizonDark") : QStringLiteral("notepadNext");
         }
     }
+
+    applyTheme(m_activeWindow);
+    emit themeChanged(isDarkActive());
+    emit paletteChanged(m_currentPaletteId);
 }
 
 bool ThemeManager::isDarkActive() const {
@@ -122,9 +140,7 @@ void ThemeManager::setThemeMode(ThemeMode mode, MainWindow *window) {
         m_settings->setValue(QStringLiteral("App/ThemePalette"), m_currentPaletteId);
     }
 
-    if (m_activeWindow) {
-        applyTheme(m_activeWindow);
-    }
+    applyTheme(window ? window : m_activeWindow);
 
     emit themeChanged(isDarkActive());
     emit paletteChanged(m_currentPaletteId);
@@ -152,9 +168,7 @@ void ThemeManager::setPalette(const QString &paletteId, MainWindow *window) {
                              p->isDark ? QStringLiteral("Dark") : QStringLiteral("Light"));
     }
 
-    if (m_activeWindow) {
-        applyTheme(m_activeWindow);
-    }
+    applyTheme(window ? window : m_activeWindow);
 
     emit themeChanged(isDarkActive());
     emit paletteChanged(m_currentPaletteId);
@@ -166,14 +180,16 @@ void ThemeManager::toggleTheme(MainWindow *window) {
 }
 
 void ThemeManager::onSystemColorSchemeChanged() {
-    if (m_themeMode == ThemeMode::Auto && m_activeWindow) {
+    if (m_themeMode == ThemeMode::Auto) {
         applyTheme(m_activeWindow);
         emit themeChanged(isDarkActive());
     }
 }
 
 void ThemeManager::applyTheme(MainWindow *window) {
-    m_activeWindow = window;
+    if (window) {
+        m_activeWindow = window;
+    }
 
     const ThemePalette *pal = currentPalette();
     bool dark = isDarkActive();
@@ -207,6 +223,16 @@ void ThemeManager::applyTheme(MainWindow *window) {
         accent = QStringLiteral("#0969da");
     }
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
+    if (QGuiApplication::styleHints()) {
+        if (m_themeMode == ThemeMode::Auto) {
+            QGuiApplication::styleHints()->setColorScheme(Qt::ColorScheme::Unknown);
+        } else {
+            QGuiApplication::styleHints()->setColorScheme(dark ? Qt::ColorScheme::Dark : Qt::ColorScheme::Light);
+        }
+    }
+#endif
+
     QPalette appPal;
     appPal.setColor(QPalette::Window, QColor(win));
     appPal.setColor(QPalette::WindowText, QColor(txtPri));
@@ -227,17 +253,17 @@ void ThemeManager::applyTheme(MainWindow *window) {
     appPal.setColor(QPalette::Disabled, QPalette::ButtonText, QColor(txtSec));
     QApplication::setPalette(appPal);
 
-    QString sheet = getThemeStyleSheet();
     if (qApp) {
+        const QString sheet = getThemeStyleSheet();
         qApp->setStyleSheet(sheet);
     }
 
-    if (!window)
+    if (!m_activeWindow)
         return;
 
-    window->applyStyleSheet();
+    m_activeWindow->applyStyleSheet();
 
-    for (ScintillaNext *editor : window->editors()) {
+    for (ScintillaNext *editor : m_activeWindow->editors()) {
         applyThemeToEditor(editor);
     }
 }
@@ -481,6 +507,45 @@ QWidget {
 QMainWindow, QDialog, QMessageBox {
     background-color: %1;
     color: %2;
+}
+
+/* Explicit Message Box Styling */
+QMessageBox QLabel {
+    color: %2;
+    background-color: transparent;
+}
+QMessageBox QLabel#qt_msgbox_label {
+    color: %2;
+    font-size: 13px;
+    font-weight: 500;
+}
+QMessageBox QLabel#qt_msgbox_informativelabel {
+    color: %4;
+    font-size: 12px;
+}
+QMessageBox QPushButton {
+    background-color: %5;
+    color: %2;
+    border: 1px solid %3;
+    border-radius: 6px;
+    padding: 6px 16px;
+    min-width: 72px;
+    font-size: 13px;
+    font-weight: 500;
+}
+QMessageBox QPushButton:hover {
+    border-color: %6;
+    color: %6;
+}
+QMessageBox QPushButton:pressed {
+    background-color: %6;
+    color: #ffffff;
+}
+QMessageBox QPushButton:default {
+    background-color: %6;
+    color: #ffffff;
+    border: 1px solid %6;
+    font-weight: 600;
 }
 
 /* Labels */

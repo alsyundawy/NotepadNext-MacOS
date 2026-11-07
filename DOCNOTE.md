@@ -23,7 +23,21 @@ Architecture        : Native Scintilla reimplementation of Notepad++ for macOS &
 
 NotepadNext-MacOS **v0.15-07** delivers critical runtime crash fixes, compiler database stabilization, complete multi-Qt Linux and macOS matrix synchronization, and rigorous zero-error linter compliance:
 
-1. **Resolution of Random Crash When Closing Unsaved Tabs**:
+1. **Resolution of Random Dark Mode Message Dialogs in Light Mode**:
+   - **Root Cause Investigation**: Users reported that when launching the application in Light Mode, message dialog boxes (`QMessageBox`, `QDialog`, `SaveModifiedDialog`) unpredictably rendered in Dark Mode, requiring a manual theme reset from the Themes menu.
+     1. In `ThemeManager::initialize()`, saved theme preferences were read from `ApplicationSettings`, but `applyTheme()` was never called during application startup. As a result, `QApplication::setPalette(appPal)` was never called and `qApp->setStyleSheet(sheet)` remained empty at startup.
+     2. In `MainWindow::applyStyleSheet()`, stylesheets were only applied locally to `MainWindow` (`this`). Because Qt modal dialogs and `QMessageBox` are top-level windows, they do not inherit local parent stylesheets—they strictly inherit `qApp->styleSheet()` and `QApplication::palette()`.
+     3. On macOS with system Dark Mode active, Qt 6's default Cocoa style assigned a dark native Cocoa appearance to top-level dialogs whenever `QApplication::palette()` was left unconfigured.
+     4. Resetting the theme via the Themes menu called `ThemeManager::setPalette()`, which explicitly executed `applyTheme()`, setting `QApplication::setPalette()` and `qApp->setStyleSheet()`, temporarily fixing the dialogs until the next launch.
+     5. In `SaveModifiedDialog.cpp`, `updateThemeColors()` calculated `dark = (winColor.lightness() < 128)` directly from the uninitialized window palette rather than consulting `ThemeManager::instance()->isDarkActive()`.
+   - **Remediation**:
+     1. Initialized `ThemeManager` early in `NotepadNextApplication::init()` (`ThemeManager::instance()->initialize(settings)`), ensuring application-wide palette, Cocoa color scheme, and stylesheet are active before any dialog or window is created.
+     2. Called `applyTheme(m_activeWindow)` unconditionally inside `initialize()`, normalizing the current palette against `themeMode` and emitting `themeChanged` and `paletteChanged`.
+     3. Added `QGuiApplication::styleHints()->setColorScheme(dark ? Qt::ColorScheme::Dark : Qt::ColorScheme::Light)` (with `Unknown` for `Auto`) on Qt >= 6.5.0 to force native Cocoa dialog and sheet appearance to follow the configured application theme.
+     4. Added explicit CSS rules for `QMessageBox`, `QMessageBox QLabel`, and `QMessageBox QPushButton` (including hover, pressed, and default states) in `ThemeManager::getThemeStyleSheet()`.
+     5. Refactored `SaveModifiedDialog` to derive colors directly from `ThemeManager::instance()->isDarkActive()` and `ThemeManager::instance()->currentPalette()`, and connected to `themeChanged` and `paletteChanged` signals for instant reactive updates.
+
+2. **Resolution of Random Crash When Closing Unsaved Tabs**:
    - **Root Cause Investigation**: Identified crash triggers during tab closure:
      1. In `ScintillaNext::getFilePath()`, `getPath()`, and `getFileInfo()`, calls unconditionally executed `Q_ASSERT(isFile())`. When closing an unsaved or untitled document, `SaveModifiedDialog::setupUi()` invoked `getFilePath()`, which failed the assertion and triggered `qt_assert(...)` calling `abort()`.
      2. In `DockedEditor.cpp`, the `QObject::destroyed(QObject *obj)` lambda re-queried `editors()`. Because the underlying `CDockWidget` had not yet detached its widget pointer during early destruction, `editors()` returned the dying editor object (`obj`), re-setting `currentEditor` to the deallocated instance and firing `editorActivated(currentEditor.data())`, causing a critical Use-After-Free / pure-virtual call crash in `updateGui()`.
@@ -31,7 +45,7 @@ NotepadNext-MacOS **v0.15-07** delivers critical runtime crash fixes, compiler d
      4. In `DockedEditor::switchToEditor()`, missing null-check on `editor` caused null dereferencing of `editor->parentWidget()`.
    - **Remediation**: Replaced assertions in `ScintillaNext::getFilePath()` with safe empty fallbacks, guarded `SaveModifiedDialog::setupUi()` with `isFile()` checks, added null guards in `updateEditorPositionBasedUi()`, filtered out dying `obj` from `edList` in the `destroyed` callback, and safely wrapped `editor` with `QPointer<ScintillaNext>` during modal save prompt unwinding in `closeFile()`.
 
-2. **Fix for 1,288 Clangd / IDE False-Positive Errors & C-Header Parsing**:
+3. **Fix for 1,288 Clangd / IDE False-Positive Errors & C-Header Parsing**:
    - **Root Cause**: Clang/Clangd defaults `.h` files without corresponding compile units to C language mode. When `.clangd` or SonarLint supplied `-std=c++20`, Clang aborted parsing with `error: invalid argument '-std=c++20' not allowed with 'C'` and reported missing `<type_traits>`, cascading into over 1,200 false syntax errors.
    - **Remediation**:
      1. Created automated Python enrichment tool `scripts/generate_compdb_headers.py` wired directly into `CMakeLists.txt` via `enrich_compile_commands` target, automatically populating `compile_commands.json` with explicit `-x c++-header -std=c++20` entries for all 95 headers in `src/`.
@@ -39,24 +53,24 @@ NotepadNext-MacOS **v0.15-07** delivers critical runtime crash fixes, compiler d
      3. Updated `.clangd` with explicit two-argument `-x` / `c++-header` rules for `PathMatch: .*\.(h|hpp)$`.
      4. Verified with `clangd --check` on `ActionUtils.h`, `AboutDialog.h`, `DefaultDirectoryManager.cpp`, `MainWindow.cpp`, and `DockedEditor.cpp` achieving 0 errors and 0 syntax warnings.
 
-3. **Resolution of SonarLint Code Smells & Cognitive Complexity Warnings**:
+4. **Resolution of SonarLint Code Smells & Cognitive Complexity Warnings**:
    - **`DefaultDirectoryManager.cpp`**: Applied C++20 `using enum ApplicationSettings::DefaultDirectoryBehaviorEnum;` to reduce verbosity (S6186) and modernized control flow with C++17/C++20 if-init statements `if (const auto behavior = ...; ...)` (S6004).
    - **`MainWindow.cpp` & `MainWindow.h`**: Converted `newEditor` pointers to `const ScintillaNext *` (S5813), `dockArea` to `const ads::CDockAreaWidget *`, and marked `MainWindow::switchToEditor` as a `const` member function in declaration and definition (S5956).
    - **`DockedEditor.cpp`**: Converted `dockAreaCreated` lambda parameter to `const ads::CDockAreaWidget *` (S5813). Extracted helper functions `extractActiveEditor` and `isEditorOpen` to decouple widget hierarchy traversal, eliminating deep nesting (nesting depth <= 2 across all methods, resolving S134) and dropping `getCurrentEditor()` Cognitive Complexity from 29 down to <= 6 (resolving S3776).
 
-4. **Pixel-Crisp Toolbar Tooltips & Native Cocoa Window Transparency**:
+5. **Pixel-Crisp Toolbar Tooltips & Native Cocoa Window Transparency**:
    - Enforced 6px rounded corners (`border-radius: 6px;`), compact geometry tight to font size (`lbl->setMargin(0)` and `qproperty-margin: 0; padding: 2px 6px;`).
    - Integrated native Cocoa `NSWindow` transparency (`[window setOpaque:NO]`, `[window setBackgroundColor:[NSColor clearColor]]`, `[window invalidateShadow]`), eliminating opaque black window clipping artifacts on macOS.
    - Suppressed redundant keyboard shortcut duplicates in tooltip labels via `ToolbarTooltipFilter`.
 
-5. **Synchronized Linux Packaging (`cmake/PackagingLinux.cmake`)**:
+6. **Synchronized Linux Packaging (`cmake/PackagingLinux.cmake`)**:
    - Synchronized Linux packaging with `SparkNotePad/cmake/PackagingLinux.cmake` including multi-Qt version tagging (`PKG_QT_SUFFIX`), dual 64-bit RPM SONAME resolves, automated APT/DNF dependencies, AppStream metadata, and support for both x86_64 (amd64) and ARM64 (aarch64).
    - Created `NotepadNext-Default-Editor-Linux.sh` implementing standard Freedesktop XDG MIME handlers (120+ types), alternatives management, and shell `$EDITOR` integration.
 
-6. **Complete Linux & macOS Release Matrix (Qt 6.5 to 6.12 for x64 & ARM64)**:
+7. **Complete Linux & macOS Release Matrix (Qt 6.5 to 6.12 for x64 & ARM64)**:
    - Updated `.github/workflows/release.yml` to include the complete matrix from Qt 6.5, 6.8 LTS, 6.10, 6.11, up to 6.12 across Linux x64 (Ubuntu 22.04 & 24.04), native Linux ARM64 (Ubuntu 24.04 ARM on `ubuntu-24.04-arm`), macOS Intel x64, and macOS Apple Silicon arm64 runners.
 
-7. **Empirically Verified Local macOS Release Build & DMG Packaging**:
+8. **Empirically Verified Local macOS Release Build & DMG Packaging**:
    - Built locally via Ninja and Qt 6.12.0:
 
      ```bash
@@ -71,19 +85,20 @@ NotepadNext-MacOS **v0.15-07** delivers critical runtime crash fixes, compiler d
    - Generated native disk image: `build/NotepadNext-v0.15-07-x64.dmg` (27 MB, compressed UDBZ).
    - Validated integrity with Apple `hdiutil verify`: Checksum status **VALID** (CRC32 `$7CACB3C2`).
 
-8. **Comprehensive 14-Pillar Codebase Audit & Security Certification**:
+9. **Comprehensive 14-Pillar Codebase Audit & Security Certification**:
    - Conducted systematic audit across all 14 engineering pillars: Bug, Syntax, Runtime, Logic, Memory, Dead Code, Duplicate Code, Circular Dependency, Performance Bottleneck, Security Vulnerability (OWASP Top 25 2024–2026 / MITRE CWE Top 50 2024–2026), Maintainability (CISQ/ISO 5055), Scalability, Readability (Google C++ Style), and Empirical Verification Gate.
    - Identified and resolved heap memory leak in `QRegexSearch::substituted` (CWE-401) by adding destructor `~QRegexSearch() override { delete substituted; }`.
    - Verified active mitigation of **CVE-2026-42214** (Lua code injection via unvalidated extension) through parameterized `setVariable()` and Lua VM sandboxing stripping `os.execute`, `io.popen`, `package.loadlib`.
    - Pruned heavy unused Qt modules (`QtPdf`, `QtQml`, `QtVirtualKeyboard`) in macOS packaging to eliminate upstream CVE attack surfaces.
 
-9. **Full Toolchain & Linter Zero-Error Verification**:
-   - **Compiler**: Built cleanly with Clang++ and CMake (`exit 0`).
-   - **MegaLinter CI**: 100% green across branches `0.15-01` through `0.15-07` and `master`.
-   - **Cppcheck**: Zero errors with Qt library support across all source files (`exit 0`).
-   - **Clangd**: 100% clean check across all C++ source files (`exit 0`, 0 errors).
-   - **ShellCheck & shfmt**: Zero warnings across all repository shell scripts.
-   - **Actionlint**: Validated all workflows in `.github/workflows/` (`exit 0`).
+10. **Full Toolchain & Linter Zero-Error Verification**:
+
+- **Compiler**: Built cleanly with Clang++ and CMake (`exit 0`).
+- **MegaLinter CI**: 100% green across branches `0.15-01` through `0.15-07` and `master`.
+- **Cppcheck**: Zero errors with Qt library support across all source files (`exit 0`).
+- **Clangd**: 100% clean check across all C++ source files (`exit 0`, 0 errors).
+- **ShellCheck & shfmt**: Zero warnings across all repository shell scripts.
+- **Actionlint**: Validated all workflows in `.github/workflows/` (`exit 0`).
 
 ---
 

@@ -32,6 +32,7 @@ Key innovations introduced in `0.15-07`:
    - **Read-Only Hexadecimal / Binary Viewer**: Fast binary inspection mode featuring 16-byte hex dump and ASCII side-column.
 
 3. **macOS Native Architecture & UI Polish**:
+   - **Dialog Box Theme Stabilization & Startup Theme Propagation**: Resolved random dark mode rendering on message dialog boxes (`QMessageBox`, `QDialog`, `SaveModifiedDialog`) when launching in Light Mode. Initialized `ThemeManager` early in `NotepadNextApplication::init()`, applied theme palettes immediately at startup, synchronized native Cocoa sheet and window appearance via `QGuiApplication::styleHints()->setColorScheme()` (Qt 6.5+), embedded explicit `QMessageBox` styling rules, and decoupled `SaveModifiedDialog` colors from uninitialized window palettes.
    - **macOS In-Process Multi-Window & Dock Integration**: Unified multi-window architecture within a single process via `NotepadNextApplication`, ensuring secondary window invocations and Cmd+N remain responsive to macOS Dock activations and Cmd+~ window cycling.
    - **macOS Dock Right-Click Quit Save Prompt (`QEvent::Close`)**: Intercepted application-level close events on macOS Dock context menu quit and Cmd+Q, cycling through all windows and invoking `checkEditorsBeforeClose()` to guarantee dirty and untitled tabs prompt for saving before exit.
    - **macOS Menu Bar Extra / Dock Status Mode**: Resident background mode with quick-access menu via `QSystemTrayIcon`.
