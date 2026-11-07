@@ -59,8 +59,9 @@ Key innovations introduced in `0.15-07`:
 6. **Upstream PR Harmonization**:
    - Ported and harmonized upstream PR #8a0a615 (Trim Trailing Whitespace buffer operation with full Indonesian localization), PR #e08fc92 (defensive message handler deregistration in `DebugManager`), PR #90d6174 (centralized tooltip generation in `ScintillaNext::getToolTip`), PR #ef75daf (Replace All progress advancement on zero-length regex matches), and PR #be1e274 (Default Language setting for new documents in `PreferencesDialog`).
 
-7. **100% Complete Bilingual Localization & Linguistic Rigor**:
-   - 100% complete Bahasa Indonesia (`id_ID`) and English (`en_US`) catalogs with 0 unfinished strings (646/646 entries).
+7. **Comprehensive Multilingual Localization & Linguistic Rigor**:
+   - Pulled and synchronized 22 official language translation files directly from `upstream/l10n_master` (Arabic, Czech, German, Spanish, French, Hungarian, Italian, Japanese, Korean, Dutch, Polish, Portuguese Brazilian, Portuguese European, Russian, Swedish, Turkish, Ukrainian, Vietnamese, Chinese Simplified, and Chinese Traditional).
+   - Maintained 100% complete Bahasa Indonesia (`id_ID`) and English (`en_US`) catalogs with 0 unfinished strings (660/660 entries), enriched with full native macOS Maintainer and attribution metadata.
    - Standardized strictly against official Indonesian linguistic guidelines: EYD V ([ejaan.kemendikdasmen.go.id](https://ejaan.kemendikdasmen.go.id)), PUEBI, Mozilla Indonesian L10n Style Guide, and official IT terminology (PASTI Kemendikdasmen / KBBI).
    - Eliminated legacy transliterations (e.g. _pengkodean_ -> _pengodean_, _file_ -> _berkas_, _shortcut_ -> _pintasan_) and stripped redundant parenthetical annotations.
    - Zero-overhead IDE diagnostics: resolved Qt XML `.ts` vs TypeScript parser conflicts and `.clangd` schema validations.

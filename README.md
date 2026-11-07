@@ -317,10 +317,11 @@ sudo ./NotepadNext-Default-Editor-Linux.sh --system -f
    - 🇬🇧 Restart NotepadNext to apply the Indonesian language across the entire application.
    - 🇮🇩 Mulai ulang (restart) NotepadNext untuk menerapkan Bahasa Indonesia ke seluruh aplikasi.
 
-| Language / Bahasa       | Locale Code    | Coverage / Cakupan                | Maintainer / Penerjemah                      |
-| :---------------------- | :------------- | :-------------------------------- | :------------------------------------------- |
-| 🇮🇩 **Bahasa Indonesia** | `id_ID` (`id`) | Lengkap (2.150+ baris string XML) | [@alsyundawy](https://github.com/alsyundawy) |
-| 🇬🇧 **English**          | `en_US` (`en`) | Base (Native)                     | [@dail8859](https://github.com/dail8859)     |
+| Language / Bahasa           | Locale Code                                                                                                                              | Coverage / Cakupan                | Maintainer / Penerjemah                      |
+| :-------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------- | :------------------------------------------- |
+| 🇮🇩 **Bahasa Indonesia**     | `id_ID` (`id`)                                                                                                                           | Lengkap (3.550+ baris string XML) | [@alsyundawy](https://github.com/alsyundawy) |
+| 🇬🇧 **English**              | `en_US` (`en`)                                                                                                                           | Base (Native)                     | [@dail8859](https://github.com/dail8859)     |
+| 🌐 **20+ Global Languages** | `ar`, `cs`, `de`, `es`, `fr`, `hu`, `it`, `ja`, `ko`, `nl`, `pl`, `pt_BR`, `pt_PT`, `ru`, `sv`, `tr`, `uk`, `vi`, `zh`, `zh_CN`, `zh_TW` | Upstream Official Synchronized    | Upstream Community & Transifex               |
 
 ---
 

@@ -1,0 +1,2209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="ru_RU" sourcelanguage="en">
+  <context>
+    <name>ColumnEditorDialog</name>
+    <message>
+      <location filename="../src/dialogs/ColumnEditorDialog.ui" line="20"/>
+      <source>Column Mode</source>
+      <translation>Режим столбцов</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/ColumnEditorDialog.ui" line="32"/>
+      <source>Text</source>
+      <translation>Текст</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/ColumnEditorDialog.ui" line="47"/>
+      <source>Numbers</source>
+      <translation>Числа</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/ColumnEditorDialog.ui" line="59"/>
+      <source>Start:</source>
+      <translation>Начало:</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/ColumnEditorDialog.ui" line="76"/>
+      <source>Step:</source>
+      <translation>Шаг:</translation>
+    </message>
+  </context>
+  <context>
+    <name>DebugLogDock</name>
+    <message>
+      <location filename="../src/docks/DebugLogDock.ui" line="14"/>
+      <source>Debug Log</source>
+      <translation>Журнал отладки</translation>
+    </message>
+  </context>
+  <context>
+    <name>EditorInfoStatusBar</name>
+    <message>
+      <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="100"/>
+      <source>Length: %L1    Lines: %L2</source>
+      <translation>Длина: %L1    Строк: %L2</translation>
+    </message>
+    <message>
+      <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="109"/>
+      <source>Sel: N/A</source>
+      <translation>Выб: Н/Д</translation>
+    </message>
+    <message>
+      <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="119"/>
+      <source>Sel: %L1 | %L2</source>
+      <translation>Выб: %L1 | %L2</translation>
+    </message>
+    <message>
+      <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="123"/>
+      <source>Ln: %L1    Col: %L2    </source>
+      <translation>Стр: %L1   Стл: %L2    </translation>
+    </message>
+    <message>
+      <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="139"/>
+      <source>Macintosh (CR)</source>
+      <translation>Macintosh (CR)</translation>
+    </message>
+    <message>
+      <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="142"/>
+      <source>Windows (CR LF)</source>
+      <translation>Windows (CR LF)</translation>
+    </message>
+    <message>
+      <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="145"/>
+      <source>Unix (LF)</source>
+      <translation>Unix (LF)</translation>
+    </message>
+    <message>
+      <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="155"/>
+      <source>ANSI</source>
+      <translation>ANSI</translation>
+    </message>
+    <message>
+      <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="159"/>
+      <source>UTF-8</source>
+      <translation>UTF-8</translation>
+    </message>
+    <message>
+      <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="160"/>
+      <source>UTF-8 BOM</source>
+      <translation>UTF-8 BOM</translation>
+    </message>
+    <message>
+      <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="161"/>
+      <source>UTF-16LE BOM</source>
+      <translation>UTF-16LE BOM</translation>
+    </message>
+    <message>
+      <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="162"/>
+      <source>UTF-16BE BOM</source>
+      <translation>UTF-16BE BOM</translation>
+    </message>
+    <message>
+      <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="178"/>
+      <source>OVR</source>
+      <extracomment>This is a short abbreviation to indicate characters will be replaced when typing</extracomment>
+      <translation>ЗАМ</translation>
+    </message>
+    <message>
+      <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="182"/>
+      <source>INS</source>
+      <extracomment>This is a short abbreviation to indicate characters will be inserted when typing</extracomment>
+      <translation>ВСТ</translation>
+    </message>
+  </context>
+  <context>
+    <name>EditorInspectorDock</name>
+    <message>
+      <location filename="../src/docks/EditorInspectorDock.ui" line="14"/>
+      <source>Editor Inspector</source>
+      <translation>Инспектор редактора</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/EditorInspectorDock.cpp" line="36"/>
+      <source>Position Information</source>
+      <translation>Информация о положении</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/EditorInspectorDock.cpp" line="39"/>
+      <source>Current Position</source>
+      <translation>Текущее положение</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/EditorInspectorDock.cpp" line="40"/>
+      <source>Current Position (x, y)</source>
+      <translation>Текущее положение (x, y)</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/EditorInspectorDock.cpp" line="41"/>
+      <source>Column</source>
+      <translation>Столбец</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/EditorInspectorDock.cpp" line="43"/>
+      <source>Current Style</source>
+      <translation>Текущий стиль</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/EditorInspectorDock.cpp" line="44"/>
+      <source>Current Line</source>
+      <translation>Текущая строка</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/EditorInspectorDock.cpp" line="45"/>
+      <source>Line Length</source>
+      <translation>Длина строки</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/EditorInspectorDock.cpp" line="46"/>
+      <source>Line End Position</source>
+      <translation>Положение конца строки</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/EditorInspectorDock.cpp" line="47"/>
+      <source>Line Indentation</source>
+      <translation>Отступ строки</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/EditorInspectorDock.cpp" line="48"/>
+      <source>Line Indent Position</source>
+      <translation>Положение отступа строки</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/EditorInspectorDock.cpp" line="52"/>
+      <source>Selection Information</source>
+      <translation>Информация о выделении</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/EditorInspectorDock.cpp" line="55"/>
+      <source>Mode</source>
+      <translation>Режим</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/EditorInspectorDock.cpp" line="69"/>
+      <source>Is Rectangle</source>
+      <translation>Прямоугольник</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/EditorInspectorDock.cpp" line="70"/>
+      <source>Selection Empty</source>
+      <translation>Выделение пусто</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/EditorInspectorDock.cpp" line="71"/>
+      <source>Main Selection</source>
+      <translation>Основное выделение</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/EditorInspectorDock.cpp" line="72"/>
+      <source># of Selections</source>
+      <translation># выделений</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/EditorInspectorDock.cpp" line="75"/>
+      <source>Multiple Selections</source>
+      <translation>Множественные выделения</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/EditorInspectorDock.cpp" line="80"/>
+      <source>Document Information</source>
+      <translation>Информация о документе</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/EditorInspectorDock.cpp" line="83"/>
+      <source>Length</source>
+      <translation>Длина</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/EditorInspectorDock.cpp" line="84"/>
+      <source>Line Count</source>
+      <translation>Количество строк</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/EditorInspectorDock.cpp" line="88"/>
+      <source>View Information</source>
+      <translation>Сведения об области просмотра</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/EditorInspectorDock.cpp" line="91"/>
+      <source>Lines on Screen</source>
+      <translation>Строк на экране</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/EditorInspectorDock.cpp" line="92"/>
+      <source>First Visible Line</source>
+      <translation>Первая видимая строка</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/EditorInspectorDock.cpp" line="93"/>
+      <source>X Offset</source>
+      <translation>Смещение по X</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/EditorInspectorDock.cpp" line="97"/>
+      <source>Fold Information</source>
+      <translation>Информация о сворачивании</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/EditorInspectorDock.cpp" line="100"/>
+      <source>Visible From Doc Line</source>
+      <translation>Отображаемая от строки документа</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/EditorInspectorDock.cpp" line="101"/>
+      <source>Doc Line From Visible</source>
+      <translation>Строка документа от отображаемой</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/EditorInspectorDock.cpp" line="102"/>
+      <source>Fold Level</source>
+      <translation>Уровень вложенности</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/EditorInspectorDock.cpp" line="103"/>
+      <source>Is Fold Header</source>
+      <translation>Заголовок вложения</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/EditorInspectorDock.cpp" line="104"/>
+      <source>Fold Parent</source>
+      <translation>Родитель вложения</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/EditorInspectorDock.cpp" line="105"/>
+      <source>Last Child</source>
+      <translation>Последний дочерний</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/EditorInspectorDock.cpp" line="106"/>
+      <source>Contracted Fold Next</source>
+      <translation>Следующее свернутое вложение</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/EditorInspectorDock.cpp" line="173"/>
+      <source>Caret</source>
+      <translation>Каретка</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/EditorInspectorDock.cpp" line="177"/>
+      <source>Anchor</source>
+      <translation>Якорь</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/EditorInspectorDock.cpp" line="181"/>
+      <source>Caret Virtual Space</source>
+      <translation>Виртуальное пространство каретки</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/EditorInspectorDock.cpp" line="185"/>
+      <source>Anchor Virtual Space</source>
+      <translation>Виртуальное пространство якоря</translation>
+    </message>
+  </context>
+  <context>
+    <name>FileList</name>
+    <message>
+      <location filename="../src/docks/FileListDock.ui" line="14"/>
+      <source>File List</source>
+      <translation>Список файлов</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/FileListDock.ui" line="51"/>
+      <source>...</source>
+      <translation>...</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/FileListDock.ui" line="90"/>
+      <source>Sort by File Name</source>
+      <translation>Сортировать по имени файла</translation>
+    </message>
+  </context>
+  <context>
+    <name>FindReplaceDialog</name>
+    <message>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="20"/>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="247"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="63"/>
+      <source>Find</source>
+      <translation>Поиск</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="69"/>
+      <source>Search Mode</source>
+      <translation>Режим поиска</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="90"/>
+      <source>&amp;Normal</source>
+      <translation>&amp;Нормальный</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="106"/>
+      <source>E&amp;xtended (\n, \r, \t, \0, \x...)</source>
+      <translation>Р&amp;асширенный (\n, \r, \t, \0, \x...)</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="124"/>
+      <source>Re&amp;gular expression</source>
+      <translation>&amp;Регулярное выражение</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="140"/>
+      <source>&amp;. matches newline</source>
+      <translation>&amp;. - новая строка</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="179"/>
+      <source>Transparenc&amp;y</source>
+      <translation>Про&amp;зрачность</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="200"/>
+      <source>On losing focus</source>
+      <translation>При потере фокуса</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="210"/>
+      <source>Always</source>
+      <translation>Всегда</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="260"/>
+      <source>Coun&amp;t</source>
+      <translation>&amp;Подсчитать</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="270"/>
+      <source>&amp;Replace</source>
+      <translation>&amp;Заменить</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="277"/>
+      <source>Replace &amp;All</source>
+      <translation>Заменить &amp;все</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="284"/>
+      <source>Replace All in &amp;Opened Documents</source>
+      <translation>Заменить все во всех о&amp;ткрытых документах</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="291"/>
+      <source>Find All in All &amp;Opened Documents</source>
+      <translation>Найти все во всех откр&amp;ытых документах</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="301"/>
+      <source>Find All in Current Document</source>
+      <translation>Найти все в текущем документе</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="311"/>
+      <source>Mark All</source>
+      <translation>Отметить все</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="321"/>
+      <source>Clear all marks</source>
+      <translation>Очистить все метки</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="331"/>
+      <source>Copy Marked Text</source>
+      <translation>Копировать отмеченный текст</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="341"/>
+      <source>Close</source>
+      <translation>Закрыть</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="397"/>
+      <source>&amp;Find:</source>
+      <translation>&amp;Найти:</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="432"/>
+      <source>Replace:</source>
+      <translation>Заменить:</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="481"/>
+      <source>&amp;Bookmark line</source>
+      <translation>&amp;Строка закладки</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="488"/>
+      <source>&amp;Purge for each search</source>
+      <translation>&amp;Очищать для каждого поиска</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="495"/>
+      <source>Backward direction</source>
+      <translation>Обратное направление поиска</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="502"/>
+      <source>Match &amp;whole word only</source>
+      <translation>Только целые &amp;слова</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="509"/>
+      <source>Match &amp;case</source>
+      <translation>Учитывать &amp;регистр</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="516"/>
+      <source>Wra&amp;p Around</source>
+      <translation>За&amp;циклить поиск</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="64"/>
+      <source>Replace</source>
+      <translation>Замена</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="65"/>
+      <source>Mark</source>
+      <translation>Отметить</translation>
+    </message>
+    <message numerus="yes">
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="154"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="362"/>
+      <source>Replaced %Ln matches</source>
+      <translation>
+        <numerusform>Заменено %Ln соответствие</numerusform>
+        <numerusform>Заменено %Ln соответствия</numerusform>
+        <numerusform>Заменено %Ln соответствий</numerusform>
+        <numerusform>Replaced %Ln matches</numerusform>
+      </translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="262"/>
+      <source>The end of the document has been reached. Found 1st occurrence from the top.</source>
+      <translation>Достигнут конец документа. Обнаружено первое соответствие сверху.</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="273"/>
+      <source>No matches found.</source>
+      <translation>Не найдено соответствий.</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="334"/>
+      <source>1 occurrence was replaced</source>
+      <translation>1 совпадение заменено</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="343"/>
+      <source>No more occurrences were found</source>
+      <translation>Больше совпадений не обнаружено</translation>
+    </message>
+    <message numerus="yes">
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="373"/>
+      <source>Found %Ln matches</source>
+      <translation>
+        <numerusform>Найдено %Ln соответствие</numerusform>
+        <numerusform>Найдено %Ln соответствия</numerusform>
+        <numerusform>Найдено %Ln соответствий</numerusform>
+        <numerusform>Found %Ln matches</numerusform>
+      </translation>
+    </message>
+    <message numerus="yes">
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="783"/>
+      <source>Mark: %Ln match in entire file</source>
+      <translation>
+        <numerusform>Метка: %Ln совпадение во всём файле</numerusform>
+        <numerusform>Метка: %Ln совпадения во всём файле</numerusform>
+        <numerusform>Метка: %Ln совпадениий во всём файле</numerusform>
+        <numerusform>Метка: %Ln совпадениий во всём файле</numerusform>
+      </translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="794"/>
+      <source>All marks cleared</source>
+      <translation>Все метки очищены</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="818"/>
+      <source>No marks to copy</source>
+      <translation>Нет меток для копирования</translation>
+    </message>
+    <message numerus="yes">
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="823"/>
+      <source>Copied %Ln marked text(s)</source>
+      <translation>
+        <numerusform>Скопирован %Ln отмеченный текст</numerusform>
+        <numerusform>Скопировано %Ln отмеченных текста</numerusform>
+        <numerusform>Скопировано %Ln отмеченных текстов</numerusform>
+        <numerusform>Скопировано %Ln отмеченных текстов</numerusform>
+      </translation>
+    </message>
+  </context>
+  <context>
+    <name>FolderAsWorkspaceDock</name>
+    <message>
+      <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="14"/>
+      <source>Folder as Workspace</source>
+      <translation>Папка как проект</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="88"/>
+      <source>...</source>
+      <translation>...</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="108"/>
+      <source>Size</source>
+      <translation>Размер</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="119"/>
+      <source>Type</source>
+      <translation>Тип</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="130"/>
+      <source>Date Modified</source>
+      <translation>Дата изменения</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="141"/>
+      <source>Hidden</source>
+      <translation>Скрыто</translation>
+    </message>
+  </context>
+  <context>
+    <name>LanguageInspectorDock</name>
+    <message>
+      <location filename="../src/docks/LanguageInspectorDock.ui" line="14"/>
+      <source>Language Inspector</source>
+      <translation>Инспектор языка</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/LanguageInspectorDock.ui" line="56"/>
+      <source>Language:</source>
+      <translation>Язык:</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/LanguageInspectorDock.ui" line="70"/>
+      <source>Lexer:</source>
+      <translation>Лексер:</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/LanguageInspectorDock.ui" line="86"/>
+      <source>Properties:</source>
+      <translation>Свойства:</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/LanguageInspectorDock.ui" line="100"/>
+      <source>Property</source>
+      <translation>Свойство</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/LanguageInspectorDock.ui" line="105"/>
+      <source>Type</source>
+      <translation>Тип</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/LanguageInspectorDock.ui" line="110"/>
+      <location filename="../src/docks/LanguageInspectorDock.ui" line="151"/>
+      <source>Description</source>
+      <translation>Описание</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/LanguageInspectorDock.ui" line="115"/>
+      <source>Value</source>
+      <translation>Значение</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/LanguageInspectorDock.ui" line="123"/>
+      <source>Keywords:</source>
+      <translation>Ключевые слова:</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/LanguageInspectorDock.ui" line="146"/>
+      <source>ID</source>
+      <translation>ИД</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/LanguageInspectorDock.ui" line="159"/>
+      <source>Styles:</source>
+      <translation>Стили:</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/LanguageInspectorDock.ui" line="166"/>
+      <source>TextLabel</source>
+      <translation>TextLabel</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/LanguageInspectorDock.cpp" line="146"/>
+      <source>Position %1 Style %2</source>
+      <translation>Положение %1 Стиль %2</translation>
+    </message>
+  </context>
+  <context>
+    <name>LuaConsoleDock</name>
+    <message>
+      <location filename="../src/docks/LuaConsoleDock.ui" line="17"/>
+      <source>Lua Console</source>
+      <translation>Консоль Lua</translation>
+    </message>
+  </context>
+  <context>
+    <name>MacroEditorDialog</name>
+    <message>
+      <location filename="../src/dialogs/MacroEditorDialog.ui" line="14"/>
+      <source>Macro Editor</source>
+      <translation>Редактор макросов</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MacroEditorDialog.ui" line="48"/>
+      <source>Name</source>
+      <translation>Имя</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MacroEditorDialog.ui" line="58"/>
+      <source>Shortcut</source>
+      <translation>Комбинация клавиш</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MacroEditorDialog.ui" line="67"/>
+      <source>Steps:</source>
+      <translation>Шаги:</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MacroEditorDialog.ui" line="95"/>
+      <source>Insert Macro Step</source>
+      <translation>Вставить шаг макроса</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MacroEditorDialog.ui" line="110"/>
+      <source>Delete Selected Macro Step</source>
+      <translation>Удалить выбранный шаг макроса</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MacroEditorDialog.ui" line="125"/>
+      <source>Move Selected Macro Step Up</source>
+      <translation>Переместить выбранный шаг макроса вверх</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MacroEditorDialog.ui" line="140"/>
+      <source>Move Selected Macro Step Down</source>
+      <translation>Переместить выбранный шаг макроса вниз</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MacroEditorDialog.ui" line="176"/>
+      <source>Copy Selected Macro</source>
+      <translation>Копировать выбранный макрос</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MacroEditorDialog.ui" line="191"/>
+      <source>Delete Selected Macro</source>
+      <translation>Удалить выбранный макрос</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MacroEditorDialog.cpp" line="129"/>
+      <source>Delete Macro</source>
+      <translation>Удалить макрос</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MacroEditorDialog.cpp" line="129"/>
+      <source>Are you sure you want to delete &lt;b&gt;%1&lt;/b&gt;?</source>
+      <translation>Вы действительно хотите удалить &lt;b&gt;%1&lt;/b&gt;?</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MacroEditorDialog.cpp" line="150"/>
+      <source>(Copy)</source>
+      <translation>(копия)</translation>
+    </message>
+  </context>
+  <context>
+    <name>MacroRunDialog</name>
+    <message>
+      <location filename="../src/dialogs/MacroRunDialog.ui" line="14"/>
+      <source>Run a Macro Multiple Times</source>
+      <translation>Многократный запуск</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MacroRunDialog.ui" line="31"/>
+      <source>Macro:</source>
+      <translation>Макрос:</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MacroRunDialog.ui" line="56"/>
+      <source>Run Until End of File</source>
+      <translation>Выполнять до конца файла</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MacroRunDialog.ui" line="63"/>
+      <source>Execute...</source>
+      <translation>Выполнить...</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MacroRunDialog.ui" line="116"/>
+      <source>times</source>
+      <translation>раз(а)</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MacroRunDialog.ui" line="166"/>
+      <source>Run</source>
+      <translation>Запускать</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MacroRunDialog.ui" line="173"/>
+      <source>Cancel</source>
+      <translation>Отмена</translation>
+    </message>
+  </context>
+  <context>
+    <name>MacroSaveDialog</name>
+    <message>
+      <location filename="../src/dialogs/MacroSaveDialog.ui" line="14"/>
+      <source>Save Macro</source>
+      <translation>Сохранение макроса</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MacroSaveDialog.ui" line="25"/>
+      <source>Name:</source>
+      <translation>Имя:</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MacroSaveDialog.ui" line="39"/>
+      <source>Shortcut:</source>
+      <translation>Комбинация клавиш:</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MacroSaveDialog.ui" line="82"/>
+      <source>OK</source>
+      <translation>ОК</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MacroSaveDialog.ui" line="89"/>
+      <source>Cancel</source>
+      <translation>Отмена</translation>
+    </message>
+  </context>
+  <context>
+    <name>MacroStepTableModel</name>
+    <message>
+      <location filename="../src/MacroStepTableModel.cpp" line="34"/>
+      <source>Name</source>
+      <translation>Имя</translation>
+    </message>
+    <message>
+      <location filename="../src/MacroStepTableModel.cpp" line="36"/>
+      <source>Text</source>
+      <translation>Текст</translation>
+    </message>
+  </context>
+  <context>
+    <name>MainWindow</name>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="17"/>
+      <source>Notepad Next[*]</source>
+      <translation>Notepad Next[*]</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="33"/>
+      <source>+</source>
+      <translation>+</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="48"/>
+      <source>&amp;File</source>
+      <translation>&amp;Файл</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="52"/>
+      <source>Close More</source>
+      <translation>Закрытие вкладок</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="60"/>
+      <source>&amp;Recent Files</source>
+      <translation>&amp;Недавние файлы</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="69"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1524"/>
+      <source>Export As</source>
+      <translation>Экспортировать как</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="97"/>
+      <source>&amp;Edit</source>
+      <translation>&amp;Правка</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="101"/>
+      <source>Copy More</source>
+      <translation>Копировать в буфер</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="109"/>
+      <source>Indent</source>
+      <translation>Отступ</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="116"/>
+      <source>EOL Conversion</source>
+      <translation>Конвертация конца строк</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="124"/>
+      <source>Convert Case</source>
+      <translation>Конвертация регистра</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="131"/>
+      <source>Line Operations</source>
+      <translation>Операции со строками</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="154"/>
+      <source>Blank Operations</source>
+      <translation>Операции с пробелами</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="160"/>
+      <source>Comment/Uncomment</source>
+      <translation>Комментирование</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="168"/>
+      <source>Copy As</source>
+      <translation>Копировать как</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="175"/>
+      <source>Encoding/Decoding</source>
+      <translation>Кодирование/декодирование</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="207"/>
+      <source>Search</source>
+      <translation>Поиск</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="211"/>
+      <source>Bookmarks</source>
+      <translation>Закладки</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="228"/>
+      <source>Mark All Occurrences</source>
+      <translation>Отметить все вхождения</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="236"/>
+      <source>Clear Marks</source>
+      <translation>Очистить отметки</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="261"/>
+      <source>&amp;View</source>
+      <translation>&amp;Вид</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="265"/>
+      <source>&amp;Zoom</source>
+      <translation>&amp;Масштаб</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="274"/>
+      <source>Show Symbol</source>
+      <translation>Отображение символов</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="285"/>
+      <source>Fold Level</source>
+      <translation>Свернуть уровень</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="299"/>
+      <source>Unfold Level</source>
+      <translation>Развернуть уровень</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="328"/>
+      <source>Language</source>
+      <translation>Язык</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="333"/>
+      <source>Settings</source>
+      <translation>Опции</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="339"/>
+      <source>Macro</source>
+      <translation>Макросы</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="350"/>
+      <source>Help</source>
+      <translation>Справка</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="361"/>
+      <source>Encoding</source>
+      <translation>Кодировка</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="377"/>
+      <source>Main Tool Bar</source>
+      <translation>Основная панель инструментов</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="437"/>
+      <source>&amp;New</source>
+      <translation>&amp;Новый</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="440"/>
+      <source>Create a new file</source>
+      <translation>Создать новый файл</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="453"/>
+      <source>&amp;Open...</source>
+      <translation>&amp;Открыть...</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="469"/>
+      <source>&amp;Save</source>
+      <translation>&amp;Сохранить</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="472"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2030"/>
+      <source>Save</source>
+      <translation>Сохранить</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="480"/>
+      <source>E&amp;xit</source>
+      <translation>&amp;Выход</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="493"/>
+      <source>&amp;Undo</source>
+      <translation>&amp;Отмена</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="506"/>
+      <source>&amp;Redo</source>
+      <translation>&amp;Повтор</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="519"/>
+      <source>Cu&amp;t</source>
+      <translation>В&amp;ырезать</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="532"/>
+      <source>&amp;Copy</source>
+      <translation>&amp;Копировать</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="545"/>
+      <source>&amp;Paste</source>
+      <translation>В&amp;ставить</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="553"/>
+      <source>&amp;Delete</source>
+      <translation>&amp;Удалить</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="561"/>
+      <source>Copy Full Path</source>
+      <translation>Копировать полный путь</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="566"/>
+      <source>Copy File Name</source>
+      <translation>Копировать имя файла</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="571"/>
+      <source>Copy File Directory</source>
+      <translation>Копировать путь к файлу</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="580"/>
+      <source>&amp;Close</source>
+      <translation>&amp;Закрыть</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="583"/>
+      <source>Close the current file</source>
+      <translation>Закрыть текущий файл</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="591"/>
+      <source>Save &amp;As...</source>
+      <translation>Сох&amp;ранить как...</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="599"/>
+      <source>Save a Copy As...</source>
+      <translation>Сохранить копию как...</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="608"/>
+      <source>Sav&amp;e All</source>
+      <translation>Сохра&amp;нить все</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="616"/>
+      <source>Select A&amp;ll</source>
+      <translation>Выделить &amp;все</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="628"/>
+      <source>Increase Indent</source>
+      <translation>Увеличить отступ</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="637"/>
+      <source>Decrease Indent</source>
+      <translation>Уменьшить отступ</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="642"/>
+      <source>Rename...</source>
+      <translation>Переименовать...</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="651"/>
+      <source>Re&amp;load</source>
+      <translation>&amp;Перезагрузить</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="659"/>
+      <source>Windows (CR LF)</source>
+      <translation>Windows (CR LF)</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="667"/>
+      <source>Unix (LF)</source>
+      <translation>Unix (LF)</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="675"/>
+      <source>Macintosh (CR)</source>
+      <translation>Macintosh (CR)</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="680"/>
+      <source>UPPER CASE</source>
+      <translation>ВЕРХНИЙ РЕГИСТР</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="683"/>
+      <source>Convert text to upper case</source>
+      <translation>Конвертировать текст в верхний регистр</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="688"/>
+      <source>lower case</source>
+      <translation>нижний регистр</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="691"/>
+      <source>Convert text to lower case</source>
+      <translation>Конвертировать текст в нижний регистр</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="696"/>
+      <source>Duplicate Current Line</source>
+      <translation>Дублировать текущую строку</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="704"/>
+      <source>Split Lines</source>
+      <translation>Разбить строки</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="709"/>
+      <source>Join Lines</source>
+      <translation>Соединить строки</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="717"/>
+      <source>Move Selected Lines Up</source>
+      <translation>Переместить выбранные строки вверх</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="725"/>
+      <source>Move Selected Lines Down</source>
+      <translation>Переместить выбранные строки вниз</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="737"/>
+      <source>Clos&amp;e All</source>
+      <translation>Зак&amp;рыть все</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="740"/>
+      <source>Close All files</source>
+      <translation>Закрыть все файлы</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="748"/>
+      <source>Close All Except Active Document</source>
+      <translation>Закрыть все кроме текущей</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="753"/>
+      <source>Close All to the Left</source>
+      <translation>Закрыть все вкладки слева</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="758"/>
+      <source>Close All to the Right</source>
+      <translation>Закрыть все вкладки справа</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="768"/>
+      <source>Zoom &amp;In</source>
+      <translation>У&amp;величить масштаб</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="781"/>
+      <source>Zoom &amp;Out</source>
+      <translation>&amp;Уменьшить масштаб</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="789"/>
+      <source>Reset Zoom</source>
+      <translation>Сбросить масштаб</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="797"/>
+      <source>About Qt</source>
+      <translation>О Qt</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="809"/>
+      <source>About Notepad Next</source>
+      <translation>О Notepad Next</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="820"/>
+      <source>Show Whitespace</source>
+      <translation>Показывать пустое пространство</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="828"/>
+      <source>Show End of Line</source>
+      <translation>Показывать символ конца строки</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="841"/>
+      <source>Show All Characters</source>
+      <translation>Показывать все символы</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="854"/>
+      <source>Show Indent Guide</source>
+      <translation>Показывать направляющие отступов</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="862"/>
+      <source>Show Wrap Symbol</source>
+      <translation>Отображать знак Перенос строк</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="875"/>
+      <source>Word Wrap</source>
+      <translation>Перенос строк</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="880"/>
+      <source>Restore Recently Closed File</source>
+      <translation>Открыть последний закрытый файл</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="888"/>
+      <source>Open All Recent Files</source>
+      <translation>Открыть все недавние файлы</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="893"/>
+      <source>Clear Recent Files List</source>
+      <translation>Очистить список недавних файлов</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="903"/>
+      <source>&amp;Find...</source>
+      <translation>&amp;Найти...</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="911"/>
+      <source>Find in Files...</source>
+      <translation>Найти в файлах...</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="916"/>
+      <source>Find &amp;Next</source>
+      <translation>Искать &amp;далее</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="924"/>
+      <source>Find &amp;Previous</source>
+      <translation>Искать &amp;ранее</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="937"/>
+      <source>&amp;Replace...</source>
+      <translation>&amp;Заменить...</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="948"/>
+      <source>Full Screen</source>
+      <translation>Полный экран</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="964"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="828"/>
+      <source>Start Recording</source>
+      <translation>Начать запись</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="976"/>
+      <source>Playback</source>
+      <translation>Воспроизвести</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="991"/>
+      <source>Save Current Recorded Macro...</source>
+      <translation>Сохранить записанный макрос...</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1003"/>
+      <source>Run a Macro Multiple Times...</source>
+      <translation>Многократный запуск...</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1012"/>
+      <source>Preferences...</source>
+      <translation>Настройки...</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1020"/>
+      <source>Quick Find</source>
+      <translation>Быстрый поиск</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1028"/>
+      <source>Select Next Instance</source>
+      <translation>Выделить следующий экземпляр</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1040"/>
+      <source>Move to Trash...</source>
+      <translation>Убрать в корзину...</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1043"/>
+      <source>Move to Trash</source>
+      <translation>Убрать в корзину</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1048"/>
+      <source>Check for Updates...</source>
+      <translation>Проверить обновления...</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1053"/>
+      <source>&amp;Go to Line...</source>
+      <translation>&amp;Перейти к строке...</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1065"/>
+      <source>Print...</source>
+      <translation>Печать...</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1073"/>
+      <source>Open Folder as Workspace...</source>
+      <translation>Открыть папку как проект...</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1078"/>
+      <source>Toggle Single Line Comment</source>
+      <translation>Вкл/откл комментарий строки</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1086"/>
+      <source>Single Line Comment</source>
+      <translation> Закомментировать строку</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1094"/>
+      <source>Single Line Uncomment</source>
+      <translation>Раскомментировать строку</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1109"/>
+      <source>Edit Macros...</source>
+      <translation>Редактирование макросов...</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1117"/>
+      <source>This is not currently implemented</source>
+      <translation>Это ещё не реализовано</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1122"/>
+      <source>Column Mode...</source>
+      <translation>Режим столбцов...</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1127"/>
+      <source>Export as HTML...</source>
+      <translation>Экспортировать как HTML...</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1132"/>
+      <source>Export as RTF...</source>
+      <translation>Экспортировать как RTF...</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1137"/>
+      <source>Copy as HTML</source>
+      <translation>Копировать как HTML</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1142"/>
+      <source>Copy as RTF</source>
+      <translation>Копировать как RTF</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1147"/>
+      <source>Base 64 Encode</source>
+      <translation>Кодирование Base 64</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1152"/>
+      <source>URL Encode</source>
+      <translation>Кодирование URL</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1157"/>
+      <source>Base 64 Decode</source>
+      <translation>Декодирование Base 64</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1162"/>
+      <source>URL Decode</source>
+      <translation>Декодирование URL</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1167"/>
+      <source>Copy URL</source>
+      <translation>Копировать URL</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1172"/>
+      <source>Remove Empty Lines</source>
+      <translation>Удалить пустые строки</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1177"/>
+      <source>Trim Trailing Space</source>
+      <translation>Удалить пробелы в конце строк</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1186"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1189"/>
+      <source>Show in Explorer</source>
+      <translation>Открыть в Проводнике</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1198"/>
+      <source>Open %1 Here</source>
+      <translation>Открыть %1 здесь</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1203"/>
+      <source>Toggle Bookmark</source>
+      <translation>Закладка (поставить/снять)</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1211"/>
+      <source>Search and Bookmark Lines...</source>
+      <translation>Поиск и закладки строк…</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1219"/>
+      <source>Next Bookmark</source>
+      <translation>Следующая закладка</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1227"/>
+      <source>Previous Bookmark</source>
+      <translation>Предыдущая закладка</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1235"/>
+      <source>Clear Bookmarks</source>
+      <translation>Очистить закладки</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1240"/>
+      <source>Invert Bookmarks</source>
+      <translation>Инвертировать закладки</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1245"/>
+      <source>Next Tab</source>
+      <translation>Следующая вкладка</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1256"/>
+      <source>Previous Tab</source>
+      <translation>Предыдущая вкладка</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1267"/>
+      <source>Fold Level 1</source>
+      <translation>Свернуть уровень 1</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1275"/>
+      <source>Fold Level 2</source>
+      <translation>Свернуть уровень 2</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1283"/>
+      <source>Fold Level 3</source>
+      <translation>Свернуть уровень 3</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1291"/>
+      <source>Fold Level 4</source>
+      <translation>Свернуть уровень 4</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1299"/>
+      <source>Unfold Level 1</source>
+      <translation>Развернуть уровень 1</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1307"/>
+      <source>Unfold Level 2</source>
+      <translation>Развернуть уровень 2</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1315"/>
+      <source>Unfold Level 3</source>
+      <translation>Развернуть уровень 3</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1323"/>
+      <source>Unfold Level 4</source>
+      <translation>Развернуть уровень 4</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1331"/>
+      <source>Fold All</source>
+      <translation>Свернуть все</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1339"/>
+      <source>Unfold All</source>
+      <translation>Развернуть все</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1347"/>
+      <source>Fold Level 5</source>
+      <translation>Свернуть уровень 5</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1355"/>
+      <source>Fold Level 6</source>
+      <translation>Свернуть уровень 6</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1363"/>
+      <source>Fold Level 7</source>
+      <translation>Свернуть уровень 7</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1371"/>
+      <source>Fold Level 8</source>
+      <translation>Свернуть уровень 8</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1379"/>
+      <source>Fold Level 9</source>
+      <translation>Свернуть уровень 9</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1387"/>
+      <source>Unfold Level 5</source>
+      <translation>Развернуть уровень 5</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1395"/>
+      <source>Unfold Level 6</source>
+      <translation>Развернуть уровень 6</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1403"/>
+      <source>Unfold Level 7</source>
+      <translation>Развернуть уровень 7</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1411"/>
+      <source>Unfold Level 8</source>
+      <translation>Развернуть уровень 8</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1419"/>
+      <source>Unfold Level 9</source>
+      <translation>Развернуть уровень 9</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1427"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1430"/>
+      <source>Toggle Overtype</source>
+      <translation>Режим замены (вкл/откл)</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1441"/>
+      <source>Debug Info...</source>
+      <translation>Отладочная информация…</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1446"/>
+      <source>Cut Bookmarked Lines</source>
+      <translation>Вырезать строки с закладками</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1451"/>
+      <source>Copy Bookmarked Lines</source>
+      <translation>Копировать строки с закладками</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1456"/>
+      <source>Delete Bookmarked Lines</source>
+      <translation>Удалить строки с закладками</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1461"/>
+      <source>Mark Style 1</source>
+      <translation>Отметить стилем 1</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1469"/>
+      <source>Mark Style 2</source>
+      <translation>Отметить стилем 2</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1477"/>
+      <source>Clear Style 1</source>
+      <translation>Очистить стиль 1</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1485"/>
+      <source>Clear Style 2</source>
+      <translation>Очистить стиль 2</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1493"/>
+      <source>Mark Style 3</source>
+      <translation>Отметить стилем 3</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1501"/>
+      <source>Clear Style 3</source>
+      <translation>Очистить стиль 3</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1509"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1512"/>
+      <source>Clear All Styles</source>
+      <translation>Очистить все стили</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1517"/>
+      <source>Remove Duplicate Lines</source>
+      <translation>Удалить повторяющиеся строки</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1522"/>
+      <source>Remove Consecutive Duplicate Lines</source>
+      <translation>Удалить повторяющиеся подряд строки</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1527"/>
+      <source>Sort Lines Ascending</source>
+      <translation>Сортировать строки по возрастанию</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1532"/>
+      <source>Sort Lines Descending</source>
+      <translation>Сортировать строки по убыванию</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1537"/>
+      <source>Sort Lines Ascending (Case-Insensitive)</source>
+      <translation>Сортировать строки по возрастанию (без учёта регистра)</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1542"/>
+      <source>Sort Lines Descending (Case-Insensitive)</source>
+      <translation>Сортировать строки по убыванию (без учёта регистра)</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1547"/>
+      <source>Sort Lines by Length Ascending</source>
+      <translation>Сортировать строки по длине по возрастанию</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1552"/>
+      <source>Sort Lines by Length Descending</source>
+      <translation>Сортировать строки по длине по убыванию</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1557"/>
+      <source>Reverse Line Order</source>
+      <translation>Обратный порядок строк</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1562"/>
+      <source>Split Horizontal</source>
+      <translation>Разделить по горизонтали</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1565"/>
+      <source>Split editor horizontally (left/right)</source>
+      <translation>Разделить редактор по горизонтали (слева/справа)</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1573"/>
+      <source>Split Vertical</source>
+      <translation>Разделить по вертикали</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1576"/>
+      <source>Split editor vertically (top/bottom)</source>
+      <translation>Разделить редактор по вертикали (сверху/снизу)</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1584"/>
+      <source>Select and Find Next</source>
+      <translation>Выбрать и найти следующее</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1592"/>
+      <source>Select and Find Previous</source>
+      <translation>Выбрать и найти предыдущее</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="481"/>
+      <source>Go to line</source>
+      <translation>Перейти к строке</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="481"/>
+      <source>Line Number (1 - %1)</source>
+      <translation>Номер строки (1 - %1)</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="819"/>
+      <source>Stop Recording</source>
+      <translation>Остановить запись</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="924"/>
+      <source>Debug Info</source>
+      <translation>Отладочная информация</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1144"/>
+      <source>New %1</source>
+      <translation>Новый %1</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1206"/>
+      <source>Create File</source>
+      <translation>Создать файл</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1206"/>
+      <source>&lt;b&gt;%1&lt;/b&gt; does not exist. Do you want to create it?</source>
+      <translation>&lt;b&gt;%1&lt;/b&gt; не существует. Хотите создать его?</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2021"/>
+      <source>Save File</source>
+      <translation>Сохранить файл</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1285"/>
+      <source>Open Folder as Workspace</source>
+      <translation>Открыть папку как проект</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1308"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1964"/>
+      <source>Reload File</source>
+      <translation>Перезагрузить файл</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1308"/>
+      <source>Are you sure you want to reload &lt;b&gt;%1&lt;/b&gt;? Any unsaved changes will be lost.</source>
+      <translation>Уверены, что хотите перезагрузить &lt;b&gt;%1&lt;/b&gt;? Все несохранённые изменения будут потеряны.</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1480"/>
+      <source>Save a Copy As</source>
+      <translation>Сохранить копию как</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1565"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1582"/>
+      <source>Rename</source>
+      <translation>Переименовать</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1582"/>
+      <source>Name:</source>
+      <translation>Имя:</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1602"/>
+      <source>Delete File</source>
+      <translation>Удалить файл</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1602"/>
+      <source>Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</source>
+      <translation>Уверены, что хотите переместить &lt;b&gt;%1&lt;/b&gt; в корзину?</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1612"/>
+      <source>Error Deleting File</source>
+      <translation>Ошибка при удалении файла</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1612"/>
+      <source>Something went wrong deleting &lt;b&gt;%1&lt;/b&gt;?</source>
+      <translation>Что-то пошло не так при удалении &lt;b&gt;%1&lt;/b&gt;?</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1696"/>
+      <source>Administrator</source>
+      <translation>Администратор</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1964"/>
+      <source>&lt;b&gt;%1&lt;/b&gt; has been modified by another program. Do you want to reload it?</source>
+      <translation>&lt;b&gt;%1&lt;/b&gt; был изменён другой программой. Хотите перезагрузить его?</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1990"/>
+      <source>Read error</source>
+      <translation>Ошибка чтения</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1991"/>
+      <source>Write error</source>
+      <translation>Ошибка записи</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1992"/>
+      <source>Fatal error</source>
+      <translation>Фатальная ошибка</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1993"/>
+      <source>Resource error</source>
+      <translation>Ошибка ресурса</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1994"/>
+      <source>Open error</source>
+      <translation>Ошибка открытия</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1995"/>
+      <source>Abort error</source>
+      <translation>Ошибка прерывания</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1996"/>
+      <source>Timeout error</source>
+      <translation>Ошибка тайм-аута</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1997"/>
+      <source>Unspecified error</source>
+      <translation>Неопределённая ошибка</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1998"/>
+      <source>Remove error</source>
+      <translation>Ошибка удаления</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1999"/>
+      <source>Rename error</source>
+      <translation>Ошибка переименования</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2000"/>
+      <source>Position error</source>
+      <translation>Ошибка позиции</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2001"/>
+      <source>Resize error</source>
+      <translation>Ошибка изменения размера</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2002"/>
+      <source>Permissions error</source>
+      <translation>Ошибка прав доступа</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2003"/>
+      <source>Copy error</source>
+      <translation>Ошибка копирования</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2004"/>
+      <source>Unknown error (%1)</source>
+      <translation>Неизвестная ошибка (%1)</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2007"/>
+      <source>Error Saving File</source>
+      <translation>Ошибка при сохранении файла</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2008"/>
+      <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
+      <translation>Произошла ошибка при сохранении &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Ошибка: %2</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2014"/>
+      <source>Zoom: %1%</source>
+      <translation>Масштаб: %1%</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2026"/>
+      <source>Save changes to &lt;b&gt;%1&lt;/b&gt;?</source>
+      <translation>Сохранить изменения в &lt;b&gt;%1&lt;/b&gt;?</translation>
+    </message>
+    <message numerus="yes">
+      <location filename="../src/dialogs/MainWindow.cpp" line="2027"/>
+      <source>There are %n files with unsaved changes. Save them?</source>
+      <translation>
+        <numerusform>Есть %n файл с несохранёнными изменениями. Сохранить?</numerusform>
+        <numerusform>Есть %n файла с несохранёнными изменениями. Сохранить?</numerusform>
+        <numerusform>Есть %n файлов с несохранёнными изменениями. Сохранить?</numerusform>
+        <numerusform>Есть %n файлов с несохранёнными изменениями. Сохранить?</numerusform>
+      </translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2030"/>
+      <source>Save All</source>
+      <translation>Сохранить все</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2031"/>
+      <source>Discard All</source>
+      <translation>Отклонить все</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2031"/>
+      <source>Discard</source>
+      <translation>Отклонить</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2228"/>
+      <source>No updates are available at this time.</source>
+      <translation>В настоящее время обновлений нет.</translation>
+    </message>
+  </context>
+  <context>
+    <name>PreferencesDialog</name>
+    <message>
+      <location filename="../src/dialogs/PreferencesDialog.ui" line="14"/>
+      <source>Preferences</source>
+      <translation>Настройки</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/PreferencesDialog.ui" line="37"/>
+      <source>Show menu bar</source>
+      <translation>Показывать строку меню</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/PreferencesDialog.ui" line="44"/>
+      <source>Show toolbar</source>
+      <translation>Показывать панель инструментов</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/PreferencesDialog.ui" line="51"/>
+      <source>Show status bar</source>
+      <translation>Показывать строку состояния</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/PreferencesDialog.ui" line="58"/>
+      <source>Restore previous session</source>
+      <translation>Восстанавливать предыдущую сессию</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/PreferencesDialog.ui" line="70"/>
+      <source>Unsaved changes</source>
+      <translation>Несохранённые изменения</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/PreferencesDialog.ui" line="77"/>
+      <source>Temporary files</source>
+      <translation>Временные файлы</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/PreferencesDialog.ui" line="89"/>
+      <source>Recenter find/replace dialog when opened</source>
+      <translation>Центрировать диалог поиска/замены при открытии</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/PreferencesDialog.ui" line="96"/>
+      <source>Combine search results</source>
+      <translation>Комбинировать результаты поиска</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/PreferencesDialog.ui" line="114"/>
+      <source>Translation:</source>
+      <translation>Перевод:</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/PreferencesDialog.ui" line="123"/>
+      <source>Exit on last tab closed</source>
+      <translation>Выход при закрытии последней вкладки</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/PreferencesDialog.ui" line="132"/>
+      <source>Default Font</source>
+      <translation>Шрифт по умолчанию</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/PreferencesDialog.ui" line="138"/>
+      <source>Font</source>
+      <translation>Шрифт</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/PreferencesDialog.ui" line="148"/>
+      <source>Font Size</source>
+      <translation>Размер шрифта</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/PreferencesDialog.ui" line="155"/>
+      <source>pt</source>
+      <translation> пт</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/PreferencesDialog.ui" line="188"/>
+      <source>Default Line Endings</source>
+      <translation>Окончания строк по умолчанию</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/PreferencesDialog.ui" line="198"/>
+      <source>Default Language</source>
+      <translation>Язык по умолчанию</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/PreferencesDialog.ui" line="210"/>
+      <source>Highlight URLs</source>
+      <translation>Выделять URL-адреса</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/PreferencesDialog.ui" line="217"/>
+      <source>Show Line Numbers</source>
+      <translation>Показывать номера строк</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/PreferencesDialog.ui" line="224"/>
+      <source>Auto Completion</source>
+      <translation>Автозаполнение</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/PreferencesDialog.ui" line="231"/>
+      <location filename="../src/dialogs/PreferencesDialog.cpp" line="131"/>
+      <source>Default Directory</source>
+      <translation>Каталог по умолчанию</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/PreferencesDialog.ui" line="237"/>
+      <source>Follow Current Document</source>
+      <translation>Следовать за текущим документом</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/PreferencesDialog.ui" line="244"/>
+      <source>Last Used Directory</source>
+      <translation>Последний использованный каталог</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/PreferencesDialog.ui" line="263"/>
+      <source>...</source>
+      <translation>...</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/PreferencesDialog.ui" line="294"/>
+      <source>TextLabel</source>
+      <translation>TextLabel</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/PreferencesDialog.ui" line="306"/>
+      <source>An application restart is required to apply certain settings.</source>
+      <translation>Для применения некоторых настроек требуется перезапуск приложения.</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/PreferencesDialog.cpp" line="56"/>
+      <source>Warning</source>
+      <translation>Предупреждение</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/PreferencesDialog.cpp" line="56"/>
+      <source>This feature is experimental and it should not be considered safe for critically important work. It may lead to possible data loss. Use at your own risk.</source>
+      <translation>Эта функция является экспериментальной, и ее не следует считать безопасной для критически важной работы. Это может привести к возможной потере данных. Используйте на свой риск.</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/PreferencesDialog.cpp" line="85"/>
+      <source>System Default</source>
+      <translation>По умолчанию для системы</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/PreferencesDialog.cpp" line="86"/>
+      <source>Windows (CR LF)</source>
+      <translation>Windows (CR LF)</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/PreferencesDialog.cpp" line="87"/>
+      <source>Linux (LF)</source>
+      <translation>Linux (LF)</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/PreferencesDialog.cpp" line="88"/>
+      <source>Macintosh (CR)</source>
+      <translation>Macintosh (CR)</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/PreferencesDialog.cpp" line="194"/>
+      <source>&lt;System Default&gt;</source>
+      <translation>&lt;Использовать системный&gt;</translation>
+    </message>
+  </context>
+  <context>
+    <name>QuickFindWidget</name>
+    <message>
+      <location filename="../src/widgets/QuickFindWidget.ui" line="17"/>
+      <source>Frame</source>
+      <translation>Фрейм</translation>
+    </message>
+    <message>
+      <location filename="../src/widgets/QuickFindWidget.ui" line="32"/>
+      <source>Find...</source>
+      <translation>Поиск...</translation>
+    </message>
+    <message>
+      <location filename="../src/widgets/QuickFindWidget.ui" line="44"/>
+      <source>Match case</source>
+      <translation>Учитывать регистр</translation>
+    </message>
+    <message>
+      <location filename="../src/widgets/QuickFindWidget.ui" line="47"/>
+      <source>Aa</source>
+      <translation>Aa</translation>
+    </message>
+    <message>
+      <location filename="../src/widgets/QuickFindWidget.ui" line="57"/>
+      <source>Match whole word</source>
+      <translation>Искать целые слова</translation>
+    </message>
+    <message>
+      <location filename="../src/widgets/QuickFindWidget.ui" line="60"/>
+      <source>|A|</source>
+      <translation>|A|</translation>
+    </message>
+    <message>
+      <location filename="../src/widgets/QuickFindWidget.ui" line="70"/>
+      <source>Use regular expression</source>
+      <translation>Используйте регулярное выражение</translation>
+    </message>
+    <message>
+      <location filename="../src/widgets/QuickFindWidget.ui" line="73"/>
+      <source>. *</source>
+      <translation>. *</translation>
+    </message>
+    <message>
+      <location filename="../src/widgets/QuickFindWidget.cpp" line="238"/>
+      <source>%L1/%L2</source>
+      <translation>%L1/%L2</translation>
+    </message>
+  </context>
+  <context>
+    <name>SearchResultsDock</name>
+    <message>
+      <location filename="../src/docks/SearchResultsDock.ui" line="14"/>
+      <source>Search Results</source>
+      <translation>Результаты поиска</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/SearchResultsDock.ui" line="38"/>
+      <location filename="../src/docks/SearchResultsDock.ui" line="41"/>
+      <source>Copy All Results to Clipboard</source>
+      <translation>Копировать все результаты в буфер обмена</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/SearchResultsDock.cpp" line="57"/>
+      <source>Copy</source>
+      <translation>Копировать</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/SearchResultsDock.cpp" line="59"/>
+      <source>Collapse All</source>
+      <translation>Свернуть все</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/SearchResultsDock.cpp" line="60"/>
+      <source>Expand All</source>
+      <translation>Развернуть все</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/SearchResultsDock.cpp" line="62"/>
+      <source>Delete Entry</source>
+      <translation>Удалить запись</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/SearchResultsDock.cpp" line="64"/>
+      <source>Delete All</source>
+      <translation>Удалить все</translation>
+    </message>
+  </context>
+  <context>
+    <name>TabsQuickActionsBar</name>
+    <message>
+      <location filename="../src/widgets/TabsQuickActionsBar.cpp" line="40"/>
+      <source>Create a new file</source>
+      <translation>Создать новый файл</translation>
+    </message>
+    <message>
+      <location filename="../src/widgets/TabsQuickActionsBar.cpp" line="43"/>
+      <source>Show opened files list</source>
+      <translation>Показать список открытых файлов</translation>
+    </message>
+    <message>
+      <location filename="../src/widgets/TabsQuickActionsBar.cpp" line="49"/>
+      <source>Close the current file</source>
+      <translation>Закрыть текущий файл</translation>
+    </message>
+  </context>
+</TS>
