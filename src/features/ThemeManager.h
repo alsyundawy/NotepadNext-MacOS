@@ -24,6 +24,7 @@
 
 #include <QObject>
 #include <QPointer>
+#include <QWidget>
 #include <QString>
 #include <QColor>
 #include <QList>
@@ -83,7 +84,7 @@ private:
     ThemeMode m_themeMode = ThemeMode::Light;
     QString m_currentPaletteId = QStringLiteral("notepadNext");
     ApplicationSettings *m_settings = nullptr;
-    QPointer<MainWindow> m_activeWindow = nullptr;
+    QPointer<QWidget> m_activeWindow = nullptr;
 };
 
 #endif  // THEMEMANAGER_H

@@ -82,7 +82,7 @@ void ThemeManager::initialize(ApplicationSettings *settings, MainWindow *window)
         }
     }
 
-    applyTheme(m_activeWindow);
+    applyTheme(qobject_cast<MainWindow *>(m_activeWindow.data()));
     emit themeChanged(isDarkActive());
     emit paletteChanged(m_currentPaletteId);
 }
@@ -141,7 +141,7 @@ void ThemeManager::setThemeMode(ThemeMode mode, MainWindow *window) {
         m_settings->setValue(QStringLiteral("App/ThemePalette"), m_currentPaletteId);
     }
 
-    applyTheme(window ? window : m_activeWindow.data());
+    applyTheme(window ? window : qobject_cast<MainWindow *>(m_activeWindow.data()));
 
     emit themeChanged(isDarkActive());
     emit paletteChanged(m_currentPaletteId);
@@ -169,7 +169,7 @@ void ThemeManager::setPalette(const QString &paletteId, MainWindow *window) {
                              p->isDark ? QStringLiteral("Dark") : QStringLiteral("Light"));
     }
 
-    applyTheme(window ? window : m_activeWindow.data());
+    applyTheme(window ? window : qobject_cast<MainWindow *>(m_activeWindow.data()));
 
     emit themeChanged(isDarkActive());
     emit paletteChanged(m_currentPaletteId);
@@ -182,7 +182,7 @@ void ThemeManager::toggleTheme(MainWindow *window) {
 
 void ThemeManager::onSystemColorSchemeChanged() {
     if (m_themeMode == ThemeMode::Auto) {
-        applyTheme(m_activeWindow.data());
+        applyTheme(qobject_cast<MainWindow *>(m_activeWindow.data()));
         emit themeChanged(isDarkActive());
     }
 }
@@ -276,11 +276,13 @@ void ThemeManager::applyTheme(MainWindow *window) {
         }
     }
 
-    if (!anyWindowUpdated && m_activeWindow) {
-        m_activeWindow->applyStyleSheet();
-        m_activeWindow->enforceDarkTitleBar();
-        for (ScintillaNext *editor : m_activeWindow->editors()) {
-            applyThemeToEditor(editor);
+    if (!anyWindowUpdated) {
+        if (auto *activeWin = qobject_cast<MainWindow *>(m_activeWindow.data())) {
+            activeWin->applyStyleSheet();
+            activeWin->enforceDarkTitleBar();
+            for (ScintillaNext *editor : activeWin->editors()) {
+                applyThemeToEditor(editor);
+            }
         }
     }
 }
