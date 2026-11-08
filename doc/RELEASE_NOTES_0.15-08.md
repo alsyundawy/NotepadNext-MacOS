@@ -50,6 +50,8 @@ This release successfully completes all 8 architectural phases defined in `PLAN_
 - **KaTeX & Mermaid Diagram Support**: Native preview rendering of complex mathematical formulas via KaTeX and flowchart/sequence diagrams via Mermaid.js.
 - **Bidirectional Scroll Synchronization**: Real-time position tracking between the Scintilla text editor and the preview browser.
 - **Standalone Document Export**: Export active documents directly to standalone self-contained HTML (with embedded GitHub dark/light styling) or vector PDF documents via `DocumentExportManager` and `ExportOptionsDialog`.
+- **Markdown-it Compiler Compatibility & 30 Isolated Themes**: Fully matches markdown-it specifications with 30 isolated classless themes (`GITHUB`, `GITHUB-DARK`, `ALMOND`, `AWSM`, `AXIST`, `BAMBOO`, `BULLFRAME`, `HOLIDAY`, `KACIT`, `LATEX`, `MARX`, `MINI`, `MODEST`, `NEW`, `NO-CLASS`, `PICO`, `RETRO`, `SAKURA`, `SAKURA-VADER`, `SEMANTIC`, `SIMPLE`, `STYLE-SANS`, `STYLE-SERIF`, `STYLIZE`, `SUPERSTYLIN`, `TACIT`, `VANILLA`, `WATER`, `WATER-DARK`, `WRIT`) strictly scoped to prevent conflicts with application UI dark/light modes.
+- **IANA Media Types & Extended Extensions**: Comprehensive file matching for all standard Markdown formats (`.markdown`, `.mdown`, `.mkdn`, `.md`, `.mkd`, `.mdwn`, `.mdtxt`, `.mdtext`, `.text`) including query/hash suffixes, and HTML formats (`.html`, `.htm`, `.shtml`, `.shtm`, `.xhtml`, `.xht`, `.phtml`, `.hta`).
 
 ### 4. Editor Ergonomics Suite
 

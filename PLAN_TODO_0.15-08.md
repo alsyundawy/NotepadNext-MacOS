@@ -399,12 +399,12 @@ Agar seluruh fitur baru dapat masuk dengan mulus tanpa mengubah atau merusak fun
 
 ### Tugas Fase 8: Audit 14 Pilar, i18n, Verifikasi & Build Gate Release 0.15-08
 
-- **Tugas 8.1**: Perbarui `CMakeLists.txt` dan `src/CMakeLists.txt` untuk mendaftarkan seluruh berkas sumber baru.
-- **Tugas 8.2**: Jalankan verifikasi linting ketat: `trunk check`, `cppcheck`, `clang-tidy`, dan `lint-check.sh` (Target: 0 error / 0 warning).
-- **Tugas 8.3**: Jalankan `cmake --build build --target update_translations` (`lupdate`) dan verifikasi 100% kelengkapan string.
-- **Tugas 8.4**: Perbarui seluruh dokumentasi: `README.md`, `CHANGELOG.md`, `DOCNOTE.md`, `doc/DOCNOTE.md`, dan `doc/RELEASE_NOTES_0.15-08.md`.
-- **Tugas 8.5**: Kompilasi lokal dan bangun DMG `NotepadNext-v0.15-08-x64.dmg`. Lakukan verifikasi integritas checksum via `hdiutil verify`.
-- **Tugas 8.6**: Lakukan commit atomik, sinkronisasi cabang `master` dan `0.15-08`, dorong tag `0.15-08` ke remote, serta awasi pipeline GitHub Actions dan MegaLinter hingga tuntas.
+- [x] **Tugas 8.1**: Perbarui `CMakeLists.txt` dan `src/CMakeLists.txt` untuk mendaftarkan seluruh berkas sumber baru.
+- [x] **Tugas 8.2**: Jalankan verifikasi linting ketat: `trunk check`, `cppcheck`, `clang-tidy`, dan `lint-check.sh` (Target: 0 error / 0 warning).
+- [x] **Tugas 8.3**: Jalankan `cmake --build build --target update_translations` (`lupdate`) dan verifikasi 100% kelengkapan string.
+- [x] **Tugas 8.4**: Perbarui seluruh dokumentasi: `README.md`, `CHANGELOG.md`, `DOCNOTE.md`, `doc/DOCNOTE.md`, dan `doc/RELEASE_NOTES_0.15-08.md`.
+- [x] **Tugas 8.5**: Kompilasi lokal dan bangun DMG `NotepadNext-v0.15-08-x64.dmg`. Lakukan verifikasi integritas checksum via `hdiutil verify`.
+- [x] **Tugas 8.6**: Lakukan commit atomik, sinkronisasi cabang `master` dan `0.15-08`, dorong tag `0.15-08` ke remote, serta awasi pipeline GitHub Actions dan MegaLinter hingga tuntas.
 
 ---
 

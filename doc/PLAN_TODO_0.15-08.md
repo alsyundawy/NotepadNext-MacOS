@@ -4,7 +4,7 @@
 
 > **Target Release**: NotepadNext-MacOS `v0.15-08`<br/>
 > **Baseline Release**: NotepadNext-MacOS `v0.15-07` (`a26d748`)<br/>
-> **Feature Donor Project**: [SparkNotePad](https://github.com/alsyundawy/SparkNotePad) `v1.3.8` • [SubnetCalc-MacOS](https://github.com/alsyundawy/SubnetCalc-MacOS) (25 Theme Suites)<br/>
+> **Feature Donor Project**: SparkNotePad `v1.3.8` (`/Users/alsyundawy/Downloads/GitHub/SparkNotePad`)<br/>
 > **Author & Maintainer**: Harry Dertin Sutisna Alsyundawy ([@alsyundawy](https://github.com/alsyundawy)) | ALSYUNDAWY IT SOLUTION<br/>
 > **Upstream Project**: Justin Dailey ([@dail8859/NotepadNext](https://github.com/dail8859/NotepadNext))<br/>
 > **Framework & Standards**: Qt 6.5–6.12 • ISO C++20 • Scintilla 5.6.x • Lexilla 5.5.x • Apple HIG
@@ -399,12 +399,12 @@ Agar seluruh fitur baru dapat masuk dengan mulus tanpa mengubah atau merusak fun
 
 ### Tugas Fase 8: Audit 14 Pilar, i18n, Verifikasi & Build Gate Release 0.15-08
 
-- **Tugas 8.1**: Perbarui `CMakeLists.txt` dan `src/CMakeLists.txt` untuk mendaftarkan seluruh berkas sumber baru.
-- **Tugas 8.2**: Jalankan verifikasi linting ketat: `trunk check`, `cppcheck`, `clang-tidy`, dan `lint-check.sh` (Target: 0 error / 0 warning).
-- **Tugas 8.3**: Jalankan `cmake --build build --target update_translations` (`lupdate`) dan verifikasi 100% kelengkapan string.
-- **Tugas 8.4**: Perbarui seluruh dokumentasi: `README.md`, `CHANGELOG.md`, `DOCNOTE.md`, `doc/DOCNOTE.md`, dan `doc/RELEASE_NOTES_0.15-08.md`.
-- **Tugas 8.5**: Kompilasi lokal dan bangun DMG `NotepadNext-v0.15-08-x64.dmg`. Lakukan verifikasi integritas checksum via `hdiutil verify`.
-- **Tugas 8.6**: Lakukan commit atomik, sinkronisasi cabang `master` dan `0.15-08`, dorong tag `0.15-08` ke remote, serta awasi pipeline GitHub Actions dan MegaLinter hingga tuntas.
+- [x] **Tugas 8.1**: Perbarui `CMakeLists.txt` dan `src/CMakeLists.txt` untuk mendaftarkan seluruh berkas sumber baru.
+- [x] **Tugas 8.2**: Jalankan verifikasi linting ketat: `trunk check`, `cppcheck`, `clang-tidy`, dan `lint-check.sh` (Target: 0 error / 0 warning).
+- [x] **Tugas 8.3**: Jalankan `cmake --build build --target update_translations` (`lupdate`) dan verifikasi 100% kelengkapan string.
+- [x] **Tugas 8.4**: Perbarui seluruh dokumentasi: `README.md`, `CHANGELOG.md`, `DOCNOTE.md`, `doc/DOCNOTE.md`, dan `doc/RELEASE_NOTES_0.15-08.md`.
+- [x] **Tugas 8.5**: Kompilasi lokal dan bangun DMG `NotepadNext-v0.15-08-x64.dmg`. Lakukan verifikasi integritas checksum via `hdiutil verify`.
+- [x] **Tugas 8.6**: Lakukan commit atomik, sinkronisasi cabang `master` dan `0.15-08`, dorong tag `0.15-08` ke remote, serta awasi pipeline GitHub Actions dan MegaLinter hingga tuntas.
 
 ---
 
@@ -416,45 +416,3 @@ Agar seluruh fitur baru dapat masuk dengan mulus tanpa mengubah atau merusak fun
 | **Penurunan Performa Rendering Markdown Pratinjau** | Rendah       | Tinggi | Gunakan timer debounce 300ms; pembacaan buffer teks dibatasi dan pembaruan hanya berjalan saat dock terlihat (`isVisible()`).                 | Nonaktifkan opsi "Auto-Show Preview" dan sembunyikan dock pratinjau.                              |
 | **Konflik Tombol Pintas AutoClosePairs**            | Rendah       | Rendah | Filter event tombol hanya menangkap karakter tanda kurung dan petik saat kontrol editor Scintilla aktif. Opsi dapat dimatikan di Preferences. | Sediakan toggle aktif/nonaktif seketika di menu `Edit -> Auto-Close Pairs`.                       |
 | **Peningkatan Ukuran Biner Bundle DMG**             | Sedang       | Rendah | Ikon dioptimasi melalui kompresi SVG dan penghapusan duplikasi aset bitmap. Ukuran DMG tetap dijaga ketat di bawah 30 MB.                     | Bersihkan paket ikon bitmap yang jarang digunakan dan gunakan representasi monoline vektor murni. |
-
----
-
-## 9. Protokol Verifikasi 14 Pilar, Audit Static Analysis & Eksekusi Tuntas
-
-### 9.1 Mandat Pemeriksaan Ketat & Tooling
-
-Pemeriksaan menyeluruh dilakukan pada seluruh berkas di `/Users/alsyundawy/Downloads/GitHub/NotepadNext-MacOS/src/*.cpp` dan `/Users/alsyundawy/Downloads/GitHub/NotepadNext-MacOS/src/*/*.cpp`, menggunakan:
-
-- `clangd --check` / LLVM 23 Clang compiler checks
-- `cppcheck` (library Qt 6.12, mode warning/style/performance/portability, 113 berkas lulus 100%)
-- `SonarLint` / `SonarQube` (0 blocker/critical/major, seluruh 47 temuan remediated)
-- `clang-tidy` / `lint-check.sh`
-- `trunk check -y` (100% clean, 0 issues)
-
-> [!IMPORTANT]
-> **Identitas Repositori**: Repositori ini adalah secara mutlak dan eksklusif `NotepadNext-MacOS`, bukan `SparkNotePad`. Repositori `SparkNotePad` diperlakukan murni sebagai referensi read-only dan tidak disentuh sama sekali.
-
-### 9.2 Checklist Audit Kode Menyeluruh (14 Pilar)
-
-- [x] **Bug Review**: Seluruh pointer null diperiksa (`qobject_cast`, pointer dereference aman), boundary check pada selection range dan offset Scintilla terverifikasi.
-- [x] **Syntax Review**: Modern C++20 standard compliance (`std::ranges`, `using enum`, init-statement pada `if`, auto deduction, explicit capture lambda).
-- [x] **Runtime Review**: Pengujian runtime signal-slot Qt6, koneksi event Scintilla updateUi/lexerChanged, dan pencegahan event recursion.
-- [x] **Logic Review**: Transisi status enum `SessionManager::SessionFileType`, pemetaan skema warna importer Notepad++, sinkronisasi preferensi.
-- [x] **Memory Review**: Migrasi alokasi raw `new`/`delete` ke `std::unique_ptr` dan kepemilikan objek Qt `deleteLater()`. Bebas memory leak.
-- [x] **Dead Code Review**: Pembersihan fungsi dan variabel yang tidak digunakan, eliminasi deklarasi duplikat.
-- [x] **Duplicate Code Review**: Ekstraksi fungsi pembantu parsing global style dan GUI configs di `NppImporter.cpp` serta konversi range-based.
-- [x] **Circular Dependency Review**: Forward declaration yang bersih pada header (`Ui::LanguageInspectorDock`, `MainWindow`, `ScintillaNext`).
-- [x] **Performance Bottleneck Review**: Reduksi kompleksitas kognitif (<5 pada fitur baru, <25 pada modul parser), eliminasi copy berlebih dengan const reference.
-- [x] **Security / CWE / CVE Vulnerability Review**: Sanitasi pratinjau markdown (mitigasi script injection & CVE-2025-3512), mitigasi input path traversal, SHA-256 verification.
-- [x] **Maintainability Review**: Modularitas tinggi, clean architecture, dokumentasi API lengkap, dan isolasi decorator.
-- [x] **Scalability Review**: Penanganan dokumen skala besar, streaming buffer, dan efisiensi thread build paralel.
-- [x] **Readability Review**: Penamaan deskriptif, komentar terstruktur, dan kepatuhan Google C++ Style Guide / SonarQube standards.
-- [x] **Linter Review**: 0 compiler warnings, 0 SonarLint issues, 0 cppcheck warnings, 0 trunk issues.
-
-### 9.3 Status Peluncuran Rilis v0.15-08
-
-- **Kompilasi Biner**: Selesai via CMake 4.x + Ninja + LLVM 23 + Qt 6.12.0 (Exit code: 0).
-- **Lokal DMG Package**: `build-dmg/NotepadNext-v0.15-08-x64.dmg` terverifikasi via `hdiutil verify` (Checksum VALID).
-- **Integritas Hash**: `d5d039afe1c4c9d511da9738d73b219afc71b98c832cf536266d1962b6433a3a` dicatat pada `build-dmg/SHA256SUMS` dan `updates.json`.
-- **Internasionalisasi (i18n)**: Seluruh 23 berkas katalog `.ts` dan `.qm` disinkronkan melalui `update_translations`.
-- **Status Akhir**: **SELESAI 100% & SIAP DIRILIS**.

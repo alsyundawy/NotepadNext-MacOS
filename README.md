@@ -400,7 +400,7 @@ sudo ./NotepadNext-Default-Editor-Linux.sh --system -f
 >
 > - 🎨 **28-Pack Toolbar Icon Engine & 6-Tier Sizing**: Runtime vector and multi-res PNG icon packs with dynamic toolbar resizing (`ToolbarIconManager`).
 > - ➕ **Tab Bar Plus (+) Button**: Persistent macOS-styled dock tab bar `+` button for instant new document creation (`DockedEditorTitleBar`).
-> - 📑 **Tabbed Markdown & HTML Live Preview**: Full-featured `PreviewTabWidget` with GitHub callouts, DevDocs styling, reading metrics, zoom, and direct browser previews.
+> - 📑 **Tabbed Markdown & HTML Live Preview & 30 Isolated Themes**: Full-featured `PreviewTabWidget` & `MarkdownSafePreviewDock` with markdown-it compiler compatibility, 30 isolated classless themes (independent of app dark/light mode), IANA media type extensions (`.mdtxt`, `.mdtext`, etc.), GitHub callouts, DevDocs styling, reading metrics, zoom, and direct browser previews.
 > - 🔍 **Myers LCS Diff Engine**: Side-by-side synchronized document comparison and syntax-aware diff highlights (`MyersDiffEngine`, `FileDiffDialog`).
 > - 🔒 **Cryptographic Stream Hasher**: Constant-memory digest verification (CRC32, MD5, SHA-1, SHA-256, SHA-512, SHA3).
 > - 🔬 **Forensic Text Utilities**: Shannon entropy analysis, JWT/Base64 inspector, and Unicode character breakdown (`TokenForensicUtils`, `CharacterInfoDialog`).
