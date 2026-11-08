@@ -122,6 +122,12 @@ jobs:
           modules: qt5compat
           cache: true
 
+      # ─── Install create-dmg ──────────────────────────────────────
+      - name: Install DMG Packaging Tools (mac)
+        if: matrix.platform == 'mac'
+        shell: bash
+        run: brew install create-dmg || true
+
       # ─── Set DISTRIBUTION ────────────────────────────────────────
       - name: Set Distribution (mac)
         if: matrix.platform == 'mac'

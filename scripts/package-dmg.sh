@@ -140,6 +140,9 @@ if command -v create-dmg >/dev/null 2>&1; then
 	if create-dmg "${CREATE_DMG_ARGS[@]}" "${DMG_OUTPUT}" "${STAGE_DIR}"; then
 		CREATED=1
 		echo "[*] Styled DMG successfully created with create-dmg."
+	elif create-dmg "${CREATE_DMG_ARGS[@]}" --sandbox-safe "${DMG_OUTPUT}" "${STAGE_DIR}"; then
+		CREATED=1
+		echo "[*] Styled DMG successfully created with create-dmg (--sandbox-safe)."
 	else
 		echo "Warning: Standard create-dmg failed (AppleScript unavailable or timed out). Falling back to native hdiutil..." >&2
 		CREATED=0

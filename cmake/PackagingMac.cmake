@@ -71,6 +71,7 @@ endif()
 
 find_program(MACDEPLOYQT_EXECUTABLE macdeployqt REQUIRED)
 find_program(HDIUTIL_EXECUTABLE hdiutil REQUIRED)
+find_program(BASH_EXECUTABLE NAMES bash REQUIRED PATHS /usr/local/bin /opt/homebrew/bin /bin /usr/bin)
 
 set(PRUNE_UNUSED_QT_FILES
     COMMAND ${CMAKE_COMMAND} -E rm -rf
@@ -101,7 +102,7 @@ if(MAC_DMG_LEGACY_NAME)
         ${PRUNE_UNUSED_QT_FILES}
         COMMAND /bin/sync
         COMMAND /bin/sleep 2
-        COMMAND /usr/local/bin/bash ${CMAKE_SOURCE_DIR}/scripts/package-dmg.sh ${INSTALL_DIR}/NotepadNext.app ${CMAKE_BINARY_DIR}/${MAC_DMG_NAME} NotepadNext
+        COMMAND ${BASH_EXECUTABLE} ${CMAKE_SOURCE_DIR}/scripts/package-dmg.sh ${INSTALL_DIR}/NotepadNext.app ${CMAKE_BINARY_DIR}/${MAC_DMG_NAME} NotepadNext
         COMMAND ${CMAKE_COMMAND} -E copy
             ${CMAKE_BINARY_DIR}/${MAC_DMG_NAME}
             ${CMAKE_BINARY_DIR}/${MAC_DMG_LEGACY_NAME}
@@ -114,7 +115,7 @@ else()
         ${PRUNE_UNUSED_QT_FILES}
         COMMAND /bin/sync
         COMMAND /bin/sleep 2
-        COMMAND /usr/local/bin/bash ${CMAKE_SOURCE_DIR}/scripts/package-dmg.sh ${INSTALL_DIR}/NotepadNext.app ${CMAKE_BINARY_DIR}/${MAC_DMG_NAME} NotepadNext
+        COMMAND ${BASH_EXECUTABLE} ${CMAKE_SOURCE_DIR}/scripts/package-dmg.sh ${INSTALL_DIR}/NotepadNext.app ${CMAKE_BINARY_DIR}/${MAC_DMG_NAME} NotepadNext
         DEPENDS install_local
     )
 endif()

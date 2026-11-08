@@ -70,6 +70,13 @@
 >
 > 🇮🇩 **Peningkatan Mayor Enterprise Versi 0.15-08 & Integrasi Fitur SparkNotePad:**
 >
+> - ➕ **Tombol Plus (+) Tab Bar**: Tombol native macOS `+` persisten di ujung tab bar docking untuk membuat dokumen baru secara instan via klik atau pintasan `Cmd+N`.
+> - 📑 **Pratinjau Live Markdown & HTML Bertab (`PreviewTabWidget`)**: Widget pratinjau bertab berkinerja tinggi dengan badge callout GitHub (`[!NOTE]`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]`, `[!CAUTION]`), penataan gaya DevDocs, metrik jumlah kata / perkiraan waktu baca, zoom dinamis, ekspor HTML, salin ke clipboard, dan pratinjau peramban web default.
+> - 🖱️ **Menu Konteks Klik-Kanan Tab untuk `.md` & `.html`**: Aksi kontekstual pada tab berkas untuk membuka pratinjau langsung di tab baru atau peramban web default.
+> - 🎨 **Icon Pack Toolbar & 6 Pilihan Ukuran Ikon**: Pilihan lengkap paket ikon toolbar dan 6 tingkat ukuran ikon toolbar (`16x16`, `20x20`, `24x24`, `32x32`, `48x48`, `64x64`) dengan tanda centang aktif dan penyesuaian ukuran toolbar secara instan.
+> - 📖 **Dokumentasi Help Menu di Tab Editor**: Akses instan ke `DocNote` (`DOCNOTE.md`) dan `Changelog` (`CHANGELOG.md`) langsung di tab editor baru.
+> - ⚙️ **Tab "Themes & Toolbar" pada Dialog Preferensi**: Tab terdedikasi untuk pengaturan palet tema, mode Dark/Light, opasitas jendela, pilihan paket ikon toolbar, dan penggeser ukuran ikon dengan pratinjau langsung.
+> - 💿 **Installer DMG Bergaya Native macOS**: Artwork background standar dan Retina @2x beresolusi tinggi, geometri jendela kustom (680x440), ikon aplikasi di kiri, symlink drop Aplikasi di kanan, indikator drag-and-drop melengkung, dan validasi checksum.
 > - 🎨 **Suite Personalisasi 38 Icon Pack (`ToolbarIconManager`)**: Menghadirkan 38 paket ikon lengkap (Modern SVG, Fluent, Material, Notepad++ Klasik, ragam Aksara, Retro Windows 7/Aero, Pixel Fugue) dengan pergantian langsung via menu klik-kanan toolbar.
 > - 🛠️ **Kustomisasi Toolbar Interaktif (`CustomizeToolbarDialog`)**: Antarmuka dual-list drag-and-drop untuk menambah, memindahkan, menyisipkan pemisah, dan mengatur aksi toolbar secara seketika.
 > - 📄 **Dock Pratinjau Aman Markdown & Pipeline Ekspor Dokumen (`MarkdownSafePreviewDock`)**: Dock pratinjau langsung berkinerja tinggi dengan dukungan formula KaTeX, diagram Mermaid, scroll sinkron dua arah dengan Scintilla, serta ekspor HTML mandiri bergaya GitHub dan dokumen PDF vektor.

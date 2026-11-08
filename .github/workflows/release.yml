@@ -338,6 +338,10 @@ jobs:
           modules: qt5compat
           cache: true
 
+      - name: Install DMG Packaging Tools (macOS x64)
+        shell: bash
+        run: brew install create-dmg || true
+
       - name: Set Distribution (mac)
         shell: bash
         run: echo "DISTRIBUTION=dmg" >> "$GITHUB_ENV"
@@ -473,6 +477,10 @@ jobs:
           arch: ${{ matrix.qt_arch }}
           modules: qt5compat
           cache: true
+
+      - name: Install DMG Packaging Tools (macOS arm64)
+        shell: bash
+        run: brew install create-dmg || true
 
       - name: Set Distribution (mac)
         shell: bash

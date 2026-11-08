@@ -72,6 +72,14 @@ This release successfully completes all 8 architectural phases defined in `PLAN_
 - **Uniform Type Identifiers (UTType)**: Declared native macOS UTTypes ensuring full Finder icon association and QuickLook compatibility.
 - **macOS System Services**: Integrated with macOS System Services for "Open with NotepadNext" and "New Window with Selection".
 
+### 7. Tab Bar Plus Button, Tabbed Markdown/HTML Preview, Themes & Toolbar Preferences, and Styled DMG
+
+- **Tab Bar Plus Button (`+`)**: Click the persistent plus button at the right edge of tabs to open a new tab immediately (`Cmd+N`).
+- **Tabbed Markdown & HTML Preview (`PreviewTabWidget`)**: High-performance tabbed preview widget rendering GitHub Flavored Markdown with callouts (`[!NOTE]`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]`, `[!CAUTION]`), HTML preview, zoom controls, clipboard copy, and default browser preview.
+- **Context Menu Integration**: Right-click `.md` or `.html` file tabs to preview directly in a new editor tab or in the system web browser.
+- **Dedicated "Themes & Toolbar" Preferences Tab**: Preferences dialog features a dedicated tab for theme palettes, light/dark mode, toolbar icon packs, and 6-tier toolbar icon sizing (`16x16`, `20x20`, `24x24`, `32x32`, `48x48`, `64x64`) with live preview.
+- **Styled macOS DMG Presentation**: High-DPI background with "NotepadNext" branding, curved drag-and-drop arrow, volume icon, and Applications symlink.
+
 ---
 
 ## 🛡️ Code Quality & Verification Gate
