@@ -64,6 +64,7 @@
 #include <QDockWidget>
 #include <QFontDatabase>
 #include <QSysInfo>
+#include <bit>
 #include <functional>
 #include <algorithm>
 #include <QCollator>
@@ -2791,7 +2792,7 @@ void MainWindow::activateEditor(ScintillaNext *editor)
     emit editorActivated(editor);
 }
 
-void MainWindow::enforceDarkTitleBar()
+void MainWindow::enforceDarkTitleBar() const
 {
 #ifdef Q_OS_MACOS
     const WId viewId = effectiveWinId();
@@ -2803,25 +2804,24 @@ void MainWindow::enforceDarkTitleBar()
     auto msgSendIdArg = reinterpret_cast<id (*)(id, SEL, id)>(objc_msgSend); // NOSONAR
     auto strWithUtf8 = reinterpret_cast<id (*)(id, SEL, const char *)>(objc_msgSend); // NOSONAR
 
-    id nsView = reinterpret_cast<id>(viewId);
-    id nsWindow = msgSendId(nsView, sel_registerName("window"));
+    auto nsView = reinterpret_cast<id>(viewId); // NOSONAR
+    auto nsWindow = msgSendId(nsView, sel_registerName("window"));
     if (!nsWindow) {
         return;
     }
 
-    id nsAppearanceClass = reinterpret_cast<id>(objc_getClass("NSAppearance"));
-    id nsStrClass = reinterpret_cast<id>(objc_getClass("NSString"));
-    id darkAquaStr = strWithUtf8(nsStrClass, sel_registerName("stringWithUTF8String:"), "NSAppearanceNameDarkAqua");
+    auto nsAppearanceClass = static_cast<id>(static_cast<void *>(objc_getClass("NSAppearance")));
+    auto nsStrClass = static_cast<id>(static_cast<void *>(objc_getClass("NSString")));
+    auto darkAquaStr = strWithUtf8(nsStrClass, sel_registerName("stringWithUTF8String:"), "NSAppearanceNameDarkAqua");
 
-    id darkAppearance = msgSendIdArg(nsAppearanceClass, sel_registerName("appearanceNamed:"), darkAquaStr);
+    auto darkAppearance = msgSendIdArg(nsAppearanceClass, sel_registerName("appearanceNamed:"), darkAquaStr);
     if (darkAppearance) {
         msgSendIdArg(nsWindow, sel_registerName("setAppearance:"), darkAppearance);
         msgSendId(nsWindow, sel_registerName("invalidateShadow"));
     }
 
-    id appClass = reinterpret_cast<id>(objc_getClass("NSApplication"));
-    id nsApp = msgSendId(appClass, sel_registerName("sharedApplication"));
-    if (nsApp && darkAppearance) {
+    auto appClass = static_cast<id>(static_cast<void *>(objc_getClass("NSApplication")));
+    if (auto nsApp = msgSendId(appClass, sel_registerName("sharedApplication")); nsApp && darkAppearance) {
         msgSendIdArg(nsApp, sel_registerName("setAppearance:"), darkAppearance);
     }
 #endif
@@ -3440,7 +3440,7 @@ void MainWindow::tabBarRightClicked(const ScintillaNext *editor)
     }
 
     auto *menu = buildMenu(actionNames);
-    populateTabBarPreviewActions(menu, const_cast<ScintillaNext *>(editor));
+    populateTabBarPreviewActions(menu, dockedEditor->getCurrentEditor());
     menu->popup(QCursor::pos());
 }
 
@@ -3502,7 +3502,7 @@ void MainWindow::openPreviewInNewTab(ScintillaNext *editor, bool isHtml)
     }
 }
 
-void MainWindow::openInDefaultBrowser(const QString &filePath)
+void MainWindow::openInDefaultBrowser(const QString &filePath) const
 {
     if (filePath.isEmpty()) {
         return;

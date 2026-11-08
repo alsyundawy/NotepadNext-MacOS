@@ -133,8 +133,7 @@ PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *par
         ui->comboBoxLineEndings->setCurrentIndex(foundIdx == -1 ? 0 : foundIdx);
     });
 
-    const auto *app = qobject_cast<const NotepadNextApplication *>(qApp);
-    if (app) {
+    if (const auto *app = qobject_cast<const NotepadNextApplication *>(qApp); app) {
         ui->comboBoxDefaultLanguage->addItems(app->getLanguages());
     }
 
@@ -228,12 +227,21 @@ void PreferencesDialog::populateTranslationComboBox()
     // Add the system default at the top
     ui->comboBoxTranslation->addItem(tr("<System Default>"), QStringLiteral(""));
 
-    // TODO: sort this list and keep the system default at the top
-    for (const auto &localeName : app->getTranslationManager()->availableTranslations())
+    // Sorted alphabetically by display name while keeping the system default at the top
+    const auto translations = app->getTranslationManager()->availableTranslations();
+    std::vector<QPair<QString, QString>> translationList;
+    translationList.reserve(translations.size());
+    for (const auto &localeName : translations)
     {
         QLocale locale(localeName);
-        const QString localeDisplay = TranslationManager::FormatLocaleTerritoryAndLanguage(locale);
-        ui->comboBoxTranslation->addItem(localeDisplay, localeName);
+        translationList.emplace_back(TranslationManager::FormatLocaleTerritoryAndLanguage(locale), localeName);
+    }
+    std::ranges::sort(translationList, [](const auto &a, const auto &b) {
+        return a.first.localeAwareCompare(b.first) < 0;
+    });
+    for (const auto &item : translationList)
+    {
+        ui->comboBoxTranslation->addItem(item.first, item.second);
     }
 
     // Select the current one
@@ -307,7 +315,9 @@ void PreferencesDialog::setupThemesGroup(QWidget *container)
         ThemeManager::instance()->setPalette(themeId, mw);
     });
 
-    auto *themeRowLayout = new QHBoxLayout();
+    auto *themeRowWidget = new QWidget(gbxThemes);
+    auto *themeRowLayout = new QHBoxLayout(themeRowWidget);
+    themeRowLayout->setContentsMargins(0, 0, 0, 0);
     themeRowLayout->addWidget(comboBoxTheme, 1);
 
     btnToggleDarkLight = new QPushButton(tr("Toggle Dark/Light"), gbxThemes);
@@ -323,7 +333,7 @@ void PreferencesDialog::setupThemesGroup(QWidget *container)
         }
     });
     themeRowLayout->addWidget(btnToggleDarkLight);
-    themeLayout->addRow(tr("Active Theme:"), themeRowLayout);
+    themeLayout->addRow(tr("Active Theme:"), themeRowWidget);
 
     container->layout()->addWidget(gbxThemes);
 }
@@ -458,7 +468,7 @@ void PreferencesDialog::updateIconPreview()
     };
 
     if (m_previewLabels.isEmpty()) {
-        for (const auto &act : sampleActions) {
+        for (qsizetype i = 0; i < sampleActions.size(); ++i) {
             auto *lbl = new QLabel(widgetIconPreview);
             lbl->setFixedSize(24, 24);
             lbl->setAlignment(Qt::AlignCenter);

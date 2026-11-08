@@ -16,6 +16,7 @@
 #endif
 
 #include <array>
+#include <numeric>
 #include <QtGlobal>
 #include "ToolbarIconManager.h"
 #include "../ApplicationSettings.h"
@@ -726,10 +727,9 @@ QRgb transformDarkPixel(QRgb px) {
     const int b = qBlue(px);
     const int maxC = std::max({r, g, b});
     const int minC = std::min({r, g, b});
-    const int lit = (maxC + minC) / 2;
-    const int delta = maxC - minC;
+    const int lit = std::midpoint(maxC, minC);
 
-    if (delta < 30) {
+    if (const int delta = maxC - minC; delta < 30) {
         if (lit < 160) {
             const int newLit = qBound(180, 240 - lit, 255);
             return qRgba(newLit, newLit, newLit, a);
@@ -758,7 +758,7 @@ QImage adaptImageForTheme(const QImage &src, bool isDark) {
     const int h = direct.height();
 
     for (int y = 0; y < h; ++y) {
-        auto *scanLine = reinterpret_cast<QRgb *>(direct.scanLine(y));
+        auto *scanLine = reinterpret_cast<QRgb *>(direct.scanLine(y)); // NOSONAR
         for (int x = 0; x < w; ++x) {
             scanLine[x] = transformDarkPixel(scanLine[x]);
         }
@@ -784,17 +784,19 @@ void addHiDpiPixmaps(QIcon &icon, const QString &filePath, bool isPngBased, bool
 
     static constexpr std::array<int, 4> s_dpiSizes = {16, 24, 32, 48};
     for (const int sz : s_dpiSizes) {
-        if (baseW != sz || baseH != sz) {
-            if (const QPixmap px = QPixmap::fromImage(
-                    adapted.scaled(sz, sz, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
-                !px.isNull()) {
-                icon.addPixmap(px);
-                if (sz == 32 || sz == 48) {
-                    QPixmap pxRetina = px;
-                    pxRetina.setDevicePixelRatio(2.0);
-                    icon.addPixmap(pxRetina);
-                }
-            }
+        if (baseW == sz && baseH == sz) {
+            continue;
+        }
+        const QPixmap px = QPixmap::fromImage(
+            adapted.scaled(sz, sz, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+        if (px.isNull()) {
+            continue;
+        }
+        icon.addPixmap(px);
+        if (sz == 32 || sz == 48) {
+            QPixmap pxRetina = px;
+            pxRetina.setDevicePixelRatio(2.0);
+            icon.addPixmap(pxRetina);
         }
     }
 

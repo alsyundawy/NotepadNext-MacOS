@@ -96,24 +96,58 @@ NotepadNextApplication::NotepadNextApplication(int &argc, char **argv)
 
 NotepadNextApplication::~NotepadNextApplication() = default;
 
+#ifdef Q_OS_MACOS
+static void applyMacDarkAquaAppearance()
+{
+    // Enforce dark appearance at NSApp level so all windows and dialogues maintain dark titlebars in any mode
+    auto msgSendId = reinterpret_cast<id (*)(id, SEL)>(objc_msgSend); // NOSONAR
+    auto msgSendIdArg = reinterpret_cast<id (*)(id, SEL, id)>(objc_msgSend); // NOSONAR
+    auto strWithUtf8 = reinterpret_cast<id (*)(id, SEL, const char *)>(objc_msgSend); // NOSONAR
+    auto nsAppearanceClass = static_cast<id>(static_cast<void *>(objc_getClass("NSAppearance")));
+    auto nsStrClass = static_cast<id>(static_cast<void *>(objc_getClass("NSString")));
+    auto darkAquaStr = strWithUtf8(nsStrClass, sel_registerName("stringWithUTF8String:"), "NSAppearanceNameDarkAqua");
+    auto darkAppearance = msgSendIdArg(nsAppearanceClass, sel_registerName("appearanceNamed:"), darkAquaStr);
+    auto appClass = static_cast<id>(static_cast<void *>(objc_getClass("NSApplication")));
+    if (auto nsApp = msgSendId(appClass, sel_registerName("sharedApplication")); nsApp && darkAppearance) {
+        msgSendIdArg(nsApp, sel_registerName("setAppearance:"), darkAppearance);
+    }
+}
+#endif
+
+static void resetSettingsIfRequested(const QCommandLineParser &parser, ApplicationSettings *settings)
+{
+    if (!parser.isSet("reset-settings")) {
+        return;
+    }
+    const QFileInfo original(settings->fileName());
+    const QString backup = original.canonicalFilePath() + QStringLiteral(".backup");
+
+    qInfo("Resetting application settings");
+    qInfo("Backuping up %s to %s", qUtf8Printable(settings->fileName()), qUtf8Printable(backup));
+
+    QFile::remove(backup);
+    QFile::rename(settings->fileName(), backup);
+
+    settings->clear();
+}
+
+static void setupInitialTranslation(const QCommandLineParser &parser, const ApplicationSettings *settings, TranslationManager *translationManager)
+{
+    if (!parser.value("translation").isEmpty()) {
+        translationManager->loadTranslation(parser.value("translation"));
+    } else if (!settings->translation().isEmpty()) {
+        translationManager->loadTranslation(settings->translation());
+    } else {
+        translationManager->loadSystemDefaultTranslation();
+    }
+}
+
 bool NotepadNextApplication::init()
 {
     qInfo(Q_FUNC_INFO);
 
 #ifdef Q_OS_MACOS
-    // Enforce dark appearance at NSApp level so all windows and dialogues maintain dark titlebars in any mode
-    auto msgSendId = reinterpret_cast<id (*)(id, SEL)>(objc_msgSend); // NOSONAR
-    auto msgSendIdArg = reinterpret_cast<id (*)(id, SEL, id)>(objc_msgSend); // NOSONAR
-    auto strWithUtf8 = reinterpret_cast<id (*)(id, SEL, const char *)>(objc_msgSend); // NOSONAR
-    id nsAppearanceClass = reinterpret_cast<id>(objc_getClass("NSAppearance"));
-    id nsStrClass = reinterpret_cast<id>(objc_getClass("NSString"));
-    id darkAquaStr = strWithUtf8(nsStrClass, sel_registerName("stringWithUTF8String:"), "NSAppearanceNameDarkAqua");
-    id darkAppearance = msgSendIdArg(nsAppearanceClass, sel_registerName("appearanceNamed:"), darkAquaStr);
-    id appClass = reinterpret_cast<id>(objc_getClass("NSApplication"));
-    id nsApp = msgSendId(appClass, sel_registerName("sharedApplication"));
-    if (nsApp && darkAppearance) {
-        msgSendIdArg(nsApp, sel_registerName("setAppearance:"), darkAppearance);
-    }
+    applyMacDarkAquaAppearance();
 #endif
 
 #ifndef Q_OS_MACOS
@@ -121,38 +155,13 @@ bool NotepadNextApplication::init()
 #endif
 
     settings = new ApplicationSettings(this);
-
-    if (parser.isSet("reset-settings")) {
-        QFileInfo original(settings->fileName());
-        const QString backup = original.canonicalFilePath() + QStringLiteral(".backup");
-
-        qInfo("Resetting application settings");
-        qInfo("Backuping up %s to %s", qUtf8Printable(settings->fileName()), qUtf8Printable(backup));
-
-        QFile::remove(backup);
-        QFile::rename(settings->fileName(), backup);
-
-        settings->clear();
-    }
+    resetSettingsIfRequested(parser, settings);
 
     ThemeManager::instance()->initialize(settings);
 
     // Translation files are stored as a qresource
     translationManager = new TranslationManager(this, QStringLiteral(":/i18n/"));
-
-    // The command line overrides the settings
-    if (!parser.value("translation").isEmpty()) {
-        translationManager->loadTranslation(parser.value("translation"));
-    }
-    else if (!settings->translation().isEmpty()){
-        translationManager->loadTranslation(settings->translation());
-    }
-    else {
-        translationManager->loadSystemDefaultTranslation();
-    }
-
-    // This connection isn't needed since the application can not appropriately retranslate the UI at runtime
-    //connect(settings, &ApplicationSettings::translationChanged, translationManager, &TranslationManager::loadTranslationByName);
+    setupInitialTranslation(parser, settings, translationManager);
 
     luaState = std::make_unique<LuaState>();
 
@@ -184,7 +193,7 @@ bool NotepadNextApplication::init()
     installEventFilter(new ToolbarTooltipFilter(this));
 
     luaState->executeFile(":/scripts/init.lua");
-    LuaExtension::Instance().Initialise(luaState->L, Q_NULLPTR);
+    LuaExtension::Initialise(luaState->L, nullptr);
 
     MainWindow *initialWindow = createNewWindow();
     connect(editorManager, &EditorManager::editorCreated, this, [this](ScintillaNext *editor) {
@@ -314,7 +323,7 @@ QStringList NotepadNextApplication::getLanguages() const
 
 void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QString &languageName) const
 {
-    LuaExtension::Instance().setEditor(editor);
+    LuaExtension::setEditor(editor);
 
     getLuaState()->setVariable("languageName", languageName);
     const auto lexer = getLuaState()->executeAndReturn<QString>("return languages[languageName].lexer");
@@ -412,7 +421,7 @@ QString NotepadNextApplication::detectLanguageFromContents(ScintillaNext *editor
 {
     qInfo(Q_FUNC_INFO);
 
-    LuaExtension::Instance().setEditor(editor);
+    LuaExtension::setEditor(editor);
 
     return getLuaState()->executeAndReturn<QString>(R"(
     -- Grab a small chunk
@@ -530,13 +539,14 @@ bool NotepadNextApplication::event(QEvent *e)
 
         const auto windowsCopy = m_windows;
         for (const auto &mw : windowsCopy) {
-            if (mw) {
-                mw->bringWindowToForeground();
-                if (!mw->close()) {
-                    qInfo("Window close rejected, aborting quit.");
-                    e->ignore();
-                    return true;
-                }
+            if (!mw) {
+                continue;
+            }
+            mw->bringWindowToForeground();
+            if (!mw->close()) {
+                qInfo("Window close rejected, aborting quit.");
+                e->ignore();
+                return true;
             }
         }
 
@@ -620,7 +630,7 @@ MainWindow *NotepadNextApplication::createNewWindow()
 
     // Keep Lua's editor reference up to date
     connect(newWindow, &MainWindow::editorActivated, this, [](ScintillaNext *editor) {
-        LuaExtension::Instance().setEditor(editor);
+        LuaExtension::setEditor(editor);
     });
 
     // Session persistence: MainWindow aboutToClose signals application shutdown while editors remain valid

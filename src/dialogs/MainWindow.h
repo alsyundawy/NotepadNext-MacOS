@@ -95,7 +95,7 @@ public:
     int editorCount() const;
     QVector<ScintillaNext *> editors() const;
     DockedEditor *getDockedEditor() const { return dockedEditor; }
-    void enforceDarkTitleBar();
+    void enforceDarkTitleBar() const;
 
 public slots:
     void newFile() const;
@@ -108,7 +108,7 @@ public slots:
     void setFolderAsWorkspacePath(const QString &dir) const;
 
     void openPreviewInNewTab(ScintillaNext *editor, bool isHtml);
-    void openInDefaultBrowser(const QString &filePath);
+    void openInDefaultBrowser(const QString &filePath) const;
     void populateTabBarPreviewActions(QMenu *menu, ScintillaNext *editor);
     void onDocNoteTriggered();
     void onChangelogTriggered();
