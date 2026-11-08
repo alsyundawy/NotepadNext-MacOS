@@ -383,6 +383,7 @@ void PreferencesDialog::setupToolbarPacksGroup(QWidget *container)
                                      : pack->description;
             lblIconPackDescription->setText(desc);
         }
+        updateIconPreview();
     });
 
     // Icon Size
@@ -419,6 +420,15 @@ void PreferencesDialog::setupToolbarPacksGroup(QWidget *container)
     });
     toolbarLayout->addRow(tr("Toolbar Icon Size:"), comboBoxIconSize);
 
+    // Pack Preview Row
+    widgetIconPreview = new QWidget(gbxToolbarPacks);
+    layoutIconPreview = new QHBoxLayout(widgetIconPreview);
+    layoutIconPreview->setContentsMargins(8, 6, 8, 6);
+    layoutIconPreview->setSpacing(10);
+    widgetIconPreview->setStyleSheet(QStringLiteral("background: rgba(0, 0, 0, 0.03); border-radius: 6px; padding: 2px 4px;"));
+    updateIconPreview();
+    toolbarLayout->addRow(tr("Icon Preview:"), widgetIconPreview);
+
     container->layout()->addWidget(gbxToolbarPacks);
 }
 
@@ -449,6 +459,37 @@ void PreferencesDialog::populateIconPacksComboBox()
     }
 }
 
+void PreferencesDialog::updateIconPreview()
+{
+    if (!widgetIconPreview || !layoutIconPreview) {
+        return;
+    }
+
+    const QString currentPack = comboBoxIconPack ? comboBoxIconPack->currentData().toString() : QString();
+
+    const QStringList sampleActions = {
+        QStringLiteral("newfile"), QStringLiteral("openFile"), QStringLiteral("saved"),
+        QStringLiteral("cut"),     QStringLiteral("copy"),     QStringLiteral("paste"),
+        QStringLiteral("undo"),    QStringLiteral("redo"),     QStringLiteral("find")
+    };
+
+    if (m_previewLabels.isEmpty()) {
+        for (qsizetype i = 0; i < sampleActions.size(); ++i) {
+            auto *lbl = new QLabel(widgetIconPreview);
+            lbl->setFixedSize(24, 24);
+            lbl->setAlignment(Qt::AlignCenter);
+            layoutIconPreview->addWidget(lbl);
+            m_previewLabels.append(lbl);
+        }
+        layoutIconPreview->addStretch();
+    }
+
+    for (int i = 0; i < sampleActions.size() && i < m_previewLabels.size(); ++i) {
+        const QIcon icon = ToolbarIconManager::instance()->actionIcon(sampleActions[i], currentPack);
+        m_previewLabels[i]->setPixmap(icon.pixmap(20, 20));
+    }
+}
+
 void PreferencesDialog::updateThemeColors()
 {
     if (comboBoxTheme) {
@@ -459,4 +500,5 @@ void PreferencesDialog::updateThemeColors()
             comboBoxTheme->setCurrentIndex(found);
         }
     }
+    updateIconPreview();
 }

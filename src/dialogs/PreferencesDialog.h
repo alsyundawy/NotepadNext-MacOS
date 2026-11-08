@@ -69,6 +69,7 @@ private:
     void setupThemesGroup(QWidget *container);
     void setupToolbarPacksGroup(QWidget *container);
     void populateIconPacksComboBox();
+    void updateIconPreview();
 
     QTabWidget *m_tabWidget{nullptr};
     QWidget *m_themesAndToolbarWidget{nullptr};
@@ -77,6 +78,9 @@ private:
     QComboBox *comboBoxIconPack{nullptr};
     QLabel *lblIconPackDescription{nullptr};
     QComboBox *comboBoxIconSize{nullptr};
+    QWidget *widgetIconPreview{nullptr};
+    QHBoxLayout *layoutIconPreview{nullptr};
+    QList<QLabel *> m_previewLabels;
 };
 
 #endif // PREFERENCESDIALOG_H

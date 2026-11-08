@@ -560,11 +560,15 @@ QString ToolbarIconManager::canonicalNameForAction(const QString &actionName) {
 
     static const QHash<QString, QString> s_actionMap = {
         {QStringLiteral("new"), QStringLiteral("newfile")},
+        {QStringLiteral("newfile"), QStringLiteral("newfile")},
         {QStringLiteral("open"), QStringLiteral("openFile")},
+        {QStringLiteral("openfile"), QStringLiteral("openFile")},
         {QStringLiteral("openurl"), QStringLiteral("openFile")},
         {QStringLiteral("save"), QStringLiteral("saved")},
+        {QStringLiteral("saved"), QStringLiteral("saved")},
         {QStringLiteral("saveall"), QStringLiteral("saveAll")},
         {QStringLiteral("close"), QStringLiteral("closeFile")},
+        {QStringLiteral("closefile"), QStringLiteral("closeFile")},
         {QStringLiteral("closeall"), QStringLiteral("closeAll")},
         {QStringLiteral("delete"), QStringLiteral("closeFile")},
         {QStringLiteral("print"), QStringLiteral("printer")},
