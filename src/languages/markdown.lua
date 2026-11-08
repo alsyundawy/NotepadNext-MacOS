@@ -7,6 +7,13 @@ L.disableFoldMargin = true
 L.extensions = {
     "md",
     "markdown",
+    "mdown",
+    "mkdn",
+    "mkd",
+    "mdwn",
+    "mdtxt",
+    "mdtext",
+    "text",
 }
 
 L.styles = {

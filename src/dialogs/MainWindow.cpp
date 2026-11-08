@@ -39,6 +39,7 @@
 #include "ui_MainWindow.h"
 #include "widgets/PreviewTabWidget.h"
 #include "features/ToolbarIconManager.h"
+#include "utils/MarkdownPreviewEnhancer.h"
 
 #include <QDesktopServices>
 
@@ -3449,9 +3450,9 @@ void MainWindow::populateTabBarPreviewActions(QMenu *menu, ScintillaNext *editor
     if (!editor || !editor->isFile()) {
         return;
     }
-    const QString ext = editor->getFileInfo().suffix().toLower();
-    const bool isMd = (ext == QStringLiteral("md") || ext == QStringLiteral("markdown"));
-    const bool isHtml = (ext == QStringLiteral("html") || ext == QStringLiteral("htm") || ext == QStringLiteral("xhtml"));
+    const QString fileName = editor->getFileInfo().fileName();
+    const bool isMd = MarkdownPreviewEnhancer::isMarkdownFile(fileName);
+    const bool isHtml = MarkdownPreviewEnhancer::isHtmlFile(fileName);
     if (!isMd && !isHtml) {
         return;
     }

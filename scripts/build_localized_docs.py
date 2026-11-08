@@ -11,7 +11,6 @@ Synchronizes across:
 """
 
 import os
-import sys
 
 DOCNOTE_ID = """# Catatan Rilis Dokumentasi (DOCNOTE) — NotepadNext-MacOS v0.15-08 (Bahasa Indonesia)
 
@@ -316,7 +315,9 @@ def main():
 
     # Master combined docs
     master_docnote_text = DOCNOTE_ID.strip() + "\n\n---\n\n" + DOCNOTE_EN.strip() + "\n"
-    master_changelog_text = CHANGELOG_ID.strip() + "\n\n---\n\n" + CHANGELOG_EN.strip() + "\n"
+    master_changelog_text = (
+        CHANGELOG_ID.strip() + "\n\n---\n\n" + CHANGELOG_EN.strip() + "\n"
+    )
 
     # Load whitepaper for DOCNOTE.md
     whitepaper_path = "doc/whitepaper_docnote.md"
@@ -345,7 +346,6 @@ def main():
         "CHANGELOG.txt": master_changelog_text,
         "CHANGELOG_id.txt": CHANGELOG_ID.strip() + "\n",
         "CHANGELOG_en.txt": CHANGELOG_EN.strip() + "\n",
-
         # doc/ artifacts
         "doc/DOCNOTE.md": whitepaper_docnote,
         "doc/DOCNOTE.txt": master_docnote_text,
@@ -355,7 +355,6 @@ def main():
         "doc/CHANGELOG.txt": master_changelog_text,
         "doc/CHANGELOG_id.txt": CHANGELOG_ID.strip() + "\n",
         "doc/CHANGELOG_en.txt": CHANGELOG_EN.strip() + "\n",
-
         # src/doc/ artifacts
         "src/doc/DOCNOTE.md": whitepaper_docnote,
         "src/doc/DOCNOTE.txt": master_docnote_text,
@@ -378,7 +377,9 @@ def main():
             os.remove(temp)
             print(f"Cleaned up temporary: {temp}")
 
-    print("\n[SUCCESS] Localized DOCNOTE and CHANGELOG generated and synchronized across root, doc/, and src/doc/.")
+    print(
+        "\n[SUCCESS] Localized DOCNOTE and CHANGELOG generated and synchronized across root, doc/, and src/doc/."
+    )
 
 
 if __name__ == "__main__":

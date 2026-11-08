@@ -23,9 +23,12 @@
 #include "../ScintillaNext.h"
 #include "../features/ThemeManager.h"
 #include "../features/ThemePaletteData.h"
+#include "../utils/MarkdownPreviewEnhancer.h"
 
 #include <algorithm>
 #include <array>
+#include <QAction>
+#include <QActionGroup>
 #include <QApplication>
 #include <QClipboard>
 #include <QDesktopServices>
@@ -36,9 +39,12 @@
 #include <QFileInfo>
 #include <QHBoxLayout>
 #include <QLabel>
+#include <QMenu>
+#include <QMessageBox>
 #include <QPushButton>
 #include <QRegularExpression>
 #include <QScrollBar>
+#include <QSettings>
 #include <QTemporaryFile>
 #include <QTextBrowser>
 #include <QTextDocument>
@@ -58,6 +64,14 @@ QString getEditorContent(const ScintillaNext *editor) {
 
 PreviewTabWidget::PreviewTabWidget(ScintillaNext *editor, bool isHtml, QWidget *parent)
     : QWidget(parent), m_editor(editor), m_isHtml(isHtml) {
+    const bool isDark = ThemeManager::instance()->isDarkActive();
+    const QSettings settings;
+    const QString defaultTheme = MarkdownPreviewEnhancer::defaultThemeId(isDark);
+    m_currentTheme = settings.value(QStringLiteral("Preview/MarkdownTheme"), defaultTheme).toString();
+    if (m_currentTheme.isEmpty() || !MarkdownPreviewEnhancer::hasTheme(m_currentTheme)) {
+        m_currentTheme = defaultTheme;
+    }
+
     setupUi();
 
     m_debounceTimer = new QTimer(this);
@@ -111,11 +125,35 @@ void PreviewTabWidget::setupUi() {
     m_titleLabel->setText(fileName);
     headerLayout->addWidget(m_titleLabel);
 
-    // Stats pill badge
-    m_statsLabel = new QLabel(headerWidget);
-    m_statsLabel->setObjectName(QStringLiteral("previewStats"));
-    m_statsLabel->setText(tr("0 words • 0 min read"));
-    headerLayout->addWidget(m_statsLabel);
+    if (!m_isHtml) {
+        // Theme button with dropdown menu (30 themes)
+        m_btnTheme = new QPushButton(headerWidget);
+        m_btnTheme->setObjectName(QStringLiteral("previewThemeBtn"));
+        m_btnTheme->setCursor(Qt::PointingHandCursor);
+        m_btnTheme->setToolTip(tr("Select Markdown preview theme (30 available)"));
+        setupThemeMenu();
+        headerLayout->addWidget(m_btnTheme);
+
+        // Compiler indicator button
+        m_btnCompiler = new QPushButton(QStringLiteral("COMPILER: markdown-it"), headerWidget);
+        m_btnCompiler->setObjectName(QStringLiteral("previewCompilerBtn"));
+        m_btnCompiler->setCursor(Qt::PointingHandCursor);
+        m_btnCompiler->setToolTip(tr("Markdown Compiler: markdown-it (click for details)"));
+        connect(m_btnCompiler, &QPushButton::clicked, this, &PreviewTabWidget::showCompilerInfo);
+        headerLayout->addWidget(m_btnCompiler);
+
+        // Stats pill badge
+        m_statsLabel = new QLabel(headerWidget);
+        m_statsLabel->setObjectName(QStringLiteral("previewStats"));
+        m_statsLabel->setText(tr("CONTENT: 0 words • 0 min read"));
+        headerLayout->addWidget(m_statsLabel);
+    } else {
+        // Stats pill badge for HTML
+        m_statsLabel = new QLabel(headerWidget);
+        m_statsLabel->setObjectName(QStringLiteral("previewStats"));
+        m_statsLabel->setText(tr("0 words • 0 min read"));
+        headerLayout->addWidget(m_statsLabel);
+    }
 
     headerLayout->addStretch(1);
 
@@ -206,6 +244,83 @@ void PreviewTabWidget::setupUi() {
     }
 }
 
+void PreviewTabWidget::setupThemeMenu() {
+    if (!m_themeMenu) {
+        m_themeMenu = new QMenu(this);
+    }
+    m_themeMenu->clear();
+
+    const auto &themes = MarkdownPreviewEnhancer::themes();
+    auto *group = new QActionGroup(m_themeMenu);
+    group->setExclusive(true);
+
+    for (const auto &t : themes) {
+        auto *act = m_themeMenu->addAction(t.name);
+        act->setCheckable(true);
+        act->setData(t.id);
+        if (t.id == m_currentTheme) {
+            act->setChecked(true);
+        }
+        group->addAction(act);
+        connect(act, &QAction::triggered, this, [this, id = t.id] {
+            setMarkdownTheme(id);
+        });
+    }
+
+    if (m_btnTheme) {
+        m_btnTheme->setMenu(m_themeMenu);
+        const MarkdownPreviewEnhancer::ThemeInfo info = MarkdownPreviewEnhancer::theme(m_currentTheme);
+        m_btnTheme->setText(QStringLiteral("THEME: %1 ▾").arg(info.name));
+    }
+}
+
+void PreviewTabWidget::setMarkdownTheme(const QString &themeId) {
+    if (m_currentTheme == themeId) {
+        return;
+    }
+    m_currentTheme = themeId;
+    QSettings settings;
+    settings.setValue(QStringLiteral("Preview/MarkdownTheme"), m_currentTheme);
+
+    const MarkdownPreviewEnhancer::ThemeInfo info = MarkdownPreviewEnhancer::theme(m_currentTheme);
+    if (m_btnTheme) {
+        m_btnTheme->setText(QStringLiteral("THEME: %1 ▾").arg(info.name));
+    }
+
+    if (m_themeMenu) {
+        for (auto *act : m_themeMenu->actions()) {
+            if (act->data().toString() == m_currentTheme) {
+                act->setChecked(true);
+                break;
+            }
+        }
+    }
+
+    applyTheme();
+    renderPreview();
+}
+
+void PreviewTabWidget::showCompilerInfo() {
+    QMessageBox::information(
+        this,
+        tr("Markdown Compiler"),
+        tr("<b>Compiler:</b> markdown-it<br><br>"
+           "<b>Supported Features:</b><br>"
+           "• CommonMark Specification compliant<br>"
+           "• GitHub Flavored Markdown (GFM) tables<br>"
+           "• Strikethrough (~~text~~)<br>"
+           "• Highlight / Mark (==text==)<br>"
+           "• Insert (++text++)<br>"
+           "• Subscript (~text~) and Superscript (^text^)<br>"
+           "• Interactive Task Lists ([ ] and [x])<br>"
+           "• Footnotes ([^1] and [^1]: definition)<br>"
+           "• Heading Custom IDs (# Heading {#custom-id})<br>"
+           "• LaTeX Math ($inline$, $$block$$)<br>"
+           "• Mermaid Diagrams (```mermaid ... ```)<br>"
+           "• GitHub Alert Callouts ([!NOTE], [!TIP], [!IMPORTANT], [!WARNING], [!CAUTION])<br>"
+           "• 30 Integrated Themes (Classless & GitHub)"));
+}
+
 void PreviewTabWidget::updateThemeColors() {
     applyTheme();
     renderPreview();
@@ -293,17 +408,37 @@ void PreviewTabWidget::applyTheme() {
         header->setStyleSheet(headerStyle);
     }
 
-    const QString browserBg = isDark ? QStringLiteral("#0d1117") : QStringLiteral("#ffffff");
-    const QString browserFg = isDark ? QStringLiteral("#e6edf3") : QStringLiteral("#1f2328");
+    QString browserBg;
+    QString browserFg;
+    if (m_isHtml) {
+        browserBg = isDark ? QStringLiteral("#0d1117") : QStringLiteral("#ffffff");
+        browserFg = isDark ? QStringLiteral("#e6edf3") : QStringLiteral("#1f2328");
+    } else {
+        const auto &themeInfo = MarkdownPreviewEnhancer::theme(m_currentTheme);
+        browserBg = themeInfo.bg;
+        browserFg = themeInfo.text;
+    }
     const QString selBg =
         isDark ? QStringLiteral("rgba(56, 139, 253, 0.4)") : QStringLiteral("rgba(9, 105, 218, 0.25)");
 
     m_browser->setStyleSheet(
         QStringLiteral(
-            "QTextBrowser { background-color: %1; color: %2; border: none; selection-background-color: %3; }")
+            "#previewBrowser { background-color: %1; color: %2; border: none; selection-background-color: %3; }")
             .arg(browserBg, browserFg, selBg));
 
-    m_browser->document()->setDefaultStyleSheet(buildDevDocsStyleSheet(isDark));
+    QPalette browserPal = m_browser->palette();
+    browserPal.setColor(QPalette::Base, QColor(browserBg));
+    browserPal.setColor(QPalette::Text, QColor(browserFg));
+    browserPal.setColor(QPalette::Window, QColor(browserBg));
+    browserPal.setColor(QPalette::WindowText, QColor(browserFg));
+    if (!m_isHtml) {
+        const auto &themeInfo = MarkdownPreviewEnhancer::theme(m_currentTheme);
+        browserPal.setColor(QPalette::Link, QColor(themeInfo.link));
+    }
+    m_browser->setPalette(browserPal);
+
+    m_browser->document()->setDefaultStyleSheet(
+        m_isHtml ? buildDevDocsStyleSheet(isDark) : MarkdownPreviewEnhancer::themeCss(m_currentTheme, m_baseFontSize));
     m_isUpdatingTheme = false;
 }
 
@@ -368,7 +503,7 @@ void PreviewTabWidget::renderPreview() {
         m_browser->clear();
         m_titleLabel->setText(tr("(Editor Closed)"));
         if (m_statsLabel) {
-            m_statsLabel->setText(tr("0 words • 0 min read"));
+            m_statsLabel->setText(m_isHtml ? tr("0 words • 0 min read") : tr("CONTENT: 0 words • 0 min read"));
         }
         return;
     }
@@ -386,12 +521,16 @@ void PreviewTabWidget::renderPreview() {
 
     if (m_statsLabel) {
         if (rawContent.isEmpty()) {
-            m_statsLabel->setText(tr("0 words • 0 min read"));
+            m_statsLabel->setText(m_isHtml ? tr("0 words • 0 min read") : tr("CONTENT: 0 words • 0 min read"));
         } else {
             const QStringList words = rawContent.split(QRegularExpression(QStringLiteral("\\s+")), Qt::SkipEmptyParts);
             const qsizetype wordCount = words.size();
             const qsizetype minutes = std::max(static_cast<qsizetype>(1), (wordCount + 199) / 200);
-            m_statsLabel->setText(tr("%1 words • %2 min read").arg(wordCount).arg(minutes));
+            if (m_isHtml) {
+                m_statsLabel->setText(tr("%1 words • %2 min read").arg(wordCount).arg(minutes));
+            } else {
+                m_statsLabel->setText(tr("CONTENT: %1 words • %2 min read").arg(wordCount).arg(minutes));
+            }
         }
     }
 
@@ -400,14 +539,12 @@ void PreviewTabWidget::renderPreview() {
                                    ? static_cast<double>(scrollBar->value()) / static_cast<double>(scrollBar->maximum())
                                    : 0.0;
 
-    const bool isDark = ThemeManager::instance()->isDarkActive();
     if (m_isHtml) {
         m_browser->setHtml(rawContent);
     } else {
-        QTextDocument doc;
-        doc.setMarkdown(rawContent);
-        const QString enhanced = enhanceCallouts(doc.toHtml(), isDark);
-        m_browser->setHtml(enhanced);
+        const bool mdIsDark = MarkdownPreviewEnhancer::isDarkTheme(m_currentTheme);
+        const QString rendered = MarkdownPreviewEnhancer::compileMarkdownIt(rawContent, mdIsDark, m_currentTheme);
+        m_browser->setHtml(rendered);
     }
 
     if (scrollBar && scrollBar->maximum() > 0 && scrollRatio > 0.0) {
@@ -449,9 +586,10 @@ void PreviewTabWidget::copyHtml() {
     if (m_isHtml) {
         fullHtml = wrapHtmlDocument(rawContent, isDark);
     } else {
-        QTextDocument doc;
-        doc.setMarkdown(rawContent);
-        fullHtml = wrapHtmlDocument(enhanceCallouts(doc.toHtml(), isDark), isDark);
+        const bool mdIsDark = MarkdownPreviewEnhancer::isDarkTheme(m_currentTheme);
+        const QString rendered = MarkdownPreviewEnhancer::compileMarkdownIt(rawContent, mdIsDark, m_currentTheme);
+        fullHtml = MarkdownPreviewEnhancer::wrapStandaloneHtml(rendered, m_currentTheme,
+                                                               m_editor ? m_editor->getName() : tr("Preview"));
     }
     QApplication::clipboard()->setText(fullHtml);
     if (m_badgeLabel) {
@@ -490,9 +628,10 @@ void PreviewTabWidget::exportHtml() {
     if (m_isHtml) {
         fullHtml = wrapHtmlDocument(rawContent, isDark);
     } else {
-        QTextDocument doc;
-        doc.setMarkdown(rawContent);
-        fullHtml = wrapHtmlDocument(enhanceCallouts(doc.toHtml(), isDark), isDark);
+        const bool mdIsDark = MarkdownPreviewEnhancer::isDarkTheme(m_currentTheme);
+        const QString rendered = MarkdownPreviewEnhancer::compileMarkdownIt(rawContent, mdIsDark, m_currentTheme);
+        fullHtml = MarkdownPreviewEnhancer::wrapStandaloneHtml(rendered, m_currentTheme,
+                                                               m_editor ? m_editor->getName() : tr("Preview"));
     }
     QFile file(savePath);
     if (file.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text)) {
@@ -521,9 +660,10 @@ void PreviewTabWidget::openInBrowser() {
         if (m_isHtml) {
             fullHtml = wrapHtmlDocument(content, isDark);
         } else {
-            QTextDocument doc;
-            doc.setMarkdown(content);
-            fullHtml = wrapHtmlDocument(enhanceCallouts(doc.toHtml(), isDark), isDark);
+            const bool mdIsDark = MarkdownPreviewEnhancer::isDarkTheme(m_currentTheme);
+            const QString rendered = MarkdownPreviewEnhancer::compileMarkdownIt(content, mdIsDark, m_currentTheme);
+            fullHtml = MarkdownPreviewEnhancer::wrapStandaloneHtml(rendered, m_currentTheme,
+                                                                   m_editor ? m_editor->getName() : tr("Preview"));
         }
         tempFile->write(fullHtml.toUtf8());
         tempFile->flush();

@@ -16,8 +16,11 @@ NotepadNext-MacOS v0.15-08 adalah rilis fitur dan stabilitas besar yang menghadi
 
 - **Tombol Tambah Tab (+) & Ergonomi Tab Modern**:
   - Menambahkan tombol `+` persisten pada tab bar editor (`DockedEditorTitleBar`) dengan estetika macOS asli dan status hover/pressed, memungkinkan pembuatan tab baru secara instan (`Cmd+N`).
-- **Pratinjau Tab Markdown & HTML (`PreviewTabWidget`) & Menu Konteks Tab**:
-  - Menghadirkan pratinjau tab interaktif untuk dokumen Markdown dan HTML dengan kotak info bergaya GitHub (`[!NOTE]`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]`, `[!CAUTION]`), tipografi devdocs, metrik jumlah kata dan estimasi waktu baca, zoom dinamis, ekspor HTML, salin ke clipboard, dan pratinjau di peramban sistem. Menambahkan aksi klik-kanan pada tab `.md` dan `.html`.
+- **Pratinjau Tab Markdown & HTML (`PreviewTabWidget` & `MarkdownSafePreviewDock`) & Menu Konteks Tab**:
+  - Menghadirkan pratinjau tab interaktif dan dock pratinjau mandiri dengan kompatibilitas format compiler markdown-it, 30 tema terisolasi independen dari tema aplikasi (`GITHUB`, `GITHUB-DARK`, `ALMOND`, `AWSM`, `AXIST`, `BAMBOO`, `BULLFRAME`, `HOLIDAY`, `KACIT`, `LATEX`, `MARX`, `MINI`, `MODEST`, `NEW`, `NO-CLASS`, `PICO`, `RETRO`, `SAKURA`, `SAKURA-VADER`, `SEMANTIC`, `SIMPLE`, `STYLE-SANS`, `STYLE-SERIF`, `STYLIZE`, `SUPERSTYLIN`, `TACIT`, `VANILLA`, `WATER`, `WATER-DARK`, `WRIT`), kotak info bergaya GitHub (`[!NOTE]`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]`, `[!CAUTION]`), tipografi devdocs, metrik jumlah kata dan estimasi waktu baca, zoom dinamis, ekspor HTML, salin ke clipboard, dan pratinjau di peramban sistem. Menambahkan aksi klik-kanan pada tab `.md` dan `.html`.
+  - Mendukung deteksi ekstensi Markdown bervariasi (`\.(?:markdown|mdown|mkdn|md|mkd|mdwn|mdtxt|mdtext|text)(?:#.*|\?.*)?$`) dan ekstensi variasi HTML (`.html`, `.htm`, `.shtml`, `.shtm`, `.xhtml`, `.xht`, `.phtml`, `.hta`) yang diselaraskan dengan standar resmi IANA Media Types.
+- **Pembaruan Skrip Asosiasi Sistem `NotepadNext-Default-Editor.sh` & `NotepadNext-Default-Editor-Linux.sh`**:
+  - Memperbarui skrip asosiasi editor default untuk macOS (menggunakan UTIs dan `duti` untuk 480+ format berkas, termasuk `.mdtxt`, `.mdtext`, `ics`, `vcf`, `vcard`, `dotenv`, `gnumakefile`) dan Linux (menggunakan `xdg-mime` untuk 220+ MIME types IANA).
 - **Konfigurasi Icon Pack & 6 Ukuran Ikon pada Menu Themes**:
   - Memperluas menu Themes dengan submenu pemilihan 28 paket ikon toolbar dan 6 tingkat ukuran ikon (`16x16`, `20x20`, `24x24`, `32x32`, `48x48`, `64x64`) lengkap dengan tanda centang status aktif dan pembaruan visual toolbar seketika.
 - **Dokumentasi Terintegrasi pada Menu Help (`DocNote` & `Changelog`)**:

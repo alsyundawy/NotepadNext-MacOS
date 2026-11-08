@@ -216,34 +216,37 @@ readonly UTIS=(
 	"com.sun.java-source"
 
 	# Web, Structured Data & Config
+	"public.html"
 	"public.json"
 	"public.xml"
 	"public.css"
 	"public.yaml"
+	"public.svg-image"
 	"com.apple.property-list"
 	"com.apple.xml-property-list"
 )
 
-# Comprehensive File Extensions (471 common text, code, config & script formats)
+# Comprehensive File Extensions (480+ common text, code, config & script formats)
 readonly EXTENSIONS=(
 	# Plain Text, Documentation, Notes & Markup
-	"txt" "text" "md" "markdown" "mdown" "mkdn" "mkd" "mdwn" "mdx"
+	"txt" "text" "md" "markdown" "mdown" "mkdn" "mkd" "mdwn" "mdtxt" "mdtext" "mdx"
 	"rst" "adoc" "asciidoc" "tex" "latex" "bib" "bibtex" "cls" "sty" "dtx" "ins"
 	"org" "pod" "nfo" "man" "rtf"
+	"ics" "ifb" "vcf" "vcard"
 	"log" "out" "err" "audit" "me" "1st" "ans" "diz" "readme" "license"
 	"todo" "notes" "textile" "wiki" "gmi"
 
 	# Web & Frontend Development
-	"xhtml" "css" "scss" "sass" "less" "styl" "postcss"
+	"html" "htm" "shtml" "shtm" "xhtml" "xht" "phtml" "hta" "css" "scss" "sass" "less" "styl" "postcss"
 	"js" "mjs" "cjs" "jsx" "ts" "mts" "cts" "tsx" "vue" "svelte" "astro"
 	"ejs" "hbs" "handlebars" "mustache" "jinja" "jinja2" "j2" "twig" "liquid" "erb" "haml" "pug" "jade"
 	"njk" "latte" "blade" "edge" "vash" "heex" "eex" "slim" "tpl" "webmanifest"
 
 	# Structured Data, Serialization & Protocols
-	"json" "json5" "jsonc" "jsonl" "ndjson" "geojson" "topojson" "jsonld" "jsonnet" "cson"
-	"xml" "xsl" "xslt" "xsd" "dtd" "svg" "rss" "atom" "kml" "gpx" "opml" "wsdl" "wadl" "dae" "gltf"
+	"json" "json5" "jsonc" "jsonl" "ndjson" "geojson" "topojson" "jsonld" "jsonnet" "cson" "har" "map"
+	"xml" "xsl" "xslt" "xsd" "dtd" "svg" "rss" "atom" "kml" "gpx" "opml" "wsdl" "wadl" "dae" "gltf" "qrc" "ui" "pom" "manifest" "opf" "ncx"
 	"yaml" "yml" "toml" "hcl" "tf" "tfvars" "tfstate" "nomad"
-	"proto" "protobuf" "thrift" "avro" "avsc" "har" "asn" "asn1"
+	"proto" "protobuf" "thrift" "avro" "avsc" "asn" "asn1"
 
 	# Diagrams, CAD, CNC & Specialized Text Formats
 	"dot" "gv" "puml" "plantuml" "mermaid" "mmd" "scad" "gcode" "cnc"
@@ -253,7 +256,7 @@ readonly EXTENSIONS=(
 
 	# Shell, Terminal & Environment Configs
 	"sh" "bash" "zsh" "fish" "ksh" "csh" "tcsh" "awk" "sed" "command" "tool"
-	"env" "env.local" "env.development" "env.production" "env.example" "env.test" "envrc"
+	"env" "dotenv" "env.local" "env.development" "env.production" "env.example" "env.test" "envrc"
 	"profile" "bashrc" "zshrc" "zprofile" "zlogin" "zlogout" "bash_profile" "bash_login" "bash_logout"
 	"inputrc" "nanorc" "vimrc" "gvimrc" "editorconfig" "tmux"
 	"ps1" "psm1" "psd1" "bat" "cmd" "vbs" "applescript" "scpt"
@@ -261,7 +264,7 @@ readonly EXTENSIONS=(
 	# Git, CI/CD, Containers & Build Systems
 	"gitignore" "gitattributes" "gitmodules" "gitconfig" "gitmessage" "dockerignore" "helmignore" "npmignore" "eslintignore" "prettierignore"
 	"npmrc" "nvmrc" "yarnrc" "bowerrc" "babelrc" "eslintrc" "prettierrc" "stylelintrc"
-	"cmake" "make" "makefile" "mk" "mak" "justfile" "procfile"
+	"cmake" "make" "makefile" "gnumakefile" "mk" "mak" "justfile" "procfile"
 	"brewfile" "gemfile" "rakefile" "vagrantfile" "dockerfile" "containerfile" "lock"
 	"jenkinsfile" "bzl" "bazel" "nix" "gradle" "sbt" "meson" "wrap" "pom" "spec" "podspec" "cartfile"
 	"pro" "pri" "prf" "qmake" "vcxproj" "csproj" "fsproj" "props" "targets" "manifest"

@@ -9,6 +9,7 @@ L.extensions = {
 	"shtm",
 	"xhtml",
 	"xht",
+	"phtml",
 	"hta",
 	"vue",
 }

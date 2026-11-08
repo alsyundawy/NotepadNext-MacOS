@@ -7,6 +7,8 @@ L.singleLineComment = "# "
 L.extensions = {
 	"mak",
 	"mk",
+	"makefile",
+	"gnumakefile",
 }
 
 L.keywords = {

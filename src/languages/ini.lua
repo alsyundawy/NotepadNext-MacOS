@@ -13,6 +13,16 @@ L.extensions = {
 	"inf",
 	"url",
 	"wer",
+	"cfg",
+	"conf",
+	"config",
+	"cnf",
+	"editorconfig",
+	"gitconfig",
+	"gitmodules",
+	"env",
+	"dotenv",
+	"toml",
 }
 
 L.keywords = {

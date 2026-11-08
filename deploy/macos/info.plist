@@ -40,16 +40,59 @@
 				<string>txt</string>
 				<string>text</string>
 				<string>log</string>
+				<string>csv</string>
+				<string>tsv</string>
+				<string>tab</string>
 				<string>ini</string>
 				<string>cfg</string>
 				<string>conf</string>
-				<string>md</string>
-				<string>markdown</string>
+				<string>config</string>
+				<string>cnf</string>
+				<string>def</string>
+				<string>list</string>
+				<string>in</string>
+				<string>out</string>
+				<string>ans</string>
+				<string>asc</string>
+				<string>diz</string>
+				<string>me</string>
+				<string>now</string>
+				<string>1st</string>
+				<string>sub</string>
+				<string>idx</string>
+				<string>ics</string>
+				<string>ifb</string>
+				<string>vcf</string>
+				<string>vcard</string>
+				<string>vtt</string>
+				<string>srt</string>
+				<string>ass</string>
+				<string>ssa</string>
+				<string>lrc</string>
+				<string>rst</string>
+				<string>adoc</string>
+				<string>asciidoc</string>
+				<string>org</string>
+				<string>env</string>
+				<string>dotenv</string>
+				<string>editorconfig</string>
+				<string>gitattributes</string>
+				<string>gitignore</string>
+				<string>dockerignore</string>
+				<string>properties</string>
+				<string>props</string>
+				<string>vsprops</string>
 				<string>inf</string>
 				<string>manifest</string>
 				<string>nfo</string>
-				<string>props</string>
-				<string>vsprops</string>
+				<string>md</string>
+				<string>markdown</string>
+				<string>mdown</string>
+				<string>mkdn</string>
+				<string>mkd</string>
+				<string>mdwn</string>
+				<string>mdtxt</string>
+				<string>mdtext</string>
 			</array>
 			<key>LSItemContentTypes</key>
 			<array>
@@ -76,27 +119,77 @@
 				<string>m</string>
 				<string>mm</string>
 				<string>py</string>
+				<string>pyw</string>
+				<string>pyi</string>
 				<string>js</string>
+				<string>mjs</string>
+				<string>cjs</string>
 				<string>ts</string>
+				<string>tsx</string>
+				<string>jsx</string>
+				<string>vue</string>
+				<string>svelte</string>
 				<string>json</string>
+				<string>jsonc</string>
+				<string>json5</string>
+				<string>jsonl</string>
+				<string>ndjson</string>
+				<string>webmanifest</string>
+				<string>geojson</string>
+				<string>topojson</string>
+				<string>har</string>
+				<string>map</string>
+				<string>toml</string>
 				<string>xml</string>
+				<string>xsd</string>
+				<string>xsl</string>
+				<string>xslt</string>
+				<string>dtd</string>
+				<string>rss</string>
+				<string>atom</string>
+				<string>svg</string>
+				<string>qrc</string>
+				<string>ui</string>
+				<string>pom</string>
+				<string>dae</string>
+				<string>opf</string>
+				<string>ncx</string>
 				<string>html</string>
 				<string>htm</string>
 				<string>css</string>
+				<string>scss</string>
+				<string>less</string>
 				<string>sh</string>
 				<string>bash</string>
 				<string>zsh</string>
+				<string>ksh</string>
+				<string>csh</string>
+				<string>tcsh</string>
+				<string>fish</string>
 				<string>bat</string>
 				<string>cmd</string>
+				<string>ps1</string>
+				<string>psm1</string>
 				<string>rc</string>
 				<string>lua</string>
 				<string>rs</string>
 				<string>go</string>
+				<string>swift</string>
 				<string>php</string>
 				<string>java</string>
 				<string>sql</string>
+				<string>ddl</string>
+				<string>dml</string>
+				<string>cql</string>
+				<string>prc</string>
 				<string>yaml</string>
 				<string>yml</string>
+				<string>mak</string>
+				<string>mk</string>
+				<string>makefile</string>
+				<string>cmake</string>
+				<string>diff</string>
+				<string>patch</string>
 				<string>as</string>
 				<string>asp</string>
 				<string>aspx</string>

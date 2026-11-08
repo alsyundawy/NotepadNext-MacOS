@@ -89,7 +89,7 @@ fi
 
 # Copy DOCNOTE, CHANGELOG, and README artifacts into bundle Resources
 for docf in "${REPO_ROOT}"/DOCNOTE* "${REPO_ROOT}"/CHANGELOG* "${REPO_ROOT}/README.md"; do
-	if [[ -f "${docf}" ]]; then
+	if [[ -f ${docf} ]]; then
 		cp -f "${docf}" "${RESOURCES_DIR}/"
 	fi
 done
@@ -140,7 +140,7 @@ CREATED=0
 # On CI runners (headless environment without active GUI Finder session),
 # AppleScript in create-dmg is guaranteed to hang or time out.
 # Packaging via native hdiutil with pre-baked .DS_Store is instantaneous and 100% reliable.
-if [[ -n "${GITHUB_ACTIONS:-}" || -n "${CI:-}" ]]; then
+if [[ -n ${GITHUB_ACTIONS:-} || -n ${CI:-} ]]; then
 	echo "[*] Headless CI environment detected. Using native hdiutil with pre-baked styled .DS_Store..."
 	[[ -e "${STAGE_DIR}/Applications" ]] || ln -s /Applications "${STAGE_DIR}/Applications"
 	hdiutil create \

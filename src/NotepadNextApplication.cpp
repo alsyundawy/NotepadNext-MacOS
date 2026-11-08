@@ -387,7 +387,17 @@ QString NotepadNextApplication::detectLanguage(ScintillaNext *editor) const
     auto language_name = QStringLiteral("Text");
 
     if (editor->isFile()) {
-        language_name = detectLanguageFromExtension(editor->getFileInfo().suffix());
+        const QFileInfo fi = editor->getFileInfo();
+        const QString ext = fi.suffix();
+        if (!ext.isEmpty()) {
+            language_name = detectLanguageFromExtension(ext);
+        }
+        if (language_name == QStringLiteral("Text")) {
+            const QString baseName = fi.fileName();
+            if (!baseName.isEmpty()) {
+                language_name = detectLanguageFromExtension(baseName);
+            }
+        }
     }
 
     if (language_name == QStringLiteral("Text")) {
@@ -401,13 +411,14 @@ QString NotepadNextApplication::detectLanguageFromExtension(const QString &exten
 {
     qInfo(Q_FUNC_INFO);
 
-    getLuaState()->setVariable("ext", extension);
+    getLuaState()->setVariable("ext", extension.toLower());
 
     return getLuaState()->executeAndReturn<QString>(R"(
+    local target = string.lower(ext)
     for name, L in pairs(languages) do
         if L.extensions then
             for _, v in ipairs(L.extensions) do
-                if v == ext then
+                if string.lower(v) == target then
                     return name
                 end
             end

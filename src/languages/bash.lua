@@ -17,9 +17,15 @@ L.extensions = {
 	"sh",
 	"bsh",
 	"csh",
+	"ksh",
+	"tcsh",
+	"zsh",
+	"fish",
 	"bash_profile",
 	"bashrc",
 	"profile",
+	"zshrc",
+	"zprofile",
 }
 
 L.keywords = {

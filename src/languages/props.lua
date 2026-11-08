@@ -6,6 +6,8 @@ L.singleLineComment = "# "
 
 L.extensions = {
 	"properties",
+	"props",
+	"vsprops",
 }
 
 L.keywords = {

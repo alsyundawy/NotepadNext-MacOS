@@ -6,6 +6,10 @@ L.singleLineComment = "-- "
 
 L.extensions = {
 	"sql",
+	"ddl",
+	"dml",
+	"cql",
+	"prc",
 }
 
 L.keywords = {

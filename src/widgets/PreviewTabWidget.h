@@ -47,6 +47,8 @@ public:
 public slots:
     void renderPreview();
     void scheduleRender();
+    void setMarkdownTheme(const QString &themeId);
+    void showCompilerInfo();
     void openInBrowser();
     void copyHtml();
     void exportHtml();
@@ -69,6 +71,7 @@ private slots:
 
 private:
     void setupUi();
+    void setupThemeMenu();
     void applyTheme();
     [[nodiscard]] QString buildDevDocsStyleSheet(bool isDark) const;
     [[nodiscard]] QString wrapHtmlDocument(const QString &rawBody, bool isDark) const;
@@ -77,13 +80,17 @@ private:
     QPointer<ScintillaNext> m_editor;
     bool m_isHtml{false};
     int m_baseFontSize{13};
+    QString m_currentTheme;
 
     QTextBrowser *m_browser{nullptr};
     QTimer *m_debounceTimer{nullptr};
 
     QLabel *m_badgeLabel{nullptr};
     QLabel *m_titleLabel{nullptr};
+    QPushButton *m_btnTheme{nullptr};
+    QPushButton *m_btnCompiler{nullptr};
     QLabel *m_statsLabel{nullptr};
+    QMenu *m_themeMenu{nullptr};
     QPushButton *m_btnRefresh{nullptr};
     QPushButton *m_btnZoomOut{nullptr};
     QPushButton *m_btnResetZoom{nullptr};

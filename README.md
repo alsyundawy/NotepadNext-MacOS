@@ -46,8 +46,9 @@
 > 🇬🇧 **Version 0.15-08 Major Enterprise Upgrade & SparkNotePad Feature Integration:**
 >
 > - ➕ **Tab Bar Plus (+) Button**: Persistent macOS-styled `+` button on the dock tab bar for instantaneous new document creation via click or standard shortcut (`Cmd+N`).
-> - 📑 **Tabbed Markdown & HTML Live Preview (`PreviewTabWidget`)**: Rich tabbed preview with GitHub-grade callouts (`[!NOTE]`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]`, `[!CAUTION]`), DevDocs styling, word count / reading time metrics, dynamic zoom, HTML export, clipboard copy, and browser preview.
-> - 🖱️ **Tab Right-Click Context Menu for `.md` & `.html`**: Contextual actions on open tabs to launch Markdown or HTML preview directly.
+> - 📑 **Markdown-It Live Preview & 30 Isolated Themes (`PreviewTabWidget` & `MarkdownSafePreviewDock`)**: Compliant with CommonMark & GFM specifications. Supports GitHub alerts (`[!NOTE]`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]`, `[!CAUTION]`), LaTeX math (`$inline$`, `$$block$$`), Mermaid diagrams, task lists, footnotes, and 30 curated preview themes strictly isolated from application UI themes (zero style contamination).
+> - 🌐 **Official IANA Media Types Default Extensions**: Full alignment with official IANA Media Types registry for default file associations (`text/*` and `application/*`), featuring case-insensitive suffix matching and dotfile / extensionless file support (`Makefile`, `.bashrc`, `.gitignore`).
+> - ⚙️ **Refined Preferences Dialog**: Clean, text-only tabs across all preferences sections without confusing emojis/icons, with dedicated "Themes & Toolbar" configuration.
 > - 🎨 **Themes Menu Toolbar Icon Packs & 6 Size Tiers**: Full selection of toolbar icon packs (`elegant themes`, `vibrant duotone`, `windows xp`, `notepad++ classic`, `modern ribbon`, `fugue classic`, etc.) and 6 toolbar icon sizes (`16x16`, `20x20`, `24x24`, `32x32`, `48x48`, `64x64`) with active state checkmarks and dynamic toolbar resizing.
 > - 📖 **Help Menu Tabbed Documentation**: Instant access to `DocNote` (`DOCNOTE.md`) and `Changelog` (`CHANGELOG.md`) opened directly in new editor tabs.
 > - ⚙️ **Preferences Dialog Dedicated "Themes & Toolbar" Tab**: Consolidated management for theme styling, dark/light toggle, window opacity, toolbar icon pack selection, and icon sizing with live icon preview.

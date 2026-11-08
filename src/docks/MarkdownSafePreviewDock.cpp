@@ -43,6 +43,7 @@ MarkdownSafePreviewDock::MarkdownSafePreviewDock(MainWindow *parent)
       browser(new QTextBrowser(this)),
       debounceTimer(new QTimer(this)),
       comboFormat(new QComboBox(this)),
+      comboTheme(new QComboBox(this)),
       lblFormatStatus(new QLabel(this)),
       lblStats(new QLabel(this)),
       btnOpenBrowser(new QPushButton(this)),
@@ -60,6 +61,13 @@ MarkdownSafePreviewDock::MarkdownSafePreviewDock(MainWindow *parent)
     if (const int savedFormat = settings.value(QStringLiteral("Gui/PreviewFormat"), 0).toInt();
         savedFormat >= 0 && savedFormat <= 2) {
         currentFormat = static_cast<PreviewFormat>(savedFormat);
+    }
+
+    const bool isDark = ThemeManager::instance()->isDarkActive();
+    const QString defaultTheme = MarkdownPreviewEnhancer::defaultThemeId(isDark);
+    currentTheme = settings.value(QStringLiteral("Preview/MarkdownTheme"), defaultTheme).toString();
+    if (currentTheme.isEmpty() || !MarkdownPreviewEnhancer::hasTheme(currentTheme)) {
+        currentTheme = defaultTheme;
     }
 
     setupUi();
@@ -93,6 +101,18 @@ void MarkdownSafePreviewDock::setupUi() {
     comboFormat->setToolTip(tr("Select preview rendering format (Auto detects Markdown or HTML)"));
     connect(comboFormat, &QComboBox::currentIndexChanged, this, &MarkdownSafePreviewDock::onFormatComboChanged);
     topLayout->addWidget(comboFormat);
+
+    const auto &themes = MarkdownPreviewEnhancer::themes();
+    for (const auto &t : themes) {
+        comboTheme->addItem(t.name, t.id);
+    }
+    const int themeIdx = comboTheme->findData(currentTheme);
+    if (themeIdx >= 0) {
+        comboTheme->setCurrentIndex(themeIdx);
+    }
+    comboTheme->setToolTip(tr("Markdown Theme (30 curated themes from markdown-viewer)"));
+    connect(comboTheme, &QComboBox::currentIndexChanged, this, &MarkdownSafePreviewDock::onThemeComboChanged);
+    topLayout->addWidget(comboTheme);
 
     lblFormatStatus->setObjectName(QStringLiteral("lblFormatStatus"));
     lblFormatStatus->setText(tr("Auto"));
@@ -170,6 +190,7 @@ void MarkdownSafePreviewDock::setupUi() {
 
     mainLayout->addWidget(topBar);
 
+    browser->setObjectName(QStringLiteral("previewSafeBrowser"));
     browser->setOpenExternalLinks(false);
     browser->setOpenLinks(false);
     connect(browser, &QTextBrowser::anchorClicked, this, &MarkdownSafePreviewDock::handleAnchorClicked);
@@ -228,13 +249,11 @@ MarkdownSafePreviewDock::PreviewFormat MarkdownSafePreviewDock::detectFormat(con
         return Markdown;
     }
 
-    const QString ext = editor->getFileInfo().suffix().toLower();
-    if (ext == QStringLiteral("html") || ext == QStringLiteral("htm") || ext == QStringLiteral("xhtml") ||
-        ext == QStringLiteral("shtml")) {
+    const QString fileName = editor->getFileInfo().fileName();
+    if (MarkdownPreviewEnhancer::isHtmlFile(fileName)) {
         return Html;
     }
-    if (ext == QStringLiteral("md") || ext == QStringLiteral("markdown") || ext == QStringLiteral("mdown") ||
-        ext == QStringLiteral("mkd") || ext == QStringLiteral("mkdn")) {
+    if (MarkdownPreviewEnhancer::isMarkdownFile(fileName)) {
         return Markdown;
     }
 
@@ -339,12 +358,38 @@ void MarkdownSafePreviewDock::applyGitHubTheme() {
                                   .arg(dockBg, textPri, accent, border, bgColor, badgeBg, textSec, btnBg);
     setStyleSheet(dockStyle);
 
+    const auto effectiveFormat = (currentFormat == PreviewFormat::Auto) ? detectFormat(currentEditor) : currentFormat;
+    QString browserBg;
+    QString browserFg;
+    if (effectiveFormat == PreviewFormat::Html) {
+        browserBg = isDark ? QStringLiteral("#0d1117") : QStringLiteral("#ffffff");
+        browserFg = isDark ? QStringLiteral("#e6edf3") : QStringLiteral("#1f2328");
+    } else {
+        const auto &themeInfo = MarkdownPreviewEnhancer::theme(currentTheme);
+        browserBg = themeInfo.bg;
+        browserFg = themeInfo.text;
+    }
+
     browser->setStyleSheet(
         QStringLiteral(
-            "QTextBrowser { background-color: %1; color: %2; border: none; selection-background-color: %3; }")
-            .arg(bgColor, textPri, selColor));
+            "#previewSafeBrowser { background-color: %1; color: %2; border: none; selection-background-color: %3; }")
+            .arg(browserBg, browserFg, selColor));
 
-    browser->document()->setDefaultStyleSheet(buildGitHubStyleSheet(isDark));
+    QPalette browserPal = browser->palette();
+    browserPal.setColor(QPalette::Base, QColor(browserBg));
+    browserPal.setColor(QPalette::Text, QColor(browserFg));
+    browserPal.setColor(QPalette::Window, QColor(browserBg));
+    browserPal.setColor(QPalette::WindowText, QColor(browserFg));
+    if (effectiveFormat != PreviewFormat::Html) {
+        const auto &themeInfo = MarkdownPreviewEnhancer::theme(currentTheme);
+        browserPal.setColor(QPalette::Link, QColor(themeInfo.link));
+    }
+    browser->setPalette(browserPal);
+
+    browser->document()->setDefaultStyleSheet(
+        (effectiveFormat == PreviewFormat::Html)
+            ? buildGitHubStyleSheet(isDark)
+            : MarkdownPreviewEnhancer::themeCss(currentTheme, baseFontSize));
     m_isUpdatingTheme = false;
 }
 
@@ -408,25 +453,31 @@ QString MarkdownSafePreviewDock::buildGitHubStyleSheet(bool isDark) const {
 }
 
 QString MarkdownSafePreviewDock::generateFullHtmlDocument(const QString &bodyHtml, bool isDark) const {
-    const QString css = buildGitHubStyleSheet(isDark);
+    const PreviewFormat effectiveFormat =
+        (currentFormat == PreviewFormat::Auto) ? detectFormat(currentEditor) : currentFormat;
     const QString title = currentEditor ? currentEditor->getFileInfo().fileName() : tr("NotepadNext Preview");
 
-    return QStringLiteral(
-               "<!DOCTYPE html>\n"
-               "<html>\n"
-               "<head>\n"
-               "<meta charset=\"utf-8\">\n"
-               "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n"
-               "<title>%1</title>\n"
-               "<style>\n"
-               "%2\n"
-               "</style>\n"
-               "</head>\n"
-               "<body>\n"
-               "%3\n"
-               "</body>\n"
-               "</html>\n")
-        .arg(title.toHtmlEscaped(), css, bodyHtml);
+    if (effectiveFormat == PreviewFormat::Html) {
+        const QString css = buildGitHubStyleSheet(isDark);
+        return QStringLiteral(
+                   "<!DOCTYPE html>\n"
+                   "<html>\n"
+                   "<head>\n"
+                   "<meta charset=\"utf-8\">\n"
+                   "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n"
+                   "<title>%1</title>\n"
+                   "<style>\n"
+                   "%2\n"
+                   "</style>\n"
+                   "</head>\n"
+                   "<body>\n"
+                   "%3\n"
+                   "</body>\n"
+                   "</html>\n")
+            .arg(title.toHtmlEscaped(), css, bodyHtml);
+    }
+
+    return MarkdownPreviewEnhancer::wrapStandaloneHtml(bodyHtml, currentTheme, title);
 }
 
 namespace {
@@ -531,15 +582,18 @@ void MarkdownSafePreviewDock::renderPreview() {
                                    ? static_cast<double>(scrollBar->value()) / static_cast<double>(scrollBar->maximum())
                                    : 0.0;
 
-    const bool isDark = ThemeManager::instance()->isDarkActive();
     if (effectiveFormat == PreviewFormat::Html) {
         browser->setHtml(content);
+        if (comboTheme) {
+            comboTheme->setEnabled(false);
+        }
     } else {
-        const QString enrichedMd = MarkdownPreviewEnhancer::enhanceMarkdown(content, isDark);
-        QTextDocument doc;
-        doc.setMarkdown(enrichedMd);
-        const QString enhanced = enhanceCallouts(doc.toHtml(), isDark);
-        browser->setHtml(enhanced);
+        if (comboTheme) {
+            comboTheme->setEnabled(true);
+        }
+        const bool mdIsDark = MarkdownPreviewEnhancer::isDarkTheme(currentTheme);
+        const QString rendered = MarkdownPreviewEnhancer::compileMarkdownIt(content, mdIsDark, currentTheme);
+        browser->setHtml(rendered);
     }
 
     if (scrollBar && scrollBar->maximum() > 0 && scrollRatio > 0.0) {
@@ -600,6 +654,29 @@ void MarkdownSafePreviewDock::onFormatComboChanged(int index) {
     }
 }
 
+void MarkdownSafePreviewDock::onThemeComboChanged(int index) {
+    if (index >= 0 && comboTheme && index < comboTheme->count()) {
+        setMarkdownTheme(comboTheme->itemData(index).toString());
+    }
+}
+
+void MarkdownSafePreviewDock::setMarkdownTheme(const QString &themeId) {
+    if (currentTheme == themeId) {
+        return;
+    }
+    currentTheme = themeId;
+    QSettings settings;
+    settings.setValue(QStringLiteral("Preview/MarkdownTheme"), currentTheme);
+    if (comboTheme) {
+        const int idx = comboTheme->findData(currentTheme);
+        if (idx >= 0 && comboTheme->currentIndex() != idx) {
+            comboTheme->setCurrentIndex(idx);
+        }
+    }
+    applyGitHubTheme();
+    renderPreview();
+}
+
 void MarkdownSafePreviewDock::setAutoShowEnabled(bool enabled) {
     if (autoShowEnabled == enabled) {
         return;
@@ -621,9 +698,8 @@ void MarkdownSafePreviewDock::copyHtml() {
     if (effectiveFormat == PreviewFormat::Html) {
         bodyHtml = rawContent;
     } else {
-        QTextDocument doc;
-        doc.setMarkdown(rawContent);
-        bodyHtml = doc.toHtml();
+        const bool mdIsDark = MarkdownPreviewEnhancer::isDarkTheme(currentTheme);
+        bodyHtml = MarkdownPreviewEnhancer::compileMarkdownIt(rawContent, mdIsDark, currentTheme);
     }
     const bool isDark = ThemeManager::instance()->isDarkActive();
     const QString fullHtml = generateFullHtmlDocument(bodyHtml, isDark);
@@ -733,9 +809,8 @@ void MarkdownSafePreviewDock::openInBrowser() const {
     if (effectiveFormat == PreviewFormat::Html) {
         bodyHtml = rawContent;
     } else {
-        QTextDocument doc;
-        doc.setMarkdown(rawContent);
-        bodyHtml = doc.toHtml();
+        const bool mdIsDark = MarkdownPreviewEnhancer::isDarkTheme(currentTheme);
+        bodyHtml = MarkdownPreviewEnhancer::compileMarkdownIt(rawContent, mdIsDark, currentTheme);
     }
 
     QTemporaryFile tempFile(QDir::tempPath() + QStringLiteral("/NotepadNext_preview_XXXXXX.html"));

@@ -49,6 +49,7 @@ public slots:
     void scheduleRender();
     void renderPreview();
     void setPreviewFormat(PreviewFormat newFormat);
+    void setMarkdownTheme(const QString &themeId);
     void setAutoShowEnabled(bool enabled);
     void openInBrowser() const;
     void copyHtml();
@@ -70,6 +71,7 @@ protected:
 private slots:
     void handleAnchorClicked(const QUrl &url);
     void onFormatComboChanged(int index);
+    void onThemeComboChanged(int index);
 
 private:
     void setupUi();
@@ -85,6 +87,7 @@ private:
     QPointer<ScintillaNext> currentEditor;
 
     QComboBox *comboFormat = nullptr;
+    QComboBox *comboTheme = nullptr;
     QLabel *lblFormatStatus = nullptr;
     QLabel *lblStats = nullptr;
     QPushButton *btnOpenBrowser = nullptr;
@@ -97,6 +100,7 @@ private:
     QPushButton *btnResetZoom = nullptr;
 
     PreviewFormat currentFormat = PreviewFormat::Auto;
+    QString currentTheme;
     bool autoShowEnabled = false;
     int baseFontSize = 13;
     bool m_isUpdatingTheme{false};
