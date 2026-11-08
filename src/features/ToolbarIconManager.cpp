@@ -32,6 +32,7 @@
 #include <QToolBar>
 #include <QMenu>
 #include <QWidget>
+#include <QTimer>
 
 ToolbarIconManager *ToolbarIconManager::instance() {
     static ToolbarIconManager s_instance;
@@ -45,10 +46,20 @@ ToolbarIconManager::ToolbarIconManager(QObject *parent) : QObject(parent) {
 void ToolbarIconManager::registerBuiltInPacks() {
     m_packs.clear();
 
-    // 1. Modern Ribbon (Default Vector SVG)
+    // 1. NotepadNext Classic (Bawaan Default)
+    m_packs.append(ToolbarIconPack{
+        .id = QStringLiteral("notepadNext"),
+        .displayName = tr("NotepadNext Classic (Bawaan)"),
+        .description = tr("Authentic classic NotepadNext built-in silk iconography"),
+        .basePath = QStringLiteral(":/icons/packs/notepadNext"),
+        .isBuiltIn = true,
+        .isPngBased = true,
+    });
+
+    // 2. Modern Ribbon (Vector SVG)
     m_packs.append(ToolbarIconPack{
         .id = QStringLiteral("modernRibbon"),
-        .displayName = tr("Modern Ribbon (Default Vector)"),
+        .displayName = tr("Modern Ribbon (Vector SVG)"),
         .description = tr("High-DPI 20x20 monoline vector SVG suite with refined contours"),
         .basePath = QStringLiteral(":/icons"),
         .isBuiltIn = true,
@@ -185,15 +196,6 @@ void ToolbarIconManager::registerBuiltInPacks() {
         .isPngBased = true,
     });
 
-    // 15. NotepadNext Classic (Silk)
-    m_packs.append(ToolbarIconPack{
-        .id = QStringLiteral("notepadNext"),
-        .displayName = tr("NotepadNext Classic (Silk)"),
-        .description = tr("Authentic 16x16 Silk bitmap icons from NotepadNext"),
-        .basePath = QStringLiteral(":/icons/packs/notepadNext"),
-        .isBuiltIn = true,
-        .isPngBased = true,
-    });
 
     // 16. Vibrant DuoTone (Cyberpunk)
     m_packs.append(ToolbarIconPack{
@@ -433,9 +435,9 @@ void ToolbarIconManager::initialize(ApplicationSettings *settings) {
 
     if (m_settings) {
         const QString savedPack =
-            m_settings->value(QStringLiteral("Gui/ToolbarIconSet"), QStringLiteral("modernRibbon")).toString();
+            m_settings->value(QStringLiteral("Gui/ToolbarIconSet"), QStringLiteral("notepadNext")).toString();
         const ToolbarIconPack *pack = findPackById(savedPack);
-        m_currentPackId = pack ? pack->id : QStringLiteral("modernRibbon");
+        m_currentPackId = pack ? pack->id : QStringLiteral("notepadNext");
 
         const int savedSize = m_settings->value(QStringLiteral("Gui/ToolbarIconSize"), 24).toInt();
         const int clampedSize = (savedSize >= 16 && savedSize <= 64) ? savedSize : 24;
@@ -485,7 +487,12 @@ void ToolbarIconManager::setPack(const QString &packId, QToolBar *toolBar) {
     }
 
     if (toolBar) {
-        applyToWindow(toolBar->window(), toolBar);
+        applyToToolbar(toolBar);
+        if (const QWidget *win = toolBar->window()) {
+            QTimer::singleShot(0, this, [this, win]() {
+                applyToWindow(win, nullptr);
+            });
+        }
     }
 
     if (isDifferentPack) {
@@ -714,22 +721,29 @@ QRgb transformDarkPixel(QRgb px) {
     if (a < 15) {
         return px;
     }
-    const QColor c(px);
-    const int lit = c.lightness();
-    const int sat = c.hslSaturation();
-    const int hue = c.hslHue();
+    const int r = qRed(px);
+    const int g = qGreen(px);
+    const int b = qBlue(px);
+    const int maxC = std::max({r, g, b});
+    const int minC = std::min({r, g, b});
+    const int lit = (maxC + minC) / 2;
+    const int delta = maxC - minC;
 
-    if (sat < 30) {
+    if (delta < 30) {
         if (lit < 160) {
             const int newLit = qBound(180, 240 - lit, 255);
-            return QColor::fromHsl(hue, 0, newLit, a).rgba();
+            return qRgba(newLit, newLit, newLit, a);
         }
         return px;
     }
 
     if (lit < 155) {
-        const int newLit = qBound(155, 155 + (lit * 75 / 155), 235);
-        return QColor::fromHsl(hue, sat, newLit, a).rgba();
+        const int boost = 155 + (lit * 75 / 155);
+        const int denom = (lit > 0) ? lit : 1;
+        const int nr = qBound(0, (r * boost) / denom, 255);
+        const int ng = qBound(0, (g * boost) / denom, 255);
+        const int nb = qBound(0, (b * boost) / denom, 255);
+        return qRgba(nr, ng, nb, a);
     }
     return px;
 }
@@ -744,12 +758,9 @@ QImage adaptImageForTheme(const QImage &src, bool isDark) {
     const int h = direct.height();
 
     for (int y = 0; y < h; ++y) {
+        auto *scanLine = reinterpret_cast<QRgb *>(direct.scanLine(y));
         for (int x = 0; x < w; ++x) {
-            const QRgb px = direct.pixel(x, y);
-            const QRgb transformed = transformDarkPixel(px);
-            if (transformed != px) {
-                direct.setPixel(x, y, transformed);
-            }
+            scanLine[x] = transformDarkPixel(scanLine[x]);
         }
     }
     return direct;
@@ -766,16 +777,23 @@ void addHiDpiPixmaps(QIcon &icon, const QString &filePath, bool isPngBased, bool
     }
 
     const QImage adapted = adaptImageForTheme(baseImg, isDark);
-    static constexpr std::array<int, 6> s_dpiSizes = {16, 20, 24, 32, 48, 64};
+    const int baseW = adapted.width();
+    const int baseH = adapted.height();
+
+    icon.addPixmap(QPixmap::fromImage(adapted));
+
+    static constexpr std::array<int, 4> s_dpiSizes = {16, 24, 32, 48};
     for (const int sz : s_dpiSizes) {
-        if (const QPixmap px = QPixmap::fromImage(
-                adapted.scaled(sz, sz, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
-            !px.isNull()) {
-            icon.addPixmap(px);
-            if (sz == 32 || sz == 48 || sz == 64) {
-                QPixmap pxRetina = px;
-                pxRetina.setDevicePixelRatio(2.0);
-                icon.addPixmap(pxRetina);
+        if (baseW != sz || baseH != sz) {
+            if (const QPixmap px = QPixmap::fromImage(
+                    adapted.scaled(sz, sz, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+                !px.isNull()) {
+                icon.addPixmap(px);
+                if (sz == 32 || sz == 48) {
+                    QPixmap pxRetina = px;
+                    pxRetina.setDevicePixelRatio(2.0);
+                    icon.addPixmap(pxRetina);
+                }
             }
         }
     }
@@ -878,7 +896,7 @@ QIcon ToolbarIconManager::getActionIcon(const QString &actionName, const QString
 
     const ToolbarIconPack *pack = findPackById(targetPackId);
     if (!pack) {
-        pack = findPackById(QStringLiteral("modernRibbon"));
+        pack = findPackById(QStringLiteral("notepadNext"));
     }
 
     if (!pack) {

@@ -67,10 +67,7 @@ public:
     }
     [[nodiscard]] bool isDarkMode() const { return m_isDarkMode; }
     void setDarkMode(bool dark) {
-        if (m_isDarkMode != dark) {
-            m_isDarkMode = dark;
-            clearCache();
-        }
+        m_isDarkMode = dark;
     }
     void clearCache() const { m_iconCache.clear(); }
 
@@ -96,7 +93,7 @@ private:
     [[nodiscard]] static QString resolveIconFilePath(const ToolbarIconPack &pack, const QString &canonical);
 
     ApplicationSettings *m_settings{nullptr};
-    QString m_currentPackId{QStringLiteral("modernRibbon")};
+    QString m_currentPackId{QStringLiteral("notepadNext")};
     QSize m_currentIconSize{24, 24};
     bool m_isDarkMode{false};
     QList<ToolbarIconPack> m_packs;

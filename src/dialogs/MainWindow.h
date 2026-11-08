@@ -95,6 +95,7 @@ public:
     int editorCount() const;
     QVector<ScintillaNext *> editors() const;
     DockedEditor *getDockedEditor() const { return dockedEditor; }
+    void enforceDarkTitleBar();
 
 public slots:
     void newFile() const;
@@ -190,6 +191,7 @@ signals:
     void fileDialogAccepted(const QString &filePath);
 
 protected:
+    void showEvent(QShowEvent *event) override;
     void closeEvent(QCloseEvent *event) override;
     void dragEnterEvent(QDragEnterEvent *event) override;
     void dropEvent(QDropEvent *event) override;

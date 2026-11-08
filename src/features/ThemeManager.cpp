@@ -226,11 +226,16 @@ void ThemeManager::applyTheme(MainWindow *window) {
 
 #if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
     if (QGuiApplication::styleHints()) {
+#ifdef Q_OS_MACOS
+        // On macOS, always enforce Dark color scheme so Cocoa window frames and titlebars remain black/dark in any mode
+        QGuiApplication::styleHints()->setColorScheme(Qt::ColorScheme::Dark);
+#else
         if (m_themeMode == ThemeMode::Auto) {
             QGuiApplication::styleHints()->setColorScheme(Qt::ColorScheme::Unknown);
         } else {
             QGuiApplication::styleHints()->setColorScheme(dark ? Qt::ColorScheme::Dark : Qt::ColorScheme::Light);
         }
+#endif
     }
 #endif
 
@@ -264,6 +269,7 @@ void ThemeManager::applyTheme(MainWindow *window) {
         if (auto *mw = qobject_cast<MainWindow *>(widget)) {
             anyWindowUpdated = true;
             mw->applyStyleSheet();
+            mw->enforceDarkTitleBar();
             for (ScintillaNext *editor : mw->editors()) {
                 applyThemeToEditor(editor);
             }
@@ -272,6 +278,7 @@ void ThemeManager::applyTheme(MainWindow *window) {
 
     if (!anyWindowUpdated && m_activeWindow) {
         m_activeWindow->applyStyleSheet();
+        m_activeWindow->enforceDarkTitleBar();
         for (ScintillaNext *editor : m_activeWindow->editors()) {
             applyThemeToEditor(editor);
         }

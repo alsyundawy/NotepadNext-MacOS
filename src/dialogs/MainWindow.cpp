@@ -151,6 +151,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) : // NOSONAR
     setAttribute(Qt::WA_DeleteOnClose);
 
     ui->setupUi(this);
+    enforceDarkTitleBar();
 
     applyCustomShortcuts();
 
@@ -2790,11 +2791,51 @@ void MainWindow::activateEditor(ScintillaNext *editor)
     emit editorActivated(editor);
 }
 
+void MainWindow::enforceDarkTitleBar()
+{
+#ifdef Q_OS_MACOS
+    const WId viewId = effectiveWinId();
+    if (!viewId) {
+        return;
+    }
+    // msgSend helpers with correct signatures
+    auto msgSendId = reinterpret_cast<id (*)(id, SEL)>(objc_msgSend); // NOSONAR
+    auto msgSendIdArg = reinterpret_cast<id (*)(id, SEL, id)>(objc_msgSend); // NOSONAR
+    auto strWithUtf8 = reinterpret_cast<id (*)(id, SEL, const char *)>(objc_msgSend); // NOSONAR
+
+    id nsView = reinterpret_cast<id>(viewId);
+    id nsWindow = msgSendId(nsView, sel_registerName("window"));
+    if (!nsWindow) {
+        return;
+    }
+
+    id nsAppearanceClass = reinterpret_cast<id>(objc_getClass("NSAppearance"));
+    id nsStrClass = reinterpret_cast<id>(objc_getClass("NSString"));
+    id darkAquaStr = strWithUtf8(nsStrClass, sel_registerName("stringWithUTF8String:"), "NSAppearanceNameDarkAqua");
+
+    id darkAppearance = msgSendIdArg(nsAppearanceClass, sel_registerName("appearanceNamed:"), darkAquaStr);
+    if (darkAppearance) {
+        msgSendIdArg(nsWindow, sel_registerName("setAppearance:"), darkAppearance);
+        msgSendId(nsWindow, sel_registerName("invalidateShadow"));
+    }
+
+    id appClass = reinterpret_cast<id>(objc_getClass("NSApplication"));
+    id nsApp = msgSendId(appClass, sel_registerName("sharedApplication"));
+    if (nsApp && darkAppearance) {
+        msgSendIdArg(nsApp, sel_registerName("setAppearance:"), darkAppearance);
+    }
+#endif
+}
+
+void MainWindow::showEvent(QShowEvent *event)
+{
+    QMainWindow::showEvent(event);
+    enforceDarkTitleBar();
+}
+
 void MainWindow::applyStyleSheet()
 {
     qInfo(Q_FUNC_INFO);
-
-    QString sheet = ThemeManager::instance()->getThemeStyleSheet();
 
     // If there is a "custom.css" file where the ini is located, load it as a style sheet addition
     const QString directoryPath = QFileInfo(app->getSettings()->fileName()).absolutePath();
@@ -2803,12 +2844,20 @@ void MainWindow::applyStyleSheet()
         qInfo() << "Loading stylesheet:" << custom.fileName();
 
         if (custom.open(QFile::ReadOnly)) {
-            sheet += custom.readAll();
+            QString sheet = ThemeManager::instance()->getThemeStyleSheet() + QString::fromUtf8(custom.readAll());
             custom.close();
+            setStyleSheet(sheet);
+            enforceDarkTitleBar();
+            return;
         }
     }
 
-    setStyleSheet(sheet);
+    // When no custom.css is present, do NOT redundantly parse and set the stylesheet on MainWindow.
+    // All child widgets inherit qApp's stylesheet directly, eliminating duplicate parsing and GUI freezing.
+    if (!styleSheet().isEmpty()) {
+        setStyleSheet(QString());
+    }
+    enforceDarkTitleBar();
 }
 
 void MainWindow::setLanguage(ScintillaNext *editor, const QString &languageName) const
@@ -3074,6 +3123,7 @@ void MainWindow::focusIn()
 void MainWindow::changeEvent(QEvent *event)
 {
     QMainWindow::changeEvent(event);
+    enforceDarkTitleBar();
 
     if (event->type() == QEvent::ActivationChange) {
         qInfo() << "ActivationChange, isActiveWindow() =" << isActiveWindow();

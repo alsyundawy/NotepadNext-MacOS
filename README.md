@@ -393,24 +393,30 @@ sudo ./NotepadNext-Default-Editor-Linux.sh --system -f
 
 ## Credits
 
-> 🇬🇧 This repository is an enhanced **macOS & Linux edition** of the original project by **[@dail8859](https://github.com/dail8859)**.
+> 🇬🇧 This repository is an enhanced **macOS & Linux edition** of the original project by **[@dail8859](https://github.com/dail8859)**, heavily supercharged with advanced features, UI ergonomics, and forensic utilities ported from the sister project **[SparkNotePad](https://github.com/alsyundawy/SparkNotePad)** (v1.3.8) across cumulative releases **v0.15-01 through v0.15-08**.
 >
-> All credit for the original codebase goes to the original author.
+> All credit for the original codebase goes to the original author, and special architectural credit goes to the **SparkNotePad** project for serving as the foundational feature donor:
 >
-> This edition is maintained at [https://github.com/alsyundawy/NotepadNext-MacOS](https://github.com/alsyundawy/NotepadNext-MacOS) to provide first-class macOS DMGs, native Linux DEB & RPM packages, deep desktop integrations, tab lifecycle stability fixes, and enterprise-grade code hardening.
+> - 🎨 **38-Pack Toolbar Icon Engine & 6-Tier Sizing**: Runtime vector and multi-res PNG icon packs with dynamic toolbar resizing (`ToolbarIconManager`).
+> - ➕ **Tab Bar Plus (+) Button**: Persistent macOS-styled dock tab bar `+` button for instant new document creation (`DockedEditorTitleBar`).
+> - 📑 **Tabbed Markdown & HTML Live Preview**: Full-featured `PreviewTabWidget` with GitHub callouts, DevDocs styling, reading metrics, zoom, and direct browser previews.
+> - 🔍 **Myers LCS Diff Engine**: Side-by-side synchronized document comparison and syntax-aware diff highlights (`MyersDiffEngine`, `FileDiffDialog`).
+> - 🔒 **Cryptographic Stream Hasher**: Constant-memory digest verification (CRC32, MD5, SHA-1, SHA-256, SHA-512, SHA3).
+> - 🔬 **Forensic Text Utilities**: Shannon entropy analysis, JWT/Base64 inspector, and Unicode character breakdown (`TokenForensicUtils`, `CharacterInfoDialog`).
+> - 🛠️ **Dynamic Toolbar Customizer**: Drag-and-drop toolbar button and separator customization dialog (`CustomizeToolbarDialog`).
+> - 🍏 **High-DPI Retina Styled DMG Artwork**: Custom 680x440 installer canvas geometry, custom background banner, and drag-and-drop workflow.
 >
-> 🇮🇩 Repository ini merupakan **edisi khusus macOS & Linux** dari proyek asli oleh **[@dail8859](https://github.com/dail8859)**.
+> 🇮🇩 Repository ini merupakan **edisi khusus macOS & Linux** dari proyek asli oleh **[@dail8859](https://github.com/dail8859)**, dengan integrasi arsitektur fitur tingkat lanjut, ergonomi UI, dan utilitas forensik yang diadaptasi dari proyek saudara **[SparkNotePad](https://github.com/alsyundawy/SparkNotePad)** (v1.3.8) dari rilis kumulatif **v0.15-01 hingga v0.15-08**.
 >
-> Seluruh kredit untuk proyek aslinya diberikan kepada penulis asli.
->
-> Edisi ini dikelola di [https://github.com/alsyundawy/NotepadNext-MacOS](https://github.com/alsyundawy/NotepadNext-MacOS) untuk menyediakan paket native macOS (Apple Silicon & Intel DMG), paket distribusi Linux (.deb & .rpm), integrasi editor default sistem, perbaikan stabilitas tab, dan standardisasi kualitas kode bebas cacat.
+> Seluruh kredit untuk proyek aslinya diberikan kepada penulis asli, dan kredit arsitektur khusus diberikan kepada proyek **SparkNotePad** sebagai donor fitur utama.
 
-| Component / Komponen                             | Link / Tautan                                                                              |
-| :----------------------------------------------- | :----------------------------------------------------------------------------------------- |
-| 🏠 **Original Repository / Repositori Asli**     | [github.com/dail8859/NotepadNext](https://github.com/dail8859/NotepadNext)                 |
-| 👤 **Original Author / Penulis Asli**            | [@dail8859](https://github.com/dail8859)                                                   |
-| 📦 **Edition Repository / Repositori Edisi Ini** | [github.com/alsyundawy/NotepadNext-MacOS](https://github.com/alsyundawy/NotepadNext-MacOS) |
-| 👤 **Lead Maintainer / Pengembang Utama**        | [@alsyundawy](https://github.com/alsyundawy)                                               |
+| Component / Komponen                                       | Link / Tautan                                                                              |
+| :--------------------------------------------------------- | :----------------------------------------------------------------------------------------- |
+| 🏠 **Original Repository / Repositori Asli**               | [github.com/dail8859/NotepadNext](https://github.com/dail8859/NotepadNext)                 |
+| 👤 **Original Author / Penulis Asli**                      | [@dail8859](https://github.com/dail8859)                                                   |
+| ⚡ **Feature Donor Project / Proyek Donor Fitur (v1.3.8)** | [SparkNotePad](https://github.com/alsyundawy/SparkNotePad)                                 |
+| 📦 **Edition Repository / Repositori Edisi Ini**           | [github.com/alsyundawy/NotepadNext-MacOS](https://github.com/alsyundawy/NotepadNext-MacOS) |
+| 👤 **Lead Maintainer / Pengembang Utama**                  | [@alsyundawy](https://github.com/alsyundawy)                                               |
 
 ---
 

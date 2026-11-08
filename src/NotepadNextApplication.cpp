@@ -39,6 +39,10 @@
 #include "ILexer.h"
 #include "Lexilla.h"
 
+#ifdef Q_OS_MACOS
+#include <objc/message.h>
+#endif
+
 #include <QCommandLineParser>
 #include <algorithm>
 
@@ -95,6 +99,22 @@ NotepadNextApplication::~NotepadNextApplication() = default;
 bool NotepadNextApplication::init()
 {
     qInfo(Q_FUNC_INFO);
+
+#ifdef Q_OS_MACOS
+    // Enforce dark appearance at NSApp level so all windows and dialogues maintain dark titlebars in any mode
+    auto msgSendId = reinterpret_cast<id (*)(id, SEL)>(objc_msgSend); // NOSONAR
+    auto msgSendIdArg = reinterpret_cast<id (*)(id, SEL, id)>(objc_msgSend); // NOSONAR
+    auto strWithUtf8 = reinterpret_cast<id (*)(id, SEL, const char *)>(objc_msgSend); // NOSONAR
+    id nsAppearanceClass = reinterpret_cast<id>(objc_getClass("NSAppearance"));
+    id nsStrClass = reinterpret_cast<id>(objc_getClass("NSString"));
+    id darkAquaStr = strWithUtf8(nsStrClass, sel_registerName("stringWithUTF8String:"), "NSAppearanceNameDarkAqua");
+    id darkAppearance = msgSendIdArg(nsAppearanceClass, sel_registerName("appearanceNamed:"), darkAquaStr);
+    id appClass = reinterpret_cast<id>(objc_getClass("NSApplication"));
+    id nsApp = msgSendId(appClass, sel_registerName("sharedApplication"));
+    if (nsApp && darkAppearance) {
+        msgSendIdArg(nsApp, sel_registerName("setAppearance:"), darkAppearance);
+    }
+#endif
 
 #ifndef Q_OS_MACOS
     setWindowIcon(QIcon(QStringLiteral(":/icons/NotepadNext.png")));
