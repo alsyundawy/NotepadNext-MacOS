@@ -1,3 +1,6 @@
+# Exclude all thirdparty directories and targets from Qt translation extraction (Qt 6.7+)
+set_property(DIRECTORY PROPERTY QT_EXCLUDE_FROM_TRANSLATION ON)
+
 include(${CMAKE_SOURCE_DIR}/cmake/CPM.cmake)
 
 CPMAddPackage(
@@ -44,3 +47,9 @@ if(Python3_FOUND)
 endif()
 
 target_link_libraries(lexilla PRIVATE scintilla)
+
+foreach(_tp_target ads QSimpleUpdater SingleApplication editorconfig_core_qt lua scintilla lexilla uchardet)
+    if(TARGET ${_tp_target})
+        set_property(TARGET ${_tp_target} PROPERTY QT_EXCLUDE_FROM_TRANSLATION ON)
+    endif()
+endforeach()

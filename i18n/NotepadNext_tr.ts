@@ -50,45 +50,22 @@
     </message>
     <message>
         <location filename="../src/dialogs/AboutDialog.cpp" line="326"/>
-        <source>&lt;div style=&apos;color: %1; line-height: 1.6;&apos;&gt;&lt;h3 style=&apos;color: %1; margin-top: 0;&apos;&gt;Credits &amp;amp; Upstream Attribution&lt;/h3&gt;&lt;p&gt;Notepad Next for macOS stands on the shoulders of giants. We express our deepest gratitude to the following projects and authors:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;b&gt;Justin Dailey (dail8859):&lt;/b&gt; Original creator and lead developer of NotepadNext. Provided the cross-platform Qt scaffolding, docking framework, and core application design. (&lt;a style=&apos;color: %2;&apos; href=&apos;https://github.com/dail8859/NotepadNext&apos;&gt;github.com/dail8859/NotepadNext&lt;/a&gt;)&lt;/li&gt;&lt;li&gt;&lt;b&gt;Scintilla:&lt;/b&gt; Created by Neil Hodgson and contributors. The legendary core editing component providing high-performance text rendering, multi-caret editing, and fold margins. (&lt;a style=&apos;color: %2;&apos; href=&apos;https://www.scintilla.org&apos;&gt;scintilla.org&lt;/a&gt;)&lt;/li&gt;&lt;li&gt;&lt;b&gt;Lexilla:&lt;/b&gt; Created by Neil Hodgson and contributors. Provides syntax highlighting and styling lexers for over 100 programming languages. (&lt;a style=&apos;color: %2;&apos; href=&apos;https://www.scintilla.org&apos;&gt;scintilla.org/Lexilla.html&lt;/a&gt;)&lt;/li&gt;&lt;li&gt;&lt;b&gt;uchardet:&lt;/b&gt; Maintained by Freedesktop. Enables fast and robust universal character encoding detection.&lt;/li&gt;&lt;li&gt;&lt;b&gt;Qt Project:&lt;/b&gt; Developed by The Qt Company and the Qt Open Source Community. (&lt;a style=&apos;color: %2;&apos; href=&apos;https://www.qt.io&apos;&gt;qt.io&lt;/a&gt;)&lt;/li&gt;&lt;li&gt;&lt;b&gt;Qt Advanced Docking System (QADS):&lt;/b&gt; Advanced dock widget management for Qt.&lt;/li&gt;&lt;li&gt;&lt;b&gt;NoteSciPad:&lt;/b&gt; Contributed modern Scintilla 5.6.7 / Lexilla 5.5.4 integration and multi-instance UI patterns.&lt;/li&gt;&lt;li&gt;&lt;b&gt;SparkNotePad:&lt;/b&gt; Invaluable feature donor (v1.3.8) providing inspiration and reference implementations for icon pack suites, toolbar personalization, forensics utilities, and preview workflows.&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</source>
+        <source>&lt;div style=&apos;color: %1; line-height: 1.6;&apos;&gt;&lt;h3 style=&apos;color: %1; margin-top: 0;&apos;&gt;Credits &amp;amp; Upstream Attribution&lt;/h3&gt;&lt;p&gt;Notepad Next for macOS stands on the shoulders of giants. We express our deepest gratitude to the following projects and authors:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;b&gt;Justin Dailey (dail8859):&lt;/b&gt; Original creator and lead developer of NotepadNext. Provided the cross-platform Qt scaffolding, docking framework, and core application design. (&lt;a style=&apos;color: %2;&apos; href=&apos;https://github.com/dail8859/NotepadNext&apos;&gt;github.com/dail8859/NotepadNext&lt;/a&gt;)&lt;/li&gt;&lt;li&gt;&lt;b&gt;Scintilla:&lt;/b&gt; Created by Neil Hodgson and contributors. The legendary core editing component providing high-performance text rendering, multi-caret editing, and fold margins. (&lt;a style=&apos;color: %2;&apos; href=&apos;https://www.scintilla.org&apos;&gt;scintilla.org&lt;/a&gt;)&lt;/li&gt;&lt;li&gt;&lt;b&gt;Lexilla:&lt;/b&gt; Created by Neil Hodgson and contributors. Provides syntax highlighting and styling lexers for over 100 programming languages. (&lt;a style=&apos;color: %2;&apos; href=&apos;https://www.scintilla.org&apos;&gt;scintilla.org/Lexilla.html&lt;/a&gt;)&lt;/li&gt;&lt;li&gt;&lt;b&gt;uchardet:&lt;/b&gt; Maintained by Freedesktop. Enables fast and robust universal character encoding detection.&lt;/li&gt;&lt;li&gt;&lt;b&gt;Qt Project:&lt;/b&gt; Developed by The Qt Company and the Qt Open Source Community. (&lt;a style=&apos;color: %2;&apos; href=&apos;https://www.qt.io&apos;&gt;qt.io&lt;/a&gt;)&lt;/li&gt;&lt;li&gt;&lt;b&gt;Qt Advanced Docking System (QADS):&lt;/b&gt; Advanced dock widget management for Qt.&lt;/li&gt;&lt;li&gt;&lt;b&gt;NoteSciPad:&lt;/b&gt; Contributed modern Scintilla 5.6.7 / Lexilla 5.5.4 integration and multi-instance UI patterns.&lt;/li&gt;&lt;li&gt;&lt;b&gt;SparkNotePad (v1.3.8) — Sister Project &amp;amp; Master Feature Donor:&lt;/b&gt;&lt;br/&gt;Special recognition to the &lt;b&gt;SparkNotePad&lt;/b&gt; project and architecture for providing the core reference implementations, assets, and foundational engineering ported into NotepadNext-MacOS across cumulative releases &lt;b&gt;v0.15-01 through v0.15-08&lt;/b&gt;:  &lt;ul style=&apos;margin-top: 4px;&apos;&gt;    &lt;li&gt;🎨 &lt;b&gt;38-Pack Toolbar Icon Engine &amp;amp; 6-Tier Scaling:&lt;/b&gt; Complete vector and multi-res PNG icon packs (Modern Ribbon, Fugue, Fluent UI, Windows 7/11, Amber, Retro WinXP) with real-time dynamic toolbar resizing.&lt;/li&gt;    &lt;li&gt;➕ &lt;b&gt;Tab Bar Plus (+) Button:&lt;/b&gt; Persistent macOS-styled dock tab bar &lt;code&gt;+&lt;/code&gt; button for instantaneous new document creation.&lt;/li&gt;    &lt;li&gt;📑 &lt;b&gt;Tabbed Markdown &amp;amp; HTML Live Preview:&lt;/b&gt; Dedicated &lt;code&gt;PreviewTabWidget&lt;/code&gt; with GitHub callouts, DevDocs styling, reading metrics, zoom, and direct browser previews.&lt;/li&gt;    &lt;li&gt;🔍 &lt;b&gt;Myers LCS Diff Engine:&lt;/b&gt; Side-by-side synchronized document comparison and syntax-aware diff highlights (&lt;code&gt;MyersDiffEngine&lt;/code&gt;, &lt;code&gt;FileDiffDialog&lt;/code&gt;).&lt;/li&gt;    &lt;li&gt;🔒 &lt;b&gt;Cryptographic Stream Hasher:&lt;/b&gt; Constant-memory digest verification (CRC32, MD5, SHA-1, SHA-256, SHA-512, SHA3).&lt;/li&gt;    &lt;li&gt;🔬 &lt;b&gt;Forensic Inspection &amp;amp; Text Utilities:&lt;/b&gt; Shannon entropy analysis, JWT/Base64 inspector, and Unicode character breakdown.&lt;/li&gt;    &lt;li&gt;🛠️ &lt;b&gt;Dynamic Toolbar Customizer:&lt;/b&gt; Dual-list drag-and-drop toolbar button and separator customization dialog (&lt;code&gt;CustomizeToolbarDialog&lt;/code&gt;).&lt;/li&gt;    &lt;li&gt;🍏 &lt;b&gt;High-DPI Retina Styled DMG Artwork:&lt;/b&gt; Custom 680x440 installer canvas geometry, custom background banner, and drag-and-drop workflow.&lt;/li&gt;  &lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/AboutDialog.cpp" line="345"/>
+        <location filename="../src/dialogs/AboutDialog.cpp" line="357"/>
         <source>&lt;div style=&apos;color: %1; line-height: 1.6;&apos;&gt;&lt;h3 style=&apos;color: %1; margin-top: 0;&apos;&gt;Key Productivity Shortcuts&lt;/h3&gt;&lt;table border=&apos;0&apos; cellspacing=&apos;6&apos; cellpadding=&apos;4&apos; width=&apos;100%&apos; style=&apos;color: %1;&apos;&gt;&lt;tr&gt;&lt;td style=&apos;color: %2; font-weight: bold;&apos;&gt;Ctrl / Cmd + N&lt;/td&gt;&lt;td&gt;Create New File&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&apos;color: %2; font-weight: bold;&apos;&gt;Ctrl / Cmd + Shift + N&lt;/td&gt;&lt;td&gt;Open New Window&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&apos;color: %2; font-weight: bold;&apos;&gt;Ctrl / Cmd + O&lt;/td&gt;&lt;td&gt;Open File&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&apos;color: %2; font-weight: bold;&apos;&gt;Ctrl / Cmd + S&lt;/td&gt;&lt;td&gt;Save File&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&apos;color: %2; font-weight: bold;&apos;&gt;Ctrl / Cmd + Shift + S&lt;/td&gt;&lt;td&gt;Save As...&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&apos;color: %2; font-weight: bold;&apos;&gt;Ctrl / Cmd + F&lt;/td&gt;&lt;td&gt;Find / Quick Find&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&apos;color: %2; font-weight: bold;&apos;&gt;Ctrl / Cmd + H&lt;/td&gt;&lt;td&gt;Find &amp;amp; Replace&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&apos;color: %2; font-weight: bold;&apos;&gt;Ctrl / Cmd + Shift + F&lt;/td&gt;&lt;td&gt;Find in Files / Workspace&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&apos;color: %2; font-weight: bold;&apos;&gt;Ctrl / Cmd + D&lt;/td&gt;&lt;td&gt;Duplicate Current Line or Selection&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&apos;color: %2; font-weight: bold;&apos;&gt;Ctrl / Cmd + /&lt;/td&gt;&lt;td&gt;Toggle Single-Line Comment&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&apos;color: %2; font-weight: bold;&apos;&gt;Ctrl / Cmd + Shift + /&lt;/td&gt;&lt;td&gt;Toggle Block / Stream Comment&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&apos;color: %2; font-weight: bold;&apos;&gt;Ctrl / Cmd + Shift + U&lt;/td&gt;&lt;td&gt;Convert Selection to UPPERCASE&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&apos;color: %2; font-weight: bold;&apos;&gt;Ctrl / Cmd + U&lt;/td&gt;&lt;td&gt;Convert Selection to lowercase&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&apos;color: %2; font-weight: bold;&apos;&gt;Ctrl+Alt+Shift+E&lt;/td&gt;&lt;td&gt;Encoding Information &amp;amp; Conversion Dialog&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&apos;color: %2; font-weight: bold;&apos;&gt;Ctrl+Alt+U&lt;/td&gt;&lt;td&gt;Convert Document Encoding to UTF-8&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&apos;color: %2; font-weight: bold;&apos;&gt;Ctrl+Alt+A&lt;/td&gt;&lt;td&gt;Convert Document Encoding to ANSI&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&apos;color: %2; font-weight: bold;&apos;&gt;Alt + Click &amp;amp; Drag&lt;/td&gt;&lt;td&gt;Column / Rectangular Box Selection&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/AboutDialog.cpp" line="372"/>
+        <location filename="../src/dialogs/AboutDialog.cpp" line="384"/>
         <source>&lt;div style=&apos;color: %1; line-height: 1.6;&apos;&gt;&lt;h3 style=&apos;color: %1; margin-top: 0;&apos;&gt;GNU General Public License v3.0&lt;/h3&gt;&lt;p&gt;Notepad Next is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.&lt;/p&gt;&lt;p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.&lt;/p&gt;&lt;p&gt;For complete license details, visit: &lt;a style=&apos;color: %2;&apos; href=&apos;https://www.gnu.org/licenses/&apos;&gt;https://www.gnu.org/licenses/&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/AboutDialog.cpp" line="470"/>
+        <location filename="../src/dialogs/AboutDialog.cpp" line="482"/>
         <source>Copy Diagnostics to Clipboard</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>AuthenticateDialog</name>
-    <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/AuthenticateDialog.ui" line="14"/>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/AuthenticateDialog.ui" line="26"/>
-        <source>Please provide the user name and password for the download location.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/AuthenticateDialog.ui" line="35"/>
-        <source>&amp;User name:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/AuthenticateDialog.ui" line="48"/>
-        <source>&amp;Password:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -588,167 +565,8 @@ Shannon Entropy: %12
 <context>
     <name>Downloader</name>
     <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.ui" line="23"/>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.cpp" line="311"/>
-        <source>Updater</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.ui" line="90"/>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.cpp" line="144"/>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.cpp" line="385"/>
-        <source>Downloading updates</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.ui" line="113"/>
-        <source>Time remaining: 0 minutes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.ui" line="154"/>
-        <source>Open</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.ui" line="161"/>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.cpp" line="143"/>
-        <source>Stop</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.cpp" line="145"/>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.cpp" line="483"/>
-        <source>Time remaining</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.cpp" line="145"/>
-        <source>unknown</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.cpp" line="251"/>
-        <source>Error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.cpp" line="251"/>
-        <source>Cannot find downloaded update!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.cpp" line="267"/>
         <source>Close</source>
-        <translation type="unfinished">Kapat</translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.cpp" line="268"/>
-        <source>Download complete!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.cpp" line="269"/>
-        <source>The installer opens separately</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.cpp" line="276"/>
-        <source>Click &quot;OK&quot; to begin installing the update</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.cpp" line="278"/>
-        <source>In order to install the update, you may need to quit the application.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.cpp" line="282"/>
-        <source>In order to install the update, you may need to quit the application. This is a mandatory update, exiting now will close the application.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.cpp" line="298"/>
-        <source>Click the &quot;Open&quot; button to apply the update</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.cpp" line="315"/>
-        <source>Are you sure you want to cancel the download?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.cpp" line="317"/>
-        <source>Are you sure you want to cancel the download? This is a mandatory update, exiting now will close the application</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.cpp" line="372"/>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.cpp" line="379"/>
-        <source>%1 bytes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.cpp" line="374"/>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.cpp" line="381"/>
-        <source>%1 KB</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.cpp" line="376"/>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.cpp" line="383"/>
-        <source>%1 MB</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.cpp" line="385"/>
-        <source>of</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.cpp" line="430"/>
-        <source>Downloading Updates</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.cpp" line="431"/>
-        <source>Time Remaining</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.cpp" line="431"/>
-        <source>Unknown</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.cpp" line="459"/>
-        <source>about %1 hours</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.cpp" line="461"/>
-        <source>about one hour</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.cpp" line="469"/>
-        <source>%1 minutes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.cpp" line="471"/>
-        <source>1 minute</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.cpp" line="478"/>
-        <source>%1 seconds</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Downloader.cpp" line="480"/>
-        <source>1 second</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Kapat</translation>
     </message>
 </context>
 <context>
@@ -2000,7 +1818,7 @@ Shannon Entropy: %12
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="69"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2265"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2267"/>
         <source>Export As</source>
         <translation>... olarak Dışa Aktar</translation>
     </message>
@@ -2585,7 +2403,7 @@ Shannon Entropy: %12
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1175"/>
         <location filename="../src/dialogs/MainWindow.ui" line="1178"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="993"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="995"/>
         <source>Start Recording</source>
         <translation>Kaydetmeye Başla</translation>
     </message>
@@ -3138,19 +2956,19 @@ Shannon Entropy: %12
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1932"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="284"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="286"/>
         <source>Pretty Print XML</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1937"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="304"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="306"/>
         <source>Format JSON</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1942"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="325"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="327"/>
         <source>Minify JSON</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3195,37 +3013,37 @@ Shannon Entropy: %12
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="645"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="647"/>
         <source>Go to line</source>
         <translation>Satıra Git</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="645"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="647"/>
         <source>Line Number (1 - %1)</source>
         <translation>Satır Numarası (1 - %1)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="984"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="986"/>
         <source>Stop Recording</source>
         <translation>Kaydetmeyi Durdur</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1178"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1180"/>
         <source>Debug Info</source>
         <translation>Debug Info</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1838"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1840"/>
         <source>New %1</source>
         <translation>Yeni %1</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1903"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1905"/>
         <source>Create File</source>
         <translation>Dosya Oluştur</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1903"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1905"/>
         <source>&lt;b&gt;%1&lt;/b&gt; does not exist. Do you want to create it?</source>
         <translation>&lt;b&gt;%1&lt;/b&gt; mevcut değil. Oluşturmak istiyor musunuz?</translation>
     </message>
@@ -3234,388 +3052,388 @@ Shannon Entropy: %12
         <translation type="vanished">Dosyayı Kaydet</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="304"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="325"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="306"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="327"/>
         <source>JSON Error: %1 (offset %2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="348"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="350"/>
         <source>Emoji &amp; Symbols</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1121"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1123"/>
         <source>Notepad Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1122"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1124"/>
         <source>Cannot reopen unsaved new buffer from disk.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1159"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1161"/>
         <source>DocNote</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1163"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1165"/>
         <source>Changelog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1425"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1445"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1427"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1447"/>
         <source>Theme applied: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1476"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1478"/>
         <source>&amp;Themes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1484"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1486"/>
         <source>Open Theme Switcher...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1495"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1497"/>
         <source>&amp;Toolbar Icon Packs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1508"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1510"/>
         <source>Toolbar icon pack changed to: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1518"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1520"/>
         <source>16 x 16 (Compact)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1519"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1521"/>
         <source>20 x 20 (Standard / Small)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1520"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1522"/>
         <source>24 x 24 (Default / Recommended)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1521"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1523"/>
         <source>32 x 32 (Large / High-DPI)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1522"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1524"/>
         <source>48 x 48 (Extra Large)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1523"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1525"/>
         <source>64 x 64 (Ultra High-DPI)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1526"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1528"/>
         <source>Toolbar &amp;Icon Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1538"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1540"/>
         <source>Toolbar icon size changed to: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1545"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1547"/>
         <source>Light Themes Only</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1549"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1551"/>
         <source>Dark Themes Only</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1555"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1557"/>
         <source>Themes by Family</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1577"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1579"/>
         <source>Reset to Default (Light Mode - NotepadNext)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1580"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1582"/>
         <source>Theme reset to default Light Mode (NotepadNext)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1584"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1586"/>
         <source>Default Dark Mode (Horizon Dark)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1587"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1589"/>
         <source>Theme set to Dark Mode (Horizon Dark)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1591"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1593"/>
         <source>Toggle Dark / Light Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1596"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1598"/>
         <source>Switched to Dark Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1596"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1598"/>
         <source>Switched to Light Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1607"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1609"/>
         <source>&amp;Tools</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1614"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1616"/>
         <source>Compare Files (Diff)...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1621"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1623"/>
         <source>Document Statistics...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1626"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1628"/>
         <source>Character Information...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1633"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1635"/>
         <source>File Hash &amp; Checksums...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1638"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1640"/>
         <source>Generate Hash Digest...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1645"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1782"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1647"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1784"/>
         <source>Customize Toolbar...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1788"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1790"/>
         <source>Reset Toolbar to Defaults</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1793"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1795"/>
         <source>Icon Pack</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1985"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1987"/>
         <source>Open Folder as Workspace</source>
         <translation>Klasörü Çalışma Alanı Olarak Aç</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2009"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2882"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2011"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2931"/>
         <source>Reload File</source>
         <translation>Dosyayı Yeniden Yükle</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2009"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2011"/>
         <source>Are you sure you want to reload &lt;b&gt;%1&lt;/b&gt;? Any unsaved changes will be lost.</source>
         <translation>&lt;b&gt;%1&lt;/b&gt;&apos;i yeniden yüklemek istediğinizden emin misiniz? Kaydedilmemiş değişiklikler kaybolacak.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2225"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2227"/>
         <source>Save a Copy As</source>
         <translation>Bir Kopyayı Farklı Kaydet</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2306"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2322"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2308"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2324"/>
         <source>Rename</source>
         <translation>Yeniden Adlandır</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2322"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2324"/>
         <source>Name:</source>
         <translation>İsim:</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2344"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2346"/>
         <source>Delete File</source>
         <translation>Dosyayı Sil</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2344"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2346"/>
         <source>Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</source>
         <translation>&lt;b&gt;%1&lt;/b&gt;&apos;i çöp kutusuna taşımak istediğinizden emin misiniz?</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2354"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2356"/>
         <source>Error Deleting File</source>
         <translation>Dosya Silme Hatası</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2354"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2356"/>
         <source>Something went wrong deleting &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>&lt;b&gt;%1&lt;/b&gt; silinirken bir hata oluştu?</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2566"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2568"/>
         <source>Administrator</source>
         <translation>Administrator</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2875"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2924"/>
         <source>&lt;b&gt;%1&lt;/b&gt; has been modified by another program. Do you want to reload it?</source>
         <translation>&lt;b&gt;%1&lt;/b&gt; has been modified by another program. Do you want to reload it?</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2878"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2927"/>
         <source>&lt;br&gt;&lt;br&gt;&lt;b&gt;Warning:&lt;/b&gt; you have unsaved changes in this tab. Reloading will discard them permanently.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2908"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2957"/>
         <source>Read error</source>
         <translation>Read error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2909"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2958"/>
         <source>Write error</source>
         <translation>Write error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2910"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2959"/>
         <source>Fatal error</source>
         <translation>Fatal error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2911"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2960"/>
         <source>Resource error</source>
         <translation>Resource error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2912"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2961"/>
         <source>Open error</source>
         <translation>Open error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2913"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2962"/>
         <source>Abort error</source>
         <translation>Abort error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2914"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2963"/>
         <source>Timeout error</source>
         <translation>Timeout error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2915"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2964"/>
         <source>Unspecified error</source>
         <translation>Unspecified error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2916"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2965"/>
         <source>Remove error</source>
         <translation>Remove error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2917"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2966"/>
         <source>Rename error</source>
         <translation>Rename error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2918"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2967"/>
         <source>Position error</source>
         <translation>Position error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2919"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2968"/>
         <source>Resize error</source>
         <translation>Resize error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2920"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2969"/>
         <source>Permissions error</source>
         <translation>Permissions error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2921"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2970"/>
         <source>Copy error</source>
         <translation>Copy error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2922"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2971"/>
         <source>Unknown error (%1)</source>
         <translation>Unknown error (%1)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2925"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2974"/>
         <source>Error Saving File</source>
         <translation>Dosyayı Kaydetme Hatası</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2926"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2975"/>
         <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
         <translation>Bir hata oluştu. &lt;b&gt;%1&lt;/b&gt; kaydedilirken hata oluştu. &lt;br&gt;&lt;br&gt;Hata: %2</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2931"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2980"/>
         <source>Zoom: %1%</source>
         <translation>Zoom: %1%</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="3411"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="3461"/>
         <source>Preview Markdown in New Tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="3417"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="3467"/>
         <source>Preview HTML in New Tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="3423"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="3473"/>
         <source>Preview in Default Browser</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="3469"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="3480"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="3519"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="3530"/>
         <source>Documentation Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="3470"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="3520"/>
         <source>Unable to locate DOCNOTE.md on disk or in application resources.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="3481"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="3531"/>
         <source>Unable to locate CHANGELOG.md on disk or in application resources.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="3668"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="3718"/>
         <source>Show / Hide Notepad Next</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3892,7 +3710,7 @@ Only http, https, and mailto URLs are permitted in HTML &amp; Markdown Preview (
     </message>
     <message>
         <location filename="../src/dialogs/PreferencesDialog.ui" line="238"/>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="167"/>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="166"/>
         <source>Default Directory</source>
         <translation>Default Directory</translation>
     </message>
@@ -3962,107 +3780,107 @@ Only http, https, and mailto URLs are permitted in HTML &amp; Markdown Preview (
         <translation>Macintosh (CR)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="229"/>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="228"/>
         <source>&lt;System Default&gt;</source>
         <translation>&lt;System Default&gt;</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="263"/>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="271"/>
         <source>&amp;Themes &amp;&amp; Toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="268"/>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="276"/>
         <source>Themes &amp; Visual Styling</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="291"/>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="299"/>
         <source>Dark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="291"/>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="299"/>
         <source>Light</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="313"/>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="323"/>
         <source>Toggle Dark/Light</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="314"/>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="324"/>
         <source>Quickly switch between active dark and light modes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="326"/>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="336"/>
         <source>Active Theme:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="333"/>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="343"/>
         <source>Toolbar Icon Packs &amp; Sizing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="345"/>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="355"/>
         <source>Active Icon Pack:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="354"/>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="364"/>
         <source>Description:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="369"/>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="379"/>
         <source>No description provided for this icon pack.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="383"/>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="393"/>
         <source>16 x 16 (Compact)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="384"/>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="394"/>
         <source>20 x 20 (Medium)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="385"/>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="395"/>
         <source>24 x 24 (Default / Recommended)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="386"/>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="396"/>
         <source>32 x 32 (Large / High-DPI)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="387"/>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="397"/>
         <source>48 x 48 (Extra Large)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="388"/>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="398"/>
         <source>64 x 64 (Ultra High-DPI)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="408"/>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="418"/>
         <source>Toolbar Icon Size:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="416"/>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="426"/>
         <source>Icon Preview:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="435"/>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="445"/>
         <source> [Custom]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4166,29 +3984,6 @@ Only http, https, and mailto URLs are permitted in HTML &amp; Markdown Preview (
     <message>
         <location filename="../src/widgets/PreviewTabWidget.cpp" line="614"/>
         <source>NotepadNext Preview</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QObject</name>
-    <message>
-        <location filename="../.cpm-cache/ads/fb9d/src/DockAreaTitleBar.cpp" line="209"/>
-        <source>List All Tabs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/ads/fb9d/src/DockAreaTitleBar.cpp" line="220"/>
-        <source>Detach Group</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/ads/fb9d/src/DockAreaTitleBar.cpp" line="247"/>
-        <source>Minimize</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/ads/fb9d/src/DockWidgetTab.cpp" line="274"/>
-        <source>Close Tab</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4430,387 +4225,387 @@ Only http, https, and mailto URLs are permitted in HTML &amp; Markdown Preview (
 <context>
     <name>ToolbarIconManager</name>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="51"/>
-        <source>Modern Ribbon (Default Vector)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="52"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="64"/>
         <source>High-DPI 20x20 monoline vector SVG suite with refined contours</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="61"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="73"/>
         <source>Fugue Classic (Silk Mini-Icons)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="62"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="74"/>
         <source>Authentic pixel-perfect Fugue 3.5.6 iconography by Yusuke Kamiyamane</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="71"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="83"/>
         <source>Windows 7 Aero (Refined Glossy)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="72"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="84"/>
         <source>Refined Windows 7 Aero translucent glass iconography</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="81"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="93"/>
         <source>Windows 7</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="82"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="94"/>
         <source>Authentic Windows 7 toolbar iconography</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="91"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="103"/>
         <source>Microsoft Fluent UI (Regular Outline)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="92"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="104"/>
         <source>Microsoft Fluent Design outlined iconography for Windows 11</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="101"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="113"/>
         <source>Microsoft Fluent UI (Filled Solid)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="102"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="114"/>
         <source>Microsoft Fluent Design filled solid iconography</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="111"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="123"/>
         <source>Windows 11</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="112"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="124"/>
         <source>Authentic Windows 11 Fluent toolbar iconography</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="121"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="133"/>
         <source>Notepad3 Warm (Classic Amber)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="122"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="134"/>
         <source>Notepad3 warm brown and amber classic text editor iconography</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="131"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="143"/>
         <source>Notepad++ (Green Accents)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="132"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="144"/>
         <source>Classic Notepad++ toolbar iconography with green accents</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="141"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="153"/>
         <source>Notepad++ (Classic)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="142"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="154"/>
         <source>Authentic Notepad++ dual-resolution SVG and PNG suite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="151"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="163"/>
         <source>Glossy Orange (WinRAR Amber)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="152"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="164"/>
         <source>Warm glossy orange and amber skeuomorphic iconography</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="161"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="173"/>
         <source>Pixel Dense (Retro 16-Bit)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="162"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="174"/>
         <source>Pixel-precise dense retro iconography with crisp edges</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="171"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="183"/>
         <source>Material Design (Sharp)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="172"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="184"/>
         <source>Google Material Design sharp geometric iconography</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="181"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="193"/>
         <source>Windows XP (Luna Classic)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="182"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="194"/>
         <source>Windows XP Luna skeuomorphic authentic iconography</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="191"/>
-        <source>NotepadNext Classic (Silk)</source>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="53"/>
+        <source>NotepadNext Classic (Bawaan)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="192"/>
-        <source>Authentic 16x16 Silk bitmap icons from NotepadNext</source>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="54"/>
+        <source>Authentic classic NotepadNext built-in silk iconography</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="201"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="63"/>
+        <source>Modern Ribbon (Vector SVG)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="204"/>
         <source>Vibrant DuoTone (Cyberpunk)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="202"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="205"/>
         <source>High-luminance electric cyan &amp; radiant magenta dual-tone contrast</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="211"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="214"/>
         <source>Monochrome Outline (Minimalist)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="212"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="215"/>
         <source>Clean 1.8px monoline wireframes engineered for dark and light themes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="221"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="224"/>
         <source>Elegant Themes (Nicholas Roach)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="222"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="225"/>
         <source>Authentic classic 48x48 Elegant Themes iconography by Nicholas Roach</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="231"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="234"/>
         <source>Seven Classic (Glossy Desktop)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="232"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="235"/>
         <source>Classic Windows 7 / Seven glossy desktop iconography suite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="241"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="244"/>
         <source>Mignon (Cute Pastel)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="242"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="245"/>
         <source>Playful modern pastel desktop iconography by Igor Moraes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="251"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="254"/>
         <source>Palette (Modern Vibrant)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="252"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="255"/>
         <source>Vibrant modern flat vector iconography by mjkim0727</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="261"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="264"/>
         <source>Diagonal (Sleek Angular)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="262"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="265"/>
         <source>Sleek geometric angular vector iconography by Tamas Csabi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="271"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="274"/>
         <source>Aksara Arch Linux</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="272"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="275"/>
         <source>Minimalist &amp; sharp: Arch cyan, fine lines, terminal aesthetic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="281"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="284"/>
         <source>Aksara elementary OS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="282"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="285"/>
         <source>Vibrant colors, 1px fine outlines, distinctive silhouettes and translucent elements</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="291"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="294"/>
         <source>Aksara Bold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="292"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="295"/>
         <source>Bold strokes with rounded caps, maximum readability and contrast</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="301"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="304"/>
         <source>Aksara Duotone</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="302"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="305"/>
         <source>Dark gray contours with subtle translucent purple accent circular backing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="311"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="314"/>
         <source>Aksara Outline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="312"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="315"/>
         <source>Clean line-art wireframe aesthetic with rounded terminators</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="321"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="324"/>
         <source>Aksara Rounded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="322"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="325"/>
         <source>Smooth flowing curves and rounded geometric contours</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="331"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="334"/>
         <source>Aksara Sharp</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="332"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="335"/>
         <source>Crisp sharp corners with technical precision styling</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="341"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="344"/>
         <source>Aksara macOS Big Sur</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="342"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="345"/>
         <source>Apple macOS modern aesthetic: soft squircle geometry, refined gradients, subtle depth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="351"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="354"/>
         <source>Aksara NPP GNOME 5.1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="352"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="355"/>
         <source>GNOME Adwaita aesthetic: warm balanced contrast, smooth rounded corners, Linux desktop feel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="361"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="364"/>
         <source>Aksara NPP KDE 6</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="362"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="365"/>
         <source>KDE Breeze 6 styling: electric cyan accents, sharp geometric edges, futuristic vibe</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="371"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="374"/>
         <source>Aksara NPP Windows Vista</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="372"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="375"/>
         <source>Windows Vista Aero Glass: bright cyan gradients, translucent reflections, 2006 skeuomorphism</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="381"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="384"/>
         <source>Aksara NPP Windows 10</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="382"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="385"/>
         <source>Segoe MDL2 Assets: flat, clean monochrome, consistent thin strokes, seamless background</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="391"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="394"/>
         <source>Aksara NPP Windows 11</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="392"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="395"/>
         <source>Segoe Fluent Icons: soft rounded contours, gentle blue accents, modern Mica aesthetic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="401"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="404"/>
         <source>Aksara NPP Windows XP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="402"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="405"/>
         <source>Windows XP Luna: soft nostalgic blue gradients, rounded corners, glossy glass shine</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="411"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="414"/>
         <source>Aksara Ubuntu Yaru</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="412"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="415"/>
         <source>Ubuntu Yaru / Suru design: warm aubergine &amp; orange accents, squircle framing, soft shadows</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="421"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="424"/>
         <source>Aksara Vista Aero</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="422"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="425"/>
         <source>Glossy and reflective: azure gradients, bright specular highlights, Aero Glass rounded tiles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/features/ToolbarIconManager.cpp" line="539"/>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="547"/>
         <source>Custom external icon pack from %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4956,219 +4751,24 @@ Only http, https, and mailto URLs are permitted in HTML &amp; Markdown Preview (
     </message>
 </context>
 <context>
-    <name>Updater</name>
-    <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Updater.cpp" line="477"/>
-        <source>Would you like to download the update now?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Updater.cpp" line="479"/>
-        <source>Would you like to download the update now?&lt;br /&gt;This is a mandatory update, exiting now will close the application.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Updater.cpp" line="485"/>
-        <source>&lt;strong&gt;Change log:&lt;/strong&gt;&lt;br/&gt;%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Updater.cpp" line="488"/>
-        <source>Version %1 of %2 has been released!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Updater.cpp" line="520"/>
-        <source>No updates are available for the moment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/qsimpleupdater/531e/src/Updater.cpp" line="522"/>
-        <source>Congratulations! You are running the latest version of %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ads::CAutoHideTab</name>
     <message>
-        <location filename="../.cpm-cache/ads/fb9d/src/AutoHideTab.cpp" line="394"/>
-        <source>Detach</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/ads/fb9d/src/AutoHideTab.cpp" line="399"/>
-        <source>Pin To...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/ads/fb9d/src/AutoHideTab.cpp" line="401"/>
-        <source>Top</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/ads/fb9d/src/AutoHideTab.cpp" line="402"/>
-        <source>Left</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/ads/fb9d/src/AutoHideTab.cpp" line="403"/>
-        <source>Right</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/ads/fb9d/src/AutoHideTab.cpp" line="404"/>
-        <source>Bottom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/ads/fb9d/src/AutoHideTab.cpp" line="406"/>
-        <source>Unpin (Dock)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/ads/fb9d/src/AutoHideTab.cpp" line="408"/>
         <source>Close</source>
-        <translation type="unfinished">Kapat</translation>
+        <translation type="obsolete">Kapat</translation>
     </message>
 </context>
 <context>
     <name>ads::CDockAreaTitleBar</name>
     <message>
-        <location filename="../.cpm-cache/ads/fb9d/src/DockAreaTitleBar.cpp" line="885"/>
-        <source>Detach</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/ads/fb9d/src/DockAreaTitleBar.cpp" line="885"/>
-        <source>Detach Group</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/ads/fb9d/src/DockAreaTitleBar.cpp" line="890"/>
-        <location filename="../.cpm-cache/ads/fb9d/src/DockAreaTitleBar.cpp" line="946"/>
-        <source>Unpin (Dock)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/ads/fb9d/src/DockAreaTitleBar.cpp" line="890"/>
-        <location filename="../.cpm-cache/ads/fb9d/src/DockAreaTitleBar.cpp" line="951"/>
-        <source>Pin Group</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/ads/fb9d/src/DockAreaTitleBar.cpp" line="896"/>
-        <source>Pin Group To...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/ads/fb9d/src/DockAreaTitleBar.cpp" line="898"/>
-        <source>Top</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/ads/fb9d/src/DockAreaTitleBar.cpp" line="899"/>
-        <source>Left</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/ads/fb9d/src/DockAreaTitleBar.cpp" line="900"/>
-        <source>Right</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/ads/fb9d/src/DockAreaTitleBar.cpp" line="901"/>
-        <source>Bottom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/ads/fb9d/src/DockAreaTitleBar.cpp" line="909"/>
-        <location filename="../.cpm-cache/ads/fb9d/src/DockAreaTitleBar.cpp" line="963"/>
-        <source>Minimize</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/ads/fb9d/src/DockAreaTitleBar.cpp" line="910"/>
-        <location filename="../.cpm-cache/ads/fb9d/src/DockAreaTitleBar.cpp" line="914"/>
-        <location filename="../.cpm-cache/ads/fb9d/src/DockAreaTitleBar.cpp" line="963"/>
         <source>Close</source>
-        <translation type="unfinished">Kapat</translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/ads/fb9d/src/DockAreaTitleBar.cpp" line="914"/>
-        <location filename="../.cpm-cache/ads/fb9d/src/DockAreaTitleBar.cpp" line="972"/>
-        <source>Close Group</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/ads/fb9d/src/DockAreaTitleBar.cpp" line="920"/>
-        <source>Close Other Groups</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/ads/fb9d/src/DockAreaTitleBar.cpp" line="955"/>
-        <source>Pin Active Tab (Press Ctrl to Pin Group)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/ads/fb9d/src/DockAreaTitleBar.cpp" line="968"/>
-        <source>Close Active Tab</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ads::CDockManager</name>
-    <message>
-        <location filename="../.cpm-cache/ads/fb9d/src/DockManager.cpp" line="544"/>
-        <source>Show View</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Kapat</translation>
     </message>
 </context>
 <context>
     <name>ads::CDockWidgetTab</name>
     <message>
-        <location filename="../.cpm-cache/ads/fb9d/src/DockWidgetTab.cpp" line="618"/>
-        <source>Detach</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/ads/fb9d/src/DockWidgetTab.cpp" line="622"/>
-        <source>Pin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/ads/fb9d/src/DockWidgetTab.cpp" line="626"/>
-        <source>Pin To...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/ads/fb9d/src/DockWidgetTab.cpp" line="628"/>
-        <source>Top</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/ads/fb9d/src/DockWidgetTab.cpp" line="629"/>
-        <source>Left</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/ads/fb9d/src/DockWidgetTab.cpp" line="630"/>
-        <source>Right</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/ads/fb9d/src/DockWidgetTab.cpp" line="631"/>
-        <source>Bottom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/ads/fb9d/src/DockWidgetTab.cpp" line="636"/>
         <source>Close</source>
-        <translation type="unfinished">Kapat</translation>
-    </message>
-    <message>
-        <location filename="../.cpm-cache/ads/fb9d/src/DockWidgetTab.cpp" line="640"/>
-        <source>Close Others</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Kapat</translation>
     </message>
 </context>
 </TS>

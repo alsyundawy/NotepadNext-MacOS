@@ -5,13 +5,17 @@ on:
   schedule:
     - cron: 35 1 * * 0
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: write
 
 jobs:
   lupdate:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 15
 
     steps:
       - name: Checkout Repository
@@ -23,7 +27,7 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@b344308e4483fc892e0d27b3cd1b173ebdd95f06 # v4.5.0
         with:
-          version: "6.5"
+          version: "6.8"
           modules: qt5compat
           cache: true
 
@@ -40,7 +44,7 @@ jobs:
         run: |
           git config --local user.name "NotepadNext Automation"
           git config --local user.email "notepadnext-bot@users.noreply.github.com"
-          git add i18n/NotepadNext_en.ts
+          git add i18n/*.ts
           if git diff --staged --quiet; then
             echo "No translation changes to commit."
           else

@@ -44,6 +44,15 @@ TranslationManager::TranslationManager(QObject *parent, const QString &path)
 {
 }
 
+TranslationManager::~TranslationManager()
+{
+    for (auto *translator : translators) {
+        QCoreApplication::removeTranslator(translator);
+        delete translator;
+    }
+    translators.clear();
+}
+
 QStringList TranslationManager::availableTranslations() const
 {
     QStringList translations;
@@ -64,13 +73,25 @@ QStringList TranslationManager::availableTranslations() const
 
 QString TranslationManager::FormatLocaleTerritoryAndLanguage(const QLocale &locale)
 {
+    const QString langName = locale.name();
+    if (langName == QLatin1String("id") || langName.startsWith(QLatin1String("id_"))) {
+        return QStringLiteral("Bahasa Indonesia (Indonesian)");
+    }
+    if (langName == QLatin1String("en") || langName.startsWith(QLatin1String("en_"))) {
+        return QStringLiteral("English (United States)");
+    }
+
+    const QString nativeLang = locale.nativeLanguageName();
+    const QString englishLang = QLocale::languageToString(locale.language());
+    if (!nativeLang.isEmpty() && nativeLang != englishLang) {
+        return QStringLiteral("%1 (%2)").arg(nativeLang, englishLang);
+    }
 #if QT_VERSION < QT_VERSION_CHECK(6, 2, 0)
     const QString territory = QLocale::countryToString(locale.country());
 #else
     const QString territory = QLocale::territoryToString(locale.territory());
 #endif
-    const QString language = QLocale::languageToString(locale.language());
-    return QStringLiteral("%1 (%2)").arg(language, territory);
+    return QStringLiteral("%1 (%2)").arg(englishLang, territory);
 }
 
 void TranslationManager::loadSystemDefaultTranslation()
@@ -82,6 +103,12 @@ void TranslationManager::loadSystemDefaultTranslation()
 void TranslationManager::loadTranslation(const QLocale &locale)
 {
     qInfo(Q_FUNC_INFO);
+
+    for (auto *translator : translators) {
+        QCoreApplication::removeTranslator(translator);
+        delete translator;
+    }
+    translators.clear();
 
     const QStringList filenames{QStringList{QApplication::applicationName(), "qt", "qtbase"}};
 
@@ -98,5 +125,9 @@ void TranslationManager::loadTranslation(const QLocale &locale)
 
 void TranslationManager::loadTranslation(const QString &localeName)
 {
+    if (localeName.trimmed().isEmpty()) {
+        loadSystemDefaultTranslation();
+        return;
+    }
     loadTranslation(QLocale(localeName));
 }

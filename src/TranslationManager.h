@@ -33,6 +33,7 @@ class TranslationManager : public QObject
 
 public:
     TranslationManager(QObject *parent, const QString &path);
+    ~TranslationManager() override;
 
     QStringList availableTranslations() const;
 
