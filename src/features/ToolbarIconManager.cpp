@@ -782,13 +782,30 @@ void addHiDpiPixmaps(QIcon &icon, const QString &filePath, bool isPngBased, bool
 
     icon.addPixmap(QPixmap::fromImage(adapted));
 
+    if (isPngBased) {
+        if (const qsizetype dotIdx = filePath.lastIndexOf(QLatin1Char('.')); dotIdx != -1) {
+            const QString at2x = filePath.left(dotIdx) + QStringLiteral("@2x.png");
+            if (QFileInfo::exists(at2x)) {
+                if (const QImage at2xImg(at2x); !at2xImg.isNull()) {
+                    QPixmap px2 = QPixmap::fromImage(adaptImageForTheme(at2xImg, isDark));
+                    px2.setDevicePixelRatio(2.0);
+                    icon.addPixmap(px2);
+                    return;
+                }
+            }
+        }
+    }
+
     static constexpr std::array<int, 4> s_dpiSizes = {16, 24, 32, 48};
     for (const int sz : s_dpiSizes) {
         if (baseW == sz && baseH == sz) {
             continue;
         }
+        const auto transformMode = (baseW <= 24 && sz > baseW)
+            ? Qt::FastTransformation
+            : Qt::SmoothTransformation;
         const QPixmap px = QPixmap::fromImage(
-            adapted.scaled(sz, sz, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+            adapted.scaled(sz, sz, Qt::IgnoreAspectRatio, transformMode));
         if (px.isNull()) {
             continue;
         }
@@ -797,24 +814,6 @@ void addHiDpiPixmaps(QIcon &icon, const QString &filePath, bool isPngBased, bool
             QPixmap pxRetina = px;
             pxRetina.setDevicePixelRatio(2.0);
             icon.addPixmap(pxRetina);
-        }
-    }
-
-    if (!isPngBased) {
-        return;
-    }
-
-    const qsizetype dotIdx = filePath.lastIndexOf(QLatin1Char('.'));
-    if (dotIdx == -1) {
-        return;
-    }
-
-    const QString at2x = filePath.left(dotIdx) + QStringLiteral("@2x.png");
-    if (QFileInfo::exists(at2x)) {
-        if (const QImage at2xImg(at2x); !at2xImg.isNull()) {
-            QPixmap px2 = QPixmap::fromImage(adaptImageForTheme(at2xImg, isDark));
-            px2.setDevicePixelRatio(2.0);
-            icon.addPixmap(px2);
         }
     }
 }

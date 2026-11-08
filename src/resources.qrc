@@ -46,7 +46,50 @@
         <file>icons/plus.svg</file>
         <file>icons/list_with_icons.svg</file>
         <file>icons/checkmark.svg</file>
+        <file>icons/restart.svg</file>
         <file>icons/exit.png</file>
         <file>icons/exit.svg</file>
+        <file>icons/settings.svg</file>
+        <file>icons/find.svg</file>
+        <file>icons/findReplace.svg</file>
+        <file>icons/zoomIn.svg</file>
+        <file>icons/zoomOut.svg</file>
+        <file>icons/indentGuide.svg</file>
+        <file>icons/undo.svg</file>
+        <file>icons/redo.svg</file>
+        <file>icons/newfile.svg</file>
+        <file>icons/openFile.svg</file>
+        <file>icons/closeFile.svg</file>
+        <file>icons/closeAll.svg</file>
+        <file>icons/saveAll.svg</file>
+        <file>icons/saved.svg</file>
+        <file>icons/unsaved.svg</file>
+        <file>icons/cut.svg</file>
+        <file>icons/copy.svg</file>
+        <file>icons/paste.svg</file>
+        <file>icons/printer.svg</file>
+        <file>icons/readonly.svg</file>
+        <file>icons/text_indent.svg</file>
+        <file>icons/text_indent_remove.svg</file>
+        <file>icons/table_edit.svg</file>
+        <file>icons/table_delete.svg</file>
+        <file>icons/arrow_up.svg</file>
+        <file>icons/arrow_down.svg</file>
+        <file>icons/arrow_refresh.svg</file>
+        <file>icons/wrap.svg</file>
+        <file>icons/wrapindicator.svg</file>
+        <file>icons/invisibleChar.svg</file>
+        <file>icons/startRecord.svg</file>
+        <file>icons/stopRecord.svg</file>
+        <file>icons/playRecord.svg</file>
+        <file>icons/playRecord_m.svg</file>
+        <file>icons/saveRecord.svg</file>
+        <file>icons/select_all.svg</file>
+        <file>icons/trash.svg</file>
+        <file>icons/folder.svg</file>
+        <file>icons/terminal.svg</file>
+        <file>icons/view.svg</file>
+        <file>icons/globe.svg</file>
+        <file>icons/export.svg</file>
     </qresource>
 </RCC>
