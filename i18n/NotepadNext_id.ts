@@ -1800,7 +1800,7 @@ Entropi Shannon: %12
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="69"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2267"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2268"/>
         <source>Export As</source>
         <translation>Export Sebagai</translation>
     </message>
@@ -2264,7 +2264,7 @@ Entropi Shannon: %12
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1175"/>
         <location filename="../src/dialogs/MainWindow.ui" line="1178"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="995"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="996"/>
         <source>Start Recording</source>
         <translation>Mulai Merekam</translation>
     </message>
@@ -2811,346 +2811,346 @@ Entropi Shannon: %12
         <translation>Alihkan Tampilan Hex / Biner</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="647"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="648"/>
         <source>Go to line</source>
         <translation>Buka baris</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="647"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="648"/>
         <source>Line Number (1 - %1)</source>
         <translation>Nomor Baris (1 - %1)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="986"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="987"/>
         <source>Stop Recording</source>
         <translation>Hentikan Perekaman</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1123"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1124"/>
         <source>Notepad Next</source>
         <translation>Notepad Next</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1124"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1125"/>
         <source>Cannot reopen unsaved new buffer from disk.</source>
         <translation>Tidak dapat membuka kembali buffer baru yang belum disimpan dari disk.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1161"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1162"/>
         <source>DocNote</source>
         <translation>DocNote</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1165"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1166"/>
         <source>Changelog</source>
         <translation>Catatan Perubahan</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1180"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1181"/>
         <source>Debug Info</source>
         <translation>Info Debug</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1497"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1498"/>
         <source>&amp;Toolbar Icon Packs</source>
         <translation>&amp;Paket Ikon Bilah Alat</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1510"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1511"/>
         <source>Toolbar icon pack changed to: %1</source>
         <translation>Paket ikon bilah alat diubah ke: %1</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1520"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1521"/>
         <source>16 x 16 (Compact)</source>
         <translation>16 x 16 (Ringkas)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1521"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1522"/>
         <source>20 x 20 (Standard / Small)</source>
         <translation>20 x 20 (Standar / Kecil)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1522"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1523"/>
         <source>24 x 24 (Default / Recommended)</source>
         <translation>24 x 24 (Standar / Disarankan)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1523"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1524"/>
         <source>32 x 32 (Large / High-DPI)</source>
         <translation>32 x 32 (Besar / High-DPI)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1524"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1525"/>
         <source>48 x 48 (Extra Large)</source>
         <translation>48 x 48 (Ekstra Besar)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1525"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1526"/>
         <source>64 x 64 (Ultra High-DPI)</source>
         <translation>64 x 64 (Ultra High-DPI)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1528"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1529"/>
         <source>Toolbar &amp;Icon Size</source>
         <translation>Ukuran &amp;Ikon Bilah Alat</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1540"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1541"/>
         <source>Toolbar icon size changed to: %1</source>
         <translation>Ukuran ikon bilah alat diubah ke: %1</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1609"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1610"/>
         <source>&amp;Tools</source>
         <translation>&amp;Peralatan</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1616"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1617"/>
         <source>Compare Files (Diff)...</source>
         <translation>Bandingkan Berkas (Diff)...</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1623"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1624"/>
         <source>Document Statistics...</source>
         <translation>Statistik Dokumen...</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1628"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1629"/>
         <source>Character Information...</source>
         <translation>Informasi Karakter...</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1635"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1636"/>
         <source>File Hash &amp; Checksums...</source>
         <translation>Hash Berkas &amp; Checksum...</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1640"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1641"/>
         <source>Generate Hash Digest...</source>
         <translation>Hasilkan Hash Digest...</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1647"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1784"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1648"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1785"/>
         <source>Customize Toolbar...</source>
         <translation>Sesuaikan Bilah Alat...</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1790"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1791"/>
         <source>Reset Toolbar to Defaults</source>
         <translation>Kembalikan Bilah Alat ke Standar</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1795"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1796"/>
         <source>Icon Pack</source>
         <translation>Paket Ikon</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1840"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1841"/>
         <source>New %1</source>
         <translation>Baru %1</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1905"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1906"/>
         <source>Create File</source>
         <translation>Buat Berkas</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1905"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1906"/>
         <source>&lt;b&gt;%1&lt;/b&gt; does not exist. Do you want to create it?</source>
         <translation>&lt;b&gt;%1&lt;/b&gt; tidak ditemukan. Apakah Anda ingin membuatnya?</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1987"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1988"/>
         <source>Open Folder as Workspace</source>
         <translation>Buka Folder sebagai Workspace</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2011"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2931"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2012"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2932"/>
         <source>Reload File</source>
         <translation>Muat Ulang Berkas</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2011"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2012"/>
         <source>Are you sure you want to reload &lt;b&gt;%1&lt;/b&gt;? Any unsaved changes will be lost.</source>
         <translation>Apakah Anda yakin ingin memuat ulang &lt;b&gt;%1&lt;/b&gt;? Perubahan yang belum disimpan akan hilang.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2227"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2228"/>
         <source>Save a Copy As</source>
         <translation>Simpan Salinan Sebagai</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2308"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2324"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2309"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2325"/>
         <source>Rename</source>
         <translation>Ganti Nama</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2324"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2325"/>
         <source>Name:</source>
         <translation>Nama:</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2346"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2347"/>
         <source>Delete File</source>
         <translation>Hapus Berkas</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2346"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2347"/>
         <source>Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</source>
         <translation>Apakah Anda yakin ingin memindahkan &lt;b&gt;%1&lt;/b&gt; ke tempat sampah?</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2356"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2357"/>
         <source>Error Deleting File</source>
         <translation>Gagal Menghapus Berkas</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2356"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2357"/>
         <source>Something went wrong deleting &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>Terjadi kesalahan saat menghapus &lt;b&gt;%1&lt;/b&gt;.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2568"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2569"/>
         <source>Administrator</source>
         <translation>Administrator</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2924"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2925"/>
         <source>&lt;b&gt;%1&lt;/b&gt; has been modified by another program. Do you want to reload it?</source>
         <translation>&lt;b&gt;%1&lt;/b&gt; telah dimodifikasi oleh program lain. Apakah Anda ingin memuatnya ulang?</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2927"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2928"/>
         <source>&lt;br&gt;&lt;br&gt;&lt;b&gt;Warning:&lt;/b&gt; you have unsaved changes in this tab. Reloading will discard them permanently.</source>
         <translation>&lt;br&gt;&lt;br&gt;&lt;b&gt;Peringatan:&lt;/b&gt; Anda memiliki perubahan yang belum disimpan pada tab ini. Memuat ulang akan membuangnya secara permanen.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2957"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2958"/>
         <source>Read error</source>
         <translation>Kesalahan membaca berkas</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2958"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2959"/>
         <source>Write error</source>
         <translation>Kesalahan menulis berkas</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2959"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2960"/>
         <source>Fatal error</source>
         <translation>Galat fatal</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2960"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2961"/>
         <source>Resource error</source>
         <translation>Galat sumber daya</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2961"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2962"/>
         <source>Open error</source>
         <translation>Kesalahan membuka berkas</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2962"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2963"/>
         <source>Abort error</source>
         <translation>Galat pembatalan</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2963"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2964"/>
         <source>Timeout error</source>
         <translation>Galat batas waktu</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2964"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2965"/>
         <source>Unspecified error</source>
         <translation>Galat tidak ditentukan</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2965"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2966"/>
         <source>Remove error</source>
         <translation>Kesalahan menghapus berkas</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2966"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2967"/>
         <source>Rename error</source>
         <translation>Kesalahan mengganti nama berkas</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2967"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2968"/>
         <source>Position error</source>
         <translation>Galat posisi</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2968"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2969"/>
         <source>Resize error</source>
         <translation>Galat pengubahan ukuran</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2969"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2970"/>
         <source>Permissions error</source>
         <translation>Kesalahan izin akses berkas</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2970"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2971"/>
         <source>Copy error</source>
         <translation>Kesalahan menyalin berkas</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2971"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2972"/>
         <source>Unknown error (%1)</source>
         <translation>Galat tidak diketahui (%1)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2974"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2975"/>
         <source>Error Saving File</source>
         <translation>Gagal Menyimpan Berkas</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2975"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2976"/>
         <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
         <translation>Terjadi kesalahan saat menyimpan &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Galat: %2</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2980"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2981"/>
         <source>Zoom: %1%</source>
         <translation>Zoom: %1%</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="3461"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="3462"/>
         <source>Preview Markdown in New Tab</source>
         <translation>Pratinjau Markdown di Tab Baru</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="3467"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="3468"/>
         <source>Preview HTML in New Tab</source>
         <translation>Pratinjau HTML di Tab Baru</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="3473"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="3474"/>
         <source>Preview in Default Browser</source>
         <translation>Pratinjau di Peramban Standar</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="3519"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="3530"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="3520"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="3531"/>
         <source>Documentation Error</source>
         <translation>Kesalahan Dokumentasi</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="3520"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="3521"/>
         <source>Unable to locate DOCNOTE.md on disk or in application resources.</source>
         <translation>Tidak dapat menemukan DOCNOTE.md pada disk atau dalam sumber daya aplikasi.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="3531"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="3532"/>
         <source>Unable to locate CHANGELOG.md on disk or in application resources.</source>
         <translation>Tidak dapat menemukan CHANGELOG.md pada disk atau dalam sumber daya aplikasi.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="3718"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="3719"/>
         <source>Show / Hide Notepad Next</source>
         <translation>Tampilkan / Sembunyikan Notepad Next</translation>
     </message>
@@ -3160,74 +3160,74 @@ Entropi Shannon: %12
         <translation>Simpan Semua</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1478"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1479"/>
         <source>&amp;Themes</source>
         <translation>&amp;Tema</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1486"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1487"/>
         <source>Open Theme Switcher...</source>
         <translation>Buka Pengalih Tema...</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1547"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1548"/>
         <source>Light Themes Only</source>
         <translation>Tema Terang Saja</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1551"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1552"/>
         <source>Dark Themes Only</source>
         <translation>Tema Gelap Saja</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1557"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1558"/>
         <source>Themes by Family</source>
         <translation>Tema Berdasarkan Keluarga</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1579"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1580"/>
         <source>Reset to Default (Light Mode - NotepadNext)</source>
         <translation>Atur Ulang ke Default (Mode Terang - NotepadNext)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1586"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1587"/>
         <source>Default Dark Mode (Horizon Dark)</source>
         <translation>Mode Gelap Default (Horizon Dark)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1593"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1594"/>
         <source>Toggle Dark / Light Mode</source>
         <translation>Alihkan Mode Gelap / Terang</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1427"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1447"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1428"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1448"/>
         <source>Theme applied: %1</source>
         <translation>Tema diterapkan: %1</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="306"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="327"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="307"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="328"/>
         <source>JSON Error: %1 (offset %2)</source>
         <translation>Kesalahan JSON: %1 (posisi %2)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1582"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1583"/>
         <source>Theme reset to default Light Mode (NotepadNext)</source>
         <translation>Tema diatur ulang ke Mode Terang default (NotepadNext)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1589"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1590"/>
         <source>Theme set to Dark Mode (Horizon Dark)</source>
         <translation>Tema diatur ke Mode Gelap (Horizon Dark)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1598"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1599"/>
         <source>Switched to Dark Mode</source>
         <translation>Beralih ke Mode Gelap</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1598"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1599"/>
         <source>Switched to Light Mode</source>
         <translation>Beralih ke Mode Terang</translation>
     </message>
@@ -3238,7 +3238,7 @@ Entropi Shannon: %12
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1932"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="286"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="287"/>
         <source>Pretty Print XML</source>
         <translation>Format Rapi XML</translation>
     </message>
@@ -3369,13 +3369,13 @@ Entropi Shannon: %12
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1937"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="306"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="307"/>
         <source>Format JSON</source>
         <translation>Format Rapi JSON</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1942"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="327"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="328"/>
         <source>Minify JSON</source>
         <translation>Minifikasi JSON</translation>
     </message>
@@ -3400,7 +3400,7 @@ Entropi Shannon: %12
         <translation>Keluar</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="350"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="351"/>
         <source>Emoji &amp; Symbols</source>
         <translation>Emoji &amp; Simbol</translation>
     </message>
@@ -3413,138 +3413,143 @@ Entropi Shannon: %12
         <translation>Pratinjau Langsung HTML &amp; Markdown</translation>
     </message>
     <message>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="89"/>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="98"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="97"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="118"/>
         <source>Auto</source>
         <translation>Otomatis</translation>
     </message>
     <message>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="90"/>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="565"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="98"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="619"/>
         <source>Markdown</source>
         <translation>Markdown</translation>
     </message>
     <message>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="91"/>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="563"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="99"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="617"/>
         <source>HTML</source>
         <translation>HTML</translation>
     </message>
     <message>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="93"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="101"/>
         <source>Select preview rendering format (Auto detects Markdown or HTML)</source>
         <translation>Pilih format render pratinjau (Otomatis mendeteksi Markdown atau HTML)</translation>
     </message>
     <message>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="102"/>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="515"/>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="574"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="113"/>
+        <source>Markdown Theme (30 curated themes from markdown-viewer)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="122"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="566"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="628"/>
         <source>0 words • 0 min read</source>
         <translation>0 kata • 0 mnt baca</translation>
     </message>
     <message>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="109"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="129"/>
         <source>Zoom Out</source>
         <translation>Perkecil</translation>
     </message>
     <message>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="116"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="136"/>
         <source>Reset Zoom (100%)</source>
         <translation>Atur Ulang Zoom (100%)</translation>
     </message>
     <message>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="125"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="145"/>
         <source>Zoom In</source>
         <translation>Perbesar</translation>
     </message>
     <message>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="133"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="153"/>
         <source>Refresh Preview</source>
         <translation>Segarkan Pratinjau</translation>
     </message>
     <message>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="141"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="161"/>
         <source>Copy Formatted HTML to Clipboard</source>
         <translation>Salin HTML Berformat ke Papan Klip</translation>
     </message>
     <message>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="149"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="169"/>
         <source>Export as Standalone HTML File...</source>
         <translation>Ekspor sebagai Berkas HTML Mandiri...</translation>
     </message>
     <message>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="156"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="176"/>
         <source>Export Document to PDF...</source>
         <translation>Ekspor Dokumen ke PDF...</translation>
     </message>
     <message>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="165"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="185"/>
         <source>Open in Default Web Browser</source>
         <translation>Buka di Peramban Web Standar</translation>
     </message>
     <message>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="412"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="458"/>
         <source>NotepadNext Preview</source>
         <translation>Pratinjau NotepadNext</translation>
     </message>
     <message>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="512"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="563"/>
         <source>No Document</source>
         <translation>Tidak Ada Dokumen</translation>
     </message>
     <message>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="558"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="612"/>
         <source>Auto (HTML)</source>
         <translation>Otomatis (HTML)</translation>
     </message>
     <message>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="560"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="614"/>
         <source>Auto (Markdown)</source>
         <translation>Otomatis (Markdown)</translation>
     </message>
     <message>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="580"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="634"/>
         <source>%1 words • %2 min read</source>
         <translation>%1 kata • %2 mnt baca</translation>
     </message>
     <message>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="633"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="709"/>
         <source>HTML Copied!</source>
         <translation>HTML Tersalin!</translation>
     </message>
     <message>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="648"/>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="688"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="724"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="764"/>
         <source>Untitled</source>
         <translation>Tanpa Judul</translation>
     </message>
     <message>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="662"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="738"/>
         <source>Export HTML Document</source>
         <translation>Ekspor Dokumen HTML</translation>
     </message>
     <message>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="663"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="739"/>
         <source>HTML Documents (*.html *.htm);;All Files (*)</source>
         <translation>Dokumen HTML (*.html *.htm);;Semua Berkas (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="702"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="778"/>
         <source>Export PDF Document</source>
         <translation>Ekspor Dokumen PDF</translation>
     </message>
     <message>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="703"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="779"/>
         <source>PDF Documents (*.pdf);;All Files (*)</source>
         <translation>Dokumen PDF (*.pdf);;Semua Berkas (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="776"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="851"/>
         <source>Blocked Untrusted Link</source>
         <translation>Tautan Tidak Tepercaya Diblokir</translation>
     </message>
     <message>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="777"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="852"/>
         <source>Navigation to link &apos;%1&apos; with scheme &apos;%2&apos; is blocked for security.
 
 Only http, https, and mailto URLs are permitted in HTML &amp; Markdown Preview (mitigating CVE-2026-20841).</source>
@@ -3848,101 +3853,140 @@ Hanya URL http, https, dan mailto yang diizinkan dalam Pratinjau HTML &amp; Mark
 <context>
     <name>PreviewTabWidget</name>
     <message>
-        <location filename="../src/widgets/PreviewTabWidget.cpp" line="84"/>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="98"/>
         <source>Preview HTML - %1</source>
         <translation>Pratinjau HTML - %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/PreviewTabWidget.cpp" line="84"/>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="98"/>
         <source>Preview Markdown - %1</source>
         <translation>Pratinjau Markdown - %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/PreviewTabWidget.cpp" line="86"/>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="100"/>
         <source>Preview HTML</source>
         <translation>Pratinjau HTML</translation>
     </message>
     <message>
-        <location filename="../src/widgets/PreviewTabWidget.cpp" line="86"/>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="100"/>
         <source>Preview Markdown</source>
         <translation>Pratinjau Markdown</translation>
     </message>
     <message>
-        <location filename="../src/widgets/PreviewTabWidget.cpp" line="110"/>
-        <location filename="../src/widgets/PreviewTabWidget.cpp" line="474"/>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="124"/>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="612"/>
         <source>Untitled</source>
         <translation>Tanpa Judul</translation>
     </message>
     <message>
-        <location filename="../src/widgets/PreviewTabWidget.cpp" line="117"/>
-        <location filename="../src/widgets/PreviewTabWidget.cpp" line="371"/>
-        <location filename="../src/widgets/PreviewTabWidget.cpp" line="389"/>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="133"/>
+        <source>Select Markdown preview theme (30 available)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="141"/>
+        <source>Markdown Compiler: markdown-it (click for details)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="148"/>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="506"/>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="524"/>
+        <source>CONTENT: 0 words • 0 min read</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="154"/>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="506"/>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="524"/>
         <source>0 words • 0 min read</source>
         <translation>0 kata • 0 mnt baca</translation>
     </message>
     <message>
-        <location filename="../src/widgets/PreviewTabWidget.cpp" line="126"/>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="164"/>
         <source>Refresh Preview</source>
         <translation>Segarkan Pratinjau</translation>
     </message>
     <message>
-        <location filename="../src/widgets/PreviewTabWidget.cpp" line="136"/>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="174"/>
         <source>Zoom Out</source>
         <translation>Perkecil</translation>
     </message>
     <message>
-        <location filename="../src/widgets/PreviewTabWidget.cpp" line="144"/>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="182"/>
         <source>Reset Zoom (100%)</source>
         <translation>Atur Ulang Zoom (100%)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/PreviewTabWidget.cpp" line="155"/>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="193"/>
         <source>Zoom In</source>
         <translation>Perbesar</translation>
     </message>
     <message>
-        <location filename="../src/widgets/PreviewTabWidget.cpp" line="165"/>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="203"/>
         <source>Copy Rendered HTML</source>
         <translation>Salin HTML Hasil Render</translation>
     </message>
     <message>
-        <location filename="../src/widgets/PreviewTabWidget.cpp" line="175"/>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="213"/>
         <source>Export as Standalone HTML File...</source>
         <translation>Ekspor sebagai Berkas HTML Mandiri...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/PreviewTabWidget.cpp" line="185"/>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="223"/>
         <source>Open in Default Web Browser</source>
         <translation>Buka di Peramban Web Standar</translation>
     </message>
     <message>
-        <location filename="../src/widgets/PreviewTabWidget.cpp" line="369"/>
-        <location filename="../src/widgets/PreviewTabWidget.cpp" line="652"/>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="306"/>
+        <source>Markdown Compiler</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="307"/>
+        <source>&lt;b&gt;Compiler:&lt;/b&gt; markdown-it&lt;br&gt;&lt;br&gt;&lt;b&gt;Supported Features:&lt;/b&gt;&lt;br&gt;• CommonMark Specification compliant&lt;br&gt;• GitHub Flavored Markdown (GFM) tables&lt;br&gt;• Strikethrough (~~text~~)&lt;br&gt;• Highlight / Mark (==text==)&lt;br&gt;• Insert (++text++)&lt;br&gt;• Subscript (~text~) and Superscript (^text^)&lt;br&gt;• Interactive Task Lists ([ ] and [x])&lt;br&gt;• Footnotes ([^1] and [^1]: definition)&lt;br&gt;• Heading Custom IDs (# Heading {#custom-id})&lt;br&gt;• LaTeX Math ($inline$, $$block$$)&lt;br&gt;• Mermaid Diagrams (```mermaid ... ```)&lt;br&gt;• GitHub Alert Callouts ([!NOTE], [!TIP], [!IMPORTANT], [!WARNING], [!CAUTION])&lt;br&gt;• 30 Integrated Themes (Classless &amp; GitHub)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="504"/>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="792"/>
         <source>(Editor Closed)</source>
         <translation>(Editor Ditutup)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/PreviewTabWidget.cpp" line="394"/>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="530"/>
         <source>%1 words • %2 min read</source>
         <translation>%1 kata • %2 mnt baca</translation>
     </message>
     <message>
-        <location filename="../src/widgets/PreviewTabWidget.cpp" line="459"/>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="532"/>
+        <source>CONTENT: %1 words • %2 min read</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="592"/>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="634"/>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="666"/>
+        <source>Preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="597"/>
         <source>COPIED!</source>
         <translation>TERSALIN!</translation>
     </message>
     <message>
-        <location filename="../src/widgets/PreviewTabWidget.cpp" line="482"/>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="620"/>
         <source>Export HTML Document</source>
         <translation>Ekspor Dokumen HTML</translation>
     </message>
     <message>
-        <location filename="../src/widgets/PreviewTabWidget.cpp" line="483"/>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="621"/>
         <source>HTML Documents (*.html *.htm);;All Files (*)</source>
         <translation>Dokumen HTML (*.html *.htm);;Semua Berkas (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/PreviewTabWidget.cpp" line="614"/>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="754"/>
         <source>NotepadNext Preview</source>
         <translation>Pratinjau NotepadNext</translation>
     </message>
