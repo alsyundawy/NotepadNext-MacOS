@@ -113,6 +113,29 @@ QString MimeTools::quotedPrintableEncode(const QString &input) {
     return QString::fromUtf8(encoded);
 }
 
+static bool decodeEscape(const QByteArray &in, int &i, QByteArray &out) {
+    if (in.at(i) != '=') {
+        return false;
+    }
+    if (i + 2 < in.size() && in.at(i + 1) == '\r' && in.at(i + 2) == '\n') {
+        i += 3;
+        return true;
+    }
+    if (i + 1 < in.size() && (in.at(i + 1) == '\r' || in.at(i + 1) == '\n')) {
+        i += 2;
+        return true;
+    }
+    if (i + 2 < in.size()) {
+        bool ok = false;
+        if (const int val = in.mid(i + 1, 2).toInt(&ok, 16); ok) {
+            out.append(static_cast<char>(val));
+            i += 3;
+            return true;
+        }
+    }
+    return false;
+}
+
 QString MimeTools::quotedPrintableDecode(const QString &input) {
     const QByteArray in = input.toUtf8();
     QByteArray out;
@@ -120,23 +143,8 @@ QString MimeTools::quotedPrintableDecode(const QString &input) {
 
     int i = 0;
     while (i < in.size()) {
-        if (in.at(i) == '=') {
-            if (i + 2 < in.size() && in.at(i + 1) == '\r' && in.at(i + 2) == '\n') {
-                i += 3;
-                continue;
-            }
-            if (i + 1 < in.size() && (in.at(i + 1) == '\r' || in.at(i + 1) == '\n')) {
-                i += 2;
-                continue;
-            }
-            if (i + 2 < in.size()) {
-                bool ok = false;
-                if (const int val = in.mid(i + 1, 2).toInt(&ok, 16); ok) {
-                    out.append(static_cast<char>(val));
-                    i += 3;
-                    continue;
-                }
-            }
+        if (decodeEscape(in, i, out)) {
+            continue;
         }
         out.append(in.at(i));
         i++;

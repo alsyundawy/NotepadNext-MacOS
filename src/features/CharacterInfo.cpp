@@ -13,6 +13,7 @@
 
 #include <algorithm>
 #include <array>
+#include <cstddef>
 #include <cstdint>
 #include <utility>
 
@@ -20,8 +21,8 @@
 #include <QStringConverter>
 #include <QMap>
 
-static const char *getAsciiName(uint32_t cp) {
-    static constexpr std::array<const char *, 128> asciiNames = {
+namespace {
+constexpr std::array<const char *, 128> kAsciiNames = {
 "NULL",
                                                 "START OF HEADING",
                                                 "START OF TEXT",
@@ -152,13 +153,7 @@ static const char *getAsciiName(uint32_t cp) {
                                                 "DELETE"
 };
 
-    if (cp < asciiNames.size())
-        return asciiNames[cp];
-    return nullptr;
-}
-
-static const char *getLatin1SupplementName(uint32_t cp) {
-    static constexpr std::array<const char *, 128> latin1Names = {
+constexpr std::array<const char *, 128> kLatin1Names = {
 "PADDING CHARACTER",
                                                  "HIGH OCTET PRESET",
                                                  "BREAK PERMITTED HERE",
@@ -288,9 +283,19 @@ static const char *getLatin1SupplementName(uint32_t cp) {
                                                  "LATIN SMALL LETTER THORN",
                                                  "LATIN SMALL LETTER Y WITH DIAERESIS"
 };
+} // namespace
 
-    if (cp >= 0x80 && cp <= 0xFF)
-        return latin1Names[cp - 0x80];
+static const char *getAsciiName(uint32_t cp) {
+    if (cp < kAsciiNames.size()) {
+        return kAsciiNames[cp];
+    }
+    return nullptr;
+}
+
+static const char *getLatin1SupplementName(uint32_t cp) {
+    if (cp >= 0x80 && cp <= 0xFF) {
+        return kLatin1Names[cp - 0x80];
+    }
     return nullptr;
 }
 
@@ -566,137 +571,60 @@ static constexpr std::array<HtmlEntityEntry, 95> htmlEntities = {{
 }};
 
 static const char *getHtmlNamedEntity(uint32_t cp) {
-    const auto it = std::ranges::lower_bound(htmlEntities, cp, {}, &HtmlEntityEntry::cp);
-    if (it != htmlEntities.end() && it->cp == cp) {
+    if (const auto it = std::ranges::lower_bound(htmlEntities, cp, {}, &HtmlEntityEntry::cp);
+        it != htmlEntities.end() && it->cp == cp) {
         return it->entity;
     }
     return nullptr;
 }
 
+struct CategoryDesc {
+    const char *code{""};
+    const char *desc{""};
+};
+
+static constexpr std::array<std::pair<QChar::Category, CategoryDesc>, 31> categoryTable = {{
+    {QChar::Letter_Uppercase, {"Lu", "Letter, Uppercase"}},
+    {QChar::Letter_Lowercase, {"Ll", "Letter, Lowercase"}},
+    {QChar::Letter_Titlecase, {"Lt", "Letter, Titlecase"}},
+    {QChar::Letter_Modifier, {"Lm", "Letter, Modifier"}},
+    {QChar::Letter_Other, {"Lo", "Letter, Other"}},
+    {QChar::Mark_NonSpacing, {"Mn", "Mark, Non-Spacing"}},
+    {QChar::Mark_SpacingCombining, {"Mc", "Mark, Spacing Combining"}},
+    {QChar::Mark_Enclosing, {"Me", "Mark, Enclosing"}},
+    {QChar::Number_DecimalDigit, {"Nd", "Number, Decimal Digit"}},
+    {QChar::Number_Letter, {"Nl", "Number, Letter"}},
+    {QChar::Number_Other, {"No", "Number, Other"}},
+    {QChar::Punctuation_Connector, {"Pc", "Punctuation, Connector"}},
+    {QChar::Punctuation_Dash, {"Pd", "Punctuation, Dash"}},
+    {QChar::Punctuation_Open, {"Ps", "Punctuation, Open / Initial"}},
+    {QChar::Punctuation_Close, {"Pe", "Punctuation, Close / Final"}},
+    {QChar::Punctuation_InitialQuote, {"Pi", "Punctuation, Initial Quote"}},
+    {QChar::Punctuation_FinalQuote, {"Pf", "Punctuation, Final Quote"}},
+    {QChar::Punctuation_Other, {"Po", "Punctuation, Other"}},
+    {QChar::Symbol_Math, {"Sm", "Symbol, Math"}},
+    {QChar::Symbol_Currency, {"Sc", "Symbol, Currency"}},
+    {QChar::Symbol_Modifier, {"Sk", "Symbol, Modifier"}},
+    {QChar::Symbol_Other, {"So", "Symbol, Other"}},
+    {QChar::Separator_Space, {"Zs", "Separator, Space"}},
+    {QChar::Separator_Line, {"Zl", "Separator, Line"}},
+    {QChar::Separator_Paragraph, {"Zp", "Separator, Paragraph"}},
+    {QChar::Other_Control, {"Cc", "Other, Control"}},
+    {QChar::Other_Format, {"Cf", "Other, Format"}},
+    {QChar::Other_Surrogate, {"Cs", "Other, Surrogate"}},
+    {QChar::Other_PrivateUse, {"Co", "Other, Private Use"}},
+    {QChar::Other_NotAssigned, {"Cn", "Other, Not Assigned"}}
+}};
+
 static void mapCategory(QChar::Category cat, QString &code, QString &desc) {
-    switch (cat) {
-        case QChar::Letter_Uppercase:
-            code = "Lu";
-            desc = "Letter, Uppercase";
-            break;
-        case QChar::Letter_Lowercase:
-            code = "Ll";
-            desc = "Letter, Lowercase";
-            break;
-        case QChar::Letter_Titlecase:
-            code = "Lt";
-            desc = "Letter, Titlecase";
-            break;
-        case QChar::Letter_Modifier:
-            code = "Lm";
-            desc = "Letter, Modifier";
-            break;
-        case QChar::Letter_Other:
-            code = "Lo";
-            desc = "Letter, Other";
-            break;
-        case QChar::Mark_NonSpacing:
-            code = "Mn";
-            desc = "Mark, Non-Spacing";
-            break;
-        case QChar::Mark_SpacingCombining:
-            code = "Mc";
-            desc = "Mark, Spacing Combining";
-            break;
-        case QChar::Mark_Enclosing:
-            code = "Me";
-            desc = "Mark, Enclosing";
-            break;
-        case QChar::Number_DecimalDigit:
-            code = "Nd";
-            desc = "Number, Decimal Digit";
-            break;
-        case QChar::Number_Letter:
-            code = "Nl";
-            desc = "Number, Letter";
-            break;
-        case QChar::Number_Other:
-            code = "No";
-            desc = "Number, Other";
-            break;
-        case QChar::Punctuation_Connector:
-            code = "Pc";
-            desc = "Punctuation, Connector";
-            break;
-        case QChar::Punctuation_Dash:
-            code = "Pd";
-            desc = "Punctuation, Dash";
-            break;
-        case QChar::Punctuation_Open:
-            code = "Ps";
-            desc = "Punctuation, Open / Initial";
-            break;
-        case QChar::Punctuation_Close:
-            code = "Pe";
-            desc = "Punctuation, Close / Final";
-            break;
-        case QChar::Punctuation_InitialQuote:
-            code = "Pi";
-            desc = "Punctuation, Initial Quote";
-            break;
-        case QChar::Punctuation_FinalQuote:
-            code = "Pf";
-            desc = "Punctuation, Final Quote";
-            break;
-        case QChar::Punctuation_Other:
-            code = "Po";
-            desc = "Punctuation, Other";
-            break;
-        case QChar::Symbol_Math:
-            code = "Sm";
-            desc = "Symbol, Math";
-            break;
-        case QChar::Symbol_Currency:
-            code = "Sc";
-            desc = "Symbol, Currency";
-            break;
-        case QChar::Symbol_Modifier:
-            code = "Sk";
-            desc = "Symbol, Modifier";
-            break;
-        case QChar::Symbol_Other:
-            code = "So";
-            desc = "Symbol, Other";
-            break;
-        case QChar::Separator_Space:
-            code = "Zs";
-            desc = "Separator, Space";
-            break;
-        case QChar::Separator_Line:
-            code = "Zl";
-            desc = "Separator, Line";
-            break;
-        case QChar::Separator_Paragraph:
-            code = "Zp";
-            desc = "Separator, Paragraph";
-            break;
-        case QChar::Other_Control:
-            code = "Cc";
-            desc = "Other, Control";
-            break;
-        case QChar::Other_Format:
-            code = "Cf";
-            desc = "Other, Format";
-            break;
-        case QChar::Other_Surrogate:
-            code = "Cs";
-            desc = "Other, Surrogate";
-            break;
-        case QChar::Other_PrivateUse:
-            code = "Co";
-            desc = "Other, Private Use";
-            break;
-        case QChar::Other_NotAssigned:
-        default:
-            code = "Cn";
-            desc = "Other, Not Assigned";
-            break;
+    if (const auto it = std::ranges::find_if(categoryTable, [cat](const auto &e) { return e.first == cat; });
+        it != categoryTable.end()) {
+        code = it->second.code;
+        desc = it->second.desc;
+        return;
     }
+    code = "Cn";
+    desc = "Other, Not Assigned";
 }
 
 struct ScriptEntry {
@@ -747,8 +675,8 @@ static constexpr std::array<ScriptEntry, 38> scriptEntries = {{
 }};
 
 static QString mapScript(QChar::Script s) {
-    const auto it = std::ranges::find_if(scriptEntries, [s](const auto &e) { return e.script == s; });
-    if (it != scriptEntries.end()) {
+    if (const auto it = std::ranges::find_if(scriptEntries, [s](const auto &e) { return e.script == s; });
+        it != scriptEntries.end()) {
         return QString::fromUtf8(it->name);
     }
     return QStringLiteral("Unknown");
@@ -953,19 +881,19 @@ CharacterInfo::Details CharacterInfo::getDetailsAt(const ScintillaNext *editor, 
         return Details();
 
     // Rewind past UTF-8 continuation bytes if cursor is midway through a multi-byte sequence
-    while (pos > 0 && (static_cast<unsigned char>(editor->charAt(pos)) & 0xC0) == 0x80) {
+    while (pos > 0 && (static_cast<std::byte>(editor->charAt(pos)) & std::byte{0xC0}) == std::byte{0x80}) {
         pos--;
     }
 
-    const auto lead = static_cast<unsigned char>(editor->charAt(pos));
+    const auto lead = static_cast<std::byte>(editor->charAt(pos));
     int seqLen = 1;
-    if ((lead & 0x80) == 0)
+    if ((lead & std::byte{0x80}) == std::byte{0x00})
         seqLen = 1;
-    else if ((lead & 0xE0) == 0xC0)
+    else if ((lead & std::byte{0xE0}) == std::byte{0xC0})
         seqLen = 2;
-    else if ((lead & 0xF0) == 0xE0)
+    else if ((lead & std::byte{0xF0}) == std::byte{0xE0})
         seqLen = 3;
-    else if ((lead & 0xF8) == 0xF0)
+    else if ((lead & std::byte{0xF8}) == std::byte{0xF0})
         seqLen = 4;
 
     if (pos + seqLen > editor->length()) {

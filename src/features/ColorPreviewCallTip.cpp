@@ -91,7 +91,7 @@ void ColorPreviewCallTip::dismissPreview() {
     m_currentMatch = ColorMatch();
 }
 
-static ColorPreviewCallTip::ColorMatch matchSelection(ScintillaNext *editor, int pos) {
+static ColorPreviewCallTip::ColorMatch matchSelection(const ScintillaNext *editor, int pos) {
     ColorPreviewCallTip::ColorMatch match;
     if (editor->selectionStart() == editor->selectionEnd()) {
         return match;
@@ -147,32 +147,33 @@ static ColorPreviewCallTip::ColorMatch matchHexColor(const QString &lineText, in
     auto hexIt = hexRegex.globalMatch(lineText);
     while (hexIt.hasNext()) {
         const auto m = hexIt.next();
-        if (col >= m.capturedStart() && col <= m.capturedEnd()) {
-            const QString raw = m.captured(0);
-            QColor c;
-            if (raw.startsWith(QLatin1String("0x"), Qt::CaseInsensitive)) {
-                c = parseColor(QStringLiteral("#") + raw.mid(2));
-                match.format = ColorPreviewCallTip::Hex0x;
+        if (col < m.capturedStart() || col > m.capturedEnd()) {
+            continue;
+        }
+        const QString raw = m.captured(0);
+        QColor c;
+        if (raw.startsWith(QLatin1String("0x"), Qt::CaseInsensitive)) {
+            c = parseColor(QStringLiteral("#") + raw.mid(2));
+            match.format = ColorPreviewCallTip::Hex0x;
+        } else {
+            c = parseColor(raw);
+            if (raw.length() == 4) {
+                match.format = ColorPreviewCallTip::Hex3;
+            } else if (raw.length() == 5) {
+                match.format = ColorPreviewCallTip::Hex4;
+            } else if (raw.length() == 7) {
+                match.format = ColorPreviewCallTip::Hex6;
             } else {
-                c = parseColor(raw);
-                if (raw.length() == 4) {
-                    match.format = ColorPreviewCallTip::Hex3;
-                } else if (raw.length() == 5) {
-                    match.format = ColorPreviewCallTip::Hex4;
-                } else if (raw.length() == 7) {
-                    match.format = ColorPreviewCallTip::Hex6;
-                } else {
-                    match.format = ColorPreviewCallTip::Hex8;
-                }
+                match.format = ColorPreviewCallTip::Hex8;
             }
-            if (c.isValid()) {
-                match.found = true;
-                match.startPos = lineStart + static_cast<int>(m.capturedStart());
-                match.endPos = lineStart + static_cast<int>(m.capturedEnd());
-                match.text = raw;
-                match.color = c;
-                return match;
-            }
+        }
+        if (c.isValid()) {
+            match.found = true;
+            match.startPos = lineStart + static_cast<int>(m.capturedStart());
+            match.endPos = lineStart + static_cast<int>(m.capturedEnd());
+            match.text = raw;
+            match.color = c;
+            return match;
         }
     }
     return match;
@@ -248,20 +249,21 @@ static ColorPreviewCallTip::ColorMatch matchNamedColor(const QString &lineText, 
     auto wordIt = wordRegex.globalMatch(lineText);
     while (wordIt.hasNext()) {
         const auto m = wordIt.next();
-        if (col >= m.capturedStart() && col <= m.capturedEnd()) {
-            const QString word = m.captured(0).toLower();
-            if (namedColors.contains(word)) {
-                const QColor c = parseColor(word);
-                if (c.isValid()) {
-                    match.found = true;
-                    match.startPos = lineStart + static_cast<int>(m.capturedStart());
-                    match.endPos = lineStart + static_cast<int>(m.capturedEnd());
-                    match.text = m.captured(0);
-                    match.color = c;
-                    match.format = ColorPreviewCallTip::Named;
-                    return match;
-                }
-            }
+        if (col < m.capturedStart() || col > m.capturedEnd()) {
+            continue;
+        }
+        const QString word = m.captured(0).toLower();
+        if (!namedColors.contains(word)) {
+            continue;
+        }
+        if (const QColor c = parseColor(word); c.isValid()) {
+            match.found = true;
+            match.startPos = lineStart + static_cast<int>(m.capturedStart());
+            match.endPos = lineStart + static_cast<int>(m.capturedEnd());
+            match.text = m.captured(0);
+            match.color = c;
+            match.format = ColorPreviewCallTip::Named;
+            return match;
         }
     }
     return match;
@@ -423,7 +425,7 @@ bool ColorPreviewCallTip::triggerColorPreviewOrPick() {
         return false;
     }
 
-    int pos = static_cast<int>(editor->currentPos());
+    auto pos = static_cast<int>(editor->currentPos());
     if (editor->selectionStart() != editor->selectionEnd()) {
         pos = static_cast<int>(editor->selectionStart());
     }
