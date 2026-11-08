@@ -20,6 +20,7 @@ FLYENV_NODE_LIB = "/Users/alsyundawy/Library/FlyEnv/env/node/lib"
 QT_MACOS_LIB = "/Users/alsyundawy/Qt/6.12.0/macos/lib"
 QT_MACOS_INCLUDE = "/Users/alsyundawy/Qt/6.12.0/macos/include"
 MACOS_SDK_PATH = "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
+STD_CXX20 = "-std=c++20"
 
 
 def get_framework_dirs() -> list[str]:
@@ -123,10 +124,10 @@ def determine_compiler_and_flags(suffix: str) -> tuple[str, list[str]]:
     if suffix == ".c":
         return CLANG_PATH, ["-std=c17"]
     if suffix == ".mm":
-        return CLANGXX_PATH, ["-std=c++20", "-x", "objective-c++"]
+        return CLANGXX_PATH, [STD_CXX20, "-x", "objective-c++"]
     if suffix in {".h", ".hpp"}:
-        return CLANGXX_PATH, ["-std=c++20", "-x", "c++-header"]
-    return CLANGXX_PATH, ["-std=c++20"]
+        return CLANGXX_PATH, [STD_CXX20, "-x", "c++-header"]
+    return CLANGXX_PATH, [STD_CXX20]
 
 
 def build_compile_entry(

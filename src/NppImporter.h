@@ -71,9 +71,14 @@ private:
     void readGlobalStyles(QXmlStreamReader &xml);
     void readGUIConfigs(QXmlStreamReader &xml);
 
-    int foldFgColor;
-    int foldBgColor;
-    int activeFgColor;
+    void readLanguageElements(QXmlStreamReader &xml);
+    void applyGlobalEditorStyle(int styleID, const QXmlStreamAttributes &attrs);
+    void applyGlobalNamedColor(const QXmlStreamAttributes &attrs);
+    void applyScintillaPrimaryView(const QXmlStreamAttributes &attrs);
+
+    int foldFgColor = 0;
+    int foldBgColor = 0;
+    int activeFgColor = 0;
 };
 
 #endif // NPPIMPORTER_H

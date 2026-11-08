@@ -112,8 +112,10 @@ PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *par
         ui->comboBoxLineEndings->setCurrentIndex(foundIdx == -1 ? 0 : foundIdx);
     });
 
-    NotepadNextApplication *app = qobject_cast<NotepadNextApplication *>(qApp);
-    ui->comboBoxDefaultLanguage->addItems(app->getLanguages());
+    const auto *app = qobject_cast<const NotepadNextApplication *>(qApp);
+    if (app) {
+        ui->comboBoxDefaultLanguage->addItems(app->getLanguages());
+    }
 
     // Select the current one
     ui->comboBoxDefaultLanguage->setCurrentText(settings->defaultLanguage());

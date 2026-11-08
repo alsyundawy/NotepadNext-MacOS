@@ -58,7 +58,7 @@ MacroEditorDialog::MacroEditorDialog(QWidget *parent, MacroManager *mm) :
     const auto rawMessages = MacroStep::RecordableMacroMessages();
     QList<ComboBoxItem> recordableMacroMessages;
     recordableMacroMessages.reserve(rawMessages.size());
-    std::transform(rawMessages.cbegin(), rawMessages.cend(), std::back_inserter(recordableMacroMessages),
+    std::ranges::transform(rawMessages, std::back_inserter(recordableMacroMessages),
         [](Scintilla::Message msg) {
             return qMakePair(MacroStep::NameOfMessage(msg), static_cast<int>(msg));
         });

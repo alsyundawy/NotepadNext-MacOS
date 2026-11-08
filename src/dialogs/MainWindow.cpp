@@ -509,17 +509,19 @@ MainWindow::MainWindow(NotepadNextApplication *app) : // NOSONAR
         editor->multipleSelectAddNext();
     });
     connect(ui->actionCopyFullPath, &QAction::triggered, this, [this]() {
-        auto editor = currentEditor();
-        if (editor->isFile()) {
+        const auto *editor = currentEditor();
+        if (editor && editor->isFile()) {
             QApplication::clipboard()->setText(editor->getFilePath());
         }
     });
     connect(ui->actionCopyFileName, &QAction::triggered, this, [this]() {
-        QApplication::clipboard()->setText(currentEditor()->getName());
+        if (const auto *editor = currentEditor()) {
+            QApplication::clipboard()->setText(editor->getName());
+        }
     });
     connect(ui->actionCopyFileDirectory, &QAction::triggered, this, [this]() {
-        auto editor = currentEditor();
-        if (editor->isFile()) {
+        const auto *editor = currentEditor();
+        if (editor && editor->isFile()) {
             QApplication::clipboard()->setText(editor->getPath());
         }
     });
@@ -2157,7 +2159,7 @@ bool MainWindow::saveCopyAsDialog()
 
 bool MainWindow::saveCopyAs(const QString &fileName)
 {
-    auto editor = currentEditor();
+    const auto *editor = currentEditor();
 
     QFileDevice::FileError error = editor->saveCopyAs(fileName);
 

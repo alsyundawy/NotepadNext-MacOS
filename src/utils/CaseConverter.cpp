@@ -239,8 +239,7 @@ static void restoreSelections(ScintillaNext *editor, const std::vector<UpdatedSe
     }
 
     if (wasWordExpanded || updated.size() == 1) {
-        const auto &s = updated[0];
-        if (s.caretAtEnd) {
+        if (const auto &s = updated[0]; s.caretAtEnd) {
             editor->setSelection(s.newEnd, s.newStart);
         } else {
             editor->setSelection(s.newStart, s.newEnd);

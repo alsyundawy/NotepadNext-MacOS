@@ -22,6 +22,7 @@
 #ifndef LANGUAGEINSPECTORDOCK_H
 #define LANGUAGEINSPECTORDOCK_H
 
+#include <memory>
 #include <QDockWidget>
 
 #include "ScintillaTypes.h"
@@ -47,13 +48,13 @@ private slots:
     void updateLexerInfo(ScintillaNext *editor);
 
 private:
-    Ui::LanguageInspectorDock *ui;
+    std::unique_ptr<Ui::LanguageInspectorDock> ui;
 
     QMetaObject::Connection editorConnection;
     QMetaObject::Connection documentConnection;
 
     void disconnectFromEditor();
-    void updateLanguageName(ScintillaNext *editor);
+    void updateLanguageName(const ScintillaNext *editor);
     void updatePropertyInfo(ScintillaNext *editor);
     void updateKeywordInfo(ScintillaNext *editor);
     void updateStyleInfo(ScintillaNext *editor);

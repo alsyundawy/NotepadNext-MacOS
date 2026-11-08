@@ -179,7 +179,7 @@ NppImporter::NppImporter(const QString &configPath, ScintillaEdit *_editor) :
     QList<QPair<QString, const Language *>> sortedLanguages;
     const auto keys = languages.keys();
     sortedLanguages.reserve(keys.size());
-    std::transform(keys.cbegin(), keys.cend(), std::back_inserter(sortedLanguages),
+    std::ranges::transform(keys, std::back_inserter(sortedLanguages),
         [this](const QString &key) {
             return qMakePair(key, &languages[key]);
         });
@@ -191,51 +191,57 @@ NppImporter::NppImporter(const QString &configPath, ScintillaEdit *_editor) :
 
     // Store the sorted keys
     sortedLanguageKeys.reserve(sortedLanguageKeys.size() + sortedLanguages.size());
-    std::transform(sortedLanguages.cbegin(), sortedLanguages.cend(), std::back_inserter(sortedLanguageKeys),
+    std::ranges::transform(sortedLanguages, std::back_inserter(sortedLanguageKeys),
         [](const auto &pair) {
             return pair.first;
         });
 }
 
+void NppImporter::readLanguageElements(QXmlStreamReader &xml)
+{
+    while (xml.readNextStartElement()) {
+        const auto langAttrs = xml.attributes();
+        const auto name = langAttrs.value("name").toString();
+        if (!langNamesToLexer.contains(name)) {
+            xml.skipCurrentElement();
+            continue;
+        }
+
+        Language language;
+        language.name = name;
+        language.extensions = langAttrs.value("ext").toString().split(" ", Qt::SkipEmptyParts);
+        language.shortName = langNamesToLexer[language.name].shortName;
+        language.longDescription = langNamesToLexer[language.name].longName;
+        language.lexer_id = langNamesToLexer[language.name].lexer_id;
+        // Read keyword class element definitions
+        while (xml.readNextStartElement()) {
+            const auto childAttrs = xml.attributes();
+            const auto t = xml.readElementText();
+            language.keywords[keywordClassToIndex(childAttrs.value("name"))] = t;
+        }
+        languages.insert(language.name, language);
+    }
+}
+
 void NppImporter::readLangsModel(const QString &filePath)
 {
     QFile file(filePath);
+    if (!file.open(QIODevice::ReadOnly)) {
+        return;
+    }
 
-    if (file.open(QIODevice::ReadOnly)) {
-        QXmlStreamReader xml(&file);
-
-        xml.readNextStartElement();
-        while (xml.readNextStartElement()) {
-            if (xml.name() == QStringLiteral("Languages")) {
-                while (xml.readNextStartElement()) {
-                    auto langAttrs = xml.attributes();
-                    if (!langNamesToLexer.contains(langAttrs.value("name").toString())) {
-                        xml.skipCurrentElement();
-                        continue;
-                    }
-
-                    Language language;
-                    language.name = langAttrs.value("name").toString();
-                    language.extensions = langAttrs.value("ext").toString().split(" ", Qt::SkipEmptyParts);
-                    language.shortName = langNamesToLexer[language.name].shortName;
-                    language.longDescription = langNamesToLexer[language.name].longName;
-                    language.lexer_id = langNamesToLexer[language.name].lexer_id;
-                    // Read keyword class element definitions
-                    while (xml.readNextStartElement()) {
-                        auto childAttrs = xml.attributes();
-                        auto t = xml.readElementText();
-                        language.keywords[keywordClassToIndex(childAttrs.value("name"))] = t;
-                    }
-                    languages.insert(language.name, language);
-                }
-            }
-            else {
-                xml.skipCurrentElement();
-            }
+    QXmlStreamReader xml(&file);
+    xml.readNextStartElement();
+    while (xml.readNextStartElement()) {
+        if (xml.name() == QStringLiteral("Languages")) {
+            readLanguageElements(xml);
         }
-        if (xml.hasError()) {
-            qWarning("%s", qUtf8Printable(xml.errorString()));
+        else {
+            xml.skipCurrentElement();
         }
+    }
+    if (xml.hasError()) {
+        qWarning("%s", qUtf8Printable(xml.errorString()));
     }
 }
 
@@ -317,6 +323,68 @@ void NppImporter::readLexerStyles(QXmlStreamReader &xml)
     }
 }
 
+void NppImporter::applyGlobalEditorStyle(int styleID, const QXmlStreamAttributes &attrs)
+{
+    const int fgColor = attrs.value("fgColor").toInt(nullptr, 16);
+    const int bgColor = attrs.value("bgColor").toInt(nullptr, 16);
+
+    editor->styleSetFore(styleID, color(fgColor));
+    editor->styleSetBack(styleID, color(bgColor));
+
+    if (attrs.hasAttribute("fontName") && !attrs.value("fontName").isEmpty()) {
+        editor->styleSetFont(styleID, attrs.value("fontName").toLocal8Bit().constData());
+    }
+    if (attrs.hasAttribute("fontSize") && !attrs.value("fontSize").isEmpty()) {
+        const int fontSize = attrs.value("fontSize").toInt();
+        editor->styleSetSize(styleID, fontSize);
+    }
+    if (attrs.hasAttribute("fontStyle") && !attrs.value("fontStyle").isEmpty()) {
+        const int fontStyle = attrs.value("fontStyle").toInt();
+        const auto uFontStyle = static_cast<unsigned int>(fontStyle);
+        editor->styleSetBold(styleID, static_cast<int>(uFontStyle & static_cast<unsigned int>(FONTSTYLE_BOLD)));
+        editor->styleSetItalic(styleID, static_cast<int>(uFontStyle & static_cast<unsigned int>(FONTSTYLE_ITALIC)));
+        editor->styleSetUnderline(styleID, static_cast<int>(uFontStyle & static_cast<unsigned int>(FONTSTYLE_UNDERLINE)));
+    }
+    if (styleID == STYLE_DEFAULT) {
+        editor->styleClearAll();
+    }
+}
+
+void NppImporter::applyGlobalNamedColor(const QXmlStreamAttributes &attrs)
+{
+    const auto name = attrs.value("name");
+    const int fgHex = attrs.value("fgColor").toInt(nullptr, 16);
+    const int bgHex = attrs.value("bgColor").toInt(nullptr, 16);
+
+    if (name == QStringLiteral("Current line background colour")) {
+        editor->setCaretLineBack(color(bgHex));
+    }
+    else if (name == QStringLiteral("Selected text colour")) {
+        editor->setSelBack(true, color(bgHex));
+    }
+    else if (name == QStringLiteral("Caret colour")) {
+        editor->setCaretFore(color(fgHex));
+    }
+    else if (name == QStringLiteral("Edge colour")) {
+        editor->setEdgeColour(color(fgHex));
+    }
+    else if (name == QStringLiteral("White space symbol")) {
+        editor->setWhitespaceFore(true, color(fgHex));
+    }
+    else if (name == QStringLiteral("Fold")) {
+        // NOTE: Yes this is a bug in Notepad++ swapping the fg and bg colors
+        foldFgColor = color(bgHex);
+        foldBgColor = color(fgHex);
+    }
+    else if (name == QStringLiteral("Fold active")) {
+        activeFgColor = color(fgHex);
+    }
+    else if (name == QStringLiteral("Fold margin")) {
+        editor->setFoldMarginColour(true, color(fgHex));
+        editor->setFoldMarginHiColour(true, color(bgHex));
+    }
+}
+
 void NppImporter::readGlobalStyles(QXmlStreamReader &xml)
 {
     editor->setMarginWidthN(0, 30);
@@ -324,102 +392,61 @@ void NppImporter::readGlobalStyles(QXmlStreamReader &xml)
     editor->styleClearAll();
 
     while (xml.readNextStartElement()) {
-        auto attrs = xml.attributes();
+        const auto attrs = xml.attributes();
         if (const int styleID = attrs.value("styleID").toInt(); styleID >= 32 && styleID <= 39) {
-            int fgColor = attrs.value("fgColor").toInt(nullptr, 16);
-            int bgColor = attrs.value("bgColor").toInt(nullptr, 16);
-
-            editor->styleSetFore(styleID, color(fgColor));
-            editor->styleSetBack(styleID, color(bgColor));
-
-            if (attrs.hasAttribute("fontName") && !attrs.value("fontName").isEmpty()) {
-                editor->styleSetFont(styleID, attrs.value("fontName").toLocal8Bit().constData());
-            }
-            if (attrs.hasAttribute("fontSize") && !attrs.value("fontSize").isEmpty()) {
-                int fontSize = attrs.value("fontSize").toInt();
-                editor->styleSetSize(styleID, fontSize);
-            }
-            if (attrs.hasAttribute("fontStyle") && !attrs.value("fontStyle").isEmpty()) {
-                int fontStyle = attrs.value("fontStyle").toInt();
-                const auto uFontStyle = static_cast<unsigned int>(fontStyle);
-                editor->styleSetBold(styleID, static_cast<int>(uFontStyle & static_cast<unsigned int>(FONTSTYLE_BOLD)));
-                editor->styleSetItalic(styleID, static_cast<int>(uFontStyle & static_cast<unsigned int>(FONTSTYLE_ITALIC)));
-                editor->styleSetUnderline(styleID, static_cast<int>(uFontStyle & static_cast<unsigned int>(FONTSTYLE_UNDERLINE)));
-            }
-            if (styleID == STYLE_DEFAULT) {
-                editor->styleClearAll();
-            }
+            applyGlobalEditorStyle(styleID, attrs);
         }
         else if (styleID > 0) {
             editor->indicSetFore(styleID, color(attrs.value("bgColor").toInt(nullptr, 16)));
         }
-        else if (attrs.value("name") == QStringLiteral("Current line background colour")) {
-            editor->setCaretLineBack(color(attrs.value("bgColor").toInt(nullptr, 16)));
-        }
-        else if (attrs.value("name") == QStringLiteral("Selected text colour")) {
-            editor->setSelBack(true, color(attrs.value("bgColor").toInt(nullptr, 16)));
-        }
-        else if (attrs.value("name") == QStringLiteral("Caret colour")) {
-            editor->setCaretFore(color(attrs.value("fgColor").toInt(nullptr, 16)));
-        }
-        else if (attrs.value("name") == QStringLiteral("Edge colour")) {
-            editor->setEdgeColour(color(attrs.value("fgColor").toInt(nullptr, 16)));
-        }
-        else if (attrs.value("name") == QStringLiteral("White space symbol")) {
-            editor->setWhitespaceFore(true, color(attrs.value("fgColor").toInt(nullptr, 16)));
-        }
-        else if (attrs.value("name") == QStringLiteral("Fold")) {
-            // NOTE: Yes this is a bug in Notepad++ swapping the fg and bg colors
-            foldFgColor = color(attrs.value("bgColor").toInt(nullptr, 16));
-            foldBgColor = color(attrs.value("fgColor").toInt(nullptr, 16));
-        }
-        else if (attrs.value("name") == QStringLiteral("Fold active")) {
-            activeFgColor = color(attrs.value("fgColor").toInt(nullptr, 16));
-        }
-        else if (attrs.value("name") == QStringLiteral("Fold margin")) {
-            editor->setFoldMarginColour(true, color(attrs.value("fgColor").toInt(nullptr, 16)));
-            editor->setFoldMarginHiColour(true, color(attrs.value("bgColor").toInt(nullptr, 16)));
+        else {
+            applyGlobalNamedColor(attrs);
         }
         xml.skipCurrentElement();
+    }
+}
+
+void NppImporter::applyScintillaPrimaryView(const QXmlStreamAttributes &attrs)
+{
+    if (attrs.value("indentGuideLine") == QStringLiteral("show")) {
+        editor->setIndentationGuides(SC_IV_LOOKBOTH);
+    }
+    if (attrs.value("currentLineHilitingShow") == QStringLiteral("show")) {
+        editor->setCaretLineVisible(true);
+        editor->setCaretLineVisibleAlways(true);
+    }
+    if (attrs.value("Wrap") == QStringLiteral("yes")) {
+        editor->setWrapMode(SC_WRAP_WHITESPACE);
+    }
+    if (attrs.value("edge") == QStringLiteral("line")) {
+        editor->setEdgeMode(EDGE_LINE);
+        editor->setEdgeColumn(attrs.value("edgeNbColumn").toInt());
+    }
+    if (attrs.value("whiteSpaceShow") == QStringLiteral("show")) {
+        editor->setViewWS(SCWS_VISIBLEALWAYS);
+    }
+    if (attrs.value("eolShow") == QStringLiteral("show")) {
+        editor->setViewEOL(true);
+    }
+    if (attrs.hasAttribute("folderMarkStyle")) {
+        editor->setAutomaticFold(static_cast<int>(static_cast<unsigned int>(SC_AUTOMATICFOLD_SHOW) | static_cast<unsigned int>(SC_AUTOMATICFOLD_CLICK) | static_cast<unsigned int>(SC_AUTOMATICFOLD_CHANGE)));
+        editor->markerEnableHighlight(true);
+        const auto markers = folderMarkers[attrs.value("folderMarkStyle").toString()];
+        const auto types = folderMarkers["type"];
+        for (int i = 0; i < types.size(); ++i) {
+            editor->markerDefine(types[i], markers[i]);
+            editor->markerSetFore(types[i], foldFgColor);
+            editor->markerSetBack(types[i], foldBgColor);
+            editor->markerSetBackSelected(types[i], activeFgColor);
+        }
     }
 }
 
 void NppImporter::readGUIConfigs(QXmlStreamReader &xml)
 {
     while (xml.readNextStartElement()) {
-        if (auto attrs = xml.attributes(); attrs.value("name") == QStringLiteral("ScintillaPrimaryView")) {
-            if (attrs.value("indentGuideLine") == QStringLiteral("show")) {
-                editor->setIndentationGuides(SC_IV_LOOKBOTH);
-            }
-            if (attrs.value("currentLineHilitingShow") == QStringLiteral("show")) {
-                editor->setCaretLineVisible(true);
-                editor->setCaretLineVisibleAlways(true);
-            }
-            if (attrs.value("Wrap") == QStringLiteral("yes")) {
-                editor->setWrapMode(SC_WRAP_WHITESPACE);
-            }
-            if (attrs.value("edge") == QStringLiteral("line")) {
-                editor->setEdgeMode(EDGE_LINE);
-                editor->setEdgeColumn(attrs.value("edgeNbColumn").toInt());
-            }
-            if (attrs.value("whiteSpaceShow") == QStringLiteral("show")) {
-                editor->setViewWS(SCWS_VISIBLEALWAYS);
-            }
-            if (attrs.value("eolShow") == QStringLiteral("show")) {
-                editor->setViewEOL(true);
-            }
-            if (attrs.hasAttribute("folderMarkStyle")) {
-                editor->setAutomaticFold(static_cast<int>(static_cast<unsigned int>(SC_AUTOMATICFOLD_SHOW) | static_cast<unsigned int>(SC_AUTOMATICFOLD_CLICK) | static_cast<unsigned int>(SC_AUTOMATICFOLD_CHANGE)));
-                editor->markerEnableHighlight(true);
-                const auto markers = folderMarkers[attrs.value("folderMarkStyle").toString()];
-                const auto types = folderMarkers["type"];
-                for (int i = 0; i < types.size(); ++i) {
-                    editor->markerDefine(types[i], markers[i]);
-                    editor->markerSetFore(types[i], foldFgColor);
-                    editor->markerSetBack(types[i], foldBgColor);
-                    editor->markerSetBackSelected(types[i], activeFgColor);
-                }
-            }
+        if (const auto attrs = xml.attributes(); attrs.value("name") == QStringLiteral("ScintillaPrimaryView")) {
+            applyScintillaPrimaryView(attrs);
         }
         xml.skipCurrentElement();
     }

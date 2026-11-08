@@ -37,8 +37,10 @@ AutoCompletion::AutoCompletion(ScintillaNext *editor) :
     editor->autoCSetMaxHeight(10);
 
     connect(editor, &ScintillaNext::lexerChanged, this, [this]() {
-        NotepadNextApplication *app = qobject_cast<NotepadNextApplication *>(qApp);
-        keywords = app->getLanguageKeywords(this->editor->languageName);
+        const auto *app = qobject_cast<const NotepadNextApplication *>(qApp);
+        if (app) {
+            keywords = app->getLanguageKeywords(this->editor->languageName);
+        }
     });
 }
 

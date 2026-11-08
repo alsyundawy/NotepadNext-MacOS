@@ -42,7 +42,7 @@ static QVariantList QListToQVariantList(const QList<int> &intList)
 {
     QVariantList vl;
     vl.reserve(intList.size());
-    std::transform(intList.cbegin(), intList.cend(), std::back_inserter(vl),
+    std::ranges::transform(intList, std::back_inserter(vl),
         [](int i) { return QVariant(i); });
     return vl;
 }
@@ -51,7 +51,7 @@ static QVariantList QListToQVariantList(const QList<int> &intList)
 static QList<int> QVariantListToQList(const QVariantList &variantList) {
     QList<int> intList;
     intList.reserve(variantList.size());
-    std::transform(variantList.cbegin(), variantList.cend(), std::back_inserter(intList),
+    std::ranges::transform(variantList, std::back_inserter(intList),
         [](const QVariant &variant) { return variant.toInt(); });
     return intList;
 }
@@ -85,20 +85,22 @@ void SessionManager::saveIntoSessionDirectory(const ScintillaNext *editor, const
 
 SessionManager::SessionFileType SessionManager::determineType(const ScintillaNext *editor)
 {
+    using enum SessionManager::SessionFileType;
+
     if (editor->isFile()) {
         if (editor->isSavedToDisk()) {
-            return SessionManager::SessionFileType::SavedFile;
+            return SavedFile;
         }
         else {
-            return SessionManager::SessionFileType::UnsavedFile;
+            return UnsavedFile;
         }
     }
     else {
         if (!editor->isSavedToDisk()) {
-            return SessionManager::SessionFileType::TempFile;
+            return TempFile;
         }
         else {
-            return SessionManager::SessionFileType::None;
+            return None;
         }
     }
 }
@@ -147,19 +149,20 @@ void SessionManager::saveSession(const MainWindow *window) const
     settings.beginWriteArray("OpenedFiles");
 
     int index = 0;
-    for (const auto &editor : window->editors()) {
-        SessionFileType editorType = determineType(editor);
+    using enum SessionManager::SessionFileType;
+    for (const ScintillaNext *editor : window->editors()) {
+        const SessionFileType editorType = determineType(editor);
 
         if (fileTypes.testFlag(editorType)) {
             settings.setArrayIndex(index);
 
-            if (editorType == SessionManager::SessionFileType::SavedFile) {
+            if (editorType == SavedFile) {
                 storeFileDetails(editor, settings);
             }
-            else if (editorType == SessionManager::SessionFileType::UnsavedFile) {
+            else if (editorType == UnsavedFile) {
                 storeUnsavedFileDetails(editor, settings);
             }
-            else if (editorType == SessionManager::SessionFileType::TempFile) {
+            else if (editorType == TempFile) {
                 storeTempFile(editor, settings);
             }
             else {
@@ -181,7 +184,7 @@ void SessionManager::saveSession(const MainWindow *window) const
     settings.endGroup();
 }
 
-void SessionManager::loadSession(MainWindow *window)
+void SessionManager::loadSession(const MainWindow *window)
 {
     qInfo(Q_FUNC_INFO);
 

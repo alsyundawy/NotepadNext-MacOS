@@ -158,7 +158,7 @@ void FileListDock::itemClicked(QListWidgetItem *item)
 {
     qInfo(Q_FUNC_INFO);
 
-    ScintillaNext *editor = item->data(Qt::UserRole).value<ScintillaNext *>();
+    const auto *editor = item->data(Qt::UserRole).value<ScintillaNext *>();
 
     window->getDockedEditor()->switchToEditor(editor);
 }
@@ -168,7 +168,7 @@ void FileListDock::editorSavePointChanged(bool dirty)
     Q_UNUSED(dirty);
     qInfo(Q_FUNC_INFO);
 
-    ScintillaNext *editor = qobject_cast<ScintillaNext *>(sender());
+    const auto *editor = qobject_cast<const ScintillaNext *>(sender());
 
     if (editor) {
         QListWidgetItem* item = lookupItemByEditor(editor);
@@ -184,7 +184,7 @@ void FileListDock::editorRenamed()
 {
     qInfo(Q_FUNC_INFO);
 
-    ScintillaNext *editor = qobject_cast<ScintillaNext *>(sender());
+    const auto *editor = qobject_cast<const ScintillaNext *>(sender());
 
     if (editor) {
         QListWidgetItem* item = lookupItemByEditor(editor);

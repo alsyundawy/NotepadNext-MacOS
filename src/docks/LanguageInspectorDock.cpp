@@ -42,7 +42,7 @@
 
 static QSpinBox *FontSizeSpinBoxFactory()
 {
-    auto *editor = new QSpinBox();
+    auto *editor = new QSpinBox(); // NOSONAR(cpp:S5025)
     editor->setFrame(false);
     editor->setRange(2, 24);
     editor->setAlignment(Qt::AlignHCenter);
@@ -51,7 +51,7 @@ static QSpinBox *FontSizeSpinBoxFactory()
 
 static QSpinBox *FontWeightSpinBoxFactory()
 {
-    auto *editor = new QSpinBox();
+    auto *editor = new QSpinBox(); // NOSONAR(cpp:S5025)
     editor->setFrame(false);
     editor->setRange(100, 2400);
     editor->setSingleStep(10);
@@ -74,7 +74,7 @@ static QString property_type_to_string(int type) {
 
 LanguageInspectorDock::LanguageInspectorDock(MainWindow *parent) :
     QDockWidget(parent),
-    ui(new Ui::LanguageInspectorDock)
+    ui(std::make_unique<Ui::LanguageInspectorDock>())
 {
     ui->setupUi(this);
 
@@ -107,14 +107,14 @@ LanguageInspectorDock::LanguageInspectorDock(MainWindow *parent) :
     const auto families = fontDatabase.families();
 #endif
     fontNames.reserve(families.size());
-    std::transform(families.cbegin(), families.cend(), std::back_inserter(fontNames),
+    std::ranges::transform(families, std::back_inserter(fontNames),
         [](const QString &font) {
             return QPair<QString, QString>(font, font);
         });
     auto *fontComboDelegate = new ComboBoxDelegate(fontNames, this);
     ui->tblStyles->setItemDelegateForColumn(4, fontComboDelegate);
 
-    connect(this, &QDockWidget::visibilityChanged, this, [=, this](bool visible) {
+    connect(this, &QDockWidget::visibilityChanged, this, [this, parent](bool visible) {
         if (visible) {
             connectToEditor(parent->currentEditor());
             connect(parent, &MainWindow::editorActivated, this, &LanguageInspectorDock::connectToEditor);
@@ -126,10 +126,7 @@ LanguageInspectorDock::LanguageInspectorDock(MainWindow *parent) :
     });
 }
 
-LanguageInspectorDock::~LanguageInspectorDock()
-{
-    delete ui;
-}
+LanguageInspectorDock::~LanguageInspectorDock() = default;
 
 void LanguageInspectorDock::connectToEditor(ScintillaNext *editor)
 {
@@ -140,7 +137,7 @@ void LanguageInspectorDock::connectToEditor(ScintillaNext *editor)
     }
 
     editorConnection = connect(editor, &ScintillaNext::updateUi, this, &LanguageInspectorDock::updatePositionInfo);
-    documentConnection = connect(editor, &ScintillaNext::lexerChanged, this, [=, this]() { updateLexerInfo(editor); });
+    documentConnection = connect(editor, &ScintillaNext::lexerChanged, this, [this, editor]() { updateLexerInfo(editor); });
 
     updateLexerInfo(editor);
 }
@@ -159,8 +156,10 @@ void LanguageInspectorDock::disconnectFromEditor()
 void LanguageInspectorDock::updatePositionInfo(Scintilla::Update updated)
 {
     if (FlagSet(updated, Scintilla::Update::Text) || FlagSet(updated, Scintilla::Update::Selection)) {
-        ScintillaNext *editor = qobject_cast<ScintillaNext*>(sender());
-        ui->lblInfo->setText(tr("Position %1 Style %2").arg(editor->currentPos()).arg(editor->styleAt(editor->currentPos())));
+        const auto *editor = qobject_cast<const ScintillaNext *>(sender());
+        if (editor) {
+            ui->lblInfo->setText(tr("Position %1 Style %2").arg(editor->currentPos()).arg(editor->styleAt(editor->currentPos())));
+        }
     }
 }
 
@@ -172,7 +171,7 @@ void LanguageInspectorDock::updateLexerInfo(ScintillaNext *editor)
     updateStyleInfo(editor);
 }
 
-void LanguageInspectorDock::updateLanguageName(ScintillaNext *editor)
+void LanguageInspectorDock::updateLanguageName(const ScintillaNext *editor)
 {
     qInfo(Q_FUNC_INFO);
 
@@ -186,23 +185,20 @@ void LanguageInspectorDock::updatePropertyInfo(ScintillaNext *editor)
 
     ui->tblProperties->clearContents();
 
-    const QString propertyNames = editor->propertyNames();
-
-    if (propertyNames.isEmpty()) {
+    if (const QString propertyNames = editor->propertyNames(); propertyNames.isEmpty()) {
         ui->tblProperties->setRowCount(0);
     }
     else {
-        QStringList propertyNamesList = propertyNames.split('\n');
+        const QStringList propertyNamesList = propertyNames.split('\n');
 
-        ui->tblProperties->setRowCount(propertyNamesList.count());
+        ui->tblProperties->setRowCount(static_cast<int>(propertyNamesList.count()));
 
-        for (int i = 0; i < propertyNamesList.count(); ++i) {
-            const auto property = propertyNamesList[i];
-
-            QTableWidgetItem *prop = new QTableWidgetItem(property);
-            QTableWidgetItem *type = new QTableWidgetItem(property_type_to_string(editor->propertyType(property.toLatin1().constData())));
-            QTableWidgetItem *desc = new QTableWidgetItem(QString(editor->describeProperty(property.toLatin1().constData())));
-            QTableWidgetItem *val = new QTableWidgetItem(QString(editor->property(property.toLatin1().constData())));
+        int row = 0;
+        for (const auto &property : propertyNamesList) {
+            auto *prop = new QTableWidgetItem(property); // NOSONAR(cpp:S5025)
+            auto *type = new QTableWidgetItem(property_type_to_string(static_cast<int>(editor->propertyType(property.toLatin1().constData())))); // NOSONAR(cpp:S5025)
+            auto *desc = new QTableWidgetItem(QString(editor->describeProperty(property.toLatin1().constData()))); // NOSONAR(cpp:S5025)
+            auto *val = new QTableWidgetItem(QString(editor->property(property.toLatin1().constData()))); // NOSONAR(cpp:S5025)
 
             desc->setToolTip(desc->text());
 
@@ -213,10 +209,11 @@ void LanguageInspectorDock::updatePropertyInfo(ScintillaNext *editor)
 
             val->setTextAlignment(Qt::AlignCenter);
 
-            ui->tblProperties->setItem(i, 0, prop);
-            ui->tblProperties->setItem(i, 1, type);
-            ui->tblProperties->setItem(i, 2, desc);
-            ui->tblProperties->setItem(i, 3, val);
+            ui->tblProperties->setItem(row, 0, prop);
+            ui->tblProperties->setItem(row, 1, type);
+            ui->tblProperties->setItem(row, 2, desc);
+            ui->tblProperties->setItem(row, 3, val);
+            ++row;
         }
     }
 
@@ -226,7 +223,7 @@ void LanguageInspectorDock::updatePropertyInfo(ScintillaNext *editor)
     ui->tblProperties->resizeColumnToContents(3);
 
     ui->tblProperties->disconnect();
-    connect(ui->tblProperties, &QTableWidget::itemChanged, this, [=, this](QTableWidgetItem *item) {
+    connect(ui->tblProperties, &QTableWidget::itemChanged, this, [this, editor](const QTableWidgetItem *item) {
         const QString property = ui->tblProperties->item(item->row(), 0)->text();
 
         editor->setProperty(property.toLatin1().constData(), item->text().toLatin1().constData());
@@ -239,22 +236,22 @@ void LanguageInspectorDock::updateKeywordInfo(ScintillaNext *editor)
 {
     ui->tblKeywords->clearContents();
 
-    const QString keyWordSetsDescription = QString(editor->describeKeyWordSets());
-
-    if (keyWordSetsDescription.isEmpty()) {
+    if (const auto keyWordSetsDescription = QString(editor->describeKeyWordSets()); keyWordSetsDescription.isEmpty()) {
         ui->tblKeywords->setRowCount(0);
     }
     else {
-        QStringList keyWordsSets = keyWordSetsDescription.split('\n');
+        const QStringList keyWordsSets = keyWordSetsDescription.split('\n');
 
-        ui->tblKeywords->setRowCount(keyWordsSets.count());
+        ui->tblKeywords->setRowCount(static_cast<int>(keyWordsSets.count()));
 
-        for (int i = 0; i < keyWordsSets.count(); ++i) {
-            auto id = new QTableWidgetItem(QString::number(i));
+        int row = 0;
+        for (const auto &kwSet : keyWordsSets) {
+            auto *id = new QTableWidgetItem(QString::number(row)); // NOSONAR(cpp:S5025)
             id->setTextAlignment(Qt::AlignCenter);
 
-            ui->tblKeywords->setItem(i, 0, id);
-            ui->tblKeywords->setItem(i, 1, new QTableWidgetItem(keyWordsSets[i]));
+            ui->tblKeywords->setItem(row, 0, id);
+            ui->tblKeywords->setItem(row, 1, new QTableWidgetItem(kwSet)); // NOSONAR(cpp:S5025)
+            ++row;
         }
     }
 

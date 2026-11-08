@@ -111,7 +111,7 @@ ScintillaNext *findFallbackEditor(const ads::CDockManager *mgr, ads::CDockAreaWi
             return ed;
         }
         const auto widgets = areaWidget->dockWidgets();
-        const auto it = std::find_if(widgets.cbegin(), widgets.cend(), [](const ads::CDockWidget *w) {
+        const auto it = std::ranges::find_if(widgets, [](const ads::CDockWidget *w) {
             return extractActiveEditor(w) != nullptr;
         });
         if (it != widgets.cend()) {
@@ -161,7 +161,7 @@ ScintillaNext *DockedEditor::getCurrentEditor() const
             return ed;
         }
         const auto widgets = areaWidget->dockWidgets();
-        const auto it = std::find_if(widgets.cbegin(), widgets.cend(), [](const ads::CDockWidget *w) {
+        const auto it = std::ranges::find_if(widgets, [](const ads::CDockWidget *w) {
             return extractActiveEditor(w) != nullptr;
         });
         if (it != widgets.cend()) {

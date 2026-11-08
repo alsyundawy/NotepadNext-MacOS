@@ -582,7 +582,7 @@ void NotepadNextApplication::saveSession()
     }
 
     // Iterate all the opened editors and add them to the recent file list
-    for (const auto &editor : target->editors()) {
+    for (const ScintillaNext *editor : target->editors()) {
         if (editor && editor->isFile()) {
             recentFilesListManager->addFile(editor->getFilePath());
         }
