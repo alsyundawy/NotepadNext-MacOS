@@ -47,12 +47,12 @@ ToolbarIconManager::ToolbarIconManager(QObject *parent) : QObject(parent) {
 void ToolbarIconManager::registerBuiltInPacks() {
     m_packs.clear();
 
-    // 1. NotepadNext Classic (Bawaan Default)
+    // 1. NotepadNext Classic (Default)
     m_packs.append(ToolbarIconPack{
         .id = QStringLiteral("notepadNext"),
-        .displayName = tr("NotepadNext Classic (Bawaan)"),
+        .displayName = tr("NotepadNext Classic (Default)"),
         .description = tr("Authentic classic NotepadNext built-in silk iconography"),
-        .basePath = QStringLiteral(":/icons/packs/notepadNext"),
+        .basePath = QStringLiteral(":/icons"),
         .isBuiltIn = true,
         .isPngBased = true,
     });
@@ -701,16 +701,29 @@ QString ToolbarIconManager::resolveIconFilePath(const ToolbarIconPack &pack, con
         }
     }
 
-    // Graceful fallback to default Modern Ribbon SVG
-    if (const QString defaultSvg = QStringLiteral(":/icons/") + canonical + QStringLiteral(".svg");
-        QFileInfo::exists(defaultSvg)) {
-        return defaultSvg;
-    }
-
-    // Fallback to PNG
-    if (const QString defaultPng = QStringLiteral(":/icons/") + canonical + QStringLiteral(".png");
-        QFileInfo::exists(defaultPng)) {
-        return defaultPng;
+    // Strict type-preserving fallback
+    if (pack.isPngBased) {
+        if (const QString defaultPng = QStringLiteral(":/icons/") + canonical + QStringLiteral(".png");
+            QFileInfo::exists(defaultPng)) {
+            return defaultPng;
+        }
+        for (const QString &alias : aliases) {
+            if (const QString aliasPng = QStringLiteral(":/icons/") + alias + QStringLiteral(".png");
+                QFileInfo::exists(aliasPng)) {
+                return aliasPng;
+            }
+        }
+    } else {
+        if (const QString defaultSvg = QStringLiteral(":/icons/") + canonical + QStringLiteral(".svg");
+            QFileInfo::exists(defaultSvg)) {
+            return defaultSvg;
+        }
+        for (const QString &alias : aliases) {
+            if (const QString aliasSvg = QStringLiteral(":/icons/") + alias + QStringLiteral(".svg");
+                QFileInfo::exists(aliasSvg)) {
+                return aliasSvg;
+            }
+        }
     }
 
     return QString();

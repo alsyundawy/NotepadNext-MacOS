@@ -4589,7 +4589,7 @@ Hanya URL http, https, dan mailto yang diizinkan dalam Pratinjau HTML &amp; Mark
     </message>
     <message>
         <location filename="../src/features/ToolbarIconManager.cpp" line="53" />
-        <source>NotepadNext Classic (Bawaan)</source>
+        <source>NotepadNext Classic (Default)</source>
         <translation>NotepadNext Klasik (Bawaan)</translation>
     </message>
     <message>

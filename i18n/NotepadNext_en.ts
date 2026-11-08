@@ -4320,8 +4320,8 @@ Only http, https, and mailto URLs are permitted in HTML &amp; Markdown Preview (
     </message>
     <message>
         <location filename="../src/features/ToolbarIconManager.cpp" line="53" />
-        <source>NotepadNext Classic (Bawaan)</source>
-        <translation>NotepadNext Classic (Bawaan)</translation>
+        <source>NotepadNext Classic (Default)</source>
+        <translation>NotepadNext Classic (Default)</translation>
     </message>
     <message>
         <location filename="../src/features/ToolbarIconManager.cpp" line="54" />

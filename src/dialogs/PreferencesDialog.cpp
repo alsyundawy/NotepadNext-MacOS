@@ -357,7 +357,10 @@ void PreferencesDialog::setupToolbarPacksGroup(QWidget *container)
     // Pack Description
     lblIconPackDescription = new QLabel(gbxToolbarPacks);
     lblIconPackDescription->setWordWrap(true);
-    lblIconPackDescription->setStyleSheet(QStringLiteral("color: gray; font-size: 11px;"));
+    lblIconPackDescription->setTextFormat(Qt::PlainText);
+    lblIconPackDescription->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    lblIconPackDescription->setMinimumHeight(44);
+    lblIconPackDescription->setStyleSheet(QStringLiteral("color: #64748b; font-size: 12px; line-height: 1.4; padding: 4px 8px; background: rgba(0, 0, 0, 0.04); border-radius: 4px;"));
     if (const auto *pack = ToolbarIconManager::instance()->findPackById(ToolbarIconManager::instance()->currentPackId())) {
         lblIconPackDescription->setText(pack->description);
     }
@@ -380,7 +383,6 @@ void PreferencesDialog::setupToolbarPacksGroup(QWidget *container)
                                      : pack->description;
             lblIconPackDescription->setText(desc);
         }
-        updateIconPreview();
     });
 
     // Icon Size
@@ -417,14 +419,6 @@ void PreferencesDialog::setupToolbarPacksGroup(QWidget *container)
     });
     toolbarLayout->addRow(tr("Toolbar Icon Size:"), comboBoxIconSize);
 
-    // Pack Preview Row
-    widgetIconPreview = new QWidget(gbxToolbarPacks);
-    layoutIconPreview = new QHBoxLayout(widgetIconPreview);
-    layoutIconPreview->setContentsMargins(4, 4, 4, 4);
-    layoutIconPreview->setSpacing(8);
-    updateIconPreview();
-    toolbarLayout->addRow(tr("Icon Preview:"), widgetIconPreview);
-
     container->layout()->addWidget(gbxToolbarPacks);
 }
 
@@ -455,35 +449,6 @@ void PreferencesDialog::populateIconPacksComboBox()
     }
 }
 
-void PreferencesDialog::updateIconPreview()
-{
-    if (!widgetIconPreview || !layoutIconPreview) {
-        return;
-    }
-
-    const QStringList sampleActions = {
-        QStringLiteral("newFile"), QStringLiteral("openFile"), QStringLiteral("save"),
-        QStringLiteral("cut"),     QStringLiteral("copy"),     QStringLiteral("paste"),
-        QStringLiteral("undo"),    QStringLiteral("redo"),     QStringLiteral("find")
-    };
-
-    if (m_previewLabels.isEmpty()) {
-        for (qsizetype i = 0; i < sampleActions.size(); ++i) {
-            auto *lbl = new QLabel(widgetIconPreview);
-            lbl->setFixedSize(24, 24);
-            lbl->setAlignment(Qt::AlignCenter);
-            layoutIconPreview->addWidget(lbl);
-            m_previewLabels.append(lbl);
-        }
-        layoutIconPreview->addStretch();
-    }
-
-    for (int i = 0; i < sampleActions.size() && i < m_previewLabels.size(); ++i) {
-        const QIcon icon = ToolbarIconManager::instance()->actionIcon(sampleActions[i]);
-        m_previewLabels[i]->setPixmap(icon.pixmap(22, 22));
-    }
-}
-
 void PreferencesDialog::updateThemeColors()
 {
     if (comboBoxTheme) {
@@ -494,5 +459,4 @@ void PreferencesDialog::updateThemeColors()
             comboBoxTheme->setCurrentIndex(found);
         }
     }
-    updateIconPreview();
 }
