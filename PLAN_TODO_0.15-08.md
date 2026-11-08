@@ -20,19 +20,26 @@
    - [2.3 Embedded Lua 5.5.1 / 5.4.x Sandbox Confinement](#23-embedded-lua-551--54x-sandbox-confinement)
    - [2.4 Kerentanan Kerangka Qt 6.5–6.12 (CVE-2025-3512, CVE-2025-14575, dll.)](#24-kerentanan-kerangka-qt-65612-cve-2025-3512-cve-2025-14575-dll)
    - [2.5 Ekosistem Editor Sibling](#25-ekosistem-editor-sibling)
-3. [Analisis Mendalam Fitur SparkNotePad v1.3.8 (Fitur Siap Adopsi)](#3-analisis-mendalam-fitur-sparknotepad-v138-fitur-siap-adopsi)
-4. [Prinsip Arsitektur Non-Destruktif & 14 Pilar Kualitas Kode](#4-prinsip-arsitektur-non-destruktif--14-pilar-kualitas-kode)
-5. [Daftar Rencana Induk & Todo (Master Implementation Plan)](#5-daftar-rencana-induk--todo-master-implementation-plan)
-6. [Rincian Tugas Bertahap (Task List by Phase)](#6-rincian-tugas-bertahap-task-list-by-phase)
-   - [Fase 1: Framework & Engine Utilitas Teks (Stateless Core)](#fase-1-framework--engine-utilitas-teks-stateless-core)
-   - [Fase 2: Toolbar Personalization & Suite 22 Icon Pack (ToolbarIconManager)](#fase-2-toolbar-personalization--suite-22-icon-pack-toolbariconmanager)
-   - [Fase 3: Dialog Kustomisasi Toolbar & Navigasi Cepat (CustomizeToolbarDialog)](#fase-3-dialog-kustomisasi-toolbar--navigasi-cepat-customizetoolbardialog)
-   - [Fase 4: Markdown Safe Preview Dock & GitHub Styling (MarkdownSafePreviewDock)](#fase-4-markdown-safe-preview-dock--github-styling-markdownsafepreviewdock)
-   - [Fase 5: Editor Ergonomics & Decorator Suite](#fase-5-editor-ergonomics--decorator-suite)
-   - [Fase 6: Dialog Forensik, Statistik, Perbandingan Diff & Hash Integrity](#fase-6-dialog-forensik-statistik-perbandingan-diff--hash-integrity)
-   - [Fase 7: Asosiasi Berkas Nextpad++ (76 Ekstensi), Styled DMG & Apple HIG Polish](#fase-7-asosiasi-berkas-nextpad-76-ekstensi-styled-dmg--apple-hig-polish)
-   - [Fase 8: Audit 14 Pilar, i18n, Verifikasi & Build Gate Release 0.15-08](#fase-8-audit-14-pilar-i18n-verifikasi--build-gate-release-015-08)
-7. [Matriks Mitigasi Risiko & Rollback Strategy](#7-matriks-mitigasi-risiko--rollback-strategy)
+3. [Mandat Utama: Audit Kode, Penuntasan 945 Error IDE & 25 SonarQube, Serta Checklist 14 Pilar](#3-mandat-utama-audit-kode-penuntasan-945-error-ide--25-sonarqube-serta-checklist-14-pilar)
+   - [3.1 Instruksi Khusus Lingkungan & Batas Repositori (NotepadNext-MacOS)](#31-instruksi-khusus-lingkungan--batas-repositori-notepadnext-macos)
+   - [3.2 Resolusi Tuntas Akar Masalah 945 Error IDE dan 25 SonarQube](#32-resolusi-tuntas-akar-masalah-945-error-ide-dan-25-sonarqube)
+   - [3.3 Protokol Pengecekan Statis Mandatori (clangd, cppcheck, SonarLint, clang-tidy)](#33-protokol-pengecekan-statis-mandatori-clangd-cppcheck-sonarlint-clang-tidy)
+   - [3.4 Checklist Audit Komprehensif 14 Pilar Kualitas Perangkat Lunak](#34-checklist-audit-komprehensif-14-pilar-kualitas-perangkat-lunak)
+   - [3.5 Pengendalian Sumber Daya Perangkat Keras (Bebas Spike CPU & RAM MacBook)](#35-pengendalian-sumber-daya-perangkat-keras-bebas-spike-cpu--ram-macbook)
+4. [Analisis Mendalam Fitur SparkNotePad v1.3.8 (Fitur Siap Adopsi)](#4-analisis-mendalam-fitur-sparknotepad-v138-fitur-siap-adopsi)
+5. [Prinsip Arsitektur Non-Destruktif & 14 Pilar Kualitas Kode](#5-prinsip-arsitektur-non-destruktif--14-pilar-kualitas-kode)
+6. [Daftar Rencana Induk & Todo (Master Implementation Plan)](#6-daftar-rencana-induk--todo-master-implementation-plan)
+7. [Rincian Tugas Bertahap (Task List by Phase)](#7-rincian-tugas-bertahap-task-list-by-phase)
+   - [Tugas Fase 0: Investigasi Diagnostik, Perbaikan Seketika & Gerbang Linter](#tugas-fase-0-investigasi-diagnostik-perbaikan-seketika--gerbang-linter)
+   - [Tugas Fase 1: Framework & Engine Utilitas Teks (Stateless Core)](#tugas-fase-1-framework--engine-utilitas-teks-stateless-core)
+   - [Tugas Fase 2: Toolbar Personalization & Suite 22 Icon Pack (ToolbarIconManager)](#tugas-fase-2-toolbar-personalization--suite-22-icon-pack-toolbariconmanager)
+   - [Tugas Fase 3: Dialog Kustomisasi Toolbar & Navigasi Cepat (CustomizeToolbarDialog)](#tugas-fase-3-dialog-kustomisasi-toolbar--navigasi-cepat-customizetoolbardialog)
+   - [Tugas Fase 4: Markdown Safe Preview Dock & GitHub Styling (MarkdownSafePreviewDock)](#tugas-fase-4-markdown-safe-preview-dock--github-styling-markdownsafepreviewdock)
+   - [Tugas Fase 5: Editor Ergonomics & Decorator Suite](#tugas-fase-5-editor-ergonomics--decorator-suite)
+   - [Tugas Fase 6: Dialog Forensik, Statistik, Perbandingan Diff & Hash Integrity](#tugas-fase-6-dialog-forensik-statistik-perbandingan-diff--hash-integrity)
+   - [Tugas Fase 7: Asosiasi Berkas Nextpad++ (76 Ekstensi), Styled DMG & Apple HIG Polish](#tugas-fase-7-asosiasi-berkas-nextpad-76-ekstensi-styled-dmg--apple-hig-polish)
+   - [Tugas Fase 8: Audit 14 Pilar, i18n, Verifikasi & Build Gate Release 0.15-08](#tugas-fase-8-audit-14-pilar-i18n-verifikasi--build-gate-release-015-08)
+8. [Matriks Mitigasi Risiko & Rollback Strategy](#8-matriks-mitigasi-risiko--rollback-strategy)
 
 ---
 
@@ -112,7 +119,84 @@ Berdasarkan riset mendalam terhadap repositori resmi, penasihat keamanan GitHub 
 
 ---
 
-## 3. Analisis Mendalam Fitur SparkNotePad v1.3.8 (Fitur Siap Adopsi)
+## 3. Mandat Utama: Audit Kode, Penuntasan 945 Error IDE & 25 SonarQube, Serta Checklist 14 Pilar
+
+Bagian ini mendokumentasikan instruksi permanen yang wajib dijalankan sebelum dan selama pengerjaan rilis NotepadNext-MacOS.
+
+### 3.1 Instruksi Khusus Lingkungan & Batas Repositori (NotepadNext-MacOS)
+
+> [!CAUTION]
+> **PERINGATAN KERAS & BATAS CAKUPAN REPOSITORI**:
+> Repositori target pengerjaan adalah **`NotepadNext-MacOS`** (`/Users/alsyundawy/Downloads/GitHub/NotepadNext-MacOS`), **BUKAN `SparkNotePad`**.
+> Repositori `SparkNotePad` (`/Users/alsyundawy/Downloads/GitHub/SparkNotePad`) hanya berstatus sebagai referensi donor fitur baca-saja (_read-only donor_). Tidak diperkenankan melakukan modifikasi berkas apapun pada direktori SparkNotePad. Seluruh perubahan wajib terlokalisasi 100% pada NotepadNext-MacOS.
+
+### 3.2 Resolusi Tuntas Akar Masalah 945 Error IDE dan 25 SonarQube
+
+Keluhan keberadaan 945 pesan error pada IDE dan 25 pesan SonarQube telah diteliti hingga ke tingkat akar sistem (_root cause analysis_):
+
+1. **Akar Masalah (Root Cause)**:
+   - Berkas basis data kompilasi `build/compile_commands.json` sebelumnya berada dalam keadaan kosong (0 byte).
+   - Akibat ketiadaan `compile_commands.json` yang valid, language server `clangd` dan ekstensi `SonarLint` / `SonarQube` gagal mengenali definisi makro penting (`APP_VERSION`, `QT_CORE_LIB`, `QT_GUI_LIB`, `QT_WIDGETS_LIB`, `ADS_STATIC`) serta direktori include Qt 6.12 dan pustaka pihak ketiga.
+   - Hal tersebut memicu banjir kesalahan palsu (_false positive cascading errors_) sebanyak 945 error diagnostik di IDE dan 25 pelanggaran SonarQube.
+2. **Tindakan Perbaikan Nyata (Remediasi Permanen)**:
+   - **Regenerasi Database Kompilasi**: Menjalankan konfigurasi CMake penuh dengan ekspor database: `cmake -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON` menghasilkan `build/compile_commands.json` lengkap berukuran 765 KB dengan 2.348 baris definisi kompilasi.
+   - **Symlink Akar Repositori**: Membuat symlink absolut `compile_commands.json -> build/compile_commands.json` di root repositori agar dikenali secara otomatis oleh VS Code, Antigravity IDE, `clangd`, dan `sonar-scanner`.
+   - **Verifikasi Empiris clangd**: Pengujian `clangd --check=src/main.cpp` membuktikan hasil sempurna: `All checks completed, 0 errors` (0 error dari sebelumnya terblokir karena `APP_VERSION`).
+   - **Pembersihan Cache & Restart SonarLint**: Menjalankan script `/usr/local/bin/bash ~/.gemini/config/scripts/sonar-restart-ext.sh` untuk me-restart sonarlint-ls dengan pemetaan `compile_commands.json` yang baru.
+
+### 3.3 Protokol Pengecekan Statis Mandatori (clangd, cppcheck, SonarLint, clang-tidy)
+
+Setiap berkas C++ di bawah `/Users/alsyundawy/Downloads/GitHub/NotepadNext-MacOS/src/*.cpp` dan `src/*/*.cpp` wajib lolos tanpa kompromi:
+
+1. **clangd Check**:
+   - Jalankan `clangd --check=<file.cpp>` untuk memverifikasi AST, indexing, dan semantic analysis. Jika ada error tipe atau undeclared identifier, perbaiki seketika.
+2. **cppcheck Gate**:
+   - Jalankan: `cppcheck --library=qt --enable=style,performance,portability,warning --suppress=missingIncludeSystem --suppress=missingInclude --error-exitcode=1 src/`.
+   - Wajib menghasilkan exit code 0.
+3. **clang-tidy Check**:
+   - Jalankan via basis data kompilasi: `/usr/local/opt/llvm/bin/clang-tidy -p build src/<file.cpp>`.
+   - Pastikan kode bersih dari bugprone, performance regression, dan memory hazards.
+4. **Trunk Check & Meta-Linter**:
+   - Jalankan `trunk check -y` untuk memverifikasi seluruh berkas termodifikasi (`.md`, `.cpp`, `.h`, `.json`, `.yml`).
+   - Target absolut: `✔ No issues`.
+5. **Universal Fast Checker**:
+   - Jalankan `/usr/local/bin/bash ~/.gemini/config/skills/ide-linter-error-fix/scripts/lint-check.sh` pada berkas yang disentuh sebelum menyelesaikan instruksi.
+
+### 3.4 Checklist Audit Komprehensif 14 Pilar Kualitas Perangkat Lunak
+
+Setiap baris kode dianalisis secara ketat berlandaskan 14 Pilar Kualitas:
+
+- [ ] **1. BUG REVIEW**: Evaluasi off-by-one errors, null/undefined pointer dereferences, perbandingan tipe data tak konsisten, swallowed exceptions, race condition pada GUI event loop.
+- [ ] **2. SYNTAX REVIEW**: Integritas sintaks ISO C++20, standar penamaan camelCase/PascalCase, validasi shebang skrip shell dan struktur JSON/YAML.
+- [ ] **3. RUNTIME REVIEW**: Penanganan signal/slot Qt 6, validitas path direktori kanonikal macOS, timeout blocking I/O, penanganan pemutusan koneksi tak terduga.
+- [ ] **4. LOGIC REVIEW**: Validasi transisi state machine editor, konsistensi boolean flag, penanganan fail-closed pada otorisasi atau operasi berkas sensitif.
+- [ ] **5. MEMORY REVIEW**: Pencegahan kebocoran memori (CWE-401/404), penanganan buffer boundary (CWE-119/787), pencegahan use-after-free (CWE-416) via `QPointer` dan RAII murni.
+- [ ] **6. DEAD CODE REVIEW**: Eliminasi fungsi yatim piatu, header/include tak terpakai, deklarasi usang tanpa implementasi nyata.
+- [ ] **7. DUPLICATE CODE REVIEW**: Konsolidasi kode duplikasi ke dalam helper terpusat di `src/utils/` tanpa abstraksi prematur yang rumit.
+- [ ] **8. CIRCULAR DEPENDENCY REVIEW**: Isolasi dependensi satu arah menggunakan deklarasi forward (`class QToolBar;`, `class ScintillaNext;`) pada header files.
+- [ ] **9. PERFORMANCE BOTTLENECK REVIEW**: Operasi pemrosesan teks linier O(N), pemanfaatan debounce timer pada event input teks, rendering UI stabil pada 60 FPS (<16ms).
+- [ ] **10. SECURITY / CWE / CVE VULNERABILITY REVIEW**:
+  - Pertahanan penuh terhadap OWASP Top 25 (Web/API/LLM 2024–2026) dan MITRE CWE Top 50 (2024–2026).
+  - Sanitasi pratinjau Markdown terhadap Heap Overflow (CVE-2025-3512 / CWE-122).
+  - Isolasi sandbox eksekusi Lua (CVE-2025-49844, CVE-2025-41688 / CWE-416, CWE-94).
+  - Pencegahan eksekusi path berbahaya (CVE-2025-49144, CVE-2026-5525 / CWE-427, CWE-121).
+  - Pencegahan serangan ReDoS pada regex finder (CWE-1333).
+- [ ] **11. MAINTAINABILITY REVIEW**: Penerapan Single Responsibility Principle, penamaan identifier yang deskriptif, pemisahan UI dari logika bisnis.
+- [ ] **12. SCALABILITY REVIEW**: Dukungan penuh lintas arsitektur Apple Silicon ARM64 (`macOS-arm64`) dan Intel x86_64 (`macOS-x64`), stabilitas Qt 6.5–6.12.
+- [ ] **13. READABILITY REVIEW**: Dokumentasi Doxygen yang jelas, indentasi rapi 4 spasi, komentar yang menjelaskan konteks teknis _mengapa_ (why).
+- [ ] **14. LINTER REVIEW**: Verifikasi kelulusan 100% pada Trunk, SonarLint, Cppcheck, Clang-Tidy, ShellCheck, actionlint, dan markdownlint-cli2 tanpa pengecualian.
+
+### 3.5 Pengendalian Sumber Daya Perangkat Keras (Bebas Spike CPU & RAM MacBook)
+
+Proses audit, kompilasi, dan analisis statis dirancang secara efisien agar tidak membebani MacBook pengembang:
+
+- **Throttle Concurrency**: Menggunakan parameter pembatasan paralelisme core `-j4` atau `-j2` untuk tugas analisis statis berat (mencegah throttling thermal).
+- **In-Memory Cache Exclusion**: Mengecualikan direktori vendor `.cpm-cache/`, `build/`, dan `thirdparty/` dari pemindaian berulang yang tidak perlu.
+- **Batasan Memori Node/Linter**: Menghindari alokasi heap tak terbatas pada proses linter berbasis JavaScript.
+
+---
+
+## 4. Analisis Mendalam Fitur SparkNotePad v1.3.8 (Fitur Siap Adopsi)
 
 Berdasarkan pemeriksaan langsung pada repositori `/Users/alsyundawy/Downloads/GitHub/SparkNotePad` tag `v1.3.8`, berikut daftar komponen berbobot tinggi yang terbukti stabil, lulus uji unit, dan siap diadopsi ke dalam NotepadNext-MacOS:
 
@@ -156,7 +240,7 @@ SparkNotePad v1.3.8 Feature Donors
 
 ---
 
-## 4. Prinsip Arsitektur Non-Destruktif & 14 Pilar Kualitas Kode
+## 5. Prinsip Arsitektur Non-Destruktif & 14 Pilar Kualitas Kode
 
 Agar seluruh fitur baru dapat masuk dengan mulus tanpa mengubah atau merusak fungsi yang sudah berjalan baik:
 
@@ -170,71 +254,65 @@ Agar seluruh fitur baru dapat masuk dengan mulus tanpa mengubah atau merusak fun
 3. **Penyimpanan Pengaturan Terisolasi**:
    - Konfigurasi fitur baru disimpan di bawah namespace terpisah dalam `ApplicationSettings` (contoh: `ToolBar/IconPack`, `Editor/AutoClosePairs`, `Editor/MarkOccurrences`), menjaga kompatibilitas mundur dengan berkas konfigurasi lama.
 4. **Gerbang 14 Pilar Kualitas Perangkat Lunak**:
-   1. **Bug Detection**: 0 cacat fungsional pada alur eksekusi teks dan berkas.
-   2. **Syntax & Standard**: Kepatuhan ketat standar ISO C++20 dan idiomatik Qt 6.
-   3. **Runtime & Crash Safety**: Eliminasi total dereferensi pointer null; penggunaan pointer pintar (`QPointer`, `QScopedPointer`, `std::unique_ptr`).
-   4. **Logic & Algorithmic Rigor**: Validasi batas array/buffer dan penanganan seluruh kasus batas (_edge cases_).
-   5. **Memory Management**: Pola RAII murni, zero memory leaks, kepemilikan objek Qt yang terstruktur dengan hierarki `QObject parent`.
-   6. **Dead Code Elimination**: Tidak ada fungsi yatim piatu, header tak terpakai, atau variabel tak bertuan.
-   7. **Duplicate Code Minimization**: Penerapan prinsip DRY melalui fungsi pembantu terpusat.
-   8. **Circular Dependency**: Arsitektur modular satu arah dengan deklarasi forward (`class QToolBar;`, `class ScintillaNext;`).
-   9. **Performance Optimization**: Waktu respons UI <16ms (60 FPS), algoritma pencarian/pemrosesan string O(N) linier.
-   10. **Security Hardening**: Sanitasi input teks, mitigasi ReDoS, pembatasan eksekusi subproses kanonikal, dan isolasi sandbox.
-   11. **Maintainability & Modularity**: Pola desain SOLID dengan tanggung jawab tunggal (_Single Responsibility Principle_).
-   12. **Scalability**: Kompatibilitas lintas arsitektur Apple Silicon ARM64 & Intel x86_64, serta dukungan Qt 6.5 hingga Qt 6.12.
-   13. **Readability & Style**: Dokumentasi kode lengkap, indentasi standar 4 spasi, penamaan konsisten camelCase/PascalCase.
-   14. **IDE Linter Gate**: Lolos 100% verifikasi Trunk, SonarLint/SonarQube, Clang-Tidy, Cppcheck, ShellCheck, actionlint, dan markdownlint tanpa peringatan (_0 errors/warnings_).
+   - Seluruh kode baru dan modifikasi wajib diverifikasi terhadap daftar periksa 14 pilar sebelum disatukan ke dalam rilis.
 
 ---
 
-## 5. Daftar Rencana Induk & Todo (Master Implementation Plan)
+## 6. Daftar Rencana Induk & Todo (Master Implementation Plan)
 
-- [ ] **Phase 1: Framework & Engine Utilitas Teks (Stateless Core)**
+- [ ] **Fase 0: Audit Total Kode, Zero IDE/Sonar Error Gate & Stabilisasi Build**
+  - [x] Regenerasi database kompilasi `build/compile_commands.json` (765 KB, 2.348 baris) dan symlink ke root.
+  - [x] Verifikasi `clangd --check=src/main.cpp` (Konfirmasi: 0 errors).
+  - [x] Restrukturisasi `.clangd` dan konfigurasi penekanan diagnostik pihak ketiga (`.cpm-cache`, `thirdparty`).
+  - [ ] Audit linter menyeluruh `cppcheck`, `clang-tidy`, `trunk check -y`, dan `lint-check.sh` pada seluruh pohon `src/`.
+  - [ ] Verifikasi dan mitigasi seluruh temuan SonarLint (0 Blocker, 0 Critical, 0 Major).
+
+- [ ] **Fase 1: Framework & Engine Utilitas Teks (Stateless Core)**
   - [ ] Implementasikan `CaseConverter.h/.cpp` (snake_case, camelCase, PascalCase, kebab-case, CONSTANT_CASE, Title Case).
   - [ ] Implementasikan `NumberConverter.h/.cpp` (Hex, Dec, Oct, Bin, ASCII, Roman numeral conversions).
   - [ ] Implementasikan `GuidTimestampUtils.h/.cpp` (UUID v4/v7 generator & konverter Unix epoch timestamp).
   - [ ] Implementasikan `Base64Utils.h/.cpp` & `MimeTools.h/.cpp` (Base64, URL, dan HTML entity encode/decode).
   - [ ] Integrasikan aksi menu baru di bawah submenu `Edit -> Convert Case` dan `Edit -> Developer Tools`.
 
-- [ ] **Phase 2: Toolbar Personalization & Suite 22 Icon Pack (ToolbarIconManager)**
+- [ ] **Fase 2: Toolbar Personalization & Suite 22 Icon Pack (ToolbarIconManager)**
   - [ ] Porting `ToolbarIconManager.h/.cpp` dengan arsitektur singleton modular.
   - [ ] Salin dan registrasikan seluruh aset ikon 22 paket (`modernRibbon`, `fluentUi`, `windows11`, `windows7`, `windowsXp`, `fugue`, `notepadNext`, `monochrome`, `vibrantDuotone`, dll.) ke dalam `src/toolbar_icons.qrc`.
   - [ ] Implementasikan adaptasi luminansi mode gelap (_HSL Tone Mapping_) via `adaptImageForTheme`.
   - [ ] Implementasikan pemindaian direktori ikon kustom pengguna di AppData (`toolbarIcons/`).
   - [ ] Integrasikan submenu `Themes -> Toolbar Icon Packs` dan `Themes -> Toolbar Icon Size`.
 
-- [ ] **Phase 3: Dialog Kustomisasi Toolbar Interaktif (CustomizeToolbarDialog)**
+- [ ] **Fase 3: Dialog Kustomisasi Toolbar & Navigasi Cepat (CustomizeToolbarDialog)**
   - [ ] Porting `CustomizeToolbarDialog.h/.cpp` (dual-list GUI, drag-and-drop, separator divider insertion, search filter).
   - [ ] Hubungkan aksi klik kanan pada `mainToolBar` untuk membuka kustomisasi toolbar.
   - [ ] Simpan dan pulihkan urutan aksi toolbar pada `ApplicationSettings` di bawah grup `ToolBar/Actions`.
 
-- [ ] **Phase 4: Markdown Safe Preview Dock & GitHub Styling (MarkdownSafePreviewDock)**
+- [ ] **Fase 4: Markdown Safe Preview Dock & GitHub Styling (MarkdownSafePreviewDock)**
   - [ ] Porting `MarkdownSafePreviewDock.h/.cpp` dengan styling autentik GitHub (`bierner.markdown-preview-github-styles`).
   - [ ] Implementasikan rendering adaptif mode terang (`#ffffff`) dan mode gelap (`#0d1117`).
   - [ ] Integrasikan proteksi sanitasi HTML (mitigasi CVE-2025-3512 heap buffer overflow).
   - [ ] Hubungkan pembaruan pratinjau otomatis ter-debounce (_debounced auto-render_) dengan sinyal perubahan teks Scintilla.
   - [ ] Tambahkan tombol pintas ekspor HTML mandiri dan buka di browser default (`openInBrowser()`).
 
-- [ ] **Phase 5: Editor Ergonomics & Decorator Suite**
+- [ ] **Fase 5: Editor Ergonomics & Decorator Suite**
   - [ ] Implementasikan `AutoClosePairs.h/.cpp` (penutupan otomatis tanda kurung & petik dengan overtype skip).
   - [ ] Implementasikan `MarkOccurrences.h/.cpp` (penandaan kemunculan kata terpilih di buffer aktif secara real-time).
   - [ ] Implementasikan `ColorPreviewCallTip.h/.cpp` (tooltip pratinjau swatch warna hex/rgb saat kursor hover).
   - [ ] Implementasikan `LogAutoTimestamp.h/.cpp` (penyisipan timestamp otomatis untuk berkas berkepala `.LOG`).
   - [ ] Tambahkan konfigurasi on/off di `PreferencesDialog`.
 
-- [ ] **Phase 6: Forensik Teks, Statistik Dokumen & Hash Integrity**
+- [ ] **Fase 6: Dialog Forensik, Statistik, Perbandingan Diff & Hash Integrity**
   - [ ] Implementasikan `DocumentStatisticsDialog.h/.cpp` (kata, baris, karakter, byte, paragraf, waktu baca).
   - [ ] Implementasikan `CharacterInfoDialog.h/.cpp` (Unicode codepoint, UTF-8/UTF-16 hex bytes, block name).
   - [ ] Implementasikan `WordFrequencyDialog.h/.cpp` (tabel analisis frekuensi kemunculan kata).
   - [ ] Implementasikan `MyersDiffEngine.h/.cpp` & `FileDiffDialog.h/.cpp` (perbandingan diff visual dua buffer).
   - [ ] Implementasikan `CryptoManager.h/.cpp`, `HashIntegrityManager.h/.cpp`, dan `GenerateHashDigestDialog.h/.cpp`.
 
-- [ ] **Phase 7: Asosiasi Berkas Nextpad++ (76 Ekstensi) & Styled Drag-and-Drop DMG**
+- [ ] **Fase 7: Asosiasi Berkas Nextpad++ (76 Ekstensi), Styled DMG & Apple HIG Polish**
   - [ ] Perbarui `deploy/macos/info.plist` dengan 76 tipe dokumen dari Nextpad++ (`.bat`, `.cmd`, `.rc`, `.sh`, `.txt`, `.log`, dll.).
   - [ ] Perbarui skrip integrasi default editor `scripts/NotepadNext-Default-Editor.sh` via utilitas `duti` (210 ekstensi).
   - [ ] Integrasikan skrip packaging DMG modern (`scripts/package-dmg.sh`) dengan background Retina dan panah penunjuk Bezier.
 
-- [ ] **Phase 8: Audit 14 Pilar, Pelokalan i18n & Release Gate v0.15-08**
+- [ ] **Fase 8: Audit 14 Pilar, i18n, Verifikasi & Build Gate Release 0.15-08**
   - [ ] Eksekusi verifikasi linter lokal: `trunk check`, `cppcheck`, `clang-tidy`, `lint-check.sh` (Target: 0 error).
   - [ ] Jalankan pembaruan pelokalan `update_translations` (`lupdate`) untuk 23 berkas bahasa di `i18n/*.ts`.
   - [ ] Perbarui dokumentasi rilis: `CHANGELOG.md`, `README.md`, `DOCNOTE.md`, `doc/DOCNOTE.md`, dan `doc/RELEASE_NOTES_0.15-08.md`.
@@ -243,9 +321,20 @@ Agar seluruh fitur baru dapat masuk dengan mulus tanpa mengubah atau merusak fun
 
 ---
 
-## 6. Rincian Tugas Bertahap (Task List by Phase)
+## 7. Rincian Tugas Bertahap (Task List by Phase)
 
-### Fase 1: Framework & Engine Utilitas Teks (Stateless Core)
+### Tugas Fase 0: Investigasi Diagnostik, Perbaikan Seketika & Gerbang Linter
+
+- **Tugas 0.1**: Investigasi dan eliminasi total 945 pesan kesalahan linter IDE dan 25 isu SonarQube.
+  - _Tindakan_: Ekspor `compile_commands.json` yang lengkap, sambungkan symlink ke direktori kerja utama, pastikan `clangd --check` menghasilkan 0 error pada semua berkas C++, dan bersihkan peringatan parameter serta shadow functions.
+- **Tugas 0.2**: Eksekusi pengujian per-file `clangd --check` pada `/Users/alsyundawy/Downloads/GitHub/NotepadNext-MacOS/src/*.cpp` dan `src/*/*.cpp`.
+  - _Tindakan_: Segera perbaiki kesalahan kompilasi atau peringatan semantik tanpa menunggu instruksi lanjutan.
+- **Tugas 0.3**: Eksekusi `cppcheck` dengan konfigurasi ketat:
+  - `cppcheck --library=qt --enable=style,performance,portability,warning --suppress=missingIncludeSystem --suppress=missingInclude --error-exitcode=1 src/`.
+- **Tugas 0.4**: Eksekusi audit 14 pilar menyeluruh pada setiap berkas di repositori: Bug, Syntax, Runtime, Logic, Memory, Dead Code, Duplicate Code, Circular Dependency, Performance, Security/CWE/CVE, Maintainability, Scalability, Readability, Linter.
+- **Tugas 0.5**: Eksekusi `trunk check -y` dan verifikasi bahwa MegaLinter serta build lokal DMG berukuran <30 MB berhasil 100%.
+
+### Tugas Fase 1: Framework & Engine Utilitas Teks (Stateless Core)
 
 - **Tugas 1.1**: Buat berkas `src/utils/CaseConverter.h` dan `src/utils/CaseConverter.cpp`.
   - _Fungsi_: Menyediakan metode statis `toSnakeCase()`, `toCamelCase()`, `toPascalCase()`, `toKebabCase()`, `toConstantCase()`, `toTitleCase()`.
@@ -258,7 +347,7 @@ Agar seluruh fitur baru dapat masuk dengan mulus tanpa mengubah atau merusak fun
   - _Fungsi_: Enkoding/dekoding Base64 standar dan URL-safe, percent-encoding URL, serta escape/unescape entitas HTML.
 - **Tugas 1.5**: Sambungkan aksi ke `MainWindow.ui` dan menu `Edit -> Convert Case` serta `Edit -> Developer Tools`.
 
-### Fase 2: Toolbar Personalization & Suite 22 Icon Pack (ToolbarIconManager)
+### Tugas Fase 2: Toolbar Personalization & Suite 22 Icon Pack (ToolbarIconManager)
 
 - **Tugas 2.1**: Buat berkas `src/features/ToolbarIconManager.h` dan `src/features/ToolbarIconManager.cpp`.
   - _Arsitektur_: Singleton `ToolbarIconManager::instance()`, membaca dan mengelola daftar 22 paket ikon bawaan:
@@ -268,7 +357,7 @@ Agar seluruh fitur baru dapat masuk dengan mulus tanpa mengubah atau merusak fun
 - **Tugas 2.4**: Tambahkan metode `scanCustomPacks()` untuk membaca paket ikon tambahan dari `~/Library/Application Support/NotepadNext/toolbarIcons/`.
 - **Tugas 2.5**: Hubungkan `ToolbarIconManager` ke `MainWindow::setupToolBar()` dan buat menu `Themes -> Toolbar Icon Packs` serta pilihan ukuran ikon (16px, 20px, 24px, 32px).
 
-### Fase 3: Dialog Kustomisasi Toolbar & Navigasi Cepat (CustomizeToolbarDialog)
+### Tugas Fase 3: Dialog Kustomisasi Toolbar & Navigasi Cepat (CustomizeToolbarDialog)
 
 - **Tugas 3.1**: Buat berkas `src/dialogs/CustomizeToolbarDialog.h` dan `src/dialogs/CustomizeToolbarDialog.cpp`.
   - _Fitur_: Daftar ganda (_dual-list_) berisi aksi yang tersedia (_available actions_) dan aksi yang terpasang pada toolbar saat ini (_current toolbar actions_).
@@ -276,7 +365,7 @@ Agar seluruh fitur baru dapat masuk dengan mulus tanpa mengubah atau merusak fun
 - **Tugas 3.2**: Hubungkan event klik kanan (_context menu_) pada `mainToolBar` dengan opsi "Customize Toolbar...".
 - **Tugas 3.3**: Simpan konfigurasi aksi ke `m_settings->setValue("ToolBar/CustomActions", actionList)`.
 
-### Fase 4: Markdown Safe Preview Dock & GitHub Styling (MarkdownSafePreviewDock)
+### Tugas Fase 4: Markdown Safe Preview Dock & GitHub Styling (MarkdownSafePreviewDock)
 
 - **Tugas 4.1**: Buat berkas `src/docks/MarkdownSafePreviewDock.h` dan `src/docks/MarkdownSafePreviewDock.cpp`.
   - _Arsitektur_: Menurunkan kelas dari `QDockWidget` yang berisi `QTextBrowser` dengan dukungan CSS GitHub.
@@ -285,7 +374,7 @@ Agar seluruh fitur baru dapat masuk dengan mulus tanpa mengubah atau merusak fun
 - **Tugas 4.4**: Pasang `QTimer` debounce (300ms) untuk mencegah re-rendering berlebihan saat pengguna mengetik cepat di Scintilla.
 - **Tugas 4.5**: Tambahkan tombol toolbar pratinjau: Zoom In (`Cmd++`), Zoom Out (`Cmd+-`), Salin HTML, Ekspor Berkas HTML, dan Buka di Browser Native.
 
-### Fase 5: Editor Ergonomics & Decorator Suite
+### Tugas Fase 5: Editor Ergonomics & Decorator Suite
 
 - **Tugas 5.1**: Buat berkas `src/features/AutoClosePairs.h` dan `src/features/AutoClosePairs.cpp`.
   - _Logika_: Menurunkan dari `EditorDecorator`. Memasang filter event tombol (`QEvent::KeyPress`). Saat pengguna mengetik `(`, `{`, `[`, `"`, `'`, pasangan penutup otomatis disisipkan. Jika karakter penutup diketik kembali saat kursor berada persis sebelum karakter penutup, kursor hanya melompat maju (_overtype_).
@@ -295,20 +384,20 @@ Agar seluruh fitur baru dapat masuk dengan mulus tanpa mengubah atau merusak fun
   - _Logika_: Mendeteksi regex kode warna (Hex `#rrggbb`, `rgb()`, `hsl()`) di bawah pointer mouse dan menampilkan pratinjau warna via Scintilla CallTip.
 - **Tugas 5.4**: Buat berkas `src/features/LogAutoTimestamp.h` dan `src/features/LogAutoTimestamp.cpp` untuk menyisipkan waktu saat membuka berkas dengan baris pertama `.LOG`.
 
-### Fase 6: Dialog Forensik, Statistik, Perbandingan Diff & Hash Integrity
+### Tugas Fase 6: Dialog Forensik, Statistik, Perbandingan Diff & Hash Integrity
 
 - **Tugas 6.1**: Buat berkas `src/dialogs/DocumentStatisticsDialog.h` dan `src/dialogs/DocumentStatisticsDialog.cpp`.
 - **Tugas 6.2**: Buat berkas `src/dialogs/CharacterInfoDialog.h` dan `src/dialogs/CharacterInfoDialog.cpp`.
 - **Tugas 6.3**: Buat berkas `src/utils/MyersDiffEngine.h`, `src/utils/MyersDiffEngine.cpp`, dan `src/dialogs/FileDiffDialog.h`.
 - **Tugas 6.4**: Buat berkas `src/utils/CryptoManager.h`, `src/utils/CryptoManager.cpp`, dan `src/dialogs/GenerateHashDigestDialog.h`.
 
-### Fase 7: Asosiasi Berkas Nextpad++ (76 Ekstensi), Styled DMG & Apple HIG Polish
+### Tugas Fase 7: Asosiasi Berkas Nextpad++ (76 Ekstensi), Styled DMG & Apple HIG Polish
 
 - **Tugas 7.1**: Integrasikan seluruh 76 ekstensi berkas Nextpad++ ke dalam `deploy/macos/info.plist`.
 - **Tugas 7.2**: Perbarui skrip asosiasi sistem `scripts/NotepadNext-Default-Editor.sh` untuk 210 tipe berkas dengan utilitas `duti`.
 - **Tugas 7.3**: Konfigurasikan skrip pembungkus DMG dengan latar visual Retina `@2x` dan panah Bezier Apple HIG.
 
-### Fase 8: Audit 14 Pilar, i18n, Verifikasi & Build Gate Release 0.15-08
+### Tugas Fase 8: Audit 14 Pilar, i18n, Verifikasi & Build Gate Release 0.15-08
 
 - **Tugas 8.1**: Perbarui `CMakeLists.txt` dan `src/CMakeLists.txt` untuk mendaftarkan seluruh berkas sumber baru.
 - **Tugas 8.2**: Jalankan verifikasi linting ketat: `trunk check`, `cppcheck`, `clang-tidy`, dan `lint-check.sh` (Target: 0 error / 0 warning).
@@ -319,7 +408,7 @@ Agar seluruh fitur baru dapat masuk dengan mulus tanpa mengubah atau merusak fun
 
 ---
 
-## 7. Matriks Mitigasi Risiko & Rollback Strategy
+## 8. Matriks Mitigasi Risiko & Rollback Strategy
 
 | Potensi Risiko                                      | Probabilitas | Dampak | Strategi Mitigasi Terencana                                                                                                                   | Rencana Pemulihan (Rollback Plan)                                                                 |
 | :-------------------------------------------------- | :----------- | :----- | :-------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------ |

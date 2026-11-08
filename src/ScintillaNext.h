@@ -58,7 +58,7 @@ public:
     void forEachMatch(const QByteArray &byteArray, Func callback) { forEachMatchInRange(byteArray, callback, {0, (Sci_PositionCR)length()}); }
 
     template<typename Func>
-    void forEachMatchInRange(const QByteArray &byteArray, Func callback, Sci_CharacterRange range);
+    void forEachMatchInRange(const QByteArray &text, Func callback, Sci_CharacterRange range);
 
     template<typename Func>
     void forEachLineInSelection(int selection, Func callback);
