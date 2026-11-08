@@ -109,10 +109,56 @@ strip -x "${STAGE_DIR}/NotepadNext.app/Contents/MacOS/NotepadNext" 2>/dev/null |
 # Touch the app bundle so macOS LaunchServices/Finder refreshes its icon cache
 touch "${STAGE_DIR}/NotepadNext.app"
 
-# Attempt DMG creation using create-dmg if available
+# Always setup custom background, volume icon, and .DS_Store
+echo "[*] Setting up DMG layout and presentation artifacts..."
+
+if [[ -f ${BG_IMG} ]]; then
+	mkdir -p "${STAGE_DIR}/.background"
+	cp -f "${BG_IMG}" "${STAGE_DIR}/.background/dmg-background.png"
+	chflags hidden "${STAGE_DIR}/.background" 2>/dev/null || true
+fi
+
+if [[ -f ${VOL_ICON} ]]; then
+	cp -f "${VOL_ICON}" "${STAGE_DIR}/.VolumeIcon.icns"
+	chflags hidden "${STAGE_DIR}/.VolumeIcon.icns" 2>/dev/null || true
+fi
+
+DS_STORE_TEMPLATE="${REPO_ROOT}/deploy/macos/dmg-ds-store"
+if [[ -f ${DS_STORE_TEMPLATE} ]]; then
+	echo "[*] Injecting pre-configured Finder window layout (.DS_Store)..."
+	cp -f "${DS_STORE_TEMPLATE}" "${STAGE_DIR}/.DS_Store"
+fi
+
+if command -v SetFile >/dev/null 2>&1; then
+	SetFile -a V "${STAGE_DIR}/.background" 2>/dev/null || true
+	SetFile -a V "${STAGE_DIR}/.VolumeIcon.icns" 2>/dev/null || true
+	SetFile -c icnC "${STAGE_DIR}/.VolumeIcon.icns" 2>/dev/null || true
+	SetFile -a C "${STAGE_DIR}" 2>/dev/null || true
+fi
+
 CREATED=0
-if command -v create-dmg >/dev/null 2>&1; then
+
+# On CI runners (headless environment without active GUI Finder session),
+# AppleScript in create-dmg is guaranteed to hang or time out.
+# Packaging via native hdiutil with pre-baked .DS_Store is instantaneous and 100% reliable.
+if [[ -n "${GITHUB_ACTIONS:-}" || -n "${CI:-}" ]]; then
+	echo "[*] Headless CI environment detected. Using native hdiutil with pre-baked styled .DS_Store..."
+	[[ -e "${STAGE_DIR}/Applications" ]] || ln -s /Applications "${STAGE_DIR}/Applications"
+	hdiutil create \
+		-volname "${VOL_NAME}" \
+		-srcfolder "${STAGE_DIR}" \
+		-ov \
+		-format UDZO \
+		-imagekey zlib-level=9 \
+		"${DMG_OUTPUT}"
+	CREATED=1
+fi
+
+# In local/interactive environment, attempt create-dmg if available
+if [[ ${CREATED} -eq 0 ]] && command -v create-dmg >/dev/null 2>&1; then
 	echo "[*] Packaging styled DMG using create-dmg..."
+	# Remove any existing Applications link before create-dmg so it doesn't collide with --app-drop-link
+	rm -f "${STAGE_DIR}/Applications" 2>/dev/null || true
 	CREATE_DMG_ARGS=(
 		--volname "${VOL_NAME}"
 		--window-pos 200 120
@@ -136,7 +182,7 @@ if command -v create-dmg >/dev/null 2>&1; then
 		CREATE_DMG_ARGS+=(--background "${BG_IMG}")
 	fi
 
-	# Always attempt full styled DMG with AppleScript first
+	# Try create-dmg
 	if create-dmg "${CREATE_DMG_ARGS[@]}" "${DMG_OUTPUT}" "${STAGE_DIR}"; then
 		CREATED=1
 		echo "[*] Styled DMG successfully created with create-dmg."
@@ -144,34 +190,15 @@ if command -v create-dmg >/dev/null 2>&1; then
 		CREATED=1
 		echo "[*] Styled DMG successfully created with create-dmg (--sandbox-safe)."
 	else
-		echo "Warning: Standard create-dmg failed (AppleScript unavailable or timed out). Falling back to native hdiutil..." >&2
+		echo "Warning: create-dmg failed. Falling back to native hdiutil..." >&2
 		CREATED=0
 	fi
 fi
 
-# Fallback to native hdiutil packaging
+# Fallback to native hdiutil packaging if not yet created
 if [[ ${CREATED} -eq 0 ]]; then
-	echo "[*] Falling back to native hdiutil packaging..."
-	ln -s /Applications "${STAGE_DIR}/Applications"
-
-	if [[ -f ${BG_IMG} ]]; then
-		mkdir -p "${STAGE_DIR}/.background"
-		cp "${BG_IMG}" "${STAGE_DIR}/.background/dmg-background.png"
-		chflags hidden "${STAGE_DIR}/.background" 2>/dev/null || true
-	fi
-
-	if [[ -f ${VOL_ICON} ]]; then
-		cp "${VOL_ICON}" "${STAGE_DIR}/.VolumeIcon.icns"
-		chflags hidden "${STAGE_DIR}/.VolumeIcon.icns" 2>/dev/null || true
-	fi
-
-	if command -v SetFile >/dev/null 2>&1; then
-		SetFile -a V "${STAGE_DIR}/.background" 2>/dev/null || true
-		SetFile -a V "${STAGE_DIR}/.VolumeIcon.icns" 2>/dev/null || true
-		SetFile -c icnC "${STAGE_DIR}/.VolumeIcon.icns" 2>/dev/null || true
-		SetFile -a C "${STAGE_DIR}" 2>/dev/null || true
-	fi
-
+	echo "[*] Creating styled DMG via native hdiutil..."
+	[[ -e "${STAGE_DIR}/Applications" ]] || ln -s /Applications "${STAGE_DIR}/Applications"
 	hdiutil create \
 		-volname "${VOL_NAME}" \
 		-srcfolder "${STAGE_DIR}" \

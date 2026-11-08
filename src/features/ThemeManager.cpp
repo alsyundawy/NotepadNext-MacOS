@@ -224,7 +224,7 @@ void ThemeManager::applyTheme(MainWindow *window) {
         accent = QStringLiteral("#0969da");
     }
 
-#if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
+#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)
     if (QGuiApplication::styleHints()) {
 #ifdef Q_OS_MACOS
         // On macOS, always enforce Dark color scheme so Cocoa window frames and titlebars remain black/dark in any mode
