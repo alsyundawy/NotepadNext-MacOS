@@ -55,13 +55,13 @@ PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *par
     m_tabWidget->setObjectName(QStringLiteral("preferencesTabWidget"));
 
     ui->verticalLayout->removeWidget(ui->scrollArea);
-    m_tabWidget->addTab(ui->scrollArea, QIcon(QStringLiteral(":/icons/saved.png")), tr("&General"));
+    m_tabWidget->addTab(ui->scrollArea, tr("&General"));
 
     setupThemesAndToolbarTab();
 
     if (auto *mainWin = qobject_cast<MainWindow *>(parent)) {
         auto *toolbarWidget = new CustomizeToolbarWidget(mainWin, this);
-        m_tabWidget->addTab(toolbarWidget, QIcon(QStringLiteral(":/icons/find.png")), tr("&Customize Toolbar"));
+        m_tabWidget->addTab(toolbarWidget, tr("&Customize Toolbar"));
     }
 
     ui->verticalLayout->insertWidget(0, m_tabWidget);
@@ -268,7 +268,7 @@ void PreferencesDialog::setupThemesAndToolbarTab()
 
     scrollArea->setWidget(container);
     m_themesAndToolbarWidget = scrollArea;
-    m_tabWidget->addTab(m_themesAndToolbarWidget, QIcon(QStringLiteral(":/icons/find.png")), tr("&Themes && Toolbar"));
+    m_tabWidget->addTab(m_themesAndToolbarWidget, tr("&Themes && Toolbar"));
 }
 
 void PreferencesDialog::setupThemesGroup(QWidget *container)

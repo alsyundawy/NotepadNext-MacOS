@@ -169,8 +169,8 @@ if [[ ${CREATED} -eq 0 ]] && command -v create-dmg >/dev/null 2>&1; then
 		--hide-extension "NotepadNext.app"
 		--app-drop-link 510 245
 		--format UDZO
-		--hdiutil-retries 10
-		--applescript-sleep-duration 5
+		--hdiutil-retries 2
+		--applescript-sleep-duration 2
 		--overwrite
 	)
 

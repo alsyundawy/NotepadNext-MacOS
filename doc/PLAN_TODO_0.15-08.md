@@ -4,7 +4,7 @@
 
 > **Target Release**: NotepadNext-MacOS `v0.15-08`<br/>
 > **Baseline Release**: NotepadNext-MacOS `v0.15-07` (`a26d748`)<br/>
-> **Feature Donor Project**: SparkNotePad `v1.3.8` (`/Users/alsyundawy/Downloads/GitHub/SparkNotePad`)<br/>
+> **Feature Donor Project**: [SparkNotePad](https://github.com/alsyundawy/SparkNotePad) `v1.3.8` • [SubnetCalc-MacOS](https://github.com/alsyundawy/SubnetCalc-MacOS) (25 Theme Suites)<br/>
 > **Author & Maintainer**: Harry Dertin Sutisna Alsyundawy ([@alsyundawy](https://github.com/alsyundawy)) | ALSYUNDAWY IT SOLUTION<br/>
 > **Upstream Project**: Justin Dailey ([@dail8859/NotepadNext](https://github.com/dail8859/NotepadNext))<br/>
 > **Framework & Standards**: Qt 6.5–6.12 • ISO C++20 • Scintilla 5.6.x • Lexilla 5.5.x • Apple HIG

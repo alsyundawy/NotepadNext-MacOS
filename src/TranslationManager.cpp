@@ -62,9 +62,10 @@ QStringList TranslationManager::availableTranslations() const
         it.next();
 
         if (it.fileName().startsWith(QApplication::applicationName())) { // Some are Qt translation files, not for the application
-            QString localeName = TranslationFileNameToLocaleName(it.fileInfo().baseName());
-
-            translations.append(localeName);
+            const QString localeName = TranslationFileNameToLocaleName(it.fileInfo().baseName());
+            if (localeName == QLatin1String("en") || localeName == QLatin1String("id")) {
+                translations.append(localeName);
+            }
         }
     }
 

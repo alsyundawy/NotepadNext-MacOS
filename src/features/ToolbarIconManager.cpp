@@ -127,27 +127,7 @@ void ToolbarIconManager::registerBuiltInPacks() {
         .isPngBased = true,
     });
 
-    // 8. Notepad3 Warm (Classic Amber)
-    m_packs.append(ToolbarIconPack{
-        .id = QStringLiteral("notepad3_warm"),
-        .displayName = tr("Notepad3 Warm (Classic Amber)"),
-        .description = tr("Notepad3 warm brown and amber classic text editor iconography"),
-        .basePath = QStringLiteral(":/icons/packs/notepad3_warm"),
-        .isBuiltIn = true,
-        .isPngBased = true,
-    });
-
-    // 9. Notepad++ (Green Accents)
-    m_packs.append(ToolbarIconPack{
-        .id = QStringLiteral("notepadpp_green"),
-        .displayName = tr("Notepad++ (Green Accents)"),
-        .description = tr("Classic Notepad++ toolbar iconography with green accents"),
-        .basePath = QStringLiteral(":/icons/packs/notepadpp_green"),
-        .isBuiltIn = true,
-        .isPngBased = true,
-    });
-
-    // 10. Notepad++ (Classic)
+    // 8. Notepad++ (Classic)
     m_packs.append(ToolbarIconPack{
         .id = QStringLiteral("notepadPlusPlus"),
         .displayName = tr("Notepad++ (Classic)"),
@@ -157,7 +137,7 @@ void ToolbarIconManager::registerBuiltInPacks() {
         .isPngBased = false,
     });
 
-    // 11. Glossy Orange (WinRAR Amber)
+    // 9. Glossy Orange (WinRAR Amber)
     m_packs.append(ToolbarIconPack{
         .id = QStringLiteral("glossy_orange"),
         .displayName = tr("Glossy Orange (WinRAR Amber)"),
@@ -167,27 +147,7 @@ void ToolbarIconManager::registerBuiltInPacks() {
         .isPngBased = true,
     });
 
-    // 12. Pixel Dense (Retro 16-Bit)
-    m_packs.append(ToolbarIconPack{
-        .id = QStringLiteral("pixel_fugue_like"),
-        .displayName = tr("Pixel Dense (Retro 16-Bit)"),
-        .description = tr("Pixel-precise dense retro iconography with crisp edges"),
-        .basePath = QStringLiteral(":/icons/packs/pixel_fugue_like"),
-        .isBuiltIn = true,
-        .isPngBased = true,
-    });
-
-    // 13. Material Design (Sharp)
-    m_packs.append(ToolbarIconPack{
-        .id = QStringLiteral("material_sharp"),
-        .displayName = tr("Material Design (Sharp)"),
-        .description = tr("Google Material Design sharp geometric iconography"),
-        .basePath = QStringLiteral(":/icons/packs/material_sharp"),
-        .isBuiltIn = true,
-        .isPngBased = true,
-    });
-
-    // 14. Windows XP (Luna Classic)
+    // 10. Windows XP (Luna Classic)
     m_packs.append(ToolbarIconPack{
         .id = QStringLiteral("windowsXp"),
         .displayName = tr("Windows XP (Luna Classic)"),
@@ -288,37 +248,7 @@ void ToolbarIconManager::registerBuiltInPacks() {
         .isPngBased = false,
     });
 
-    // 25. Aksara Bold
-    m_packs.append(ToolbarIconPack{
-        .id = QStringLiteral("aksara-icon-pack-bold"),
-        .displayName = tr("Aksara Bold"),
-        .description = tr("Bold strokes with rounded caps, maximum readability and contrast"),
-        .basePath = QStringLiteral(":/icons/packs/aksara-icon-pack-bold"),
-        .isBuiltIn = true,
-        .isPngBased = false,
-    });
-
-    // 26. Aksara Duotone
-    m_packs.append(ToolbarIconPack{
-        .id = QStringLiteral("aksara-icon-pack-duotone"),
-        .displayName = tr("Aksara Duotone"),
-        .description = tr("Dark gray contours with subtle translucent purple accent circular backing"),
-        .basePath = QStringLiteral(":/icons/packs/aksara-icon-pack-duotone"),
-        .isBuiltIn = true,
-        .isPngBased = false,
-    });
-
-    // 27. Aksara Outline
-    m_packs.append(ToolbarIconPack{
-        .id = QStringLiteral("aksara-icon-pack-outline"),
-        .displayName = tr("Aksara Outline"),
-        .description = tr("Clean line-art wireframe aesthetic with rounded terminators"),
-        .basePath = QStringLiteral(":/icons/packs/aksara-icon-pack-outline"),
-        .isBuiltIn = true,
-        .isPngBased = false,
-    });
-
-    // 28. Aksara Rounded
+    // 25. Aksara Rounded
     m_packs.append(ToolbarIconPack{
         .id = QStringLiteral("aksara-icon-pack-rounded"),
         .displayName = tr("Aksara Rounded"),
@@ -328,17 +258,7 @@ void ToolbarIconManager::registerBuiltInPacks() {
         .isPngBased = false,
     });
 
-    // 29. Aksara Sharp
-    m_packs.append(ToolbarIconPack{
-        .id = QStringLiteral("aksara-icon-pack-sharp"),
-        .displayName = tr("Aksara Sharp"),
-        .description = tr("Crisp sharp corners with technical precision styling"),
-        .basePath = QStringLiteral(":/icons/packs/aksara-icon-pack-sharp"),
-        .isBuiltIn = true,
-        .isPngBased = false,
-    });
-
-    // 30. Aksara macOS Big Sur
+    // 26. Aksara macOS Big Sur
     m_packs.append(ToolbarIconPack{
         .id = QStringLiteral("aksara-macos-bigsur"),
         .displayName = tr("Aksara macOS Big Sur"),
@@ -348,27 +268,7 @@ void ToolbarIconManager::registerBuiltInPacks() {
         .isPngBased = false,
     });
 
-    // 31. Aksara NPP GNOME 5.1
-    m_packs.append(ToolbarIconPack{
-        .id = QStringLiteral("aksara-npp-gnome51"),
-        .displayName = tr("Aksara NPP GNOME 5.1"),
-        .description = tr("GNOME Adwaita aesthetic: warm balanced contrast, smooth rounded corners, Linux desktop feel"),
-        .basePath = QStringLiteral(":/icons/packs/aksara-npp-gnome51"),
-        .isBuiltIn = true,
-        .isPngBased = false,
-    });
-
-    // 32. Aksara NPP KDE 6
-    m_packs.append(ToolbarIconPack{
-        .id = QStringLiteral("aksara-npp-kde6"),
-        .displayName = tr("Aksara NPP KDE 6"),
-        .description = tr("KDE Breeze 6 styling: electric cyan accents, sharp geometric edges, futuristic vibe"),
-        .basePath = QStringLiteral(":/icons/packs/aksara-npp-kde6"),
-        .isBuiltIn = true,
-        .isPngBased = false,
-    });
-
-    // 33. Aksara NPP Windows Vista
+    // 27. Aksara NPP Windows Vista
     m_packs.append(ToolbarIconPack{
         .id = QStringLiteral("aksara-npp-vista"),
         .displayName = tr("Aksara NPP Windows Vista"),

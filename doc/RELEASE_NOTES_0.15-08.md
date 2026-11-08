@@ -8,19 +8,19 @@
 > **Maintainer & Builder**: Harry Dertin Sutisna ([@alsyundawy](https://github.com/alsyundawy)) | ALSYUNDAWY IT SOLUTION<br/>
 > **Upstream Repository**: [dail8859/NotepadNext](https://github.com/dail8859/NotepadNext)<br/>
 > **macOS Edition Repository**: [alsyundawy/NotepadNext-MacOS](https://github.com/alsyundawy/NotepadNext-MacOS)<br/>
-> **Feature Donor Project**: SparkNotePad `v1.3.8`<br/>
+> **Feature Donor Project**: [SparkNotePad](https://github.com/alsyundawy/SparkNotePad) `v1.3.8` • [SubnetCalc-MacOS](https://github.com/alsyundawy/SubnetCalc-MacOS) (25 Theme Suites)<br/>
 > **Comprehensive Whitepaper**: [UPSTREAM_COMPARISON.md](UPSTREAM_COMPARISON.md) • [DOCNOTE.md](DOCNOTE.md)
 
 ---
 
 ## 🌟 Executive Summary
 
-**NotepadNext-MacOS v0.15-08** is a major enterprise release introducing extensive productivity features ported from sister project **SparkNotePad v1.3.8**, combined with rigorous 2025–2026 vulnerability hardening, zero-defect code quality, and deep macOS desktop integration.
+**NotepadNext-MacOS v0.15-08** is a major enterprise release introducing extensive productivity features ported from sister project **SparkNotePad v1.3.8**, 25 theme suites contributed by **SubnetCalc-MacOS**, combined with rigorous 2025–2026 vulnerability hardening, zero-defect code quality, and deep macOS desktop integration.
 
 This release successfully completes all 8 architectural phases defined in `PLAN_TODO_0.15-08.md`:
 
 1. **Phase 1: Stateless Core Text Utilities** (`CaseConverter`, `NumberConverter`, `GuidTimestampUtils`, `Base64Utils`, `MimeTools`).
-2. **Phase 2: Toolbar Personalization & 38 Icon Pack Suite** (`ToolbarIconManager`, dynamic QToolBar skinning, context-menu pack switching).
+2. **Phase 2: Toolbar Personalization & 28 Icon Pack Suite** (`ToolbarIconManager`, dynamic QToolBar skinning, context-menu pack switching).
 3. **Phase 3: Interactive Toolbar Customization Dialog** (`CustomizeToolbarDialog` with dual-list drag & drop, separator insertion, and live reflection).
 4. **Phase 4: Markdown Safe Live Preview Dock & Export Pipeline** (`MarkdownSafePreviewDock`, KaTeX math rendering, Mermaid diagrams, bidirectional scroll synchronization, and PDF/HTML document export).
 5. **Phase 5: Editor Ergonomics & Decorator Suite** (`AutoClosePairs`, `MarkOccurrences`, `LogAutoTimestamp`, `ColorPreviewCallTip`).
@@ -32,10 +32,10 @@ This release successfully completes all 8 architectural phases defined in `PLAN_
 
 ## 🚀 Key Feature Deliverables
 
-### 1. 38 Icon Pack Personalization Suite (`ToolbarIconManager`)
+### 1. 28 Icon Pack Personalization Suite (`ToolbarIconManager`)
 
-- **Suite of 38 Icon Packs**: Integrated 38 complete icon sets ported from SparkNotePad v1.3.8, including Modern SVG, Fluent Design, Material Icons, Classic Notepad++, Aksara variations (Bold, Duotone, Outline, Rounded, Sharp), Retro Windows 7/Aero, and Pixel Fugue styles.
-- **Dynamic Live Switching**: Switch icon packs instantaneously via the main toolbar's right-click context menu without restarting the editor.
+- **Suite of 28 Icon Packs**: Integrated 28 curated icon sets ported from SparkNotePad v1.3.8 and NotepadNext, including Modern Ribbon SVG, Fluent Design, Classic Notepad++, Aksara variations, Retro Windows 7/Aero, and WinXP skeuomorphic styles.
+- **Dynamic Live Switching**: Switch icon packs instantaneously via the main toolbar's right-click context menu or Preferences dialog without restarting the editor.
 - **Persistent Preferences**: Selected icon pack preferences are saved automatically in `ApplicationSettings` and restored seamlessly upon application launch.
 
 ### 2. Interactive Toolbar Customization (`CustomizeToolbarDialog`)
@@ -81,7 +81,9 @@ This release successfully completes all 8 architectural phases defined in `PLAN_
 - **Styled macOS DMG Presentation**: High-DPI background with "NotepadNext" branding, curved drag-and-drop arrow, volume icon, Applications symlink, and pre-baked Finder window configuration (`deploy/macos/dmg-ds-store`) ensuring flawless presentation on both local and headless GitHub Actions CI runner builds.
 - **Permanent macOS Dark Titlebar (Dark Aqua)**: Enforced `NSAppearanceNameDarkAqua` via Objective-C Cocoa runtime (`objc_msgSend`) so the macOS window chrome, traffic lights, and titlebar remain dark/black in any theme mode matching native Dark Aqua presentation.
 - **Instantaneous Theme & Icon Pack Switching**: Optimized icon rasterization via scanline pointer arithmetic (`scanLine()`), cached theme-adapted icons, removed redundant stylesheet re-parses, and deferred window action sync, reducing theme switch latency from >500 ms to <2 ms.
-- **SparkNotePad Attribution**: Full attribution and credit given in About Dialog and README to Harry Dertin Sutisna and the SparkNotePad (v1.3.8) project.
+- **SparkNotePad & SubnetCalc-MacOS Attribution**: Full attribution and credit given in About Dialog, README, and documentation to Harry Dertin Sutisna, the [SparkNotePad](https://github.com/alsyundawy/SparkNotePad) (v1.3.8) sister project as foundational feature donor, and [SubnetCalc-MacOS](https://github.com/alsyundawy/SubnetCalc-MacOS) for contributing 25 syntax highlighting and UI themes.
+- **Streamlined Bilingual Localization**: Cleaned translation catalog to focus strictly on English (`en`) and Indonesian (`id`) with 100% translation completion (0 unfinished), removing obsolete language files.
+- **Text-Only Preferences Tabs**: Cleaned all tab headers in `PreferencesDialog` to present purely textual titles without icons or emojis.
 - **GitHub Actions CI/CD Concurrency & Compatibility**: Added workflow-level concurrency control (`cancel-in-progress: true`), wrapped `QStyleHints::setColorScheme` in `#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)` ensuring complete compilation across Qt 6.5, 6.8, 6.10, 6.11, and 6.12.
 
 ---

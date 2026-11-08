@@ -334,10 +334,10 @@ void AboutDialog::updateThemeColors() {
                "<li><b>Qt Project:</b> Developed by The Qt Company and the Qt Open Source Community. (<a style='color: %2;' href='https://www.qt.io'>qt.io</a>)</li>"
                "<li><b>Qt Advanced Docking System (QADS):</b> Advanced dock widget management for Qt.</li>"
                "<li><b>NoteSciPad:</b> Contributed modern Scintilla 5.6.7 / Lexilla 5.5.4 integration and multi-instance UI patterns.</li>"
-               "<li><b>SparkNotePad (v1.3.8) — Sister Project &amp; Master Feature Donor:</b><br/>"
+               "<li><b>SparkNotePad (v1.3.8) — Sister Project &amp; Master Feature Donor:</b> (<a style='color: %2;' href='https://github.com/alsyundawy/SparkNotePad'>github.com/alsyundawy/SparkNotePad</a>)<br/>"
                "Special recognition to the <b>SparkNotePad</b> project and architecture for providing the core reference implementations, assets, and foundational engineering ported into NotepadNext-MacOS across cumulative releases <b>v0.15-01 through v0.15-08</b>:"
                "  <ul style='margin-top: 4px;'>"
-               "    <li>🎨 <b>38-Pack Toolbar Icon Engine &amp; 6-Tier Scaling:</b> Complete vector and multi-res PNG icon packs (Modern Ribbon, Fugue, Fluent UI, Windows 7/11, Amber, Retro WinXP) with real-time dynamic toolbar resizing.</li>"
+               "    <li>🎨 <b>28-Pack Toolbar Icon Engine &amp; 6-Tier Scaling:</b> Complete vector and multi-res PNG icon packs (Modern Ribbon, Fugue, Fluent UI, Windows 7/11, Amber, Retro WinXP) with real-time dynamic toolbar resizing.</li>"
                "    <li>➕ <b>Tab Bar Plus (+) Button:</b> Persistent macOS-styled dock tab bar <code>+</code> button for instantaneous new document creation.</li>"
                "    <li>📑 <b>Tabbed Markdown &amp; HTML Live Preview:</b> Dedicated <code>PreviewTabWidget</code> with GitHub callouts, DevDocs styling, reading metrics, zoom, and direct browser previews.</li>"
                "    <li>🔍 <b>Myers LCS Diff Engine:</b> Side-by-side synchronized document comparison and syntax-aware diff highlights (<code>MyersDiffEngine</code>, <code>FileDiffDialog</code>).</li>"
@@ -347,6 +347,8 @@ void AboutDialog::updateThemeColors() {
                "    <li>🍏 <b>High-DPI Retina Styled DMG Artwork:</b> Custom 680x440 installer canvas geometry, custom background banner, and drag-and-drop workflow.</li>"
                "  </ul>"
                "</li>"
+               "<li><b>SubnetCalc-MacOS:</b> (<a style='color: %2;' href='https://github.com/alsyundawy/SubnetCalc-MacOS'>github.com/alsyundawy/SubnetCalc-MacOS</a>)<br/>"
+               "Contributed 25 high-contrast syntax highlighting and UI themes, with all remaining themes and UI styling infrastructure ported from SparkNotePad.</li>"
                "</ul>"
                "</div>")
                 .arg(txtPri, accentCol));

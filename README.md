@@ -52,7 +52,7 @@
 > - 📖 **Help Menu Tabbed Documentation**: Instant access to `DocNote` (`DOCNOTE.md`) and `Changelog` (`CHANGELOG.md`) opened directly in new editor tabs.
 > - ⚙️ **Preferences Dialog Dedicated "Themes & Toolbar" Tab**: Consolidated management for theme styling, dark/light toggle, window opacity, toolbar icon pack selection, and icon sizing with live icon preview.
 > - 💿 **macOS Native Styled DMG Installer**: High-DPI standard and Retina background artwork, custom window geometry (680x440), left app icon, right Applications drop link, curved drag-and-drop indicator, and verified checksums.
-> - 🎨 **38 Icon Pack Personalization Suite (`ToolbarIconManager`)**: Ported a complete suite of 38 icon packs (Modern SVG, Fluent, Material, Classic Notepad++, Aksara variations, Retro Windows 7/Aero, Pixel Fugue) with live runtime switching directly via toolbar right-click context menu.
+> - 🎨 **28 Icon Pack Personalization Suite (`ToolbarIconManager`)**: Ported a complete suite of 28 icon packs (Modern Ribbon SVG, Fluent, Classic Notepad++, Aksara variations, Retro Windows 7/Aero, WinXP) with live runtime switching directly via toolbar right-click context menu and Preferences dialog.
 > - 🛠️ **Interactive Toolbar Customization (`CustomizeToolbarDialog`)**: Dual-list drag-and-drop customization widget supporting action addition, removal, reordering, separator insertion, and instantaneous toolbar sync.
 > - 📄 **Markdown Safe Live Preview Dock & Export Pipeline (`MarkdownSafePreviewDock`)**: High-performance sandboxed preview dock supporting KaTeX math formulas, Mermaid diagrams, bidirectional scroll synchronization with Scintilla editor, and export to standalone GitHub-styled HTML and vector PDF.
 > - ⚡ **Editor Ergonomics Suite**:
@@ -77,7 +77,7 @@
 > - 📖 **Dokumentasi Help Menu di Tab Editor**: Akses instan ke `DocNote` (`DOCNOTE.md`) dan `Changelog` (`CHANGELOG.md`) langsung di tab editor baru.
 > - ⚙️ **Tab "Themes & Toolbar" pada Dialog Preferensi**: Tab terdedikasi untuk pengaturan palet tema, mode Dark/Light, opasitas jendela, pilihan paket ikon toolbar, dan penggeser ukuran ikon dengan pratinjau langsung.
 > - 💿 **Installer DMG Bergaya Native macOS**: Artwork background standar dan Retina @2x beresolusi tinggi, geometri jendela kustom (680x440), ikon aplikasi di kiri, symlink drop Aplikasi di kanan, indikator drag-and-drop melengkung, dan validasi checksum.
-> - 🎨 **Suite Personalisasi 38 Icon Pack (`ToolbarIconManager`)**: Menghadirkan 38 paket ikon lengkap (Modern SVG, Fluent, Material, Notepad++ Klasik, ragam Aksara, Retro Windows 7/Aero, Pixel Fugue) dengan pergantian langsung via menu klik-kanan toolbar.
+> - 🎨 **Suite Personalisasi 28 Icon Pack (`ToolbarIconManager`)**: Menghadirkan 28 paket ikon lengkap (Modern Ribbon SVG, Fluent, Notepad++ Klasik, ragam Aksara, Retro Windows 7/Aero, WinXP) dengan pergantian langsung via menu klik-kanan toolbar dan dialog Preferensi.
 > - 🛠️ **Kustomisasi Toolbar Interaktif (`CustomizeToolbarDialog`)**: Antarmuka dual-list drag-and-drop untuk menambah, memindahkan, menyisipkan pemisah, dan mengatur aksi toolbar secara seketika.
 > - 📄 **Dock Pratinjau Aman Markdown & Pipeline Ekspor Dokumen (`MarkdownSafePreviewDock`)**: Dock pratinjau langsung berkinerja tinggi dengan dukungan formula KaTeX, diagram Mermaid, scroll sinkron dua arah dengan Scintilla, serta ekspor HTML mandiri bergaya GitHub dan dokumen PDF vektor.
 > - ⚡ **Suite Ergonomi Editor**:
@@ -397,7 +397,7 @@ sudo ./NotepadNext-Default-Editor-Linux.sh --system -f
 >
 > All credit for the original codebase goes to the original author, and special architectural credit goes to the **SparkNotePad** project for serving as the foundational feature donor:
 >
-> - 🎨 **38-Pack Toolbar Icon Engine & 6-Tier Sizing**: Runtime vector and multi-res PNG icon packs with dynamic toolbar resizing (`ToolbarIconManager`).
+> - 🎨 **28-Pack Toolbar Icon Engine & 6-Tier Sizing**: Runtime vector and multi-res PNG icon packs with dynamic toolbar resizing (`ToolbarIconManager`).
 > - ➕ **Tab Bar Plus (+) Button**: Persistent macOS-styled dock tab bar `+` button for instant new document creation (`DockedEditorTitleBar`).
 > - 📑 **Tabbed Markdown & HTML Live Preview**: Full-featured `PreviewTabWidget` with GitHub callouts, DevDocs styling, reading metrics, zoom, and direct browser previews.
 > - 🔍 **Myers LCS Diff Engine**: Side-by-side synchronized document comparison and syntax-aware diff highlights (`MyersDiffEngine`, `FileDiffDialog`).
@@ -406,15 +406,20 @@ sudo ./NotepadNext-Default-Editor-Linux.sh --system -f
 > - 🛠️ **Dynamic Toolbar Customizer**: Drag-and-drop toolbar button and separator customization dialog (`CustomizeToolbarDialog`).
 > - 🍏 **High-DPI Retina Styled DMG Artwork**: Custom 680x440 installer canvas geometry, custom background banner, and drag-and-drop workflow.
 >
+> Special credit also goes to **[SubnetCalc-MacOS](https://github.com/alsyundawy/SubnetCalc-MacOS)** for contributing 25 syntax highlighting and UI themes, with all remaining themes and UI styling infrastructure ported from **[SparkNotePad](https://github.com/alsyundawy/SparkNotePad)**.
+>
 > 🇮🇩 Repository ini merupakan **edisi khusus macOS & Linux** dari proyek asli oleh **[@dail8859](https://github.com/dail8859)**, dengan integrasi arsitektur fitur tingkat lanjut, ergonomi UI, dan utilitas forensik yang diadaptasi dari proyek saudara **[SparkNotePad](https://github.com/alsyundawy/SparkNotePad)** (v1.3.8) dari rilis kumulatif **v0.15-01 hingga v0.15-08**.
 >
 > Seluruh kredit untuk proyek aslinya diberikan kepada penulis asli, dan kredit arsitektur khusus diberikan kepada proyek **SparkNotePad** sebagai donor fitur utama.
+>
+> Kredit khusus juga diberikan kepada **[SubnetCalc-MacOS](https://github.com/alsyundawy/SubnetCalc-MacOS)** yang menyumbangkan 25 tema syntax highlighting dan UI, dengan seluruh tema selebihnya serta infrastruktur styling diadaptasi dari **[SparkNotePad](https://github.com/alsyundawy/SparkNotePad)**.
 
 | Component / Komponen                                       | Link / Tautan                                                                              |
 | :--------------------------------------------------------- | :----------------------------------------------------------------------------------------- |
 | 🏠 **Original Repository / Repositori Asli**               | [github.com/dail8859/NotepadNext](https://github.com/dail8859/NotepadNext)                 |
 | 👤 **Original Author / Penulis Asli**                      | [@dail8859](https://github.com/dail8859)                                                   |
 | ⚡ **Feature Donor Project / Proyek Donor Fitur (v1.3.8)** | [SparkNotePad](https://github.com/alsyundawy/SparkNotePad)                                 |
+| 🎨 **Theme Contributor / Kontributor Tema (25 Themes)**    | [SubnetCalc-MacOS](https://github.com/alsyundawy/SubnetCalc-MacOS)                         |
 | 📦 **Edition Repository / Repositori Edisi Ini**           | [github.com/alsyundawy/NotepadNext-MacOS](https://github.com/alsyundawy/NotepadNext-MacOS) |
 | 👤 **Lead Maintainer / Pengembang Utama**                  | [@alsyundawy](https://github.com/alsyundawy)                                               |
 

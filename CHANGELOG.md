@@ -39,10 +39,20 @@ Format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) a
 - 🇮🇩 **Presentasi Installer DMG Bergaya Native macOS**:
   Merancang pipeline pembuatan DMG kustom (`scripts/generate_dmg_background.py` & `scripts/package-dmg.sh`) yang menghasilkan aset latar belakang resolusi tinggi (standard & Retina), geometri jendela (680x440), slot aplikasi NotepadNext di kiri, tautan `/Applications` di kanan, indikator drag-and-drop melengkung, ikon volume, dan verifikasi checksum citra disk (`hdiutil verify`).
 
-- 🇬🇧 **38 Icon Pack Personalization Suite & Toolbar Management (`ToolbarIconManager`)**:
-  Integrated a comprehensive suite of 38 distinct icon packs (Modern SVG, Fluent, Material, Classic Notepad++, Aksara variations, Retro Windows 7/Aero, and Pixel styles) ported with zero overhead. Added dynamic runtime icon switching directly via toolbar right-click context menu, persistent settings integration, and support for SVG/PNG icon asset scaling.
-- 🇮🇩 **Suite Personalisasi 38 Icon Pack & Manajemen Toolbar (`ToolbarIconManager`)**:
-  Mengintegrasikan koleksi komprehensif 38 paket ikon berbeda (Modern SVG, Fluent, Material, Notepad++ Klasik, variasi Aksara, Retro Windows 7/Aero, serta gaya Pixel) yang diporting secara optimal. Menambahkan kemampuan pergantian ikon secara langsung melalui menu konteks klik-kanan toolbar, penyimpanan preferensi otomatis, dan dukungan penskalaan aset SVG/PNG.
+- 🇬🇧 **28 Curated Icon Pack Personalization Suite & Toolbar Management (`ToolbarIconManager`)**:
+  Integrated a streamlined suite of 28 curated icon packs (Modern Ribbon SVG, Fluent, Classic Notepad++, Aksara variations, Retro Windows 7/Aero, and WinXP skeuomorphic styles) with zero overhead, removing 10 redundant packs (`aksara-icon-pack-sharp`, `notepad3_warm`, `notepadpp_green`, `material_sharp`, `pixel_fugue_like`, `aksara-icon-pack-bold`, `aksara-icon-pack-duotone`, `aksara-icon-pack-outline`, `aksara-npp-gnome51`, `aksara-npp-kde6`). Added dynamic runtime icon switching directly via toolbar right-click context menu and Preferences dialog.
+- 🇮🇩 **Suite Personalisasi 28 Icon Pack Terpilih & Manajemen Toolbar (`ToolbarIconManager`)**:
+  Mengintegrasikan koleksi terkurasi 28 paket ikon (Modern Ribbon SVG, Fluent, Notepad++ Klasik, variasi Aksara, Retro Windows 7/Aero, dan skeuomorfik WinXP) secara optimal, menghapus 10 pack redundan. Menambahkan kemampuan pergantian ikon secara langsung melalui menu konteks klik-kanan toolbar dan dialog Preferensi.
+
+- 🇬🇧 **Attribution & Upstream Donor Recognition**:
+  Added explicit URLs and formal attribution for sister project [SparkNotePad](https://github.com/alsyundawy/SparkNotePad) as foundational architecture and feature donor, and [SubnetCalc-MacOS](https://github.com/alsyundawy/SubnetCalc-MacOS) for contributing 25 syntax highlighting and UI themes across the application.
+- 🇮🇩 **Pengakuan Atribusi & Proyek Donor**:
+  Menyertakan tautan resmi dan pengakuan atribusi terperinci untuk proyek saudara [SparkNotePad](https://github.com/alsyundawy/SparkNotePad) sebagai donor arsitektur dan fitur utama, serta [SubnetCalc-MacOS](https://github.com/alsyundawy/SubnetCalc-MacOS) atas kontribusi 25 tema syntax highlighting dan UI.
+
+- 🇬🇧 **Streamlined Bilingual Localization & Text-Only Preferences Tabs**:
+  Refactored translation system to strictly focus on English (`en`) and Indonesian (`id`) with 100% finished translation entries, removing obsolete language files. Updated all tab headers in `PreferencesDialog` to clean text-only labels without icons or emojis.
+- 🇮🇩 **Lokalisasi Bilingual Terpadu & Tab Preferensi Berbasis Teks Murni**:
+  Menyederhanakan sistem translasi hanya pada bahasa Inggris (`en`) dan bahasa Indonesia (`id`) dengan penyelesaian 100% tuntas, membersihkan berkas bahasa yang tidak digunakan. Memperbarui seluruh judul tab pada `PreferencesDialog` menjadi berbasis teks murni tanpa ikon atau emoji.
 
 - 🇬🇧 **Interactive Toolbar Customization Dialog (`CustomizeToolbarDialog`)**:
   Introduced a dual-list drag-and-drop toolbar customization dialog allowing users to add, remove, reorder actions, insert separators, and reset to defaults with instantaneous live toolbar reflection. Includes search filtering across available actions and seamless synchronization with application settings (`Gui/ToolBar`).
