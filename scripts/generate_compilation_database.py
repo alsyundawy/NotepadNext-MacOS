@@ -85,7 +85,7 @@ def get_include_dirs(root: Path) -> list[str]:
 def get_base_defines() -> list[str]:
     """Return common preprocessor defines."""
     return [
-        '-DAPP_VERSION="0.15-07"',
+        '-DAPP_VERSION="0.15-08"',
         '-DAPP_DISTRIBUTION="dmg"',
         '-DAPP_COPYRIGHT="Copyright 2019-2026 Justin Dailey"',
         '-DAPP_COPYRIGHT_BUILDER="Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>"',

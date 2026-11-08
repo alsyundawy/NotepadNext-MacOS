@@ -39,8 +39,7 @@ class QByteArrayView
 public:
     QByteArrayView() : m_data(nullptr), m_size(0) {}
     QByteArrayView(const char* data, qsizetype size) : m_data(data), m_size(size) {}
-    // cppcheck-suppress noExplicitConstructor
-    QByteArrayView(const QByteArray& ba) : m_data(ba.constData()), m_size(ba.size()) {}
+    explicit QByteArrayView(const QByteArray& ba) : m_data(ba.constData()), m_size(ba.size()) {}
     const char* data() const { return m_data; }
     qsizetype size() const { return m_size; }
     bool isEmpty() const { return m_size == 0; }
@@ -59,6 +58,7 @@ private:
 #include <QSet>
 #include <algorithm>
 #include <cstring>
+#include <numeric>
 #include <unordered_set>
 
 namespace ByteArrayUtils
@@ -127,9 +127,8 @@ inline QByteArray join(const QList<QByteArrayView>& parts, const QByteArray& del
     const qsizetype dlen = delimiter.size();
 
     // Compute total size
-    qsizetype total = 0;
-    for (const auto& v : parts)
-        total += v.size();
+    qsizetype total = std::accumulate(parts.cbegin(), parts.cend(), qsizetype{0},
+        [](qsizetype sum, const QByteArrayView& v) { return sum + v.size(); });
     total += dlen * (parts.size() - 1);
 
     // Allocate final QByteArray

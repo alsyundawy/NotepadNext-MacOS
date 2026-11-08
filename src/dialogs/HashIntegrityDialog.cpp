@@ -29,7 +29,7 @@ HashIntegrityDialog::HashIntegrityDialog(QWidget *parent, ScintillaNext *current
     auto *mainLayout = new QVBoxLayout(this);
     mainLayout->setSpacing(12);
 
-    auto *sourceLayout = new QHBoxLayout();
+    auto *sourceLayout = new QHBoxLayout(); // NOSONAR(cpp:S5025)
     radioFile = new QRadioButton(tr("File on Disk"), this);
     radioCurrentEditor = new QRadioButton(tr("Current Editor Text"), this);
     sourceLayout->addWidget(radioFile);
@@ -37,7 +37,7 @@ HashIntegrityDialog::HashIntegrityDialog(QWidget *parent, ScintillaNext *current
     sourceLayout->addStretch();
     mainLayout->addLayout(sourceLayout);
 
-    auto *fileRowLayout = new QHBoxLayout();
+    auto *fileRowLayout = new QHBoxLayout(); // NOSONAR(cpp:S5025)
     editFilePath = new QLineEdit(this);
     editFilePath->setPlaceholderText(tr("Select file to hash..."));
     btnBrowse = new QPushButton(tr("&Browse..."), this);
@@ -45,7 +45,7 @@ HashIntegrityDialog::HashIntegrityDialog(QWidget *parent, ScintillaNext *current
     fileRowLayout->addWidget(btnBrowse);
     mainLayout->addLayout(fileRowLayout);
 
-    auto *formLayout = new QFormLayout();
+    auto *formLayout = new QFormLayout(); // NOSONAR(cpp:S5025)
     formLayout->setSpacing(8);
 
     comboAlgorithm = new QComboBox(this);
@@ -68,10 +68,10 @@ HashIntegrityDialog::HashIntegrityDialog(QWidget *parent, ScintillaNext *current
     btnCompute->setDefault(true);
     mainLayout->addWidget(btnCompute);
 
-    auto *outputForm = new QFormLayout();
+    auto *outputForm = new QFormLayout(); // NOSONAR(cpp:S5025)
     outputForm->setSpacing(8);
 
-    auto *computedLayout = new QHBoxLayout();
+    auto *computedLayout = new QHBoxLayout(); // NOSONAR(cpp:S5025)
     editComputedHash = new QLineEdit(this);
     editComputedHash->setReadOnly(true);
     editComputedHash->setPlaceholderText(tr("Computed checksum will appear here..."));
@@ -93,7 +93,7 @@ HashIntegrityDialog::HashIntegrityDialog(QWidget *parent, ScintillaNext *current
     labelComparisonResult->setText(tr("Enter expected hash above to compare automatically."));
     mainLayout->addWidget(labelComparisonResult);
 
-    auto *btnBox = new QHBoxLayout();
+    auto *btnBox = new QHBoxLayout(); // NOSONAR(cpp:S5025)
     btnBox->addStretch();
     auto *btnClose = new QPushButton(tr("Close"), this);
     btnBox->addWidget(btnClose);
@@ -156,7 +156,7 @@ void HashIntegrityDialog::onComputeHashClicked() {
         }
     } else if (editor) {
         hash = HashIntegrityManager::computeTextHash(
-            QString::fromUtf8(editor->get_text_range(0, editor->length())), algo);
+            QString::fromUtf8(editor->get_text_range(0, static_cast<int>(editor->length()))), algo);
     }
 
     editComputedHash->setText(hash);

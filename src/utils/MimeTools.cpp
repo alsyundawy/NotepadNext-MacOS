@@ -81,8 +81,8 @@ QString MimeTools::quotedPrintableEncode(const QString &input) {
 
     int lineLen = 0;
     for (int i = 0; i < utf8.size(); ++i) {
-        const auto byte = static_cast<unsigned char>(utf8.at(i));
-        if ((byte >= 33 && byte <= 60) || (byte >= 62 && byte <= 126)) {
+        if (const auto byte = static_cast<unsigned char>(utf8.at(i));
+            (byte >= 33 && byte <= 60) || (byte >= 62 && byte <= 126)) {
             encoded.append(static_cast<char>(byte));
             lineLen++;
         } else if (byte == ' ' || byte == '\t') {
@@ -118,27 +118,28 @@ QString MimeTools::quotedPrintableDecode(const QString &input) {
     QByteArray out;
     out.reserve(in.size());
 
-    for (int i = 0; i < in.size(); ++i) {
+    int i = 0;
+    while (i < in.size()) {
         if (in.at(i) == '=') {
             if (i + 2 < in.size() && in.at(i + 1) == '\r' && in.at(i + 2) == '\n') {
-                i += 2;
+                i += 3;
                 continue;
             }
             if (i + 1 < in.size() && (in.at(i + 1) == '\r' || in.at(i + 1) == '\n')) {
-                i += 1;
+                i += 2;
                 continue;
             }
             if (i + 2 < in.size()) {
                 bool ok = false;
-                const int val = in.mid(i + 1, 2).toInt(&ok, 16);
-                if (ok) {
+                if (const int val = in.mid(i + 1, 2).toInt(&ok, 16); ok) {
                     out.append(static_cast<char>(val));
-                    i += 2;
+                    i += 3;
                     continue;
                 }
             }
         }
         out.append(in.at(i));
+        i++;
     }
 
     return QString::fromUtf8(out);

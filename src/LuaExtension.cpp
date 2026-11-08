@@ -669,8 +669,7 @@ LuaExtension &LuaExtension::Instance() {
     return singleton;
 }
 
-// cppcheck-suppress functionStatic
-bool LuaExtension::Initialise(lua_State *L, ScintillaNext *editor_) const {
+bool LuaExtension::Initialise(lua_State *L, ScintillaNext *editor_) {
     auto &state = runtimeState();
     state.luaState = L;
     state.editor = editor_;
@@ -679,13 +678,11 @@ bool LuaExtension::Initialise(lua_State *L, ScintillaNext *editor_) const {
     return false;
 }
 
-// cppcheck-suppress functionStatic
-void LuaExtension::setEditor(ScintillaEdit *editor_) const {
+void LuaExtension::setEditor(ScintillaEdit *editor_) {
     runtimeState().editor = editor_;
 }
 
-// cppcheck-suppress functionStatic
-bool LuaExtension::Finalise() const {
+bool LuaExtension::Finalise() {
     auto &state = runtimeState();
     if (state.luaState) {
         lua_close(state.luaState);
@@ -697,8 +694,7 @@ bool LuaExtension::Finalise() const {
     return false;
 }
 
-// cppcheck-suppress functionStatic
-bool LuaExtension::RunString(const char *s) const {
+bool LuaExtension::RunString(const char *s) {
     if (!s) {
         return false;
     }
@@ -773,8 +769,7 @@ static void printExecutionResult(lua_State *L, int status) {
     lua_settop(L, 0);
 }
 
-// cppcheck-suppress functionStatic
-bool LuaExtension::OnExecute(const char *s) const {
+bool LuaExtension::OnExecute(const char *s) {
     if (!s) {
         return false;
     }
@@ -818,6 +813,6 @@ bool LuaExtension::OnExecute(const char *s) const {
     return true;
 }
 
-void LuaExtension::CallShortcut(int /*id*/) const {
+void LuaExtension::CallShortcut(int /*id*/) {
     // Reserved for future shortcut event dispatching
 }

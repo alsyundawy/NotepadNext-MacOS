@@ -2,34 +2,34 @@
   "updates": {
     "windows": {
       "open-url": "https://github.com/alsyundawy/NotepadNext-MacOS/releases/latest",
-      "latest-version": "0.15-07",
-      "download-url": "https://github.com/alsyundawy/NotepadNext-MacOS/releases/download/0.15-07/NotepadNext-v0.15-x64.dmg",
-      "changelog": "https://github.com/alsyundawy/NotepadNext-MacOS/releases/tag/0.15-07",
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "latest-version": "0.15-08",
+      "download-url": "https://github.com/alsyundawy/NotepadNext-MacOS/releases/download/0.15-08/NotepadNext-v0.15-x64.dmg",
+      "changelog": "https://github.com/alsyundawy/NotepadNext-MacOS/releases/tag/0.15-08",
+      "sha256": "ce0df70beb90ce77001947b3d60352e2f17fe262c20d1421ef8b56d716fe6108",
       "mandatory": false
     },
     "macos": {
       "open-url": "https://github.com/alsyundawy/NotepadNext-MacOS/releases/latest",
-      "latest-version": "0.15-07",
-      "download-url": "https://github.com/alsyundawy/NotepadNext-MacOS/releases/download/0.15-07/NotepadNext-v0.15-arm64.dmg",
-      "changelog": "https://github.com/alsyundawy/NotepadNext-MacOS/releases/tag/0.15-07",
+      "latest-version": "0.15-08",
+      "download-url": "https://github.com/alsyundawy/NotepadNext-MacOS/releases/download/0.15-08/NotepadNext-v0.15-arm64.dmg",
+      "changelog": "https://github.com/alsyundawy/NotepadNext-MacOS/releases/tag/0.15-08",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "mandatory": false
     },
     "macos-arm64": {
       "open-url": "https://github.com/alsyundawy/NotepadNext-MacOS/releases/latest",
-      "latest-version": "0.15-07",
-      "download-url": "https://github.com/alsyundawy/NotepadNext-MacOS/releases/download/0.15-07/NotepadNext-v0.15-arm64.dmg",
-      "changelog": "https://github.com/alsyundawy/NotepadNext-MacOS/releases/tag/0.15-07",
+      "latest-version": "0.15-08",
+      "download-url": "https://github.com/alsyundawy/NotepadNext-MacOS/releases/download/0.15-08/NotepadNext-v0.15-arm64.dmg",
+      "changelog": "https://github.com/alsyundawy/NotepadNext-MacOS/releases/tag/0.15-08",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "mandatory": false
     },
     "macos-x64": {
       "open-url": "https://github.com/alsyundawy/NotepadNext-MacOS/releases/latest",
-      "latest-version": "0.15-07",
-      "download-url": "https://github.com/alsyundawy/NotepadNext-MacOS/releases/download/0.15-07/NotepadNext-v0.15-x64.dmg",
-      "changelog": "https://github.com/alsyundawy/NotepadNext-MacOS/releases/tag/0.15-07",
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "latest-version": "0.15-08",
+      "download-url": "https://github.com/alsyundawy/NotepadNext-MacOS/releases/download/0.15-08/NotepadNext-v0.15-x64.dmg",
+      "changelog": "https://github.com/alsyundawy/NotepadNext-MacOS/releases/tag/0.15-08",
+      "sha256": "ce0df70beb90ce77001947b3d60352e2f17fe262c20d1421ef8b56d716fe6108",
       "mandatory": false
     }
   }

@@ -25,6 +25,7 @@
 #define QT_VERSION_CHECK(major, minor, patch) (((major)<<16)|((minor)<<8)|(patch))
 #endif
 
+#include <algorithm>
 #include <QFontDatabase>
 
 #include "LanguageInspectorDock.h"
@@ -100,13 +101,16 @@ LanguageInspectorDock::LanguageInspectorDock(MainWindow *parent) :
 
     QList<ComboBoxItem> fontNames;
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-    for (const QString &font : QFontDatabase::families()) {
+    const auto families = QFontDatabase::families();
 #else
     QFontDatabase fontDatabase;
-    for (const QString &font : fontDatabase.families()) {
+    const auto families = fontDatabase.families();
 #endif
-        fontNames.append(QPair<QString, QString>(font, font));
-    }
+    fontNames.reserve(families.size());
+    std::transform(families.cbegin(), families.cend(), std::back_inserter(fontNames),
+        [](const QString &font) {
+            return QPair<QString, QString>(font, font);
+        });
     auto *fontComboDelegate = new ComboBoxDelegate(fontNames, this);
     ui->tblStyles->setItemDelegateForColumn(4, fontComboDelegate);
 

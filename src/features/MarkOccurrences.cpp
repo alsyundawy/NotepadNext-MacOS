@@ -12,7 +12,7 @@
 #include "../ScintillaNext.h"
 #include <QByteArray>
 
-static const char *kIndicatorName = "notesci_mark_all";
+static constexpr const char *const kIndicatorName = "notesci_mark_all";
 
 static int QColorToScintillaColour(const QColor &c) {
     return c.red() | (c.green() << 8) | (c.blue() << 16);
@@ -20,7 +20,7 @@ static int QColorToScintillaColour(const QColor &c) {
 
 MarkOccurrences::MarkOccurrences(QObject *parent) : QObject(parent) {}
 
-void MarkOccurrences::setupIndicator(ScintillaNext *editor, int indicator) {
+void MarkOccurrences::setupIndicator(ScintillaNext *editor, int indicator) const {
     if (!editor || indicator < 0) {
         return;
     }
@@ -44,14 +44,14 @@ int MarkOccurrences::markAll(ScintillaNext *editor, bool matchCase, bool wholeWo
         return 0;
     }
 
-    int selectionStart = editor->selectionStart();
-    int selectionEnd = editor->selectionEnd();
+    auto selectionStart = static_cast<int>(editor->selectionStart());
+    auto selectionEnd = static_cast<int>(editor->selectionEnd());
     bool isWord = wholeWord;
 
     if (selectionStart == selectionEnd) {
-        const int curPos = editor->currentPos();
-        selectionStart = editor->wordStartPosition(curPos, true);
-        selectionEnd = editor->wordEndPosition(curPos, true);
+        const auto curPos = static_cast<int>(editor->currentPos());
+        selectionStart = static_cast<int>(editor->wordStartPosition(curPos, true));
+        selectionEnd = static_cast<int>(editor->wordEndPosition(curPos, true));
         isWord = true;
 
         if (selectionStart == selectionEnd) {
@@ -80,7 +80,7 @@ int MarkOccurrences::markText(ScintillaNext *editor, const QString &text, bool m
     setupIndicator(editor, indicator);
 
     editor->setIndicatorCurrent(indicator);
-    editor->indicatorClearRange(0, editor->length());
+    editor->indicatorClearRange(0, static_cast<int>(editor->length()));
 
     int flags = 0;
     if (matchCase) {
@@ -98,7 +98,7 @@ int MarkOccurrences::markText(ScintillaNext *editor, const QString &text, bool m
     const QByteArray queryBytes = text.toUtf8();
     int count = 0;
 
-    editor->forEachMatch(queryBytes, [&](int start, int end) {
+    editor->forEachMatch(queryBytes, [&count, editor](int start, int end) {
         if (start < end) {
             editor->indicatorFillRange(start, end - start);
             count++;
@@ -118,10 +118,9 @@ void MarkOccurrences::clearMarks(ScintillaNext *editor) {
         return;
     }
 
-    const int indicator = indicatorForEditor(editor);
-    if (indicator >= 0) {
+    if (const int indicator = indicatorForEditor(editor); indicator >= 0) {
         editor->setIndicatorCurrent(indicator);
-        editor->indicatorClearRange(0, editor->length());
+        editor->indicatorClearRange(0, static_cast<int>(editor->length()));
     }
 
     m_lastMatchCount = 0;

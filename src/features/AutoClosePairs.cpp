@@ -31,7 +31,7 @@ bool AutoClosePairs::eventFilter(QObject *obj, QEvent *event) {
     Q_UNUSED(obj)
 
     if (event->type() == QEvent::KeyPress && isEnabled()) {
-        auto *keyEvent = static_cast<QKeyEvent *>(event);
+        const auto *keyEvent = static_cast<const QKeyEvent *>(event);
         if (handleKeyPress(keyEvent)) {
             return true;
         }
@@ -40,13 +40,69 @@ bool AutoClosePairs::eventFilter(QObject *obj, QEvent *event) {
     return false;
 }
 
-bool AutoClosePairs::handleKeyPress(QKeyEvent *keyEvent) {
+bool AutoClosePairs::handleBracketPair(QChar ch, int curPos, char charAtPos) {
+    if (ch == '(') {
+        editor->insertText(curPos, "()");
+        editor->gotoPos(curPos + 1);
+        return true;
+    }
+    if (ch == '[') {
+        editor->insertText(curPos, "[]");
+        editor->gotoPos(curPos + 1);
+        return true;
+    }
+    if (ch == '{') {
+        editor->insertText(curPos, "{}");
+        editor->gotoPos(curPos + 1);
+        return true;
+    }
+    if ((ch == ')' || ch == ']' || ch == '}') && charAtPos == ch.toLatin1()) {
+        editor->gotoPos(curPos + 1);
+        return true;
+    }
+    return false;
+}
+
+bool AutoClosePairs::handleQuotePair(QChar ch, int curPos, char charAtPos, char charBefore) {
+    if (ch == '"') {
+        if (charAtPos == '"') {
+            editor->gotoPos(curPos + 1);
+            return true;
+        }
+        editor->insertText(curPos, "\"\"");
+        editor->gotoPos(curPos + 1);
+        return true;
+    }
+    if (ch == '\'') {
+        if (charAtPos == '\'') {
+            editor->gotoPos(curPos + 1);
+            return true;
+        }
+        if (!isWordChar(charBefore)) {
+            editor->insertText(curPos, "''");
+            editor->gotoPos(curPos + 1);
+            return true;
+        }
+    }
+    if (ch == '`') {
+        if (charAtPos == '`') {
+            editor->gotoPos(curPos + 1);
+            return true;
+        }
+        editor->insertText(curPos, "``");
+        editor->gotoPos(curPos + 1);
+        return true;
+    }
+    return false;
+}
+
+bool AutoClosePairs::handleKeyPress(const QKeyEvent *keyEvent) {
     if (!editor || !editor->selectionEmpty()) {
         return false;
     }
 
-    const int curPos = static_cast<int>(editor->currentPos());
-    const int docLen = static_cast<int>(editor->length());
+    const auto curPos = static_cast<int>(editor->currentPos());
+    const auto docLen = static_cast<int>(editor->length());
     const char charAtPos = (curPos < docLen) ? static_cast<char>(editor->charAt(curPos)) : 0;
     const char charBefore = (curPos > 0) ? static_cast<char>(editor->charAt(curPos - 1)) : 0;
     const QString text = keyEvent->text();
@@ -67,62 +123,12 @@ bool AutoClosePairs::handleKeyPress(QKeyEvent *keyEvent) {
 
     const QChar ch = text.at(0);
 
-    // 1. Auto-close Brackets: (), [], {}
-    if (m_autoCloseBrackets) {
-        if (ch == '(') {
-            editor->insertText(curPos, "()");
-            editor->gotoPos(curPos + 1);
-            return true;
-        }
-        if (ch == '[') {
-            editor->insertText(curPos, "[]");
-            editor->gotoPos(curPos + 1);
-            return true;
-        }
-        if (ch == '{') {
-            editor->insertText(curPos, "{}");
-            editor->gotoPos(curPos + 1);
-            return true;
-        }
-        if (ch == ')' || ch == ']' || ch == '}') {
-            if (charAtPos == ch.toLatin1()) {
-                editor->gotoPos(curPos + 1);
-                return true;
-            }
-        }
+    if (m_autoCloseBrackets && handleBracketPair(ch, curPos, charAtPos)) {
+        return true;
     }
 
-    // 2. Auto-close Quotes: "", '', ``
-    if (m_autoCloseQuotes) {
-        if (ch == '"') {
-            if (charAtPos == '"') {
-                editor->gotoPos(curPos + 1);
-                return true;
-            }
-            editor->insertText(curPos, "\"\"");
-            editor->gotoPos(curPos + 1);
-            return true;
-        }
-        if (ch == '\'') {
-            if (charAtPos == '\'') {
-                editor->gotoPos(curPos + 1);
-                return true;
-            }
-            if (!isWordChar(charBefore)) {
-                editor->insertText(curPos, "''");
-                editor->gotoPos(curPos + 1);
-                return true;
-            }
-        }
-        if (ch == '`') {
-            if (charAtPos == '`') {
-                editor->gotoPos(curPos + 1);
-                return true;
-            }
-            editor->insertText(curPos, "``");
-            editor->gotoPos(curPos + 1);
-            return true;
-        }
+    if (m_autoCloseQuotes && handleQuotePair(ch, curPos, charAtPos, charBefore)) {
+        return true;
     }
 
     return false;

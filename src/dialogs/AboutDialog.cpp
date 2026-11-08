@@ -24,7 +24,7 @@
 #include "features/ThemePaletteData.h"
 
 #ifndef APP_VERSION
-#define APP_VERSION "0.15-07"
+#define APP_VERSION "0.15-08"
 #endif
 
 #include <QVBoxLayout>
@@ -394,7 +394,7 @@ QWidget *AboutDialog::createAboutTab() {
     layout->setSpacing(14);
 
     // Header layout with icon and title
-    auto *headerLayout = new QHBoxLayout();
+    auto *headerLayout = new QHBoxLayout(); // NOSONAR(cpp:S5025)
     headerLayout->setSpacing(16);
 
     auto *iconLabel = new QLabel(tab);
@@ -408,7 +408,7 @@ QWidget *AboutDialog::createAboutTab() {
     iconLabel->setFixedSize(80, 80);
     headerLayout->addWidget(iconLabel);
 
-    auto *titleLayout = new QVBoxLayout();
+    auto *titleLayout = new QVBoxLayout(); // NOSONAR(cpp:S5025)
     titleLayout->setSpacing(4);
 
     m_titleLabel = new QLabel(tab);

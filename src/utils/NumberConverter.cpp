@@ -43,7 +43,7 @@ NumberConverter::Result NumberConverter::convertString(const QString &input, Tar
     } else if (text.startsWith(QLatin1String("0o"), Qt::CaseInsensitive)) {
         value = text.mid(2).toULongLong(&ok, 8);
     } else {
-        const bool hasHexAlpha = std::any_of(text.cbegin(), text.cend(), [](const QChar &ch) {
+        const bool hasHexAlpha = std::ranges::any_of(text, [](const QChar &ch) {
             return (ch >= 'a' && ch <= 'f') || (ch >= 'A' && ch <= 'F');
         });
 
@@ -96,16 +96,16 @@ NumberConverter::Result NumberConverter::convert(ScintillaNext *editor, TargetBa
         return {false, QString(), QString(), QStringLiteral("No active editor")};
     }
 
-    int startPos = editor->selectionStart();
-    int endPos = editor->selectionEnd();
+    auto startPos = static_cast<int>(editor->selectionStart());
+    auto endPos = static_cast<int>(editor->selectionEnd());
 
     if (startPos == endPos) {
-        const int curPos = editor->currentPos();
-        const int docLen = editor->length();
+        const auto curPos = static_cast<int>(editor->currentPos());
+        const auto docLen = static_cast<int>(editor->length());
 
         startPos = curPos;
         while (startPos > 0) {
-            const char ch = static_cast<char>(editor->charAt(startPos - 1));
+            const auto ch = static_cast<char>(editor->charAt(startPos - 1));
             if ((ch >= '0' && ch <= '9') || (ch >= 'a' && ch <= 'f') || (ch >= 'A' && ch <= 'F') || ch == 'x' ||
                 ch == 'X' || ch == 'b' || ch == 'B' || ch == 'o' || ch == 'O') {
                 --startPos;
@@ -116,7 +116,7 @@ NumberConverter::Result NumberConverter::convert(ScintillaNext *editor, TargetBa
 
         endPos = curPos;
         while (endPos < docLen) {
-            const char ch = static_cast<char>(editor->charAt(endPos));
+            const auto ch = static_cast<char>(editor->charAt(endPos));
             if ((ch >= '0' && ch <= '9') || (ch >= 'a' && ch <= 'f') || (ch >= 'A' && ch <= 'F') || ch == 'x' ||
                 ch == 'X' || ch == 'b' || ch == 'B' || ch == 'o' || ch == 'O') {
                 ++endPos;

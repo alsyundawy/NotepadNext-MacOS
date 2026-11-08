@@ -60,7 +60,7 @@ public slots:
 
 private slots:
     void onDwellStart(int x, int y);
-    void onDwellEnd(int x, int y);
+    void onDwellEnd(int x, int y) const;
     void onCallTipClick(int position);
 
 private:

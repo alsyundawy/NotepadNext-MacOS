@@ -52,8 +52,8 @@ void DocumentStatisticsDialog::setupUi(const QString &documentName, const TokenF
     m_tableWidget->setAlternatingRowColors(true);
 
     auto setRow = [this](int row, const QString &metric, const QString &val) {
-        auto *itemMetric = new QTableWidgetItem(metric);
-        auto *itemVal = new QTableWidgetItem(val);
+        auto *itemMetric = new QTableWidgetItem(metric); // NOSONAR(cpp:S5025)
+        auto *itemVal = new QTableWidgetItem(val); // NOSONAR(cpp:S5025)
         m_tableWidget->setItem(row, 0, itemMetric);
         m_tableWidget->setItem(row, 1, itemVal);
     };
@@ -64,12 +64,12 @@ void DocumentStatisticsDialog::setupUi(const QString &documentName, const TokenF
     setRow(3, tr("Characters (without spaces)"), QString::number(stats.charsNoSpaces));
     setRow(4, tr("Size (UTF-8 Bytes)"), tr("%1 bytes").arg(stats.bytesUtf8));
 
-    int readMin = static_cast<int>(stats.readingTimeMinutes);
-    int readSec = static_cast<int>((stats.readingTimeMinutes - readMin) * 60);
+    const auto readMin = static_cast<int>(stats.readingTimeMinutes);
+    const auto readSec = static_cast<int>((stats.readingTimeMinutes - readMin) * 60);
     setRow(5, tr("Estimated Reading Time"), tr("%1 min %2 sec (at 200 wpm)").arg(readMin).arg(readSec));
 
-    int speakMin = static_cast<int>(stats.speakingTimeMinutes);
-    int speakSec = static_cast<int>((stats.speakingTimeMinutes - speakMin) * 60);
+    const auto speakMin = static_cast<int>(stats.speakingTimeMinutes);
+    const auto speakSec = static_cast<int>((stats.speakingTimeMinutes - speakMin) * 60);
     setRow(6, tr("Estimated Speaking Time"), tr("%1 min %2 sec (at 130 wpm)").arg(speakMin).arg(speakSec));
 
     QString entropyStr = tr("%1 / 8.00 bits/byte").arg(QString::number(stats.shannonEntropy, 'f', 2));
@@ -104,7 +104,7 @@ void DocumentStatisticsDialog::setupUi(const QString &documentName, const TokenF
                              .arg(speakSec)
                              .arg(entropyStr);
 
-    auto *btnLayout = new QHBoxLayout();
+    auto *btnLayout = new QHBoxLayout(); // NOSONAR(cpp:S5025)
     m_copyButton = new QPushButton(tr("Copy to Clipboard"), this);
     connect(m_copyButton, &QPushButton::clicked, this, &DocumentStatisticsDialog::onCopyStatsClicked);
     btnLayout->addWidget(m_copyButton);

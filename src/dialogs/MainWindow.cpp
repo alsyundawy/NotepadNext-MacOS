@@ -1573,7 +1573,7 @@ void MainWindow::setupToolsMenu()
 void MainWindow::showFileDiffDialog()
 {
     auto *dlg = new FileDiffDialog(this);
-    if (auto *editor = currentEditor()) {
+    if (const auto *editor = currentEditor()) {
         if (editor->isFile()) {
             dlg->setInitialFiles(editor->getFilePath());
         }
@@ -1583,11 +1583,11 @@ void MainWindow::showFileDiffDialog()
 
 void MainWindow::showDocumentStatisticsDialog()
 {
-    auto *editor = currentEditor();
+    const auto *editor = currentEditor();
     if (!editor) {
         return;
     }
-    const QString text = QString::fromUtf8(editor->get_text_range(0, editor->length()));
+    const QString text = QString::fromUtf8(editor->get_text_range(0, static_cast<int>(editor->length())));
     const QString docName = editor->isFile() ? QFileInfo(editor->getFilePath()).fileName() : editor->getName();
     const auto stats = TokenForensicUtils::analyzeText(text);
     DocumentStatisticsDialog dlg(docName, stats, this);
@@ -1596,7 +1596,7 @@ void MainWindow::showDocumentStatisticsDialog()
 
 void MainWindow::showCharacterInfoDialog()
 {
-    auto *editor = currentEditor();
+    const auto *editor = currentEditor();
     if (!editor) {
         return;
     }
@@ -1619,7 +1619,7 @@ void MainWindow::showGenerateHashDigestDialog()
         if (!sel.isEmpty()) {
             initialText = QString::fromUtf8(sel);
         } else {
-            initialText = QString::fromUtf8(editor->get_text_range(0, editor->length()));
+            initialText = QString::fromUtf8(editor->get_text_range(0, static_cast<int>(editor->length())));
         }
     }
     GenerateHashDigestDialog dlg(QStringLiteral("SHA-256"), initialText, this);
@@ -1701,13 +1701,13 @@ void MainWindow::resetToolbarToDefaults()
 void MainWindow::onToolbarContextMenu(const QPoint &pos)
 {
     QMenu menu(this);
-    QAction *customizeAct = menu.addAction(tr("Customize Toolbar..."));
+    const QAction *customizeAct = menu.addAction(tr("Customize Toolbar..."));
     connect(customizeAct, &QAction::triggered, this, [this]() {
         CustomizeToolbarDialog dlg(this, this);
         dlg.exec();
     });
 
-    QAction *resetAct = menu.addAction(tr("Reset Toolbar to Defaults"));
+    const QAction *resetAct = menu.addAction(tr("Reset Toolbar to Defaults"));
     connect(resetAct, &QAction::triggered, this, &MainWindow::resetToolbarToDefaults);
 
     menu.addSeparator();
@@ -1759,11 +1759,9 @@ void MainWindow::newFile() const
     forever {
         const QString newFileName = tr("New %1").arg(count);
         const auto edList = editors();
-        const bool exists = std::any_of(edList.cbegin(), edList.cend(), [&newFileName](const ScintillaNext *editor) {
-            return editor && !editor->isFile() && editor->getName() == newFileName;
-        });
-
-        if (!exists) {
+        if (const bool exists = std::ranges::any_of(edList, [&newFileName](const ScintillaNext *editor) {
+                return editor && !editor->isFile() && editor->getName() == newFileName;
+            }); !exists) {
             ScintillaNext *editor = app->getEditorManager()->createEditor(newFileName);
             editor->grabFocus();
             break;
@@ -2179,7 +2177,7 @@ bool MainWindow::saveAll()
 
 bool MainWindow::saveAllEditors(const QVector<ScintillaNext *> &editorList)
 {
-    return std::all_of(editorList.cbegin(), editorList.cend(), [this](ScintillaNext *editor) {
+    return std::ranges::all_of(editorList, [this](ScintillaNext *editor) {
         return saveFile(editor);
     });
 }
@@ -2584,11 +2582,9 @@ void MainWindow::updateLanguageBasedUi(const ScintillaNext *editor) const
 
     const QString language_name = editor->languageName;
     const auto actions = languageActionGroup->actions();
-    const auto it = std::find_if(actions.cbegin(), actions.cend(), [&language_name](const QAction *action) {
-        return action && action->data().toString() == language_name;
-    });
-
-    if (it != actions.cend()) {
+    if (const auto it = std::ranges::find_if(actions, [&language_name](const QAction *action) {
+            return action && action->data().toString() == language_name;
+        }); it != actions.cend()) {
         (*it)->setChecked(true);
         return;
     }
@@ -2882,7 +2878,7 @@ QStringList MainWindow::currentDockObjectNames() const
     const auto docks = findChildren<QDockWidget *>();
     QStringList names;
     names.reserve(docks.size());
-    std::transform(docks.cbegin(), docks.cend(), std::back_inserter(names), [](const QDockWidget *dock) {
+    std::ranges::transform(docks, std::back_inserter(names), [](const QDockWidget *dock) {
         return dock ? dock->objectName() : QString();
     });
     names.removeAll(QString());
@@ -3025,7 +3021,7 @@ QStringList resolveContextMenuActionNames(const NotepadNextApplication *app, con
         const QStringList rawNames = settings->value("Gui/EditorContextMenu").toStringList();
         actionNames.clear();
         actionNames.reserve(rawNames.size());
-        std::transform(rawNames.cbegin(), rawNames.cend(), std::back_inserter(actionNames), [](const QString &rawName) {
+        std::ranges::transform(rawNames, std::back_inserter(actionNames), [](const QString &rawName) {
             return rawName.trimmed();
         });
     }
@@ -3138,7 +3134,7 @@ void MainWindow::checkForUpdatesFinished(const QString &url)
 #if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
     const bool available = QSimpleUpdater::getInstance()->getUpdateAvailable(url);
     const QString latestVer = QSimpleUpdater::getInstance()->getLatestVersion(url);
-    const auto currentVer = QStringLiteral("0.15-07");
+    const auto currentVer = QStringLiteral("0.15-08");
     const QString downloadUrl = QSimpleUpdater::getInstance()->getDownloadUrl(url);
     const QString changelog = QSimpleUpdater::getInstance()->getChangelog(url);
     const QString openUrl = QSimpleUpdater::getInstance()->getOpenUrl(url);

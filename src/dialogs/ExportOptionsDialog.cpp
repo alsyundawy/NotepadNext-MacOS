@@ -29,7 +29,7 @@ ExportOptionsDialog::ExportOptionsDialog(TargetFormat format, const QString &def
 void ExportOptionsDialog::setupUi() {
     auto *mainLayout = new QVBoxLayout(this);
 
-    auto *formLayout = new QFormLayout();
+    auto *formLayout = new QFormLayout(); // NOSONAR(cpp:S5025)
     editTitle = new QLineEdit(this);
     editTitle->setText(m_initialTitle);
     editTitle->setPlaceholderText(tr("Document title"));

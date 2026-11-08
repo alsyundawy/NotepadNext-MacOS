@@ -42,7 +42,7 @@ void FileDiffDialog::setupUi() {
     mainLayout->setContentsMargins(10, 10, 10, 10);
     mainLayout->setSpacing(8);
 
-    auto *topLayout = new QHBoxLayout();
+    auto *topLayout = new QHBoxLayout(); // NOSONAR(cpp:S5025)
     topLayout->setSpacing(6);
 
     auto *lblA = new QLabel(tr("Original (A):"), this);
@@ -80,7 +80,7 @@ void FileDiffDialog::setupUi() {
 
     mainLayout->addLayout(topLayout);
 
-    auto *navLayout = new QHBoxLayout();
+    auto *navLayout = new QHBoxLayout(); // NOSONAR(cpp:S5025)
     m_lblSummary = new QLabel(tr("Select two files or open tabs to compare."), this);
     navLayout->addWidget(m_lblSummary);
 
@@ -119,7 +119,7 @@ void FileDiffDialog::setupUi() {
         connect(scrollB, &QScrollBar::valueChanged, this, &FileDiffDialog::onEditorBScrolled);
     }
 
-    auto *bottomLayout = new QHBoxLayout();
+    auto *bottomLayout = new QHBoxLayout(); // NOSONAR(cpp:S5025)
     bottomLayout->addStretch();
     auto *btnClose = new QPushButton(tr("Close"), this);
     connect(btnClose, &QPushButton::clicked, this, &QDialog::accept);
@@ -236,8 +236,8 @@ QString FileDiffDialog::readContent(int comboIndex, const QString &customPath) c
     if (m_mainWindow && m_mainWindow->getDockedEditor()) {
         const auto editors = m_mainWindow->getDockedEditor()->editors();
         if (comboIndex >= 0 && comboIndex < editors.size()) {
-            if (auto *ed = editors[comboIndex]) {
-                return QString::fromUtf8(ed->get_text_range(0, ed->length()));
+            if (const auto *ed = editors[comboIndex]) {
+                return QString::fromUtf8(ed->get_text_range(0, static_cast<int>(ed->length())));
             }
         }
     }

@@ -39,14 +39,14 @@ public:
 
     ~LuaExtension() = default;
 
-    bool Initialise(lua_State *L, ScintillaNext *editor_) const;
-    void setEditor(ScintillaEdit *editor_) const;
-    bool Finalise() const;
+    static bool Initialise(lua_State *L, ScintillaNext *editor_);
+    static void setEditor(ScintillaEdit *editor_);
+    static bool Finalise();
 
     // Helper methods
-    bool RunString(const char *s) const;
-    bool OnExecute(const char *s) const;
-    void CallShortcut(int id) const;
+    static bool RunString(const char *s);
+    static bool OnExecute(const char *s);
+    static void CallShortcut(int id);
 };
 
 #endif

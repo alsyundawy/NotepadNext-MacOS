@@ -46,7 +46,7 @@ public:
         bool isValid{false};
     };
 
-    static Details getDetailsAt(ScintillaNext *editor, int pos = -1);
+    static Details getDetailsAt(const ScintillaNext *editor, int pos = -1);
     static Details getDetailsForCodePoint(uint32_t codePoint);
     static QString formatSummary(const Details &d);
     static QString formatCodePoint(uint32_t cp);

@@ -50,21 +50,21 @@
     </message>
     <message>
         <location filename="../src/dialogs/AboutDialog.cpp" line="326"/>
-        <source>&lt;div style=&apos;color: %1; line-height: 1.6;&apos;&gt;&lt;h3 style=&apos;color: %1; margin-top: 0;&apos;&gt;Credits &amp;amp; Upstream Attribution&lt;/h3&gt;&lt;p&gt;Notepad Next for macOS stands on the shoulders of giants. We express our deepest gratitude to the following projects and authors:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;b&gt;Justin Dailey (dail8859):&lt;/b&gt; Original creator and lead developer of NotepadNext. Provided the cross-platform Qt scaffolding, docking framework, and core application design. (&lt;a style=&apos;color: %2;&apos; href=&apos;https://github.com/dail8859/NotepadNext&apos;&gt;github.com/dail8859/NotepadNext&lt;/a&gt;)&lt;/li&gt;&lt;li&gt;&lt;b&gt;Scintilla:&lt;/b&gt; Created by Neil Hodgson and contributors. The legendary core editing component providing high-performance text rendering, multi-caret editing, and fold margins. (&lt;a style=&apos;color: %2;&apos; href=&apos;https://www.scintilla.org&apos;&gt;scintilla.org&lt;/a&gt;)&lt;/li&gt;&lt;li&gt;&lt;b&gt;Lexilla:&lt;/b&gt; Created by Neil Hodgson and contributors. Provides syntax highlighting and styling lexers for over 100 programming languages. (&lt;a style=&apos;color: %2;&apos; href=&apos;https://www.scintilla.org&apos;&gt;scintilla.org/Lexilla.html&lt;/a&gt;)&lt;/li&gt;&lt;li&gt;&lt;b&gt;uchardet:&lt;/b&gt; Maintained by Freedesktop. Enables fast and robust universal character encoding detection.&lt;/li&gt;&lt;li&gt;&lt;b&gt;Qt Project:&lt;/b&gt; Developed by The Qt Company and the Qt Open Source Community. (&lt;a style=&apos;color: %2;&apos; href=&apos;https://www.qt.io&apos;&gt;qt.io&lt;/a&gt;)&lt;/li&gt;&lt;li&gt;&lt;b&gt;Qt Advanced Docking System (QADS):&lt;/b&gt; Advanced dock widget management for Qt.&lt;/li&gt;&lt;li&gt;&lt;b&gt;NoteSciPad:&lt;/b&gt; Contributed modern Scintilla 5.6.7 / Lexilla 5.5.4 integration and multi-instance UI patterns.&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</source>
+        <source>&lt;div style=&apos;color: %1; line-height: 1.6;&apos;&gt;&lt;h3 style=&apos;color: %1; margin-top: 0;&apos;&gt;Credits &amp;amp; Upstream Attribution&lt;/h3&gt;&lt;p&gt;Notepad Next for macOS stands on the shoulders of giants. We express our deepest gratitude to the following projects and authors:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;b&gt;Justin Dailey (dail8859):&lt;/b&gt; Original creator and lead developer of NotepadNext. Provided the cross-platform Qt scaffolding, docking framework, and core application design. (&lt;a style=&apos;color: %2;&apos; href=&apos;https://github.com/dail8859/NotepadNext&apos;&gt;github.com/dail8859/NotepadNext&lt;/a&gt;)&lt;/li&gt;&lt;li&gt;&lt;b&gt;Scintilla:&lt;/b&gt; Created by Neil Hodgson and contributors. The legendary core editing component providing high-performance text rendering, multi-caret editing, and fold margins. (&lt;a style=&apos;color: %2;&apos; href=&apos;https://www.scintilla.org&apos;&gt;scintilla.org&lt;/a&gt;)&lt;/li&gt;&lt;li&gt;&lt;b&gt;Lexilla:&lt;/b&gt; Created by Neil Hodgson and contributors. Provides syntax highlighting and styling lexers for over 100 programming languages. (&lt;a style=&apos;color: %2;&apos; href=&apos;https://www.scintilla.org&apos;&gt;scintilla.org/Lexilla.html&lt;/a&gt;)&lt;/li&gt;&lt;li&gt;&lt;b&gt;uchardet:&lt;/b&gt; Maintained by Freedesktop. Enables fast and robust universal character encoding detection.&lt;/li&gt;&lt;li&gt;&lt;b&gt;Qt Project:&lt;/b&gt; Developed by The Qt Company and the Qt Open Source Community. (&lt;a style=&apos;color: %2;&apos; href=&apos;https://www.qt.io&apos;&gt;qt.io&lt;/a&gt;)&lt;/li&gt;&lt;li&gt;&lt;b&gt;Qt Advanced Docking System (QADS):&lt;/b&gt; Advanced dock widget management for Qt.&lt;/li&gt;&lt;li&gt;&lt;b&gt;NoteSciPad:&lt;/b&gt; Contributed modern Scintilla 5.6.7 / Lexilla 5.5.4 integration and multi-instance UI patterns.&lt;/li&gt;&lt;li&gt;&lt;b&gt;SparkNotePad:&lt;/b&gt; Invaluable feature donor (v1.3.8) providing inspiration and reference implementations for icon pack suites, toolbar personalization, forensics utilities, and preview workflows.&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/AboutDialog.cpp" line="344"/>
+        <location filename="../src/dialogs/AboutDialog.cpp" line="345"/>
         <source>&lt;div style=&apos;color: %1; line-height: 1.6;&apos;&gt;&lt;h3 style=&apos;color: %1; margin-top: 0;&apos;&gt;Key Productivity Shortcuts&lt;/h3&gt;&lt;table border=&apos;0&apos; cellspacing=&apos;6&apos; cellpadding=&apos;4&apos; width=&apos;100%&apos; style=&apos;color: %1;&apos;&gt;&lt;tr&gt;&lt;td style=&apos;color: %2; font-weight: bold;&apos;&gt;Ctrl / Cmd + N&lt;/td&gt;&lt;td&gt;Create New File&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&apos;color: %2; font-weight: bold;&apos;&gt;Ctrl / Cmd + Shift + N&lt;/td&gt;&lt;td&gt;Open New Window&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&apos;color: %2; font-weight: bold;&apos;&gt;Ctrl / Cmd + O&lt;/td&gt;&lt;td&gt;Open File&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&apos;color: %2; font-weight: bold;&apos;&gt;Ctrl / Cmd + S&lt;/td&gt;&lt;td&gt;Save File&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&apos;color: %2; font-weight: bold;&apos;&gt;Ctrl / Cmd + Shift + S&lt;/td&gt;&lt;td&gt;Save As...&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&apos;color: %2; font-weight: bold;&apos;&gt;Ctrl / Cmd + F&lt;/td&gt;&lt;td&gt;Find / Quick Find&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&apos;color: %2; font-weight: bold;&apos;&gt;Ctrl / Cmd + H&lt;/td&gt;&lt;td&gt;Find &amp;amp; Replace&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&apos;color: %2; font-weight: bold;&apos;&gt;Ctrl / Cmd + Shift + F&lt;/td&gt;&lt;td&gt;Find in Files / Workspace&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&apos;color: %2; font-weight: bold;&apos;&gt;Ctrl / Cmd + D&lt;/td&gt;&lt;td&gt;Duplicate Current Line or Selection&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&apos;color: %2; font-weight: bold;&apos;&gt;Ctrl / Cmd + /&lt;/td&gt;&lt;td&gt;Toggle Single-Line Comment&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&apos;color: %2; font-weight: bold;&apos;&gt;Ctrl / Cmd + Shift + /&lt;/td&gt;&lt;td&gt;Toggle Block / Stream Comment&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&apos;color: %2; font-weight: bold;&apos;&gt;Ctrl / Cmd + Shift + U&lt;/td&gt;&lt;td&gt;Convert Selection to UPPERCASE&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&apos;color: %2; font-weight: bold;&apos;&gt;Ctrl / Cmd + U&lt;/td&gt;&lt;td&gt;Convert Selection to lowercase&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&apos;color: %2; font-weight: bold;&apos;&gt;Ctrl+Alt+Shift+E&lt;/td&gt;&lt;td&gt;Encoding Information &amp;amp; Conversion Dialog&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&apos;color: %2; font-weight: bold;&apos;&gt;Ctrl+Alt+U&lt;/td&gt;&lt;td&gt;Convert Document Encoding to UTF-8&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&apos;color: %2; font-weight: bold;&apos;&gt;Ctrl+Alt+A&lt;/td&gt;&lt;td&gt;Convert Document Encoding to ANSI&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&apos;color: %2; font-weight: bold;&apos;&gt;Alt + Click &amp;amp; Drag&lt;/td&gt;&lt;td&gt;Column / Rectangular Box Selection&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/AboutDialog.cpp" line="371"/>
+        <location filename="../src/dialogs/AboutDialog.cpp" line="372"/>
         <source>&lt;div style=&apos;color: %1; line-height: 1.6;&apos;&gt;&lt;h3 style=&apos;color: %1; margin-top: 0;&apos;&gt;GNU General Public License v3.0&lt;/h3&gt;&lt;p&gt;Notepad Next is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.&lt;/p&gt;&lt;p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.&lt;/p&gt;&lt;p&gt;For complete license details, visit: &lt;a style=&apos;color: %2;&apos; href=&apos;https://www.gnu.org/licenses/&apos;&gt;https://www.gnu.org/licenses/&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/AboutDialog.cpp" line="469"/>
+        <location filename="../src/dialogs/AboutDialog.cpp" line="470"/>
         <source>Copy Diagnostics to Clipboard</source>
         <translation type="unfinished"></translation>
     </message>
@@ -95,17 +95,17 @@
 <context>
     <name>CaseConverter</name>
     <message>
-        <location filename="../src/utils/CaseConverter.cpp" line="224"/>
+        <location filename="../src/utils/CaseConverter.cpp" line="265"/>
         <source>No active editor.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/utils/CaseConverter.cpp" line="229"/>
+        <location filename="../src/utils/CaseConverter.cpp" line="270"/>
         <source>Document is read-only.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/utils/CaseConverter.cpp" line="265"/>
+        <location filename="../src/utils/CaseConverter.cpp" line="299"/>
         <source>No text selected or under cursor.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -303,7 +303,7 @@
 <context>
     <name>ColorPreviewCallTip</name>
     <message>
-        <location filename="../src/features/ColorPreviewCallTip.cpp" line="362"/>
+        <location filename="../src/features/ColorPreviewCallTip.cpp" line="405"/>
         <source>Pick New Color</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1803,7 +1803,7 @@ Shannon Entropy: %12
         <translation>Metin</translation>
     </message>
     <message>
-        <location filename="../src/docks/LanguageInspectorDock.cpp" line="159"/>
+        <location filename="../src/docks/LanguageInspectorDock.cpp" line="163"/>
         <source>Position %1 Style %2</source>
         <translation>Pozisyon %1 Stil %2</translation>
     </message>
@@ -1869,17 +1869,17 @@ Shannon Entropy: %12
         <translation>Seçilen Makroyu Sil</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MacroEditorDialog.cpp" line="127"/>
+        <location filename="../src/dialogs/MacroEditorDialog.cpp" line="131"/>
         <source>Delete Macro</source>
         <translation>Makroyu Sil</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MacroEditorDialog.cpp" line="127"/>
+        <location filename="../src/dialogs/MacroEditorDialog.cpp" line="131"/>
         <source>Are you sure you want to delete &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>&lt;b&gt;%1&lt;/b&gt;&apos;i silmek istediğinize emin misiniz?</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MacroEditorDialog.cpp" line="147"/>
+        <location filename="../src/dialogs/MacroEditorDialog.cpp" line="151"/>
         <source>(Copy)</source>
         <translation>(Kopyala)</translation>
     </message>
@@ -1992,7 +1992,7 @@ Shannon Entropy: %12
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="69"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2197"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2187"/>
         <source>Export As</source>
         <translation>... olarak Dışa Aktar</translation>
     </message>
@@ -3212,12 +3212,12 @@ Shannon Entropy: %12
         <translation>Yeni %1</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1831"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1825"/>
         <source>Create File</source>
         <translation>Dosya Oluştur</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1831"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1825"/>
         <source>&lt;b&gt;%1&lt;/b&gt; does not exist. Do you want to create it?</source>
         <translation>&lt;b&gt;%1&lt;/b&gt; mevcut değil. Oluşturmak istiyor musunuz?</translation>
     </message>
@@ -3359,164 +3359,164 @@ Shannon Entropy: %12
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1913"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1907"/>
         <source>Open Folder as Workspace</source>
         <translation>Klasörü Çalışma Alanı Olarak Aç</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1937"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2816"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1931"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2804"/>
         <source>Reload File</source>
         <translation>Dosyayı Yeniden Yükle</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1937"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1931"/>
         <source>Are you sure you want to reload &lt;b&gt;%1&lt;/b&gt;? Any unsaved changes will be lost.</source>
         <translation>&lt;b&gt;%1&lt;/b&gt;&apos;i yeniden yüklemek istediğinizden emin misiniz? Kaydedilmemiş değişiklikler kaybolacak.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2153"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2147"/>
         <source>Save a Copy As</source>
         <translation>Bir Kopyayı Farklı Kaydet</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2238"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2254"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2228"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2244"/>
         <source>Rename</source>
         <translation>Yeniden Adlandır</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2254"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2244"/>
         <source>Name:</source>
         <translation>İsim:</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2276"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2266"/>
         <source>Delete File</source>
         <translation>Dosyayı Sil</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2276"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2266"/>
         <source>Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</source>
         <translation>&lt;b&gt;%1&lt;/b&gt;&apos;i çöp kutusuna taşımak istediğinizden emin misiniz?</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2286"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2276"/>
         <source>Error Deleting File</source>
         <translation>Dosya Silme Hatası</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2286"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2276"/>
         <source>Something went wrong deleting &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>&lt;b&gt;%1&lt;/b&gt; silinirken bir hata oluştu?</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2498"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2488"/>
         <source>Administrator</source>
         <translation>Administrator</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2809"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2797"/>
         <source>&lt;b&gt;%1&lt;/b&gt; has been modified by another program. Do you want to reload it?</source>
         <translation>&lt;b&gt;%1&lt;/b&gt; has been modified by another program. Do you want to reload it?</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2812"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2800"/>
         <source>&lt;br&gt;&lt;br&gt;&lt;b&gt;Warning:&lt;/b&gt; you have unsaved changes in this tab. Reloading will discard them permanently.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2842"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2830"/>
         <source>Read error</source>
         <translation>Read error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2843"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2831"/>
         <source>Write error</source>
         <translation>Write error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2844"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2832"/>
         <source>Fatal error</source>
         <translation>Fatal error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2845"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2833"/>
         <source>Resource error</source>
         <translation>Resource error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2846"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2834"/>
         <source>Open error</source>
         <translation>Open error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2847"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2835"/>
         <source>Abort error</source>
         <translation>Abort error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2848"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2836"/>
         <source>Timeout error</source>
         <translation>Timeout error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2849"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2837"/>
         <source>Unspecified error</source>
         <translation>Unspecified error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2850"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2838"/>
         <source>Remove error</source>
         <translation>Remove error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2851"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2839"/>
         <source>Rename error</source>
         <translation>Rename error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2852"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2840"/>
         <source>Position error</source>
         <translation>Position error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2853"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2841"/>
         <source>Resize error</source>
         <translation>Resize error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2854"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2842"/>
         <source>Permissions error</source>
         <translation>Permissions error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2855"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2843"/>
         <source>Copy error</source>
         <translation>Copy error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2856"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2844"/>
         <source>Unknown error (%1)</source>
         <translation>Unknown error (%1)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2859"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2847"/>
         <source>Error Saving File</source>
         <translation>Dosyayı Kaydetme Hatası</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2860"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2848"/>
         <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
         <translation>Bir hata oluştu. &lt;b&gt;%1&lt;/b&gt; kaydedilirken hata oluştu. &lt;br&gt;&lt;br&gt;Hata: %2</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2865"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2853"/>
         <source>Zoom: %1%</source>
         <translation>Zoom: %1%</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="3487"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="3476"/>
         <source>Show / Hide Notepad Next</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3545,13 +3545,13 @@ Shannon Entropy: %12
     </message>
     <message>
         <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="90"/>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="564"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="565"/>
         <source>Markdown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="91"/>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="562"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="563"/>
         <source>HTML</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3563,7 +3563,7 @@ Shannon Entropy: %12
     <message>
         <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="102"/>
         <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="515"/>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="573"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="574"/>
         <source>0 words • 0 min read</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3618,58 +3618,58 @@ Shannon Entropy: %12
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="557"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="558"/>
         <source>Auto (HTML)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="559"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="560"/>
         <source>Auto (Markdown)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="579"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="580"/>
         <source>%1 words • %2 min read</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="632"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="633"/>
         <source>HTML Copied!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="647"/>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="687"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="648"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="688"/>
         <source>Untitled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="661"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="662"/>
         <source>Export HTML Document</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="662"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="663"/>
         <source>HTML Documents (*.html *.htm);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="701"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="702"/>
         <source>Export PDF Document</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="702"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="703"/>
         <source>PDF Documents (*.pdf);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="775"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="776"/>
         <source>Blocked Untrusted Link</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="776"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="777"/>
         <source>Navigation to link &apos;%1&apos; with scheme &apos;%2&apos; is blocked for security.
 
 Only http, https, and mailto URLs are permitted in HTML &amp; Markdown Preview (mitigating CVE-2026-20841).</source>

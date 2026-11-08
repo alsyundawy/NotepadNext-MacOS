@@ -238,8 +238,8 @@ MarkdownSafePreviewDock::PreviewFormat MarkdownSafePreviewDock::detectFormat(con
         return Markdown;
     }
 
-    const QString snippet = QString::fromUtf8(editor->get_text_range(0, 400)).trimmed().toLower();
-    if (snippet.startsWith(QStringLiteral("<!doctype html")) || snippet.startsWith(QStringLiteral("<html")) ||
+    if (const QString snippet = QString::fromUtf8(editor->get_text_range(0, 400)).trimmed().toLower();
+        snippet.startsWith(QStringLiteral("<!doctype html")) || snippet.startsWith(QStringLiteral("<html")) ||
         snippet.contains(QStringLiteral("<head>")) || snippet.contains(QStringLiteral("<body>")) ||
         snippet.contains(QStringLiteral("</div>")) || snippet.contains(QStringLiteral("</p>"))) {
         return Html;
@@ -519,7 +519,7 @@ void MarkdownSafePreviewDock::renderPreview() {
 
     applyGitHubTheme();
 
-    const QString content = QString::fromUtf8(currentEditor->get_text_range(0, currentEditor->length()));
+    const QString content = QString::fromUtf8(currentEditor->get_text_range(0, static_cast<int>(currentEditor->length())));
     const PreviewFormat effectiveFormat =
         (currentFormat == PreviewFormat::Auto) ? detectFormat(currentEditor) : currentFormat;
 
@@ -552,13 +552,14 @@ void MarkdownSafePreviewDock::updateFormatLabel(PreviewFormat effectiveFormat) {
         return;
     }
 
-    if (currentFormat == PreviewFormat::Auto) {
-        if (effectiveFormat == PreviewFormat::Html) {
+    using enum PreviewFormat;
+    if (currentFormat == Auto) {
+        if (effectiveFormat == Html) {
             lblFormatStatus->setText(tr("Auto (HTML)"));
         } else {
             lblFormatStatus->setText(tr("Auto (Markdown)"));
         }
-    } else if (currentFormat == PreviewFormat::Html) {
+    } else if (currentFormat == Html) {
         lblFormatStatus->setText(tr("HTML"));
     } else {
         lblFormatStatus->setText(tr("Markdown"));
@@ -613,7 +614,7 @@ void MarkdownSafePreviewDock::copyHtml() {
     if (!currentEditor) {
         return;
     }
-    const QString rawContent = QString::fromUtf8(currentEditor->get_text_range(0, currentEditor->length()));
+    const QString rawContent = QString::fromUtf8(currentEditor->get_text_range(0, static_cast<int>(currentEditor->length())));
     const PreviewFormat effectiveFormat =
         (currentFormat == PreviewFormat::Auto) ? detectFormat(currentEditor) : currentFormat;
     QString bodyHtml;
@@ -663,7 +664,7 @@ void MarkdownSafePreviewDock::exportHtml() {
     if (savePath.isEmpty()) {
         return;
     }
-    const QString rawContent = QString::fromUtf8(currentEditor->get_text_range(0, currentEditor->length()));
+    const QString rawContent = QString::fromUtf8(currentEditor->get_text_range(0, static_cast<int>(currentEditor->length())));
     const PreviewFormat effectiveFormat =
         (currentFormat == PreviewFormat::Auto) ? detectFormat(currentEditor) : currentFormat;
 
@@ -704,7 +705,7 @@ void MarkdownSafePreviewDock::exportPdf() {
         return;
     }
 
-    const QString rawContent = QString::fromUtf8(currentEditor->get_text_range(0, currentEditor->length()));
+    const QString rawContent = QString::fromUtf8(currentEditor->get_text_range(0, static_cast<int>(currentEditor->length())));
     const PreviewFormat effectiveFormat =
         (currentFormat == PreviewFormat::Auto) ? detectFormat(currentEditor) : currentFormat;
     const bool isMarkdown = (effectiveFormat != PreviewFormat::Html);
@@ -712,7 +713,7 @@ void MarkdownSafePreviewDock::exportPdf() {
     DocumentExportManager::exportToPdf(rawContent, isMarkdown, savePath, dlg.options());
 }
 
-void MarkdownSafePreviewDock::openInBrowser() {
+void MarkdownSafePreviewDock::openInBrowser() const {
     if (!currentEditor) {
         return;
     }
@@ -727,7 +728,7 @@ void MarkdownSafePreviewDock::openInBrowser() {
     }
 
     const bool isDark = palette().color(QPalette::Window).lightness() < 128;
-    const QString rawContent = QString::fromUtf8(currentEditor->get_text_range(0, currentEditor->length()));
+    const QString rawContent = QString::fromUtf8(currentEditor->get_text_range(0, static_cast<int>(currentEditor->length())));
     QString bodyHtml;
     if (effectiveFormat == PreviewFormat::Html) {
         bodyHtml = rawContent;
@@ -804,7 +805,7 @@ void MarkdownSafePreviewDock::syncScrollFromBrowser() {
     if (m_syncingScroll || !currentEditor || !isVisible()) {
         return;
     }
-    QScrollBar *const scrollBar = browser->verticalScrollBar();
+    const QScrollBar *const scrollBar = browser->verticalScrollBar();
     if (!scrollBar || scrollBar->maximum() <= 0) {
         return;
     }

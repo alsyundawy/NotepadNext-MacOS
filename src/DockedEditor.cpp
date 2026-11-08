@@ -30,6 +30,7 @@
 #include "ScintillaNext.h"
 
 #include <QUuid>
+#include <algorithm>
 
 
 class DockedEditorComponentsFactory : public ads::CDockComponentsFactory
@@ -109,11 +110,13 @@ ScintillaNext *findFallbackEditor(const ads::CDockManager *mgr, ads::CDockAreaWi
             targetArea = areaWidget;
             return ed;
         }
-        for (const ads::CDockWidget *dockWidget : areaWidget->dockWidgets()) {
-            if (auto *ed = extractActiveEditor(dockWidget)) {
-                targetArea = areaWidget;
-                return ed;
-            }
+        const auto widgets = areaWidget->dockWidgets();
+        const auto it = std::find_if(widgets.cbegin(), widgets.cend(), [](const ads::CDockWidget *w) {
+            return extractActiveEditor(w) != nullptr;
+        });
+        if (it != widgets.cend()) {
+            targetArea = areaWidget;
+            return extractActiveEditor(*it);
         }
     }
     return nullptr;
@@ -157,10 +160,12 @@ ScintillaNext *DockedEditor::getCurrentEditor() const
         if (auto *ed = extractActiveEditor(areaWidget->currentDockWidget())) {
             return ed;
         }
-        for (const ads::CDockWidget *dockWidget : areaWidget->dockWidgets()) {
-            if (auto *ed = extractActiveEditor(dockWidget)) {
-                return ed;
-            }
+        const auto widgets = areaWidget->dockWidgets();
+        const auto it = std::find_if(widgets.cbegin(), widgets.cend(), [](const ads::CDockWidget *w) {
+            return extractActiveEditor(w) != nullptr;
+        });
+        if (it != widgets.cend()) {
+            return extractActiveEditor(*it);
         }
     }
 

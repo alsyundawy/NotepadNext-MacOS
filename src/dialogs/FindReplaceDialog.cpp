@@ -226,7 +226,7 @@ bool FindReplaceDialog::event(QEvent *e)
     return QDialog::event(e);
 }
 
-void FindReplaceDialog::showEvent(QShowEvent *event)
+void FindReplaceDialog::showEvent(QShowEvent *e)
 {
     qInfo(Q_FUNC_INFO);
 
@@ -239,14 +239,14 @@ void FindReplaceDialog::showEvent(QShowEvent *event)
     updateInSelectionCheckbox();
     changeTab(tabBar->currentIndex());
 
-    QDialog::showEvent(event);
+    QDialog::showEvent(e);
 }
 
-void FindReplaceDialog::closeEvent(QCloseEvent *event)
+void FindReplaceDialog::closeEvent(QCloseEvent *e)
 {
     saveSettings();
 
-    QDialog::closeEvent(event);
+    QDialog::closeEvent(e);
 }
 
 static void updateComboList(QComboBox *comboBox, const QString &text)
@@ -948,29 +948,29 @@ void FindReplaceDialog::showMessage(const QString &message, const QString &color
     statusBar->showMessage(message);
 }
 
-bool FindReplaceDialog::eventFilter(QObject *obj, QEvent *event)
+bool FindReplaceDialog::eventFilter(QObject *obj, QEvent *e)
 {
-    if (event->type() != QEvent::KeyPress) {
-        return QDialog::eventFilter(obj, event);
+    if (e->type() != QEvent::KeyPress) {
+        return QDialog::eventFilter(obj, e);
     }
 
-    if (const auto *keyEvent = static_cast<const QKeyEvent *>(event); !keyEvent->matches(QKeySequence::Paste)) {
-        return QDialog::eventFilter(obj, event);
+    if (const auto *keyEvent = static_cast<const QKeyEvent *>(e); !keyEvent->matches(QKeySequence::Paste)) {
+        return QDialog::eventFilter(obj, e);
     }
 
     const QClipboard *clipboard = QGuiApplication::clipboard();
     if (!clipboard) {
-        return QDialog::eventFilter(obj, event);
+        return QDialog::eventFilter(obj, e);
     }
 
     QString text = clipboard->text();
     if (!text.contains(QLatin1Char('\n')) && !text.contains(QLatin1Char('\r'))) {
-        return QDialog::eventFilter(obj, event);
+        return QDialog::eventFilter(obj, e);
     }
 
     auto *le = qobject_cast<QLineEdit *>(obj);
     if (!le) {
-        return QDialog::eventFilter(obj, event);
+        return QDialog::eventFilter(obj, e);
     }
 
     if (ui->radioExtendedSearch->isChecked() || ui->radioRegexSearch->isChecked()) {

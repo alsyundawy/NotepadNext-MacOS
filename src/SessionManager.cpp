@@ -29,6 +29,7 @@
 #include <QDir>
 #include <QStandardPaths>
 #include <QUuid>
+#include <algorithm>
 
 
 static QString RandomSessionFileName()
@@ -40,18 +41,18 @@ static QString RandomSessionFileName()
 static QVariantList QListToQVariantList(const QList<int> &intList)
 {
     QVariantList vl;
-    for (const int i : intList){
-        vl.append(i);
-    }
+    vl.reserve(intList.size());
+    std::transform(intList.cbegin(), intList.cend(), std::back_inserter(vl),
+        [](int i) { return QVariant(i); });
     return vl;
 }
 
 // Do the opposite of the function above
 static QList<int> QVariantListToQList(const QVariantList &variantList) {
     QList<int> intList;
-    for (const QVariant &variant : variantList) {
-        intList.append(variant.toInt());
-    }
+    intList.reserve(variantList.size());
+    std::transform(variantList.cbegin(), variantList.cend(), std::back_inserter(intList),
+        [](const QVariant &variant) { return variant.toInt(); });
     return intList;
 }
 

@@ -59,7 +59,7 @@ UpdateDialog::UpdateDialog(const UpdateManifest &manifest, QWidget *parent)
     , m_updateAvailable(manifest.updateAvailable)
     , m_isError(manifest.latestVersion.trimmed().isEmpty())
     , m_latestVersion(manifest.latestVersion)
-    , m_currentVersion(manifest.currentVersion.isEmpty() ? QStringLiteral("0.15-07") : manifest.currentVersion)
+    , m_currentVersion(manifest.currentVersion.isEmpty() ? QStringLiteral("0.15-08") : manifest.currentVersion)
     , m_downloadUrl(manifest.downloadUrl)
     , m_changelogUrl(manifest.changelogUrl)
     , m_openUrl(manifest.openUrl.isEmpty() ? QStringLiteral("https://github.com/alsyundawy/NotepadNext-MacOS/releases") : manifest.openUrl)
@@ -206,7 +206,7 @@ void UpdateDialog::setupUi()
 
         addCardRow(tr("Current Version:"), QStringLiteral("v%1").arg(m_currentVersion));
         addCardRow(tr("System Architecture:"), archStr);
-        addCardRow(tr("Release Channel:"), tr("Official GitHub Stable (0.15-07)"));
+        addCardRow(tr("Release Channel:"), tr("Official GitHub Stable (0.15-08)"));
         addCardRow(tr("Last Checked:"), QDateTime::currentDateTime().toString(QStringLiteral("yyyy-MM-dd hh:mm")));
     }
 

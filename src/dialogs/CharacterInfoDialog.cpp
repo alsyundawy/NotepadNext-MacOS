@@ -15,7 +15,7 @@
 #include <QApplication>
 
 CharacterInfoDialog::CharacterInfoDialog(const CharacterInfo::Details &d, QWidget *parent)
-    : QDialog(parent), ui(new Ui::CharacterInfoDialog), m_details(d) {
+    : QDialog(parent), ui(std::make_unique<Ui::CharacterInfoDialog>()), m_details(d) {
     ui->setupUi(this);
 
     ui->labelGlyph->setText(d.displayGlyph);
@@ -48,23 +48,21 @@ CharacterInfoDialog::CharacterInfoDialog(const CharacterInfo::Details &d, QWidge
     connect(ui->btnCopyHtml, &QPushButton::clicked, this, &CharacterInfoDialog::copyHtmlEntity);
 }
 
-CharacterInfoDialog::~CharacterInfoDialog() {
-    delete ui;
-}
+CharacterInfoDialog::~CharacterInfoDialog() = default;
 
-void CharacterInfoDialog::copyCharacter() {
+void CharacterInfoDialog::copyCharacter() const {
     QApplication::clipboard()->setText(m_details.glyph);
 }
 
-void CharacterInfoDialog::copyCodePoint() {
+void CharacterInfoDialog::copyCodePoint() const {
     QApplication::clipboard()->setText(CharacterInfo::formatCodePoint(m_details.codePoint));
 }
 
-void CharacterInfoDialog::copyUtf8() {
+void CharacterInfoDialog::copyUtf8() const {
     QApplication::clipboard()->setText(m_details.utf8Hex);
 }
 
-void CharacterInfoDialog::copyHtmlEntity() {
+void CharacterInfoDialog::copyHtmlEntity() const {
     if (!m_details.htmlNamedEntity.isEmpty()) {
         QApplication::clipboard()->setText(m_details.htmlNamedEntity);
     } else {

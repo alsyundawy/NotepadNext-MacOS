@@ -119,17 +119,17 @@ cmake --build build --target rpm
 
 The resulting files will be placed in `build/`:
 
-- `build/notepadnext_0.15-07_amd64.deb`
-- `build/notepadnext-0.15-07-1.x86_64.rpm`
+- `build/notepadnext_0.15-08_amd64.deb`
+- `build/notepadnext-0.15-08-1.x86_64.rpm`
 
 ### 6.1 Inspect Package Metadata
 
 ```bash
 # Inspect generated Debian package control metadata:
-dpkg-deb -I build/notepadnext_0.15-07_amd64.deb
+dpkg-deb -I build/notepadnext_0.15-08_amd64.deb
 
 # Verify file contents inside .deb:
-dpkg-deb -c build/notepadnext_0.15-07_amd64.deb
+dpkg-deb -c build/notepadnext_0.15-08_amd64.deb
 ```
 
 ---
@@ -140,7 +140,7 @@ To install the `.deb` package while automatically resolving and downloading all 
 
 ```bash
 # ✅ Recommended APT installation command (local file):
-sudo apt install ./build/notepadnext_0.15-07_amd64.deb
+sudo apt install ./build/notepadnext_0.15-08_amd64.deb
 ```
 
 > **Why `apt install ./file.deb` instead of `dpkg -i`?**  

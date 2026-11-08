@@ -21,14 +21,15 @@ MyersDiffEngine::DiffResult MyersDiffEngine::compare(const QString &textA, const
 
     result.lines = computeLcs(linesA, linesB);
 
+    using enum MyersDiffEngine::DiffOp;
     for (const auto &line : result.lines) {
-        if (line.op == DiffOp::Insert) {
+        if (line.op == Insert) {
             result.additions++;
             result.hasDifferences = true;
-        } else if (line.op == DiffOp::Delete) {
+        } else if (line.op == Delete) {
             result.deletions++;
             result.hasDifferences = true;
-        } else if (line.op == DiffOp::Modify) {
+        } else if (line.op == Modify) {
             result.modifications++;
             result.hasDifferences = true;
         }
@@ -38,10 +39,10 @@ MyersDiffEngine::DiffResult MyersDiffEngine::compare(const QString &textA, const
 }
 
 QVector<MyersDiffEngine::DiffLine> MyersDiffEngine::computeLcs(const QStringList &linesA, const QStringList &linesB) {
-    const int n = static_cast<int>(linesA.size());
-    const int m = static_cast<int>(linesB.size());
+    const auto n = static_cast<int>(linesA.size());
+    const auto m = static_cast<int>(linesB.size());
 
-    std::vector<std::vector<int>> dp(n + 1, std::vector<int>(m + 1, 0));
+    std::vector dp(n + 1, std::vector(m + 1, 0));
 
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < m; ++j) {
@@ -57,10 +58,11 @@ QVector<MyersDiffEngine::DiffLine> MyersDiffEngine::computeLcs(const QStringList
     int i = n;
     int j = m;
 
+    using enum MyersDiffEngine::DiffOp;
     while (i > 0 || j > 0) {
         if (i > 0 && j > 0 && linesA[i - 1] == linesB[j - 1]) {
             DiffLine dl;
-            dl.op = DiffOp::Equal;
+            dl.op = Equal;
             dl.lineA = i - 1;
             dl.lineB = j - 1;
             dl.textA = linesA[i - 1];
@@ -70,7 +72,7 @@ QVector<MyersDiffEngine::DiffLine> MyersDiffEngine::computeLcs(const QStringList
             --j;
         } else if (j > 0 && (i == 0 || dp[i][j - 1] >= dp[i - 1][j])) {
             DiffLine dl;
-            dl.op = DiffOp::Insert;
+            dl.op = Insert;
             dl.lineA = -1;
             dl.lineB = j - 1;
             dl.textA = QString();
@@ -79,7 +81,7 @@ QVector<MyersDiffEngine::DiffLine> MyersDiffEngine::computeLcs(const QStringList
             --j;
         } else if (i > 0 && (j == 0 || dp[i][j - 1] < dp[i - 1][j])) {
             DiffLine dl;
-            dl.op = DiffOp::Delete;
+            dl.op = Delete;
             dl.lineA = i - 1;
             dl.lineB = -1;
             dl.textA = linesA[i - 1];
@@ -89,21 +91,23 @@ QVector<MyersDiffEngine::DiffLine> MyersDiffEngine::computeLcs(const QStringList
         }
     }
 
-    std::reverse(rawDiff.begin(), rawDiff.end());
+    std::ranges::reverse(rawDiff);
 
     QVector<DiffLine> processed;
-    for (int idx = 0; idx < rawDiff.size(); ++idx) {
-        if (idx + 1 < rawDiff.size() && rawDiff[idx].op == DiffOp::Delete && rawDiff[idx + 1].op == DiffOp::Insert) {
+    int idx = 0;
+    while (idx < rawDiff.size()) {
+        if (idx + 1 < rawDiff.size() && rawDiff[idx].op == Delete && rawDiff[idx + 1].op == Insert) {
             DiffLine mod;
-            mod.op = DiffOp::Modify;
+            mod.op = Modify;
             mod.lineA = rawDiff[idx].lineA;
             mod.lineB = rawDiff[idx + 1].lineB;
             mod.textA = rawDiff[idx].textA;
             mod.textB = rawDiff[idx + 1].textB;
             processed.append(mod);
-            idx++;
+            idx += 2;
         } else {
             processed.append(rawDiff[idx]);
+            idx++;
         }
     }
 

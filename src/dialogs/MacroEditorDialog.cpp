@@ -19,6 +19,7 @@
  * along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
  */
 #include <utility>
+#include <algorithm>
 
 #include <QItemSelectionModel>
 #include <QMessageBox>
@@ -54,10 +55,13 @@ MacroEditorDialog::MacroEditorDialog(QWidget *parent, MacroManager *mm) :
     connect(ui->btnMoveMacroStepUp, &QPushButton::clicked, this, &MacroEditorDialog::moveMacroStepUp);
     connect(ui->btnMoveMacroStepDown, &QPushButton::clicked, this, &MacroEditorDialog::moveMacroStepDown);
 
+    const auto rawMessages = MacroStep::RecordableMacroMessages();
     QList<ComboBoxItem> recordableMacroMessages;
-    for (Scintilla::Message msg : MacroStep::RecordableMacroMessages()) {
-        recordableMacroMessages.append(qMakePair(MacroStep::NameOfMessage(msg), static_cast<int>(msg)));
-    }
+    recordableMacroMessages.reserve(rawMessages.size());
+    std::transform(rawMessages.cbegin(), rawMessages.cend(), std::back_inserter(recordableMacroMessages),
+        [](Scintilla::Message msg) {
+            return qMakePair(MacroStep::NameOfMessage(msg), static_cast<int>(msg));
+        });
     ui->tblMacroSteps->setItemDelegateForColumn(0, new ComboBoxDelegate(recordableMacroMessages, this));
 
     ui->listMacros->setCurrentIndex(model->index(0));

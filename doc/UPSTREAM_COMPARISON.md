@@ -1,8 +1,8 @@
-# ⚖️ Comprehensive Architectural Comparison: NotepadNext-MacOS vs. Official Upstream (v0.15-07 vs. v0.15)
+# ⚖️ Comprehensive Architectural Comparison: NotepadNext-MacOS vs. Official Upstream (v0.15-08 vs. v0.15)
 
-> **Komparasi Mendalam & Analisis Arsitektur: NotepadNext-MacOS vs. Versi Hulu Resmi (v0.15-07 vs. v0.15)**<br/>
-> **Document Version**: `1.0.0`<br/>
-> **Target Release**: NotepadNext-MacOS `v0.15-07`<br/>
+> **Komparasi Mendalam & Analisis Arsitektur: NotepadNext-MacOS vs. Versi Hulu Resmi (v0.15-08 vs. v0.15)**<br/>
+> **Document Version**: `1.1.0`<br/>
+> **Target Release**: NotepadNext-MacOS `v0.15-08`<br/>
 > **Baseline Upstream**: `dail8859/NotepadNext v0.15` (Official Tag: `v0.15`)<br/>
 > **Author & Maintainer**: Harry DS Alsyundawy ([@alsyundawy](https://github.com/alsyundawy))<br/>
 > **Upstream Repository**: [dail8859/NotepadNext](https://github.com/dail8859/NotepadNext)<br/>
@@ -34,7 +34,7 @@
 
 While the official upstream project [`dail8859/NotepadNext`](https://github.com/dail8859/NotepadNext) provides a remarkable cross-platform proof-of-concept for porting Notepad++ to Qt, its generic multi-platform architecture leaves critical macOS ergonomics, security guardrails, typography rendering, and stability features unaddressed.
 
-**NotepadNext-MacOS** (maintained by `@alsyundawy`) was engineered to transform NotepadNext from a generic desktop port into a **first-class, enterprise-grade, native macOS editor**. Synthesizing architectural innovations across seven iterations (`v0.15-01` through `v0.15-07`), this repository resolves critical upstream shortcomings:
+**NotepadNext-MacOS** (maintained by `@alsyundawy`) was engineered to transform NotepadNext from a generic desktop port into a **first-class, enterprise-grade, native macOS editor**. Synthesizing architectural innovations across eight iterations (`v0.15-01` through `v0.15-08`), this repository resolves critical upstream shortcomings:
 
 1. **Defensive Cybersecurity**: Mitigates four 2025–2026 CVE vectors (CWE-494, CWE-94, CWE-78, CWE-120/126) left unpatched in upstream.
 2. **Native macOS Integration**: Implements single-instance in-process multi-window cycling (`Cmd+~`), responsive Dock activations, Apple HIG unsaved document prompt cards (`SaveModifiedDialog` with `Cmd+D`), and macOS Dock quit interceptors (`QEvent::Close`).
@@ -48,7 +48,7 @@ While the official upstream project [`dail8859/NotepadNext`](https://github.com/
 
 Meskipun proyek hulu resmi [`dail8859/NotepadNext`](https://github.com/dail8859/NotepadNext) menghadirkan konsep luar biasa dalam mem-porting Notepad++ ke pustaka Qt lintas platform, pendekatan arsitektur generiknya meninggalkan kelemahan krusial pada ergonomi macOS, perlindungan keamanan, rendering tipografi, dan stabilitas berkas.
 
-**NotepadNext-MacOS** (dikelola oleh `@alsyundawy`) dirancang khusus untuk mentransformasikan NotepadNext dari sekadar aplikasi desktop generik menjadi **teks editor native macOS berkelas enterprise yang tangguh**. Melalui sintesis arsitektural berkelanjutan dari versi `v0.15-01` hingga `v0.15-07`, repositori ini menuntaskan berbagai keterbatasan versi hulu:
+**NotepadNext-MacOS** (dikelola oleh `@alsyundawy`) dirancang khusus untuk mentransformasikan NotepadNext dari sekadar aplikasi desktop generik menjadi **teks editor native macOS berkelas enterprise yang tangguh**. Melalui sintesis arsitektural berkelanjutan dari versi `v0.15-01` hingga `v0.15-08`, repositori ini menuntaskan berbagai keterbatasan versi hulu:
 
 1. **Keamanan Siber Defensif**: Menambal empat vektor kerentanan CVE 2025–2026 (CWE-494, CWE-94, CWE-78, CWE-120/126) yang belum termitigasi di versi hulu.
 2. **Integrasi Native macOS Sejati**: Menyediakan arsitektur multi-jendela in-process dengan navigasi `Cmd+~`, responsivitas klik Dock macOS, kartu konfirmasi simpan dokumen standar Apple HIG (`SaveModifiedDialog` dengan pintasan `Cmd+D`), serta pencegahan kehilangan data saat keluar dari menu Dock (`QEvent::Close`).
@@ -60,7 +60,7 @@ Meskipun proyek hulu resmi [`dail8859/NotepadNext`](https://github.com/dail8859/
 
 ## 2. Comprehensive Feature & Architecture Matrix / Matriks Komprehensif
 
-|   #    | Dimension / Dimensi                      | Official Upstream v0.15 (`dail8859`)                           | NotepadNext-MacOS v0.15-07 (`alsyundawy`)                                   | Detailed Engineering Distinction / Keunggulan Teknis Mendalam                                                                                                                                  |
+|   #    | Dimension / Dimensi                      | Official Upstream v0.15 (`dail8859`)                           | NotepadNext-MacOS v0.15-08 (`alsyundawy`)                                   | Detailed Engineering Distinction / Keunggulan Teknis Mendalam                                                                                                                                  |
 | :----: | :--------------------------------------- | :------------------------------------------------------------- | :-------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **1**  | **Auto-Updater Security**                | Plain HTTP/HTTPS download without hash verification            | **HTTPS Pinning + SHA-256 Checksum Validation (CWE-494)**                   | Upstream downloads binaries without cryptographic hash checks; this edition verifies SHA-256 via `QCryptographicHash` before prompts (`CVE-2025-15556`).                                       |
 | **2**  | **Lua Sandbox Safety**                   | Standard Lua 5.4 runtime with unrestricted OS/file APIs        | **Hardened Sandboxed Lua 5.5.1 Runtime (CWE-94)**                           | Upstream allows arbitrary command execution; this edition strips `os.execute`, `io.popen`, `package.loadlib` to eliminate RCE vectors (`CVE-2026-42214`).                                      |
@@ -347,7 +347,7 @@ While upstream contains numerous compiler warnings, implicit conversions, and hi
 
 ### 🇬🇧 English: The Definitive macOS Notepad++ Experience
 
-The comparison demonstrates that **NotepadNext-MacOS v0.15-07** is not merely a downstream build, but an **advanced architectural evolution** of the project:
+The comparison demonstrates that **NotepadNext-MacOS v0.15-08** is not merely a downstream build, but an **advanced architectural evolution** of the project:
 
 - **Security**: Upstream leaves multiple critical CVEs unmitigated; this edition is strictly hardened with sandboxed runtimes, HTTPS pinning, and bounded memory safety.
 - **macOS Experience**: Upstream feels like a cross-platform guest; this edition behaves like a native Mac citizen with in-process multi-window handling, Dock quit protection, and Apple HIG dialogs.
@@ -358,7 +358,7 @@ The comparison demonstrates that **NotepadNext-MacOS v0.15-07** is not merely a 
 
 ### 🇮🇩 Bahasa Indonesia: Pengalaman Terbaik Notepad++ di macOS
 
-Analisis komparatif ini membuktikan bahwa **NotepadNext-MacOS v0.15-07** bukan sekadar salinan rilis, melainkan **lompatan evolusi arsitektural yang signifikan**:
+Analisis komparatif ini membuktikan bahwa **NotepadNext-MacOS v0.15-08** bukan sekadar salinan rilis, melainkan **lompatan evolusi arsitektural yang signifikan**:
 
 - **Keamanan Siber**: Menambal seluruh kerentanan CVE kritis yang belum teratasi di versi hulu melalui sandbox Lua, validasi SHA-256, dan pengamanan memori.
 - **Pengalaman macOS**: Mengubah aplikasi dari sekadar porting lintas platform menjadi aplikasi yang terintegrasi secara native dengan sistem macOS (multi-jendela in-process, proteksi Dock, dialog Apple HIG).

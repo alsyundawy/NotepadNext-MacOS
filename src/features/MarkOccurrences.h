@@ -39,7 +39,7 @@ signals:
     void marksCleared();
 
 private:
-    void setupIndicator(ScintillaNext *editor, int indicator);
+    void setupIndicator(ScintillaNext *editor, int indicator) const;
 
     int m_lastMatchCount{0};
     QString m_lastQuery;

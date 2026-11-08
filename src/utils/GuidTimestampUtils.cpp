@@ -88,20 +88,21 @@ GuidTimestampUtils::Result GuidTimestampUtils::insertText(ScintillaNext *editor,
         return {false, QString(), QStringLiteral("Document is read-only")};
     }
 
-    const int startPos = editor->selectionStart();
-    const int endPos = editor->selectionEnd();
+    const auto startPos = static_cast<int>(editor->selectionStart());
+    const auto endPos = static_cast<int>(editor->selectionEnd());
 
     const UndoAction ua(editor);
     if (startPos != endPos) {
         editor->setTargetRange(startPos, endPos);
     } else {
-        const int curPos = editor->currentPos();
+        const auto curPos = static_cast<int>(editor->currentPos());
         editor->setTargetRange(curPos, curPos);
     }
 
     const QByteArray utf8 = text.toUtf8();
     editor->replaceTarget(utf8.length(), utf8.constData());
-    const int targetPos = (startPos != endPos ? startPos : editor->currentPos()) + utf8.length();
+    const auto basePos = (startPos != endPos ? startPos : static_cast<int>(editor->currentPos()));
+    const auto targetPos = basePos + static_cast<int>(utf8.length());
     editor->setSelection(targetPos, targetPos);
 
     return {true, text, QString()};

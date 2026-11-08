@@ -228,7 +228,7 @@ ScintillaNext *EditorManager::getEditorByFilePath(const QString &filePath)
 
     purgeOldEditorPointers();
 
-    const auto it = std::find_if(editors.cbegin(), editors.cend(), [&newInfo](const ScintillaNext *editor) {
+    const auto it = std::ranges::find_if(editors, [&newInfo](const ScintillaNext *editor) {
         return editor && editor->isFile() && editor->getFileInfo() == newInfo;
     });
 

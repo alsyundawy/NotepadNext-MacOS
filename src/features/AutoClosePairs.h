@@ -34,7 +34,9 @@ public slots:
     void notify(const Scintilla::NotificationData *pscn) override;
 
 private:
-    bool handleKeyPress(class QKeyEvent *keyEvent);
+    bool handleKeyPress(const class QKeyEvent *keyEvent);
+    bool handleBracketPair(QChar ch, int curPos, char charAtPos);
+    bool handleQuotePair(QChar ch, int curPos, char charAtPos, char charBefore);
     static bool isWordChar(char ch);
 
     bool m_autoCloseBrackets{true};

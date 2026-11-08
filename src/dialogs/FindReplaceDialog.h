@@ -72,9 +72,9 @@ public:
 
 protected:
     bool event(QEvent *e) override;
-    bool eventFilter(QObject *obj, QEvent *event) override;
-    void showEvent(QShowEvent *event) override;
-    void closeEvent(QCloseEvent *event) override;
+    bool eventFilter(QObject *obj, QEvent *e) override;
+    void showEvent(QShowEvent *e) override;
+    void closeEvent(QCloseEvent *e) override;
 
 signals:
     void windowActivated();

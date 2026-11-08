@@ -131,8 +131,8 @@ QString CaseConverter::toSnakeCase(const QString &text) {
     }
     QStringList lowerWords;
     lowerWords.reserve(words.size());
-    std::transform(words.cbegin(), words.cend(), std::back_inserter(lowerWords),
-                   [](const QString &w) { return w.toLower(); });
+    std::ranges::transform(words, std::back_inserter(lowerWords),
+                           [](const QString &w) { return w.toLower(); });
     return lowerWords.join(QLatin1Char('_'));
 }
 
@@ -175,8 +175,8 @@ QString CaseConverter::toKebabCase(const QString &text) {
     }
     QStringList lowerWords;
     lowerWords.reserve(words.size());
-    std::transform(words.cbegin(), words.cend(), std::back_inserter(lowerWords),
-                   [](const QString &w) { return w.toLower(); });
+    std::ranges::transform(words, std::back_inserter(lowerWords),
+                           [](const QString &w) { return w.toLower(); });
     return lowerWords.join(QLatin1Char('-'));
 }
 
@@ -187,35 +187,76 @@ QString CaseConverter::toConstantCase(const QString &text) {
     }
     QStringList upperWords;
     upperWords.reserve(words.size());
-    std::transform(words.cbegin(), words.cend(), std::back_inserter(upperWords),
-                   [](const QString &w) { return w.toUpper(); });
+    std::ranges::transform(words, std::back_inserter(upperWords),
+                           [](const QString &w) { return w.toUpper(); });
     return upperWords.join(QLatin1Char('_'));
 }
 
 QString CaseConverter::convertText(const QString &text, CaseType caseType) {
+    using enum CaseConverter::CaseType;
     switch (caseType) {
-        case CaseType::UpperCase:
+        case UpperCase:
             return toUpper(text);
-        case CaseType::LowerCase:
+        case LowerCase:
             return toLower(text);
-        case CaseType::InvertCase:
+        case InvertCase:
             return toInvertCase(text);
-        case CaseType::TitleCase:
+        case TitleCase:
             return toTitleCase(text);
-        case CaseType::SentenceCase:
+        case SentenceCase:
             return toSentenceCase(text);
-        case CaseType::SnakeCase:
+        case SnakeCase:
             return toSnakeCase(text);
-        case CaseType::CamelCase:
+        case CamelCase:
             return toCamelCase(text);
-        case CaseType::PascalCase:
+        case PascalCase:
             return toPascalCase(text);
-        case CaseType::KebabCase:
+        case KebabCase:
             return toKebabCase(text);
-        case CaseType::ConstantCase:
+        case ConstantCase:
             return toConstantCase(text);
     }
     return text;
+}
+
+struct SelectionRange {
+    int index = 0;
+    sptr_t start = 0;
+    sptr_t end = 0;
+    bool caretAtEnd = false;
+};
+
+struct UpdatedSel {
+    int index = 0;
+    sptr_t newStart = 0;
+    sptr_t newEnd = 0;
+    bool caretAtEnd = false;
+};
+
+static void restoreSelections(ScintillaNext *editor, const std::vector<UpdatedSel> &updated, bool wasWordExpanded) {
+    if (updated.empty()) {
+        return;
+    }
+
+    if (wasWordExpanded || updated.size() == 1) {
+        const auto &s = updated[0];
+        if (s.caretAtEnd) {
+            editor->setSelection(s.newEnd, s.newStart);
+        } else {
+            editor->setSelection(s.newStart, s.newEnd);
+        }
+        return;
+    }
+
+    for (const auto &s : updated) {
+        if (s.caretAtEnd) {
+            editor->setSelectionNCaret(s.index, s.newEnd);
+            editor->setSelectionNAnchor(s.index, s.newStart);
+        } else {
+            editor->setSelectionNCaret(s.index, s.newStart);
+            editor->setSelectionNAnchor(s.index, s.newEnd);
+        }
+    }
 }
 
 CaseConverter::ConvertResult CaseConverter::convertEditor(ScintillaNext *editor, CaseType caseType) {
@@ -230,13 +271,6 @@ CaseConverter::ConvertResult CaseConverter::convertEditor(ScintillaNext *editor,
         return res;
     }
 
-    struct SelectionRange {
-        int index = 0;
-        sptr_t start = 0;
-        sptr_t end = 0;
-        bool caretAtEnd = false;
-    };
-
     std::vector<SelectionRange> ranges;
     const sptr_t numSelections = editor->selections();
 
@@ -246,7 +280,7 @@ CaseConverter::ConvertResult CaseConverter::convertEditor(ScintillaNext *editor,
         sptr_t caret = editor->selectionNCaret(i);
         sptr_t anchor = editor->selectionNAnchor(i);
         if (end > start) {
-            ranges.push_back({static_cast<int>(i), start, end, caret >= anchor});
+            ranges.emplace_back(static_cast<int>(i), start, end, caret >= anchor);
         }
     }
 
@@ -256,7 +290,7 @@ CaseConverter::ConvertResult CaseConverter::convertEditor(ScintillaNext *editor,
         sptr_t wStart = editor->wordStartPosition(pos, true);
         sptr_t wEnd = editor->wordEndPosition(pos, true);
         if (wEnd > wStart) {
-            ranges.push_back({0, wStart, wEnd, true});
+            ranges.emplace_back(0, wStart, wEnd, true);
             wasWordExpanded = true;
         }
     }
@@ -266,61 +300,32 @@ CaseConverter::ConvertResult CaseConverter::convertEditor(ScintillaNext *editor,
         return res;
     }
 
-    std::sort(ranges.begin(), ranges.end(),
-              [](const SelectionRange &a, const SelectionRange &b) { return a.start > b.start; });
+    std::ranges::sort(ranges, [](const SelectionRange &a, const SelectionRange &b) { return a.start > b.start; });
 
-    struct UpdatedSel {
-        int index = 0;
-        sptr_t newStart = 0;
-        sptr_t newEnd = 0;
-        bool caretAtEnd = false;
-    };
     std::vector<UpdatedSel> updated;
     updated.reserve(ranges.size());
 
     const UndoAction ua(editor);
 
     for (const auto &r : ranges) {
-        const sptr_t len = r.end - r.start;
         const QByteArray originalBytes = editor->get_text_range(static_cast<int>(r.start), static_cast<int>(r.end));
-
         const QString originalStr = QString::fromUtf8(originalBytes);
-        const QString convertedStr = convertText(originalStr, caseType);
 
-        if (convertedStr != originalStr) {
+        if (const QString convertedStr = convertText(originalStr, caseType); convertedStr != originalStr) {
             const QByteArray newBytes = convertedStr.toUtf8();
             editor->setTargetRange(r.start, r.end);
             editor->replaceTarget(newBytes.length(), newBytes.constData());
 
             const sptr_t newEnd = r.start + static_cast<sptr_t>(newBytes.length());
-            updated.push_back({r.index, r.start, newEnd, r.caretAtEnd});
+            updated.emplace_back(r.index, r.start, newEnd, r.caretAtEnd);
             res.charactersChanged += static_cast<int>(originalStr.length());
         } else {
-            updated.push_back({r.index, r.start, r.end, r.caretAtEnd});
+            updated.emplace_back(r.index, r.start, r.end, r.caretAtEnd);
         }
         res.selectionsConverted++;
     }
 
-    if (!updated.empty()) {
-        if (wasWordExpanded || updated.size() == 1) {
-            const auto &s = updated[0];
-            if (s.caretAtEnd) {
-                editor->setSelection(s.newEnd, s.newStart);
-            } else {
-                editor->setSelection(s.newStart, s.newEnd);
-            }
-        } else {
-            for (const auto &s : updated) {
-                if (s.caretAtEnd) {
-                    editor->setSelectionNCaret(s.index, s.newEnd);
-                    editor->setSelectionNAnchor(s.index, s.newStart);
-                } else {
-                    editor->setSelectionNCaret(s.index, s.newStart);
-                    editor->setSelectionNAnchor(s.index, s.newEnd);
-                }
-            }
-        }
-    }
+    restoreSelections(editor, updated, wasWordExpanded);
 
     res.success = true;
     return res;

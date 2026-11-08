@@ -50,7 +50,7 @@ public slots:
     void renderPreview();
     void setPreviewFormat(PreviewFormat newFormat);
     void setAutoShowEnabled(bool enabled);
-    void openInBrowser();
+    void openInBrowser() const;
     void copyHtml();
     void exportHtml();
     void exportPdf();

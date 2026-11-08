@@ -86,11 +86,11 @@ void CustomizeToolbarWidget::setupUi() {
     headerLabel->setWordWrap(true);
     mainLayout->addWidget(headerLabel);
 
-    auto *centerLayout = new QHBoxLayout();
+    auto *centerLayout = new QHBoxLayout(); // NOSONAR(cpp:S5025)
     centerLayout->setSpacing(12);
 
     // Left column: Available Actions
-    auto *leftCol = new QVBoxLayout();
+    auto *leftCol = new QVBoxLayout(); // NOSONAR(cpp:S5025)
     auto *lblAvailable = new QLabel(tr("Available Actions:"), this);
     lblAvailable->setStyleSheet(QStringLiteral("font-weight: bold;"));
     leftCol->addWidget(lblAvailable);
@@ -113,7 +113,7 @@ void CustomizeToolbarWidget::setupUi() {
     centerLayout->addLayout(leftCol, 1);
 
     // Middle column: Action Buttons
-    auto *midCol = new QVBoxLayout();
+    auto *midCol = new QVBoxLayout(); // NOSONAR(cpp:S5025)
     midCol->addStretch();
 
     m_btnAdd = new QPushButton(tr("Add ▶"), this);
@@ -149,7 +149,7 @@ void CustomizeToolbarWidget::setupUi() {
     centerLayout->addLayout(midCol);
 
     // Right column: Current Toolbar Buttons
-    auto *rightCol = new QVBoxLayout();
+    auto *rightCol = new QVBoxLayout(); // NOSONAR(cpp:S5025)
     auto *lblCurrent = new QLabel(tr("Current Toolbar Buttons:"), this);
     lblCurrent->setStyleSheet(QStringLiteral("font-weight: bold;"));
     rightCol->addWidget(lblCurrent);
@@ -172,7 +172,7 @@ void CustomizeToolbarWidget::setupUi() {
     mainLayout->addLayout(centerLayout, 1);
 
     // Bottom controls
-    auto *bottomLayout = new QHBoxLayout();
+    auto *bottomLayout = new QHBoxLayout(); // NOSONAR(cpp:S5025)
     m_btnReset = new QPushButton(tr("Reset to Defaults"), this);
     m_btnReset->setToolTip(tr("Restore standard NotepadNext toolbar buttons"));
     connect(m_btnReset, &QPushButton::clicked, this, &CustomizeToolbarWidget::onResetDefaultsClicked);
@@ -254,7 +254,7 @@ void CustomizeToolbarWidget::populateCurrentActions() {
 
 void CustomizeToolbarWidget::insertCurrentActionItem(int row, const QString &actionName) {
     if (actionName.isEmpty()) {
-        auto *sepItem = new QListWidgetItem();
+        auto *sepItem = new QListWidgetItem(); // NOSONAR(cpp:S5025)
         sepItem->setText(tr("─────────── [ Separator ] ───────────"));
         sepItem->setData(Qt::UserRole, QString());
         sepItem->setTextAlignment(Qt::AlignCenter);
@@ -285,7 +285,7 @@ void CustomizeToolbarWidget::insertCurrentActionItem(int row, const QString &act
         toolTip = action->toolTip();
     }
 
-    auto *item = new QListWidgetItem();
+    auto *item = new QListWidgetItem(); // NOSONAR(cpp:S5025)
     item->setText(labelText);
     item->setIcon(icon);
     item->setData(Qt::UserRole, actionName);
@@ -331,7 +331,7 @@ void CustomizeToolbarWidget::onRemoveClicked() {
         return;
     }
 
-    delete m_currentList->takeItem(row);
+    const std::unique_ptr<QListWidgetItem> removedItem(m_currentList->takeItem(row));
 
     if (row < m_currentList->count()) {
         m_currentList->setCurrentRow(row);

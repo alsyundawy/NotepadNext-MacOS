@@ -222,13 +222,13 @@ void GenerateHashDigestDialog::setupUi() {
     m_textOutput->setPlaceholderText(tr("Computed hash digest will appear here..."));
     mainLayout->addWidget(m_textOutput, 1);
 
-    auto *copyRow = new QHBoxLayout();
+    auto *copyRow = new QHBoxLayout(); // NOSONAR(cpp:S5025)
     copyRow->addStretch();
     m_btnCopy = new QPushButton(tr("&Copy to Clipboard"), this);
     copyRow->addWidget(m_btnCopy);
     mainLayout->addLayout(copyRow);
 
-    auto *closeRow = new QHBoxLayout();
+    auto *closeRow = new QHBoxLayout(); // NOSONAR(cpp:S5025)
     closeRow->addStretch();
     m_btnClose = new QPushButton(tr("&Close"), this);
     m_btnClose->setMinimumWidth(110);

@@ -9,16 +9,20 @@
  */
 
 #include "CharacterInfo.h"
-#ifndef UNIT_TESTING
-#include "../ScintillaNext.h"
-#endif
+#include "ScintillaNext.h"
+
+#include <algorithm>
+#include <array>
+#include <cstdint>
+#include <utility>
 
 #include <QChar>
 #include <QStringConverter>
 #include <QMap>
 
 static const char *getAsciiName(uint32_t cp) {
-    static const char *const asciiNames[128] = {"NULL",
+    static constexpr std::array<const char *, 128> asciiNames = {
+"NULL",
                                                 "START OF HEADING",
                                                 "START OF TEXT",
                                                 "END OF TEXT",
@@ -145,15 +149,17 @@ static const char *getAsciiName(uint32_t cp) {
                                                 "VERTICAL LINE",
                                                 "RIGHT CURLY BRACKET",
                                                 "TILDE",
-                                                "DELETE"};
+                                                "DELETE"
+};
 
-    if (cp < 128)
+    if (cp < asciiNames.size())
         return asciiNames[cp];
     return nullptr;
 }
 
 static const char *getLatin1SupplementName(uint32_t cp) {
-    static const char *const latin1Names[128] = {"PADDING CHARACTER",
+    static constexpr std::array<const char *, 128> latin1Names = {
+"PADDING CHARACTER",
                                                  "HIGH OCTET PRESET",
                                                  "BREAK PERMITTED HERE",
                                                  "NO BREAK HERE",
@@ -280,497 +286,291 @@ static const char *getLatin1SupplementName(uint32_t cp) {
                                                  "LATIN SMALL LETTER U WITH DIAERESIS",
                                                  "LATIN SMALL LETTER Y WITH ACUTE",
                                                  "LATIN SMALL LETTER THORN",
-                                                 "LATIN SMALL LETTER Y WITH DIAERESIS"};
+                                                 "LATIN SMALL LETTER Y WITH DIAERESIS"
+};
 
     if (cp >= 0x80 && cp <= 0xFF)
         return latin1Names[cp - 0x80];
     return nullptr;
 }
 
-static QString getUnicodeBlock(uint32_t cp) {
-    if (cp <= 0x007F)
-        return QStringLiteral("Basic Latin");
-    if (cp <= 0x00FF)
-        return QStringLiteral("Latin-1 Supplement");
-    if (cp <= 0x017F)
-        return QStringLiteral("Latin Extended-A");
-    if (cp <= 0x024F)
-        return QStringLiteral("Latin Extended-B");
-    if (cp <= 0x02AF)
-        return QStringLiteral("IPA Extensions");
-    if (cp <= 0x02FF)
-        return QStringLiteral("Spacing Modifier Letters");
-    if (cp <= 0x036F)
-        return QStringLiteral("Combining Diacritical Marks");
-    if (cp <= 0x03FF)
-        return QStringLiteral("Greek and Coptic");
-    if (cp <= 0x04FF)
-        return QStringLiteral("Cyrillic");
-    if (cp <= 0x052F)
-        return QStringLiteral("Cyrillic Supplement");
-    if (cp <= 0x058F)
-        return QStringLiteral("Armenian");
-    if (cp <= 0x05FF)
-        return QStringLiteral("Hebrew");
-    if (cp <= 0x06FF)
-        return QStringLiteral("Arabic");
-    if (cp <= 0x074F)
-        return QStringLiteral("Syriac");
-    if (cp <= 0x077F)
-        return QStringLiteral("Arabic Supplement");
-    if (cp <= 0x07BF)
-        return QStringLiteral("Thaana");
-    if (cp <= 0x07FF)
-        return QStringLiteral("NKo");
-    if (cp <= 0x08FF)
-        return QStringLiteral("Arabic Extended-A");
-    if (cp <= 0x097F)
-        return QStringLiteral("Devanagari");
-    if (cp <= 0x09FF)
-        return QStringLiteral("Bengali");
-    if (cp <= 0x0A7F)
-        return QStringLiteral("Gurmukhi");
-    if (cp <= 0x0AFF)
-        return QStringLiteral("Gujarati");
-    if (cp <= 0x0B7F)
-        return QStringLiteral("Oriya");
-    if (cp <= 0x0BFF)
-        return QStringLiteral("Tamil");
-    if (cp <= 0x0C7F)
-        return QStringLiteral("Telugu");
-    if (cp <= 0x0CFF)
-        return QStringLiteral("Kannada");
-    if (cp <= 0x0D7F)
-        return QStringLiteral("Malayalam");
-    if (cp <= 0x0E7F)
-        return QStringLiteral("Thai");
-    if (cp <= 0x0EFF)
-        return QStringLiteral("Lao");
-    if (cp <= 0x0FFF)
-        return QStringLiteral("Tibetan");
-    if (cp <= 0x109F)
-        return QStringLiteral("Myanmar");
-    if (cp <= 0x10FF)
-        return QStringLiteral("Georgian");
-    if (cp <= 0x11FF)
-        return QStringLiteral("Hangul Jamo");
-    if (cp <= 0x137F)
-        return QStringLiteral("Ethiopic");
-    if (cp <= 0x139F)
-        return QStringLiteral("Ethiopic Supplement");
-    if (cp <= 0x13FF)
-        return QStringLiteral("Cherokee");
-    if (cp <= 0x167F)
-        return QStringLiteral("Unified Canadian Aboriginal Syllabics");
-    if (cp <= 0x169F)
-        return QStringLiteral("Ogham");
-    if (cp <= 0x16FF)
-        return QStringLiteral("Runic");
-    if (cp <= 0x177F)
-        return QStringLiteral("Tagalog / Hanunoo / Buhid / Tagbanwa");
-    if (cp <= 0x17FF)
-        return QStringLiteral("Khmer");
-    if (cp <= 0x18AF)
-        return QStringLiteral("Mongolian");
-    if (cp <= 0x1AFF)
-        return QStringLiteral("Sundanese / Balinese");
-    if (cp <= 0x1B7F)
-        return QStringLiteral("Balinese");
-    if (cp <= 0x1C4F)
-        return QStringLiteral("Lepcha / Ol Chiki");
-    if (cp <= 0x1C7F)
-        return QStringLiteral("Vedic Extensions");
-    if (cp <= 0x1CFF)
-        return QStringLiteral("Phonetic Extensions");
-    if (cp <= 0x1D7F)
-        return QStringLiteral("Phonetic Extensions Supplement");
-    if (cp <= 0x1DBF)
-        return QStringLiteral("Combining Diacritical Marks Supplement");
-    if (cp <= 0x1DFF)
-        return QStringLiteral("Latin Extended Additional");
-    if (cp <= 0x1EFF)
-        return QStringLiteral("Greek Extended");
-    if (cp <= 0x206F)
-        return QStringLiteral("General Punctuation");
-    if (cp <= 0x209F)
-        return QStringLiteral("Superscripts and Subscripts");
-    if (cp <= 0x20CF)
-        return QStringLiteral("Currency Symbols");
-    if (cp <= 0x20FF)
-        return QStringLiteral("Combining Diacritical Marks for Symbols");
-    if (cp <= 0x214F)
-        return QStringLiteral("Letterlike Symbols");
-    if (cp <= 0x218F)
-        return QStringLiteral("Number Forms");
-    if (cp <= 0x21FF)
-        return QStringLiteral("Arrows");
-    if (cp <= 0x22FF)
-        return QStringLiteral("Mathematical Operators");
-    if (cp <= 0x23FF)
-        return QStringLiteral("Miscellaneous Technical");
-    if (cp <= 0x243F)
-        return QStringLiteral("Control Pictures");
-    if (cp <= 0x245F)
-        return QStringLiteral("Optical Character Recognition");
-    if (cp <= 0x24FF)
-        return QStringLiteral("Enclosed Alphanumerics");
-    if (cp <= 0x257F)
-        return QStringLiteral("Box Drawing");
-    if (cp <= 0x259F)
-        return QStringLiteral("Block Elements");
-    if (cp <= 0x25FF)
-        return QStringLiteral("Geometric Shapes");
-    if (cp <= 0x26FF)
-        return QStringLiteral("Miscellaneous Symbols");
-    if (cp <= 0x27BF)
-        return QStringLiteral("Dingbats");
-    if (cp <= 0x27EF)
-        return QStringLiteral("Miscellaneous Mathematical Symbols-A");
-    if (cp <= 0x27FF)
-        return QStringLiteral("Supplemental Arrows-A");
-    if (cp <= 0x28FF)
-        return QStringLiteral("Braille Patterns");
-    if (cp <= 0x2BFF)
-        return QStringLiteral("Miscellaneous Symbols and Arrows");
-    if (cp <= 0x2E7F)
-        return QStringLiteral("Supplemental Punctuation");
-    if (cp <= 0x2EFF)
-        return QStringLiteral("CJK Radicals Supplement");
-    if (cp <= 0x2FDF)
-        return QStringLiteral("Kangxi Radicals");
-    if (cp <= 0x303F)
-        return QStringLiteral("CJK Symbols and Punctuation");
-    if (cp <= 0x309F)
-        return QStringLiteral("Hiragana");
-    if (cp <= 0x30FF)
-        return QStringLiteral("Katakana");
-    if (cp <= 0x312F)
-        return QStringLiteral("Bopomofo");
-    if (cp <= 0x318F)
-        return QStringLiteral("Hangul Compatibility Jamo");
-    if (cp <= 0x319F)
-        return QStringLiteral("Kanbun");
-    if (cp <= 0x31BF)
-        return QStringLiteral("Bopomofo Extended");
-    if (cp <= 0x31EF)
-        return QStringLiteral("CJK Strokes");
-    if (cp <= 0x31FF)
-        return QStringLiteral("Katakana Phonetic Extensions");
-    if (cp <= 0x32FF)
-        return QStringLiteral("Enclosed CJK Letters and Months");
-    if (cp <= 0x33FF)
-        return QStringLiteral("CJK Compatibility");
-    if (cp <= 0x4DBF)
-        return QStringLiteral("CJK Unified Ideographs Extension A");
-    if (cp <= 0x4DFF)
-        return QStringLiteral("Yijing Hexagram Symbols");
-    if (cp <= 0x9FFF)
-        return QStringLiteral("CJK Unified Ideographs");
-    if (cp <= 0xA48F)
-        return QStringLiteral("Yi Syllables");
-    if (cp <= 0xA4CF)
-        return QStringLiteral("Yi Radicals");
-    if (cp <= 0xAC00)
-        return QStringLiteral("Vai / Cherokee / Syloti Nagri");
-    if (cp <= 0xD7AF)
-        return QStringLiteral("Hangul Syllables");
-    if (cp <= 0xD7FF)
-        return QStringLiteral("Hangul Jamo Extended-B");
-    if (cp <= 0xDFFF)
-        return QStringLiteral("High/Low Surrogates");
-    if (cp <= 0xF8FF)
-        return QStringLiteral("Private Use Area");
-    if (cp <= 0xFAFF)
-        return QStringLiteral("CJK Compatibility Ideographs");
-    if (cp <= 0xFB4F)
-        return QStringLiteral("Alphabetic Presentation Forms");
-    if (cp <= 0xFDFF)
-        return QStringLiteral("Arabic Presentation Forms-A");
-    if (cp <= 0xFE0F)
-        return QStringLiteral("Variation Selectors");
-    if (cp <= 0xFE1F)
-        return QStringLiteral("Vertical Forms");
-    if (cp <= 0xFE2F)
-        return QStringLiteral("Combining Half Marks");
-    if (cp <= 0xFE4F)
-        return QStringLiteral("CJK Compatibility Forms");
-    if (cp <= 0xFE6F)
-        return QStringLiteral("Small Form Variants");
-    if (cp <= 0xFEFF)
-        return QStringLiteral("Arabic Presentation Forms-B / Specials");
-    if (cp <= 0xFFEF)
-        return QStringLiteral("Halfwidth and Fullwidth Forms");
-    if (cp <= 0xFFFF)
-        return QStringLiteral("Specials");
-    if (cp <= 0x1013F)
-        return QStringLiteral("Aegean Numbers / Linear B");
-    if (cp <= 0x1037F)
-        return QStringLiteral("Old Persian / Ugaritic");
-    if (cp <= 0x104AF)
-        return QStringLiteral("Deseret / Shavian");
-    if (cp <= 0x1083F)
-        return QStringLiteral("Imperial Aramaic / Palmyrene");
-    if (cp <= 0x1091F)
-        return QStringLiteral("Phoenician / Lydian");
-    if (cp <= 0x1107F)
-        return QStringLiteral("Brahmi");
-    if (cp <= 0x123FF)
-        return QStringLiteral("Cuneiform");
-    if (cp <= 0x1342F)
-        return QStringLiteral("Egyptian Hieroglyphs");
-    if (cp <= 0x16A3F)
-        return QStringLiteral("Tangut");
-    if (cp <= 0x1D1FF)
-        return QStringLiteral("Musical Symbols");
-    if (cp <= 0x1D7FF)
-        return QStringLiteral("Mathematical Alphanumeric Symbols");
-    if (cp <= 0x1F02F)
-        return QStringLiteral("Mahjong Tiles");
-    if (cp <= 0x1F09F)
-        return QStringLiteral("Domino Tiles");
-    if (cp <= 0x1F0FF)
-        return QStringLiteral("Playing Cards");
-    if (cp <= 0x1F2FF)
-        return QStringLiteral("Enclosed Ideographic Supplement");
-    if (cp <= 0x1F5FF)
-        return QStringLiteral("Miscellaneous Symbols and Pictographs");
-    if (cp <= 0x1F64F)
-        return QStringLiteral("Emoticons");
-    if (cp <= 0x1F67F)
-        return QStringLiteral("Ornamental Dingbats");
-    if (cp <= 0x1F6FF)
-        return QStringLiteral("Transport and Map Symbols");
-    if (cp <= 0x1F77F)
-        return QStringLiteral("Alchemical Symbols");
-    if (cp <= 0x1F7FF)
-        return QStringLiteral("Geometric Shapes Extended");
-    if (cp <= 0x1F8FF)
-        return QStringLiteral("Supplemental Arrows-C");
-    if (cp <= 0x1F9FF)
-        return QStringLiteral("Supplemental Symbols and Pictographs");
-    if (cp <= 0x1FA6F)
-        return QStringLiteral("Chess Symbols");
-    if (cp <= 0x1FAFF)
-        return QStringLiteral("Symbols and Pictographs Extended-A");
-    if (cp <= 0x2A6DF)
-        return QStringLiteral("CJK Unified Ideographs Extension B");
-    if (cp <= 0x2B73F)
-        return QStringLiteral("CJK Unified Ideographs Extension C");
-    if (cp <= 0x2B81F)
-        return QStringLiteral("CJK Unified Ideographs Extension D");
-    if (cp <= 0x2CEAF)
-        return QStringLiteral("CJK Unified Ideographs Extension E");
-    if (cp <= 0x2EBEF)
-        return QStringLiteral("CJK Unified Ideographs Extension F");
-    if (cp <= 0x2F7FF)
-        return QStringLiteral("CJK Compatibility Ideographs Supplement");
-    if (cp <= 0x323AF)
-        return QStringLiteral("CJK Unified Ideographs Extension G/H/I");
-    if (cp >= 0xE0000 && cp <= 0xE007F)
-        return QStringLiteral("Tags");
-    if (cp >= 0xE0100 && cp <= 0xE01EF)
-        return QStringLiteral("Variation Selectors Supplement");
-    if (cp >= 0xF0000 && cp <= 0x10FFFF)
-        return QStringLiteral("Supplementary Private Use Area");
+struct UnicodeBlockEntry {
+    uint32_t endCp{0};
+    const char *name{nullptr};
+};
 
+static constexpr std::array<UnicodeBlockEntry, 139> unicodeBlocks = {{
+
+    {0x007F, "Basic Latin"},
+    {0x00FF, "Latin-1 Supplement"},
+    {0x017F, "Latin Extended-A"},
+    {0x024F, "Latin Extended-B"},
+    {0x02AF, "IPA Extensions"},
+    {0x02FF, "Spacing Modifier Letters"},
+    {0x036F, "Combining Diacritical Marks"},
+    {0x03FF, "Greek and Coptic"},
+    {0x04FF, "Cyrillic"},
+    {0x052F, "Cyrillic Supplement"},
+    {0x058F, "Armenian"},
+    {0x05FF, "Hebrew"},
+    {0x06FF, "Arabic"},
+    {0x074F, "Syriac"},
+    {0x077F, "Arabic Supplement"},
+    {0x07BF, "Thaana"},
+    {0x07FF, "NKo"},
+    {0x08FF, "Arabic Extended-A"},
+    {0x097F, "Devanagari"},
+    {0x09FF, "Bengali"},
+    {0x0A7F, "Gurmukhi"},
+    {0x0AFF, "Gujarati"},
+    {0x0B7F, "Oriya"},
+    {0x0BFF, "Tamil"},
+    {0x0C7F, "Telugu"},
+    {0x0CFF, "Kannada"},
+    {0x0D7F, "Malayalam"},
+    {0x0E7F, "Thai"},
+    {0x0EFF, "Lao"},
+    {0x0FFF, "Tibetan"},
+    {0x109F, "Myanmar"},
+    {0x10FF, "Georgian"},
+    {0x11FF, "Hangul Jamo"},
+    {0x137F, "Ethiopic"},
+    {0x139F, "Ethiopic Supplement"},
+    {0x13FF, "Cherokee"},
+    {0x167F, "Unified Canadian Aboriginal Syllabics"},
+    {0x169F, "Ogham"},
+    {0x16FF, "Runic"},
+    {0x177F, "Tagalog / Hanunoo / Buhid / Tagbanwa"},
+    {0x17FF, "Khmer"},
+    {0x18AF, "Mongolian"},
+    {0x1AFF, "Sundanese / Balinese"},
+    {0x1B7F, "Balinese"},
+    {0x1C4F, "Lepcha / Ol Chiki"},
+    {0x1C7F, "Vedic Extensions"},
+    {0x1CFF, "Phonetic Extensions"},
+    {0x1D7F, "Phonetic Extensions Supplement"},
+    {0x1DBF, "Combining Diacritical Marks Supplement"},
+    {0x1DFF, "Latin Extended Additional"},
+    {0x1EFF, "Greek Extended"},
+    {0x206F, "General Punctuation"},
+    {0x209F, "Superscripts and Subscripts"},
+    {0x20CF, "Currency Symbols"},
+    {0x20FF, "Combining Diacritical Marks for Symbols"},
+    {0x214F, "Letterlike Symbols"},
+    {0x218F, "Number Forms"},
+    {0x21FF, "Arrows"},
+    {0x22FF, "Mathematical Operators"},
+    {0x23FF, "Miscellaneous Technical"},
+    {0x243F, "Control Pictures"},
+    {0x245F, "Optical Character Recognition"},
+    {0x24FF, "Enclosed Alphanumerics"},
+    {0x257F, "Box Drawing"},
+    {0x259F, "Block Elements"},
+    {0x25FF, "Geometric Shapes"},
+    {0x26FF, "Miscellaneous Symbols"},
+    {0x27BF, "Dingbats"},
+    {0x27EF, "Miscellaneous Mathematical Symbols-A"},
+    {0x27FF, "Supplemental Arrows-A"},
+    {0x28FF, "Braille Patterns"},
+    {0x2BFF, "Miscellaneous Symbols and Arrows"},
+    {0x2E7F, "Supplemental Punctuation"},
+    {0x2EFF, "CJK Radicals Supplement"},
+    {0x2FDF, "Kangxi Radicals"},
+    {0x303F, "CJK Symbols and Punctuation"},
+    {0x309F, "Hiragana"},
+    {0x30FF, "Katakana"},
+    {0x312F, "Bopomofo"},
+    {0x318F, "Hangul Compatibility Jamo"},
+    {0x319F, "Kanbun"},
+    {0x31BF, "Bopomofo Extended"},
+    {0x31EF, "CJK Strokes"},
+    {0x31FF, "Katakana Phonetic Extensions"},
+    {0x32FF, "Enclosed CJK Letters and Months"},
+    {0x33FF, "CJK Compatibility"},
+    {0x4DBF, "CJK Unified Ideographs Extension A"},
+    {0x4DFF, "Yijing Hexagram Symbols"},
+    {0x9FFF, "CJK Unified Ideographs"},
+    {0xA48F, "Yi Syllables"},
+    {0xA4CF, "Yi Radicals"},
+    {0xAC00, "Vai / Cherokee / Syloti Nagri"},
+    {0xD7AF, "Hangul Syllables"},
+    {0xD7FF, "Hangul Jamo Extended-B"},
+    {0xDFFF, "High/Low Surrogates"},
+    {0xF8FF, "Private Use Area"},
+    {0xFAFF, "CJK Compatibility Ideographs"},
+    {0xFB4F, "Alphabetic Presentation Forms"},
+    {0xFDFF, "Arabic Presentation Forms-A"},
+    {0xFE0F, "Variation Selectors"},
+    {0xFE1F, "Vertical Forms"},
+    {0xFE2F, "Combining Half Marks"},
+    {0xFE4F, "CJK Compatibility Forms"},
+    {0xFE6F, "Small Form Variants"},
+    {0xFEFF, "Arabic Presentation Forms-B / Specials"},
+    {0xFFEF, "Halfwidth and Fullwidth Forms"},
+    {0xFFFF, "Specials"},
+    {0x1013F, "Aegean Numbers / Linear B"},
+    {0x1037F, "Old Persian / Ugaritic"},
+    {0x104AF, "Deseret / Shavian"},
+    {0x1083F, "Imperial Aramaic / Palmyrene"},
+    {0x1091F, "Phoenician / Lydian"},
+    {0x1107F, "Brahmi"},
+    {0x123FF, "Cuneiform"},
+    {0x1342F, "Egyptian Hieroglyphs"},
+    {0x16A3F, "Tangut"},
+    {0x1D1FF, "Musical Symbols"},
+    {0x1D7FF, "Mathematical Alphanumeric Symbols"},
+    {0x1F02F, "Mahjong Tiles"},
+    {0x1F09F, "Domino Tiles"},
+    {0x1F0FF, "Playing Cards"},
+    {0x1F2FF, "Enclosed Ideographic Supplement"},
+    {0x1F5FF, "Miscellaneous Symbols and Pictographs"},
+    {0x1F64F, "Emoticons"},
+    {0x1F67F, "Ornamental Dingbats"},
+    {0x1F6FF, "Transport and Map Symbols"},
+    {0x1F77F, "Alchemical Symbols"},
+    {0x1F7FF, "Geometric Shapes Extended"},
+    {0x1F8FF, "Supplemental Arrows-C"},
+    {0x1F9FF, "Supplemental Symbols and Pictographs"},
+    {0x1FA6F, "Chess Symbols"},
+    {0x1FAFF, "Symbols and Pictographs Extended-A"},
+    {0x2A6DF, "CJK Unified Ideographs Extension B"},
+    {0x2B73F, "CJK Unified Ideographs Extension C"},
+    {0x2B81F, "CJK Unified Ideographs Extension D"},
+    {0x2CEAF, "CJK Unified Ideographs Extension E"},
+    {0x2EBEF, "CJK Unified Ideographs Extension F"},
+    {0x2F7FF, "CJK Compatibility Ideographs Supplement"},
+    {0x323AF, "CJK Unified Ideographs Extension G/H/I"},
+}};
+
+static QString getUnicodeBlock(uint32_t cp) {
+    if (cp <= 0x323AF) {
+        const auto it = std::ranges::lower_bound(unicodeBlocks, cp, {}, &UnicodeBlockEntry::endCp);
+        if (it != unicodeBlocks.end()) {
+            return QString::fromUtf8(it->name);
+        }
+    }
+    if (cp >= 0xE0000 && cp <= 0xE007F) {
+        return QStringLiteral("Tags");
+    }
+    if (cp >= 0xE0100 && cp <= 0xE01EF) {
+        return QStringLiteral("Variation Selectors Supplement");
+    }
+    if (cp >= 0xF0000 && cp <= 0x10FFFF) {
+        return QStringLiteral("Supplementary Private Use Area");
+    }
     return QStringLiteral("Unassigned");
 }
 
+struct HtmlEntityEntry {
+    uint32_t cp{0};
+    const char *entity{nullptr};
+};
+
+static constexpr std::array<HtmlEntityEntry, 95> htmlEntities = {{
+
+    {34, "&quot;"},
+    {38, "&amp;"},
+    {39, "&apos;"},
+    {60, "&lt;"},
+    {62, "&gt;"},
+    {160, "&nbsp;"},
+    {161, "&iexcl;"},
+    {162, "&cent;"},
+    {163, "&pound;"},
+    {164, "&curren;"},
+    {165, "&yen;"},
+    {166, "&brvbar;"},
+    {167, "&sect;"},
+    {168, "&uml;"},
+    {169, "&copy;"},
+    {170, "&ordf;"},
+    {171, "&laquo;"},
+    {172, "&not;"},
+    {173, "&shy;"},
+    {174, "&reg;"},
+    {175, "&macr;"},
+    {176, "&deg;"},
+    {177, "&plusmn;"},
+    {178, "&sup2;"},
+    {179, "&sup3;"},
+    {180, "&acute;"},
+    {181, "&micro;"},
+    {182, "&para;"},
+    {183, "&middot;"},
+    {184, "&cedil;"},
+    {185, "&sup1;"},
+    {186, "&ordm;"},
+    {187, "&raquo;"},
+    {188, "&frac14;"},
+    {189, "&frac12;"},
+    {190, "&frac34;"},
+    {191, "&iquest;"},
+    {215, "&times;"},
+    {247, "&divide;"},
+    {8211, "&ndash;"},
+    {8212, "&mdash;"},
+    {8216, "&lsquo;"},
+    {8217, "&rsquo;"},
+    {8218, "&sbquo;"},
+    {8220, "&ldquo;"},
+    {8221, "&rdquo;"},
+    {8222, "&bdquo;"},
+    {8224, "&dagger;"},
+    {8225, "&Dagger;"},
+    {8226, "&bull;"},
+    {8230, "&hellip;"},
+    {8240, "&permil;"},
+    {8242, "&prime;"},
+    {8243, "&Prime;"},
+    {8364, "&euro;"},
+    {8482, "&trade;"},
+    {8592, "&larr;"},
+    {8593, "&uarr;"},
+    {8594, "&rarr;"},
+    {8595, "&darr;"},
+    {8596, "&harr;"},
+    {8704, "&forall;"},
+    {8706, "&part;"},
+    {8707, "&exist;"},
+    {8709, "&empty;"},
+    {8711, "&nabla;"},
+    {8712, "&isin;"},
+    {8713, "&notin;"},
+    {8715, "&ni;"},
+    {8719, "&prod;"},
+    {8721, "&sum;"},
+    {8722, "&minus;"},
+    {8730, "&radic;"},
+    {8734, "&infin;"},
+    {8743, "&and;"},
+    {8744, "&or;"},
+    {8745, "&cap;"},
+    {8746, "&cup;"},
+    {8747, "&int;"},
+    {8756, "&there4;"},
+    {8764, "&sim;"},
+    {8773, "&cong;"},
+    {8776, "&asymp;"},
+    {8800, "&ne;"},
+    {8801, "&equiv;"},
+    {8804, "&le;"},
+    {8805, "&ge;"},
+    {8834, "&sub;"},
+    {8835, "&sup;"},
+    {8838, "&sube;"},
+    {8839, "&supe;"},
+    {8853, "&oplus;"},
+    {8855, "&otimes;"},
+    {8869, "&perp;"},
+    {8901, "&sdot;"},
+}};
+
 static const char *getHtmlNamedEntity(uint32_t cp) {
-    switch (cp) {
-        case 34:
-            return "&quot;";
-        case 38:
-            return "&amp;";
-        case 39:
-            return "&apos;";
-        case 60:
-            return "&lt;";
-        case 62:
-            return "&gt;";
-        case 160:
-            return "&nbsp;";
-        case 161:
-            return "&iexcl;";
-        case 162:
-            return "&cent;";
-        case 163:
-            return "&pound;";
-        case 164:
-            return "&curren;";
-        case 165:
-            return "&yen;";
-        case 166:
-            return "&brvbar;";
-        case 167:
-            return "&sect;";
-        case 168:
-            return "&uml;";
-        case 169:
-            return "&copy;";
-        case 170:
-            return "&ordf;";
-        case 171:
-            return "&laquo;";
-        case 172:
-            return "&not;";
-        case 173:
-            return "&shy;";
-        case 174:
-            return "&reg;";
-        case 175:
-            return "&macr;";
-        case 176:
-            return "&deg;";
-        case 177:
-            return "&plusmn;";
-        case 178:
-            return "&sup2;";
-        case 179:
-            return "&sup3;";
-        case 180:
-            return "&acute;";
-        case 181:
-            return "&micro;";
-        case 182:
-            return "&para;";
-        case 183:
-            return "&middot;";
-        case 184:
-            return "&cedil;";
-        case 185:
-            return "&sup1;";
-        case 186:
-            return "&ordm;";
-        case 187:
-            return "&raquo;";
-        case 188:
-            return "&frac14;";
-        case 189:
-            return "&frac12;";
-        case 190:
-            return "&frac34;";
-        case 191:
-            return "&iquest;";
-        case 215:
-            return "&times;";
-        case 247:
-            return "&divide;";
-        case 8211:
-            return "&ndash;";
-        case 8212:
-            return "&mdash;";
-        case 8216:
-            return "&lsquo;";
-        case 8217:
-            return "&rsquo;";
-        case 8218:
-            return "&sbquo;";
-        case 8220:
-            return "&ldquo;";
-        case 8221:
-            return "&rdquo;";
-        case 8222:
-            return "&bdquo;";
-        case 8224:
-            return "&dagger;";
-        case 8225:
-            return "&Dagger;";
-        case 8226:
-            return "&bull;";
-        case 8230:
-            return "&hellip;";
-        case 8240:
-            return "&permil;";
-        case 8242:
-            return "&prime;";
-        case 8243:
-            return "&Prime;";
-        case 8364:
-            return "&euro;";
-        case 8482:
-            return "&trade;";
-        case 8592:
-            return "&larr;";
-        case 8593:
-            return "&uarr;";
-        case 8594:
-            return "&rarr;";
-        case 8595:
-            return "&darr;";
-        case 8596:
-            return "&harr;";
-        case 8704:
-            return "&forall;";
-        case 8706:
-            return "&part;";
-        case 8707:
-            return "&exist;";
-        case 8709:
-            return "&empty;";
-        case 8711:
-            return "&nabla;";
-        case 8712:
-            return "&isin;";
-        case 8713:
-            return "&notin;";
-        case 8715:
-            return "&ni;";
-        case 8719:
-            return "&prod;";
-        case 8721:
-            return "&sum;";
-        case 8722:
-            return "&minus;";
-        case 8730:
-            return "&radic;";
-        case 8734:
-            return "&infin;";
-        case 8743:
-            return "&and;";
-        case 8744:
-            return "&or;";
-        case 8745:
-            return "&cap;";
-        case 8746:
-            return "&cup;";
-        case 8747:
-            return "&int;";
-        case 8756:
-            return "&there4;";
-        case 8764:
-            return "&sim;";
-        case 8773:
-            return "&cong;";
-        case 8776:
-            return "&asymp;";
-        case 8800:
-            return "&ne;";
-        case 8801:
-            return "&equiv;";
-        case 8804:
-            return "&le;";
-        case 8805:
-            return "&ge;";
-        case 8834:
-            return "&sub;";
-        case 8835:
-            return "&sup;";
-        case 8838:
-            return "&sube;";
-        case 8839:
-            return "&supe;";
-        case 8853:
-            return "&oplus;";
-        case 8855:
-            return "&otimes;";
-        case 8869:
-            return "&perp;";
-        case 8901:
-            return "&sdot;";
-        default:
-            return nullptr;
+    const auto it = std::ranges::lower_bound(htmlEntities, cp, {}, &HtmlEntityEntry::cp);
+    if (it != htmlEntities.end() && it->cp == cp) {
+        return it->entity;
     }
+    return nullptr;
 }
 
 static void mapCategory(QChar::Category cat, QString &code, QString &desc) {
@@ -899,87 +699,59 @@ static void mapCategory(QChar::Category cat, QString &code, QString &desc) {
     }
 }
 
+struct ScriptEntry {
+    QChar::Script script{QChar::Script_Common};
+    const char *name{nullptr};
+};
+
+static constexpr std::array<ScriptEntry, 38> scriptEntries = {{
+
+    {QChar::Script_Common, "Common"},
+    {QChar::Script_Inherited, "Inherited"},
+    {QChar::Script_Latin, "Latin"},
+    {QChar::Script_Greek, "Greek"},
+    {QChar::Script_Cyrillic, "Cyrillic"},
+    {QChar::Script_Armenian, "Armenian"},
+    {QChar::Script_Hebrew, "Hebrew"},
+    {QChar::Script_Arabic, "Arabic"},
+    {QChar::Script_Syriac, "Syriac"},
+    {QChar::Script_Thaana, "Thaana"},
+    {QChar::Script_Devanagari, "Devanagari"},
+    {QChar::Script_Bengali, "Bengali"},
+    {QChar::Script_Gurmukhi, "Gurmukhi"},
+    {QChar::Script_Gujarati, "Gujarati"},
+    {QChar::Script_Oriya, "Oriya"},
+    {QChar::Script_Tamil, "Tamil"},
+    {QChar::Script_Telugu, "Telugu"},
+    {QChar::Script_Kannada, "Kannada"},
+    {QChar::Script_Malayalam, "Malayalam"},
+    {QChar::Script_Sinhala, "Sinhala"},
+    {QChar::Script_Thai, "Thai"},
+    {QChar::Script_Lao, "Lao"},
+    {QChar::Script_Tibetan, "Tibetan"},
+    {QChar::Script_Myanmar, "Myanmar"},
+    {QChar::Script_Georgian, "Georgian"},
+    {QChar::Script_Hangul, "Hangul"},
+    {QChar::Script_Ethiopic, "Ethiopic"},
+    {QChar::Script_Cherokee, "Cherokee"},
+    {QChar::Script_Ogham, "Ogham"},
+    {QChar::Script_Runic, "Runic"},
+    {QChar::Script_Khmer, "Khmer"},
+    {QChar::Script_Mongolian, "Mongolian"},
+    {QChar::Script_Hiragana, "Hiragana"},
+    {QChar::Script_Katakana, "Katakana"},
+    {QChar::Script_Bopomofo, "Bopomofo"},
+    {QChar::Script_Han, "Han (CJK Ideographs)"},
+    {QChar::Script_Yi, "Yi"},
+    {QChar::Script_Braille, "Braille"},
+}};
+
 static QString mapScript(QChar::Script s) {
-    switch (s) {
-        case QChar::Script_Common:
-            return QStringLiteral("Common");
-        case QChar::Script_Inherited:
-            return QStringLiteral("Inherited");
-        case QChar::Script_Latin:
-            return QStringLiteral("Latin");
-        case QChar::Script_Greek:
-            return QStringLiteral("Greek");
-        case QChar::Script_Cyrillic:
-            return QStringLiteral("Cyrillic");
-        case QChar::Script_Armenian:
-            return QStringLiteral("Armenian");
-        case QChar::Script_Hebrew:
-            return QStringLiteral("Hebrew");
-        case QChar::Script_Arabic:
-            return QStringLiteral("Arabic");
-        case QChar::Script_Syriac:
-            return QStringLiteral("Syriac");
-        case QChar::Script_Thaana:
-            return QStringLiteral("Thaana");
-        case QChar::Script_Devanagari:
-            return QStringLiteral("Devanagari");
-        case QChar::Script_Bengali:
-            return QStringLiteral("Bengali");
-        case QChar::Script_Gurmukhi:
-            return QStringLiteral("Gurmukhi");
-        case QChar::Script_Gujarati:
-            return QStringLiteral("Gujarati");
-        case QChar::Script_Oriya:
-            return QStringLiteral("Oriya");
-        case QChar::Script_Tamil:
-            return QStringLiteral("Tamil");
-        case QChar::Script_Telugu:
-            return QStringLiteral("Telugu");
-        case QChar::Script_Kannada:
-            return QStringLiteral("Kannada");
-        case QChar::Script_Malayalam:
-            return QStringLiteral("Malayalam");
-        case QChar::Script_Sinhala:
-            return QStringLiteral("Sinhala");
-        case QChar::Script_Thai:
-            return QStringLiteral("Thai");
-        case QChar::Script_Lao:
-            return QStringLiteral("Lao");
-        case QChar::Script_Tibetan:
-            return QStringLiteral("Tibetan");
-        case QChar::Script_Myanmar:
-            return QStringLiteral("Myanmar");
-        case QChar::Script_Georgian:
-            return QStringLiteral("Georgian");
-        case QChar::Script_Hangul:
-            return QStringLiteral("Hangul");
-        case QChar::Script_Ethiopic:
-            return QStringLiteral("Ethiopic");
-        case QChar::Script_Cherokee:
-            return QStringLiteral("Cherokee");
-        case QChar::Script_Ogham:
-            return QStringLiteral("Ogham");
-        case QChar::Script_Runic:
-            return QStringLiteral("Runic");
-        case QChar::Script_Khmer:
-            return QStringLiteral("Khmer");
-        case QChar::Script_Mongolian:
-            return QStringLiteral("Mongolian");
-        case QChar::Script_Hiragana:
-            return QStringLiteral("Hiragana");
-        case QChar::Script_Katakana:
-            return QStringLiteral("Katakana");
-        case QChar::Script_Bopomofo:
-            return QStringLiteral("Bopomofo");
-        case QChar::Script_Han:
-            return QStringLiteral("Han (CJK Ideographs)");
-        case QChar::Script_Yi:
-            return QStringLiteral("Yi");
-        case QChar::Script_Braille:
-            return QStringLiteral("Braille");
-        default:
-            return QStringLiteral("Unknown");
+    const auto it = std::ranges::find_if(scriptEntries, [s](const auto &e) { return e.script == s; });
+    if (it != scriptEntries.end()) {
+        return QString::fromUtf8(it->name);
     }
+    return QStringLiteral("Unknown");
 }
 
 static QString mapDirection(QChar::Direction d) {
@@ -1027,11 +799,54 @@ static QString mapDirection(QChar::Direction d) {
     }
 }
 
-QString CharacterInfo::formatCodePoint(uint32_t cp) {
-    if (cp <= 0xFFFF) {
-        return QStringLiteral("U+%1").arg(cp, 4, 16, QChar('0')).toUpper();
+static QString getDisplayGlyph(uint32_t cp, const QString &defaultGlyph) {
+    switch (cp) {
+        case 0x00: return QStringLiteral("␀ (NUL)");
+        case 0x07: return QStringLiteral("␇ (BEL)");
+        case 0x08: return QStringLiteral("␈ (BS)");
+        case 0x09: return QStringLiteral("␉ (TAB)");
+        case 0x0A: return QStringLiteral("␊ (LF)");
+        case 0x0B: return QStringLiteral("␋ (VT)");
+        case 0x0C: return QStringLiteral("␌ (FF)");
+        case 0x0D: return QStringLiteral("␍ (CR)");
+        case 0x1B: return QStringLiteral("␛ (ESC)");
+        case 0x20: return QStringLiteral("␣ (Space)");
+        case 0x7F: return QStringLiteral("␡ (DEL)");
+        default:
+            if (cp < 0x20 || (cp >= 0x80 && cp <= 0x9F)) {
+                return QStringLiteral("␀ (Control)");
+            }
+            return defaultGlyph;
     }
-    return QStringLiteral("U+%1").arg(cp, 5, 16, QChar('0')).toUpper();
+}
+
+static void populateEscapes(uint32_t cp, CharacterInfo::Details &d) {
+    switch (cp) {
+        case '\n': d.cEscape = QStringLiteral("\\n"); break;
+        case '\r': d.cEscape = QStringLiteral("\\r"); break;
+        case '\t': d.cEscape = QStringLiteral("\\t"); break;
+        case '\0': d.cEscape = QStringLiteral("\\0"); break;
+        default:
+            if (cp <= 0xFFFF) {
+                d.cEscape = QStringLiteral("\\u%1").arg(cp, 4, 16, QChar('0')).toUpper();
+            } else {
+                d.cEscape = QStringLiteral("\\U%1").arg(cp, 8, 16, QChar('0')).toUpper();
+            }
+            break;
+    }
+
+    if (cp <= 0xFFFF) {
+        d.jsonEscape = QStringLiteral("\\u%1").arg(cp, 4, 16, QChar('0')).toUpper();
+    } else {
+        const auto high = static_cast<uint16_t>(0xD800 + ((cp - 0x10000) >> 10));
+        const auto low = static_cast<uint16_t>(0xDC00 + ((cp - 0x10000) & 0x3FF));
+        d.jsonEscape = QStringLiteral("\\u%1\\u%2").arg(high, 4, 16, QChar('0')).arg(low, 4, 16, QChar('0')).toUpper();
+    }
+}
+
+QString CharacterInfo::formatCodePoint(uint32_t cp) {
+    const int fieldWidth = (cp <= 0xFFFF) ? 4 : 5;
+    return QStringLiteral("U+%1").arg(cp, fieldWidth, 16, QChar('0')).toUpper();
 }
 
 CharacterInfo::Details CharacterInfo::getDetailsForCodePoint(uint32_t cp) {
@@ -1039,36 +854,9 @@ CharacterInfo::Details CharacterInfo::getDetailsForCodePoint(uint32_t cp) {
     d.codePoint = cp;
     d.isValid = true;
 
-    char32_t ucs[1] = {cp};
-    d.glyph = QString::fromUcs4(ucs, 1);
-
-    // Visual display for control characters
-    if (cp == 0x00)
-        d.displayGlyph = QStringLiteral("␀ (NUL)");
-    else if (cp == 0x07)
-        d.displayGlyph = QStringLiteral("␇ (BEL)");
-    else if (cp == 0x08)
-        d.displayGlyph = QStringLiteral("␈ (BS)");
-    else if (cp == 0x09)
-        d.displayGlyph = QStringLiteral("␉ (TAB)");
-    else if (cp == 0x0A)
-        d.displayGlyph = QStringLiteral("␊ (LF)");
-    else if (cp == 0x0B)
-        d.displayGlyph = QStringLiteral("␋ (VT)");
-    else if (cp == 0x0C)
-        d.displayGlyph = QStringLiteral("␌ (FF)");
-    else if (cp == 0x0D)
-        d.displayGlyph = QStringLiteral("␍ (CR)");
-    else if (cp == 0x1B)
-        d.displayGlyph = QStringLiteral("␛ (ESC)");
-    else if (cp == 0x20)
-        d.displayGlyph = QStringLiteral("␣ (Space)");
-    else if (cp == 0x7F)
-        d.displayGlyph = QStringLiteral("␡ (DEL)");
-    else if (cp < 0x20 || (cp >= 0x80 && cp <= 0x9F))
-        d.displayGlyph = QStringLiteral("␀ (Control)");
-    else
-        d.displayGlyph = d.glyph;
+    const std::array<char32_t, 1> ucs = {cp};
+    d.glyph = QString::fromUcs4(ucs.data(), 1);
+    d.displayGlyph = getDisplayGlyph(cp, d.glyph);
 
     // Unicode Block
     d.block = getUnicodeBlock(cp);
@@ -1100,8 +888,8 @@ CharacterInfo::Details CharacterInfo::getDetailsForCodePoint(uint32_t cp) {
     d.utf8Bytes = d.glyph.toUtf8();
     QStringList u8HexList;
     QStringList u8DecList;
-    for (int i = 0; i < d.utf8Bytes.size(); ++i) {
-        unsigned char b = static_cast<unsigned char>(d.utf8Bytes.at(i));
+    for (const auto byte : d.utf8Bytes) {
+        const auto b = static_cast<unsigned char>(byte);
         u8HexList << QStringLiteral("0x%1").arg(b, 2, 16, QChar('0')).toUpper();
         u8DecList << QString::number(b);
     }
@@ -1126,33 +914,14 @@ CharacterInfo::Details CharacterInfo::getDetailsForCodePoint(uint32_t cp) {
     d.utf32Hex = QStringLiteral("0x%1").arg(cp, 8, 16, QChar('0')).toUpper();
 
     // Web Entities
-    const char *namedEnt = getHtmlNamedEntity(cp);
-    if (namedEnt)
+    if (const char *namedEnt = getHtmlNamedEntity(cp); namedEnt != nullptr) {
         d.htmlNamedEntity = QString::fromLatin1(namedEnt);
+    }
     d.htmlDecEntity = QStringLiteral("&#%1;").arg(cp);
     d.htmlHexEntity = QStringLiteral("&#x%1;").arg(cp, 0, 16).toUpper();
 
     // Escape Sequences
-    if (cp == '\n')
-        d.cEscape = QStringLiteral("\\n");
-    else if (cp == '\r')
-        d.cEscape = QStringLiteral("\\r");
-    else if (cp == '\t')
-        d.cEscape = QStringLiteral("\\t");
-    else if (cp == '\0')
-        d.cEscape = QStringLiteral("\\0");
-    else if (cp <= 0xFFFF)
-        d.cEscape = QStringLiteral("\\u%1").arg(cp, 4, 16, QChar('0')).toUpper();
-    else
-        d.cEscape = QStringLiteral("\\U%1").arg(cp, 8, 16, QChar('0')).toUpper();
-
-    if (cp <= 0xFFFF) {
-        d.jsonEscape = QStringLiteral("\\u%1").arg(cp, 4, 16, QChar('0')).toUpper();
-    } else {
-        const auto high = static_cast<uint16_t>(0xD800 + ((cp - 0x10000) >> 10));
-        const auto low = static_cast<uint16_t>(0xDC00 + ((cp - 0x10000) & 0x3FF));
-        d.jsonEscape = QStringLiteral("\\u%1\\u%2").arg(high, 4, 16, QChar('0')).arg(low, 4, 16, QChar('0')).toUpper();
-    }
+    populateEscapes(cp, d);
 
     d.cssEscape = QStringLiteral("\\%1 ").arg(cp, 0, 16).toLower();
     d.urlPercent = QString::fromUtf8(d.utf8Bytes.toPercentEncoding());
@@ -1160,7 +929,7 @@ CharacterInfo::Details CharacterInfo::getDetailsForCodePoint(uint32_t cp) {
     return d;
 }
 
-CharacterInfo::Details CharacterInfo::getDetailsAt(ScintillaNext *editor, int pos) {
+CharacterInfo::Details CharacterInfo::getDetailsAt(const ScintillaNext *editor, int pos) {
 #ifdef UNIT_TESTING
     Q_UNUSED(editor);
     Q_UNUSED(pos);
@@ -1188,7 +957,7 @@ CharacterInfo::Details CharacterInfo::getDetailsAt(ScintillaNext *editor, int po
         pos--;
     }
 
-    const unsigned char lead = static_cast<unsigned char>(editor->charAt(pos));
+    const auto lead = static_cast<unsigned char>(editor->charAt(pos));
     int seqLen = 1;
     if ((lead & 0x80) == 0)
         seqLen = 1;
@@ -1208,19 +977,18 @@ CharacterInfo::Details CharacterInfo::getDetailsAt(ScintillaNext *editor, int po
     if (str.isEmpty())
         return Details();
 
-    const auto ucs4 = str.toUcs4();
-    if (ucs4.isEmpty())
+    const char32_t cp = str.toUcs4().value(0, 0);
+    if (cp == 0)
         return Details();
 
-    return getDetailsForCodePoint(static_cast<uint32_t>(ucs4.first()));
+    return getDetailsForCodePoint(cp);
 #endif
 }
 
 QString CharacterInfo::formatSummary(const Details &d) {
     if (!d.isValid)
-        return QStringLiteral("No character selected");
+        return QStringLiteral("Invalid character");
 
-    return QStringLiteral("%1 %2\nName: %3\nBlock: %4\nCategory: %5 (%6)\nUTF-8: %7\nUTF-16: %8")
-        .arg(formatCodePoint(d.codePoint), d.displayGlyph, d.name, d.block, d.categoryCode, d.categoryDescription,
-             d.utf8Hex, d.utf16Hex);
+    return QStringLiteral("%1 (%2) - %3 | Category: %4 | UTF-8: %5")
+        .arg(d.displayGlyph, formatCodePoint(d.codePoint), d.name, d.categoryCode, d.utf8Hex);
 }

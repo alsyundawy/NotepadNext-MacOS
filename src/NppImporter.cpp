@@ -177,18 +177,24 @@ NppImporter::NppImporter(const QString &configPath, ScintillaEdit *_editor) :
 
     // Build a temporary list of the key/value pairs
     QList<QPair<QString, const Language *>> sortedLanguages;
-    for (const QString &key : languages.keys()) {
-        sortedLanguages.append(qMakePair(key, &languages[key]));
-    }
+    const auto keys = languages.keys();
+    sortedLanguages.reserve(keys.size());
+    std::transform(keys.cbegin(), keys.cend(), std::back_inserter(sortedLanguages),
+        [this](const QString &key) {
+            return qMakePair(key, &languages[key]);
+        });
+
     // And sort it based on the values
     std::ranges::sort(sortedLanguages, [](const auto &a, const auto &b) {
         return QString::compare(a.second->shortName, b.second->shortName, Qt::CaseInsensitive) < 0;
     });
 
     // Store the sorted keys
-    for (const auto &[key, lang] : sortedLanguages) {
-        sortedLanguageKeys.append(key);
-    }
+    sortedLanguageKeys.reserve(sortedLanguageKeys.size() + sortedLanguages.size());
+    std::transform(sortedLanguages.cbegin(), sortedLanguages.cend(), std::back_inserter(sortedLanguageKeys),
+        [](const auto &pair) {
+            return pair.first;
+        });
 }
 
 void NppImporter::readLangsModel(const QString &filePath)

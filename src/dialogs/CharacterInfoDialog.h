@@ -13,6 +13,7 @@
 #define CHARACTERINFODIALOG_H
 
 #include <QDialog>
+#include <memory>
 #include "../features/CharacterInfo.h"
 
 namespace Ui {
@@ -27,13 +28,13 @@ public:
     ~CharacterInfoDialog() override;
 
 private slots:
-    void copyCharacter();
-    void copyCodePoint();
-    void copyUtf8();
-    void copyHtmlEntity();
+    void copyCharacter() const;
+    void copyCodePoint() const;
+    void copyUtf8() const;
+    void copyHtmlEntity() const;
 
 private:
-    Ui::CharacterInfoDialog *ui;
+    std::unique_ptr<Ui::CharacterInfoDialog> ui;
     CharacterInfo::Details m_details;
 };
 
