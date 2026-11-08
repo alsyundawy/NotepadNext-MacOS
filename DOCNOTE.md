@@ -3,7 +3,7 @@
 - **Project**: NotepadNext For MacOS
 - **Target Release**: `0.15-08`
 - **Date**: November 8, 2026
-- **Maintainer / Builder**: Harry Dertin Sutisna ([@alsyundawy](https://github.com/alsyundawy)) | ALSYUNDAWY IT SOLUSTION
+- **Maintainer / Builder**: Harry Dertin Sutisna ([@alsyundawy](https://github.com/alsyundawy)) | ALSYUNDAWY IT SOLUTION
 - **Upstream Project**: [dail8859/NotepadNext](https://github.com/dail8859/NotepadNext)
 - **Feature Donor Project**: [SparkNotePad](https://github.com/alsyundawy/SparkNotePad) `v1.3.8` • [SubnetCalc-MacOS](https://github.com/alsyundawy/SubnetCalc-MacOS) (25 Theme Suites)
 - **Comparative Whitepaper**: [UPSTREAM_COMPARISON.md](UPSTREAM_COMPARISON.md) • [RELEASE_NOTES_0.15-08.md](RELEASE_NOTES_0.15-08.md)

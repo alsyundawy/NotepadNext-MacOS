@@ -96,7 +96,7 @@ This release successfully completes all 8 architectural phases defined in `PLAN_
 | **Clangd AST Diagnostics**   | 0 syntax errors across all C++ files       | ✅ **PASSED** | 100% clean check                                                  |
 | **Cppcheck Static Analysis** | 0 style/warning/performance findings       | ✅ **PASSED** | Clean check with `--enable=warning,style,performance,portability` |
 | **Compiler Build Gate**      | 0 compiler warnings, 0 linker errors       | ✅ **PASSED** | `cmake --build build --parallel` cleanly linked `NotepadNext.app` |
-| **Qt Translation Catalogs**  | Synchronized against source strings        | ✅ **PASSED** | 22 language catalogs updated via `update_translations`            |
+| **Qt Translation Catalogs**  | Synchronized against source strings        | ✅ **PASSED** | Bilingual catalogs (en, id) 100% complete (0 unfinished)          |
 | **Local DMG Packaging**      | Verified DMG `< 32 MB` with valid checksum | ✅ **PASSED** | `NotepadNext-v0.15-08-x64.dmg` verified with `hdiutil verify`     |
 
 ---

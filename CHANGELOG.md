@@ -1,275 +1,133 @@
-# 📜 Changelog — NotepadNext For MacOS
+# Catatan Perubahan (Changelog) — NotepadNext For MacOS
 
-All notable changes to the **NotepadNext For MacOS** project are documented in this file.
-Format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+Semua perubahan penting pada **NotepadNext For MacOS** didokumentasikan di berkas ini.
+Format disusun berdasarkan panduan [Keep a Changelog](https://keepachangelog.com/id/1.1.0/)
+dan proyek ini mematuhi [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
 ## [0.15-08] - 2026-11-08
 
-### 🚀 Major Feature Integration & Productivity Innovations / Integrasi Fitur Utama & Inovasi Produktivitas
+### 🌟 Rilis Utama: Tab Bar Plus (+), Pratinjau Markdown/HTML Tabbed, Suite 28 Icon Pack, Lokalisasi Bilingual, Preferensi Teks Murni, Atribusi SubnetCalc-MacOS & Kompatibilitas Multi-Qt
 
-- 🇬🇧 **Tab Bar Plus (+) Button & Tab Ergonomics**:
-  Added a persistent `+` tool button on the dock tab bar (`DockedEditorTitleBar`) with macOS styling and hover/pressed states, allowing users to quickly open a new document tab with a single click or standard shortcut (`Cmd+N`).
-- 🇮🇩 **Tombol Tambah Tab (+) & Ergonomi Tab**:
-  Menambahkan tombol `+` persisten pada tab bar editor (`DockedEditorTitleBar`) dengan estetika macOS asli dan status hover/pressed, memungkinkan pembuatan tab dokumen baru secara instan melalui satu klik atau pintasan standar (`Cmd+N`).
+NotepadNext-MacOS v0.15-08 adalah rilis fitur dan stabilitas besar yang menghadirkan inovasi produktivitas terdepan, integrasi mendalam macOS, pemurnian antarmuka, dan pengerasan arsitektur:
 
-- 🇬🇧 **Tabbed Markdown & HTML Live Preview (`PreviewTabWidget`) & Tab Context Menu**:
-  Introduced tabbed live preview for Markdown and HTML documents with GitHub-grade callouts (`[!NOTE]`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]`, `[!CAUTION]`), devdocs typography, word and reading time metrics, dynamic zoom, HTML export, clipboard copy, and browser preview. Added tab right-click context menu actions to launch Markdown and HTML previews directly from open `.md`, `.markdown`, and `.html` files.
-- 🇮🇩 **Pratinjau Tab Markdown & HTML (`PreviewTabWidget`) & Menu Konteks Tab**:
-  Menghadirkan pratinjau tab interaktif untuk dokumen Markdown dan HTML dengan kotak info bergaya GitHub (`[!NOTE]`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]`, `[!CAUTION]`), tipografi devdocs, metrik jumlah kata dan estimasi waktu baca, zoom dinamis, ekspor HTML, salin ke clipboard, dan pratinjau di browser. Menambahkan menu konteks klik-kanan tab untuk membuka pratinjau langsung dari berkas `.md`, `.markdown`, dan `.html`.
+#### 🆕 Ditambahkan
 
-- 🇬🇧 **Themes Menu Icon Pack & 6-Tier Size Configuration**:
-  Expanded the Themes menu to include full selection of toolbar icon packs (`elegant themes`, `vibrant duotone`, `windows xp`, `notepad++ classic`, `modern ribbon`, `fugue classic`, etc.) and 6 toolbar icon sizes (`16x16`, `20x20`, `24x24`, `32x32`, `48x48`, `64x64`) with active state checkmarks and dynamic toolbar resizing.
-- 🇮🇩 **Konfigurasi Icon Pack & 6 Ukuran Ikon pada Menu Themes**:
-  Memperluas menu Themes dengan submenu pemilihan paket ikon toolbar (`elegant themes`, `vibrant duotone`, `windows xp`, `notepad++ classic`, `modern ribbon`, `fugue classic`, dll.) serta 6 tingkat ukuran ikon toolbar (`16x16`, `20x20`, `24x24`, `32x32`, `48x48`, `64x64`) lengkap dengan tanda centang status aktif dan pembaruan visual toolbar seketika.
-
-- 🇬🇧 **Help Menu Tabbed Documentation (`DocNote` & `Changelog`)**:
-  Added `DocNote` and `Changelog` actions under the Help menu that resolve and display `DOCNOTE.md` and `CHANGELOG.md` directly inside dedicated editor tabs.
-- 🇮🇩 **Dokumentasi Terintegrasi pada Menu Help (`DocNote` & `Changelog`)**:
-  Menambahkan aksi `DocNote` dan `Changelog` pada menu Help yang secara otomatis membuka berkas `DOCNOTE.md` dan `CHANGELOG.md` langsung di dalam tab editor.
-
-- 🇬🇧 **Preferences Dialog "Themes & Toolbar" Dedicated Tab**:
-  Restructured the Preferences dialog into a clean tabbed layout, relocating theme styling, dark/light toggle, toolbar icon pack selection, and toolbar icon sizing into a dedicated **Themes & Toolbar** tab with live icon preview.
-- 🇮🇩 **Tab Khusus "Themes & Toolbar" pada Dialog Preferensi**:
-  Merestrukturisasi dialog preferensi dengan antarmuka bertab yang rapi, memindahkan pengaturan tema, toggle mode gelap/terang, pemilihan paket ikon, dan penyesuaian ukuran ikon ke dalam tab khusus **Themes & Toolbar** lengkap dengan pratinjau ikon langsung.
-
-- 🇬🇧 **macOS Native Styled DMG Installer Presentation**:
-  Engineered custom packaging pipeline (`scripts/generate_dmg_background.py` & `scripts/package-dmg.sh`) producing high-DPI standard and Retina background assets, custom window geometry (680x440), left NotepadNext app slot, right `/Applications` link, curved drag-and-drop indicator, volume icon, and verified disk image checksums.
-- 🇮🇩 **Presentasi Installer DMG Bergaya Native macOS**:
-  Merancang pipeline pembuatan DMG kustom (`scripts/generate_dmg_background.py` & `scripts/package-dmg.sh`) yang menghasilkan aset latar belakang resolusi tinggi (standard & Retina), geometri jendela (680x440), slot aplikasi NotepadNext di kiri, tautan `/Applications` di kanan, indikator drag-and-drop melengkung, ikon volume, dan verifikasi checksum citra disk (`hdiutil verify`).
-
-- 🇬🇧 **28 Curated Icon Pack Personalization Suite & Toolbar Management (`ToolbarIconManager`)**:
-  Integrated a streamlined suite of 28 curated icon packs (Modern Ribbon SVG, Fluent, Classic Notepad++, Aksara variations, Retro Windows 7/Aero, and WinXP skeuomorphic styles) with zero overhead, removing 10 redundant packs (`aksara-icon-pack-sharp`, `notepad3_warm`, `notepadpp_green`, `material_sharp`, `pixel_fugue_like`, `aksara-icon-pack-bold`, `aksara-icon-pack-duotone`, `aksara-icon-pack-outline`, `aksara-npp-gnome51`, `aksara-npp-kde6`). Added dynamic runtime icon switching directly via toolbar right-click context menu and Preferences dialog.
-- 🇮🇩 **Suite Personalisasi 28 Icon Pack Terpilih & Manajemen Toolbar (`ToolbarIconManager`)**:
-  Mengintegrasikan koleksi terkurasi 28 paket ikon (Modern Ribbon SVG, Fluent, Notepad++ Klasik, variasi Aksara, Retro Windows 7/Aero, dan skeuomorfik WinXP) secara optimal, menghapus 10 pack redundan. Menambahkan kemampuan pergantian ikon secara langsung melalui menu konteks klik-kanan toolbar dan dialog Preferensi.
-
-- 🇬🇧 **Attribution & Upstream Donor Recognition**:
-  Added explicit URLs and formal attribution for sister project [SparkNotePad](https://github.com/alsyundawy/SparkNotePad) as foundational architecture and feature donor, and [SubnetCalc-MacOS](https://github.com/alsyundawy/SubnetCalc-MacOS) for contributing 25 syntax highlighting and UI themes across the application.
-- 🇮🇩 **Pengakuan Atribusi & Proyek Donor**:
-  Menyertakan tautan resmi dan pengakuan atribusi terperinci untuk proyek saudara [SparkNotePad](https://github.com/alsyundawy/SparkNotePad) sebagai donor arsitektur dan fitur utama, serta [SubnetCalc-MacOS](https://github.com/alsyundawy/SubnetCalc-MacOS) atas kontribusi 25 tema syntax highlighting dan UI.
-
-- 🇬🇧 **Streamlined Bilingual Localization & Text-Only Preferences Tabs**:
-  Refactored translation system to strictly focus on English (`en`) and Indonesian (`id`) with 100% finished translation entries, removing obsolete language files. Updated all tab headers in `PreferencesDialog` to clean text-only labels without icons or emojis.
-- 🇮🇩 **Lokalisasi Bilingual Terpadu & Tab Preferensi Berbasis Teks Murni**:
-  Menyederhanakan sistem translasi hanya pada bahasa Inggris (`en`) dan bahasa Indonesia (`id`) dengan penyelesaian 100% tuntas, membersihkan berkas bahasa yang tidak digunakan. Memperbarui seluruh judul tab pada `PreferencesDialog` menjadi berbasis teks murni tanpa ikon atau emoji.
-
-- 🇬🇧 **Interactive Toolbar Customization Dialog (`CustomizeToolbarDialog`)**:
-  Introduced a dual-list drag-and-drop toolbar customization dialog allowing users to add, remove, reorder actions, insert separators, and reset to defaults with instantaneous live toolbar reflection. Includes search filtering across available actions and seamless synchronization with application settings (`Gui/ToolBar`).
-- 🇮🇩 **Dialog Kustomisasi Toolbar Interaktif (`CustomizeToolbarDialog`)**:
-  Menghadirkan dialog kustomisasi toolbar interaktif dengan antarmuka dual-list drag-and-drop yang memungkinkan penambahan, pengurangan, pengurutan aksi, penyisipan pemisah (separator), dan reset ke default dengan pembaruan toolbar secara seketika. Dilengkapi pencarian filter aksi dan sinkronisasi otomatis dengan pengaturan aplikasi (`Gui/ToolBar`).
-
-- 🇬🇧 **Markdown Safe Live Preview Dock & Document Export Pipeline (`MarkdownSafePreviewDock`)**:
-  Added a high-performance live preview dock for Markdown and HTML documents featuring KaTeX math expression rendering and Mermaid diagram support. Includes bidirectional scroll synchronization between Scintilla editor and preview browser. Paired with `DocumentExportManager` and `ExportOptionsDialog` for exporting documents as standalone self-contained HTML (with embedded GitHub styling) or vector PDF documents.
-- 🇮🇩 **Dock Pratinjau Aman Markdown & Pipeline Ekspor Dokumen (`MarkdownSafePreviewDock`)**:
-  Menambahkan dock pratinjau langsung berkinerja tinggi untuk dokumen Markdown dan HTML dengan dukungan formula matematika KaTeX dan diagram Mermaid. Mendukung sinkronisasi scroll dua arah antara Scintilla editor dan penampil pratinjau. Dilengkapi `DocumentExportManager` dan `ExportOptionsDialog` untuk mengekspor dokumen ke berkas HTML mandiri (dengan styling GitHub tersemat) atau dokumen PDF vektor.
-
-- 🇬🇧 **Editor Ergonomics Suite (Auto-Closing Pairs, Mark Occurrences, Log Auto-Timestamp & Color Swatches)**:
-  - `AutoClosePairs`: Intelligent bracket and quote auto-closing with overtyping skip logic and empty-pair backspace handling.
-  - `MarkOccurrences`: Scintilla indicator-based highlight matching for all occurrences of selected text across the active editor viewport.
-  - `LogAutoTimestamp`: Native Windows Notepad `.LOG` header detection automatically appending local date/time stamps when opening log files.
-  - `ColorPreviewCallTip`: Automatic detection of Hex, RGB, RGBA, HSL, HSLA, and CSS color codes with live visual CallTip and tooltip color swatches.
-- 🇮🇩 **Suite Ergonomi Editor (Auto-Closing Pairs, Mark Occurrences, Timestamp Otomatis Log & Preview Warna)**:
+- **Tombol Tambah Tab (+) & Ergonomi Tab Modern**:
+  - Menambahkan tombol `+` persisten pada tab bar editor (`DockedEditorTitleBar`) dengan estetika macOS asli dan status hover/pressed, memungkinkan pembuatan tab baru secara instan (`Cmd+N`).
+- **Pratinjau Tab Markdown & HTML (`PreviewTabWidget`) & Menu Konteks Tab**:
+  - Menghadirkan pratinjau tab interaktif untuk dokumen Markdown dan HTML dengan kotak info bergaya GitHub (`[!NOTE]`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]`, `[!CAUTION]`), tipografi devdocs, metrik jumlah kata dan estimasi waktu baca, zoom dinamis, ekspor HTML, salin ke clipboard, dan pratinjau di peramban sistem. Menambahkan aksi klik-kanan pada tab `.md` dan `.html`.
+- **Konfigurasi Icon Pack & 6 Ukuran Ikon pada Menu Themes**:
+  - Memperluas menu Themes dengan submenu pemilihan 28 paket ikon toolbar dan 6 tingkat ukuran ikon (`16x16`, `20x20`, `24x24`, `32x32`, `48x48`, `64x64`) lengkap dengan tanda centang status aktif dan pembaruan visual toolbar seketika.
+- **Dokumentasi Terintegrasi pada Menu Help (`DocNote` & `Changelog`)**:
+  - Menambahkan aksi `DocNote` dan `Changelog` pada menu Help yang secara otomatis membuka berkas `DOCNOTE.md` dan `CHANGELOG.md` langsung di dalam tab editor Scintilla.
+- **Tab Khusus "Themes & Toolbar" pada Dialog Preferensi**:
+  - Merestrukturisasi dialog preferensi dengan antarmuka bertab berbasis teks murni (tanpa ikon/emoji), memindahkan pengaturan tema, toggle mode gelap/terang, opasitas jendela, pemilihan paket ikon, dan penyesuaian ukuran ikon ke dalam tab khusus **Themes & Toolbar** lengkap dengan baris pratinjau ikon langsung yang terang dan jelas.
+- **Presentasi Installer DMG Bergaya Native macOS**:
+  - Merancang pipeline pembuatan DMG kustom (`scripts/generate_dmg_background.py` & `scripts/package-dmg.sh`) yang menghasilkan aset latar belakang resolusi tinggi (standard & Retina @2x), geometri jendela (680x440), slot aplikasi NotepadNext di kiri, tautan `/Applications` di kanan, indikator drag-and-drop melengkung, ikon volume, dan verifikasi checksum citra disk (`hdiutil verify`).
+- **Suite Personalisasi 28 Icon Pack Terpilih & Manajemen Toolbar (`ToolbarIconManager`)**:
+  - Mengintegrasikan koleksi terkurasi 28 paket ikon (Modern Ribbon SVG, Fluent, Notepad++ Klasik, variasi Aksara, Retro Windows 7/Aero, dan skeuomorfik WinXP) secara optimal, menghapus 10 paket ikon redundan. Menambahkan kemampuan pergantian ikon secara langsung melalui menu konteks klik-kanan toolbar dan dialog Preferensi.
+- **Pengakuan Atribusi & Proyek Donor**:
+  - Menyertakan tautan resmi dan pengakuan atribusi terperinci untuk proyek saudara [SparkNotePad](https://github.com/alsyundawy/SparkNotePad) sebagai donor arsitektur dan fitur utama, serta [SubnetCalc-MacOS](https://github.com/alsyundawy/SubnetCalc-MacOS) atas kontribusi 25 tema syntax highlighting dan UI.
+- **Lokalisasi Bilingual Terpadu & Tab Preferensi Berbasis Teks Murni**:
+  - Menyederhanakan sistem translasi hanya pada bahasa Inggris (`en`) dan bahasa Indonesia (`id`) dengan penyelesaian 100% tuntas, membersihkan 20 berkas katalog terjemahan usang. Memperbarui seluruh judul tab pada `PreferencesDialog` menjadi berbasis teks murni tanpa ikon atau emoji.
+- **Dialog Kustomisasi Toolbar Interaktif (`CustomizeToolbarDialog`)**:
+  - Menghadirkan dialog kustomisasi toolbar interaktif dengan antarmuka dual-list drag-and-drop yang memungkinkan penambahan, pengurangan, pengurutan aksi, penyisipan pemisah (separator), dan reset ke default dengan pembaruan toolbar secara seketika. Dilengkapi pencarian filter aksi dan sinkronisasi otomatis dengan pengaturan aplikasi (`Gui/ToolBar`).
+- **Dock Pratinjau Aman Markdown & Pipeline Ekspor Dokumen (`MarkdownSafePreviewDock`)**:
+  - Menambahkan dock pratinjau langsung berkinerja tinggi untuk dokumen Markdown dan HTML dengan dukungan formula matematika KaTeX dan diagram Mermaid. Mendukung sinkronisasi scroll dua arah antara Scintilla editor dan penampil pratinjau. Dilengkapi `DocumentExportManager` dan `ExportOptionsDialog` untuk mengekspor dokumen ke berkas HTML mandiri (dengan styling GitHub tersemat) atau dokumen PDF vektor.
+- **Suite Ergonomi Editor (Auto-Closing Pairs, Mark Occurrences, Timestamp Otomatis Log & Preview Warna)**:
   - `AutoClosePairs`: Penutupan otomatis tanda kurung dan tanda kutip dengan logika overtyping skip dan penanganan backspace pasangan kosong.
   - `MarkOccurrences`: Penandaan indikator Scintilla untuk menyorot seluruh kemunculan teks yang dipilih pada viewport editor aktif.
   - `LogAutoTimestamp`: Deteksi header `.LOG` ala Windows Notepad yang otomatis menyisipkan stempel tanggal/waktu saat membuka berkas catatan log.
   - `ColorPreviewCallTip`: Deteksi kode warna Hex, RGB, RGBA, HSL, HSLA, dan CSS secara instan dengan pratinjau swatch warna visual pada CallTip editor.
-
-- 🇬🇧 **Forensics, Statistics, Myers Diff Engine & Hash Integrity Suite**:
-  - `TokenForensicUtils` & `DocumentStatisticsDialog`: Shannon entropy calculations, JWT header/payload decoding, reading/speaking time estimates, and comprehensive character/word/line analytics.
-  - `CharacterInfo` & `CharacterInfoDialog`: In-depth Unicode 16 codepoint inspection with visual glyph cards, HTML/C/JSON/CSS escape sequences, and bidirectional character metrics.
-  - `MyersDiffEngine` & `FileDiffDialog`: Longest Common Subsequence (LCS) side-by-side file comparison with synchronized dual-pane scrolling.
-  - `HashIntegrityManager`, `GenerateHashDigestDialog` & `HashIntegrityDialog`: Constant-memory stream chunked cryptographic digest generation (CRC32, MD5, SHA-1, SHA-256, SHA-512, SHA3) with real-time verification status indicators.
-- 🇮🇩 **Suite Forensik, Statistik, Mesin Diff Myers & Integritas Hash**:
+- **Suite Forensik, Statistik, Mesin Diff Myers & Integritas Hash**:
   - `TokenForensicUtils` & `DocumentStatisticsDialog`: Perhitungan entropi Shannon, decoding header/payload token JWT, estimasi waktu membaca/berbicara, serta statistik karakter/kata/baris terperinci.
   - `CharacterInfo` & `CharacterInfoDialog`: Inspeksi mendalam codepoint Unicode 16 dengan kartu visual glyph, urutan escape HTML/C/JSON/CSS, dan metrik karakter dwiarah.
   - `MyersDiffEngine` & `FileDiffDialog`: Perbandingan berkas berdampingan algoritma LCS (Longest Common Subsequence) dengan sinkronisasi scroll dua panel.
   - `HashIntegrityManager`, `GenerateHashDigestDialog` & `HashIntegrityDialog`: Pembuatan digest kriptografis aliran chunk memori konstan (CRC32, MD5, SHA-1, SHA-256, SHA-512, SHA3) dengan indikator status verifikasi real-time.
+- **Integrasi Mendalam macOS & Asosiasi 76 Format Berkas**:
+  - Memperbarui `deploy/macos/info.plist` dengan deklarasi Uniform Type Identifiers (UTType) komprehensif yang mencakup 76 ekstensi bahasa pemrograman dan markup, serta integrasi macOS System Services.
 
-- 🇬🇧 **macOS Deep System Integration & 76 File Format Associations**:
-  Modernized `deploy/macos/info.plist` with comprehensive Uniform Type Identifiers (UTType), document type definitions covering 76 programming and markup file extensions, and native macOS System Services integration.
-- 🇮🇩 **Integrasi Mendalam macOS & Asosiasi 76 Format Berkas**:
-  Memperbarui `deploy/macos/info.plist` dengan deklarasi Uniform Type Identifiers (UTType) komprehensif yang mencakup 76 ekstensi bahasa pemrograman dan markup, serta integrasi macOS System Services.
+#### 🛠️ Diperbaiki & Diperkuat
 
-### 🛡️ Code Quality, Hardening & Verification / Kualitas Kode, Pengerasan & Verifikasi
-
-- 🇬🇧 **100% Zero-Error Static Analysis Gate**:
-  - Cleared all findings across `trunk check -y`, validating 4,023 files with 0 issues.
-  - Clean `cppcheck` execution across all newly added and modified C++ source and header files.
-  - Complete elimination of shadow parameter warnings and loop modernized to standard STL algorithms (`std::any_of`, `std::all_of`, `std::find_if`, `std::transform`).
-  - Full synchronization of Qt Translation catalogs via `cmake --build build --target update_translations`.
-  - Built and verified local DMG release (`NotepadNext-v0.15-08-x64.dmg`) with `hdiutil verify` cryptographic checksum validation.
-- 🇮🇩 **Gerbang Analisis Statis 100% Zero-Error**:
+- **Kompatibilitas Multi-Qt Penuh (Qt 6.5 LTS hingga Qt 6.12)**:
+  - Membungkus pemanggilan `QStyleHints::setColorScheme` dalam `#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)` sehingga kompilasi berhasil tanpa eror pada seluruh runner CI GitHub Actions dan distro Linux Qt 6.5 LTS.
+- **Judul Jendela macOS Permanen Dark Aqua**:
+  - Menegakkan `NSAppearanceNameDarkAqua` melalui runtime Objective-C Cocoa (`objc_msgSend`) sehingga bingkai jendela dan tombol traffic lights macOS tetap gelap dan elegan dalam mode apa pun.
+- **Pergantian Tema & Icon Cepat (< 2 ms)**:
+  - Mengoptimalkan rasterisasi ikon melalui scanline pointer arithmetic (`scanLine()`), caching tema ikon adaptif, dan deferral sinkronisasi aksi jendela.
+- **Gerbang Analisis Statis 100% Zero-Error**:
   - Lulus seluruh validasi `trunk check -y` pada 4.023 berkas dengan 0 isu.
   - Eksekusi `cppcheck` bersih pada seluruh berkas C++ baru dan yang dimodifikasi.
-  - Eliminasi total peringatan shadow parameter dan modernisasi perulangan ke algoritma STL standar (`std::any_of`, `std::all_of`, `std::find_if`, `std::transform`).
-  - Sinkronisasi penuh katalog terjemahan Qt melalui `cmake --build build --target update_translations`.
   - Pembuatan dan verifikasi paket DMG lokal (`NotepadNext-v0.15-08-x64.dmg`) tervalidasi menggunakan `hdiutil verify`.
 
 ---
 
-### 🐛 Critical Bug Fixes & Stability / Perbaikan Bug Kritis & Stabilitas
+# Changelog — NotepadNext For MacOS
 
-- 🇬🇧 **Multi-Window Theme Propagation & Dangling Pointer Prevention**: Fortified `ThemeManager` in multi-window environments by converting `m_activeWindow` from a raw pointer to `QPointer<MainWindow>`, completely eliminating dangling pointer and use-after-free risks (CWE-416) when secondary windows are closed. Enhanced `ThemeManager::applyTheme()` to dynamically iterate and apply stylesheet updates and Scintilla text styling across all active top-level `MainWindow` instances (`QApplication::topLevelWidgets()`), guaranteeing theme consistency when cycling multiple windows or toggling themes. Added non-null safe fallback to `&kAllThemePalettes[0]` in `currentPalette()`.
-- 🇮🇩 **Propagasi Tema Multi-Jendela & Pencegahan Pointer Menggantung**: Memperkokoh `ThemeManager` dalam skenario multi-jendela dengan mengubah `m_activeWindow` dari raw pointer menjadi `QPointer<MainWindow>`, sepenuhnya melenyapkan risiko dangling pointer dan use-after-free (CWE-416) saat jendela sekunder ditutup. Menyempurnakan `ThemeManager::applyTheme()` untuk mengiterasi dan menerapkan stylesheet serta pewarnaan teks Scintilla ke seluruh instance `MainWindow` tingkat atas (`QApplication::topLevelWidgets()`), menjamin konsistensi tema saat beralih antar jendela atau berganti tema. Menambahkan fallback aman non-null ke `&kAllThemePalettes[0]` pada `currentPalette()`.
+All notable changes to the **NotepadNext For MacOS** project are documented in this file.
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-- 🇬🇧 **Multilingual Localization & Full lupdate Synchronization**: Pulled and synchronized 22 official language translation files directly from `upstream/l10n_master` (Arabic, Czech, German, Spanish, French, Hungarian, Italian, Japanese, Korean, Dutch, Polish, Portuguese Brazilian, Portuguese European, Russian, Swedish, Turkish, Ukrainian, Vietnamese, Chinese Simplified, and Chinese Traditional). Executed `lupdate` across the entire codebase, updating line numbers and source anchors, while maintaining 100% complete Bahasa Indonesia (`id_ID`) and English (`en_US`) catalogs with 660 finished strings and 0 unfinished entries.
-- 🇮🇩 **Pelokalan Multibahasa & Sinkronisasi Penuh lupdate**: Menarik dan menyinkronkan 22 berkas terjemahan bahasa resmi langsung dari `upstream/l10n_master` (Arab, Ceko, Jerman, Spanyol, Prancis, Hungaria, Italia, Jepang, Korea, Belanda, Polandia, Portugis Brasil, Portugis Eropa, Rusia, Swedia, Turki, Ukraina, Vietnam, Tionghoa Sederhana, dan Tionghoa Tradisional). Menjalankan `lupdate` di seluruh codebase untuk memperbarui nomor baris dan jangkar sumber, serta mempertahankan 100% kelengkapan katalog Bahasa Indonesia (`id_ID`) dan Bahasa Inggris (`en_US`) dengan 660 string selesai dan 0 entri tertunda.
+---
 
-- 🇬🇧 **Dialog Box Theme Stabilization & Startup Theme Propagation**: Resolved a persistent defect where launching the application in Light Mode caused modal message dialog boxes (`QMessageBox`, `QDialog`, `SaveModifiedDialog`) to randomly render in Dark Mode unless the user manually reset the theme to default light mode from the Themes menu. Root cause analysis revealed that `ThemeManager::initialize()` merely loaded preferences into member variables without invoking `applyTheme()`, leaving `QApplication::palette()` and `qApp->styleSheet()` uninitialized at application startup. Consequently, top-level modal dialogs (which do not inherit window-level styles from `MainWindow`) fell back to the host macOS Cocoa dark appearance whenever macOS system Dark Mode was enabled. Resolved by:
-  1. Invoking `ThemeManager::initialize(settings)` early during `NotepadNextApplication::init()`, guaranteeing application-level palettes and stylesheets are established before any UI components or dialogs are constructed.
-  2. Calling `applyTheme()` immediately within `initialize()`, normalizing the current palette against active `themeMode` and emitting `themeChanged` and `paletteChanged`.
-  3. Configuring `QGuiApplication::styleHints()->setColorScheme()` (Qt 6.5+) to explicitly synchronize the native Cocoa window frame and sheet appearance (`Qt::ColorScheme::Light`, `Qt::ColorScheme::Dark`, or `Qt::ColorScheme::Unknown` for Auto).
-  4. Augmenting `ThemeManager::getThemeStyleSheet()` with comprehensive, explicit CSS rules for `QMessageBox` and child elements (`QLabel`, `QLabel#qt_msgbox_label`, `QLabel#qt_msgbox_informativelabel`, `QPushButton`, hover/pressed/default states).
-  5. Decoupling `SaveModifiedDialog` color resolution from uninitialized window palettes by binding directly to `ThemeManager::instance()->isDarkActive()` and `ThemeManager::instance()->currentPalette()`, and connecting live `themeChanged` / `paletteChanged` signals.
-- 🇮🇩 **Stabilisasi Tema Kotak Dialog & Propagasi Tema Saat Startup**: Memperbaiki masalah di mana saat aplikasi dibuka dalam mode terang (Light Mode), kotak dialog pesan (`QMessageBox`, `QDialog`, `SaveModifiedDialog`) secara acak tampil dalam Dark Mode kecuali pengguna mereset tema ke default light mode di menu Themes. Analisis akar penyebab menemukan bahwa `ThemeManager::initialize()` hanya memuat nilai pengaturan ke variabel anggota tanpa memanggil `applyTheme()`, membiarkan `QApplication::palette()` dan `qApp->styleSheet()` kosong saat startup. Akibatnya, kotak dialog modal tingkat atas (yang tidak mewarisi stylesheet lokal `MainWindow`) kembali ke appearance gelap native Cocoa macOS setiap kali macOS berada dalam system Dark Mode. Diselesaikan dengan:
-  1. Memanggil `ThemeManager::initialize(settings)` lebih awal pada `NotepadNextApplication::init()`, memastikan palet dan stylesheet tingkat aplikasi diterapkan sebelum komponen UI atau dialog apa pun dibuat.
-  2. Menjalankan `applyTheme()` langsung di dalam `initialize()`, menormalisasi palet aktif terhadap `themeMode` serta memancarkan sinyal `themeChanged` dan `paletteChanged`.
-  3. Mengonfigurasi `QGuiApplication::styleHints()->setColorScheme()` (Qt 6.5+) untuk menyinkronkan tampilan frame jendela dan sheet native Cocoa secara eksplisit (`Qt::ColorScheme::Light`, `Qt::ColorScheme::Dark`, atau `Qt::ColorScheme::Unknown` untuk Auto).
-  4. Menambahkan aturan CSS lengkap dan eksplisit pada `ThemeManager::getThemeStyleSheet()` untuk `QMessageBox` dan elemen anaknya (`QLabel`, `QLabel#qt_msgbox_label`, `QLabel#qt_msgbox_informativelabel`, `QPushButton`, serta state hover/pressed/default).
-  5. Mendekopel penentuan warna pada `SaveModifiedDialog` dari palet window yang belum terinisialisasi dengan menghubungkannya langsung ke `ThemeManager::instance()->isDarkActive()` dan `ThemeManager::instance()->currentPalette()`, serta menghubungkan sinyal reaktif `themeChanged` dan `paletteChanged`.
+## [0.15-08] - 2026-11-08
 
-- 🇬🇧 **14-Pillar Codebase Audit & QRegexSearch Memory Leak Resolution**: Executed exhaustive 14-pillar codebase audit covering Bug, Syntax, Runtime, Logic, Memory, Dead Code, Duplicate Code, Circular Dependency, Performance Bottleneck, Security Vulnerability (OWASP Top 25 2024–2026 / MITRE CWE Top 50 2024–2026), Maintainability (CISQ/ISO 5055), Scalability, Readability (Google C++ Style), and Empirical Verification Gate. Resolved heap memory leak in `src/QRegexSearch.h` by adding `~QRegexSearch() override { delete substituted; }` to cleanly reclaim replacement buffer memory (CWE-401).
-- 🇮🇩 **Audit 14-Pilar Codebase & Perbaikan Memory Leak QRegexSearch**: Menjalankan audit menyeluruh pada 14 pilar rekayasa perangkat lunak mencakup Bug, Sintaks, Runtime, Logika, Memori, Dead Code, Duplicate Code, Circular Dependency, Performance Bottleneck, Kerentanan Keamanan (OWASP Top 25 2024–2026 / MITRE CWE Top 50 2024–2026), Maintainability (CISQ/ISO 5055), Skalabilitas, Readability (Google C++ Style), dan Gerbang Verifikasi Empiris. Memperbaiki kebocoran memori heap pada `src/QRegexSearch.h` dengan menambahkan destruktor `~QRegexSearch() override { delete substituted; }` untuk membersihkan buffer penggantian teks (CWE-401).
-- 🇬🇧 **Random Crash Resolution on Closing Unsaved Tab**: Fixed critical SIGABRT / `qt_assert` and Use-After-Free crashes occurring when closing unsaved documents. Defensively replaced crashing `Q_ASSERT(isFile())` calls in `ScintillaNext::getFilePath()`, `getPath()`, `getFileInfo()`, and `SaveModifiedDialog::setupUi()` with safe empty fallbacks, resolved the lifetime race in `DockedEditor.cpp` where `QObject::destroyed(obj)` re-registered the dying editor into `currentEditor`, eliminated null dereferencing in `MainWindow::updateEditorPositionBasedUi()` when dock areas collapse, and protected document unwinding using `QPointer<ScintillaNext>` during modal save dialogues.
-- 🇮🇩 **Penyelesaian Crash Acak Saat Menutup Tab Belum Tersimpan**: Memperbaiki crash fatal SIGABRT / `qt_assert` dan Use-After-Free saat menutup dokumen yang belum tersimpan. Mengganti pemanggilan `Q_ASSERT(isFile())` yang memicu abort pada `ScintillaNext::getFilePath()`, `getPath()`, `getFileInfo()`, dan `SaveModifiedDialog::setupUi()` dengan pengecekan aman, memperbaiki kondisi balapan lifetime pada `DockedEditor.cpp` di mana `QObject::destroyed(obj)` mendaftarkan ulang objek editor yang sedang dihancurkan, menghilangkan dereferensi pointer null pada `MainWindow::updateEditorPositionBasedUi()` saat dock area ditutup, dan mengamankan penutupan dokumen dengan `QPointer<ScintillaNext>`.
-- 🇬🇧 **Clangd & SonarLint C-Mode Elimination & Header Compilation Database**: Introduced `scripts/generate_compdb_headers.py` directly integrated into CMake build pipeline via `enrich_compile_commands`, generating explicit `-x c++-header -std=c++20` database entries for all 95 C++ header files in `src/`. Configured `.vscode/settings.json` with `"sonar.c.file.suffixes": "-"` and `"sonar.cpp.file.suffixes": ".cpp,.cxx,.cc,.h,.hpp,.hxx"`, resolving the fatal `invalid argument '-std=c++20' not allowed with 'C'` parser conflict and completely eliminating 1,288 false syntax errors across all header files.
-- 🇮🇩 **Eliminasi Mode-C Clangd & SonarLint serta Database Kompilasi Header**: Mengintegrasikan `scripts/generate_compdb_headers.py` ke pipeline CMake melalui target `enrich_compile_commands` yang menghasilkan entri kompilasi `-x c++-header -std=c++20` eksplisit untuk seluruh 95 berkas header C++ di `src/`. Menambahkan konfigurasi `.vscode/settings.json` dengan `"sonar.c.file.suffixes": "-"` dan `"sonar.cpp.file.suffixes": ".cpp,.cxx,.cc,.h,.hpp,.hxx"`, menuntaskan konflik `invalid argument '-std=c++20' not allowed with 'C'` dan melenyapkan 1.288 error sintaks palsu di seluruh header.
-- 🇬🇧 **SonarLint Code Quality & Complexity Refactoring**:
-  - `DefaultDirectoryManager.cpp`: Applied C++20 `using enum ApplicationSettings::DefaultDirectoryBehaviorEnum;` (S6186) and modernized control flow with C++17/C++20 if-init statements `if (const auto behavior = ...; ...)` (S6004).
-  - `MainWindow.cpp` & `MainWindow.h`: Converted `newEditor` pointers to `const ScintillaNext *` (S5813), `dockArea` to `const ads::CDockAreaWidget *`, and marked `MainWindow::switchToEditor` as a `const` member function in declaration and definition (S5956).
-  - `DockedEditor.cpp`: Converted `dockAreaCreated` lambda parameter to `const ads::CDockAreaWidget *` (S5813). Extracted helper functions `extractActiveEditor` and `isEditorOpen` to decouple widget hierarchy traversal, eliminating deep nesting (nesting depth <= 2 across all methods, resolving S134) and dropping `getCurrentEditor()` Cognitive Complexity from 29 down to <= 6 (resolving S3776).
-- 🇮🇩 **Refaktorisasi Kualitas Kode & Kompleksitas Kognitif SonarLint**:
-  - `DefaultDirectoryManager.cpp`: Menerapkan C++20 `using enum ApplicationSettings::DefaultDirectoryBehaviorEnum;` (S6186) dan modernisasi kontrol alur dengan pernyataan if-init C++17/C++20 `if (const auto behavior = ...; ...)` (S6004).
-  - `MainWindow.cpp` & `MainWindow.h`: Mengubah pointer `newEditor` menjadi `const ScintillaNext *` (S5813), `dockArea` menjadi `const ads::CDockAreaWidget *`, dan menandai method `MainWindow::switchToEditor` sebagai fungsi anggota `const` pada deklarasi dan definisi (S5956).
-  - `DockedEditor.cpp`: Mengubah parameter lambda `dockAreaCreated` menjadi `const ads::CDockAreaWidget *` (S5813). Mengekstrak fungsi pembantu `extractActiveEditor` dan `isEditorOpen` untuk menyederhanakan penelusuran hierarki widget, menghilangkan percabangan dalam (kedalaman nesting <= 2 di seluruh method, menuntaskan S134) serta menurunkan Kompleksitas Kognitif `getCurrentEditor()` dari 29 menjadi <= 6 (menuntaskan S3776).
-- 🇬🇧 **SonarQube / SonarLint 756 Error Remediation**: Added explicit exclusions in `sonar-project.properties` (`thirdparty/**`, `.cpm-cache/**`, `build/**`, `i18n/**`, `**/*.ts`, `src/stylesheets/**`), preventing Qt Translation XML (`.ts`) files from being mistakenly processed as invalid TypeScript and eliminating 756 analyzer errors.
-- 🇮🇩 **Remediasi 756 Error SonarQube / SonarLint**: Menambahkan pengecualian eksplisit pada `sonar-project.properties` (`thirdparty/**`, `.cpm-cache/**`, `build/**`, `i18n/**`, `**/*.ts`, `src/stylesheets/**`), mencegah berkas XML Terjemahan Qt (`.ts`) diproses secara keliru sebagai TypeScript tidak valid dan melenyapkan 756 error analyzer.
-- 🇬🇧 **Uchardet Header Include & 100% Zero-Error Clangd Validation**: Added `thirdparty/uchardet/src` to `.clangd`, `.vscode/settings.json`, and `scripts/generate_compilation_database.py`. Successfully validated all 89 C++ files across `src/*.cpp` and `src/*/*.cpp` with `clangd --check` and `cppcheck`, achieving 0 errors across the entire codebase.
-- 🇮🇩 **Include Header Uchardet & Validasi 100% Zero-Error Clangd**: Menambahkan path `thirdparty/uchardet/src` pada `.clangd`, `.vscode/settings.json`, dan `scripts/generate_compilation_database.py`. Sukses memvalidasi seluruh 89 berkas C++ di `src/*.cpp` dan `src/*/*.cpp` dengan `clangd --check` dan `cppcheck`, mencapai 0 error mutlak di seluruh codebase.
-- 🇬🇧 **Bandit Security Hardening in Compilation Database Generator**: Refactored `scripts/generate_compilation_database.py` into modular, subprocess-free functions using pure `pathlib` and `json`, eliminating all Bandit security warnings (B404, B603, B607) and passing `trunk check` with 0 issues.
-- 🇮🇩 **Hardening Keamanan Bandit pada Generator Database Kompilasi**: Merefaktor `scripts/generate_compilation_database.py` menjadi fungsi-fungsi modular tanpa modul `subprocess` menggunakan pustaka standar `pathlib` dan `json`, melenyapkan seluruh temuan keamanan Bandit (B404, B603, B607) serta lulus 100% uji `trunk check` tanpa isu.
-- 🇬🇧 **Verified Local macOS DMG Packaging (v0.15-07)**: Configured and executed clean Release compilation with CMake and Qt 6.12.0 via Ninja, packaging `build/NotepadNext-v0.15-07-x64.dmg` (27 MB, compressed UDBZ) with 100% valid Apple `hdiutil verify` checksum ($7CACB3C2).
-- 🇮🇩 **Verifikasi Pemaketan DMG macOS Lokal (v0.15-07)**: Mengonfigurasi dan mengeksekusi kompilasi Release bersih menggunakan CMake dan Qt 6.12.0 via Ninja, memaketkan `build/NotepadNext-v0.15-07-x64.dmg` (27 MB, format kompresi UDBZ) dengan status verifikasi `hdiutil verify` 100% valid (CRC32 $7CACB3C2).
+### 🌟 Major Release: Tab Bar Plus (+), Tabbed Markdown/HTML Preview, 28 Curated Icon Packs, Bilingual Localization en/id, Clean Text-Only Preferences, SubnetCalc-MacOS Attribution & Multi-Qt Compatibility
 
-### 📦 Cross-Platform Packaging & Linux Deployment / Pemaketan Lintas Platform & Rilis Linux
+NotepadNext-MacOS v0.15-08 is a major feature and stability release introducing leading productivity innovations, deep macOS desktop integration, refined ergonomics, and architectural hardening:
 
-- 🇬🇧 **Complete Linux & macOS Qt 6.5–6.12 Release Matrix (x64 & ARM64)**: Updated `.github/workflows/release.yml` to provide complete build and packaging coverage from Qt 6.5, 6.8 LTS, 6.10, 6.11, up to Qt 6.12 across Linux x64 (Ubuntu 22.04 & 24.04), native Linux ARM64 (Ubuntu 24.04 ARM on `ubuntu-24.04-arm`), macOS Intel (x64), and macOS Apple Silicon (arm64) runners.
-- 🇮🇩 **Matriks Rilis Lengkap Linux & macOS Qt 6.5–6.12 (x64 & ARM64)**: Memperbarui `.github/workflows/release.yml` untuk menyediakan cakupan kompilasi dan pemaketan lengkap dari Qt 6.5, 6.8 LTS, 6.10, 6.11, hingga Qt 6.12 di seluruh runner Linux x64 (Ubuntu 22.04 & 24.04), native Linux ARM64 (Ubuntu 24.04 ARM pada `ubuntu-24.04-arm`), macOS Intel (x64), dan macOS Apple Silicon (arm64).
-- 🇬🇧 **Native Debian (.deb) & Red Hat (.rpm) Packaging for x64 & ARM64**: Implemented native CPack packaging infrastructure in `cmake/PackagingLinux.cmake` supporting Ubuntu 22.04 LTS, Ubuntu 24.04 LTS, Debian, Fedora, and openSUSE for both x86_64 (amd64) and ARM64 (aarch64) architectures, with complete `.desktop` desktop entry, multi-resolution scalable vector icons (`NotepadNext.svg`), and AppStream metadata.
-- 🇮🇩 **Pemaketan Native Debian (.deb) & Red Hat (.rpm) untuk x64 & ARM64**: Mengimplementasikan infrastruktur pemaketan CPack native pada `cmake/PackagingLinux.cmake` mendukung Ubuntu 22.04 LTS, Ubuntu 24.04 LTS, Debian, Fedora, dan openSUSE untuk arsitektur x86_64 (amd64) dan ARM64 (aarch64) dilengkapi berkas desktop `.desktop`, ikon vektor skalabel (`NotepadNext.svg`), serta metadata AppStream.
-- 🇬🇧 **Multi-Platform CI/CD Release Matrix**: Added dedicated Linux runner matrix across Qt 6.5, 6.8, 6.10, 6.11, and 6.12 generating automated `.deb` and `.rpm` release artifacts in `.github/workflows/release.yml` for both x64 and ARM64, with unified release asset publishing.
-- 🇮🇩 **Matriks Rilis CI/CD Multi-Platform**: Menambahkan matriks runner Linux khusus untuk Qt 6.5, 6.8, 6.10, 6.11, dan 6.12 yang memproduksi paket rilis `.deb` dan `.rpm` otomatis pada `.github/workflows/release.yml` untuk x64 dan ARM64, terintegrasi dengan publikasi aset rilis GitHub.
-- 🇬🇧 **Linux Default Editor Automation Engine (`NotepadNext-Default-Editor-Linux.sh`)**: Created enterprise-grade default editor configuration script for all Linux distributions (Debian, Ubuntu, Linux Mint, Fedora, RHEL, openSUSE, Arch, etc.) and Desktop Environments (GNOME, KDE Plasma, XFCE, Cinnamon, MATE, LXQt, COSMIC, etc.). Enforces Freedesktop XDG MIME standards (120+ MIME types), system alternatives (`update-alternatives` and `alternatives`), and terminal `$EDITOR`/`$VISUAL`. Fully verified with 0 `shellcheck` warnings and 100% `shfmt` conformance.
-- 🇮🇩 **Mesin Otomasi Editor Default Linux (`NotepadNext-Default-Editor-Linux.sh`)**: Membuat skrip konfigurasi editor default kelas enterprise untuk seluruh distro Linux (Debian, Ubuntu, Linux Mint, Fedora, RHEL, openSUSE, Arch, dll) dan Desktop Environment (GNOME, KDE Plasma, XFCE, Cinnamon, MATE, LXQt, COSMIC, dll). Menerapkan standar Freedesktop XDG MIME (120+ tipe MIME), sistem alternatif (`update-alternatives` & `alternatives`), serta variabel terminal `$EDITOR`/`$VISUAL`. Lolos 100% uji `shellcheck` (0 peringatan) dan kepatuhan penuh `shfmt`.
-- 🇬🇧 **Standardized AppStream Identifier & Dual Desktop Entries**: Standardized Linux AppStream ID to `com.github.alsyundawy.NotepadNext` (superseding legacy `io.github.dail8859.NotepadNext`), providing dual desktop entries (`NotepadNext.desktop` and `com.github.alsyundawy.NotepadNext.desktop`) in `deploy/linux/` and automated CPack installation.
-- 🇮🇩 **Standarisasi Pengenal AppStream & Entri Desktop Ganda**: Menstandarisasikan ID AppStream Linux ke `com.github.alsyundawy.NotepadNext` (menggantikan `io.github.dail8859.NotepadNext` lama), menyediakan entri desktop ganda (`NotepadNext.desktop` dan `com.github.alsyundawy.NotepadNext.desktop`) pada `deploy/linux/` serta instalasi otomatis CPack.
-- 🇬🇧 **Dual Script Root & Release Synchronization**: Ensured both `NotepadNext-Default-Editor.sh` (macOS) and `NotepadNext-Default-Editor-Linux.sh` (Linux) are maintained in repository root, synced to `scripts/`, and automated as primary GitHub release download assets.
-- 🇮🇩 **Sinkronisasi Skrip Ganda Folder Utama & Aset Rilis**: Memastikan kedua skrip `NotepadNext-Default-Editor.sh` (macOS) dan `NotepadNext-Default-Editor-Linux.sh` (Linux) selalu hadir di folder utama (root), tersinkronisasi ke `scripts/`, dan diunggah otomatis sebagai aset rilis GitHub.
-- 🇬🇧 **Cross-Platform Documentation & Packaging Architecture Suite**: Integrated 5 comprehensive engineering guides covering Ubuntu/Debian native builds (`doc/BUILD_UBUNTU_DEBIAN.md`), Homebrew distribution (`doc/HOMEBREW_DISTRIBUTION.md`), Linux DEB/RPM CPack architecture (`doc/LINUX_DEB_RPM_PACKAGING.md`), macOS codesigning and notarization (`doc/MACOS_CODESIGN_AND_NOTARIZATION.md`), and OS support matrix (`doc/PLATFORM_SUPPORT.md`). Extended `README.md` with full Linux packaging instructions and standardized CLI flag documentation (`-f`, `-s/--system`, `-d/--dry-run`, `--status`, `--restore`).
-- 🇮🇩 **Suite Arsitektur Dokumentasi & Pemaketan Lintas Platform**: Mengintegrasikan 5 panduan teknis komprehensif mencakup kompilasi native Ubuntu/Debian (`doc/BUILD_UBUNTU_DEBIAN.md`), distribusi Homebrew (`doc/HOMEBREW_DISTRIBUTION.md`), arsitektur CPack Linux DEB/RPM (`doc/LINUX_DEB_RPM_PACKAGING.md`), penandatanganan kode & notarisasi macOS (`doc/MACOS_CODESIGN_AND_NOTARIZATION.md`), serta matriks dukungan sistem operasi (`doc/PLATFORM_SUPPORT.md`). Memperluas `README.md` dengan instruksi pemaketan Linux lengkap dan dokumentasi opsi CLI standar (`-f`, `-s/--system`, `-d/--dry-run`, `--status`, `--restore`).
+#### 🆕 Added
 
-### 🎨 UI/UX & Quality-of-Life Polish / Pemolesan UI/UX & Kualitas Penggunaan
+- **Tab Bar Plus (+) Button & Tab Ergonomics**:
+  - Added a persistent `+` tool button on the dock tab bar (`DockedEditorTitleBar`) with macOS styling and hover/pressed states, allowing users to quickly open a new document tab with a single click or standard shortcut (`Cmd+N`).
+- **Tabbed Markdown & HTML Live Preview (`PreviewTabWidget`) & Tab Context Menu**:
+  - Introduced tabbed live preview for Markdown and HTML documents with GitHub-grade callouts (`[!NOTE]`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]`, `[!CAUTION]`), devdocs typography, word and reading time metrics, dynamic zoom, HTML export, clipboard copy, and browser preview. Added tab right-click context menu actions to launch Markdown and HTML previews directly from open `.md`, `.markdown`, and `.html` files.
+- **Themes Menu Icon Pack & 6-Tier Size Configuration**:
+  - Expanded the Themes menu to include full selection of 28 toolbar icon packs (`modern ribbon`, `fluent`, `notepad++ classic`, `windows xp`, `retro aero`, `aksara`, etc.) and 6 toolbar icon sizes (`16x16`, `20x20`, `24x24`, `32x32`, `48x48`, `64x64`) with active state checkmarks and dynamic toolbar resizing.
+- **Help Menu Tabbed Documentation (`DocNote` & `Changelog`)**:
+  - Added `DocNote` and `Changelog` actions under the Help menu that resolve and display `DOCNOTE.md` and `CHANGELOG.md` directly inside dedicated editor tabs.
+- **Preferences Dialog "Themes & Toolbar" Dedicated Tab**:
+  - Restructured the Preferences dialog into a clean, text-only tabbed layout without icons or emojis. Relocated theme styling, dark/light toggle, window opacity, toolbar icon pack selection, and toolbar icon sizing into a dedicated **Themes & Toolbar** tab with a clear live icon preview row.
+- **macOS Native Styled DMG Installer Presentation**:
+  - Engineered custom packaging pipeline (`scripts/generate_dmg_background.py` & `scripts/package-dmg.sh`) producing high-DPI standard and Retina background assets, custom window geometry (680x440), left NotepadNext app slot, right `/Applications` link, curved drag-and-drop indicator, volume icon, and verified disk image checksums (`hdiutil verify`).
+- **28 Curated Icon Pack Personalization Suite & Toolbar Management (`ToolbarIconManager`)**:
+  - Integrated a streamlined suite of 28 curated icon packs (Modern Ribbon SVG, Fluent, Classic Notepad++, Aksara variations, Retro Windows 7/Aero, and WinXP skeuomorphic styles) with zero overhead, removing 10 redundant packs (`aksara-icon-pack-sharp`, `notepad3_warm`, `notepadpp_green`, `material_sharp`, `pixel_fugue_like`, `aksara-icon-pack-bold`, `aksara-icon-pack-duotone`, `aksara-icon-pack-outline`, `aksara-npp-gnome51`, `aksara-npp-kde6`). Added dynamic runtime icon switching directly via toolbar right-click context menu and Preferences dialog.
+- **Attribution & Upstream Donor Recognition**:
+  - Added explicit URLs and formal attribution for sister project [SparkNotePad](https://github.com/alsyundawy/SparkNotePad) as foundational architecture and feature donor, and [SubnetCalc-MacOS](https://github.com/alsyundawy/SubnetCalc-MacOS) for contributing 25 syntax highlighting and UI themes across the application.
+- **Streamlined Bilingual Localization & Text-Only Preferences Tabs**:
+  - Refactored translation system to strictly focus on English (`en`) and Indonesian (`id`) with 100% finished translation entries, removing 20 obsolete language files. Updated all tab headers in `PreferencesDialog` to clean text-only labels without icons or emojis.
+- **Interactive Toolbar Customization Dialog (`CustomizeToolbarDialog`)**:
+  - Introduced a dual-list drag-and-drop toolbar customization dialog allowing users to add, remove, reorder actions, insert separators, and reset to defaults with instantaneous live toolbar reflection. Includes search filtering across available actions and seamless synchronization with application settings (`Gui/ToolBar`).
+- **Markdown Safe Live Preview Dock & Document Export Pipeline (`MarkdownSafePreviewDock`)**:
+  - Added a high-performance live preview dock for Markdown and HTML documents featuring KaTeX math expression rendering and Mermaid diagram support. Includes bidirectional scroll synchronization between Scintilla editor and preview browser. Paired with `DocumentExportManager` and `ExportOptionsDialog` for exporting documents as standalone self-contained HTML (with embedded GitHub styling) or vector PDF documents.
+- **Editor Ergonomics Suite (Auto-Closing Pairs, Mark Occurrences, Log Auto-Timestamp & Color Swatches)**:
+  - `AutoClosePairs`: Intelligent bracket and quote auto-closing with overtyping skip logic and empty-pair backspace handling.
+  - `MarkOccurrences`: Scintilla indicator-based highlight matching for all occurrences of selected text across the active editor viewport.
+  - `LogAutoTimestamp`: Native Windows Notepad `.LOG` header detection automatically appending local date/time stamps when opening log files.
+  - `ColorPreviewCallTip`: Automatic detection of Hex, RGB, RGBA, HSL, HSLA, and CSS color codes with live visual CallTip and tooltip color swatches.
+- **Forensics, Statistics, Myers Diff Engine & Hash Integrity Suite**:
+  - `TokenForensicUtils` & `DocumentStatisticsDialog`: Shannon entropy calculations, JWT header/payload decoding, reading/speaking time estimates, and comprehensive character/word/line analytics.
+  - `CharacterInfo` & `CharacterInfoDialog`: In-depth Unicode 16 codepoint inspection with visual glyph cards, HTML/C/JSON/CSS escape sequences, and bidirectional character metrics.
+  - `MyersDiffEngine` & `FileDiffDialog`: Longest Common Subsequence (LCS) side-by-side file comparison with synchronized dual-pane scrolling.
+  - `HashIntegrityManager`, `GenerateHashDigestDialog` & `HashIntegrityDialog`: Constant-memory stream chunked cryptographic digest generation (CRC32, MD5, SHA-1, SHA-256, SHA-512, SHA3) with real-time verification status indicators.
+- **macOS Deep System Integration & 76 File Format Associations**:
+  - Modernized `deploy/macos/info.plist` with comprehensive Uniform Type Identifiers (UTType), document type definitions covering 76 programming and markup file extensions, and native macOS System Services integration.
 
-- 🇬🇧 **Non-Intrusive Status Bar Zoom Indicator**: Replaced screen-blocking On-Screen Display (OSD) popup with clean, non-intrusive `statusBar()->showMessage()` feedback, preventing popup boxes from obscuring the document buffer while zooming.
-- 🇮🇩 **Indikator Zoom Status Bar Non-Intrusif**: Mengganti pop-up OSD yang menutupi layar dengan pesan `statusBar()->showMessage()` yang bersih dan elegan pada status bar, mencegah kotak pop-up menghalangi pandangan teks editor saat zooming.
-- 🇬🇧 **FadingIndicator Palette & Contrast Fix**: Fixed macOS Qt 6 palette manipulation in `FadingIndicator` with crisp, high-contrast text rendering and subtle rounded backdrop geometry.
-- 🇮🇩 **Perbaikan Palet & Kontras FadingIndicator**: Memperbaiki manipulasi palet macOS Qt 6 pada `FadingIndicator` dengan teks kontras tinggi yang tajam dan latar belakang berpenampilan rapi.
-- 🇬🇧 **Pixel-Crisp Notepad++ Mirror Toolbar Tooltips & Native Cocoa Transparency**: Completely redesigned toolbar tooltips to mirror Notepad++'s clean UI/UX with smooth 6px rounded corners on every edge (`border-radius: 6px;`), compact box geometry tightly fitted to font size via `lbl->setMargin(0)` and `qproperty-margin: 0;` with `padding: 2px 6px;`, native Cocoa `NSWindow` transparency (`[window setOpaque:NO]`, `[window setBackgroundColor:[NSColor clearColor]]`, `[window invalidateShadow]`) preventing opaque black rectangular window artifacts on macOS, redundant shortcut key suppression (e.g., `(Ctrl+H)`, `(⌘H)`) via `ToolbarTooltipFilter`, and standardized Notepad++ action strings.
-- 🇮🇩 **Penyelarasan Presisi Tooltip Toolbar Notepad++ & Transparansi Native Cocoa**: Mendesain ulang tooltip toolbar agar menyamai UI/UX Notepad++ dengan sudut membulat halus 6px pada setiap ujung kotak (`border-radius: 6px;`), ukuran kotak ringkas yang mengecil pas mengikuti ukuran font via `lbl->setMargin(0)` dan `qproperty-margin: 0;` dengan `padding: 2px 6px;`, transparansi jendela native Cocoa `NSWindow` (`[window setOpaque:NO]`, `[window setBackgroundColor:[NSColor clearColor]]`, `[window invalidateShadow]`) mencegah artefak kotak hitam kaku di macOS, peniadaan pintasan keyboard berlebih (seperti `(Ctrl+H)`, `(⌘H)`) via `ToolbarTooltipFilter`, dan standarisasi teks aksi Notepad++.
+#### 🛠️ Fixed & Hardened
 
-### 🛠️ C++26 Safety, Modernization & Linter Zero-Error / Keamanan C++26 & Kebersihan Linter
-
-- 🇬🇧 **C++26 Incomplete Type Deletion Prevention**: Migrated raw pointers `Ui::PreferencesDialog *ui` and `Ui::MacroRunDialog *ui` to `std::unique_ptr` with default destructors in translation units, eliminating C++26 deletion warnings and undefined behavior risks.
-- 🇮🇩 **Pencegahan Penghapusan Tipe Inkomplit C++26**: Memigrasikan raw pointer `Ui::PreferencesDialog *ui` dan `Ui::MacroRunDialog *ui` ke `std::unique_ptr` dengan destruktor default pada unit translasi, menghapus warning C++26 dan mencegah risiko undefined behavior.
-- 🇬🇧 **Scoped Enum Template Serialization**: Enhanced `ApplicationSettings` template getters/setters with C++20 `if constexpr (std::is_enum_v<T>)` to support scoped `enum class` types seamlessly.
-- 🇮🇩 **Serialisasi Template Scoped Enum**: Meningkatkan fungsi template `ApplicationSettings` dengan `if constexpr (std::is_enum_v<T>)` C++20 untuk mendukung `enum class` secara aman dan otomatis.
-- 🇬🇧 **IDE & SonarQube Clean Validation**: Configured `.vscode/c_cpp_properties.json` and `.clangd` with exact Qt 6.12 include paths and unified CMake compilation database, achieving 0 linter errors and 0 warnings.
-- 🇮🇩 **Validasi Bersih IDE & SonarQube**: Mengonfigurasi `.vscode/c_cpp_properties.json` dan `.clangd` dengan jalur include Qt 6.12 dan database kompilasi CMake, mencapai 0 error dan 0 warning.
-- 🇬🇧 **Markdownlint MD060 & Table Alignment Rectification**: Resolved table pipe alignment violations (`MD060/table-column-style`) across `doc/DOCNOTE.md` and `doc/RELEASE_NOTES_0.15-07.md`. Verified 100% compliance with `markdownlint-cli` and `trunk check`.
-- 🇮🇩 **Penyelarasan Kolom Tabel Markdownlint MD060**: Menuntaskan peringatan perataan garis batas tabel (`MD060/table-column-style`) pada `doc/DOCNOTE.md` dan `doc/RELEASE_NOTES_0.15-07.md`. Diverifikasi 100% bersih menggunakan `markdownlint-cli` dan `trunk check`.
-- 🇬🇧 **Copyright & Attribution Standardization**: Standardized all project source headers with Harry Dertin Sutisna (`ALSYUNDAWY IT SOLUSTION`) and Justin Dailey.
-- 🇮🇩 **Standarisasi Hak Cipta & Atribusi**: Menstandarisasikan seluruh header sumber proyek dengan nama Harry Dertin Sutisna (`ALSYUNDAWY IT SOLUSTION`) dan Justin Dailey.
-
-### 🛡️ Security Hardening & 2025–2026 CVE Defenses / Pertahanan Keamanan & Mitigasi CVE 2025–2026
-
-- 🇬🇧 **Auto-Updater Cryptographic Integrity (CVE-2025-15556 / CWE-494)**: Enforced strict HTTPS URL pinning for `updates.json`, integrated SHA-256 cryptographic package integrity checking via `QCryptographicHash`, and added checksum verification indicators in `UpdateDialog`.
-- 🇮🇩 **Integritas Kriptografi Pembaruan Otomatis (CVE-2025-15556 / CWE-494)**: Menegakkan pinning URL HTTPS ketat untuk `updates.json`, mengintegrasikan verifikasi integritas paket kriptografis SHA-256 melalui `QCryptographicHash`, dan menambahkan indikator checksum pada `UpdateDialog`.
-- 🇬🇧 **Embedded Lua Sandbox Hardening (CVE-2026-42214 / CWE-94)**: Stripped dangerous shell execution and filesystem manipulation functions (`os.execute`, `os.remove`, `os.rename`, `os.exit`, `io.popen`, `package.loadlib`) from the embedded Lua 5.5.1 runtime, preventing arbitrary command injection.
-- 🇮🇩 **Penguatan Kotak Pasir (Sandbox) Lua (CVE-2026-42214 / CWE-94)**: Menghapus fungsi eksekusi shell dan manipulasi sistem berkas yang rentan (`os.execute`, `os.remove`, `os.rename`, `os.exit`, `io.popen`, `package.loadlib`) dari runtime Lua 5.5.1 bawaan untuk mencegah injeksi perintah berbahaya.
-- 🇬🇧 **Subprocess Canonicalization (CVE-2026-25926 / CWE-78)**: Replaced PATH-dependent subprocess calls with canonical absolute binaries (`/usr/bin/open`, `/usr/bin/qlmanage`, `/usr/bin/killall`, `/usr/bin/pgrep`) across all macOS scripts and controllers.
-- 🇮🇩 **Kanonikalisasi Subproses (CVE-2026-25926 / CWE-78)**: Mengganti pemanggilan subproses yang bergantung pada PATH dengan jalur absolut kanonik (`/usr/bin/open`, `/usr/bin/qlmanage`, `/usr/bin/killall`, `/usr/bin/pgrep`) di seluruh skrip dan pengendali macOS.
-- 🇬🇧 **Memory Bounds & Lexer Protection (CVE-2025-49144 / CVE-2025-56383)**: Implemented safe bounded C-string inspection with `strnlen` in preprocessor hint lookups and bounded lexer name queries (`lexer.size() <= 64`).
-- 🇮🇩 **Proteksi Batas Memori & Lekser (CVE-2025-49144 / CVE-2025-56383)**: Menerapkan inspeksi string-C yang aman dengan batas `strnlen` pada pencarian petunjuk praprosesor serta validasi panjang nama lekser (`lexer.size() <= 64`).
-
-### 🍏 macOS Native Architecture & UI/UX Polish / Arsitektur Native macOS & Pemolesan UI/UX
-
-- 🇬🇧 **macOS Menu Bar Extra / Dock Status Mode**: Integrated `QSystemTrayIcon` enabling background residency with quick access menu to show/hide application and quit.
-- 🇮🇩 **Menu Bar Extra / Ikon Status Dock macOS**: Mengintegrasikan `QSystemTrayIcon` yang memungkinkan mode residen di latar belakang dengan menu akses cepat untuk menampilkan/menyembunyikan aplikasi dan keluar.
-- 🇬🇧 **Tab Label Middle-Ellipsis (`elideMode`)**: Implemented configurable middle-ellipsis truncation on editor tab labels, preserving tab bar layout geometry even with 30+ open documents.
-- 🇮🇩 **Elipsis Tengah Judul Tab (`elideMode`)**: Menerapkan pemotongan judul tab panjang dengan elipsis tengah yang dapat dikonfigurasi, menjaga stabilitas geometri bilah tab meski membuka 30+ dokumen.
-- 🇬🇧 **Horizon Dark Contrast Optimization**: Fine-tuned dark/light horizon themes for maximum contrast and readability on Apple Retina displays.
-- 🇮🇩 **Optimalisasi Kontras Horizon Dark**: Menyetel palet tema gelap/terang horizon untuk kontras dan keterbacaan optimal pada layar Apple Retina.
-- 🇬🇧 **Find & Replace Form Input Precision**: Enforced strict 1-box form input (`comboFind`) for Tab Find and Tab Mark, completely hiding the Replace row and shrinking dialog height via `adjustSize()`, reserving the 2-box input strictly for Tab Replace.
-- 🇮🇩 **Presisi Formulir Input Cari & Ganti**: Menegakkan format 1 kotak input (`comboFind`) pada Tab Find dan Tab Mark, menyembunyikan baris Replace sepenuhnya dan menyusutkan tinggi dialog via `adjustSize()`, serta membatasi 2 kotak input hanya untuk Tab Replace.
-- 🇬🇧 **Persistent Toolbar Preferences & Exit Actions**: Enforced persistent Settings/Preferences (cog icon) and Exit (exit icon) on `mainToolBar`, ensuring icons are never lost when restoring saved toolbars from `QSettings`.
-- 🇮🇩 **Retensi Permanen Ikon Toolbar Preferensi & Keluar**: Memastikan persistensi aksi Preferensi (ikon roda gigi) dan Keluar (ikon keluar) pada `mainToolBar`, mencegah hilangnya ikon saat memuat ulang konfigurasi dari `QSettings`.
-- 🇬🇧 **macOS In-Process Multi-Window & Dock Integration**: Unified multi-window architecture within a single process via `NotepadNextApplication`, ensuring secondary window invocations and Cmd+N remain responsive to macOS Dock activations and Cmd+` window cycling.
-- 🇮🇩 **Arsitektur Multi-Jendela In-Process & Integrasi Dock macOS**: Menyatukan arsitektur multi-jendela dalam satu proses tunggal via `NotepadNextApplication`, memastikan pembuatan jendela baru dan Cmd+N tetap responsif terhadap klik ikon Dock macOS dan pergantian jendela Cmd+`.
-- 🇬🇧 **macOS Dock Right-Click Quit Save Prompt (`QEvent::Close`)**: Intercepted application-level close events on macOS Dock context menu quit and Cmd+Q, iterating through all tracked windows and invoking `checkEditorsBeforeClose()` to guarantee dirty and untitled tabs prompt for saving before exit.
-- 🇮🇩 **Dialog Konfirmasi Simpan Berkas saat Keluar dari Menu Dock macOS (`QEvent::Close`)**: Menangkap event penutupan tingkat aplikasi saat keluar melalui klik kanan menu Dock atau Cmd+Q, menelusuri seluruh jendela dan memanggil `checkEditorsBeforeClose()` guna memastikan tab yang dimodifikasi atau baru selalu meminta konfirmasi simpan sebelum aplikasi ditutup.
-- 🇬🇧 **Multi-View Split Closure & Unicode Emoji Rendering Stability**: Fortified tab closure routines in horizontal/vertical split views and eliminated text layout crashes on high-volume documents (>10,000 lines) containing complex compound emojis via bounded PlatQt measurement.
-- 🇮🇩 **Stabilitas Penutupan Tab Tampilan Pisah & Rendering Emoji Unicode**: Memperkuat rutinitas penutupan tab pada mode belah horizontal/vertikal dan mencegah crash tata letak teks pada dokumen bervolume besar (>10.000 baris) dengan emoji majemuk melalui pengukuran berbatas PlatQt.
-
-### 🔍 13-Pillar Code Quality, SonarLint & Static Analysis Audit / Audit Kualitas Kode 13 Pilar, SonarLint & Analisis Statis
-
-- 🇬🇧 **100% Zero-Defect SonarLint & IDE Diagnostics Resolution**: Resolved all 36 flagged IDE and SonarLint warnings across `AboutDialog`, `HighlightedScrollBar`, `RecentFilesListManager`, `RecentFilesListMenuBuilder`, `RtfConverter`, and `EditorInfoStatusBar` (defaulted destructors `= default`, C++17 `if` init-statements, explicit lambda captures `[this]`, C++20 `using enum Scintilla::Update`, default cases in switch statements, pointer-to-const parameter qualifiers, extraction of nested ternary operators, and explicit `static_cast<int>` on `sptr_t` and `qsizetype`).
-- 🇮🇩 **Penyelesaian Penuh Diagnostik SonarLint & Linter IDE Bebas Cacat 100%**: Menyelesaikan seluruh 36 peringatan linter IDE dan SonarLint pada `AboutDialog`, `HighlightedScrollBar`, `RecentFilesListManager`, `RecentFilesListMenuBuilder`, `RtfConverter`, dan `EditorInfoStatusBar` (destruktor defaulted `= default`, C++17 `if` init-statements, penangkapan lambda eksplisit `[this]`, C++20 `using enum Scintilla::Update`, case default pada switch, kualifikasi pointer-to-const pada parameter, pemisahan operator ternary bersarang, serta `static_cast<int>` eksplisit untuk `sptr_t` dan `qsizetype`).
-- 🇬🇧 **Upstream PR Harmonization**: Cleanly ported and harmonized upstream PR #8a0a615 (Trim Trailing Whitespace buffer operation with full Indonesian localization), PR #e08fc92 (defensive message handler deregistration in `DebugManager`), PR #90d6174 (centralized tooltip generation in `ScintillaNext::getToolTip`), PR #ef75daf (Replace All progress advancement on zero-length regex matches), and PR #be1e274 (Default Language configuration for new documents in `PreferencesDialog`).
-- 🇮🇩 **Harmonisasi PR Upstream**: Mengintegrasikan dan mengharmonisasikan PR upstream #8a0a615 (Aksi Pangkas Spasi Akhir dengan pelokalan Indonesia penuh), PR #e08fc92 (pelepasan handler pesan secara defensif pada `DebugManager`), PR #90d6174 (pembuatan tooltip terpusat via `ScintillaNext::getToolTip`), PR #ef75daf (kemajuan Replace All pada regex berpanjang nol), serta PR #be1e274 (konfigurasi Bahasa Default untuk dokumen baru pada `PreferencesDialog`).
-- 🇬🇧 **100% Zero-Defect Codebase Hardening**: Resolved all SonarLint and static analysis warnings across `URLFinder`, `FindReplaceDialog`, `MacroEditorDialog`, `MainWindow`, `UpdateDialog`, `EditorInspectorDock`, `EditorManager`, `ThemeManager`, `LuaExtension`, `LuaState`, `NotepadNextApplication`, and `ScintillaNext`.
-- 🇮🇩 **Penguatan Basis Kode Bebas Cacat 100%**: Menyelesaikan seluruh peringatan SonarLint dan analisis statis di seluruh file inti (`URLFinder`, `FindReplaceDialog`, `MacroEditorDialog`, `MainWindow`, `UpdateDialog`, `EditorInspectorDock`, `EditorManager`, `ThemeManager`, `LuaExtension`, `LuaState`, `NotepadNextApplication`, dan `ScintillaNext`).
-- 🇬🇧 **Cognitive Complexity & Nesting Reductions**: Refactored monolithic functions in `MainWindow.cpp`, `LuaExtension.cpp`, `EditorManager.cpp`, and `ScintillaNext.cpp` into modular, single-responsibility helpers, dropping cognitive complexity well below 25 and maximum control flow nesting <= 3.
-- 🇮🇩 **Reduksi Kompleksitas Kognitif & Penumpukan Kontrol (Nesting)**: Memfaktorkan ulang fungsi monolitik pada `MainWindow.cpp`, `LuaExtension.cpp`, `EditorManager.cpp`, dan `ScintillaNext.cpp` menjadi fungsi pembantu modular dengan tanggung jawab tunggal, menurunkan kompleksitas kognitif jauh di bawah ambang 25 serta nesting kontrol <= 3.
-- 🇬🇧 **Modern RAII & Memory Modernization**: Converted raw UI and component allocations to `std::unique_ptr` with `std::make_unique` (`Ui::MainWindow`, `Ui::FindReplaceDialog`, `Ui::MacroEditorDialog`, `Ui::EditorInspectorDock`, and `LuaState`), eliminating manual delete statements.
-- 🇮🇩 **Modernisasi Memori & RAII Modern**: Mengonversi alokasi pointer mentah pada komponen UI ke `std::unique_ptr` dengan `std::make_unique` (`Ui::MainWindow`, `Ui::FindReplaceDialog`, `Ui::MacroEditorDialog`, `Ui::EditorInspectorDock`, dan `LuaState`), menghapus operasi delete manual.
-- 🇬🇧 **Type Safety & Scoped Enums**: Upgraded legacy enums (`FileStateChange`, `BufferType`, `TabIndex`) to C++20 `enum class` with `using enum` syntax and eliminated integer precision loss via explicit `static_cast` for Scintilla `sptr_t`, `Sci_Position`, and Qt `qsizetype`.
-- 🇮🇩 **Keamanan Tipe & Enum Terlingkup (enum class)**: Memperbarui enum lama (`FileStateChange`, `BufferType`, `TabIndex`) ke `enum class` C++20 dengan sintaks `using enum` serta mengeliminasi potensi kehilangan presisi integer melalui `static_cast` eksplisit untuk `sptr_t`, `Sci_Position`, dan `qsizetype`.
-- 🇬🇧 **Const-Correctness & Lambda Captures**: Enforced const qualifiers across methods and pointers, converted default lambda captures `[&]` to explicit scoped captures, and mapped offline `.clangd` SchemaStore definitions to eliminate offline schema warnings.
-- 🇮🇩 **Koreksi Const & Penangkapan Lambda Eksplisit**: Menegakkan kualifikasi const pada method dan pointer, mengubah penangkapan lambda implisit `[&]` menjadi penangkapan terlingkup eksplisit, serta memetakan skema `.clangd` offline untuk menghilangkan peringatan skema.
-- 🇬🇧 **Flylint & Sonar Diagnostics Resolution**: Resolved IDE linter issues by configuring `.vscode/settings.json` (disabling standalone `c-cpp-flylint.clang` fallback on Qt headers, excluding `.cpm-cache/**`, mapping offline `.clangd` schema), eliminating the most vexing parse in `UpdateDialog.cpp`, adopting C++17 `if` init-statements and auto-types with `static_cast` in `FindReplaceDialog.cpp`, adding missing `<functional>` header in `EditorInspectorDock.h`, and resolving header guard formatting.
-- 🇮🇩 **Penyelesaian Masalah Flylint & Diagnostik Sonar**: Mengeliminasi seluruh pesan kesalahan linter IDE melalui perbaikan konfigurasi `.vscode/settings.json` (menonaktifkan parser standalone `c-cpp-flylint.clang` pada header Qt, mengecualikan `.cpm-cache/**`, memetakan skema `.clangd` offline), memperbaiki ambiguitas most vexing parse pada `UpdateDialog.cpp`, menerapkan C++17 `if` init-statement dan deduplikasi tipe auto pada `FindReplaceDialog.cpp`, menyertakan pustaka `<functional>` pada `EditorInspectorDock.h`, serta merapikan header guard.
-
-### 🌐 Complete i18n Modernization & Standardization / Modernisasi & Standardisasi Pelokalan i18n Penuh
-
-- 🇬🇧 **100% Translation Coverage (0 Unfinished Entries)**: Resolved all unfinished translation strings in both Indonesian (`NotepadNext_id.ts` & `SparkNotePad_id.ts`) and English (`NotepadNext_en.ts` & `SparkNotePad_en.ts`) catalogs, generating 646 finished entries in NotepadNext and 1,391 finished entries in SparkNotePad.
-- 🇮🇩 **Cakupan Terjemahan 100% (0 Entri Belum Selesai)**: Menyelesaikan seluruh string translasi yang belum selesai pada katalog bahasa Indonesia (`NotepadNext_id.ts` & `SparkNotePad_id.ts`) dan bahasa Inggris (`NotepadNext_en.ts` & `SparkNotePad_en.ts`), menghasilkan 646 entri selesai di NotepadNext dan 1.391 entri selesai di SparkNotePad.
-- 🇬🇧 **Indonesian Standardization per EYD V, PUEBI & Mozilla L10n**: Rebuilt Indonesian translations complying with official guidelines from Badan Pengembangan dan Pembinaan Bahasa Kemendikdasmen (ejaan.kemendikdasmen.go.id, PASTI glossary) and the Mozilla Indonesian Style Guide. Standardized terminology (_Berkas_, _Markah_, _Bilah Alat_, _Bilah Status_, _Pintasan_, _Makro_, _Pemeriksa_, _Pengodean_, _Hanya Baca_, _Opak_).
-- 🇮🇩 **Standardisasi Bahasa Indonesia sesuai EYD V, PUEBI & Mozilla L10n**: Membangun ulang terjemahan bahasa Indonesia sesuai pedoman resmi Badan Bahasa Kemendikdasmen (ejaan.kemendikdasmen.go.id, glosarium PASTI) dan Panduan Gaya Pelokalan Mozilla. Menstandarkan istilah resmi (_Berkas_, _Markah_, _Bilah Alat_, _Bilah Status_, _Pintasan_, _Makro_, _Pemeriksa_, _Pengodean_, _Hanya Baca_, _Opak_).
-- 🇬🇧 **Removal of Dual-Language Parenthetical Artifacts**: Cleaned up legacy translation artifacts containing embedded English terms in parentheses (e.g. `Po&tong (Cut)` -> `Po&tong`, `&Salin (Copy)` -> `&Salin`, `Ubah Nama (Rename)...` -> `Ganti Nama...`, `Read error (Gagal membaca file)` -> `Kesalahan membaca berkas`).
-- 🇮🇩 **Pembersihan Anotasi Ganda Inggris dalam Kurung**: Membersihkan artefak terjemahan lama yang mengandung istilah bahasa Inggris dalam kurung (misal `Po&tong (Cut)` -> `Po&tong`, `&Salin (Copy)` -> `&Salin`, `Ubah Nama (Rename)...` -> `Ganti Nama...`, `Read error (Gagal membaca file)` -> `Kesalahan membaca berkas`).
-- 🇬🇧 **Zero-Linter Defect Architecture**: Fixed `.clangd` configuration, excluded Qt translation `.ts` XML files from JavaScript/TypeScript language server parsers via `tsconfig.json` and `biome.json`, and eliminated all IDE warnings (`trunk check` passes 100% with 0 issues).
-- 🇮🇩 **Arsitektur Bebas Cacat Linter 100%**: Memperbaiki konfigurasi `.clangd`, mengecualikan berkas XML `.ts` translasi Qt dari parser bahasa JavaScript/TypeScript melalui `tsconfig.json` dan `biome.json`, serta mengeliminasi seluruh peringatan IDE (`trunk check` lolos 100% dengan 0 masalah).
-
-### 🧪 LLVM Clang-Tidy, Cppcheck & Zero-Defect Static Analysis Audit / Audit Analisis Statis LLVM Clang-Tidy, Cppcheck & Bebas-Cacat
-
-- 🇬🇧 **100% Clean Clang-Tidy, Cppcheck & Clangd Audit**: Passed comprehensive static analysis across all 88 translation units and header files with 0 errors and 0 warnings.
-- 🇮🇩 **Audit Clang-Tidy, Cppcheck & Clangd Bebas Cacat 100%**: Berhasil lolos verifikasi analisis statis komprehensif di seluruh 88 unit translasi dan file header tanpa peringatan maupun pesan kesalahan.
-- 🇬🇧 **Null-Pointer Dereference Bugfix in QuickFindWidget**: Added critical null guard `if (!editor) return;` in `QuickFindWidget::initializeEditorIndicator`, eliminating null pointer dereference during quick search initialization.
-- 🇮🇩 **Perbaikan Bug Null-Pointer Dereference pada QuickFindWidget**: Menambahkan proteksi defensif `if (!editor) return;` pada `QuickFindWidget::initializeEditorIndicator`, mengeliminasi potensi crash null pointer saat inisialisasi pencarian cepat.
-- 🇬🇧 **Modern Algorithm std::find_if Loop Modernization**: Replaced raw `for` loops in `NotepadNextApplication::activeMainWindow()` with modern C++ standard algorithm `std::find_if`, enhancing readability and branch efficiency.
-- 🇮🇩 **Modernisasi Loop dengan Algoritma Modern std::find_if**: Mengganti loop `for` konvensional pada `NotepadNextApplication::activeMainWindow()` menggunakan algoritma standar C++ `std::find_if`, meningkatkan keterbacaan kode dan efisiensi eksekusi cabang.
-- 🇬🇧 **Scintilla Template Compound Statement Bracing**: Fixed missing braces on single-line branch in `ScintillaNext.h:223` (`forEachMatchInRange`), eliminating compiler template warning propagation across translation units.
-- 🇮🇩 **Pemberian Kurung Kurawal Pernyataan Majemuk Templat Scintilla**: Memperbaiki kurung kurawal yang terlewat pada percabangan satu baris di `ScintillaNext.h:223` (`forEachMatchInRange`), mengeliminasi propagasi peringatan templat ke seluruh unit translasi.
-
-### 📦 macOS DMG Packaging Pipeline & Artifact Size Optimization (< 30MB) / Pengemasan DMG & Optimasi Ukuran macOS (< 30MB)
-
-- 🇬🇧 **Elimination of Qt Dynamic Module Bloat**: Enhanced `cmake/PackagingMac.cmake` to strip non-dependent frameworks (`QtPdf`, `QtQml`, `QtQuick`, `QtVirtualKeyboard`, `QtOpenGL`, `platforminputcontexts`, unneeded `imageformats`), reducing bundle size from 112 MB to ~65 MB.
-- 🇮🇩 **Eliminasi Bloat Modul Dinamis Qt**: Memperbarui `cmake/PackagingMac.cmake` untuk menghapus pustaka kerangka kerja dinamis yang tidak digunakan (`QtPdf`, `QtQml`, `QtQuick`, `QtVirtualKeyboard`, `QtOpenGL`, `platforminputcontexts`, `imageformats` yang tidak terpakai), memangkas ukuran bundle dari 112 MB menjadi ~65 MB.
-- 🇬🇧 **Native bzip2 DMG Compression (`hdiutil -format UDBZ`)**: Built ultra-compact release DMGs of ~28 MB (28,144,826 bytes), well beneath the strict 30 MB ceiling, while maintaining full Retina assets and native macOS integration.
-- 🇮🇩 **Kompresi DMG bzip2 Native (`hdiutil -format UDBZ`)**: Menghasilkan berkas distribusi rilis DMG ultra-ringkas berukuran ~28 MB (28.144.826 bita), jauh di bawah batas maksimal 30 MB, dengan tetap mempertahankan aset visual Retina dan integrasi native macOS penuh.
-- 🇬🇧 **CMake Packaging Target Guard**: Added `if(NOT TARGET NotepadNext) return() endif()` to prevent standalone analyzer evaluation errors.
-- 🇮🇩 **Proteksi Target CMake Packaging**: Menambahkan pengaman `if(NOT TARGET NotepadNext) return() endif()` guna mencegah kesalahan evaluasi penganalisis skrip saat diperiksa secara mandiri.
+- **Full Multi-Qt Build Compatibility (Qt 6.5 LTS through Qt 6.12)**:
+  - Wrapped `QStyleHints::setColorScheme` calls in `#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)`, preventing build failures on Qt 6.5 LTS Linux runners and backward-compatible environments.
+- **Permanent macOS Dark Aqua Titlebar**:
+  - Enforced `NSAppearanceNameDarkAqua` via Objective-C Cocoa runtime (`objc_msgSend`) so the macOS window chrome, traffic lights, and titlebar remain dark/black in any theme mode matching native Dark Aqua presentation.
+- **Sub-2ms Fast Theme & Icon Switching**:
+  - Optimized icon rasterization via scanline pointer arithmetic (`scanLine()`), cached theme-adapted icons, removed redundant stylesheet re-parses, and deferred window action sync, reducing theme switch latency from >500 ms to <2 ms.
+- **100% Zero-Error Static Analysis Gate**:
+  - Cleared all findings across `trunk check -y`, validating 4,023 files with 0 issues.
+  - Clean `cppcheck` execution across all newly added and modified C++ source and header files.
+  - Complete elimination of shadow parameter warnings and loop modernized to standard STL algorithms (`std::any_of`, `std::all_of`, `std::find_if`, `std::transform`).
+  - Built and verified local DMG release (`NotepadNext-v0.15-08-x64.dmg`) with `hdiutil verify` cryptographic checksum validation.
 
 ---
 

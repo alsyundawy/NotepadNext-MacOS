@@ -1,0 +1,161 @@
+# Catatan Rilis Dokumentasi (DOCNOTE) — NotepadNext-MacOS v0.15-08 (Bahasa Indonesia)
+
+--------------------------------------------------------------------------------
+================================================================================
+Edisi Aplikasi        : NotepadNext For MacOS — Notepad++ Like
+Versi Rilis           : 0.15-08 (Tab Bar Plus, Pratinjau Markdown/HTML Tabbed, Suite 28 Icon Pack, Lokalisasi Bilingual en/id, Preferensi Teks Murni, Atribusi SubnetCalc-MacOS & Kompatibilitas Multi-Qt)
+Tanggal Rilis         : 2026-11-08
+Pengembang / Builder  : Harry Dertin Sutisna Alsyundawy (@alsyundawy)
+Organisasi            : ALSYUNDAWY IT SOLUTION (https://alsyundawy.com)
+Repositori Upstream   : https://github.com/dail8859/NotepadNext (Basis: v0.15)
+Repositori Edisi macOS: https://github.com/alsyundawy/NotepadNext-MacOS
+Proyek Donor Fitur    : SparkNotePad v1.3.8 (https://github.com/alsyundawy/SparkNotePad)
+Kontributor Tema      : SubnetCalc-MacOS (https://github.com/alsyundawy/SubnetCalc-MacOS - 25 Tema Sintaksis & UI)
+Kerangka Kerja GUI    : Qt 6.5 LTS / 6.8 LTS / 6.10 / 6.11 / 6.12 (C++20 ISO Standard)
+Target Platform       : macOS 11.0–26.0 (Apple Silicon arm64 & Intel x86_64), Linux (x86_64 & aarch64)
+Lisensi               : GNU General Public License v3.0 (GPL-3.0-or-later)
+================================================================================
+--------------------------------------------------------------------------------
+
+---
+
+## 1. Ringkasan Eksekutif (Bahasa Indonesia): Rilis v0.15-08
+
+NotepadNext-MacOS v0.15-08 adalah rilis fitur dan stabilitas besar yang menghadirkan inovasi produktivitas terdepan, integrasi mendalam macOS, pemurnian antarmuka, dan pengerasan arsitektur:
+
+1. Tombol Tambah Tab (+) & Ergonomi Tab Modern:
+   - Menambahkan tombol '+' persisten pada tab bar editor (DockedEditorTitleBar) dengan estetika native macOS dan status interaksi hover/pressed.
+   - Pembuatan tab dokumen baru secara instan melalui satu klik atau pintasan standar (Cmd+N).
+
+2. Pratinjau Tab Interaktif Markdown & HTML (PreviewTabWidget):
+   - Merender dokumen Markdown dan HTML di dalam tab editor dengan kotak info GitHub ([!NOTE], [!TIP], [!IMPORTANT], [!WARNING], [!CAUTION]), tipografi devdocs, metrik jumlah kata dan estimasi waktu baca, serta pembesaran dinamis.
+   - Menyediakan menu konteks klik-kanan pada tab editor berkas .md dan .html untuk meluncurkan pratinjau tab atau membuka langsung di peramban sistem (openInDefaultBrowser).
+
+3. Konfigurasi 6 Tingkat Ukuran Ikon & Seleksi Icon Pack pada Menu Themes:
+   - Memperluas menu Themes dengan submenu pemilihan paket ikon toolbar dan 6 tingkat ukuran ikon (16x16, 20x20, 24x24, 32x32, 48x48, 64x64) dengan tanda centang aktif dan pembaruan visual seketika.
+
+4. Dokumentasi Terintegrasi pada Menu Help (DocNote & Changelog):
+   - Aksi DocNote dan Changelog pada menu Help secara otomatis mencari dan membuka berkas DOCNOTE.md dan CHANGELOG.md langsung di dalam tab editor Scintilla.
+
+5. Tab Terdedikasi "Themes & Toolbar" pada Dialog Preferensi:
+   - Dialog preferensi ditata ulang dengan tab berbasis teks murni tanpa ikon atau emoji.
+   - Memindahkan pengaturan tema, toggle mode gelap/terang, opasitas jendela, pemilihan icon pack, dan ukuran ikon ke dalam tab khusus "Themes & Toolbar" lengkap dengan baris pratinjau ikon langsung yang terang dan jelas.
+
+6. Installer DMG Bergaya Native macOS Resolusi Tinggi:
+   - Pipeline packaging kustom (generate_dmg_background.py & package-dmg.sh) menghasilkan kanvas DMG 680x440 resolusi tinggi (standard & Retina @2x), slot aplikasi NotepadNext di kiri, symlink /Applications di kanan, indikator drag-and-drop melengkung, ikon volume, dan verifikasi checksum teruji (hdiutil verify).
+
+7. Suite Personalisasi 28 Icon Pack Terpilih (ToolbarIconManager):
+   - Mengintegrasikan koleksi terkurasi 28 paket ikon beresolusi tinggi dan SVG vektor tanpa buram (Modern Ribbon SVG, Fluent, Notepad++ Klasik, ragam Aksara, Retro Windows 7/Aero, dan skeuomorfik WinXP).
+   - Menghapus 10 paket ikon redundan untuk menjaga kerapian dan efisiensi bundle aplikasi.
+
+8. Pengakuan Atribusi Proyek Donor & Kontributor Tema:
+   - Menyertakan pengakuan atribusi terperinci dan URL resmi untuk SparkNotePad (https://github.com/alsyundawy/SparkNotePad) sebagai donor arsitektur dan fitur utama, serta SubnetCalc-MacOS (https://github.com/alsyundawy/SubnetCalc-MacOS) atas sumbangan 25 rangkaian tema sintaksis dan UI.
+
+9. Pelokalan Bilingual Terpadu (100% Selesai):
+   - Sistem bahasa dirampingkan khusus untuk Bahasa Inggris (en) dan Bahasa Indonesia (id) dengan status 100% tuntas (0 entri tertunda), membersihkan 20 berkas katalog terjemahan usang.
+
+10. Dialog Kustomisasi Toolbar Interaktif (CustomizeToolbarDialog):
+    - Antarmuka dual-list drag-and-drop untuk menambah, menghapus, mengurutkan aksi toolbar, menyisipkan garis pemisah (separator), dan reset ke default dengan refleksi seketika.
+
+11. Dock Pratinjau Aman Markdown & Ekspor Dokumen (MarkdownSafePreviewDock):
+    - Pratinjau langsung berkinerja tinggi dengan dukungan rumus matematika KaTeX dan diagram Mermaid, sinkronisasi scroll dua arah, serta ekspor ke HTML mandiri dan PDF vektor via DocumentExportManager.
+
+12. Suite Ergonomi Editor:
+    - AutoClosePairs (penutupan otomatis tanda kurung/kutip cerdas), MarkOccurrences (penyorotan seluruh kemunculan token kata), LogAutoTimestamp (pencatatan otomatis stempel waktu berkas .LOG), dan ColorPreviewCallTip (pratinjau swatch warna Hex/RGB/HSL/CSS real-time).
+
+13. Suite Forensik Teks, Statistik & Integritas Hash:
+    - TokenForensicUtils (entropi Shannon, pembaca JWT), DocumentStatisticsDialog (analitik kata/baris/karakter), CharacterInfoDialog (inspeksi mendalam Unicode 16), MyersDiffEngine & FileDiffDialog (perbandingan berkas berdampingan algoritma LCS), dan HashIntegrityManager (pembuatan digest kriptografis streaming CRC32, MD5, SHA-1, SHA-256, SHA-512, SHA3).
+
+14. Integrasi Mendalam macOS (76 Asosiasi Format Berkas):
+    - Deklarasi komprehensif 76 tipe dokumen pemrograman dan konfigurasi serta UTType native di deploy/macos/info.plist, lengkap dengan integrasi macOS System Services.
+
+15. Judul Jendela macOS Permanen Dark Aqua:
+    - Menegakkan NSAppearanceNameDarkAqua melalui runtime Objective-C Cocoa (objc_msgSend) sehingga bingkai jendela dan tombol traffic lights macOS tetap gelap dan elegan dalam mode apa pun.
+
+16. Pergantian Tema Cepat (< 2 ms):
+    - Optimasi rasterisasi ikon via pointer scanline (scanLine()), caching ikon adaptif tema, dan eliminasi parse ulang stylesheet redundan.
+
+17. Kompatibilitas Multi-Qt Penuh (Qt 6.5 LTS hingga Qt 6.12):
+    - Perlindungan makro praprosesor (#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)) untuk setColorScheme memastikan kompilasi sukses 100% di semua runner CI dan lingkungan lokal.
+
+---
+
+# Documentation Note (DOCNOTE) — NotepadNext-MacOS v0.15-08 (English)
+
+--------------------------------------------------------------------------------
+================================================================================
+Application Edition   : NotepadNext For MacOS — Notepad++ Like
+Release Version       : 0.15-08 (Tab Bar Plus, Tabbed Markdown/HTML Preview, 28 Curated Icon Packs, Bilingual Localization en/id, Clean Text-Only Preferences, SubnetCalc-MacOS Attribution & Multi-Qt Compatibility)
+Release Date          : 2026-11-08
+Lead Maintainer       : Harry Dertin Sutisna Alsyundawy (@alsyundawy)
+Organization          : ALSYUNDAWY IT SOLUTION (https://alsyundawy.com)
+Upstream Repository   : https://github.com/dail8859/NotepadNext (Baseline: v0.15)
+macOS Edition Repo    : https://github.com/alsyundawy/NotepadNext-MacOS
+Feature Donor Project : SparkNotePad v1.3.8 (https://github.com/alsyundawy/SparkNotePad)
+Theme Contributor     : SubnetCalc-MacOS (https://github.com/alsyundawy/SubnetCalc-MacOS - 25 Theme Suites)
+GUI Framework         : Qt 6.5 LTS / 6.8 LTS / 6.10 / 6.11 / 6.12 (C++20 ISO Standard)
+Target Platforms      : macOS 11.0–26.0 (Apple Silicon arm64 & Intel x86_64), Linux (x86_64 & aarch64)
+License               : GNU General Public License v3.0 (GPL-3.0-or-later)
+================================================================================
+--------------------------------------------------------------------------------
+
+---
+
+## 1. Executive Summary (English): Release v0.15-08
+
+NotepadNext-MacOS v0.15-08 is a premier enterprise release introducing cutting-edge productivity innovations, deep macOS desktop integration, refined ergonomics, and architectural hardening:
+
+1. Persistent Tab Bar Plus (+) Button & Modern Tab Ergonomics:
+   - Added a persistent '+' tool button directly on the editor tab bar (DockedEditorTitleBar) with native macOS styling and responsive hover/pressed interaction states.
+   - Create new document tabs instantaneously with a single click or standard shortcut (Cmd+N).
+
+2. Tabbed Interactive Markdown & HTML Live Preview (PreviewTabWidget):
+   - Renders Markdown and HTML documents inside editor tabs with GitHub-grade callouts ([!NOTE], [!TIP], [!IMPORTANT], [!WARNING], [!CAUTION]), devdocs typography, word count, reading time estimates, and dynamic zoom controls.
+   - Added tab right-click context menu options on .md and .html files to launch in-tab preview or open directly in the default system browser (openInDefaultBrowser).
+
+3. Themes Menu Icon Pack Selection & 6-Tier Sizing Configuration:
+   - Expanded the Themes menu with a full toolbar icon pack selector and 6 configurable icon sizes (16x16, 20x20, 24x24, 32x32, 48x48, 64x64) with active checkmarks and live toolbar adaptation.
+
+4. Help Menu In-Editor Documentation (DocNote & Changelog):
+   - DocNote and Changelog actions under the Help menu automatically resolve and open DOCNOTE.md and CHANGELOG.md directly in dedicated Scintilla editor tabs.
+
+5. Preferences Dialog Dedicated "Themes & Toolbar" Tab:
+   - Restructured the Preferences dialog into a clean, text-only tabbed layout without icons or emojis.
+   - Relocated theme styling, dark/light toggle, window opacity, toolbar icon pack selection, and toolbar icon sizing into a dedicated "Themes & Toolbar" tab with a crisp, clear live icon preview row.
+
+6. macOS Native High-DPI Styled DMG Presentation:
+   - Engineered custom packaging pipeline (generate_dmg_background.py & package-dmg.sh) producing high-DPI standard and Retina background assets, custom window geometry (680x440), left NotepadNext app slot, right /Applications link, curved drag-and-drop indicator, volume icon, and verified disk image checksums (hdiutil verify).
+
+7. 28 Curated Icon Pack Personalization Suite (ToolbarIconManager):
+   - Integrated a refined suite of 28 curated, high-clarity icon packs (Modern Ribbon SVG, Fluent, Classic Notepad++, Aksara variations, Retro Windows 7/Aero, and WinXP skeuomorphic styles).
+   - Removed 10 redundant packs to maintain a lean, polished application bundle.
+
+8. Comprehensive Upstream Donor & Contributor Attribution:
+   - Full attribution and official URLs provided for SparkNotePad (https://github.com/alsyundawy/SparkNotePad) as foundational architecture and feature donor, and SubnetCalc-MacOS (https://github.com/alsyundawy/SubnetCalc-MacOS) for contributing 25 syntax highlighting and UI theme suites.
+
+9. Streamlined Bilingual Localization (100% Complete):
+   - Streamlined translation catalogs to focus strictly on English (en) and Indonesian (id) with 100% finished translation entries (0 unfinished), eliminating 20 obsolete language files.
+
+10. Interactive Toolbar Customization Dialog (CustomizeToolbarDialog):
+    - Dual-list drag-and-drop toolbar customization dialog supporting button addition, removal, reordering, separator insertion, and instantaneous toolbar sync with application settings.
+
+11. Markdown Safe Live Preview Dock & Document Export Pipeline (MarkdownSafePreviewDock):
+    - High-performance live preview dock supporting KaTeX mathematical expressions and Mermaid diagrams, bidirectional scroll synchronization, and export to standalone GitHub-styled HTML and vector PDF via DocumentExportManager.
+
+12. Editor Ergonomics Suite:
+    - AutoClosePairs (intelligent auto-closing of brackets and quotes), MarkOccurrences (Scintilla indicator-based highlight matching across viewport), LogAutoTimestamp (Windows Notepad .LOG header auto-timestamping), and ColorPreviewCallTip (real-time Hex/RGB/HSL/CSS visual calltips and swatches).
+
+13. Text Forensics, Statistics & Cryptographic Hash Integrity:
+    - TokenForensicUtils (Shannon entropy, JWT decoding), DocumentStatisticsDialog (character/word/line analytics), CharacterInfoDialog (in-depth Unicode 16 codepoint inspection), MyersDiffEngine & FileDiffDialog (side-by-side LCS file comparison), and HashIntegrityManager (streaming constant-memory cryptographic digest generation for CRC32, MD5, SHA-1, SHA-256, SHA-512, SHA3).
+
+14. Deep macOS System Integration (76 Document Associations):
+    - Full declaration of 76 programming and configuration file formats with native macOS UTTypes in deploy/macos/info.plist, complete with macOS System Services integration.
+
+15. Permanent macOS Dark Aqua Titlebar:
+    - Enforced NSAppearanceNameDarkAqua via Objective-C Cocoa runtime (objc_msgSend) ensuring window frames and traffic light controls stay dark and sleek in any theme mode.
+
+16. Sub-2ms Fast Theme & Icon Switching:
+    - Optimized icon rasterization via scanline pointer arithmetic (scanLine()), cached theme-adapted icons, and deferred action sync reducing switch latency to under 2 ms.
+
+17. Full Multi-Qt Build Compatibility (Qt 6.5 LTS through Qt 6.12):
+    - Guarded setColorScheme with preprocessor checks (#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)), ensuring complete, warning-free compilation on both legacy and cutting-edge Qt runners.

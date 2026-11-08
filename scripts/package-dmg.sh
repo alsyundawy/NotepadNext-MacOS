@@ -87,13 +87,12 @@ if [[ ! -f "${RESOURCES_DIR}/NotepadNext.icns" ]]; then
 	fi
 fi
 
-# Copy DOCNOTE.md and CHANGELOG.md into bundle Resources
-if [[ -f "${REPO_ROOT}/DOCNOTE.md" ]]; then
-	cp -f "${REPO_ROOT}/DOCNOTE.md" "${RESOURCES_DIR}/"
-fi
-if [[ -f "${REPO_ROOT}/CHANGELOG.md" ]]; then
-	cp -f "${REPO_ROOT}/CHANGELOG.md" "${RESOURCES_DIR}/"
-fi
+# Copy DOCNOTE, CHANGELOG, and README artifacts into bundle Resources
+for docf in "${REPO_ROOT}"/DOCNOTE* "${REPO_ROOT}"/CHANGELOG* "${REPO_ROOT}/README.md"; do
+	if [[ -f "${docf}" ]]; then
+		cp -f "${docf}" "${RESOURCES_DIR}/"
+	fi
+done
 
 # Prune unneeded heavy plugins and unneeded debug symbols from staged bundle
 rm -f "${STAGE_DIR}/NotepadNext.app/Contents/PlugIns/imageformats/libqtiff.dylib" \
