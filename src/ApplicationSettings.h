@@ -21,6 +21,7 @@
 
 #pragma once
 
+#include <cstdint>
 #include <functional>
 #include <type_traits>
 
@@ -72,7 +73,7 @@ class ApplicationSettings : public QSettings
 public:
     explicit ApplicationSettings(QObject *parent = nullptr);
 
-    enum class DefaultDirectoryBehaviorEnum {
+    enum class DefaultDirectoryBehaviorEnum : std::uint8_t {
         FollowCurrentDocument,
         RememberLastUsed,
         HardCoded

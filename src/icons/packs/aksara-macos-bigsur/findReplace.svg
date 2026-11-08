@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.0" stroke-linecap="round" stroke-linejoin="round">
+<defs><linearGradient id="macos-grad-findReplace" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FF6B6B"/><stop offset="50%" stop-color="#C44EFF"/><stop offset="100%" stop-color="#4A90D9"/></linearGradient></defs>
+<rect x="1" y="1" width="22" height="22" rx="6" fill="url(#macos-grad-findReplace)" stroke="#00000022" stroke-width="0.6"/>
+<circle cx="10" cy="10" r="5"/><path d="M14 14l4 4"/><path d="M16 6h4"/><path d="M18 4v4"/><path d="M4 18h6"/><path d="M8 16l2 2-2 2"/>
+</svg>

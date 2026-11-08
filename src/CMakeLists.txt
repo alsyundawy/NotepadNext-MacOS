@@ -54,6 +54,7 @@ qt_add_executable(NotepadNext
 	ToolbarTooltipFilter.h
 	resources.qrc
 	scripts.qrc
+	toolbar_icons.qrc
 	ApplicationSettings.cpp
 	ColorPickerDelegate.cpp
 	ComboBoxDelegate.cpp
@@ -161,11 +162,58 @@ qt_add_executable(NotepadNext
 	dialogs/ThemeSwitcherDialog.h
 	dialogs/UpdateDialog.cpp
 	dialogs/UpdateDialog.h
+	dialogs/CustomizeToolbarDialog.cpp
+	dialogs/CustomizeToolbarDialog.h
+	dialogs/ExportOptionsDialog.cpp
+	dialogs/ExportOptionsDialog.h
+	dialogs/DocumentStatisticsDialog.cpp
+	dialogs/DocumentStatisticsDialog.h
+	dialogs/CharacterInfoDialog.cpp
+	dialogs/CharacterInfoDialog.h
+	dialogs/CharacterInfoDialog.ui
+	dialogs/FileDiffDialog.cpp
+	dialogs/FileDiffDialog.h
+	dialogs/GenerateHashDigestDialog.cpp
+	dialogs/GenerateHashDigestDialog.h
+	dialogs/HashIntegrityDialog.cpp
+	dialogs/HashIntegrityDialog.h
 	features/ThemeManager.cpp
 	features/ThemeManager.h
 	features/ThemePaletteData.h
+	features/ToolbarIconManager.cpp
+	features/ToolbarIconManager.h
+	features/AutoClosePairs.cpp
+	features/AutoClosePairs.h
+	features/MarkOccurrences.cpp
+	features/MarkOccurrences.h
+	features/ColorPreviewCallTip.cpp
+	features/ColorPreviewCallTip.h
+	features/LogAutoTimestamp.cpp
+	features/LogAutoTimestamp.h
+	features/CharacterInfo.cpp
+	features/CharacterInfo.h
+	features/DocumentExportManager.cpp
+	features/DocumentExportManager.h
 	utils/EncodingDetector.cpp
 	utils/EncodingDetector.h
+	utils/Base64Utils.cpp
+	utils/Base64Utils.h
+	utils/CaseConverter.cpp
+	utils/CaseConverter.h
+	utils/GuidTimestampUtils.cpp
+	utils/GuidTimestampUtils.h
+	utils/HashIntegrityManager.cpp
+	utils/HashIntegrityManager.h
+	utils/MarkdownPreviewEnhancer.cpp
+	utils/MarkdownPreviewEnhancer.h
+	utils/MimeTools.cpp
+	utils/MimeTools.h
+	utils/MyersDiffEngine.cpp
+	utils/MyersDiffEngine.h
+	utils/NumberConverter.cpp
+	utils/NumberConverter.h
+	utils/TokenForensicUtils.cpp
+	utils/TokenForensicUtils.h
 	docks/DebugLogDock.cpp
 	docks/DebugLogDock.h
 	docks/DebugLogDock.ui
@@ -178,6 +226,8 @@ qt_add_executable(NotepadNext
 	docks/FolderAsWorkspaceDock.cpp
 	docks/FolderAsWorkspaceDock.h
 	docks/FolderAsWorkspaceDock.ui
+	docks/MarkdownSafePreviewDock.cpp
+	docks/MarkdownSafePreviewDock.h
 
 
 

@@ -93,6 +93,222 @@
     </message>
 </context>
 <context>
+    <name>CaseConverter</name>
+    <message>
+        <location filename="../src/utils/CaseConverter.cpp" line="224"/>
+        <source>No active editor.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/utils/CaseConverter.cpp" line="229"/>
+        <source>Document is read-only.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/utils/CaseConverter.cpp" line="265"/>
+        <source>No text selected or under cursor.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CharacterInfoDialog</name>
+    <message>
+        <location filename="../src/dialogs/CharacterInfoDialog.ui" line="14"/>
+        <source>Character Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CharacterInfoDialog.ui" line="51"/>
+        <location filename="../src/dialogs/CharacterInfoDialog.ui" line="306"/>
+        <source>A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CharacterInfoDialog.ui" line="69"/>
+        <source>LATIN CAPITAL LETTER A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CharacterInfoDialog.ui" line="84"/>
+        <source>U+0041  (Dec: 65,  Oct: 0101)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CharacterInfoDialog.ui" line="96"/>
+        <source>Block: Basic Latin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CharacterInfoDialog.ui" line="107"/>
+        <source>Classification &amp; Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CharacterInfoDialog.ui" line="113"/>
+        <source>General Category:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CharacterInfoDialog.ui" line="120"/>
+        <source>Letter, Uppercase (Lu)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CharacterInfoDialog.ui" line="127"/>
+        <source>Script:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CharacterInfoDialog.ui" line="134"/>
+        <source>Latin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CharacterInfoDialog.ui" line="141"/>
+        <source>Bidirectional Class:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CharacterInfoDialog.ui" line="148"/>
+        <source>Left to Right (L)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CharacterInfoDialog.ui" line="158"/>
+        <source>Encodings &amp; Byte Sequences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CharacterInfoDialog.ui" line="164"/>
+        <source>UTF-8:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CharacterInfoDialog.ui" line="171"/>
+        <source>0x41  (Dec: 65)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CharacterInfoDialog.ui" line="178"/>
+        <source>UTF-16:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CharacterInfoDialog.ui" line="185"/>
+        <source>0x0041  (Dec: 65)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CharacterInfoDialog.ui" line="192"/>
+        <source>UTF-32 (UCS-4):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CharacterInfoDialog.ui" line="199"/>
+        <source>0x00000041</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CharacterInfoDialog.ui" line="209"/>
+        <source>Web Entities &amp; Escape Sequences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CharacterInfoDialog.ui" line="215"/>
+        <source>HTML Named Entity:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CharacterInfoDialog.ui" line="222"/>
+        <source>-</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CharacterInfoDialog.ui" line="229"/>
+        <source>HTML Decimal:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CharacterInfoDialog.ui" line="236"/>
+        <source>&amp;#65;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CharacterInfoDialog.ui" line="243"/>
+        <source>HTML Hexadecimal:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CharacterInfoDialog.ui" line="250"/>
+        <source>&amp;#x41;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CharacterInfoDialog.ui" line="257"/>
+        <source>C / C++ / Java Escape:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CharacterInfoDialog.ui" line="264"/>
+        <location filename="../src/dialogs/CharacterInfoDialog.ui" line="278"/>
+        <source>\u0041</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CharacterInfoDialog.ui" line="271"/>
+        <source>JSON Escape:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CharacterInfoDialog.ui" line="285"/>
+        <source>CSS Escape:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CharacterInfoDialog.ui" line="292"/>
+        <source>\41 </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CharacterInfoDialog.ui" line="299"/>
+        <source>URL Percent-Encoded:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CharacterInfoDialog.ui" line="318"/>
+        <source>Copy Character</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CharacterInfoDialog.ui" line="325"/>
+        <source>Copy Code Point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CharacterInfoDialog.ui" line="332"/>
+        <source>Copy UTF-8</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CharacterInfoDialog.ui" line="339"/>
+        <source>Copy HTML Entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CharacterInfoDialog.ui" line="359"/>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ColorPreviewCallTip</name>
+    <message>
+        <location filename="../src/features/ColorPreviewCallTip.cpp" line="362"/>
+        <source>Pick New Color</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ColumnEditorDialog</name>
     <message>
         <location filename="../src/dialogs/ColumnEditorDialog.ui" line="20"/>
@@ -121,10 +337,243 @@
     </message>
 </context>
 <context>
+    <name>CustomizeToolbarDialog</name>
+    <message>
+        <location filename="../src/dialogs/CustomizeToolbarDialog.cpp" line="432"/>
+        <source>Customize Toolbar Buttons</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CustomizeToolbarWidget</name>
+    <message>
+        <location filename="../src/dialogs/CustomizeToolbarDialog.cpp" line="83"/>
+        <source>Select actions to display on the main toolbar. You can add, remove, and reorder items or insert separators.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CustomizeToolbarDialog.cpp" line="94"/>
+        <source>Available Actions:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CustomizeToolbarDialog.cpp" line="99"/>
+        <source>Search actions...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CustomizeToolbarDialog.cpp" line="119"/>
+        <source>Add ▶</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CustomizeToolbarDialog.cpp" line="120"/>
+        <source>Add selected action to toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CustomizeToolbarDialog.cpp" line="124"/>
+        <source>◀ Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CustomizeToolbarDialog.cpp" line="125"/>
+        <source>Remove selected item from toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CustomizeToolbarDialog.cpp" line="131"/>
+        <source>+ Separator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CustomizeToolbarDialog.cpp" line="132"/>
+        <source>Insert a separator line at selected position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CustomizeToolbarDialog.cpp" line="138"/>
+        <source>▲ Move Up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CustomizeToolbarDialog.cpp" line="139"/>
+        <source>Move selected item up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CustomizeToolbarDialog.cpp" line="143"/>
+        <source>▼ Move Down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CustomizeToolbarDialog.cpp" line="144"/>
+        <source>Move selected item down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CustomizeToolbarDialog.cpp" line="153"/>
+        <source>Current Toolbar Buttons:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CustomizeToolbarDialog.cpp" line="176"/>
+        <source>Reset to Defaults</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CustomizeToolbarDialog.cpp" line="177"/>
+        <source>Restore standard NotepadNext toolbar buttons</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CustomizeToolbarDialog.cpp" line="183"/>
+        <source>Apply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CustomizeToolbarDialog.cpp" line="184"/>
+        <source>Apply toolbar changes immediately</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/CustomizeToolbarDialog.cpp" line="258"/>
+        <source>─────────── [ Separator ] ───────────</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DebugLogDock</name>
     <message>
         <location filename="../src/docks/DebugLogDock.ui" line="14"/>
         <source>Debug Log</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DocumentStatisticsDialog</name>
+    <message>
+        <location filename="../src/dialogs/DocumentStatisticsDialog.cpp" line="29"/>
+        <source>Document Statistics &amp; Forensics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/DocumentStatisticsDialog.cpp" line="41"/>
+        <source>Statistics for: &lt;b&gt;%1&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/DocumentStatisticsDialog.cpp" line="46"/>
+        <source>Metric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/DocumentStatisticsDialog.cpp" line="46"/>
+        <source>Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/DocumentStatisticsDialog.cpp" line="61"/>
+        <source>Lines (Total / Non-empty)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/DocumentStatisticsDialog.cpp" line="61"/>
+        <source>%1 / %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/DocumentStatisticsDialog.cpp" line="62"/>
+        <source>Words Count</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/DocumentStatisticsDialog.cpp" line="63"/>
+        <source>Characters (with spaces)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/DocumentStatisticsDialog.cpp" line="64"/>
+        <source>Characters (without spaces)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/DocumentStatisticsDialog.cpp" line="65"/>
+        <source>Size (UTF-8 Bytes)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/DocumentStatisticsDialog.cpp" line="65"/>
+        <source>%1 bytes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/DocumentStatisticsDialog.cpp" line="69"/>
+        <source>Estimated Reading Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/DocumentStatisticsDialog.cpp" line="69"/>
+        <source>%1 min %2 sec (at 200 wpm)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/DocumentStatisticsDialog.cpp" line="73"/>
+        <source>Estimated Speaking Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/DocumentStatisticsDialog.cpp" line="73"/>
+        <source>%1 min %2 sec (at 130 wpm)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/DocumentStatisticsDialog.cpp" line="75"/>
+        <source>%1 / 8.00 bits/byte</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/DocumentStatisticsDialog.cpp" line="77"/>
+        <source> — High (Possible Encrypted/Obfuscated Payload)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/DocumentStatisticsDialog.cpp" line="79"/>
+        <source> — Normal text/source code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/DocumentStatisticsDialog.cpp" line="81"/>
+        <source>Shannon Entropy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/DocumentStatisticsDialog.cpp" line="85"/>
+        <source>=== Document Statistics for %1 ===
+Lines: %2 (Non-empty: %3)
+Words: %4
+Characters (with spaces): %5
+Characters (without spaces): %6
+Bytes (UTF-8): %7
+Estimated Reading Time: %8 min %9 sec
+Estimated Speaking Time: %10 min %11 sec
+Shannon Entropy: %12
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/DocumentStatisticsDialog.cpp" line="108"/>
+        <source>Copy to Clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/DocumentStatisticsDialog.cpp" line="114"/>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/DocumentStatisticsDialog.cpp" line="123"/>
+        <source>Copied!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -643,6 +1092,220 @@
     </message>
 </context>
 <context>
+    <name>ExportOptionsDialog</name>
+    <message>
+        <location filename="../src/dialogs/ExportOptionsDialog.cpp" line="24"/>
+        <source>Export to PDF Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/ExportOptionsDialog.cpp" line="24"/>
+        <source>Export to HTML Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/ExportOptionsDialog.cpp" line="35"/>
+        <source>Document title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/ExportOptionsDialog.cpp" line="36"/>
+        <source>Document Title:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/ExportOptionsDialog.cpp" line="40"/>
+        <source>Page Layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/ExportOptionsDialog.cpp" line="44"/>
+        <source>A4 (210 × 297 mm)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/ExportOptionsDialog.cpp" line="45"/>
+        <source>Letter (8.5 × 11 in)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/ExportOptionsDialog.cpp" line="46"/>
+        <source>Legal (8.5 × 14 in)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/ExportOptionsDialog.cpp" line="47"/>
+        <source>Tabloid (11 × 17 in)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/ExportOptionsDialog.cpp" line="48"/>
+        <source>Page Size:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/ExportOptionsDialog.cpp" line="51"/>
+        <source>Portrait</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/ExportOptionsDialog.cpp" line="52"/>
+        <source>Landscape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/ExportOptionsDialog.cpp" line="53"/>
+        <source>Orientation:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/ExportOptionsDialog.cpp" line="56"/>
+        <source>Normal (15 mm)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/ExportOptionsDialog.cpp" line="57"/>
+        <source>Narrow (10 mm)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/ExportOptionsDialog.cpp" line="58"/>
+        <source>Wide (25 mm)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/ExportOptionsDialog.cpp" line="59"/>
+        <source>Margins:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/ExportOptionsDialog.cpp" line="64"/>
+        <source>Styling &amp; Engine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/ExportOptionsDialog.cpp" line="67"/>
+        <source>Embed GitHub Markdown CSS Stylesheet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/ExportOptionsDialog.cpp" line="71"/>
+        <source>Use Dark Mode Theme for Output</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/ExportOptionsDialog.cpp" line="76"/>
+        <source>Use Pandoc Engine (Advanced CLI Converter)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/ExportOptionsDialog.cpp" line="80"/>
+        <source>Pandoc executable was not detected on PATH</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/ExportOptionsDialog.cpp" line="87"/>
+        <source>Export...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FileDiffDialog</name>
+    <message>
+        <location filename="../src/dialogs/FileDiffDialog.cpp" line="32"/>
+        <source>Side-by-Side File Compare &amp; Diff</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/FileDiffDialog.cpp" line="48"/>
+        <source>Original (A):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/FileDiffDialog.cpp" line="55"/>
+        <location filename="../src/dialogs/FileDiffDialog.cpp" line="72"/>
+        <source>Browse...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/FileDiffDialog.cpp" line="61"/>
+        <source>Swap Left and Right Files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/FileDiffDialog.cpp" line="65"/>
+        <source>Modified (B):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/FileDiffDialog.cpp" line="76"/>
+        <source>Compare</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/FileDiffDialog.cpp" line="84"/>
+        <source>Select two files or open tabs to compare.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/FileDiffDialog.cpp" line="89"/>
+        <source>◀ Prev Diff (Shift+F7)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/FileDiffDialog.cpp" line="94"/>
+        <source>Next Diff (F7) ▶</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/FileDiffDialog.cpp" line="103"/>
+        <source>File A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/FileDiffDialog.cpp" line="106"/>
+        <source>File B</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/FileDiffDialog.cpp" line="124"/>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/FileDiffDialog.cpp" line="168"/>
+        <source>Tab: %1 (%2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/FileDiffDialog.cpp" line="190"/>
+        <location filename="../src/dialogs/FileDiffDialog.cpp" line="200"/>
+        <source>File: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/FileDiffDialog.cpp" line="210"/>
+        <source>Select Original File (A)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/FileDiffDialog.cpp" line="213"/>
+        <location filename="../src/dialogs/FileDiffDialog.cpp" line="222"/>
+        <source>Disk: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/FileDiffDialog.cpp" line="219"/>
+        <source>Select Modified File (B)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/FileDiffDialog.cpp" line="318"/>
+        <source>&lt;b&gt;Diff Summary:&lt;/b&gt; &lt;font color=&apos;#28a745&apos;&gt;+%1 Added&lt;/font&gt; | &lt;font color=&apos;#d73a49&apos;&gt;-%2 Removed&lt;/font&gt; | &lt;font color=&apos;#d9a300&apos;&gt;~%3 Modified&lt;/font&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FileList</name>
     <message>
         <location filename="../src/docks/FileListDock.ui" line="14"/>
@@ -920,6 +1583,148 @@
     </message>
 </context>
 <context>
+    <name>GenerateHashDigestDialog</name>
+    <message>
+        <location filename="../src/dialogs/GenerateHashDigestDialog.cpp" line="200"/>
+        <source>Generate %1 digest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/GenerateHashDigestDialog.cpp" line="209"/>
+        <source>Treat each line as a &amp;separate string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/GenerateHashDigestDialog.cpp" line="215"/>
+        <source>Enter text or paste here to generate digest...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/GenerateHashDigestDialog.cpp" line="222"/>
+        <source>Computed hash digest will appear here...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/GenerateHashDigestDialog.cpp" line="227"/>
+        <source>&amp;Copy to Clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/GenerateHashDigestDialog.cpp" line="233"/>
+        <source>&amp;Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/GenerateHashDigestDialog.cpp" line="283"/>
+        <source>✓ Copied!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>HashIntegrityDialog</name>
+    <message>
+        <location filename="../src/dialogs/HashIntegrityDialog.cpp" line="26"/>
+        <source>Hash &amp; Authenticity Validator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/HashIntegrityDialog.cpp" line="33"/>
+        <source>File on Disk</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/HashIntegrityDialog.cpp" line="34"/>
+        <source>Current Editor Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/HashIntegrityDialog.cpp" line="42"/>
+        <source>Select file to hash...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/HashIntegrityDialog.cpp" line="43"/>
+        <source>&amp;Browse...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/HashIntegrityDialog.cpp" line="63"/>
+        <source>Hash Algorithm:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/HashIntegrityDialog.cpp" line="67"/>
+        <source>🔒 Compute Hash</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/HashIntegrityDialog.cpp" line="77"/>
+        <source>Computed checksum will appear here...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/HashIntegrityDialog.cpp" line="78"/>
+        <source>Copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/HashIntegrityDialog.cpp" line="81"/>
+        <source>Computed Hash:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/HashIntegrityDialog.cpp" line="84"/>
+        <source>Paste expected release hash to verify authenticity...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/HashIntegrityDialog.cpp" line="85"/>
+        <source>Expected Hash:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/HashIntegrityDialog.cpp" line="93"/>
+        <location filename="../src/dialogs/HashIntegrityDialog.cpp" line="190"/>
+        <source>Enter expected hash above to compare automatically.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/HashIntegrityDialog.cpp" line="98"/>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/HashIntegrityDialog.cpp" line="125"/>
+        <source>Select File to Hash</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/HashIntegrityDialog.cpp" line="142"/>
+        <source>Error: Specified file does not exist.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/HashIntegrityDialog.cpp" line="151"/>
+        <source>Error: Failed to read file for hash computation.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/HashIntegrityDialog.cpp" line="182"/>
+        <source>Click &apos;Compute Hash&apos; to generate checksum.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/HashIntegrityDialog.cpp" line="198"/>
+        <source>✓ MATCH: Checksums match perfectly. Authenticity and integrity verified!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/HashIntegrityDialog.cpp" line="203"/>
+        <source>✗ MISMATCH: Checksum mismatch! Possible corruption or tampering detected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LanguageInspectorDock</name>
     <message>
         <location filename="../src/docks/LanguageInspectorDock.ui" line="14"/>
@@ -1172,7 +1977,7 @@
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="69"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1960"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2197"/>
         <source>Export As</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1741,7 +2546,7 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1175"/>
         <location filename="../src/dialogs/MainWindow.ui" line="1178"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="974"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="986"/>
         <source>Start Recording</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2294,19 +3099,19 @@
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1932"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="267"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="279"/>
         <source>Pretty Print XML</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1937"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="287"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="299"/>
         <source>Format JSON</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1942"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="308"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="320"/>
         <source>Minify JSON</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2351,292 +3156,492 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="626"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="638"/>
         <source>Go to line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="626"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="638"/>
         <source>Line Number (1 - %1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="965"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="977"/>
         <source>Stop Recording</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1147"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1159"/>
         <source>Debug Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1524"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1760"/>
         <source>New %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1595"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1831"/>
         <source>Create File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1595"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1831"/>
         <source>&lt;b&gt;%1&lt;/b&gt; does not exist. Do you want to create it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="287"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="308"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="299"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="320"/>
         <source>JSON Error: %1 (offset %2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="331"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="343"/>
         <source>Emoji &amp; Symbols</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1102"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1114"/>
         <source>Notepad Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1103"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1115"/>
         <source>Cannot reopen unsaved new buffer from disk.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1378"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1398"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1406"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1426"/>
         <source>Theme applied: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1429"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1457"/>
         <source>&amp;Themes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1437"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1465"/>
         <source>Open Theme Switcher...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1448"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1476"/>
         <source>Light Themes Only</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1452"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1480"/>
         <source>Dark Themes Only</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1458"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1486"/>
         <source>Themes by Family</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1471"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1499"/>
         <source>Reset to Default (Light Mode - NotepadNext)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1474"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1502"/>
         <source>Theme reset to default Light Mode (NotepadNext)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1478"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1506"/>
         <source>Default Dark Mode (Horizon Dark)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1481"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1509"/>
         <source>Theme set to Dark Mode (Horizon Dark)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1485"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1513"/>
         <source>Toggle Dark / Light Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1490"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1518"/>
         <source>Switched to Dark Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1490"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1518"/>
         <source>Switched to Light Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1676"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1529"/>
+        <source>&amp;Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1536"/>
+        <source>Compare Files (Diff)...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1543"/>
+        <source>Document Statistics...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1548"/>
+        <source>Character Information...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1555"/>
+        <source>File Hash &amp; Checksums...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1560"/>
+        <source>Generate Hash Digest...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1567"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1704"/>
+        <source>Customize Toolbar...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1710"/>
+        <source>Reset Toolbar to Defaults</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1715"/>
+        <source>Icon Pack</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1913"/>
         <source>Open Folder as Workspace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1700"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2575"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1937"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2816"/>
         <source>Reload File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1700"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1937"/>
         <source>Are you sure you want to reload &lt;b&gt;%1&lt;/b&gt;? Any unsaved changes will be lost.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1916"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2153"/>
         <source>Save a Copy As</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2001"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2017"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2238"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2254"/>
         <source>Rename</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2017"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2254"/>
         <source>Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2039"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2276"/>
         <source>Delete File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2039"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2276"/>
         <source>Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2049"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2286"/>
         <source>Error Deleting File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2049"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2286"/>
         <source>Something went wrong deleting &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2261"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2498"/>
         <source>Administrator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2568"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2809"/>
         <source>&lt;b&gt;%1&lt;/b&gt; has been modified by another program. Do you want to reload it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2571"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2812"/>
         <source>&lt;br&gt;&lt;br&gt;&lt;b&gt;Warning:&lt;/b&gt; you have unsaved changes in this tab. Reloading will discard them permanently.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2601"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2842"/>
         <source>Read error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2602"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2843"/>
         <source>Write error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2603"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2844"/>
         <source>Fatal error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2604"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2845"/>
         <source>Resource error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2605"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2846"/>
         <source>Open error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2606"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2847"/>
         <source>Abort error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2607"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2848"/>
         <source>Timeout error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2608"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2849"/>
         <source>Unspecified error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2609"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2850"/>
         <source>Remove error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2610"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2851"/>
         <source>Rename error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2611"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2852"/>
         <source>Position error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2612"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2853"/>
         <source>Resize error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2613"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2854"/>
         <source>Permissions error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2614"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2855"/>
         <source>Copy error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2615"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2856"/>
         <source>Unknown error (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2618"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2859"/>
         <source>Error Saving File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2619"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2860"/>
         <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2624"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2865"/>
         <source>Zoom: %1%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="3243"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="3487"/>
         <source>Show / Hide Notepad Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="754"/>
         <source>Save All</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MarkdownSafePreviewDock</name>
+    <message>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="42"/>
+        <source>HTML &amp; Markdown Live Preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="89"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="98"/>
+        <source>Auto</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="90"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="564"/>
+        <source>Markdown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="91"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="562"/>
+        <source>HTML</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="93"/>
+        <source>Select preview rendering format (Auto detects Markdown or HTML)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="102"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="515"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="573"/>
+        <source>0 words • 0 min read</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="109"/>
+        <source>Zoom Out</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="116"/>
+        <source>Reset Zoom (100%)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="125"/>
+        <source>Zoom In</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="133"/>
+        <source>Refresh Preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="141"/>
+        <source>Copy Formatted HTML to Clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="149"/>
+        <source>Export as Standalone HTML File...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="156"/>
+        <source>Export Document to PDF...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="165"/>
+        <source>Open in Default Web Browser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="412"/>
+        <source>NotepadNext Preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="512"/>
+        <source>No Document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="557"/>
+        <source>Auto (HTML)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="559"/>
+        <source>Auto (Markdown)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="579"/>
+        <source>%1 words • %2 min read</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="632"/>
+        <source>HTML Copied!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="647"/>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="687"/>
+        <source>Untitled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="661"/>
+        <source>Export HTML Document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="662"/>
+        <source>HTML Documents (*.html *.htm);;All Files (*)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="701"/>
+        <source>Export PDF Document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="702"/>
+        <source>PDF Documents (*.pdf);;All Files (*)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="775"/>
+        <source>Blocked Untrusted Link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/MarkdownSafePreviewDock.cpp" line="776"/>
+        <source>Navigation to link &apos;%1&apos; with scheme &apos;%2&apos; is blocked for security.
+
+Only http, https, and mailto URLs are permitted in HTML &amp; Markdown Preview (mitigating CVE-2026-20841).</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MimeTools</name>
+    <message>
+        <location filename="../src/utils/MimeTools.cpp" line="70"/>
+        <source>[Error: Invalid Base64 Data or Padding]</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3100,6 +4105,394 @@
     <message>
         <location filename="../src/dialogs/ThemeSwitcherDialog.cpp" line="114"/>
         <source>Apply Theme</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ToolbarIconManager</name>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="51"/>
+        <source>Modern Ribbon (Default Vector)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="52"/>
+        <source>High-DPI 20x20 monoline vector SVG suite with refined contours</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="61"/>
+        <source>Fugue Classic (Silk Mini-Icons)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="62"/>
+        <source>Authentic pixel-perfect Fugue 3.5.6 iconography by Yusuke Kamiyamane</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="71"/>
+        <source>Windows 7 Aero (Refined Glossy)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="72"/>
+        <source>Refined Windows 7 Aero translucent glass iconography</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="81"/>
+        <source>Windows 7</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="82"/>
+        <source>Authentic Windows 7 toolbar iconography</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="91"/>
+        <source>Microsoft Fluent UI (Regular Outline)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="92"/>
+        <source>Microsoft Fluent Design outlined iconography for Windows 11</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="101"/>
+        <source>Microsoft Fluent UI (Filled Solid)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="102"/>
+        <source>Microsoft Fluent Design filled solid iconography</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="111"/>
+        <source>Windows 11</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="112"/>
+        <source>Authentic Windows 11 Fluent toolbar iconography</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="121"/>
+        <source>Notepad3 Warm (Classic Amber)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="122"/>
+        <source>Notepad3 warm brown and amber classic text editor iconography</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="131"/>
+        <source>Notepad++ (Green Accents)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="132"/>
+        <source>Classic Notepad++ toolbar iconography with green accents</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="141"/>
+        <source>Notepad++ (Classic)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="142"/>
+        <source>Authentic Notepad++ dual-resolution SVG and PNG suite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="151"/>
+        <source>Glossy Orange (WinRAR Amber)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="152"/>
+        <source>Warm glossy orange and amber skeuomorphic iconography</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="161"/>
+        <source>Pixel Dense (Retro 16-Bit)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="162"/>
+        <source>Pixel-precise dense retro iconography with crisp edges</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="171"/>
+        <source>Material Design (Sharp)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="172"/>
+        <source>Google Material Design sharp geometric iconography</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="181"/>
+        <source>Windows XP (Luna Classic)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="182"/>
+        <source>Windows XP Luna skeuomorphic authentic iconography</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="191"/>
+        <source>NotepadNext Classic (Silk)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="192"/>
+        <source>Authentic 16x16 Silk bitmap icons from NotepadNext</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="201"/>
+        <source>Vibrant DuoTone (Cyberpunk)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="202"/>
+        <source>High-luminance electric cyan &amp; radiant magenta dual-tone contrast</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="211"/>
+        <source>Monochrome Outline (Minimalist)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="212"/>
+        <source>Clean 1.8px monoline wireframes engineered for dark and light themes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="221"/>
+        <source>Elegant Themes (Nicholas Roach)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="222"/>
+        <source>Authentic classic 48x48 Elegant Themes iconography by Nicholas Roach</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="231"/>
+        <source>Seven Classic (Glossy Desktop)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="232"/>
+        <source>Classic Windows 7 / Seven glossy desktop iconography suite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="241"/>
+        <source>Mignon (Cute Pastel)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="242"/>
+        <source>Playful modern pastel desktop iconography by Igor Moraes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="251"/>
+        <source>Palette (Modern Vibrant)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="252"/>
+        <source>Vibrant modern flat vector iconography by mjkim0727</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="261"/>
+        <source>Diagonal (Sleek Angular)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="262"/>
+        <source>Sleek geometric angular vector iconography by Tamas Csabi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="271"/>
+        <source>Aksara Arch Linux</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="272"/>
+        <source>Minimalist &amp; sharp: Arch cyan, fine lines, terminal aesthetic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="281"/>
+        <source>Aksara elementary OS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="282"/>
+        <source>Vibrant colors, 1px fine outlines, distinctive silhouettes and translucent elements</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="291"/>
+        <source>Aksara Bold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="292"/>
+        <source>Bold strokes with rounded caps, maximum readability and contrast</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="301"/>
+        <source>Aksara Duotone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="302"/>
+        <source>Dark gray contours with subtle translucent purple accent circular backing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="311"/>
+        <source>Aksara Outline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="312"/>
+        <source>Clean line-art wireframe aesthetic with rounded terminators</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="321"/>
+        <source>Aksara Rounded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="322"/>
+        <source>Smooth flowing curves and rounded geometric contours</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="331"/>
+        <source>Aksara Sharp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="332"/>
+        <source>Crisp sharp corners with technical precision styling</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="341"/>
+        <source>Aksara macOS Big Sur</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="342"/>
+        <source>Apple macOS modern aesthetic: soft squircle geometry, refined gradients, subtle depth</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="351"/>
+        <source>Aksara NPP GNOME 5.1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="352"/>
+        <source>GNOME Adwaita aesthetic: warm balanced contrast, smooth rounded corners, Linux desktop feel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="361"/>
+        <source>Aksara NPP KDE 6</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="362"/>
+        <source>KDE Breeze 6 styling: electric cyan accents, sharp geometric edges, futuristic vibe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="371"/>
+        <source>Aksara NPP Windows Vista</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="372"/>
+        <source>Windows Vista Aero Glass: bright cyan gradients, translucent reflections, 2006 skeuomorphism</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="381"/>
+        <source>Aksara NPP Windows 10</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="382"/>
+        <source>Segoe MDL2 Assets: flat, clean monochrome, consistent thin strokes, seamless background</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="391"/>
+        <source>Aksara NPP Windows 11</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="392"/>
+        <source>Segoe Fluent Icons: soft rounded contours, gentle blue accents, modern Mica aesthetic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="401"/>
+        <source>Aksara NPP Windows XP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="402"/>
+        <source>Windows XP Luna: soft nostalgic blue gradients, rounded corners, glossy glass shine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="411"/>
+        <source>Aksara Ubuntu Yaru</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="412"/>
+        <source>Ubuntu Yaru / Suru design: warm aubergine &amp; orange accents, squircle framing, soft shadows</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="421"/>
+        <source>Aksara Vista Aero</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="422"/>
+        <source>Glossy and reflective: azure gradients, bright specular highlights, Aero Glass rounded tiles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/features/ToolbarIconManager.cpp" line="539"/>
+        <source>Custom external icon pack from %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -5,7 +5,68 @@ Format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) a
 
 ---
 
-## [0.15-07] - 2026-10-28
+## [0.15-08] - 2026-11-08
+
+### 🚀 Major Feature Integration & Productivity Innovations / Integrasi Fitur Utama & Inovasi Produktivitas
+
+- 🇬🇧 **38 Icon Pack Personalization Suite & Toolbar Management (`ToolbarIconManager`)**:
+  Integrated a comprehensive suite of 38 distinct icon packs (Modern SVG, Fluent, Material, Classic Notepad++, Aksara variations, Retro Windows 7/Aero, and Pixel styles) ported with zero overhead. Added dynamic runtime icon switching directly via toolbar right-click context menu, persistent settings integration, and support for SVG/PNG icon asset scaling.
+- 🇮🇩 **Suite Personalisasi 38 Icon Pack & Manajemen Toolbar (`ToolbarIconManager`)**:
+  Mengintegrasikan koleksi komprehensif 38 paket ikon berbeda (Modern SVG, Fluent, Material, Notepad++ Klasik, variasi Aksara, Retro Windows 7/Aero, serta gaya Pixel) yang diporting secara optimal. Menambahkan kemampuan pergantian ikon secara langsung melalui menu konteks klik-kanan toolbar, penyimpanan preferensi otomatis, dan dukungan penskalaan aset SVG/PNG.
+
+- 🇬🇧 **Interactive Toolbar Customization Dialog (`CustomizeToolbarDialog`)**:
+  Introduced a dual-list drag-and-drop toolbar customization dialog allowing users to add, remove, reorder actions, insert separators, and reset to defaults with instantaneous live toolbar reflection. Includes search filtering across available actions and seamless synchronization with application settings (`Gui/ToolBar`).
+- 🇮🇩 **Dialog Kustomisasi Toolbar Interaktif (`CustomizeToolbarDialog`)**:
+  Menghadirkan dialog kustomisasi toolbar interaktif dengan antarmuka dual-list drag-and-drop yang memungkinkan penambahan, pengurangan, pengurutan aksi, penyisipan pemisah (separator), dan reset ke default dengan pembaruan toolbar secara seketika. Dilengkapi pencarian filter aksi dan sinkronisasi otomatis dengan pengaturan aplikasi (`Gui/ToolBar`).
+
+- 🇬🇧 **Markdown Safe Live Preview Dock & Document Export Pipeline (`MarkdownSafePreviewDock`)**:
+  Added a high-performance live preview dock for Markdown and HTML documents featuring KaTeX math expression rendering and Mermaid diagram support. Includes bidirectional scroll synchronization between Scintilla editor and preview browser. Paired with `DocumentExportManager` and `ExportOptionsDialog` for exporting documents as standalone self-contained HTML (with embedded GitHub styling) or vector PDF documents.
+- 🇮🇩 **Dock Pratinjau Aman Markdown & Pipeline Ekspor Dokumen (`MarkdownSafePreviewDock`)**:
+  Menambahkan dock pratinjau langsung berkinerja tinggi untuk dokumen Markdown dan HTML dengan dukungan formula matematika KaTeX dan diagram Mermaid. Mendukung sinkronisasi scroll dua arah antara Scintilla editor dan penampil pratinjau. Dilengkapi `DocumentExportManager` dan `ExportOptionsDialog` untuk mengekspor dokumen ke berkas HTML mandiri (dengan styling GitHub tersemat) atau dokumen PDF vektor.
+
+- 🇬🇧 **Editor Ergonomics Suite (Auto-Closing Pairs, Mark Occurrences, Log Auto-Timestamp & Color Swatches)**:
+  - `AutoClosePairs`: Intelligent bracket and quote auto-closing with overtyping skip logic and empty-pair backspace handling.
+  - `MarkOccurrences`: Scintilla indicator-based highlight matching for all occurrences of selected text across the active editor viewport.
+  - `LogAutoTimestamp`: Native Windows Notepad `.LOG` header detection automatically appending local date/time stamps when opening log files.
+  - `ColorPreviewCallTip`: Automatic detection of Hex, RGB, RGBA, HSL, HSLA, and CSS color codes with live visual CallTip and tooltip color swatches.
+- 🇮🇩 **Suite Ergonomi Editor (Auto-Closing Pairs, Mark Occurrences, Timestamp Otomatis Log & Preview Warna)**:
+  - `AutoClosePairs`: Penutupan otomatis tanda kurung dan tanda kutip dengan logika overtyping skip dan penanganan backspace pasangan kosong.
+  - `MarkOccurrences`: Penandaan indikator Scintilla untuk menyorot seluruh kemunculan teks yang dipilih pada viewport editor aktif.
+  - `LogAutoTimestamp`: Deteksi header `.LOG` ala Windows Notepad yang otomatis menyisipkan stempel tanggal/waktu saat membuka berkas catatan log.
+  - `ColorPreviewCallTip`: Deteksi kode warna Hex, RGB, RGBA, HSL, HSLA, dan CSS secara instan dengan pratinjau swatch warna visual pada CallTip editor.
+
+- 🇬🇧 **Forensics, Statistics, Myers Diff Engine & Hash Integrity Suite**:
+  - `TokenForensicUtils` & `DocumentStatisticsDialog`: Shannon entropy calculations, JWT header/payload decoding, reading/speaking time estimates, and comprehensive character/word/line analytics.
+  - `CharacterInfo` & `CharacterInfoDialog`: In-depth Unicode 16 codepoint inspection with visual glyph cards, HTML/C/JSON/CSS escape sequences, and bidirectional character metrics.
+  - `MyersDiffEngine` & `FileDiffDialog`: Longest Common Subsequence (LCS) side-by-side file comparison with synchronized dual-pane scrolling.
+  - `HashIntegrityManager`, `GenerateHashDigestDialog` & `HashIntegrityDialog`: Constant-memory stream chunked cryptographic digest generation (CRC32, MD5, SHA-1, SHA-256, SHA-512, SHA3) with real-time verification status indicators.
+- 🇮🇩 **Suite Forensik, Statistik, Mesin Diff Myers & Integritas Hash**:
+  - `TokenForensicUtils` & `DocumentStatisticsDialog`: Perhitungan entropi Shannon, decoding header/payload token JWT, estimasi waktu membaca/berbicara, serta statistik karakter/kata/baris terperinci.
+  - `CharacterInfo` & `CharacterInfoDialog`: Inspeksi mendalam codepoint Unicode 16 dengan kartu visual glyph, urutan escape HTML/C/JSON/CSS, dan metrik karakter dwiarah.
+  - `MyersDiffEngine` & `FileDiffDialog`: Perbandingan berkas berdampingan algoritma LCS (Longest Common Subsequence) dengan sinkronisasi scroll dua panel.
+  - `HashIntegrityManager`, `GenerateHashDigestDialog` & `HashIntegrityDialog`: Pembuatan digest kriptografis aliran chunk memori konstan (CRC32, MD5, SHA-1, SHA-256, SHA-512, SHA3) dengan indikator status verifikasi real-time.
+
+- 🇬🇧 **macOS Deep System Integration & 76 File Format Associations**:
+  Modernized `deploy/macos/info.plist` with comprehensive Uniform Type Identifiers (UTType), document type definitions covering 76 programming and markup file extensions, and native macOS System Services integration.
+- 🇮🇩 **Integrasi Mendalam macOS & Asosiasi 76 Format Berkas**:
+  Memperbarui `deploy/macos/info.plist` dengan deklarasi Uniform Type Identifiers (UTType) komprehensif yang mencakup 76 ekstensi bahasa pemrograman dan markup, serta integrasi macOS System Services.
+
+### 🛡️ Code Quality, Hardening & Verification / Kualitas Kode, Pengerasan & Verifikasi
+
+- 🇬🇧 **100% Zero-Error Static Analysis Gate**:
+  - Cleared all findings across `trunk check -y`, validating 4,023 files with 0 issues.
+  - Clean `cppcheck` execution across all newly added and modified C++ source and header files.
+  - Complete elimination of shadow parameter warnings and loop modernized to standard STL algorithms (`std::any_of`, `std::all_of`, `std::find_if`, `std::transform`).
+  - Full synchronization of Qt Translation catalogs via `cmake --build build --target update_translations`.
+  - Built and verified local DMG release (`NotepadNext-v0.15-08-x64.dmg`) with `hdiutil verify` cryptographic checksum validation.
+- 🇮🇩 **Gerbang Analisis Statis 100% Zero-Error**:
+  - Lulus seluruh validasi `trunk check -y` pada 4.023 berkas dengan 0 isu.
+  - Eksekusi `cppcheck` bersih pada seluruh berkas C++ baru dan yang dimodifikasi.
+  - Eliminasi total peringatan shadow parameter dan modernisasi perulangan ke algoritma STL standar (`std::any_of`, `std::all_of`, `std::find_if`, `std::transform`).
+  - Sinkronisasi penuh katalog terjemahan Qt melalui `cmake --build build --target update_translations`.
+  - Pembuatan dan verifikasi paket DMG lokal (`NotepadNext-v0.15-08-x64.dmg`) tervalidasi menggunakan `hdiutil verify`.
+
+---
 
 ### 🐛 Critical Bug Fixes & Stability / Perbaikan Bug Kritis & Stabilitas
 

@@ -44,6 +44,8 @@
 #include "URLFinder.h"
 #include "BookMarkDecorator.h"
 #include "HTMLAutoCompleteDecorator.h"
+#include "AutoClosePairs.h"
+#include "ColorPreviewCallTip.h"
 
 
 const int MARK_HIDELINESBEGIN = 23;
@@ -226,13 +228,11 @@ ScintillaNext *EditorManager::getEditorByFilePath(const QString &filePath)
 
     purgeOldEditorPointers();
 
-    for (ScintillaNext *editor : std::as_const(editors)) {
-        if (editor->isFile() && editor->getFileInfo() == newInfo) {
-            return editor;
-        }
-    }
+    const auto it = std::find_if(editors.cbegin(), editors.cend(), [&newInfo](const ScintillaNext *editor) {
+        return editor && editor->isFile() && editor->getFileInfo() == newInfo;
+    });
 
-    return Q_NULLPTR;
+    return (it != editors.cend()) ? *it : Q_NULLPTR;
 }
 
 void EditorManager::manageEditor(ScintillaNext *editor)
@@ -469,6 +469,12 @@ void EditorManager::setupEditor(ScintillaNext *editor) const
     bm->setEnabled(true);
 
     new HTMLAutoCompleteDecorator(editor);
+
+    auto *acp = new AutoClosePairs(editor);
+    acp->setEnabled(true);
+
+    auto *cpt = new ColorPreviewCallTip(editor);
+    cpt->setEnabled(true);
 }
 
 void EditorManager::purgeOldEditorPointers()

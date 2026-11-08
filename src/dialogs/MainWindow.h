@@ -44,6 +44,14 @@ namespace Ui {
 class MainWindow;
 }
 
+class MarkdownSafePreviewDock;
+class FileDiffDialog;
+class DocumentStatisticsDialog;
+class CharacterInfoDialog;
+class HashIntegrityDialog;
+class GenerateHashDigestDialog;
+class CustomizeToolbarDialog;
+
 class NotepadNextApplication;
 class QSystemTrayIcon;
 class Macro;
@@ -70,6 +78,19 @@ public:
 
     void setupLanguageMenu();
     void setupThemeMenu();
+    void setupToolsMenu();
+
+    [[nodiscard]] QStringList currentToolbarActionNames() const;
+    void updateToolbarActions(const QStringList &actionNames);
+    void resetToolbarToDefaults();
+    void onToolbarContextMenu(const QPoint &pos);
+
+    void showFileDiffDialog();
+    void showDocumentStatisticsDialog();
+    void showCharacterInfoDialog();
+    void showHashIntegrityDialog();
+    void showGenerateHashDigestDialog();
+    void showCustomizeToolbarDialog();
     ScintillaNext *currentEditor() const;
     int editorCount() const;
     QVector<ScintillaNext *> editors() const;
@@ -162,10 +183,10 @@ signals:
     void fileDialogAccepted(const QString &filePath);
 
 protected:
-    void closeEvent(QCloseEvent *closeEvent) override;
+    void closeEvent(QCloseEvent *event) override;
     void dragEnterEvent(QDragEnterEvent *event) override;
     void dropEvent(QDropEvent *event) override;
-    void changeEvent(QEvent *changeEvent) override;
+    void changeEvent(QEvent *event) override;
 
 private slots:
     void tabBarRightClicked(const ScintillaNext *editor);
@@ -235,6 +256,15 @@ private:
     QAction *actionThemeDark = Q_NULLPTR;
     QAction *actionToggleTheme = Q_NULLPTR;
     QSystemTrayIcon *m_systemTrayIcon = Q_NULLPTR;
+
+    MarkdownSafePreviewDock *markdownPreviewDock = Q_NULLPTR;
+    QMenu *menuTools = Q_NULLPTR;
+    QAction *actionFileDiff = Q_NULLPTR;
+    QAction *actionDocumentStatistics = Q_NULLPTR;
+    QAction *actionCharacterInfo = Q_NULLPTR;
+    QAction *actionHashIntegrity = Q_NULLPTR;
+    QAction *actionGenerateHashDigest = Q_NULLPTR;
+    QAction *actionCustomizeToolbar = Q_NULLPTR;
 };
 
 #endif // MAINWINDOW_H

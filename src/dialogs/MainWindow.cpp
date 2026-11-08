@@ -122,6 +122,18 @@
 
 #include "ActionUtils.h"
 
+#include "ToolbarIconManager.h"
+#include "CustomizeToolbarDialog.h"
+#include "MarkdownSafePreviewDock.h"
+#include "DocumentStatisticsDialog.h"
+#include "CharacterInfoDialog.h"
+#include "FileDiffDialog.h"
+#include "GenerateHashDigestDialog.h"
+#include "HashIntegrityDialog.h"
+#include "LogAutoTimestamp.h"
+#include "TokenForensicUtils.h"
+#include "CharacterInfo.h"
+
 
 MainWindow::MainWindow(NotepadNextApplication *app) : // NOSONAR
     ui(std::make_unique<Ui::MainWindow>()),
@@ -1228,6 +1240,21 @@ MainWindow::MainWindow(NotepadNextApplication *app) : // NOSONAR
     addDockWidget(Qt::LeftDockWidgetArea, fileListDock);
     ui->menuView->addAction(fileListDock->toggleViewAction());
 
+    markdownPreviewDock = new MarkdownSafePreviewDock(this);
+    markdownPreviewDock->setObjectName(QStringLiteral("MarkdownSafePreviewDock"));
+    markdownPreviewDock->hide();
+    addDockWidget(Qt::RightDockWidgetArea, markdownPreviewDock);
+    ui->menuView->addAction(markdownPreviewDock->toggleViewAction());
+    connect(markdownPreviewDock, &QDockWidget::visibilityChanged, this, [this](bool visible) {
+        if (visible) {
+            markdownPreviewDock->setActiveEditor(currentEditor());
+        }
+    });
+
+    ui->mainToolBar->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->mainToolBar, &QToolBar::customContextMenuRequested, this, &MainWindow::onToolbarContextMenu);
+    ToolbarIconManager::instance()->initialize(app->getSettings());
+
     connect(app->getSettings(), &ApplicationSettings::showMenuBarChanged, this, [this](bool showMenuBar) {
         // Don't 'hide' it, else the actions won't be enabled
         ui->menuBar->setMaximumHeight(showMenuBar ? QWIDGETSIZE_MAX : 0);
@@ -1244,6 +1271,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) : // NOSONAR
     setupLanguageMenu();
     ThemeManager::instance()->initialize(app->getSettings(), this);
     setupThemeMenu();
+    setupToolsMenu();
 
     applyStyleSheet();
 
@@ -1492,6 +1520,214 @@ void MainWindow::setupThemeMenu()
     menuTheme->addAction(actionToggleTheme);
 }
 
+void MainWindow::setupToolsMenu()
+{
+    if (menuTools) {
+        return;
+    }
+
+    menuTools = new QMenu(tr("&Tools"), this);
+    if (ui->menuSettings) {
+        ui->menuBar->insertMenu(ui->menuSettings->menuAction(), menuTools);
+    } else {
+        ui->menuBar->addMenu(menuTools);
+    }
+
+    actionFileDiff = new QAction(tr("Compare Files (Diff)..."), this);
+    actionFileDiff->setObjectName(QStringLiteral("actionFileDiff"));
+    connect(actionFileDiff, &QAction::triggered, this, &MainWindow::showFileDiffDialog);
+    menuTools->addAction(actionFileDiff);
+
+    menuTools->addSeparator();
+
+    actionDocumentStatistics = new QAction(tr("Document Statistics..."), this);
+    actionDocumentStatistics->setObjectName(QStringLiteral("actionDocumentStatistics"));
+    connect(actionDocumentStatistics, &QAction::triggered, this, &MainWindow::showDocumentStatisticsDialog);
+    menuTools->addAction(actionDocumentStatistics);
+
+    actionCharacterInfo = new QAction(tr("Character Information..."), this);
+    actionCharacterInfo->setObjectName(QStringLiteral("actionCharacterInfo"));
+    connect(actionCharacterInfo, &QAction::triggered, this, &MainWindow::showCharacterInfoDialog);
+    menuTools->addAction(actionCharacterInfo);
+
+    menuTools->addSeparator();
+
+    actionHashIntegrity = new QAction(tr("File Hash & Checksums..."), this);
+    actionHashIntegrity->setObjectName(QStringLiteral("actionHashIntegrity"));
+    connect(actionHashIntegrity, &QAction::triggered, this, &MainWindow::showHashIntegrityDialog);
+    menuTools->addAction(actionHashIntegrity);
+
+    actionGenerateHashDigest = new QAction(tr("Generate Hash Digest..."), this);
+    actionGenerateHashDigest->setObjectName(QStringLiteral("actionGenerateHashDigest"));
+    connect(actionGenerateHashDigest, &QAction::triggered, this, &MainWindow::showGenerateHashDigestDialog);
+    menuTools->addAction(actionGenerateHashDigest);
+
+    menuTools->addSeparator();
+
+    actionCustomizeToolbar = new QAction(tr("Customize Toolbar..."), this);
+    actionCustomizeToolbar->setObjectName(QStringLiteral("actionCustomizeToolbar"));
+    connect(actionCustomizeToolbar, &QAction::triggered, this, &MainWindow::showCustomizeToolbarDialog);
+    menuTools->addAction(actionCustomizeToolbar);
+}
+
+void MainWindow::showFileDiffDialog()
+{
+    auto *dlg = new FileDiffDialog(this);
+    if (auto *editor = currentEditor()) {
+        if (editor->isFile()) {
+            dlg->setInitialFiles(editor->getFilePath());
+        }
+    }
+    dlg->show();
+}
+
+void MainWindow::showDocumentStatisticsDialog()
+{
+    auto *editor = currentEditor();
+    if (!editor) {
+        return;
+    }
+    const QString text = QString::fromUtf8(editor->get_text_range(0, editor->length()));
+    const QString docName = editor->isFile() ? QFileInfo(editor->getFilePath()).fileName() : editor->getName();
+    const auto stats = TokenForensicUtils::analyzeText(text);
+    DocumentStatisticsDialog dlg(docName, stats, this);
+    dlg.exec();
+}
+
+void MainWindow::showCharacterInfoDialog()
+{
+    auto *editor = currentEditor();
+    if (!editor) {
+        return;
+    }
+    const auto details = CharacterInfo::getDetailsAt(editor);
+    CharacterInfoDialog dlg(details, this);
+    dlg.exec();
+}
+
+void MainWindow::showHashIntegrityDialog()
+{
+    auto *dlg = new HashIntegrityDialog(this, currentEditor());
+    dlg->show();
+}
+
+void MainWindow::showGenerateHashDigestDialog()
+{
+    QString initialText;
+    if (auto *editor = currentEditor()) {
+        const QByteArray sel = editor->getSelText();
+        if (!sel.isEmpty()) {
+            initialText = QString::fromUtf8(sel);
+        } else {
+            initialText = QString::fromUtf8(editor->get_text_range(0, editor->length()));
+        }
+    }
+    GenerateHashDigestDialog dlg(QStringLiteral("SHA-256"), initialText, this);
+    dlg.exec();
+}
+
+void MainWindow::showCustomizeToolbarDialog()
+{
+    CustomizeToolbarDialog dlg(this, this);
+    dlg.exec();
+}
+
+QStringList MainWindow::currentToolbarActionNames() const
+{
+    QStringList names;
+    if (!ui->mainToolBar) {
+        return names;
+    }
+    for (const QAction *action : ui->mainToolBar->actions()) {
+        if (!action) {
+            continue;
+        }
+        if (action->isSeparator()) {
+            names.append(QString());
+        } else {
+            QString name = action->objectName();
+            if (name.startsWith(QLatin1String("action"))) {
+                name = name.mid(6);
+            }
+            if (!name.isEmpty()) {
+                names.append(name);
+            }
+        }
+    }
+    return names;
+}
+
+void MainWindow::updateToolbarActions(const QStringList &actionNames)
+{
+    if (!ui->mainToolBar) {
+        return;
+    }
+    ui->mainToolBar->clear();
+    ActionUtils::populateActionContainer(ui->mainToolBar, this, actionNames);
+    ToolbarIconManager::instance()->applyToToolbar(ui->mainToolBar);
+    app->getSettings()->setValue("Gui/ToolBar", actionNames);
+}
+
+void MainWindow::resetToolbarToDefaults()
+{
+    const QStringList defaultActions = {
+        QStringLiteral("New"),
+        QStringLiteral("Open"),
+        QStringLiteral("Save"),
+        QStringLiteral("SaveAll"),
+        QStringLiteral("Close"),
+        QStringLiteral("CloseAll"),
+        QString(),
+        QStringLiteral("Cut"),
+        QStringLiteral("Copy"),
+        QStringLiteral("Paste"),
+        QString(),
+        QStringLiteral("Undo"),
+        QStringLiteral("Redo"),
+        QString(),
+        QStringLiteral("Find"),
+        QStringLiteral("Replace"),
+        QString(),
+        QStringLiteral("ZoomIn"),
+        QStringLiteral("ZoomOut"),
+        QString(),
+        QStringLiteral("Preferences"),
+        QString(),
+        QStringLiteral("Exit")
+    };
+    updateToolbarActions(defaultActions);
+}
+
+void MainWindow::onToolbarContextMenu(const QPoint &pos)
+{
+    QMenu menu(this);
+    QAction *customizeAct = menu.addAction(tr("Customize Toolbar..."));
+    connect(customizeAct, &QAction::triggered, this, [this]() {
+        CustomizeToolbarDialog dlg(this, this);
+        dlg.exec();
+    });
+
+    QAction *resetAct = menu.addAction(tr("Reset Toolbar to Defaults"));
+    connect(resetAct, &QAction::triggered, this, &MainWindow::resetToolbarToDefaults);
+
+    menu.addSeparator();
+
+    QMenu *iconPackMenu = menu.addMenu(tr("Icon Pack"));
+    const QString currentPack = ToolbarIconManager::instance()->currentPackId();
+    const auto &packs = ToolbarIconManager::instance()->availablePacks();
+    for (const auto &pack : packs) {
+        QAction *packAct = iconPackMenu->addAction(pack.displayName);
+        packAct->setCheckable(true);
+        packAct->setChecked(pack.id == currentPack);
+        const QString packId = pack.id;
+        connect(packAct, &QAction::triggered, this, [this, packId]() {
+            ToolbarIconManager::instance()->setPack(packId, ui->mainToolBar);
+        });
+    }
+
+    menu.exec(ui->mainToolBar->mapToGlobal(pos));
+}
+
 ScintillaNext *MainWindow::currentEditor() const
 {
     return dockedEditor->getCurrentEditor();
@@ -1522,16 +1758,12 @@ void MainWindow::newFile() const
     int count = 1;
     forever {
         const QString newFileName = tr("New %1").arg(count);
-        bool canUseName = true;
+        const auto edList = editors();
+        const bool exists = std::any_of(edList.cbegin(), edList.cend(), [&newFileName](const ScintillaNext *editor) {
+            return editor && !editor->isFile() && editor->getName() == newFileName;
+        });
 
-        for (const ScintillaNext *editor : editors()) {
-            if (!editor->isFile() && editor->getName() == newFileName) {
-                canUseName = false;
-                break;
-            }
-        }
-
-        if (canUseName) {
+        if (!exists) {
             ScintillaNext *editor = app->getEditorManager()->createEditor(newFileName);
             editor->grabFocus();
             break;
@@ -1605,6 +1837,7 @@ void MainWindow::openFileList(const QStringList &fileNames)
         qInfo("%s", qUtf8Printable(filePath));
         if (auto *editor = loadOrCreateFile(filePath)) {
             openedEditors.append(editor);
+            LogAutoTimestamp::checkAndApplyLogTimestamp(editor);
         }
     }
 
@@ -1725,8 +1958,8 @@ void MainWindow::closeFile(ScintillaNext *editor)
         return;
     }
 
-    if (pEditor) {
-        pEditor->close();
+    if (auto *target = pEditor.data()) {
+        target->close();
     }
 
     // If the last document was closed, figure out what to do next. Defer to next event loop iteration
@@ -1946,13 +2179,9 @@ bool MainWindow::saveAll()
 
 bool MainWindow::saveAllEditors(const QVector<ScintillaNext *> &editorList)
 {
-    for (ScintillaNext *editor : editorList) {
-        if (!saveFile(editor)){
-            return false;
-        }
-    }
-
-    return true;
+    return std::all_of(editorList.cbegin(), editorList.cend(), [this](ScintillaNext *editor) {
+        return saveFile(editor);
+    });
 }
 
 void MainWindow::exportAsFormat(Converter *converter, const QString &filter)
@@ -2354,19 +2583,19 @@ void MainWindow::updateLanguageBasedUi(const ScintillaNext *editor) const
     }
 
     const QString language_name = editor->languageName;
+    const auto actions = languageActionGroup->actions();
+    const auto it = std::find_if(actions.cbegin(), actions.cend(), [&language_name](const QAction *action) {
+        return action && action->data().toString() == language_name;
+    });
 
-    for (QAction *action : languageActionGroup->actions()) {
-        if (action->data().toString() == language_name) {
-            action->setChecked(true);
-
-            // Found one, so we are completely done
-            return;
-        }
+    if (it != actions.cend()) {
+        (*it)->setChecked(true);
+        return;
     }
 
     // The above loop did not set any action as checked, so make sure they are all unchecked now
-    for (QAction *action : languageActionGroup->actions()) {
-        if (action->isChecked()) {
+    for (QAction *action : actions) {
+        if (action && action->isChecked()) {
             action->setChecked(false);
         }
     }
@@ -2479,6 +2708,10 @@ void MainWindow::activateEditor(ScintillaNext *editor)
 
     checkFileForModification(editor);
     updateGui(editor);
+
+    if (markdownPreviewDock && markdownPreviewDock->isVisible()) {
+        markdownPreviewDock->setActiveEditor(editor);
+    }
 
     emit editorActivated(editor);
 }
@@ -2646,14 +2879,14 @@ MainWindow::UserSaveAction MainWindow::promptForSave(const QVector<ScintillaNext
 
 QStringList MainWindow::currentDockObjectNames() const
 {
+    const auto docks = findChildren<QDockWidget *>();
     QStringList names;
-
-    for (const QDockWidget *dock : findChildren<QDockWidget *>()) {
-        names.append(dock->objectName());
-    }
-
+    names.reserve(docks.size());
+    std::transform(docks.cbegin(), docks.cend(), std::back_inserter(names), [](const QDockWidget *dock) {
+        return dock ? dock->objectName() : QString();
+    });
+    names.removeAll(QString());
     names.sort();
-
     return names;
 }
 
@@ -2668,6 +2901,7 @@ void MainWindow::saveSettings() const
     settings->setValue("MainWindow/dockObjectNames", currentDockObjectNames());
 
     settings->setValue("Editor/ZoomLevel", zoomLevel);
+    settings->setValue("Gui/ToolBar", currentToolbarActionNames());
 }
 
 void MainWindow::restoreSettings()
@@ -2706,6 +2940,8 @@ void MainWindow::restoreSettings()
         ui->mainToolBar->addSeparator();
         ui->mainToolBar->addAction(ui->actionExit);
     }
+
+    ToolbarIconManager::instance()->applyToToolbar(ui->mainToolBar);
 }
 
 ISearchResultsHandler *MainWindow::determineSearchResultsHandler()
@@ -2761,11 +2997,11 @@ void MainWindow::focusIn()
     }
 }
 
-void MainWindow::changeEvent(QEvent *changeEvent)
+void MainWindow::changeEvent(QEvent *event)
 {
-    QMainWindow::changeEvent(changeEvent);
+    QMainWindow::changeEvent(event);
 
-    if (changeEvent->type() == QEvent::ActivationChange) {
+    if (event->type() == QEvent::ActivationChange) {
         qInfo() << "ActivationChange, isActiveWindow() =" << isActiveWindow();
         if (isActiveWindow()) {
             focusIn();
@@ -2788,9 +3024,10 @@ QStringList resolveContextMenuActionNames(const NotepadNextApplication *app, con
     if (const ApplicationSettings *settings = app->getSettings(); settings->contains("Gui/EditorContextMenu")) {
         const QStringList rawNames = settings->value("Gui/EditorContextMenu").toStringList();
         actionNames.clear();
-        for (const QString &rawName : rawNames) {
-            actionNames.append(rawName.trimmed());
-        }
+        actionNames.reserve(rawNames.size());
+        std::transform(rawNames.cbegin(), rawNames.cend(), std::back_inserter(actionNames), [](const QString &rawName) {
+            return rawName.trimmed();
+        });
     }
 
     if (const URLFinder *urlFinder = editor->findChild<URLFinder *>(QString(), Qt::FindDirectChildrenOnly);
@@ -2941,20 +3178,20 @@ void MainWindow::initUpdateCheck()
 #endif
 }
 
-void MainWindow::closeEvent(QCloseEvent *closeEvent)
+void MainWindow::closeEvent(QCloseEvent *event)
 {
     bringWindowToForeground();
 
     if (!checkEditorsBeforeClose(editors())) {
-        closeEvent->ignore();
+        event->ignore();
         return;
     }
 
     emit aboutToClose();
 
-    closeEvent->accept();
+    event->accept();
 
-    QMainWindow::closeEvent(closeEvent);
+    QMainWindow::closeEvent(event);
 }
 
 void MainWindow::dragEnterEvent(QDragEnterEvent *event)

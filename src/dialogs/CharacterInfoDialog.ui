@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CharacterInfoDialog</class>
+ <widget class="QDialog" name="CharacterInfoDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>560</width>
+    <height>620</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Character Information</string>
+  </property>
+  <layout class="QVBoxLayout" name="mainLayout">
+   <item>
+    <layout class="QHBoxLayout" name="headerLayout">
+     <item>
+      <widget class="QFrame" name="glyphFrame">
+       <property name="minimumSize">
+        <size>
+         <width>90</width>
+         <height>90</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>90</width>
+         <height>90</height>
+        </size>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <layout class="QVBoxLayout" name="glyphLayout">
+        <item>
+         <widget class="QLabel" name="labelGlyph">
+          <property name="font">
+           <font>
+            <pointsize>36</pointsize>
+           </font>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+          <property name="text">
+           <string>A</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="titleLayout">
+       <item>
+        <widget class="QLabel" name="labelCharName">
+         <property name="font">
+          <font>
+           <pointsize>13</pointsize>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>LATIN CAPITAL LETTER A</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="labelCodePoint">
+         <property name="font">
+          <font>
+           <pointsize>11</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>U+0041  (Dec: 65,  Oct: 0101)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="labelBlock">
+         <property name="font">
+          <font>
+           <italic>true</italic>
+          </font>
+         </property>
+         <property name="text">
+          <string>Block: Basic Latin</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupClassification">
+     <property name="title">
+      <string>Classification &amp; Properties</string>
+     </property>
+     <layout class="QFormLayout" name="formClassification">
+      <item row="0" column="0">
+       <widget class="QLabel" name="lblCatTitle">
+        <property name="text">
+         <string>General Category:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="labelCategory">
+        <property name="text">
+         <string>Letter, Uppercase (Lu)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="lblScriptTitle">
+        <property name="text">
+         <string>Script:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLabel" name="labelScript">
+        <property name="text">
+         <string>Latin</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="lblDirTitle">
+        <property name="text">
+         <string>Bidirectional Class:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLabel" name="labelDirection">
+        <property name="text">
+         <string>Left to Right (L)</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupEncodings">
+     <property name="title">
+      <string>Encodings &amp; Byte Sequences</string>
+     </property>
+     <layout class="QFormLayout" name="formEncodings">
+      <item row="0" column="0">
+       <widget class="QLabel" name="lblUtf8Title">
+        <property name="text">
+         <string>UTF-8:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="labelUtf8">
+        <property name="text">
+         <string>0x41  (Dec: 65)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="lblUtf16Title">
+        <property name="text">
+         <string>UTF-16:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLabel" name="labelUtf16">
+        <property name="text">
+         <string>0x0041  (Dec: 65)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="lblUtf32Title">
+        <property name="text">
+         <string>UTF-32 (UCS-4):</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLabel" name="labelUtf32">
+        <property name="text">
+         <string>0x00000041</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupEntities">
+     <property name="title">
+      <string>Web Entities &amp; Escape Sequences</string>
+     </property>
+     <layout class="QFormLayout" name="formEntities">
+      <item row="0" column="0">
+       <widget class="QLabel" name="lblHtmlNamedTitle">
+        <property name="text">
+         <string>HTML Named Entity:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="labelHtmlNamed">
+        <property name="text">
+         <string>-</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="lblHtmlDecTitle">
+        <property name="text">
+         <string>HTML Decimal:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLabel" name="labelHtmlDec">
+        <property name="text">
+         <string>&amp;#65;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="lblHtmlHexTitle">
+        <property name="text">
+         <string>HTML Hexadecimal:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLabel" name="labelHtmlHex">
+        <property name="text">
+         <string>&amp;#x41;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="lblCEscapeTitle">
+        <property name="text">
+         <string>C / C++ / Java Escape:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLabel" name="labelCEscape">
+        <property name="text">
+         <string>\u0041</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="lblJsonEscapeTitle">
+        <property name="text">
+         <string>JSON Escape:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLabel" name="labelJsonEscape">
+        <property name="text">
+         <string>\u0041</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="lblCssEscapeTitle">
+        <property name="text">
+         <string>CSS Escape:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QLabel" name="labelCssEscape">
+        <property name="text">
+         <string>\41 </string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0">
+       <widget class="QLabel" name="lblUrlPercentTitle">
+        <property name="text">
+         <string>URL Percent-Encoded:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="1">
+       <widget class="QLabel" name="labelUrlPercent">
+        <property name="text">
+         <string>A</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="actionsLayout">
+     <item>
+      <widget class="QPushButton" name="btnCopyChar">
+       <property name="text">
+        <string>Copy Character</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnCopyCodePoint">
+       <property name="text">
+        <string>Copy Code Point</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnCopyUtf8">
+       <property name="text">
+        <string>Copy UTF-8</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnCopyHtml">
+       <property name="text">
+        <string>Copy HTML Entity</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnClose">
+       <property name="text">
+        <string>Close</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>btnClose</sender>
+   <signal>clicked()</signal>
+   <receiver>CharacterInfoDialog</receiver>
+   <slot>accept()</slot>
+  </connection>
+ </connections>
+</ui>

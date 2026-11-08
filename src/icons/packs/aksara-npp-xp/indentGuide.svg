@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1E3A6D" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+<defs><linearGradient id="xp-grad-indentGuide" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7BA7D9"/><stop offset="45%" stop-color="#3B6EA5"/><stop offset="100%" stop-color="#1E3A6D"/></linearGradient><linearGradient id="xp-hl-indentGuide" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.55"/><stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/></linearGradient></defs>
+<rect x="1" y="1" width="22" height="22" rx="3" fill="url(#xp-grad-indentGuide)" stroke="#1E3A6D" stroke-width="0.8"/>
+<rect x="2.5" y="2.5" width="19" height="9" rx="2.5" fill="url(#xp-hl-indentGuide)" stroke="none"/>
+<path d="M4 4v16" stroke-dasharray="2 2"/><path d="M8 6h12"/><path d="M8 12h12"/><path d="M8 18h12"/>
+</svg>

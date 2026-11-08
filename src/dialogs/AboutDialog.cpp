@@ -334,6 +334,7 @@ void AboutDialog::updateThemeColors() {
                "<li><b>Qt Project:</b> Developed by The Qt Company and the Qt Open Source Community. (<a style='color: %2;' href='https://www.qt.io'>qt.io</a>)</li>"
                "<li><b>Qt Advanced Docking System (QADS):</b> Advanced dock widget management for Qt.</li>"
                "<li><b>NoteSciPad:</b> Contributed modern Scintilla 5.6.7 / Lexilla 5.5.4 integration and multi-instance UI patterns.</li>"
+               "<li><b>SparkNotePad:</b> Invaluable feature donor (v1.3.8) providing inspiration and reference implementations for icon pack suites, toolbar personalization, forensics utilities, and preview workflows.</li>"
                "</ul>"
                "</div>")
                 .arg(txtPri, accentCol));

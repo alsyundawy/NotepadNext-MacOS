@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E95420" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+<defs><radialGradient id="ubuntu-grad-indentGuide" cx="50%" cy="40%" r="60%"><stop offset="0%" stop-color="#FFFFFF"/><stop offset="100%" stop-color="#F2F2F2"/></radialGradient></defs>
+<circle cx="12" cy="12" r="11" fill="url(#ubuntu-grad-indentGuide)" stroke="#00000018" stroke-width="0.8"/>
+<g stroke="#5E2750" stroke-width="0.3" fill="none" opacity="0.3"></g>
+<path d="M4 4v16" stroke-dasharray="2 2"/><path d="M8 6h12"/><path d="M8 12h12"/><path d="M8 18h12"/>
+</svg>

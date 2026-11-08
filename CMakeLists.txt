@@ -6,7 +6,7 @@ project(NotepadNext
     LANGUAGES C CXX
 )
 
-set(APP_VERSION "0.15-07")
+set(APP_VERSION "0.15-08")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 if(APPLE AND NOT CMAKE_OSX_SYSROOT)
     set(CMAKE_OSX_SYSROOT "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk" CACHE PATH "macOS SDK sysroot" FORCE)

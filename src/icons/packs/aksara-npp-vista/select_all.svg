@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.0" stroke-linecap="round" stroke-linejoin="round">
+<defs><linearGradient id="vista-grad-select_all" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8FC3F0"/><stop offset="40%" stop-color="#2E75B6"/><stop offset="60%" stop-color="#1B4F72"/><stop offset="100%" stop-color="#0D2B45"/></linearGradient><linearGradient id="vista-hl-select_all" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.75"/><stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/></linearGradient><linearGradient id="vista-refl-select_all" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.35"/><stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/></linearGradient></defs>
+<rect x="1" y="1" width="22" height="22" rx="5" fill="url(#vista-grad-select_all)" stroke="#0A1F33" stroke-width="0.8"/>
+<rect x="2.5" y="2.5" width="19" height="10" rx="4" fill="url(#vista-hl-select_all)" stroke="none"/>
+<rect x="2.5" y="14" width="19" height="8" rx="4" fill="url(#vista-refl-select_all)" stroke="none"/>
+<rect x="4" y="4" width="16" height="16" rx="2" stroke-dasharray="2 2"/><path d="M8 12l3 3 5-6"/>
+</svg>
