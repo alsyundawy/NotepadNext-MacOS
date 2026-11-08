@@ -75,6 +75,7 @@ DockedEditor::DockedEditor(QWidget *parent) : QObject(parent)
     connect(dockManager, &ads::CDockManager::dockAreaCreated, this, [this](const ads::CDockAreaWidget* DockArea) {
         const auto *titleBar = qobject_cast<const DockedEditorTitleBar *>(DockArea->titleBar());
         connect(titleBar, &DockedEditorTitleBar::doubleClicked, this, &DockedEditor::titleBarDoubleClicked);
+        connect(titleBar, &DockedEditorTitleBar::plusButtonClicked, this, &DockedEditor::newFileRequested);
 
         connect(DockArea->titleBar()->tabBar(), &ads::CDockAreaTabBar::tabMoved, this, [this](int /*from*/, int /*to*/) {
             emit editorOrderChanged();
@@ -219,14 +220,53 @@ void DockedEditor::switchToEditor(const ScintillaNext *editor) const
 
 void DockedEditor::dockWidgetCloseRequested()
 {
-    const auto *dockWidget = qobject_cast<const ads::CDockWidget *>(sender());
+    auto *dockWidget = qobject_cast<ads::CDockWidget *>(sender());
     if (!dockWidget || !dockWidget->widget()) {
         return;
     }
-    auto *editor = qobject_cast<ScintillaNext *>(dockWidget->widget());
-    if (editor) {
+    if (auto *editor = qobject_cast<ScintillaNext *>(dockWidget->widget())) {
         emit editorCloseRequested(editor);
+    } else {
+        dockWidget->closeDockWidget();
     }
+}
+
+ads::CDockWidget *DockedEditor::addTabWidget(QWidget *widget, const QString &title, const QIcon &icon,
+                                             const QString &toolTip)
+{
+    if (!widget) {
+        return nullptr;
+    }
+
+    ads::CDockWidget *dockWidget = dockManager->createDockWidget(title);
+    dockWidget->tabWidget()->setElideMode(Qt::ElideNone);
+    dockWidget->setObjectName(QUuid::createUuid().toString());
+    dockWidget->setWidget(widget);
+    dockWidget->setFeature(ads::CDockWidget::DockWidgetFeature::DockWidgetDeleteOnClose, true);
+    dockWidget->setFeature(ads::CDockWidget::DockWidgetFeature::CustomCloseHandling, true);
+    dockWidget->setFeature(ads::CDockWidget::DockWidgetFeature::DockWidgetFloatable, false);
+
+    if (!icon.isNull()) {
+        dockWidget->tabWidget()->setIcon(icon);
+    }
+
+    if (!toolTip.isEmpty()) {
+        dockWidget->tabWidget()->setToolTip(toolTip);
+    } else {
+        dockWidget->tabWidget()->setToolTip(title);
+    }
+
+    connect(dockWidget, &ads::CDockWidget::closeRequested, this, &DockedEditor::dockWidgetCloseRequested);
+
+    if (ads::CDockAreaWidget *area = currentDockArea()) {
+        dockManager->addDockWidget(ads::CenterDockWidgetArea, dockWidget, area);
+    } else {
+        dockManager->addDockWidget(ads::CenterDockWidgetArea, dockWidget);
+    }
+
+    dockWidget->setAsCurrentTab();
+    dockWidget->raise();
+    return dockWidget;
 }
 
 ads::CDockAreaWidget *DockedEditor::currentDockArea() const

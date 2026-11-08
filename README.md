@@ -45,6 +45,13 @@
 
 > 🇬🇧 **Version 0.15-08 Major Enterprise Upgrade & SparkNotePad Feature Integration:**
 >
+> - ➕ **Tab Bar Plus (+) Button**: Persistent macOS-styled `+` button on the dock tab bar for instantaneous new document creation via click or standard shortcut (`Cmd+N`).
+> - 📑 **Tabbed Markdown & HTML Live Preview (`PreviewTabWidget`)**: Rich tabbed preview with GitHub-grade callouts (`[!NOTE]`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]`, `[!CAUTION]`), DevDocs styling, word count / reading time metrics, dynamic zoom, HTML export, clipboard copy, and browser preview.
+> - 🖱️ **Tab Right-Click Context Menu for `.md` & `.html`**: Contextual actions on open tabs to launch Markdown or HTML preview directly.
+> - 🎨 **Themes Menu Toolbar Icon Packs & 6 Size Tiers**: Full selection of toolbar icon packs (`elegant themes`, `vibrant duotone`, `windows xp`, `notepad++ classic`, `modern ribbon`, `fugue classic`, etc.) and 6 toolbar icon sizes (`16x16`, `20x20`, `24x24`, `32x32`, `48x48`, `64x64`) with active state checkmarks and dynamic toolbar resizing.
+> - 📖 **Help Menu Tabbed Documentation**: Instant access to `DocNote` (`DOCNOTE.md`) and `Changelog` (`CHANGELOG.md`) opened directly in new editor tabs.
+> - ⚙️ **Preferences Dialog Dedicated "Themes & Toolbar" Tab**: Consolidated management for theme styling, dark/light toggle, window opacity, toolbar icon pack selection, and icon sizing with live icon preview.
+> - 💿 **macOS Native Styled DMG Installer**: High-DPI standard and Retina background artwork, custom window geometry (680x440), left app icon, right Applications drop link, curved drag-and-drop indicator, and verified checksums.
 > - 🎨 **38 Icon Pack Personalization Suite (`ToolbarIconManager`)**: Ported a complete suite of 38 icon packs (Modern SVG, Fluent, Material, Classic Notepad++, Aksara variations, Retro Windows 7/Aero, Pixel Fugue) with live runtime switching directly via toolbar right-click context menu.
 > - 🛠️ **Interactive Toolbar Customization (`CustomizeToolbarDialog`)**: Dual-list drag-and-drop customization widget supporting action addition, removal, reordering, separator insertion, and instantaneous toolbar sync.
 > - 📄 **Markdown Safe Live Preview Dock & Export Pipeline (`MarkdownSafePreviewDock`)**: High-performance sandboxed preview dock supporting KaTeX math formulas, Mermaid diagrams, bidirectional scroll synchronization with Scintilla editor, and export to standalone GitHub-styled HTML and vector PDF.

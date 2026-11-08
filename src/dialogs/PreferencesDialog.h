@@ -37,14 +37,17 @@ class PreferencesDialog;
 class Settings;
 class QComboBox;
 class QPushButton;
+class QTabWidget;
+class QLabel;
+class QHBoxLayout;
 
 class PreferencesDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit PreferencesDialog(ApplicationSettings *settings, QWidget *parent = 0);
-    ~PreferencesDialog();
+    explicit PreferencesDialog(ApplicationSettings *settings, QWidget *parent = nullptr);
+    ~PreferencesDialog() override;
 
     void showApplicationRestartRequired() const;
 
@@ -62,10 +65,22 @@ private:
     void MapSettingToGroupBox(QGroupBox *groupBox, Func1 getter, Func2 setter, Func3 notifier) const;
 
     void populateTranslationComboBox();
-    void setupThemeSettings();
+    void setupThemesAndToolbarTab();
+    void setupThemesGroup(QWidget *container);
+    void setupToolbarPacksGroup(QWidget *container);
+    void populateIconPacksComboBox();
+    void updateIconPreview();
 
-    QComboBox *comboBoxTheme = nullptr;
-    QPushButton *btnToggleDarkLight = nullptr;
+    QTabWidget *m_tabWidget{nullptr};
+    QWidget *m_themesAndToolbarWidget{nullptr};
+    QComboBox *comboBoxTheme{nullptr};
+    QPushButton *btnToggleDarkLight{nullptr};
+    QComboBox *comboBoxIconPack{nullptr};
+    QLabel *lblIconPackDescription{nullptr};
+    QComboBox *comboBoxIconSize{nullptr};
+    QWidget *widgetIconPreview{nullptr};
+    QHBoxLayout *layoutIconPreview{nullptr};
+    QList<QLabel *> m_previewLabels;
 };
 
 #endif // PREFERENCESDIALOG_H

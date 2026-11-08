@@ -25,9 +25,12 @@
 #include "ThemeManager.h"
 #include "ThemePaletteData.h"
 #include "MainWindow.h"
+#include "CustomizeToolbarDialog.h"
+#include "features/ToolbarIconManager.h"
 #include "ui_PreferencesDialog.h"
 #include "ScintillaNext.h"
 
+#include <array>
 #include <QButtonGroup>
 #include <QFileDialog>
 #include <QMessageBox>
@@ -35,6 +38,10 @@
 #include <QComboBox>
 #include <QPushButton>
 #include <QAbstractItemView>
+#include <QScrollArea>
+#include <QLabel>
+#include <QTabWidget>
+#include <QToolBar>
 
 
 PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *parent) :
@@ -44,7 +51,21 @@ PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *par
 {
     ui->setupUi(this);
 
-    setupThemeSettings();
+    m_tabWidget = new QTabWidget(this);
+    m_tabWidget->setObjectName(QStringLiteral("preferencesTabWidget"));
+
+    ui->verticalLayout->removeWidget(ui->scrollArea);
+    m_tabWidget->addTab(ui->scrollArea, QIcon(QStringLiteral(":/icons/saved.png")), tr("&General"));
+
+    setupThemesAndToolbarTab();
+
+    if (auto *mainWin = qobject_cast<MainWindow *>(parent)) {
+        auto *toolbarWidget = new CustomizeToolbarWidget(mainWin, this);
+        m_tabWidget->addTab(toolbarWidget, QIcon(QStringLiteral(":/icons/find.png")), tr("&Customize Toolbar"));
+    }
+
+    ui->verticalLayout->insertWidget(0, m_tabWidget);
+
     connect(ThemeManager::instance(), &ThemeManager::themeChanged, this, &PreferencesDialog::updateThemeColors);
     connect(ThemeManager::instance(), &ThemeManager::paletteChanged, this, &PreferencesDialog::updateThemeColors);
 
@@ -222,9 +243,29 @@ void PreferencesDialog::populateTranslationComboBox()
     }
 }
 
-void PreferencesDialog::setupThemeSettings()
+void PreferencesDialog::setupThemesAndToolbarTab()
 {
-    auto *gbxThemes = new QGroupBox(tr("Themes & Visual Styling"), ui->scrollAreaWidgetContents);
+    auto *scrollArea = new QScrollArea(this);
+    scrollArea->setWidgetResizable(true);
+    scrollArea->setFrameShape(QFrame::NoFrame);
+
+    auto *container = new QWidget(scrollArea);
+    auto *mainLayout = new QVBoxLayout(container);
+    mainLayout->setSpacing(14);
+    mainLayout->setContentsMargins(14, 16, 14, 14);
+
+    setupThemesGroup(container);
+    setupToolbarPacksGroup(container);
+    mainLayout->addStretch();
+
+    scrollArea->setWidget(container);
+    m_themesAndToolbarWidget = scrollArea;
+    m_tabWidget->addTab(m_themesAndToolbarWidget, QIcon(QStringLiteral(":/icons/find.png")), tr("&Themes && Toolbar"));
+}
+
+void PreferencesDialog::setupThemesGroup(QWidget *container)
+{
+    auto *gbxThemes = new QGroupBox(tr("Themes & Visual Styling"), container);
     auto *themeLayout = new QFormLayout(gbxThemes);
     themeLayout->setSpacing(10);
     themeLayout->setContentsMargins(14, 16, 14, 14);
@@ -236,7 +277,7 @@ void PreferencesDialog::setupThemeSettings()
         comboBoxTheme->view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     }
     int selectedIdx = 0;
-    QString currentId = ThemeManager::instance()->currentPaletteId();
+    const QString currentId = ThemeManager::instance()->currentPaletteId();
     QString lastFamily;
     for (const auto &pal : kAllThemePalettes) {
         QString family = QString::fromUtf8(pal.family);
@@ -258,7 +299,7 @@ void PreferencesDialog::setupThemeSettings()
         if (index < 0) {
             return;
         }
-        QString themeId = comboBoxTheme->itemData(index).toString();
+        const QString themeId = comboBoxTheme->itemData(index).toString();
         if (themeId.isEmpty()) {
             return;
         }
@@ -274,28 +315,174 @@ void PreferencesDialog::setupThemeSettings()
     connect(btnToggleDarkLight, &QPushButton::clicked, this, [this]() {
         auto *mw = qobject_cast<MainWindow *>(parentWidget());
         ThemeManager::instance()->toggleTheme(mw);
-        QString currentId = ThemeManager::instance()->currentPaletteId();
-        int found = comboBoxTheme->findData(currentId);
+        const QString cur = ThemeManager::instance()->currentPaletteId();
+        const int found = comboBoxTheme->findData(cur);
         if (found >= 0) {
-            QSignalBlocker blocker(comboBoxTheme);
+            const QSignalBlocker blocker(comboBoxTheme);
             comboBoxTheme->setCurrentIndex(found);
         }
     });
     themeRowLayout->addWidget(btnToggleDarkLight);
     themeLayout->addRow(tr("Active Theme:"), themeRowLayout);
 
-    // Insert at the top of scrollAreaWidgetContents layout
-    ui->verticalLayout_4->insertWidget(0, gbxThemes);
+    container->layout()->addWidget(gbxThemes);
+}
+
+void PreferencesDialog::setupToolbarPacksGroup(QWidget *container)
+{
+    auto *gbxToolbarPacks = new QGroupBox(tr("Toolbar Icon Packs & Sizing"), container);
+    auto *toolbarLayout = new QFormLayout(gbxToolbarPacks);
+    toolbarLayout->setSpacing(10);
+    toolbarLayout->setContentsMargins(14, 16, 14, 14);
+
+    // Active Icon Pack Selector
+    comboBoxIconPack = new QComboBox(gbxToolbarPacks);
+    comboBoxIconPack->setMaxVisibleItems(14);
+    if (comboBoxIconPack->view()) {
+        comboBoxIconPack->view()->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    }
+    populateIconPacksComboBox();
+    toolbarLayout->addRow(tr("Active Icon Pack:"), comboBoxIconPack);
+
+    // Pack Description
+    lblIconPackDescription = new QLabel(gbxToolbarPacks);
+    lblIconPackDescription->setWordWrap(true);
+    lblIconPackDescription->setStyleSheet(QStringLiteral("color: gray; font-size: 11px;"));
+    if (const auto *pack = ToolbarIconManager::instance()->findPackById(ToolbarIconManager::instance()->currentPackId())) {
+        lblIconPackDescription->setText(pack->description);
+    }
+    toolbarLayout->addRow(tr("Description:"), lblIconPackDescription);
+
+    connect(comboBoxIconPack, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this](int idx) {
+        if (idx < 0) {
+            return;
+        }
+        const QString packId = comboBoxIconPack->itemData(idx).toString();
+        if (packId.isEmpty()) {
+            return;
+        }
+        const auto *mw = qobject_cast<const MainWindow *>(parentWidget());
+        QToolBar *tb = mw ? mw->findChild<QToolBar *>() : nullptr;
+        ToolbarIconManager::instance()->setPack(packId, tb);
+        if (const auto *pack = ToolbarIconManager::instance()->findPackById(packId); pack && lblIconPackDescription) {
+            const QString desc = pack->description.trimmed().isEmpty()
+                                     ? tr("No description provided for this icon pack.")
+                                     : pack->description;
+            lblIconPackDescription->setText(desc);
+        }
+        updateIconPreview();
+    });
+
+    // Icon Size
+    comboBoxIconSize = new QComboBox(gbxToolbarPacks);
+    struct SizeEntry {
+        QString label;
+        QSize size;
+    };
+    const std::array<SizeEntry, 6> sizes = {{
+        {tr("16 x 16 (Compact)"), QSize(16, 16)},
+        {tr("20 x 20 (Medium)"), QSize(20, 20)},
+        {tr("24 x 24 (Default / Recommended)"), QSize(24, 24)},
+        {tr("32 x 32 (Large / High-DPI)"), QSize(32, 32)},
+        {tr("48 x 48 (Extra Large)"), QSize(48, 48)},
+        {tr("64 x 64 (Ultra High-DPI)"), QSize(64, 64)},
+    }};
+    const QSize currentSize = ToolbarIconManager::instance()->iconSize();
+    int sizeIdx = 2;
+    for (size_t i = 0; i < sizes.size(); ++i) {
+        comboBoxIconSize->addItem(sizes[i].label, QVariant(sizes[i].size));
+        if (sizes[i].size == currentSize) {
+            sizeIdx = static_cast<int>(i);
+        }
+    }
+    comboBoxIconSize->setCurrentIndex(sizeIdx);
+    connect(comboBoxIconSize, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this](int idx) {
+        if (idx < 0) {
+            return;
+        }
+        const QSize size = comboBoxIconSize->itemData(idx).toSize();
+        const auto *mw = qobject_cast<const MainWindow *>(parentWidget());
+        QToolBar *tb = mw ? mw->findChild<QToolBar *>() : nullptr;
+        ToolbarIconManager::instance()->setIconSize(size, tb);
+    });
+    toolbarLayout->addRow(tr("Toolbar Icon Size:"), comboBoxIconSize);
+
+    // Pack Preview Row
+    widgetIconPreview = new QWidget(gbxToolbarPacks);
+    layoutIconPreview = new QHBoxLayout(widgetIconPreview);
+    layoutIconPreview->setContentsMargins(4, 4, 4, 4);
+    layoutIconPreview->setSpacing(8);
+    updateIconPreview();
+    toolbarLayout->addRow(tr("Icon Preview:"), widgetIconPreview);
+
+    container->layout()->addWidget(gbxToolbarPacks);
+}
+
+void PreferencesDialog::populateIconPacksComboBox()
+{
+    if (!comboBoxIconPack) {
+        return;
+    }
+    const QSignalBlocker blocker(comboBoxIconPack);
+    comboBoxIconPack->clear();
+    const auto &packs = ToolbarIconManager::instance()->availablePacks();
+    const QString currentPack = ToolbarIconManager::instance()->currentPackId();
+    int currentIdx = 0;
+    for (int i = 0; i < packs.size(); ++i) {
+        const auto &pack = packs[i];
+        QString label = pack.displayName;
+        if (!pack.isBuiltIn) {
+            label += tr(" [Custom]");
+        }
+        comboBoxIconPack->addItem(label, pack.id);
+        if (pack.id == currentPack) {
+            currentIdx = i;
+        }
+    }
+    comboBoxIconPack->setCurrentIndex(currentIdx);
+    if (const auto *pack = ToolbarIconManager::instance()->findPackById(currentPack); pack && lblIconPackDescription) {
+        lblIconPackDescription->setText(pack->description);
+    }
+}
+
+void PreferencesDialog::updateIconPreview()
+{
+    if (!widgetIconPreview || !layoutIconPreview) {
+        return;
+    }
+
+    const QStringList sampleActions = {
+        QStringLiteral("newFile"), QStringLiteral("openFile"), QStringLiteral("save"),
+        QStringLiteral("cut"),     QStringLiteral("copy"),     QStringLiteral("paste"),
+        QStringLiteral("undo"),    QStringLiteral("redo"),     QStringLiteral("find")
+    };
+
+    if (m_previewLabels.isEmpty()) {
+        for (const auto &act : sampleActions) {
+            auto *lbl = new QLabel(widgetIconPreview);
+            lbl->setFixedSize(24, 24);
+            lbl->setAlignment(Qt::AlignCenter);
+            layoutIconPreview->addWidget(lbl);
+            m_previewLabels.append(lbl);
+        }
+        layoutIconPreview->addStretch();
+    }
+
+    for (int i = 0; i < sampleActions.size() && i < m_previewLabels.size(); ++i) {
+        const QIcon icon = ToolbarIconManager::instance()->actionIcon(sampleActions[i]);
+        m_previewLabels[i]->setPixmap(icon.pixmap(22, 22));
+    }
 }
 
 void PreferencesDialog::updateThemeColors()
 {
     if (comboBoxTheme) {
-        QString currentId = ThemeManager::instance()->currentPaletteId();
-        int found = comboBoxTheme->findData(currentId);
+        const QString currentId = ThemeManager::instance()->currentPaletteId();
+        const int found = comboBoxTheme->findData(currentId);
         if (found >= 0 && comboBoxTheme->currentIndex() != found) {
-            QSignalBlocker blocker(comboBoxTheme);
+            const QSignalBlocker blocker(comboBoxTheme);
             comboBoxTheme->setCurrentIndex(found);
         }
     }
+    updateIconPreview();
 }

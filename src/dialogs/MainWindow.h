@@ -106,6 +106,13 @@ public slots:
     void openFolderAsWorkspaceDialog();
     void setFolderAsWorkspacePath(const QString &dir) const;
 
+    void openPreviewInNewTab(ScintillaNext *editor, bool isHtml);
+    void openInDefaultBrowser(const QString &filePath);
+    void populateTabBarPreviewActions(QMenu *menu, ScintillaNext *editor);
+    void onDocNoteTriggered();
+    void onChangelogTriggered();
+    [[nodiscard]] static QString findDocumentationFilePath(const QString &fileName);
+
     void reloadFile();
 
     void closeCurrentFile();

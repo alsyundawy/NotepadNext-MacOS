@@ -455,6 +455,6 @@ Pemeriksaan menyeluruh dilakukan pada seluruh berkas di `/Users/alsyundawy/Downl
 
 - **Kompilasi Biner**: Selesai via CMake 4.x + Ninja + LLVM 23 + Qt 6.12.0 (Exit code: 0).
 - **Lokal DMG Package**: `build-dmg/NotepadNext-v0.15-08-x64.dmg` terverifikasi via `hdiutil verify` (Checksum VALID).
-- **Integritas Hash**: `bc569a2ff85a6ce5a3b5bccef5dcc6194b547eab5497fe737e2ac3108813d686` dicatat pada `build-dmg/SHA256SUMS` dan `updates.json`.
+- **Integritas Hash**: `d5d039afe1c4c9d511da9738d73b219afc71b98c832cf536266d1962b6433a3a` dicatat pada `build-dmg/SHA256SUMS` dan `updates.json`.
 - **Internasionalisasi (i18n)**: Seluruh 23 berkas katalog `.ts` dan `.qm` disinkronkan melalui `update_translations`.
 - **Status Akhir**: **SELESAI 100% & SIAP DIRILIS**.

@@ -303,7 +303,7 @@
 <context>
     <name>ColorPreviewCallTip</name>
     <message>
-        <location filename="../src/features/ColorPreviewCallTip.cpp" line="405"/>
+        <location filename="../src/features/ColorPreviewCallTip.cpp" line="407"/>
         <source>Pick New Color</source>
         <translation type="unfinished"></translation>
     </message>
@@ -448,6 +448,14 @@
         <location filename="../src/docks/DebugLogDock.ui" line="14"/>
         <source>Debug Log</source>
         <translation>调试日志</translation>
+    </message>
+</context>
+<context>
+    <name>DockedEditorTitleBar</name>
+    <message>
+        <location filename="../src/DockedEditorTitleBar.h" line="39"/>
+        <source>New Document (Cmd+N)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1999,7 +2007,7 @@ Shannon Entropy: %12
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="69"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2189"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2265"/>
         <source>Export As</source>
         <translation>导出为</translation>
     </message>
@@ -2410,19 +2418,19 @@ Shannon Entropy: %12
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1932"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="279"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="284"/>
         <source>Pretty Print XML</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1937"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="299"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="304"/>
         <source>Format JSON</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1942"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="320"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="325"/>
         <source>Minify JSON</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2931,7 +2939,7 @@ Shannon Entropy: %12
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1175"/>
         <location filename="../src/dialogs/MainWindow.ui" line="1178"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="988"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="993"/>
         <source>Start Recording</source>
         <translation>开始录制</translation>
     </message>
@@ -3439,37 +3447,37 @@ Shannon Entropy: %12
         <translation type="unfinished">Remove Consecutive Duplicate Lines</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="640"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="645"/>
         <source>Go to line</source>
         <translation>转跳到行</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="640"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="645"/>
         <source>Line Number (1 - %1)</source>
         <translation>行号（1 - %1）</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="979"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="984"/>
         <source>Stop Recording</source>
         <translation>停止录制</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1161"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1178"/>
         <source>Debug Info</source>
         <translation type="unfinished">Debug Info</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1762"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1838"/>
         <source>New %1</source>
         <translation>新文件 %1</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1827"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1903"/>
         <source>Create File</source>
         <translation>新建文件</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1827"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1903"/>
         <source>&lt;b&gt;%1&lt;/b&gt; does not exist. Do you want to create it?</source>
         <translation>&lt;b&gt;%1&lt;/b&gt; 尚不存在，你想要新建一个吗？</translation>
     </message>
@@ -3482,297 +3490,388 @@ Shannon Entropy: %12
         <translation type="vanished">保存文件</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="299"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="320"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="304"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="325"/>
         <source>JSON Error: %1 (offset %2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="343"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="348"/>
         <source>Emoji &amp; Symbols</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1116"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1121"/>
         <source>Notepad Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1117"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1122"/>
         <source>Cannot reopen unsaved new buffer from disk.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1408"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1428"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1159"/>
+        <source>DocNote</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1163"/>
+        <source>Changelog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1425"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1445"/>
         <source>Theme applied: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1459"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1476"/>
         <source>&amp;Themes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1467"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1484"/>
         <source>Open Theme Switcher...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1478"/>
-        <source>Light Themes Only</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1482"/>
-        <source>Dark Themes Only</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1488"/>
-        <source>Themes by Family</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1501"/>
-        <source>Reset to Default (Light Mode - NotepadNext)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1504"/>
-        <source>Theme reset to default Light Mode (NotepadNext)</source>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1495"/>
+        <source>&amp;Toolbar Icon Packs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.cpp" line="1508"/>
-        <source>Default Dark Mode (Horizon Dark)</source>
+        <source>Toolbar icon pack changed to: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1511"/>
-        <source>Theme set to Dark Mode (Horizon Dark)</source>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1518"/>
+        <source>16 x 16 (Compact)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1515"/>
-        <source>Toggle Dark / Light Mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1520"/>
-        <source>Switched to Dark Mode</source>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1519"/>
+        <source>20 x 20 (Standard / Small)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.cpp" line="1520"/>
-        <source>Switched to Light Mode</source>
+        <source>24 x 24 (Default / Recommended)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1531"/>
-        <source>&amp;Tools</source>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1521"/>
+        <source>32 x 32 (Large / High-DPI)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1522"/>
+        <source>48 x 48 (Extra Large)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1523"/>
+        <source>64 x 64 (Ultra High-DPI)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1526"/>
+        <source>Toolbar &amp;Icon Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.cpp" line="1538"/>
-        <source>Compare Files (Diff)...</source>
+        <source>Toolbar icon size changed to: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.cpp" line="1545"/>
+        <source>Light Themes Only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1549"/>
+        <source>Dark Themes Only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1555"/>
+        <source>Themes by Family</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1577"/>
+        <source>Reset to Default (Light Mode - NotepadNext)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1580"/>
+        <source>Theme reset to default Light Mode (NotepadNext)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1584"/>
+        <source>Default Dark Mode (Horizon Dark)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1587"/>
+        <source>Theme set to Dark Mode (Horizon Dark)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1591"/>
+        <source>Toggle Dark / Light Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1596"/>
+        <source>Switched to Dark Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1596"/>
+        <source>Switched to Light Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1607"/>
+        <source>&amp;Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1614"/>
+        <source>Compare Files (Diff)...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1621"/>
         <source>Document Statistics...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1550"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1626"/>
         <source>Character Information...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1557"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1633"/>
         <source>File Hash &amp; Checksums...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1562"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1638"/>
         <source>Generate Hash Digest...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1569"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1706"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1645"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1782"/>
         <source>Customize Toolbar...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1712"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1788"/>
         <source>Reset Toolbar to Defaults</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1717"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1793"/>
         <source>Icon Pack</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1909"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1985"/>
         <source>Open Folder as Workspace</source>
         <translation>打开文件夹作为工作区</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1933"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2806"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2009"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2882"/>
         <source>Reload File</source>
         <translation>重新加载文件</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1933"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2009"/>
         <source>Are you sure you want to reload &lt;b&gt;%1&lt;/b&gt;? Any unsaved changes will be lost.</source>
         <translation>你确定要重新加载 &lt;b&gt;%1&lt;/b&gt;？任何未保存的修改都会丢失。</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2149"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2225"/>
         <source>Save a Copy As</source>
         <translation>副本另存为</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2230"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2246"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2306"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2322"/>
         <source>Rename</source>
         <translation>重命名</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2246"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2322"/>
         <source>Name:</source>
         <translation>宏名：</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2268"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2344"/>
         <source>Delete File</source>
         <translation>删除文件</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2268"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2344"/>
         <source>Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</source>
         <translation>你确定要将 &lt;b&gt;%1&lt;/b&gt; 移至回收站？</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2278"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2354"/>
         <source>Error Deleting File</source>
         <translation>删除文件时出错</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2278"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2354"/>
         <source>Something went wrong deleting &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>删除  &lt;b&gt;%1&lt;/b&gt; 时出错了？</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2490"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2566"/>
         <source>Administrator</source>
         <translation type="unfinished">Administrator</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2799"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2875"/>
         <source>&lt;b&gt;%1&lt;/b&gt; has been modified by another program. Do you want to reload it?</source>
         <translation type="unfinished">&lt;b&gt;%1&lt;/b&gt; has been modified by another program. Do you want to reload it?</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2802"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2878"/>
         <source>&lt;br&gt;&lt;br&gt;&lt;b&gt;Warning:&lt;/b&gt; you have unsaved changes in this tab. Reloading will discard them permanently.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2832"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2908"/>
         <source>Read error</source>
         <translation type="unfinished">Read error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2833"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2909"/>
         <source>Write error</source>
         <translation type="unfinished">Write error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2834"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2910"/>
         <source>Fatal error</source>
         <translation type="unfinished">Fatal error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2835"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2911"/>
         <source>Resource error</source>
         <translation type="unfinished">Resource error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2836"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2912"/>
         <source>Open error</source>
         <translation type="unfinished">Open error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2837"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2913"/>
         <source>Abort error</source>
         <translation type="unfinished">Abort error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2838"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2914"/>
         <source>Timeout error</source>
         <translation type="unfinished">Timeout error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2839"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2915"/>
         <source>Unspecified error</source>
         <translation type="unfinished">Unspecified error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2840"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2916"/>
         <source>Remove error</source>
         <translation type="unfinished">Remove error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2841"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2917"/>
         <source>Rename error</source>
         <translation type="unfinished">Rename error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2842"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2918"/>
         <source>Position error</source>
         <translation type="unfinished">Position error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2843"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2919"/>
         <source>Resize error</source>
         <translation type="unfinished">Resize error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2844"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2920"/>
         <source>Permissions error</source>
         <translation type="unfinished">Permissions error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2845"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2921"/>
         <source>Copy error</source>
         <translation type="unfinished">Copy error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2846"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2922"/>
         <source>Unknown error (%1)</source>
         <translation type="unfinished">Unknown error (%1)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2849"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2925"/>
         <source>Error Saving File</source>
         <translation>保存文件时出错</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2850"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2926"/>
         <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
         <translation>保存 &lt;b&gt;%1&lt;/b&gt; 时发生了错误&lt;br&gt;&lt;br&gt;错误：%2</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2855"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2931"/>
         <source>Zoom: %1%</source>
         <translation type="unfinished">Zoom: %1%</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="3478"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="3411"/>
+        <source>Preview Markdown in New Tab</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.cpp" line="3417"/>
+        <source>Preview HTML in New Tab</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.cpp" line="3423"/>
+        <source>Preview in Default Browser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.cpp" line="3469"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="3480"/>
+        <source>Documentation Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.cpp" line="3470"/>
+        <source>Unable to locate DOCNOTE.md on disk or in application resources.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.cpp" line="3481"/>
+        <source>Unable to locate CHANGELOG.md on disk or in application resources.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/MainWindow.cpp" line="3668"/>
         <source>Show / Hide Notepad Next</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4044,7 +4143,7 @@ Only http, https, and mailto URLs are permitted in HTML &amp; Markdown Preview (
     </message>
     <message>
         <location filename="../src/dialogs/PreferencesDialog.ui" line="238"/>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="146"/>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="167"/>
         <source>Default Directory</source>
         <translation type="unfinished">Default Directory</translation>
     </message>
@@ -4074,68 +4173,250 @@ Only http, https, and mailto URLs are permitted in HTML &amp; Markdown Preview (
         <translation type="unfinished">An application restart is required to apply certain settings.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="69"/>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="58"/>
+        <source>&amp;General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="64"/>
+        <source>&amp;Customize Toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="90"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="69"/>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="90"/>
         <source>This feature is experimental and it should not be considered safe for critically important work. It may lead to possible data loss. Use at your own risk.</source>
         <translation>本功能是实验性的。对于关键性的重要工作开启本功能并不安全，可能导致数据丢失，使用时风险自负。</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="98"/>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="119"/>
         <source>System Default</source>
         <translation type="unfinished">System Default</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="99"/>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="120"/>
         <source>Windows (CR LF)</source>
         <translation>Windows (CR LF)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="100"/>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="121"/>
         <source>Linux (LF)</source>
         <translation type="unfinished">Linux (LF)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="101"/>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="122"/>
         <source>Macintosh (CR)</source>
         <translation>Macintosh (CR)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="208"/>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="229"/>
         <source>&lt;System Default&gt;</source>
         <translation type="unfinished">&lt;System Default&gt;</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="227"/>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="263"/>
+        <source>&amp;Themes &amp;&amp; Toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="268"/>
         <source>Themes &amp; Visual Styling</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="250"/>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="291"/>
         <source>Dark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="250"/>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="291"/>
         <source>Light</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="272"/>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="313"/>
         <source>Toggle Dark/Light</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="273"/>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="314"/>
         <source>Quickly switch between active dark and light modes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="285"/>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="326"/>
         <source>Active Theme:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="333"/>
+        <source>Toolbar Icon Packs &amp; Sizing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="345"/>
+        <source>Active Icon Pack:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="354"/>
+        <source>Description:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="369"/>
+        <source>No description provided for this icon pack.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="383"/>
+        <source>16 x 16 (Compact)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="384"/>
+        <source>20 x 20 (Medium)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="385"/>
+        <source>24 x 24 (Default / Recommended)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="386"/>
+        <source>32 x 32 (Large / High-DPI)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="387"/>
+        <source>48 x 48 (Extra Large)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="388"/>
+        <source>64 x 64 (Ultra High-DPI)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="408"/>
+        <source>Toolbar Icon Size:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="416"/>
+        <source>Icon Preview:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="435"/>
+        <source> [Custom]</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PreviewTabWidget</name>
+    <message>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="84"/>
+        <source>Preview HTML - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="84"/>
+        <source>Preview Markdown - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="86"/>
+        <source>Preview HTML</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="86"/>
+        <source>Preview Markdown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="110"/>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="474"/>
+        <source>Untitled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="117"/>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="371"/>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="389"/>
+        <source>0 words • 0 min read</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="126"/>
+        <source>Refresh Preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="136"/>
+        <source>Zoom Out</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="144"/>
+        <source>Reset Zoom (100%)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="155"/>
+        <source>Zoom In</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="165"/>
+        <source>Copy Rendered HTML</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="175"/>
+        <source>Export as Standalone HTML File...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="185"/>
+        <source>Open in Default Web Browser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="369"/>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="652"/>
+        <source>(Editor Closed)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="394"/>
+        <source>%1 words • %2 min read</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="459"/>
+        <source>COPIED!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="482"/>
+        <source>Export HTML Document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="483"/>
+        <source>HTML Documents (*.html *.htm);;All Files (*)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/PreviewTabWidget.cpp" line="614"/>
+        <source>NotepadNext Preview</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

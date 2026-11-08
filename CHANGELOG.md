@@ -9,6 +9,36 @@ Format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) a
 
 ### 🚀 Major Feature Integration & Productivity Innovations / Integrasi Fitur Utama & Inovasi Produktivitas
 
+- 🇬🇧 **Tab Bar Plus (+) Button & Tab Ergonomics**:
+  Added a persistent `+` tool button on the dock tab bar (`DockedEditorTitleBar`) with macOS styling and hover/pressed states, allowing users to quickly open a new document tab with a single click or standard shortcut (`Cmd+N`).
+- 🇮🇩 **Tombol Tambah Tab (+) & Ergonomi Tab**:
+  Menambahkan tombol `+` persisten pada tab bar editor (`DockedEditorTitleBar`) dengan estetika macOS asli dan status hover/pressed, memungkinkan pembuatan tab dokumen baru secara instan melalui satu klik atau pintasan standar (`Cmd+N`).
+
+- 🇬🇧 **Tabbed Markdown & HTML Live Preview (`PreviewTabWidget`) & Tab Context Menu**:
+  Introduced tabbed live preview for Markdown and HTML documents with GitHub-grade callouts (`[!NOTE]`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]`, `[!CAUTION]`), devdocs typography, word and reading time metrics, dynamic zoom, HTML export, clipboard copy, and browser preview. Added tab right-click context menu actions to launch Markdown and HTML previews directly from open `.md`, `.markdown`, and `.html` files.
+- 🇮🇩 **Pratinjau Tab Markdown & HTML (`PreviewTabWidget`) & Menu Konteks Tab**:
+  Menghadirkan pratinjau tab interaktif untuk dokumen Markdown dan HTML dengan kotak info bergaya GitHub (`[!NOTE]`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]`, `[!CAUTION]`), tipografi devdocs, metrik jumlah kata dan estimasi waktu baca, zoom dinamis, ekspor HTML, salin ke clipboard, dan pratinjau di browser. Menambahkan menu konteks klik-kanan tab untuk membuka pratinjau langsung dari berkas `.md`, `.markdown`, dan `.html`.
+
+- 🇬🇧 **Themes Menu Icon Pack & 6-Tier Size Configuration**:
+  Expanded the Themes menu to include full selection of toolbar icon packs (`elegant themes`, `vibrant duotone`, `windows xp`, `notepad++ classic`, `modern ribbon`, `fugue classic`, etc.) and 6 toolbar icon sizes (`16x16`, `20x20`, `24x24`, `32x32`, `48x48`, `64x64`) with active state checkmarks and dynamic toolbar resizing.
+- 🇮🇩 **Konfigurasi Icon Pack & 6 Ukuran Ikon pada Menu Themes**:
+  Memperluas menu Themes dengan submenu pemilihan paket ikon toolbar (`elegant themes`, `vibrant duotone`, `windows xp`, `notepad++ classic`, `modern ribbon`, `fugue classic`, dll.) serta 6 tingkat ukuran ikon toolbar (`16x16`, `20x20`, `24x24`, `32x32`, `48x48`, `64x64`) lengkap dengan tanda centang status aktif dan pembaruan visual toolbar seketika.
+
+- 🇬🇧 **Help Menu Tabbed Documentation (`DocNote` & `Changelog`)**:
+  Added `DocNote` and `Changelog` actions under the Help menu that resolve and display `DOCNOTE.md` and `CHANGELOG.md` directly inside dedicated editor tabs.
+- 🇮🇩 **Dokumentasi Terintegrasi pada Menu Help (`DocNote` & `Changelog`)**:
+  Menambahkan aksi `DocNote` dan `Changelog` pada menu Help yang secara otomatis membuka berkas `DOCNOTE.md` dan `CHANGELOG.md` langsung di dalam tab editor.
+
+- 🇬🇧 **Preferences Dialog "Themes & Toolbar" Dedicated Tab**:
+  Restructured the Preferences dialog into a clean tabbed layout, relocating theme styling, dark/light toggle, toolbar icon pack selection, and toolbar icon sizing into a dedicated **Themes & Toolbar** tab with live icon preview.
+- 🇮🇩 **Tab Khusus "Themes & Toolbar" pada Dialog Preferensi**:
+  Merestrukturisasi dialog preferensi dengan antarmuka bertab yang rapi, memindahkan pengaturan tema, toggle mode gelap/terang, pemilihan paket ikon, dan penyesuaian ukuran ikon ke dalam tab khusus **Themes & Toolbar** lengkap dengan pratinjau ikon langsung.
+
+- 🇬🇧 **macOS Native Styled DMG Installer Presentation**:
+  Engineered custom packaging pipeline (`scripts/generate_dmg_background.py` & `scripts/package-dmg.sh`) producing high-DPI standard and Retina background assets, custom window geometry (680x440), left NotepadNext app slot, right `/Applications` link, curved drag-and-drop indicator, volume icon, and verified disk image checksums.
+- 🇮🇩 **Presentasi Installer DMG Bergaya Native macOS**:
+  Merancang pipeline pembuatan DMG kustom (`scripts/generate_dmg_background.py` & `scripts/package-dmg.sh`) yang menghasilkan aset latar belakang resolusi tinggi (standard & Retina), geometri jendela (680x440), slot aplikasi NotepadNext di kiri, tautan `/Applications` di kanan, indikator drag-and-drop melengkung, ikon volume, dan verifikasi checksum citra disk (`hdiutil verify`).
+
 - 🇬🇧 **38 Icon Pack Personalization Suite & Toolbar Management (`ToolbarIconManager`)**:
   Integrated a comprehensive suite of 38 distinct icon packs (Modern SVG, Fluent, Material, Classic Notepad++, Aksara variations, Retro Windows 7/Aero, and Pixel styles) ported with zero overhead. Added dynamic runtime icon switching directly via toolbar right-click context menu, persistent settings integration, and support for SVG/PNG icon asset scaling.
 - 🇮🇩 **Suite Personalisasi 38 Icon Pack & Manajemen Toolbar (`ToolbarIconManager`)**:

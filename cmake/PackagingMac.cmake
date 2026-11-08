@@ -29,6 +29,8 @@ install(TARGETS NotepadNext
 )
 
 install(FILES ${APP_ICON_MACOS}
+    ${CMAKE_SOURCE_DIR}/DOCNOTE.md
+    ${CMAKE_SOURCE_DIR}/CHANGELOG.md
     DESTINATION NotepadNext.app/Contents/Resources
 )
 
@@ -99,11 +101,7 @@ if(MAC_DMG_LEGACY_NAME)
         ${PRUNE_UNUSED_QT_FILES}
         COMMAND /bin/sync
         COMMAND /bin/sleep 2
-        COMMAND ${HDIUTIL_EXECUTABLE} create
-            -volname "NotepadNext"
-            -srcfolder ${INSTALL_DIR}/NotepadNext.app
-            -ov -format UDBZ
-            ${CMAKE_BINARY_DIR}/${MAC_DMG_NAME}
+        COMMAND /usr/local/bin/bash ${CMAKE_SOURCE_DIR}/scripts/package-dmg.sh ${INSTALL_DIR}/NotepadNext.app ${CMAKE_BINARY_DIR}/${MAC_DMG_NAME} NotepadNext
         COMMAND ${CMAKE_COMMAND} -E copy
             ${CMAKE_BINARY_DIR}/${MAC_DMG_NAME}
             ${CMAKE_BINARY_DIR}/${MAC_DMG_LEGACY_NAME}
@@ -116,11 +114,7 @@ else()
         ${PRUNE_UNUSED_QT_FILES}
         COMMAND /bin/sync
         COMMAND /bin/sleep 2
-        COMMAND ${HDIUTIL_EXECUTABLE} create
-            -volname "NotepadNext"
-            -srcfolder ${INSTALL_DIR}/NotepadNext.app
-            -ov -format UDBZ
-            ${CMAKE_BINARY_DIR}/${MAC_DMG_NAME}
+        COMMAND /usr/local/bin/bash ${CMAKE_SOURCE_DIR}/scripts/package-dmg.sh ${INSTALL_DIR}/NotepadNext.app ${CMAKE_BINARY_DIR}/${MAC_DMG_NAME} NotepadNext
         DEPENDS install_local
     )
 endif()

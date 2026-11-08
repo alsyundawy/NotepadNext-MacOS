@@ -37,6 +37,10 @@
 #include "SessionManager.h"
 #include "UndoAction.h"
 #include "ui_MainWindow.h"
+#include "widgets/PreviewTabWidget.h"
+#include "features/ToolbarIconManager.h"
+
+#include <QDesktopServices>
 
 #include <QFileDialog>
 #include <QMessageBox>
@@ -162,6 +166,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) : // NOSONAR
     connect(dockedEditor, &DockedEditor::editorActivated, this, &MainWindow::activateEditor);
     connect(dockedEditor, &DockedEditor::contextMenuRequestedForEditor, this, &MainWindow::tabBarRightClicked);
     connect(dockedEditor, &DockedEditor::titleBarDoubleClicked, this, &MainWindow::newFile);
+    connect(dockedEditor, &DockedEditor::newFileRequested, this, &MainWindow::newFile);
 
     // React immediately (instead of only on tab-switch/window-focus) when an
     // open file is changed by another program - but only if NotepadNext is
@@ -1151,6 +1156,18 @@ MainWindow::MainWindow(NotepadNextApplication *app) : // NOSONAR
     ui->actionAboutQt->setIcon(QPixmap(QLatin1String(":/qt-project.org/qmessagebox/images/qtlogo-64.png")));
     connect(ui->actionAboutQt, &QAction::triggered, &QApplication::aboutQt);
 
+    auto *actionDocNote = new QAction(tr("DocNote"), this);
+    actionDocNote->setObjectName(QStringLiteral("actionDocNote"));
+    connect(actionDocNote, &QAction::triggered, this, &MainWindow::onDocNoteTriggered);
+
+    auto *actionChangelog = new QAction(tr("Changelog"), this);
+    actionChangelog->setObjectName(QStringLiteral("actionChangelog"));
+    connect(actionChangelog, &QAction::triggered, this, &MainWindow::onChangelogTriggered);
+
+    ui->menuHelp->insertAction(ui->actionAboutNotepadNext, actionDocNote);
+    ui->menuHelp->insertAction(ui->actionAboutNotepadNext, actionChangelog);
+    ui->menuHelp->insertSeparator(ui->actionAboutNotepadNext);
+
     ui->actionAboutNotepadNext->setShortcut(QKeySequence::HelpContents);
     connect(ui->actionAboutNotepadNext, &QAction::triggered, this, [this]() {
         AboutDialog dlg(this);
@@ -1474,25 +1491,84 @@ void MainWindow::setupThemeMenu()
 
     menuTheme->addSeparator();
 
-    // 2. Light Themes Only (Submenu)
+    // 2. Toolbar Icon Packs Submenu
+    QMenu *menuPacks = menuTheme->addMenu(tr("&Toolbar Icon Packs"));
+    auto *packsGroup = new QActionGroup(this);
+    packsGroup->setExclusive(true);
+    const auto &packs = ToolbarIconManager::instance()->availablePacks();
+    const QString currentPack = ToolbarIconManager::instance()->currentPackId();
+    for (const auto &pack : packs) {
+        auto *act = menuPacks->addAction(pack.displayName);
+        act->setCheckable(true);
+        act->setChecked(pack.id == currentPack);
+        act->setData(pack.id);
+        packsGroup->addAction(act);
+        connect(act, &QAction::triggered, this, [this, pack] {
+            ToolbarIconManager::instance()->setPack(pack.id, ui->mainToolBar);
+            ui->statusBar->showMessage(tr("Toolbar icon pack changed to: %1").arg(pack.displayName), 3000);
+        });
+    }
+
+    // 3. Toolbar Icon Size Submenu
+    struct IconSizeOption {
+        QString label;
+        QSize size;
+    };
+    const std::array<IconSizeOption, 6> sizes = {{
+        {tr("16 x 16 (Compact)"), QSize(16, 16)},
+        {tr("20 x 20 (Standard / Small)"), QSize(20, 20)},
+        {tr("24 x 24 (Default / Recommended)"), QSize(24, 24)},
+        {tr("32 x 32 (Large / High-DPI)"), QSize(32, 32)},
+        {tr("48 x 48 (Extra Large)"), QSize(48, 48)},
+        {tr("64 x 64 (Ultra High-DPI)"), QSize(64, 64)},
+    }};
+
+    QMenu *menuSizes = menuTheme->addMenu(tr("Toolbar &Icon Size"));
+    auto *sizesGroup = new QActionGroup(this);
+    sizesGroup->setExclusive(true);
+    const QSize currentSize = ToolbarIconManager::instance()->iconSize();
+    for (const auto &s : sizes) {
+        auto *act = menuSizes->addAction(s.label);
+        act->setCheckable(true);
+        act->setChecked(s.size == currentSize);
+        act->setData(s.size);
+        sizesGroup->addAction(act);
+        connect(act, &QAction::triggered, this, [this, s] {
+            ToolbarIconManager::instance()->setIconSize(s.size, ui->mainToolBar);
+            ui->statusBar->showMessage(tr("Toolbar icon size changed to: %1").arg(s.label), 3000);
+        });
+    }
+
+    menuTheme->addSeparator();
+
+    // 4. Light Themes Only (Submenu)
     QMenu *menuLightOnly = menuTheme->addMenu(tr("Light Themes Only"));
     populateThemeSubmenu(menuLightOnly, getThemesByDarkMode(false), this);
 
-    // 3. Dark Themes Only (Submenu)
+    // 5. Dark Themes Only (Submenu)
     QMenu *menuDarkOnly = menuTheme->addMenu(tr("Dark Themes Only"));
     populateThemeSubmenu(menuDarkOnly, getThemesByDarkMode(true), this);
 
     menuTheme->addSeparator();
 
-    // 4. All 25 Families grouped neatly in a dedicated Submenu
+    // 6. All 25 Families grouped neatly in a dedicated Submenu
     QMenu *menuFamilies = menuTheme->addMenu(tr("Themes by Family"));
     populateThemeFamilySubmenus(menuFamilies, this);
 
-    connect(menuTheme, &QMenu::aboutToShow, this, [menuLightOnly, menuDarkOnly, menuFamilies]() {
+    connect(menuTheme, &QMenu::aboutToShow, this, [menuLightOnly, menuDarkOnly, menuFamilies, menuPacks, menuSizes]() {
         const QString curId = ThemeManager::instance()->currentPaletteId();
         updateThemeMenuChecks(menuLightOnly, curId);
         updateThemeMenuChecks(menuDarkOnly, curId);
         updateThemeMenuChecks(menuFamilies, curId);
+
+        const QString activePack = ToolbarIconManager::instance()->currentPackId();
+        for (auto *act : menuPacks->actions()) {
+            act->setChecked(act->data().toString() == activePack);
+        }
+        const QSize activeSize = ToolbarIconManager::instance()->iconSize();
+        for (auto *act : menuSizes->actions()) {
+            act->setChecked(act->data().toSize() == activeSize);
+        }
     });
 
     menuTheme->addSeparator();
@@ -3313,7 +3389,121 @@ void MainWindow::tabBarRightClicked(const ScintillaNext *editor)
         actionNames = settings->value("Gui/TabBarContextMenu").toStringList();
     }
 
-    buildMenu(actionNames)->popup(QCursor::pos());
+    auto *menu = buildMenu(actionNames);
+    populateTabBarPreviewActions(menu, const_cast<ScintillaNext *>(editor));
+    menu->popup(QCursor::pos());
+}
+
+void MainWindow::populateTabBarPreviewActions(QMenu *menu, ScintillaNext *editor)
+{
+    if (!editor || !editor->isFile()) {
+        return;
+    }
+    const QString ext = editor->getFileInfo().suffix().toLower();
+    const bool isMd = (ext == QStringLiteral("md") || ext == QStringLiteral("markdown"));
+    const bool isHtml = (ext == QStringLiteral("html") || ext == QStringLiteral("htm") || ext == QStringLiteral("xhtml"));
+    if (!isMd && !isHtml) {
+        return;
+    }
+
+    menu->addSeparator();
+    if (isMd) {
+        auto *actPreviewMd = menu->addAction(QIcon(QStringLiteral(":/icons/find.png")), tr("Preview Markdown in New Tab"));
+        actPreviewMd->setObjectName(QStringLiteral("previewMarkdown"));
+        connect(actPreviewMd, &QAction::triggered, this, [this, editor] {
+            openPreviewInNewTab(editor, false);
+        });
+    } else if (isHtml) {
+        auto *actPreviewHtml = menu->addAction(QIcon(QStringLiteral(":/icons/find.png")), tr("Preview HTML in New Tab"));
+        actPreviewHtml->setObjectName(QStringLiteral("previewHtml"));
+        connect(actPreviewHtml, &QAction::triggered, this, [this, editor] {
+            openPreviewInNewTab(editor, true);
+        });
+
+        auto *actPreviewBrowser = menu->addAction(QIcon(QStringLiteral(":/icons/openFile.png")), tr("Preview in Default Browser"));
+        actPreviewBrowser->setObjectName(QStringLiteral("previewHtmlInBrowser"));
+        connect(actPreviewBrowser, &QAction::triggered, this, [this, editor] {
+            if (editor->isFile() && editor->getFileInfo().exists()) {
+                openInDefaultBrowser(editor->getFileInfo().absoluteFilePath());
+            } else {
+                openPreviewInNewTab(editor, true);
+            }
+        });
+    }
+}
+
+void MainWindow::openPreviewInNewTab(ScintillaNext *editor, bool isHtml)
+{
+    if (!editor) {
+        return;
+    }
+
+    auto *previewWidget = new PreviewTabWidget(editor, isHtml, this);
+    const QString title = previewWidget->documentTitle();
+    const auto icon = QIcon(isHtml ? QStringLiteral(":/icons/openFile.png") : QStringLiteral(":/icons/find.png"));
+    const QString toolTip = editor->isFile() ? editor->getFilePath() : editor->getName();
+
+    ads::CDockWidget *dockWidget = dockedEditor->addTabWidget(previewWidget, title, icon, toolTip);
+    if (dockWidget) {
+        connect(previewWidget, &PreviewTabWidget::titleChanged, dockWidget, [dockWidget](const QString &newTitle) {
+            dockWidget->setWindowTitle(newTitle);
+        });
+        connect(previewWidget, &PreviewTabWidget::closeRequested, dockWidget, &ads::CDockWidget::closeDockWidget);
+    }
+}
+
+void MainWindow::openInDefaultBrowser(const QString &filePath)
+{
+    if (filePath.isEmpty()) {
+        return;
+    }
+    QDesktopServices::openUrl(QUrl::fromLocalFile(filePath));
+}
+
+void MainWindow::onDocNoteTriggered()
+{
+    const QString path = findDocumentationFilePath(QStringLiteral("DOCNOTE.md"));
+    if (!path.isEmpty() && QFile::exists(path)) {
+        openFile(path);
+    } else {
+        QMessageBox::warning(this, tr("Documentation Error"),
+                             tr("Unable to locate DOCNOTE.md on disk or in application resources."));
+    }
+}
+
+void MainWindow::onChangelogTriggered()
+{
+    const QString path = findDocumentationFilePath(QStringLiteral("CHANGELOG.md"));
+    if (!path.isEmpty() && QFile::exists(path)) {
+        openFile(path);
+    } else {
+        QMessageBox::warning(this, tr("Documentation Error"),
+                             tr("Unable to locate CHANGELOG.md on disk or in application resources."));
+    }
+}
+
+QString MainWindow::findDocumentationFilePath(const QString &fileName)
+{
+    const QString appDir = QCoreApplication::applicationDirPath();
+    const QStringList candidates = {
+        appDir + "/../Resources/" + fileName,
+        appDir + "/../Resources/doc/" + fileName,
+        appDir + "/" + fileName,
+        appDir + "/doc/" + fileName,
+        appDir + "/../" + fileName,
+        appDir + "/../../" + fileName,
+        appDir + "/../../../" + fileName,
+        appDir + "/../../../../" + fileName,
+        QDir::currentPath() + "/" + fileName,
+        "/usr/local/share/doc/NotepadNext/" + fileName,
+    };
+
+    if (const auto it = std::ranges::find_if(candidates, [](const QString &p) { return QFile::exists(p); });
+        it != candidates.cend()) {
+        return QFileInfo(*it).canonicalFilePath();
+    }
+
+    return QString();
 }
 
 void MainWindow::languageMenuTriggered() const

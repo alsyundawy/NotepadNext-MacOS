@@ -49,6 +49,8 @@ public:
 
     int count() const;
 
+    ads::CDockWidget *addTabWidget(QWidget *widget, const QString &title, const QIcon &icon = QIcon(), const QString &toolTip = QString());
+
     void splitToRight(const ScintillaNext *editor);
     void splitToBottom(const ScintillaNext *editor);
 
@@ -69,6 +71,7 @@ signals:
 
     void contextMenuRequestedForEditor(ScintillaNext *editor);
     void titleBarDoubleClicked();
+    void newFileRequested();
 };
 
 #endif // DOCKEDEDITOR_H
