@@ -16,4 +16,5 @@ NotepadNext-MacOS **v0.15-02** hardens automation pipelines, eliminates token le
 
 1. **CI Security Hardening**: Restriced GitHub token permissions and secured release workflows.
 2. **Translation Pipeline Fix**: Addressed identity issues in `lupdate.yml`.
-3. **Local DMG Build & Verification**: Built `NotepadNext-v0.15-02-x64.dmg` locally and verified with Apple `hdiutil verify`.
+3. **Local DMG Build & Verification**: Built `NotepadNext-MacOS-0.15-02-bcfba4f.dmg` locally and verified with Apple `hdiutil verify`.
+4. **Linter & Code Quality Hardening**: Resolved variable shadowing in `NppImporter.cpp`, modernized algorithms to `std::transform`, cleaned Python scripts per ruff, and synchronized `.clang-tidy`.

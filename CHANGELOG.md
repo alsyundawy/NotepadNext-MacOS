@@ -15,5 +15,7 @@ Format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) a
 - 🇮🇩 **Sanitasi Identitas Bot Terjemahan**: Menstandarkan identitas committer git dan target push pada workflow pembaruan terjemahan `lupdate.yml`.
 - 🇬🇧 **Canonical DMG Release Deployment**: Configured release pipeline to upload canonical DMG artifacts per architecture using clean Qt builds.
 - 🇮🇩 **Distribusi DMG Kanonikal**: Mengonfigurasi alur rilis untuk mengunggah artefak DMG kanonikal per arsitektur dengan build Qt yang bersih.
-- 🇬🇧 **Local DMG Build & Verification**: Successfully built and cryptographically verified native macOS DMG (`NotepadNext-v0.15-02-x64.dmg`) locally with `hdiutil verify`.
-- 🇮🇩 **Build & Verifikasi DMG Lokal**: Berhasil mengompilasi dan memverifikasi integritas berkas DMG macOS (`NotepadNext-v0.15-02-x64.dmg`) secara lokal dengan `hdiutil verify`.
+- 🇬🇧 **Local DMG Build & Verification**: Successfully built and cryptographically verified native macOS DMG (`NotepadNext-MacOS-0.15-02-bcfba4f.dmg`) locally with `hdiutil verify`.
+- 🇮🇩 **Build & Verifikasi DMG Lokal**: Berhasil mengompilasi dan memverifikasi integritas berkas DMG macOS (`NotepadNext-MacOS-0.15-02-bcfba4f.dmg`) secara lokal dengan `hdiutil verify`.
+- 🇬🇧 **Code Quality & Linter Hardening**: Resolved variable shadowing in `NppImporter.cpp`, modernized loops using `std::transform`, cleaned Python scripts per ruff, and synchronized `.clang-tidy`.
+- 🇮🇩 **Peningkatan Kualitas Kode & Linter**: Memperbaiki variable shadowing pada `NppImporter.cpp`, memodernisasi loop menggunakan `std::transform`, membersihkan diagnostik ruff Python, dan menyinkronkan `.clang-tidy`.
