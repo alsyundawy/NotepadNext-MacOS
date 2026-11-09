@@ -7,9 +7,9 @@ _SCINTILLA_SCRIPTS_DIR = _REPO_ROOT / "thirdparty" / "scintilla" / "scripts"
 if str(_SCINTILLA_SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(_SCINTILLA_SCRIPTS_DIR))
 
-import Face  # type: ignore # noqa: E402
-import FileGenerator  # type: ignore # noqa: E402
-import HFacer  # type: ignore # noqa: E402
+import Face  # type: ignore
+import FileGenerator  # type: ignore
+import HFacer  # type: ignore
 
 DEAD_VALUES = {
     "INDIC_CONTAINER",
@@ -37,8 +37,7 @@ def _resolve_enum_value_name(f, value_name, prefix_matched):
     name_without_prefix = value_name[len(prefix_matched) :]
     if not name_without_prefix:
         name_without_prefix = value_name
-    if name_without_prefix.startswith("SC_"):
-        name_without_prefix = name_without_prefix[len("SC_") :]
+    name_without_prefix = name_without_prefix.removeprefix("SC_")
     return name_without_prefix
 
 
