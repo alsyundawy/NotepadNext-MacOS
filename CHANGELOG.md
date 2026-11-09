@@ -63,7 +63,8 @@ NotepadNext-MacOS v0.15-08 adalah rilis fitur dan stabilitas besar yang menghadi
 - **Gerbang Analisis Statis 100% Zero-Error**:
   - Lulus seluruh validasi `trunk check -y` pada 4.023 berkas dengan 0 isu.
   - Eksekusi `cppcheck` bersih pada seluruh berkas C++ baru dan yang dimodifikasi.
-  - Pembuatan dan verifikasi paket DMG lokal (`NotepadNext-v0.15-08-x64.dmg`) tervalidasi menggunakan `hdiutil verify`.
+  - Pembuatan dan verifikasi paket DMG lokal (`NotepadNext-MacOS-0.15-08-9d7f661.dmg`) tervalidasi menggunakan `hdiutil verify`.
+  - Pembersihan skrip Python per ruff pada `scripts/GenerateEnums.py` dan validasi zero diagnostic.
 
 ---
 
@@ -130,7 +131,8 @@ NotepadNext-MacOS v0.15-08 is a major feature and stability release introducing 
   - Cleared all findings across `trunk check -y`, validating 4,023 files with 0 issues.
   - Clean `cppcheck` execution across all newly added and modified C++ source and header files.
   - Complete elimination of shadow parameter warnings and loop modernized to standard STL algorithms (`std::any_of`, `std::all_of`, `std::find_if`, `std::transform`).
-  - Built and verified local DMG release (`NotepadNext-v0.15-08-x64.dmg`) with `hdiutil verify` cryptographic checksum validation.
+  - Built and verified local DMG release (`NotepadNext-MacOS-0.15-08-9d7f661.dmg`) with `hdiutil verify` cryptographic checksum validation.
+  - Cleaned Python scripts per ruff in `scripts/GenerateEnums.py` with zero diagnostic errors.
 
 ---
 
