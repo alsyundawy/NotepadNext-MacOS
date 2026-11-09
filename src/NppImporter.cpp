@@ -177,18 +177,19 @@ NppImporter::NppImporter(const QString &configPath, ScintillaEdit *_editor) :
 
     // Build a temporary list of the key/value pairs
     QList<QPair<QString, const Language *>> sortedLanguages;
-    for (const QString &key : languages.keys()) {
-        sortedLanguages.append(qMakePair(key, &languages[key]));
-    }
+    sortedLanguages.reserve(languages.size());
+    const auto keys = languages.keys();
+    std::transform(keys.begin(), keys.end(), std::back_inserter(sortedLanguages),
+                   [this](const QString &key) { return qMakePair(key, &languages[key]); });
     // And sort it based on the values
     std::sort(sortedLanguages.begin(), sortedLanguages.end(), [](const QPair<QString, const Language *> &a, const QPair<QString, const Language *> &b) {
         return QString::compare(a.second->shortName, b.second->shortName, Qt::CaseInsensitive) < 0;
     });
 
     // Store the sorted keys
-    for (const QPair<QString, const Language *> &pair : sortedLanguages) {
-        sortedLanguageKeys.append(pair.first);
-    }
+    sortedLanguageKeys.reserve(sortedLanguages.size());
+    std::transform(sortedLanguages.begin(), sortedLanguages.end(), std::back_inserter(sortedLanguageKeys),
+                   [](const QPair<QString, const Language *> &pair) { return pair.first; });
 }
 
 void NppImporter::readLangsModel(const QString &filePath)
@@ -219,10 +220,10 @@ void NppImporter::readLangsModel(const QString &filePath)
                     // TODO: read more
                     while (xml.readNextStartElement()) {
                         //qInfo(qUtf8Printable(language.name));
-                        auto attrs = xml.attributes();
+                        auto innerAttrs = xml.attributes();
                         auto t = xml.readElementText();
                         //qInfo(qUtf8Printable(t));
-                        language.keywords[keywordClassToIndex(attrs.value("name"))] = t;
+                        language.keywords[keywordClassToIndex(innerAttrs.value("name"))] = t;
                         //xml.skipCurrentElement();
                     }
                     languages.insert(language.name, language);
@@ -300,13 +301,13 @@ void NppImporter::readLexerStyles(QXmlStreamReader &xml)
         lexer->description = attrs.value("desc").toString();
         while (xml.readNextStartElement()) {
             //qInfo(qUtf8Printable(xml.name().toString()));
-            auto attrs = xml.attributes();
+            auto styleAttrs = xml.attributes();
             LexerStyle style;
-            style.id = attrs.value("styleID").toInt();
-            style.fgColor = color(attrs.value("fgColor").toInt(nullptr, 16));
-            style.bgColor = color(attrs.value("bgColor").toInt(nullptr, 16));
-            if (attrs.hasAttribute("keywordClass")) {
-                style.keywordClass = keywordClassToIndex(attrs.value("keywordClass"));
+            style.id = styleAttrs.value("styleID").toInt();
+            style.fgColor = color(styleAttrs.value("fgColor").toInt(nullptr, 16));
+            style.bgColor = color(styleAttrs.value("bgColor").toInt(nullptr, 16));
+            if (styleAttrs.hasAttribute("keywordClass")) {
+                style.keywordClass = keywordClassToIndex(styleAttrs.value("keywordClass"));
             }
             else {
                 style.keywordClass = -1;
