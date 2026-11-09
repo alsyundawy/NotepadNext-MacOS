@@ -16,4 +16,5 @@ NotepadNext-MacOS **v0.15-01** introduces initial support for 470+ file format a
 
 1. **File Associations**: Support for 470+ source and text formats.
 2. **macOS Integration**: Seamless default editor integration on modern macOS releases.
-3. **Local DMG Build & Verification**: Built `NotepadNext-v0.15-01-x64.dmg` locally and verified with Apple `hdiutil verify`.
+3. **Local DMG Build & Verification**: Built `NotepadNext-MacOS-0.15-01-efb38b8.dmg` locally and verified with Apple `hdiutil verify`.
+4. **Linter & Code Quality Hardening**: Resolved uninitialized member variables in `NppImporter.h` and `NppImporter.cpp`, eliminated variable shadowing, modernized algorithms to `std::transform`, and cleaned Python scripts per ruff.

@@ -15,5 +15,7 @@ Format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) a
 - 🇮🇩 **Perbaikan Panel Pengaturan Sistem macOS**: Memperbaiki isu hilangnya panel Pengaturan Sistem saat mendaftarkan handler default pada macOS modern.
 - 🇬🇧 **Indonesian Translation Optimization**: Comprehensive polish for Bahasa Indonesia (`id_ID`) interface and dialogs.
 - 🇮🇩 **Optimalisasi Terjemahan Bahasa Indonesia**: Penyempurnaan menyeluruh antarmuka dan dialog dalam Bahasa Indonesia (`id_ID`).
-- 🇬🇧 **Local DMG Build & Verification**: Successfully built and cryptographically verified native macOS DMG (`NotepadNext-v0.15-01-x64.dmg`) locally with `hdiutil verify`.
-- 🇮🇩 **Build & Verifikasi DMG Lokal**: Berhasil mengompilasi dan memverifikasi integritas berkas DMG macOS (`NotepadNext-v0.15-01-x64.dmg`) secara lokal dengan `hdiutil verify`.
+- 🇬🇧 **Local DMG Build & Verification**: Successfully built and cryptographically verified native macOS DMG (`NotepadNext-MacOS-0.15-01-efb38b8.dmg`) locally with `hdiutil verify`.
+- 🇮🇩 **Build & Verifikasi DMG Lokal**: Berhasil mengompilasi dan memverifikasi integritas berkas DMG macOS (`NotepadNext-MacOS-0.15-01-efb38b8.dmg`) secara lokal dengan `hdiutil verify`.
+- 🇬🇧 **Code Quality & Linter Hardening**: Initialized primitive struct member variables in `NppImporter.h` and `NppImporter.cpp`, resolved variable shadowing, modernized iterations with `std::transform`, and modernized `scripts/GenerateEnums.py`.
+- 🇮🇩 **Peningkatan Kualitas Kode & Linter**: Menginisialisasi variabel anggota primitif struct pada `NppImporter.h` dan `NppImporter.cpp`, memperbaiki variable shadowing, memodernisasi iterasi dengan `std::transform`, dan memperbarui `scripts/GenerateEnums.py`.
