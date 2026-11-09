@@ -48,8 +48,10 @@ Format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) a
 - 🇮🇩 **Include Header Uchardet & Validasi 100% Zero-Error Clangd**: Menambahkan path `thirdparty/uchardet/src` pada `.clangd`, `.vscode/settings.json`, dan `scripts/generate_compilation_database.py`. Sukses memvalidasi seluruh 89 berkas C++ di `src/*.cpp` dan `src/*/*.cpp` dengan `clangd --check` dan `cppcheck`, mencapai 0 error mutlak di seluruh codebase.
 - 🇬🇧 **Bandit Security Hardening in Compilation Database Generator**: Refactored `scripts/generate_compilation_database.py` into modular, subprocess-free functions using pure `pathlib` and `json`, eliminating all Bandit security warnings (B404, B603, B607) and passing `trunk check` with 0 issues.
 - 🇮🇩 **Hardening Keamanan Bandit pada Generator Database Kompilasi**: Merefaktor `scripts/generate_compilation_database.py` menjadi fungsi-fungsi modular tanpa modul `subprocess` menggunakan pustaka standar `pathlib` dan `json`, melenyapkan seluruh temuan keamanan Bandit (B404, B603, B607) serta lulus 100% uji `trunk check` tanpa isu.
-- 🇬🇧 **Verified Local macOS DMG Packaging (v0.15-07)**: Configured and executed clean Release compilation with CMake and Qt 6.12.0 via Ninja, packaging `build/NotepadNext-v0.15-07-x64.dmg` (27 MB, compressed UDBZ) with 100% valid Apple `hdiutil verify` checksum ($7CACB3C2).
-- 🇮🇩 **Verifikasi Pemaketan DMG macOS Lokal (v0.15-07)**: Mengonfigurasi dan mengeksekusi kompilasi Release bersih menggunakan CMake dan Qt 6.12.0 via Ninja, memaketkan `build/NotepadNext-v0.15-07-x64.dmg` (27 MB, format kompresi UDBZ) dengan status verifikasi `hdiutil verify` 100% valid (CRC32 $7CACB3C2).
+- 🇬🇧 **Verified Local macOS DMG Packaging (v0.15-07)**: Configured and executed clean Release compilation with CMake and Qt 6.12.0 via Ninja, packaging `NotepadNext-MacOS-0.15-07-a26d748.dmg` (50 MB) with 100% valid Apple `hdiutil verify` checksum.
+- 🇮🇩 **Verifikasi Pemaketan DMG macOS Lokal (v0.15-07)**: Mengonfigurasi dan mengeksekusi kompilasi Release bersih menggunakan CMake dan Qt 6.12.0 via Ninja, memaketkan `NotepadNext-MacOS-0.15-07-a26d748.dmg` (50 MB) dengan status verifikasi `hdiutil verify` 100% valid.
+- 🇬🇧 **Code Quality & Linter Hardening**: Cleaned Python scripts per ruff in `scripts/GenerateEnums.py` and validated zero errors.
+- 🇮🇩 **Peningkatan Kualitas Kode & Linter**: Membersihkan skrip Python per ruff pada `scripts/GenerateEnums.py` dan memvalidasi zero error.
 
 ### 📦 Cross-Platform Packaging & Linux Deployment / Pemaketan Lintas Platform & Rilis Linux
 

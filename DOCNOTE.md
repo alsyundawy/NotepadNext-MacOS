@@ -83,7 +83,7 @@ NotepadNext-MacOS **v0.15-07** delivers critical runtime crash fixes, compiler d
      cmake --build build --target dmg
      ```
 
-   - Generated native disk image: `build/NotepadNext-v0.15-07-x64.dmg` (27 MB, compressed UDBZ).
+   - Generated native disk image: `NotepadNext-MacOS-0.15-07-a26d748.dmg` (50 MB).
    - Validated integrity with Apple `hdiutil verify`: Checksum status **VALID** (CRC32 `$7CACB3C2`).
 
 9. **Comprehensive 14-Pillar Codebase Audit & Security Certification**:
