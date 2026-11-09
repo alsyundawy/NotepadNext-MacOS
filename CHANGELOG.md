@@ -20,5 +20,7 @@ Format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) a
 - 🇮🇩 **Harmonisasi Upstream**: Mengintegrasikan peningkatan terbaru dari upstream `dail8859/NotepadNext` (v0.15).
 - 🇬🇧 **Indonesian Translation Refinements**: Refined terminology and grammar across all menus, dialogs, and notifications in Bahasa Indonesia (`id_ID`).
 - 🇮🇩 **Penyempurnaan Terjemahan Bahasa Indonesia**: Menyempurnakan istilah dan tata bahasa di seluruh menu, dialog, dan pesan dalam Bahasa Indonesia (`id_ID`).
-- 🇬🇧 **Local DMG Build & Verification**: Successfully built and cryptographically verified native macOS DMG (`NotepadNext-v0.15-03-x64.dmg`) locally with `hdiutil verify`.
-- 🇮🇩 **Build & Verifikasi DMG Lokal**: Berhasil mengompilasi dan memverifikasi integritas berkas DMG macOS (`NotepadNext-v0.15-03-x64.dmg`) secara lokal dengan `hdiutil verify`.
+- 🇬🇧 **Local DMG Build & Verification**: Successfully built and cryptographically verified native macOS DMG (`NotepadNext-MacOS-0.15-03-595ff58.dmg`) locally with `hdiutil verify`.
+- 🇮🇩 **Build & Verifikasi DMG Lokal**: Berhasil mengompilasi dan memverifikasi integritas berkas DMG macOS (`NotepadNext-MacOS-0.15-03-595ff58.dmg`) secara lokal dengan `hdiutil verify`.
+- 🇬🇧 **Code Quality & Linter Hardening**: Resolved variable shadowing in `NppImporter.cpp`, modernized container iterations to `std::transform`, cleaned Python scripts per ruff, and synchronized `.clang-tidy`.
+- 🇮🇩 **Peningkatan Kualitas Kode & Linter**: Memperbaiki variable shadowing pada `NppImporter.cpp`, memodernisasi iterasi container ke `std::transform`, membersihkan skrip Python per ruff, dan menyinkronkan `.clang-tidy`.

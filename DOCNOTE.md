@@ -17,4 +17,5 @@ NotepadNext-MacOS **v0.15-03** focuses on Find/Replace UI ergonomics, restoring 
 1. **Find & Mark Input Field Ergonomics**: Cleaned up Find and Mark tabs to utilize a single consistent search box.
 2. **Toolbar Accessibility**: Added dedicated Preferences and Exit actions directly on the main toolbar.
 3. **Indonesian Language Polish**: Comprehensive review of Indonesian locale strings.
-4. **Local DMG Build & Verification**: Built `NotepadNext-v0.15-03-x64.dmg` locally and verified with Apple `hdiutil verify`.
+4. **Local DMG Build & Verification**: Built `NotepadNext-MacOS-0.15-03-595ff58.dmg` locally and verified with Apple `hdiutil verify`.
+5. **Linter & Code Quality Hardening**: Resolved variable shadowing in `NppImporter.cpp`, modernized algorithms to `std::transform`, cleaned Python scripts per ruff, and synchronized `.clang-tidy`.
