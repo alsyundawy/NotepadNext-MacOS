@@ -106,4 +106,5 @@ This release successfully completes all 8 architectural phases defined in `PLAN_
 ## 📦 Distribution Packages
 
 - **macOS Disk Image**: `NotepadNext-v0.15-08-x64.dmg` (Bzip2 UDBZ ultra-compressed, ~31 MB).
+- **Linux Packages & BSD Installation**: Standardized single canonical `NotepadNext.desktop` entry (`share/applications`), eliminating duplicate launcher shortcuts across FreeBSD, Linux desktop environments, and `.deb` / `.rpm` packages.
 - **Checksums**: Recorded in `build-dmg/SHA256SUMS`.

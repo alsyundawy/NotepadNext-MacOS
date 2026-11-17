@@ -51,6 +51,8 @@ NotepadNext-MacOS v0.15-08 is a major feature and stability release introducing 
 
 #### 🛠️ Fixed & Hardened
 
+- **Duplicate Desktop Shortcut Elimination on FreeBSD & Linux Builds (Packaging Fix)**:
+  - Fixed duplicate application menu shortcuts appearing when compiling on FreeBSD or Linux, or installing Linux build artifacts (.deb and .rpm), by standardizing installation to a single canonical NotepadNext.desktop entry in share/applications and synchronizing the AppStream launchable desktop-id.
 - **Full Multi-Qt Build Compatibility (Qt 6.5 LTS through Qt 6.12)**:
   - Wrapped `QStyleHints::setColorScheme` calls in `#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)`, preventing build failures on Qt 6.5 LTS Linux runners and backward-compatible environments.
 - **Permanent macOS Dark Aqua Titlebar**:

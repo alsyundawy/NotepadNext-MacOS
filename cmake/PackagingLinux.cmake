@@ -10,7 +10,6 @@ install(TARGETS NotepadNext
 )
 install(FILES
     ${PROJECT_SOURCE_DIR}/deploy/linux/NotepadNext.desktop
-    ${PROJECT_SOURCE_DIR}/deploy/linux/com.github.alsyundawy.NotepadNext.desktop
     DESTINATION share/applications
 )
 install(FILES

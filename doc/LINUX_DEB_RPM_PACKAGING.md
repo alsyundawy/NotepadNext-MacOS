@@ -29,7 +29,6 @@ All official packages are compiled on LTS base environments (**Ubuntu 22.04 LTS 
 | System Libraries    | `libc6 (>= 2.35)`, `libstdc++6 (>= 11)`, `libgcc-s1` (via `CPACK_DEBIAN_PACKAGE_SHLIBDEPS`) | `libc.so.6`, `libstdc++.so.6` (via DNF provides)                     |
 | Recommends          | `xdg-utils`                                                                                 | `xdg-utils`                                                          |
 | Desktop Entry       | `/usr/share/applications/NotepadNext.desktop`                                               | `/usr/share/applications/NotepadNext.desktop`                        |
-| Reverse DNS Desktop | `/usr/share/applications/com.github.alsyundawy.NotepadNext.desktop`                         | `/usr/share/applications/com.github.alsyundawy.NotepadNext.desktop`  |
 | AppStream Metadata  | `/usr/share/metainfo/com.github.alsyundawy.NotepadNext.metainfo.xml`                        | `/usr/share/metainfo/com.github.alsyundawy.NotepadNext.metainfo.xml` |
 | Application Icon    | `/usr/share/icons/hicolor/scalable/apps/NotepadNext.svg`                                    | `/usr/share/icons/hicolor/scalable/apps/NotepadNext.svg`             |
 | Default Editor Tool | `/usr/bin/NotepadNext-Default-Editor`                                                       | `/usr/bin/NotepadNext-Default-Editor`                                |

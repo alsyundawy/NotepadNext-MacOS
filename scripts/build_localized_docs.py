@@ -91,6 +91,9 @@ NotepadNext-MacOS v0.15-08 adalah rilis fitur dan stabilitas besar yang menghadi
 
 17. Kompatibilitas Multi-Qt Penuh (Qt 6.5 LTS hingga Qt 6.12):
     - Perlindungan makro praprosesor (#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)) untuk setColorScheme memastikan kompilasi sukses 100% di semua runner CI dan lingkungan lokal.
+
+18. Eliminasi Jalan Pintas Ganda pada Menu Desktop FreeBSD & Linux:
+    - Menstandarisasikan instalasi ke satu entri berkas kanonikal NotepadNext.desktop pada share/applications serta menyelaraskan AppStream metadata launchable desktop-id, mencegah kemunculan pintasan ganda pada menu desktop saat dikompilasi di FreeBSD, Linux, maupun pada instalasi paket build Linux (.deb dan .rpm).
 """
 
 DOCNOTE_EN = """# Documentation Note (DOCNOTE) — NotepadNext-MacOS v0.15-08 (English)
@@ -172,6 +175,9 @@ NotepadNext-MacOS v0.15-08 is a premier enterprise release introducing cutting-e
 
 17. Full Multi-Qt Build Compatibility (Qt 6.5 LTS through Qt 6.12):
     - Guarded setColorScheme with preprocessor checks (#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)), ensuring complete, warning-free compilation on both legacy and cutting-edge Qt runners.
+
+18. Duplicate Desktop Shortcut Elimination on FreeBSD & Linux Builds:
+    - Standardized installation to a single canonical NotepadNext.desktop entry in share/applications and synchronized AppStream launchable desktop-id, preventing duplicate launcher shortcuts in desktop menus when compiling on FreeBSD or Linux, or installing Linux build artifacts (.deb and .rpm).
 """
 
 CHANGELOG_ID = """# Catatan Perubahan (Changelog) — NotepadNext For MacOS
@@ -227,6 +233,8 @@ NotepadNext-MacOS v0.15-08 adalah rilis fitur dan stabilitas besar yang menghadi
 
 #### 🛠️ Diperbaiki & Diperkuat
 
+- **Pembersihan Jalan Pintas Ganda pada Menu Desktop FreeBSD & Linux (Packaging Fix)**:
+  - Memperbaiki masalah jalan pintas (shortcut) yang menjadi ganda pada menu aplikasi saat dikompilasi di FreeBSD, Linux, maupun pada paket build Linux (.deb dan .rpm), dengan menstandarisasikan instalasi ke satu berkas kanonikal NotepadNext.desktop pada share/applications serta menyelaraskan AppStream metadata launchable desktop-id.
 - **Kompatibilitas Multi-Qt Penuh (Qt 6.5 LTS hingga Qt 6.12)**:
   - Membungkus pemanggilan `QStyleHints::setColorScheme` dalam `#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)` sehingga kompilasi berhasil tanpa eror pada seluruh runner CI GitHub Actions dan distro Linux Qt 6.5 LTS.
 - **Judul Jendela macOS Permanen Dark Aqua**:
@@ -292,6 +300,8 @@ NotepadNext-MacOS v0.15-08 is a major feature and stability release introducing 
 
 #### 🛠️ Fixed & Hardened
 
+- **Duplicate Desktop Shortcut Elimination on FreeBSD & Linux Builds (Packaging Fix)**:
+  - Fixed duplicate application menu shortcuts appearing when compiling on FreeBSD or Linux, or installing Linux build artifacts (.deb and .rpm), by standardizing installation to a single canonical NotepadNext.desktop entry in share/applications and synchronizing the AppStream launchable desktop-id.
 - **Full Multi-Qt Build Compatibility (Qt 6.5 LTS through Qt 6.12)**:
   - Wrapped `QStyleHints::setColorScheme` calls in `#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)`, preventing build failures on Qt 6.5 LTS Linux runners and backward-compatible environments.
 - **Permanent macOS Dark Aqua Titlebar**:
@@ -324,6 +334,9 @@ def main():
     if os.path.exists(whitepaper_path):
         with open(whitepaper_path, "r", encoding="utf-8") as f:
             whitepaper_docnote = f.read()
+    elif os.path.exists("DOCNOTE.md"):
+        with open("DOCNOTE.md", "r", encoding="utf-8") as f:
+            whitepaper_docnote = f.read()
     else:
         whitepaper_docnote = master_docnote_text
 
@@ -333,6 +346,9 @@ def main():
         with open(hist_path, "r", encoding="utf-8") as f:
             historical_part = f.read().strip()
         full_changelog_md = master_changelog_text + "\n---\n\n" + historical_part + "\n"
+    elif os.path.exists("CHANGELOG.md"):
+        with open("CHANGELOG.md", "r", encoding="utf-8") as f:
+            full_changelog_md = f.read()
     else:
         full_changelog_md = master_changelog_text
 

@@ -52,8 +52,8 @@ IFS=$'\n\t'
 readonly SCRIPT_NAME="NotepadNext-Default-Editor-Linux.sh"
 readonly SCRIPT_VERSION="1.0.0"
 readonly APP_ID="com.github.alsyundawy.NotepadNext"
-readonly DESKTOP_PRIMARY="${APP_ID}.desktop"
-readonly DESKTOP_FALLBACK="NotepadNext.desktop"
+readonly DESKTOP_PRIMARY="NotepadNext.desktop"
+readonly DESKTOP_FALLBACK="${APP_ID}.desktop"
 readonly BINARY_NAME="NotepadNext"
 
 # ====================== COLOR & FORMATTING ======================
@@ -412,8 +412,6 @@ Comment=A cross-platform reimplementation of Notepad++ for macOS and Linux
 Keywords=notepad;next;text;editor;IDE;programming;source;code;
 EOF
 			chmod 644 "${target_desktop}"
-			# Create convenience alias
-			ln -sf "${DESKTOP_PRIMARY}" "${user_app_dir}/${DESKTOP_FALLBACK}" 2>/dev/null || true
 		fi
 
 		RESOLVED_DESKTOP_PATH="${target_desktop}"

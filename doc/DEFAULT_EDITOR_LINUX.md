@@ -98,12 +98,12 @@ Freedesktop specifies that user preferences take precedence over system defaults
 
 ```ini
 [Default Applications]
-text/plain=com.github.alsyundawy.NotepadNext.desktop;NotepadNext.desktop;
-text/markdown=com.github.alsyundawy.NotepadNext.desktop;NotepadNext.desktop;
+text/plain=NotepadNext.desktop;com.github.alsyundawy.NotepadNext.desktop;
+text/markdown=NotepadNext.desktop;com.github.alsyundawy.NotepadNext.desktop;
 ...
 
 [Added Associations]
-text/plain=com.github.alsyundawy.NotepadNext.desktop;NotepadNext.desktop;
+text/plain=NotepadNext.desktop;com.github.alsyundawy.NotepadNext.desktop;
 ...
 ```
 
@@ -210,4 +210,4 @@ sudo ./NotepadNext-Default-Editor-Linux.sh set --system
 - **Shellcheck Validation**: Evaluated against ShellCheck 0.10+ (`shellcheck NotepadNext-Default-Editor-Linux.sh`) with 0 errors and 0 warnings.
 - **shfmt Formatting**: Formatted with standard indentation and syntax rules (`shfmt -w NotepadNext-Default-Editor-Linux.sh`).
 - **Defensive Error Handling**: Safe execution under `set -eo pipefail`, atomic writes via temporary files, automatic timestamped backups before modifications, and validation of desktop file existence.
-- **Reverse-DNS AppStream ID**: Canonical target is `com.github.alsyundawy.NotepadNext.desktop`, ensuring 100% interoperability with modern Flatpak, Snap, AppStream, and standard desktop package releases.
+- **Single Canonical Desktop Entry**: Canonical target is `NotepadNext.desktop`, ensuring 100% interoperability with modern Linux desktops, FreeBSD, AppStream, and standard desktop package releases without duplicate launcher entries.

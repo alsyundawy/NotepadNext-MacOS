@@ -538,9 +538,9 @@ While macOS uses LaunchServices and UTI structures, Linux desktop environments a
 4. **Terminal & CLI System Alternatives**:
    - Automated registration with Debian/Ubuntu `update-alternatives --install /usr/bin/editor editor /usr/bin/NotepadNext 100` and RHEL/Fedora/openSUSE `alternatives --install /usr/bin/editor editor /usr/bin/NotepadNext 100`.
    - Automatic export of `$EDITOR` and `$VISUAL` environment variables in `~/.bashrc` and `~/.profile`.
-5. **Standardized Reverse-DNS AppStream ID & Dual Desktop Entries**:
+5. **Standardized Reverse-DNS AppStream ID & Canonical Desktop Entry**:
    - Standardized AppStream ID to `com.github.alsyundawy.NotepadNext` (superseding legacy `io.github.dail8859.NotepadNext`).
-   - Installed dual desktop entries (`NotepadNext.desktop` and `com.github.alsyundawy.NotepadNext.desktop`) in `deploy/linux/` and integrated via `cmake/PackagingLinux.cmake`.
+   - Configured single canonical desktop entry (`NotepadNext.desktop`) in `deploy/linux/` and integrated via `cmake/PackagingLinux.cmake`, eliminating duplicate launcher entries in FreeBSD and Linux desktop menus.
 6. **Dual Script Root & Release Synchronization Invariant**:
    - Both `NotepadNext-Default-Editor.sh` (macOS) and `NotepadNext-Default-Editor-Linux.sh` (Linux) are permanently maintained in repository root and synchronized to `scripts/`.
    - CI/CD workflow `.github/workflows/release.yml` automatically publishes both scripts as downloadable GitHub release assets.
@@ -559,7 +559,7 @@ To provide complete feature and architecture documentation parity across macOS a
 | :----------------------------------------------------------------------------- | :---------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [`doc/BUILD_UBUNTU_DEBIAN.md`](BUILD_UBUNTU_DEBIAN.md)                         | Ubuntu / Debian   | Native toolchain setup, Qt6 dependencies, CMake configuration, and deb packaging on Ubuntu 22.04/24.04/26.04 and Debian 12/13.                                  |
 | [`doc/HOMEBREW_DISTRIBUTION.md`](HOMEBREW_DISTRIBUTION.md)                     | macOS             | Third-party Homebrew tap (`alsyundawy/notepadnext`), automated cask maintenance, notarized `.dmg` deployment, and quarantine management.                        |
-| [`doc/LINUX_DEB_RPM_PACKAGING.md`](LINUX_DEB_RPM_PACKAGING.md)                 | Linux (DEB & RPM) | Deep-dive CPack packaging architecture, Debian `t64` transition, RPM 64-bit SONAME resolution, APT vs. DNF dependency modeling, and dual desktop entries.       |
+| [`doc/LINUX_DEB_RPM_PACKAGING.md`](LINUX_DEB_RPM_PACKAGING.md)                 | Linux (DEB & RPM) | Deep-dive CPack packaging architecture, Debian `t64` transition, RPM 64-bit SONAME resolution, APT vs. DNF dependency modeling, and single canonical desktop entry.       |
 | [`doc/MACOS_CODESIGN_AND_NOTARIZATION.md`](MACOS_CODESIGN_AND_NOTARIZATION.md) | macOS             | Gatekeeper quarantine analysis, Apple Developer ID codesigning, `notarytool` submission, stapling, and end-user xattr removal.                                  |
 | [`doc/PLATFORM_SUPPORT.md`](PLATFORM_SUPPORT.md)                               | Cross-Platform    | Tier 1 through Tier 4 support matrix spanning macOS 11.0–26.0 (Apple Silicon/Intel), Linux distributions (Debian, Ubuntu, Fedora, openSUSE, Arch), and FreeBSD. |
 

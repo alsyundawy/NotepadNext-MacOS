@@ -78,6 +78,9 @@ NotepadNext-MacOS v0.15-08 adalah rilis fitur dan stabilitas besar yang menghadi
 17. Kompatibilitas Multi-Qt Penuh (Qt 6.5 LTS hingga Qt 6.12):
     - Perlindungan makro praprosesor (#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)) untuk setColorScheme memastikan kompilasi sukses 100% di semua runner CI dan lingkungan lokal.
 
+18. Eliminasi Jalan Pintas Ganda pada Menu Desktop FreeBSD & Linux:
+    - Menstandarisasikan instalasi ke satu entri berkas kanonikal NotepadNext.desktop pada share/applications serta menyelaraskan AppStream metadata launchable desktop-id, mencegah kemunculan pintasan ganda pada menu desktop saat dikompilasi di FreeBSD, Linux, maupun pada instalasi paket build Linux (.deb dan .rpm).
+
 ---
 
 # Documentation Note (DOCNOTE) — NotepadNext-MacOS v0.15-08 (English)
@@ -159,3 +162,6 @@ NotepadNext-MacOS v0.15-08 is a premier enterprise release introducing cutting-e
 
 17. Full Multi-Qt Build Compatibility (Qt 6.5 LTS through Qt 6.12):
     - Guarded setColorScheme with preprocessor checks (#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)), ensuring complete, warning-free compilation on both legacy and cutting-edge Qt runners.
+
+18. Duplicate Desktop Shortcut Elimination on FreeBSD & Linux Builds:
+    - Standardized installation to a single canonical NotepadNext.desktop entry in share/applications and synchronized AppStream launchable desktop-id, preventing duplicate launcher shortcuts in desktop menus when compiling on FreeBSD or Linux, or installing Linux build artifacts (.deb and .rpm).
