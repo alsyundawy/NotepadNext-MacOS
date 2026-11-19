@@ -178,7 +178,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
-            build-essential cmake ninja-build pkg-config \
+            build-essential cmake pkg-config \
             libgl1-mesa-dev libxkbcommon-dev libxkbcommon-x11-0 \
             libfontconfig1-dev libfreetype6-dev \
             libxcb-cursor0 libxcb-glx0 libxcb-icccm4 libxcb-image0 \
@@ -208,7 +208,7 @@ jobs:
         shell: bash
         run: |
           echo "Configure: run=$GITHUB_RUN_ID runner=${{ matrix.runs_on }} qt=${{ matrix.qt_version }}"
-          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DAPP_DISTRIBUTION="${DISTRIBUTION}" -DPKG_QT_SUFFIX="qt${{ matrix.qt_version }}"
+          cmake -S . -B build -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DAPP_DISTRIBUTION="${DISTRIBUTION}" -DPKG_QT_SUFFIX="qt${{ matrix.qt_version }}"
 
       - name: Build
         shell: bash
@@ -354,7 +354,7 @@ jobs:
         shell: bash
         run: |
           echo "Configure: run=$GITHUB_RUN_ID runner=${{ matrix.runs_on }} qt=${{ matrix.qt_version }} deployment=${{ matrix.deployment_target }}"
-          CMAKE_OPTS=(-S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DAPP_DISTRIBUTION="${DISTRIBUTION}" -DCMAKE_OSX_DEPLOYMENT_TARGET="${{ matrix.deployment_target }}")
+          CMAKE_OPTS=(-S . -B build -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DAPP_DISTRIBUTION="${DISTRIBUTION}" -DCMAKE_OSX_DEPLOYMENT_TARGET="${{ matrix.deployment_target }}")
           CMAKE_OPTS+=(-DCMAKE_OSX_ARCHITECTURES="${{ matrix.cmake_arch }}" -DMAC_ARCH_SUFFIX="${{ matrix.arch }}" -DPKG_QT_SUFFIX="qt${{ matrix.qt_version }}")
           echo "CMake options: ${CMAKE_OPTS[*]}"
           cmake "${CMAKE_OPTS[@]}"
@@ -494,7 +494,7 @@ jobs:
         shell: bash
         run: |
           echo "Configure: run=$GITHUB_RUN_ID runner=${{ matrix.runs_on }} qt=${{ matrix.qt_version }} deployment=${{ matrix.deployment_target }}"
-          CMAKE_OPTS=(-S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DAPP_DISTRIBUTION="${DISTRIBUTION}" -DCMAKE_OSX_DEPLOYMENT_TARGET="${{ matrix.deployment_target }}")
+          CMAKE_OPTS=(-S . -B build -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DAPP_DISTRIBUTION="${DISTRIBUTION}" -DCMAKE_OSX_DEPLOYMENT_TARGET="${{ matrix.deployment_target }}")
           CMAKE_OPTS+=(-DCMAKE_OSX_ARCHITECTURES="${{ matrix.cmake_arch }}" -DMAC_ARCH_SUFFIX="${{ matrix.arch }}" -DPKG_QT_SUFFIX="qt${{ matrix.qt_version }}")
           echo "CMake options: ${CMAKE_OPTS[*]}"
           cmake "${CMAKE_OPTS[@]}"

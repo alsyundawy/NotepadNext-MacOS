@@ -31,6 +31,7 @@
 #include <QMainWindow>
 #include <QLabel>
 #include <QActionGroup>
+#include <cstdint>
 #include <memory>
 
 #include "DockedEditor.h"
@@ -237,7 +238,7 @@ private:
     void showSaveErrorMessage(const ScintillaNext *editor, QFileDevice::FileError error);
     void showEditorZoomLevelIndicator() const;
 
-    enum class UserSaveAction { SaveAll, DiscardAll, Cancel };
+    enum class UserSaveAction : std::uint8_t { SaveAll, DiscardAll, Cancel };
     UserSaveAction promptForSave(const QVector<ScintillaNext *> &editorList);
 
     void saveSettings() const;
