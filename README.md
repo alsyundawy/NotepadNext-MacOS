@@ -67,6 +67,8 @@
 >   - `MyersDiffEngine` & `FileDiffDialog`: Longest Common Subsequence (LCS) side-by-side file comparison with synchronized dual-pane scrolling.
 >   - `HashIntegrityManager` & `HashIntegrityDialog`: Constant-memory stream chunked digest verification (CRC32, MD5, SHA-1, SHA-256, SHA-512, SHA3).
 > - 🍏 **macOS Deep Integration**: Updated `Info.plist` with 76 document type associations, native UTTypes, and system Services.
+> - 🚀 **Single Canonical Desktop Entry (FreeBSD & Linux)**: Standardized desktop installation to single canonical `NotepadNext.desktop` in `share/applications` and synchronized AppStream launchable desktop-id, completely eliminating duplicate launcher shortcut entries across FreeBSD, Linux desktop environments (GNOME, KDE, XFCE, etc.), and native `.deb` / `.rpm` packages.
+> - 🛡️ **Qt 6 Automatic Update Crash Resolution (`Qt::UniqueConnection`)**: Resolved fatal `SIGABRT` / `qt_assert_x` assertion abort during background startup update checks by replacing lambda functor connections with dedicated private member slot `checkForUpdatesFinishedSilent`, adding explicit signal disconnection and defensive pointer checks for application settings.
 > - 🛡️ **100% Zero-Defect Code Quality**: Passed all `trunk check -y` audits (4,023 files verified), zero compiler warnings, 100% clean `cppcheck` and `clangd` validations, and verified DMG packaging (<32 MB).
 >
 > 🇮🇩 **Peningkatan Mayor Enterprise Versi 0.15-08 & Integrasi Fitur SparkNotePad:**
@@ -92,6 +94,8 @@
 >   - `MyersDiffEngine` & `FileDiffDialog`: Perbandingan berkas berdampingan algoritma LCS dengan sinkronisasi scroll dua panel.
 >   - `HashIntegrityManager` & `HashIntegrityDialog`: Pembuatan digest kriptografis aliran chunk memori konstan (CRC32, MD5, SHA-1, SHA-256, SHA-512, SHA3).
 > - 🍏 **Integrasi Mendalam macOS**: Pembaruan `Info.plist` dengan 76 asosiasi jenis berkas, native UTTypes, dan macOS system Services.
+> - 🚀 **Entri Desktop Kanonikal Tunggal (FreeBSD & Linux)**: Menstandarisasikan instalasi berkas `.desktop` ke satu entri kanonikal `NotepadNext.desktop` pada `share/applications` serta menyelaraskan AppStream metadata launchable desktop-id, menghapus kemunculan pintasan ganda pada menu desktop di FreeBSD, Linux, maupun paket build `.deb` dan `.rpm`.
+> - 🛡️ **Penyelesaian Crash Pengecekan Update Otomatis Qt 6 (`Qt::UniqueConnection`)**: Menyelesaikan kegagalan asersi fatal `SIGABRT` / `qt_assert_x` saat pengecekan pembaruan otomatis berjalan di latar belakang pada awal aplikasi dibuka, menggantikan koneksi lambda dengan slot fungsi anggota privat `checkForUpdatesFinishedSilent`, pemutusan sinyal redundan, dan pemeriksaan null defensif pada pengaturan aplikasi.
 > - 🛡️ **Kualitas Kode 100% Bebas Cacat**: Lulus seluruh audit `trunk check -y` (4.023 berkas tervalidasi), bebas peringatan kompilasi, validasi `cppcheck` & `clangd` 100% bersih, dan pengemasan DMG terverifikasi (<32 MB).
 >
 > 📊 **Cumulative Architecture Matrix & In-Depth Upstream Comparison**: For the comprehensive 21-dimension comparative whitepaper detailing why this edition is vastly superior to official upstream v0.15, see [In-Depth Upstream Comparison](doc/UPSTREAM_COMPARISON.md), [Release Notes 0.15-08](doc/RELEASE_NOTES_0.15-08.md), and [DOCNOTE.md](doc/DOCNOTE.md).

@@ -551,6 +551,26 @@ While macOS uses LaunchServices and UTI structures, Linux desktop environments a
 
 ---
 
+## 24. FreeBSD/Linux Single Canonical Desktop Entry & Qt 6 UniqueConnection Crash Remediation (v0.15-08)
+
+### 1. Single Canonical Desktop Entry Standardization (`NotepadNext.desktop`)
+- **Problem**: When compiling or installing on FreeBSD or Linux distributions (via source, `.deb`, or `.rpm`), duplicate application launcher entries appeared in desktop menus (GNOME, KDE Plasma, XFCE, Cinnamon, MATE, LXQt) due to concurrent installation of `NotepadNext.desktop` and `com.github.alsyundawy.NotepadNext.desktop`.
+- **Solution**:
+  - Standardized on a single canonical `NotepadNext.desktop` installed to `share/applications/` in `cmake/PackagingLinux.cmake`.
+  - Removed redundant `deploy/linux/com.github.alsyundawy.NotepadNext.desktop`.
+  - Synchronized `<launchable type="desktop-id">NotepadNext.desktop</launchable>` in `deploy/linux/com.github.alsyundawy.NotepadNext.metainfo.xml`.
+  - Updated `NotepadNext-Default-Editor-Linux.sh` and `scripts/NotepadNext-Default-Editor-Linux.sh` to target `NotepadNext.desktop` without generating redundant symlinks.
+
+### 2. Qt 6 `Qt::UniqueConnection` Assertion Crash Resolution (`MainWindow::checkForUpdates`)
+- **Problem**: In Qt 6, `Qt::UniqueConnection` strictly enforces that the connected slot is a member function pointer of a `QObject` subclass. Combining `Qt::UniqueConnection` with a lambda functor inside `MainWindow::checkForUpdates(bool silent)` triggered a fatal runtime abort (`Q_ASSERT_X` / `SIGABRT`) when the 15-second background update timer fired on application launch.
+- **Solution**:
+  - Replaced the lambda connection with a dedicated private member slot: `void checkForUpdatesFinishedSilent(const QString &url)`.
+  - Disconnected previously active slots before establishing unique connections to avoid signal accumulation.
+  - Added defensive null checks for `app` and `app->getSettings()` prior to updating `App/LastUpdateCheck`.
+  - Enhanced headless CI DMG packaging in `scripts/package-dmg.sh` with automated retry and filesystem synchronization loops against transient `Resource busy` errors during `hdiutil create`.
+
+---
+
 ## 8. Cross-Platform Documentation Suite & Zero-Defect Linter Audit
 
 To provide complete feature and architecture documentation parity across macOS and Linux, the repository documentation suite was systematically expanded with 5 dedicated technical guides adapted and customized from `SparkNotePad`:

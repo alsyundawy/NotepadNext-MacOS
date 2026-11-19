@@ -137,20 +137,39 @@ fi
 
 CREATED=0
 
+# Helper function for reliable hdiutil DMG packaging with retry logic against transient locks/busy resources
+create_dmg_hdiutil() {
+	echo "[*] Packaging styled DMG using native hdiutil..."
+	[[ -e "${STAGE_DIR}/Applications" ]] || ln -s /Applications "${STAGE_DIR}/Applications"
+	sync 2>/dev/null || true
+	local retry=0
+	local max_retries=5
+	while [[ ${retry} -lt ${max_retries} ]]; do
+		if hdiutil create \
+			-volname "${VOL_NAME}" \
+			-srcfolder "${STAGE_DIR}" \
+			-ov \
+			-format UDZO \
+			-imagekey zlib-level=9 \
+			"${DMG_OUTPUT}"; then
+			CREATED=1
+			return 0
+		fi
+		echo "[!] hdiutil create failed (attempt $((retry + 1))/${max_retries}). Flushing filesystem and retrying in 3 seconds..." >&2
+		hdiutil detach "/Volumes/${VOL_NAME}" -force 2>/dev/null || true
+		sync 2>/dev/null || true
+		sleep 3
+		retry=$((retry + 1))
+	done
+	return 1
+}
+
 # On CI runners (headless environment without active GUI Finder session),
 # AppleScript in create-dmg is guaranteed to hang or time out.
 # Packaging via native hdiutil with pre-baked .DS_Store is instantaneous and 100% reliable.
 if [[ -n ${GITHUB_ACTIONS:-} || -n ${CI:-} ]]; then
 	echo "[*] Headless CI environment detected. Using native hdiutil with pre-baked styled .DS_Store..."
-	[[ -e "${STAGE_DIR}/Applications" ]] || ln -s /Applications "${STAGE_DIR}/Applications"
-	hdiutil create \
-		-volname "${VOL_NAME}" \
-		-srcfolder "${STAGE_DIR}" \
-		-ov \
-		-format UDZO \
-		-imagekey zlib-level=9 \
-		"${DMG_OUTPUT}"
-	CREATED=1
+	create_dmg_hdiutil
 fi
 
 # In local/interactive environment, attempt create-dmg if available
@@ -196,15 +215,7 @@ fi
 
 # Fallback to native hdiutil packaging if not yet created
 if [[ ${CREATED} -eq 0 ]]; then
-	echo "[*] Creating styled DMG via native hdiutil..."
-	[[ -e "${STAGE_DIR}/Applications" ]] || ln -s /Applications "${STAGE_DIR}/Applications"
-	hdiutil create \
-		-volname "${VOL_NAME}" \
-		-srcfolder "${STAGE_DIR}" \
-		-ov \
-		-format UDZO \
-		-imagekey zlib-level=9 \
-		"${DMG_OUTPUT}"
+	create_dmg_hdiutil
 fi
 
 # Verification
