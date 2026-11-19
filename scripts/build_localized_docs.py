@@ -243,6 +243,9 @@ NotepadNext-MacOS v0.15-08 adalah rilis fitur dan stabilitas besar yang menghadi
   - Mengatasi crash fatal `SIGABRT` (`qt_assert_x`) pada Qt 6 di `MainWindow::checkForUpdates(bool silent)` yang dipicu oleh kombinasi `Qt::UniqueConnection` bersama lambda/functor saat timer startup 15 detik berjalan di latar belakang. Menggantikannya dengan slot fungsi anggota privat `checkForUpdatesFinishedSilent(const QString &url)` serta menambahkan pemutusan koneksi eksplisit sebelum koneksi baru dan pengecekan pointer null defensif pada `app->getSettings()`.
 - **Pembersihan Jalan Pintas Ganda pada Menu Desktop FreeBSD & Linux (Packaging Fix)**:
   - Memperbaiki masalah jalan pintas (shortcut) yang menjadi ganda pada menu aplikasi saat dikompilasi di FreeBSD, Linux, maupun pada paket build Linux (.deb dan .rpm), dengan menstandarisasikan instalasi ke satu berkas kanonikal NotepadNext.desktop pada share/applications serta menyelaraskan AppStream metadata launchable desktop-id.
+- **Standardisasi Toolchain Build ke Unix Makefiles (`make`) & Retry Packaging DMG**:
+  - Menghapus ketergantungan generator Ninja dari skrip build lokal (`scripts/build_all_local_dmgs.sh`) dan panduan instalasi (`doc/Building.md`), menstandarisasikan seluruh alur kompilasi lokal menggunakan CMake dengan generator `Unix Makefiles` dan `make` paralel bawaan sistem untuk keandalan maksimal.
+  - Mengintegrasikan mekanisme percobaan ulang (`retry loop`) hingga 5 kali dengan sinkronisasi filesystem `sync` dan detasemen paksa `hdiutil detach -force` pada pembuatan DMG (`scripts/package-dmg.sh`) untuk meniadakan kegagalan transient `hdiutil: create failed - Resource busy`.
 - **Kompatibilitas Multi-Qt Penuh (Qt 6.5 LTS hingga Qt 6.12)**:
   - Membungkus pemanggilan `QStyleHints::setColorScheme` dalam `#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)` sehingga kompilasi berhasil tanpa eror pada seluruh runner CI GitHub Actions dan distro Linux Qt 6.5 LTS.
 - **Judul Jendela macOS Permanen Dark Aqua**:
@@ -312,6 +315,9 @@ NotepadNext-MacOS v0.15-08 is a major feature and stability release introducing 
   - Fixed fatal `SIGABRT` (`qt_assert_x`) on Qt 6 in `MainWindow::checkForUpdates(bool silent)` triggered by combining `Qt::UniqueConnection` with a lambda functor when the 15-second background startup timer triggers. Replaced with private member slot `checkForUpdatesFinishedSilent(const QString &url)`, added prior slot disconnection, and added defensive pointer checks for `app->getSettings()`.
 - **Duplicate Desktop Shortcut Elimination on FreeBSD & Linux Builds (Packaging Fix)**:
   - Fixed duplicate application menu shortcuts appearing when compiling on FreeBSD or Linux, or installing Linux build artifacts (.deb and .rpm), by standardizing installation to a single canonical NotepadNext.desktop entry in share/applications and synchronizing the AppStream launchable desktop-id.
+- **Build Toolchain Standardization to Unix Makefiles (`make`) & DMG Packaging Retry Loop**:
+  - Eliminated Ninja build generator dependency from local build scripts (`scripts/build_all_local_dmgs.sh`) and build documentation (`doc/Building.md`), standardizing all local build pipelines on CMake with native `Unix Makefiles` (`make`) for robust, deterministic multi-core compilation.
+  - Integrated an automated 5-attempt retry loop with filesystem sync and forced detach in `scripts/package-dmg.sh`, eliminating transient macOS `hdiutil: create failed - Resource busy` packaging failures.
 - **Full Multi-Qt Build Compatibility (Qt 6.5 LTS through Qt 6.12)**:
   - Wrapped `QStyleHints::setColorScheme` calls in `#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)`, preventing build failures on Qt 6.5 LTS Linux runners and backward-compatible environments.
 - **Permanent macOS Dark Aqua Titlebar**:
@@ -355,12 +361,20 @@ def main():
     if os.path.exists(hist_path):
         with open(hist_path, "r", encoding="utf-8") as f:
             historical_part = f.read().strip()
-        full_changelog_md = master_changelog_text + "\n---\n\n" + historical_part + "\n"
     elif os.path.exists("CHANGELOG.md"):
         with open("CHANGELOG.md", "r", encoding="utf-8") as f:
-            full_changelog_md = f.read()
+            old_content = f.read()
+        idx = old_content.find("## [0.15-06]")
+        if idx != -1:
+            historical_part = old_content[idx:].strip()
+        else:
+            historical_part = ""
     else:
-        full_changelog_md = master_changelog_text
+        historical_part = ""
+
+    full_changelog_md = master_changelog_text + (
+        "\n---\n\n" + historical_part + "\n" if historical_part else "\n"
+    )
 
     files_to_write = {
         # Root artifacts

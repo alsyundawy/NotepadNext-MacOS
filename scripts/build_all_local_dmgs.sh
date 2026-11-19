@@ -44,7 +44,7 @@ for BRANCH in "${BRANCHES[@]}"; do
 	rm -rf build
 
 	echo "[*] Configuring and building DMG target for ${BRANCH}..."
-	cmake -S . -B build -G Ninja \
+	cmake -S . -B build -G "Unix Makefiles" \
 		-DCMAKE_BUILD_TYPE=Release \
 		-DAPP_DISTRIBUTION=dmg \
 		-DCMAKE_OSX_DEPLOYMENT_TARGET=15.0 \
@@ -54,7 +54,8 @@ for BRANCH in "${BRANCHES[@]}"; do
 		-DCMAKE_C_COMPILER=/usr/bin/clang \
 		-DCMAKE_CXX_COMPILER=/usr/bin/clang++
 
-	cmake --build build --target dmg
+	ncpu="$(sysctl -n hw.ncpu 2>/dev/null || echo 4)"
+	cmake --build build --target dmg -- -j"${ncpu}"
 
 	DMG_PATH="build/NotepadNext-v${BRANCH}-x64.dmg"
 	if [[ ! -f ${DMG_PATH} ]]; then

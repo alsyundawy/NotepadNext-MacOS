@@ -16,11 +16,8 @@ NotepadNext-MacOS v0.15-08 adalah rilis fitur dan stabilitas besar yang menghadi
 
 - **Tombol Tambah Tab (+) & Ergonomi Tab Modern**:
   - Menambahkan tombol `+` persisten pada tab bar editor (`DockedEditorTitleBar`) dengan estetika macOS asli dan status hover/pressed, memungkinkan pembuatan tab baru secara instan (`Cmd+N`).
-- **Pratinjau Tab Markdown & HTML (`PreviewTabWidget` & `MarkdownSafePreviewDock`) & Menu Konteks Tab**:
-  - Menghadirkan pratinjau tab interaktif dan dock pratinjau mandiri dengan kompatibilitas format compiler markdown-it, 30 tema terisolasi independen dari tema aplikasi (`GITHUB`, `GITHUB-DARK`, `ALMOND`, `AWSM`, `AXIST`, `BAMBOO`, `BULLFRAME`, `HOLIDAY`, `KACIT`, `LATEX`, `MARX`, `MINI`, `MODEST`, `NEW`, `NO-CLASS`, `PICO`, `RETRO`, `SAKURA`, `SAKURA-VADER`, `SEMANTIC`, `SIMPLE`, `STYLE-SANS`, `STYLE-SERIF`, `STYLIZE`, `SUPERSTYLIN`, `TACIT`, `VANILLA`, `WATER`, `WATER-DARK`, `WRIT`), kotak info bergaya GitHub (`[!NOTE]`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]`, `[!CAUTION]`), tipografi devdocs, metrik jumlah kata dan estimasi waktu baca, zoom dinamis, ekspor HTML, salin ke clipboard, dan pratinjau di peramban sistem. Menambahkan aksi klik-kanan pada tab `.md` dan `.html`.
-  - Mendukung deteksi ekstensi Markdown bervariasi (`\.(?:markdown|mdown|mkdn|md|mkd|mdwn|mdtxt|mdtext|text)(?:#.*|\?.*)?$`) dan ekstensi variasi HTML (`.html`, `.htm`, `.shtml`, `.shtm`, `.xhtml`, `.xht`, `.phtml`, `.hta`) yang diselaraskan dengan standar resmi IANA Media Types.
-- **Pembaruan Skrip Asosiasi Sistem `NotepadNext-Default-Editor.sh` & `NotepadNext-Default-Editor-Linux.sh`**:
-  - Memperbarui skrip asosiasi editor default untuk macOS (menggunakan UTIs dan `duti` untuk 480+ format berkas, termasuk `.mdtxt`, `.mdtext`, `ics`, `vcf`, `vcard`, `dotenv`, `gnumakefile`) dan Linux (menggunakan `xdg-mime` untuk 220+ MIME types IANA).
+- **Pratinjau Tab Markdown & HTML (`PreviewTabWidget`) & Menu Konteks Tab**:
+  - Menghadirkan pratinjau tab interaktif untuk dokumen Markdown dan HTML dengan kotak info bergaya GitHub (`[!NOTE]`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]`, `[!CAUTION]`), tipografi devdocs, metrik jumlah kata dan estimasi waktu baca, zoom dinamis, ekspor HTML, salin ke clipboard, dan pratinjau di peramban sistem. Menambahkan aksi klik-kanan pada tab `.md` dan `.html`.
 - **Konfigurasi Icon Pack & 6 Ukuran Ikon pada Menu Themes**:
   - Memperluas menu Themes dengan submenu pemilihan 28 paket ikon toolbar dan 6 tingkat ukuran ikon (`16x16`, `20x20`, `24x24`, `32x32`, `48x48`, `64x64`) lengkap dengan tanda centang status aktif dan pembaruan visual toolbar seketika.
 - **Dokumentasi Terintegrasi pada Menu Help (`DocNote` & `Changelog`)**:
@@ -54,9 +51,13 @@ NotepadNext-MacOS v0.15-08 adalah rilis fitur dan stabilitas besar yang menghadi
 
 #### 🛠️ Diperbaiki & Diperkuat
 
+- **Perbaikan Crash Fatal Asersi Qt::UniqueConnection pada Pengecekan Pembaruan Otomatis**:
+  - Mengatasi crash fatal `SIGABRT` (`qt_assert_x`) pada Qt 6 di `MainWindow::checkForUpdates(bool silent)` yang dipicu oleh kombinasi `Qt::UniqueConnection` bersama lambda/functor saat timer startup 15 detik berjalan di latar belakang. Menggantikannya dengan slot fungsi anggota privat `checkForUpdatesFinishedSilent(const QString &url)` serta menambahkan pemutusan koneksi eksplisit sebelum koneksi baru dan pengecekan pointer null defensif pada `app->getSettings()`.
 - **Pembersihan Jalan Pintas Ganda pada Menu Desktop FreeBSD & Linux (Packaging Fix)**:
-  - Memperbaiki masalah jalan pintas (shortcut) yang menjadi ganda pada menu aplikasi saat dikompilasi di FreeBSD, Linux, maupun pada paket build Linux (.deb dan .rpm), dengan menstandarisasikan instalasi ke satu berkas kanonikal `NotepadNext.desktop` pada `share/applications` serta menyelaraskan AppStream metadata `launchable desktop-id`.
-
+  - Memperbaiki masalah jalan pintas (shortcut) yang menjadi ganda pada menu aplikasi saat dikompilasi di FreeBSD, Linux, maupun pada paket build Linux (.deb dan .rpm), dengan menstandarisasikan instalasi ke satu berkas kanonikal NotepadNext.desktop pada share/applications serta menyelaraskan AppStream metadata launchable desktop-id.
+- **Standardisasi Toolchain Build ke Unix Makefiles (`make`) & Retry Packaging DMG**:
+  - Menghapus ketergantungan generator Ninja dari skrip build lokal (`scripts/build_all_local_dmgs.sh`) dan panduan instalasi (`doc/Building.md`), menstandarisasikan seluruh alur kompilasi lokal menggunakan CMake dengan generator `Unix Makefiles` dan `make` paralel bawaan sistem untuk keandalan maksimal.
+  - Mengintegrasikan mekanisme percobaan ulang (`retry loop`) hingga 5 kali dengan sinkronisasi filesystem `sync` dan detasemen paksa `hdiutil detach -force` pada pembuatan DMG (`scripts/package-dmg.sh`) untuk meniadakan kegagalan transient `hdiutil: create failed - Resource busy`.
 - **Kompatibilitas Multi-Qt Penuh (Qt 6.5 LTS hingga Qt 6.12)**:
   - Membungkus pemanggilan `QStyleHints::setColorScheme` dalam `#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)` sehingga kompilasi berhasil tanpa eror pada seluruh runner CI GitHub Actions dan distro Linux Qt 6.5 LTS.
 - **Judul Jendela macOS Permanen Dark Aqua**:
@@ -66,8 +67,7 @@ NotepadNext-MacOS v0.15-08 adalah rilis fitur dan stabilitas besar yang menghadi
 - **Gerbang Analisis Statis 100% Zero-Error**:
   - Lulus seluruh validasi `trunk check -y` pada 4.023 berkas dengan 0 isu.
   - Eksekusi `cppcheck` bersih pada seluruh berkas C++ baru dan yang dimodifikasi.
-  - Pembuatan dan verifikasi paket DMG lokal (`NotepadNext-MacOS-0.15-08-9d7f661.dmg`) tervalidasi menggunakan `hdiutil verify`.
-  - Pembersihan skrip Python per ruff pada `scripts/GenerateEnums.py` dan validasi zero diagnostic.
+  - Pembuatan dan verifikasi paket DMG lokal (`NotepadNext-v0.15-08-x64.dmg`) tervalidasi menggunakan `hdiutil verify`.
 
 ---
 
@@ -124,6 +124,13 @@ NotepadNext-MacOS v0.15-08 is a major feature and stability release introducing 
 
 #### 🛠️ Fixed & Hardened
 
+- **Fatal Qt::UniqueConnection Assertion Crash Fix in Automatic Update Check**:
+  - Fixed fatal `SIGABRT` (`qt_assert_x`) on Qt 6 in `MainWindow::checkForUpdates(bool silent)` triggered by combining `Qt::UniqueConnection` with a lambda functor when the 15-second background startup timer triggers. Replaced with private member slot `checkForUpdatesFinishedSilent(const QString &url)`, added prior slot disconnection, and added defensive pointer checks for `app->getSettings()`.
+- **Duplicate Desktop Shortcut Elimination on FreeBSD & Linux Builds (Packaging Fix)**:
+  - Fixed duplicate application menu shortcuts appearing when compiling on FreeBSD or Linux, or installing Linux build artifacts (.deb and .rpm), by standardizing installation to a single canonical NotepadNext.desktop entry in share/applications and synchronizing the AppStream launchable desktop-id.
+- **Build Toolchain Standardization to Unix Makefiles (`make`) & DMG Packaging Retry Loop**:
+  - Eliminated Ninja build generator dependency from local build scripts (`scripts/build_all_local_dmgs.sh`) and build documentation (`doc/Building.md`), standardizing all local build pipelines on CMake with native `Unix Makefiles` (`make`) for robust, deterministic multi-core compilation.
+  - Integrated an automated 5-attempt retry loop with filesystem sync and forced detach in `scripts/package-dmg.sh`, eliminating transient macOS `hdiutil: create failed - Resource busy` packaging failures.
 - **Full Multi-Qt Build Compatibility (Qt 6.5 LTS through Qt 6.12)**:
   - Wrapped `QStyleHints::setColorScheme` calls in `#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)`, preventing build failures on Qt 6.5 LTS Linux runners and backward-compatible environments.
 - **Permanent macOS Dark Aqua Titlebar**:
@@ -134,8 +141,7 @@ NotepadNext-MacOS v0.15-08 is a major feature and stability release introducing 
   - Cleared all findings across `trunk check -y`, validating 4,023 files with 0 issues.
   - Clean `cppcheck` execution across all newly added and modified C++ source and header files.
   - Complete elimination of shadow parameter warnings and loop modernized to standard STL algorithms (`std::any_of`, `std::all_of`, `std::find_if`, `std::transform`).
-  - Built and verified local DMG release (`NotepadNext-MacOS-0.15-08-9d7f661.dmg`) with `hdiutil verify` cryptographic checksum validation.
-  - Cleaned Python scripts per ruff in `scripts/GenerateEnums.py` with zero diagnostic errors.
+  - Built and verified local DMG release (`NotepadNext-v0.15-08-x64.dmg`) with `hdiutil verify` cryptographic checksum validation.
 
 ---
 

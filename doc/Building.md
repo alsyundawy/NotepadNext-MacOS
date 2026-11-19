@@ -46,8 +46,8 @@ export EXTRA_PLATFORM_PLUGINS="libqwayland-generic.so"
 
 sudo apt update
 sudo apt install -y \
+  build-essential \
   cmake \
-  ninja-build \
   file \
   libxkbcommon-dev \
   libxkbcommon-x11-0 \
@@ -71,7 +71,7 @@ sudo apt install -y \
   qt6-base-private-dev
 
 cmake -S . -B build \
-    -G Ninja \
+    -G "Unix Makefiles" \
     -DCMAKE_BUILD_TYPE=Release \
     -DAPP_DISTRIBUTION=$DISTRIBUTION
 cmake --build build --target appimage --parallel
@@ -83,11 +83,11 @@ To build Notepad Next on macOS (Apple Silicon or Intel):
 
 ```bash
 # 1. Install build prerequisites via Homebrew
-brew install cmake ninja qt@6
+brew install cmake qt@6
 
 # 2. Configure build directory with CMake
 cmake -S . -B build \
-    -G Ninja \
+    -G "Unix Makefiles" \
     -DCMAKE_BUILD_TYPE=Release \
     -DAPP_DISTRIBUTION=dmg \
     -DCMAKE_PREFIX_PATH="$(brew --prefix qt@6)"

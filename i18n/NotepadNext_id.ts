@@ -3119,38 +3119,38 @@ Entropi Shannon: %12
         <translation>Zoom: %1%</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="3462"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="3473"/>
         <source>Preview Markdown in New Tab</source>
         <translation>Pratinjau Markdown di Tab Baru</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="3468"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="3479"/>
         <source>Preview HTML in New Tab</source>
         <translation>Pratinjau HTML di Tab Baru</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="3474"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="3485"/>
         <source>Preview in Default Browser</source>
         <translation>Pratinjau di Peramban Standar</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="3520"/>
         <location filename="../src/dialogs/MainWindow.cpp" line="3531"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="3542"/>
         <source>Documentation Error</source>
         <translation>Kesalahan Dokumentasi</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="3521"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="3532"/>
         <source>Unable to locate DOCNOTE.md on disk or in application resources.</source>
         <translation>Tidak dapat menemukan DOCNOTE.md pada disk atau dalam sumber daya aplikasi.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="3532"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="3543"/>
         <source>Unable to locate CHANGELOG.md on disk or in application resources.</source>
         <translation>Tidak dapat menemukan CHANGELOG.md pada disk atau dalam sumber daya aplikasi.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="3719"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="3730"/>
         <source>Show / Hide Notepad Next</source>
         <translation>Tampilkan / Sembunyikan Notepad Next</translation>
     </message>

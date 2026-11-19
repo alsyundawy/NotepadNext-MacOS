@@ -3369,38 +3369,38 @@ Shannon Entropy: %12
         <translation>Zoom: %1%</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="3462"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="3473"/>
         <source>Preview Markdown in New Tab</source>
         <translation>Preview Markdown in New Tab</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="3468"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="3479"/>
         <source>Preview HTML in New Tab</source>
         <translation>Preview HTML in New Tab</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="3474"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="3485"/>
         <source>Preview in Default Browser</source>
         <translation>Preview in Default Browser</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="3520"/>
         <location filename="../src/dialogs/MainWindow.cpp" line="3531"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="3542"/>
         <source>Documentation Error</source>
         <translation>Documentation Error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="3521"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="3532"/>
         <source>Unable to locate DOCNOTE.md on disk or in application resources.</source>
         <translation>Unable to locate DOCNOTE.md on disk or in application resources.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="3532"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="3543"/>
         <source>Unable to locate CHANGELOG.md on disk or in application resources.</source>
         <translation>Unable to locate CHANGELOG.md on disk or in application resources.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="3719"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="3730"/>
         <source>Show / Hide Notepad Next</source>
         <translation>Show / Hide Notepad Next</translation>
     </message>

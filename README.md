@@ -221,7 +221,7 @@ sudo zypper install ./notepadnext-0.15-08-1.x86_64.rpm
 >   - **Linux**: Ubuntu 22.04 / 24.04 LTS, Debian 12 / 13, Fedora 40 / 41 / 42, RHEL 9 / 10, openSUSE 15.6 / Tumbleweed, Arch Linux (`x86_64` & `aarch64`).
 > - **Packaging Formats**: macOS Application Bundle (`.dmg`), Debian Package (`.deb`), Red Hat Package Manager (`.rpm`).
 > - **GUI Framework**: Qt 6.5, 6.8 LTS, 6.10, 6.11, or 6.12 with `Qt6Core5Compat`.
-> - **Build Tools**: CMake 3.21+, Ninja, and C++20 compiler (`AppleClang`, `GCC 11+`, or `Clang 14+`).
+> - **Build Tools**: CMake 3.21+, Make (Unix Makefiles), and C++20 compiler (`AppleClang`, `GCC 11+`, or `Clang 14+`).
 > - **System Integration Helpers**:
 >   - macOS: `duti` (optional, for LaunchServices file associations).
 >   - Linux: `xdg-utils`, `update-alternatives` (Debian/Ubuntu), or `alternatives` (Fedora/RHEL/openSUSE).
@@ -233,7 +233,7 @@ sudo zypper install ./notepadnext-0.15-08-1.x86_64.rpm
 >   - **Linux**: Ubuntu 22.04 / 24.04 LTS, Debian 12 / 13, Fedora 40 / 41 / 42, RHEL 9 / 10, openSUSE 15.6 / Tumbleweed, Arch Linux (`x86_64` & `aarch64`).
 > - **Format Paket**: macOS Application Bundle (`.dmg`), Debian Package (`.deb`), Red Hat Package Manager (`.rpm`).
 > - **Framework GUI**: Qt 6.5, 6.8 LTS, 6.10, 6.11, atau 6.12 dengan `Qt6Core5Compat`.
-> - **Build Tools**: CMake 3.21+, Ninja, dan C++20 compiler (`AppleClang`, `GCC 11+`, atau `Clang 14+`).
+> - **Build Tools**: CMake 3.21+, Make (Unix Makefiles), dan C++20 compiler (`AppleClang`, `GCC 11+`, atau `Clang 14+`).
 > - **Integrasi Sistem**:
 >   - macOS: `duti` (opsional, untuk pemetaan asosiasi file LaunchServices).
 >   - Linux: `xdg-utils`, `update-alternatives` (Debian/Ubuntu), atau `alternatives` (Fedora/RHEL/openSUSE).

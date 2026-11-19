@@ -554,6 +554,7 @@ While macOS uses LaunchServices and UTI structures, Linux desktop environments a
 ## 24. FreeBSD/Linux Single Canonical Desktop Entry & Qt 6 UniqueConnection Crash Remediation (v0.15-08)
 
 ### 1. Single Canonical Desktop Entry Standardization (`NotepadNext.desktop`)
+
 - **Problem**: When compiling or installing on FreeBSD or Linux distributions (via source, `.deb`, or `.rpm`), duplicate application launcher entries appeared in desktop menus (GNOME, KDE Plasma, XFCE, Cinnamon, MATE, LXQt) due to concurrent installation of `NotepadNext.desktop` and `com.github.alsyundawy.NotepadNext.desktop`.
 - **Solution**:
   - Standardized on a single canonical `NotepadNext.desktop` installed to `share/applications/` in `cmake/PackagingLinux.cmake`.
@@ -562,6 +563,7 @@ While macOS uses LaunchServices and UTI structures, Linux desktop environments a
   - Updated `NotepadNext-Default-Editor-Linux.sh` and `scripts/NotepadNext-Default-Editor-Linux.sh` to target `NotepadNext.desktop` without generating redundant symlinks.
 
 ### 2. Qt 6 `Qt::UniqueConnection` Assertion Crash Resolution (`MainWindow::checkForUpdates`)
+
 - **Problem**: In Qt 6, `Qt::UniqueConnection` strictly enforces that the connected slot is a member function pointer of a `QObject` subclass. Combining `Qt::UniqueConnection` with a lambda functor inside `MainWindow::checkForUpdates(bool silent)` triggered a fatal runtime abort (`Q_ASSERT_X` / `SIGABRT`) when the 15-second background update timer fired on application launch.
 - **Solution**:
   - Replaced the lambda connection with a dedicated private member slot: `void checkForUpdatesFinishedSilent(const QString &url)`.
@@ -575,13 +577,13 @@ While macOS uses LaunchServices and UTI structures, Linux desktop environments a
 
 To provide complete feature and architecture documentation parity across macOS and Linux, the repository documentation suite was systematically expanded with 5 dedicated technical guides adapted and customized from `SparkNotePad`:
 
-| Document                                                                       | Target Platform   | Primary Focus & Coverage                                                                                                                                        |
-| :----------------------------------------------------------------------------- | :---------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [`doc/BUILD_UBUNTU_DEBIAN.md`](BUILD_UBUNTU_DEBIAN.md)                         | Ubuntu / Debian   | Native toolchain setup, Qt6 dependencies, CMake configuration, and deb packaging on Ubuntu 22.04/24.04/26.04 and Debian 12/13.                                  |
-| [`doc/HOMEBREW_DISTRIBUTION.md`](HOMEBREW_DISTRIBUTION.md)                     | macOS             | Third-party Homebrew tap (`alsyundawy/notepadnext`), automated cask maintenance, notarized `.dmg` deployment, and quarantine management.                        |
-| [`doc/LINUX_DEB_RPM_PACKAGING.md`](LINUX_DEB_RPM_PACKAGING.md)                 | Linux (DEB & RPM) | Deep-dive CPack packaging architecture, Debian `t64` transition, RPM 64-bit SONAME resolution, APT vs. DNF dependency modeling, and single canonical desktop entry.       |
-| [`doc/MACOS_CODESIGN_AND_NOTARIZATION.md`](MACOS_CODESIGN_AND_NOTARIZATION.md) | macOS             | Gatekeeper quarantine analysis, Apple Developer ID codesigning, `notarytool` submission, stapling, and end-user xattr removal.                                  |
-| [`doc/PLATFORM_SUPPORT.md`](PLATFORM_SUPPORT.md)                               | Cross-Platform    | Tier 1 through Tier 4 support matrix spanning macOS 11.0–26.0 (Apple Silicon/Intel), Linux distributions (Debian, Ubuntu, Fedora, openSUSE, Arch), and FreeBSD. |
+| Document                                                                       | Target Platform   | Primary Focus & Coverage                                                                                                                                            |
+| :----------------------------------------------------------------------------- | :---------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [`doc/BUILD_UBUNTU_DEBIAN.md`](BUILD_UBUNTU_DEBIAN.md)                         | Ubuntu / Debian   | Native toolchain setup, Qt6 dependencies, CMake configuration, and deb packaging on Ubuntu 22.04/24.04/26.04 and Debian 12/13.                                      |
+| [`doc/HOMEBREW_DISTRIBUTION.md`](HOMEBREW_DISTRIBUTION.md)                     | macOS             | Third-party Homebrew tap (`alsyundawy/notepadnext`), automated cask maintenance, notarized `.dmg` deployment, and quarantine management.                            |
+| [`doc/LINUX_DEB_RPM_PACKAGING.md`](LINUX_DEB_RPM_PACKAGING.md)                 | Linux (DEB & RPM) | Deep-dive CPack packaging architecture, Debian `t64` transition, RPM 64-bit SONAME resolution, APT vs. DNF dependency modeling, and single canonical desktop entry. |
+| [`doc/MACOS_CODESIGN_AND_NOTARIZATION.md`](MACOS_CODESIGN_AND_NOTARIZATION.md) | macOS             | Gatekeeper quarantine analysis, Apple Developer ID codesigning, `notarytool` submission, stapling, and end-user xattr removal.                                      |
+| [`doc/PLATFORM_SUPPORT.md`](PLATFORM_SUPPORT.md)                               | Cross-Platform    | Tier 1 through Tier 4 support matrix spanning macOS 11.0–26.0 (Apple Silicon/Intel), Linux distributions (Debian, Ubuntu, Fedora, openSUSE, Arch), and FreeBSD.     |
 
 ### Technical Enhancements & Linter Rectification
 
@@ -609,4 +611,4 @@ A systematic engineering audit was conducted across all 14 pillars of software q
 11. **Maintainability Review (PASS)**: CISQ / ISO 5055 compliance; modular partitioning across `decorators/`, `dialogs/`, `docks/`, `features/`, `utils/`, and `widgets/`.
 12. **Scalability Review (PASS)**: 64-bit `Sci::Position` supports multi-gigabyte files; ADS multi-window docking architecture scales seamlessly across multi-monitor setups.
 13. **Readability Review (PASS)**: Adherence to Google C++ Style Guide and `.clang-format`; self-documenting method identifiers and clean architectural comments.
-14. **Empirical Verification Gate (PASS)**: 0 errors reported by `actionlint` on all `.github/workflows/*.yml`; 0 errors on `shellcheck`; 0 errors on `python3 -m py_compile scripts/*.py`; clean CMake 4.4.5 & Ninja build configuration with Exit Code 0.
+14. **Empirical Verification Gate (PASS)**: 0 errors reported by `actionlint` on all `.github/workflows/*.yml`; 0 errors on `shellcheck`; 0 errors on `python3 -m py_compile scripts/*.py`; clean CMake 4.4.5 & Make (Unix Makefiles) build configuration with Exit Code 0.
