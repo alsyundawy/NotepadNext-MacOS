@@ -3242,17 +3242,17 @@ void MainWindow::checkForUpdates(bool silent)
     QSimpleUpdater::getInstance()->checkForUpdates(url);
 
     if (!silent) {
+        disconnect(QSimpleUpdater::getInstance(), &QSimpleUpdater::checkingFinished, this, &MainWindow::checkForUpdatesFinishedSilent);
         connect(QSimpleUpdater::getInstance(), &QSimpleUpdater::checkingFinished, this, &MainWindow::checkForUpdatesFinished, Qt::UniqueConnection);
     }
     else {
-        connect(QSimpleUpdater::getInstance(), &QSimpleUpdater::checkingFinished, this, [this](const QString &finishUrl) {
-            if (QSimpleUpdater::getInstance()->getUpdateAvailable(finishUrl)) {
-                checkForUpdatesFinished(finishUrl);
-            }
-        }, Qt::UniqueConnection);
+        disconnect(QSimpleUpdater::getInstance(), &QSimpleUpdater::checkingFinished, this, &MainWindow::checkForUpdatesFinished);
+        connect(QSimpleUpdater::getInstance(), &QSimpleUpdater::checkingFinished, this, &MainWindow::checkForUpdatesFinishedSilent, Qt::UniqueConnection);
     }
 
-    app->getSettings()->setValue(QStringLiteral("App/LastUpdateCheck"), QDateTime::currentDateTime());
+    if (app && app->getSettings()) {
+        app->getSettings()->setValue(QStringLiteral("App/LastUpdateCheck"), QDateTime::currentDateTime());
+    }
 #else
     Q_UNUSED(silent);
 #endif
@@ -3270,6 +3270,17 @@ void MainWindow::checkForUpdatesFinished(const QString &url)
 
     UpdateDialog dlg(available, latestVer, currentVer, downloadUrl, changelog, openUrl, this);
     dlg.exec();
+#else
+    Q_UNUSED(url);
+#endif
+}
+
+void MainWindow::checkForUpdatesFinishedSilent(const QString &url)
+{
+#if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
+    if (QSimpleUpdater::getInstance()->getUpdateAvailable(url)) {
+        checkForUpdatesFinished(url);
+    }
 #else
     Q_UNUSED(url);
 #endif

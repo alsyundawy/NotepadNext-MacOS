@@ -201,6 +201,7 @@ private slots:
     void tabBarRightClicked(const ScintillaNext *editor);
     void languageMenuTriggered() const;
     void checkForUpdatesFinished(const QString &url);
+    void checkForUpdatesFinishedSilent(const QString &url);
     void activateEditor(ScintillaNext *editor);
 
 private:

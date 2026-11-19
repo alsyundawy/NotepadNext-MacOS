@@ -51,6 +51,8 @@ NotepadNext-MacOS v0.15-08 adalah rilis fitur dan stabilitas besar yang menghadi
 
 #### 🛠️ Diperbaiki & Diperkuat
 
+- **Perbaikan Crash Fatal Asersi Qt::UniqueConnection pada Pengecekan Pembaruan Otomatis**:
+  - Mengatasi crash fatal `SIGABRT` (`qt_assert_x`) pada Qt 6 di `MainWindow::checkForUpdates(bool silent)` yang dipicu oleh kombinasi `Qt::UniqueConnection` bersama lambda/functor saat timer startup 15 detik berjalan di latar belakang. Menggantikannya dengan slot fungsi anggota privat `checkForUpdatesFinishedSilent(const QString &url)` serta menambahkan pemutusan koneksi eksplisit sebelum koneksi baru dan pengecekan pointer null defensif pada `app->getSettings()`.
 - **Pembersihan Jalan Pintas Ganda pada Menu Desktop FreeBSD & Linux (Packaging Fix)**:
   - Memperbaiki masalah jalan pintas (shortcut) yang menjadi ganda pada menu aplikasi saat dikompilasi di FreeBSD, Linux, maupun pada paket build Linux (.deb dan .rpm), dengan menstandarisasikan instalasi ke satu berkas kanonikal NotepadNext.desktop pada share/applications serta menyelaraskan AppStream metadata launchable desktop-id.
 - **Kompatibilitas Multi-Qt Penuh (Qt 6.5 LTS hingga Qt 6.12)**:

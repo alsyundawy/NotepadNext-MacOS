@@ -94,6 +94,9 @@ NotepadNext-MacOS v0.15-08 adalah rilis fitur dan stabilitas besar yang menghadi
 
 18. Eliminasi Jalan Pintas Ganda pada Menu Desktop FreeBSD & Linux:
     - Menstandarisasikan instalasi ke satu entri berkas kanonikal NotepadNext.desktop pada share/applications serta menyelaraskan AppStream metadata launchable desktop-id, mencegah kemunculan pintasan ganda pada menu desktop saat dikompilasi di FreeBSD, Linux, maupun pada instalasi paket build Linux (.deb dan .rpm).
+
+19. Perbaikan Crash Qt::UniqueConnection pada Pengecekan Pembaruan Otomatis:
+    - Menggantikan lambda functor dengan pointer member function slot privat checkForUpdatesFinishedSilent pada MainWindow::checkForUpdates() serta menambahkan pemutusan koneksi (disconnect) sebelum menghubungkan kembali, menyelesaikan kegagalan fatal asersi Qt 6 (qt_assert_x) dan penghentian SIGABRT saat pengecekan pembaruan otomatis di latar belakang.
 """
 
 DOCNOTE_EN = """# Documentation Note (DOCNOTE) — NotepadNext-MacOS v0.15-08 (English)
@@ -178,6 +181,9 @@ NotepadNext-MacOS v0.15-08 is a premier enterprise release introducing cutting-e
 
 18. Duplicate Desktop Shortcut Elimination on FreeBSD & Linux Builds:
     - Standardized installation to a single canonical NotepadNext.desktop entry in share/applications and synchronized AppStream launchable desktop-id, preventing duplicate launcher shortcuts in desktop menus when compiling on FreeBSD or Linux, or installing Linux build artifacts (.deb and .rpm).
+
+19. Qt::UniqueConnection Assert Crash Resolution in Automatic Update Check:
+    - Replaced functor lambda with dedicated private member slot pointer checkForUpdatesFinishedSilent in MainWindow::checkForUpdates() alongside prior slot disconnection, resolving Qt 6 fatal assertion abort (qt_assert_x / SIGABRT) during silent background update checks on application launch.
 """
 
 CHANGELOG_ID = """# Catatan Perubahan (Changelog) — NotepadNext For MacOS
@@ -233,6 +239,8 @@ NotepadNext-MacOS v0.15-08 adalah rilis fitur dan stabilitas besar yang menghadi
 
 #### 🛠️ Diperbaiki & Diperkuat
 
+- **Perbaikan Crash Fatal Asersi Qt::UniqueConnection pada Pengecekan Pembaruan Otomatis**:
+  - Mengatasi crash fatal `SIGABRT` (`qt_assert_x`) pada Qt 6 di `MainWindow::checkForUpdates(bool silent)` yang dipicu oleh kombinasi `Qt::UniqueConnection` bersama lambda/functor saat timer startup 15 detik berjalan di latar belakang. Menggantikannya dengan slot fungsi anggota privat `checkForUpdatesFinishedSilent(const QString &url)` serta menambahkan pemutusan koneksi eksplisit sebelum koneksi baru dan pengecekan pointer null defensif pada `app->getSettings()`.
 - **Pembersihan Jalan Pintas Ganda pada Menu Desktop FreeBSD & Linux (Packaging Fix)**:
   - Memperbaiki masalah jalan pintas (shortcut) yang menjadi ganda pada menu aplikasi saat dikompilasi di FreeBSD, Linux, maupun pada paket build Linux (.deb dan .rpm), dengan menstandarisasikan instalasi ke satu berkas kanonikal NotepadNext.desktop pada share/applications serta menyelaraskan AppStream metadata launchable desktop-id.
 - **Kompatibilitas Multi-Qt Penuh (Qt 6.5 LTS hingga Qt 6.12)**:
@@ -300,6 +308,8 @@ NotepadNext-MacOS v0.15-08 is a major feature and stability release introducing 
 
 #### 🛠️ Fixed & Hardened
 
+- **Fatal Qt::UniqueConnection Assertion Crash Fix in Automatic Update Check**:
+  - Fixed fatal `SIGABRT` (`qt_assert_x`) on Qt 6 in `MainWindow::checkForUpdates(bool silent)` triggered by combining `Qt::UniqueConnection` with a lambda functor when the 15-second background startup timer triggers. Replaced with private member slot `checkForUpdatesFinishedSilent(const QString &url)`, added prior slot disconnection, and added defensive pointer checks for `app->getSettings()`.
 - **Duplicate Desktop Shortcut Elimination on FreeBSD & Linux Builds (Packaging Fix)**:
   - Fixed duplicate application menu shortcuts appearing when compiling on FreeBSD or Linux, or installing Linux build artifacts (.deb and .rpm), by standardizing installation to a single canonical NotepadNext.desktop entry in share/applications and synchronizing the AppStream launchable desktop-id.
 - **Full Multi-Qt Build Compatibility (Qt 6.5 LTS through Qt 6.12)**:

@@ -87,6 +87,8 @@ This release successfully completes all 8 architectural phases defined in `PLAN_
 - **Streamlined Bilingual Localization**: Cleaned translation catalog to focus strictly on English (`en`) and Indonesian (`id`) with 100% translation completion (0 unfinished), removing obsolete language files.
 - **Text-Only Preferences Tabs**: Cleaned all tab headers in `PreferencesDialog` to present purely textual titles without icons or emojis.
 - **GitHub Actions CI/CD Concurrency & Compatibility**: Added workflow-level concurrency control (`cancel-in-progress: true`), wrapped `QStyleHints::setColorScheme` in `#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)` ensuring complete compilation across Qt 6.5, 6.8, 6.10, 6.11, and 6.12.
+- **Duplicate Desktop Shortcut Elimination (FreeBSD & Linux)**: Standardized desktop installation to single canonical `NotepadNext.desktop` in `share/applications` and synchronized AppStream metadata, eliminating duplicate application menu shortcuts.
+- **Qt::UniqueConnection Assert Crash Fix (Auto-Updater)**: Replaced functor lambda with dedicated private member slot `checkForUpdatesFinishedSilent(const QString &url)` in `MainWindow::checkForUpdates(bool silent)`, resolving Qt 6 fatal assertion abort (`qt_assert_x` / `SIGABRT`) during silent background update checks.
 
 ---
 
