@@ -1836,7 +1836,7 @@
     <string>Show detected encoding details, confidence, and conversion options</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Alt+Shift+E</string>
+    <string notr="true">Ctrl+Alt+Shift+E</string>
    </property>
   </action>
   <action name="actionConvertToUtf8">
@@ -1844,7 +1844,7 @@
     <string>Convert to &amp;UTF-8</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Alt+U</string>
+    <string notr="true">Ctrl+Alt+U</string>
    </property>
   </action>
   <action name="actionConvertToUtf8Bom">
@@ -1857,7 +1857,7 @@
     <string>Convert to &amp;ANSI (Windows-1252)</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Alt+A</string>
+    <string notr="true">Ctrl+Alt+A</string>
    </property>
   </action>
   <action name="actionConvertToUtf16Le">
@@ -1970,7 +1970,7 @@
     <string>Evaluate Math Expression</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Shift+M</string>
+    <string notr="true">Ctrl+Shift+M</string>
    </property>
   </action>
   <action name="actionCompareActiveFiles">

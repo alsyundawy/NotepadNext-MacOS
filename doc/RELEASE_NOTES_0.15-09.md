@@ -66,10 +66,9 @@ This release successfully completes all 6 architectural phases defined in the Ro
      - TypeScript, Dart, Zig, Mojo, Solidity, Julia, Kotlin, LLVM IR, WebAssembly (WAT), Crystal, Cangjie.
      - Dockerfile, Terraform, Bicep, Crontab, Configuration File (conf), TOML, JSON5, Protobuf.
      - Elixir, Clojure, F#, Racket, Raku, OCaml, Stata, GDScript, Modula, GLSL, HLSL, AsciiDoc, BibTeX, GraphQL, Mermaid, Gettext PO, POV-Ray, Troff, Eiffel, Groovy, Haxe, Hex Dump.
-10. **Phase 10: Smart Auto-Highlighting & Thermal Guard (`SmartHighlighter` & `HighlightedScrollBar`)**:
-    - Added 100ms debouncing (`debounceTimer`) to `SmartHighlighter` eliminating CPU runaway and Mac overheating during rapid typing/selection.
-    - Viewport-constrained search for files > 1MB or > 5000 lines with a 1500 match safety cap.
-    - Precalculated track metrics in `HighlightedScrollBar` for smooth, zero-latency rendering.
+10. **Phase 10: Full Document Smart Auto-Highlighting & Ergonomics (`SmartHighlighter` & `HighlightedScrollBar`)**:
+    - Added 100ms debouncing (`debounceTimer`) to `SmartHighlighter` eliminating CPU spikes during rapid keystrokes while maintaining unconstrained full-document search across all file sizes without line or match limits.
+    - Precalculated track metrics in `HighlightedScrollBar` for smooth, zero-latency rendering of scrollbar markers across the entire document buffer.
 11. **Phase 11: Build Toolchain Modernization & Ninja Prohibition**:
     - Total and permanent elimination of the legacy Ninja generator across all build scripts, IDE configurations, and documentation.
     - CMake top-level `FATAL_ERROR` guard blocking Ninja generator invocations, strictly enforcing standard `Unix Makefiles` (`make -j6`).
@@ -89,7 +88,16 @@ This release successfully completes all 6 architectural phases defined in the Ro
 
 ---
 
-## 📦 Distribution Packages
+## 📦 Distribution Packages (Full 58-Asset Matrix)
 
-- **macOS Disk Image**: `NotepadNext-v0.15-09-x64.dmg` (Bzip2 UDBZ ultra-compressed, ~35 MB).
-- **Checksums**: Recorded in `build-dmg/SHA256SUMS_0.15-09.txt`.
+- **macOS Universal & Versioned Disk Images (28 DMGs)**:
+  - Canonical: `NotepadNext-v0.15-09-x64.dmg`, `NotepadNext-v0.15-x64.dmg`, `NotepadNext-v0.15-09-arm64.dmg`, `NotepadNext-v0.15-arm64.dmg`
+  - Multi-Qt Matrix: Qt 6.5, Qt 6.8, Qt 6.10, Qt 6.11, Qt 6.12 across x64 and arm64
+- **Linux Packages (26 Packages)**:
+  - Debian (`.deb`): `notepadnext_0.15-09_amd64.deb`, `arm64.deb`, plus Qt 6.5–6.12 matrix
+  - RedHat / Fedora (`.rpm`): `notepadnext-0.15-09-1.x86_64.rpm`, `aarch64.rpm`, plus Qt 6.5–6.12 matrix
+- **Integration Scripts & Reports**:
+  - `NotepadNext-Default-Editor.sh` (macOS default editor script)
+  - `NotepadNext-Default-Editor-Linux.sh` (Linux MIME association script)
+  - `0.15-09-*-test-report.log` (Verification test report)
+  - `SHA256SUMS_0.15-09.txt` (Complete SHA-256 digests)
