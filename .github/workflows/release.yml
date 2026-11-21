@@ -184,6 +184,7 @@ jobs:
             libxcb-cursor0 libxcb-glx0 libxcb-icccm4 libxcb-image0 \
             libxcb-keysyms1 libxcb-randr0 libxcb-render0 \
             libxcb-render-util0 libxcb-shape0 libxcb-sync1 libxcb-xfixes0 \
+            libssl-dev \
             rpm dpkg-dev
           if [ "${{ matrix.runs_on }}" = "ubuntu-22.04" ]; then
             sudo apt-get install -y --no-install-recommends g++-12 gcc-12
