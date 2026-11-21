@@ -57,10 +57,23 @@ This release successfully completes all 6 architectural phases defined in the Ro
 7. **Phase 7: Workspace System Transfer & Portable Bundles (`NotepadNextTransferManager` & `TransferBundleDialog`)**:
    - Portable `.npnbundle` workspace archive export and restoration across macOS, FreeBSD, and Linux.
    - Includes preferences, custom themes, sessions, and scripts with SHA-256 integrity validation and optional AES-256-CBC encryption.
-8. **Phase 8: Build Toolchain Modernization & Ninja Prohibition**:
-   - Total and permanent elimination of the legacy Ninja generator across all build scripts, IDE configurations, and documentation.
-   - CMake top-level `FATAL_ERROR` guard blocking Ninja generator invocations, strictly enforcing standard `Unix Makefiles` (`make -j6`).
-   - Hardened OpenSSL 3.x include paths on macOS (`${OPENSSL_INCLUDE_DIR}` and `/usr/local/opt/openssl@3/include`).
+8. **Phase 8: Scintilla 5.6.9 & Lexilla 5.5.5 Engine Modernization**:
+   - Upgraded core Scintilla editing engine from v5.6.7 to v5.6.9 LTS, and Lexilla lexer library from v5.5.4 to v5.5.5 LTS.
+   - Enforced UTF-8 codeUnits bounds protection in `PlatQt.cpp` (`std::min(fit, ui + codeUnits)`).
+   - Hardened Lua 5.5.1 runtime.
+9. **Phase 9: 42 Modern Programming Language Syntaxes & Lexers**:
+   - Expanded language definitions to 134 total programming and configuration languages:
+     - TypeScript, Dart, Zig, Mojo, Solidity, Julia, Kotlin, LLVM IR, WebAssembly (WAT), Crystal, Cangjie.
+     - Dockerfile, Terraform, Bicep, Crontab, Configuration File (conf), TOML, JSON5, Protobuf.
+     - Elixir, Clojure, F#, Racket, Raku, OCaml, Stata, GDScript, Modula, GLSL, HLSL, AsciiDoc, BibTeX, GraphQL, Mermaid, Gettext PO, POV-Ray, Troff, Eiffel, Groovy, Haxe, Hex Dump.
+10. **Phase 10: Smart Auto-Highlighting & Thermal Guard (`SmartHighlighter` & `HighlightedScrollBar`)**:
+    - Added 100ms debouncing (`debounceTimer`) to `SmartHighlighter` eliminating CPU runaway and Mac overheating during rapid typing/selection.
+    - Viewport-constrained search for files > 1MB or > 5000 lines with a 1500 match safety cap.
+    - Precalculated track metrics in `HighlightedScrollBar` for smooth, zero-latency rendering.
+11. **Phase 11: Build Toolchain Modernization & Ninja Prohibition**:
+    - Total and permanent elimination of the legacy Ninja generator across all build scripts, IDE configurations, and documentation.
+    - CMake top-level `FATAL_ERROR` guard blocking Ninja generator invocations, strictly enforcing standard `Unix Makefiles` (`make -j6`).
+    - Hardened OpenSSL 3.x include paths on macOS (`${OPENSSL_INCLUDE_DIR}` and `/usr/local/opt/openssl@3/include`).
 
 ---
 

@@ -26,6 +26,16 @@ NotepadNext-MacOS v0.15-09 is a major productivity and stability release featuri
     - *Radix & Text Tab*: Radix conversions (Bin, Oct, Dec, Hex), ASCII-to-Hex tables, Title Case, Invert Case, and Sentence Case.
     - *Crypto & Security Tab*: NIST-standard password strength evaluation and password-based HTML AES encryption/decryption.
     - *Code Formatting & Minification Tab*: Fast lossless minifiers and pretty-printers for JSON, XML, HTML, CSS, JavaScript, JWT token parsers, and UUID v4 generators.
+- **Scintilla 5.6.9 & Lexilla 5.5.5 Core Engine Modernization**:
+  - Upgraded core Scintilla editing engine from v5.6.7 to v5.6.9 with macOS Retina subpixel anti-aliasing patches and UTF-8 codeUnits bounds protection in `PlatQt.cpp`.
+  - Upgraded Lexilla library from v5.5.4 to v5.5.5 supporting state-of-the-art lexers.
+  - Hardened Lua 5.5.1 runtime with secure sandbox execution.
+- **Enrichment of 42 Modern Programming Languages & Lexers**:
+  - Integrated 42 new language definitions into `src/languages/`, `src/scripts.qrc`, and `src/scripts/init.lua` (TypeScript, Dart, Zig, Mojo, Solidity, Julia, Kotlin, LLVM IR, WebAssembly Text/WAT, Crystal, Cangjie, Dockerfile, Terraform, Bicep, Crontab, TOML, JSON5, Protobuf, Elixir, Clojure, F#, Racket, Raku, OCaml, Stata, GDScript, Modula, GLSL, HLSL, AsciiDoc, BibTeX, GraphQL, Mermaid, Gettext PO, POV-Ray, Troff, Eiffel, Groovy, Haxe, Hex Dump).
+- **Auto Highlighting Refinements & Mac Overheating Prevention (`SmartHighlighter` & `HighlightedScrollBar`)**:
+  - Added 100ms debouncing (`debounceTimer`) to `SmartHighlighter` eliminating CPU spikes and preventing Mac overheating during rapid typing and selection changes.
+  - Constrained search range for large files (> 1MB or > 5000 lines) with a safety cap of 1500 matches to prevent UI thread locks.
+  - Optimized scrollbar track line calculations in `HighlightedScrollBar` for smooth, lag-free visual marker rendering.
 - **Real-time Live Log Tail Monitoring (`TailMonitoringManager` & `TailOptionsDialog`)**:
   - Native non-blocking `tail -f` streaming of disk log files without modal reload prompts.
   - Configurable polling intervals (250ms, 500ms, 750ms, 1s, 2s, 5s).

@@ -3,7 +3,7 @@
  * Copyright 2019-2026 Justin Dailey
  * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
- * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
+ * ALSYUNDAWY IT SOLUTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,9 +24,7 @@
 
 #include "EditorDecorator.h"
 
-
-class SmartHighlighter : public EditorDecorator
-{
+class SmartHighlighter : public EditorDecorator {
     Q_OBJECT
 
 public:
@@ -34,10 +32,12 @@ public:
 
 private:
     void highlightCurrentView();
-    int indicator;
+    int indicator{0};
+    bool m_hasHighlights{false};
+    class QTimer *debounceTimer{nullptr};
 
 public slots:
     void notify(const Scintilla::NotificationData *pscn) override;
 };
 
-#endif // SMARTHIGHLIGHTER_H
+#endif  // SMARTHIGHLIGHTER_H

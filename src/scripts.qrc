@@ -88,5 +88,47 @@
         <file>languages/markdown.lua</file>
         <file>languages/nix.lua</file>
         <file>languages/abaqus.lua</file>
-    </qresource>
+        <file>languages/dart.lua</file>
+        <file>languages/toml.lua</file>
+        <file>languages/typescript.lua</file>
+        <file>languages/zig.lua</file>
+        <file>languages/mojo.lua</file>
+        <file>languages/solidity.lua</file>
+        <file>languages/julia.lua</file>
+        <file>languages/docker.lua</file>
+        <file>languages/terraform.lua</file>
+        <file>languages/protobuf.lua</file>
+        <file>languages/mermaid.lua</file>
+        <file>languages/kotlin.lua</file>
+        <file>languages/graphql.lua</file>
+        <file>languages/wat.lua</file>
+        <file>languages/bicep.lua</file>
+            <file>languages/asciidoc.lua</file>
+        <file>languages/bibtex.lua</file>
+        <file>languages/clojure.lua</file>
+        <file>languages/conf.lua</file>
+        <file>languages/crontab.lua</file>
+        <file>languages/eiffel.lua</file>
+        <file>languages/elixir.lua</file>
+        <file>languages/fsharp.lua</file>
+        <file>languages/gdscript.lua</file>
+        <file>languages/glsl.lua</file>
+        <file>languages/groovy.lua</file>
+        <file>languages/haxe.lua</file>
+        <file>languages/hex.lua</file>
+        <file>languages/hlsl.lua</file>
+        <file>languages/modula.lua</file>
+        <file>languages/ocaml.lua</file>
+        <file>languages/po.lua</file>
+        <file>languages/pov.lua</file>
+        <file>languages/racket.lua</file>
+        <file>languages/raku.lua</file>
+        <file>languages/stata.lua</file>
+        <file>languages/systemverilog.lua</file>
+        <file>languages/troff.lua</file>
+        <file>languages/crystal.lua</file>
+        <file>languages/cangjie.lua</file>
+        <file>languages/llvm.lua</file>
+        <file>languages/json5.lua</file>
+</qresource>
 </RCC>

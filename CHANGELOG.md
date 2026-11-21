@@ -26,6 +26,16 @@ NotepadNext-MacOS v0.15-09 adalah rilis peningkatan produktivitas dan stabilitas
     - *Tab Radix & Teks*: Konversi basis bilangan (Bin, Oct, Dec, Hex), tabel ASCII-ke-Hex, Title Case, Invert Case, dan Sentence Case.
     - *Tab Crypto & Keamanan*: Evaluasi kekuatan kata sandi berbasis standar NIST serta enkripsi/dekripsi HTML berbasis sandi AES.
     - *Tab Format & Minifikasi Kode*: Minifier dan pretty-printer nir-rugi cepat untuk JSON, XML, HTML, CSS, JavaScript, parser header/payload token JWT, serta generator UUID v4.
+- **Modernisasi Engine Scintilla 5.6.9 & Lexilla 5.5.5**:
+  - Pembaruan engine Scintilla dari v5.6.7 ke v5.6.9 dengan patch anti-aliasing Retina macOS dan perlindungan batas UTF-8 codeUnits di `PlatQt.cpp`.
+  - Pembaruan pustaka Lexilla dari v5.5.4 ke v5.5.5 dengan dukungan lexer mutakhir.
+  - Lua 5.5.1 terintegrasi secara native dengan sandbox yang diperkeras.
+- **Ekspansi 42 Bahasa Pemrograman & Lexer Baru**:
+  - Menambahkan 42 berkas definisi bahasa baru pada `src/languages/`, `src/scripts.qrc`, dan `src/scripts/init.lua` (TypeScript, Dart, Zig, Mojo, Solidity, Julia, Kotlin, LLVM IR, WebAssembly Text/WAT, Crystal, Cangjie, Dockerfile, Terraform, Bicep, Crontab, TOML, JSON5, Protobuf, Elixir, Clojure, F#, Racket, Raku, OCaml, Stata, GDScript, Modula, GLSL, HLSL, AsciiDoc, BibTeX, GraphQL, Mermaid, Gettext PO, POV-Ray, Troff, Eiffel, Groovy, Haxe, Hex Dump).
+- **Penyempurnaan Auto Highlighting & Pencegahan Overheating (`SmartHighlighter` & `HighlightedScrollBar`)**:
+  - Menambahkan debounce 100ms (`debounceTimer`) pada `SmartHighlighter` untuk mencegah pemborosan CPU dan menjaga suhu Mac tetap dingin saat kursor bergerak atau seleksi teks.
+  - Membatasi rentang pencarian highlight pada berkas besar (> 1MB atau > 5000 baris) dengan batas aman 1500 matches untuk mencegah freezing UI.
+  - Optimalisasi perhitungan metrik track baris pada `HighlightedScrollBar` untuk render yang halus dan responsif.
 - **Pemantauan Log Real-time Tanpa Blokir (`TailMonitoringManager` & `TailOptionsDialog`)**:
   - Mode monitoring langsung `tail -f` untuk berkas log di disk tanpa dialog peringatan modal reload.
   - Interval polling dinamis yang dapat dikonfigurasi (250ms, 500ms, 750ms, 1s, 2s, 5s).

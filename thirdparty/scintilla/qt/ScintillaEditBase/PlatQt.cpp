@@ -668,8 +668,8 @@ void SurfaceImpl::MeasureWidths(const Font *font,
 	tlay.endLayout();
 	if (mode.codePage == SC_CP_UTF8) {
 		int fit = su.size();
-		int ui = 0;
-		size_t i = 0;
+		int ui=0;
+		size_t i=0;
 		while (ui < fit && i < text.length()) {
 			const unsigned char uch = static_cast<unsigned char>(text[i]);
 			unsigned int byteCount = UTF8BytesOfLead[uch];
@@ -688,7 +688,7 @@ void SurfaceImpl::MeasureWidths(const Font *font,
 		XYPOSITION lastPos = 0;
 		if (i > 0)
 			lastPos = positions[i-1];
-		while (i < text.length()) {
+		while (i<text.length()) {
 			positions[i++] = lastPos;
 		}
 	} else if (mode.codePage) {
@@ -776,8 +776,8 @@ void SurfaceImpl::MeasureWidthsUTF8(const Font *font,
 	QTextLine tl = tlay.createLine();
 	tlay.endLayout();
 	int fit = su.size();
-	int ui = 0;
-	size_t i = 0;
+	int ui=0;
+	size_t i=0;
 	while (ui < fit && i < text.length()) {
 		const unsigned char uch = static_cast<unsigned char>(text[i]);
 		unsigned int byteCount = UTF8BytesOfLead[uch];
@@ -796,7 +796,7 @@ void SurfaceImpl::MeasureWidthsUTF8(const Font *font,
 	XYPOSITION lastPos = 0;
 	if (i > 0)
 		lastPos = positions[i-1];
-	while (i < text.length()) {
+	while (i<text.length()) {
 		positions[i++] = lastPos;
 	}
 }

@@ -3,7 +3,7 @@
  * Copyright 2019-2026 Justin Dailey
  * Copyright 2026 Harry Dertin Sutisna <alsyundawy@gmail.com>
  * https://github.com/alsyundawy/NotepadNext-MacOS
- * ALSYUNDAWY IT SOLUSTION | https://www.alsyundawy.com
+ * ALSYUNDAWY IT SOLUTION | https://www.alsyundawy.com
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,11 +27,9 @@
 
 #include "EditorDecorator.h"
 
-
 class HighlightedScrollBar;
 
-class HighlightedScrollBarDecorator : public EditorDecorator
-{
+class HighlightedScrollBarDecorator : public EditorDecorator {
     Q_OBJECT
 
 public:
@@ -45,9 +43,7 @@ private:
     HighlightedScrollBar *scrollBar;
 };
 
-
-class HighlightedScrollBar : public QScrollBar
-{
+class HighlightedScrollBar : public QScrollBar {
     Q_OBJECT
 
 public:
@@ -57,18 +53,18 @@ protected:
     void paintEvent(QPaintEvent *event) override;
 
 private:
-    void drawMarker(QPainter &p, int marker) const;
-    void drawIndicator(QPainter &p, int indicator) const;
-    void drawCursors(QPainter &p) const;
+    void drawMarker(QPainter &p, int marker, sptr_t totalLines, int trackH, int arrowH) const;
+    void drawIndicator(QPainter &p, int indicator, sptr_t totalLines, int trackH, int arrowH) const;
+    void drawCursors(QPainter &p, sptr_t totalLines, int trackH, int arrowH) const;
 
-    void drawTickMark(QPainter &p, int y, int height, const QColor &color) const;
+    void drawTickMark(QPainter &p, int y, int height, const QColor &color, int arrowH) const;
 
-    int posToScrollBarY(int pos) const;
-    int lineToScrollBarY(int line) const;
-    int scrollbarArrowHeight() const;
+    [[nodiscard]] int posToScrollBarY(sptr_t pos, sptr_t totalLines, int trackH) const;
+    [[nodiscard]] static int lineToScrollBarY(sptr_t line, sptr_t totalLines, int trackH);
+    [[nodiscard]] int scrollbarArrowHeight() const;
 
     ScintillaNext *editor;
     int smartHighlighterIndicator;
 };
 
-#endif // HIGHLIGHTEDSCROLLBAR_H
+#endif  // HIGHLIGHTEDSCROLLBAR_H

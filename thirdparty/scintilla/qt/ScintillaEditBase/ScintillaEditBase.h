@@ -158,7 +158,6 @@ private:
 
 	Scintilla::Position preeditPos;
 	QString preeditString;
-	QString lastPreedit; // composition text currently shown, if any
 
 	int wheelDelta;
 
