@@ -27,10 +27,18 @@ TabColorManager *TabColorManager::instance() {
 }
 
 QList<TabColorPreset> TabColorManager::presets() {
-    return {{tr("Red"), QColor(QStringLiteral("#cf222e"))},    {tr("Orange"), QColor(QStringLiteral("#bc4c00"))},
-            {tr("Yellow"), QColor(QStringLiteral("#bf8700"))}, {tr("Green"), QColor(QStringLiteral("#1a7f37"))},
-            {tr("Cyan"), QColor(QStringLiteral("#0969da"))},   {tr("Blue"), QColor(QStringLiteral("#0550ae"))},
-            {tr("Purple"), QColor(QStringLiteral("#8250df"))}, {tr("Magenta"), QColor(QStringLiteral("#bf3989"))}};
+    return {
+        {tr("Red"), QColor(QStringLiteral("#cf222e"))},
+        {tr("Orange"), QColor(QStringLiteral("#bc4c00"))},
+        {tr("Yellow"), QColor(QStringLiteral("#bf8700"))},
+        {tr("Green"), QColor(QStringLiteral("#1a7f37"))},
+        {tr("Teal"), QColor(QStringLiteral("#1b7c83"))},
+        {tr("Cyan"), QColor(QStringLiteral("#0969da"))},
+        {tr("Blue"), QColor(QStringLiteral("#0550ae"))},
+        {tr("Purple"), QColor(QStringLiteral("#8250df"))},
+        {tr("Magenta"), QColor(QStringLiteral("#bf3989"))},
+        {tr("Coral"), QColor(QStringLiteral("#d0395b"))}
+    };
 }
 
 QList<QColor> TabColorManager::paletteColors() {

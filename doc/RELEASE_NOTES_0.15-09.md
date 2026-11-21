@@ -46,13 +46,21 @@ This release successfully completes all 6 architectural phases defined in the Ro
    - Native Scintilla margin 3 change tracking with continuous bar markers (`SC_MARK_BAR`).
    - Four distinct status states: unsaved modifications (amber `#E5A50A`), saved changes (emerald green `#22C55E`), reverted to origin (sky blue `#3B82F6`), and reverted to modified (orange-red `#F97316`).
    - Jump to next/previous change navigation.
-6. **Phase 6: Tab Ergonomics, Custom Coloring & In-Place Rename (`ClosedTabsManager`, `TabColorManager`, `RenameTabDialog`)**:
-   - 25-item LIFO closed-tab recovery stack (`Ctrl+Shift+T` / `Cmd+Shift+T`) restoring cursor positions, visible lines, and untitled buffers.
-   - Tab right-click context menu palette coloring with 8 studio presets (Red, Orange, Yellow, Green, Cyan, Blue, Purple, Magenta) and clear color action.
-   - In-place file renaming dialog with cross-platform character sanitization and real-time disk collision protection (`Shift+Cmd+R` / tab context menu Rename).
+6. **Phase 6: Tab Ergonomics, Custom Coloring & In-Place Rename (`ClosedTabsManager`, `TabColorManager`, `RenameTabDialog`, `DockedEditor`)**:
+   - 25-item LIFO closed-tab recovery stack (`Ctrl+Shift+T` / `Cmd+Shift+T`) restoring cursor positions, visible lines, untitled buffers, and associated tab color.
+   - Dedicated keyboard shortcut deconfliction: `Ctrl+Shift+T` (`⇧⌘T`) reserved exclusively for restoring closed tabs; Theme Switcher reassigned to `Ctrl+Alt+Shift+T` (`⌥⇧⌘T`); Rename tab bound to `Ctrl+Shift+R` (`⇧⌘R`).
+   - Tab right-click context menu palette coloring with 10 vibrant studio presets (Red, Orange, Yellow, Green, Teal, Cyan, Blue, Purple, Magenta, Coral) with circular anti-aliased preview indicators.
+   - Interactive `QColorDialog` Custom Color picker ("Custom Color...") allowing arbitrary RGB/Hex selection.
+   - Dynamic stylesheet integration in `DockedEditor` (`CDockWidgetTab`) with theme palette reactivity (`ThemeManager::themeChanged` and `paletteChanged`), applying top accent borders, translucent tints, and active tab highlights across all 25 SubnetCalc theme palettes.
+   - Automatic color migration on in-place file rename (`editorRenamed`).
+   - In-place file renaming dialog with cross-platform character sanitization and real-time disk collision protection (`Ctrl+Shift+R` / `⇧⌘R` / tab context menu Rename).
 7. **Phase 7: Workspace System Transfer & Portable Bundles (`NotepadNextTransferManager` & `TransferBundleDialog`)**:
    - Portable `.npnbundle` workspace archive export and restoration across macOS, FreeBSD, and Linux.
    - Includes preferences, custom themes, sessions, and scripts with SHA-256 integrity validation and optional AES-256-CBC encryption.
+8. **Phase 8: Build Toolchain Modernization & Ninja Prohibition**:
+   - Total and permanent elimination of the legacy Ninja generator across all build scripts, IDE configurations, and documentation.
+   - CMake top-level `FATAL_ERROR` guard blocking Ninja generator invocations, strictly enforcing standard `Unix Makefiles` (`make -j6`).
+   - Hardened OpenSSL 3.x include paths on macOS (`${OPENSSL_INCLUDE_DIR}` and `/usr/local/opt/openssl@3/include`).
 
 ---
 
@@ -60,15 +68,15 @@ This release successfully completes all 6 architectural phases defined in the Ro
 
 | Metric / Check | Target Standard | Status | Evidence |
 | :--- | :--- | :--- | :--- |
-| **Compiler Build Gate** | 0 compiler errors, 0 warnings | ✅ PASSED | `make -j8` compiled with 100% clean exit |
+| **Compiler Build Gate** | 0 compiler errors, 0 warnings | ✅ PASSED | `make -j6` (Unix Makefiles) compiled with 100% clean exit |
 | **Binary Verification** | Native execution check | ✅ PASSED | `NotepadNext 0.15-09` verified on macOS x86_64 |
 | **Zero Disruption Bar** | 25 SubnetCalc Themes & 28 Icon Packs | ✅ PASSED | 100% preserved and fully operational |
 | **POSIX Sandbox Security** | Private snapshots permissions | ✅ PASSED | Strictly 0700 dir / 0600 file modes |
-| **Local DMG Packaging** | Verified DMG `< 35 MB` | ✅ PASSED | `NotepadNext-v0.15-09-x64.dmg` verified via `hdiutil` |
+| **Local DMG Packaging** | Verified DMG `< 35 MB` | ✅ PASSED | `NotepadNext-v0.15-09-x64.dmg` (35 MB) verified via `hdiutil` |
 
 ---
 
 ## 📦 Distribution Packages
 
-- **macOS Disk Image**: `NotepadNext-v0.15-09-x64.dmg` (Bzip2 UDBZ ultra-compressed, ~33 MB).
+- **macOS Disk Image**: `NotepadNext-v0.15-09-x64.dmg` (Bzip2 UDBZ ultra-compressed, ~35 MB).
 - **Checksums**: Recorded in `build-dmg/SHA256SUMS_0.15-09.txt`.

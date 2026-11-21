@@ -28,6 +28,9 @@
 #include "DockAreaTitleBar.h"
 
 #include "ScintillaNext.h"
+#include "features/TabColorManager.h"
+#include "features/ThemeManager.h"
+#include "features/ThemePaletteData.h"
 
 #include <QUuid>
 #include <algorithm>
@@ -80,6 +83,25 @@ DockedEditor::DockedEditor(QWidget *parent) : QObject(parent)
         connect(DockArea->titleBar()->tabBar(), &ads::CDockAreaTabBar::tabMoved, this, [this](int /*from*/, int /*to*/) {
             emit editorOrderChanged();
         });
+    });
+
+    connect(TabColorManager::instance(), &TabColorManager::tabColorChanged, this, [this](const QString &filePath, const QColor &color) {
+        for (auto *ed : editors()) {
+            if (ed) {
+                const QString key = ed->isFile() ? ed->getFilePath() : ed->getName();
+                if (key == filePath) {
+                    setEditorTabColor(ed, color);
+                }
+            }
+        }
+    });
+
+    connect(ThemeManager::instance(), &ThemeManager::themeChanged, this, [this](bool /*isDark*/) {
+        refreshAllEditorTabColors();
+    });
+
+    connect(ThemeManager::instance(), &ThemeManager::paletteChanged, this, [this](const QString & /*paletteId*/) {
+        refreshAllEditorTabColors();
     });
 }
 
@@ -358,7 +380,144 @@ void DockedEditor::addEditor(ScintillaNext *editor)
 
     latestDockArea = dockManager->addDockWidget(ads::CenterDockWidgetArea, dockWidget, currentDockArea());
 
+    const QString pathKey = editor->isFile() ? editor->getFilePath() : editor->getName();
+    const QColor initialColor = TabColorManager::instance()->tabColor(pathKey);
+    if (initialColor.isValid()) {
+        setEditorTabColor(editor, initialColor);
+    }
+
     emit editorAdded(editor);
+}
+
+void DockedEditor::setEditorTabColor(ScintillaNext *editor, const QColor &color)
+{
+    if (!editor) {
+        return;
+    }
+    editor->setQtProperty("tabColor", color);
+    auto *dockWidget = qobject_cast<ads::CDockWidget *>(editor->parentWidget());
+    if (!dockWidget || !dockWidget->tabWidget()) {
+        return;
+    }
+
+    if (!color.isValid()) {
+        dockWidget->tabWidget()->setStyleSheet(QString());
+        return;
+    }
+
+    const bool isDark = ThemeManager::instance()->isDarkActive();
+    const ThemePalette *pal = ThemeManager::instance()->currentPalette();
+    const QString cardBg =
+        pal ? QString::fromLatin1(pal->card) : (isDark ? QStringLiteral("#282c34") : QStringLiteral("#ffffff"));
+    const QString borderCol =
+        pal ? QString::fromLatin1(pal->border) : (isDark ? QStringLiteral("#3e4451") : QStringLiteral("#d0d7de"));
+    const QString textPri =
+        pal ? QString::fromLatin1(pal->txtPri) : (isDark ? QStringLiteral("#e6edf3") : QStringLiteral("#24292f"));
+    const QString textSec =
+        pal ? QString::fromLatin1(pal->txtSec) : (isDark ? QStringLiteral("#8b949e") : QStringLiteral("#57606a"));
+    const QString colorHex = color.name(QColor::HexRgb);
+    const int r = color.red();
+    const int g = color.green();
+    const int b = color.blue();
+
+    const QString style =
+        QStringLiteral(
+            "ads--CDockWidgetTab {"
+            "  background-color: rgba(%1, %2, %3, 0.16);"
+            "  margin-top: 2px;"
+            "  margin-right: 2px;"
+            "  border: 1px solid rgba(%1, %2, %3, 0.35);"
+            "  border-top: 3px solid %4;"
+            "  border-bottom: 1px solid %5;"
+            "  padding: 3px 10px 2px 10px;"
+            "  border-top-left-radius: 5px;"
+            "  border-top-right-radius: 5px;"
+            "}"
+            "ads--CDockWidgetTab ads--CElidingLabel,"
+            "ads--CDockWidgetTab QLabel {"
+            "  color: %6;"
+            "  font-weight: 500;"
+            "}"
+            "ads--CDockWidgetTab:hover[activeTab=\"false\"] {"
+            "  background-color: rgba(%1, %2, %3, 0.26);"
+            "  border: 1px solid rgba(%1, %2, %3, 0.55);"
+            "  border-top: 3px solid %4;"
+            "}"
+            "ads--CDockWidgetTab:hover[activeTab=\"false\"] ads--CElidingLabel,"
+            "ads--CDockWidgetTab:hover[activeTab=\"false\"] QLabel {"
+            "  color: %7;"
+            "}"
+            "ads--CDockWidgetTab[activeTab=\"true\"] {"
+            "  background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 rgba(%1, %2, %3, 0.30), stop:1 %8);"
+            "  border-left: 1px solid rgba(%1, %2, %3, 0.45);"
+            "  border-right: 1px solid rgba(%1, %2, %3, 0.45);"
+            "  border-top: 4px solid %4;"
+            "  border-bottom: 1px solid %8;"
+            "  padding-bottom: 4px;"
+            "  margin-top: 0px;"
+            "}"
+            "ads--CDockWidgetTab[activeTab=\"true\"] ads--CElidingLabel,"
+            "ads--CDockWidgetTab[activeTab=\"true\"] QLabel {"
+            "  color: %7;"
+            "  font-weight: 600;"
+            "}"
+            "ads--CDockWidgetTab[activeTab=\"true\"][focused=\"true\"],"
+            "ads--CDockWidgetTab[focused=\"true\"] {"
+            "  background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 rgba(%1, %2, %3, 0.40), stop:1 %8);"
+            "  border-left: 1px solid rgba(%1, %2, %3, 0.60);"
+            "  border-right: 1px solid rgba(%1, %2, %3, 0.60);"
+            "  border-top: 4px solid %4;"
+            "  border-bottom: 1px solid %8;"
+            "  padding-bottom: 4px;"
+            "  margin-top: 0px;"
+            "}"
+            "ads--CDockWidgetTab[activeTab=\"true\"][focused=\"true\"] ads--CElidingLabel,"
+            "ads--CDockWidgetTab[activeTab=\"true\"][focused=\"true\"] QLabel,"
+            "ads--CDockWidgetTab[focused=\"true\"] ads--CElidingLabel,"
+            "ads--CDockWidgetTab[focused=\"true\"] QLabel {"
+            "  color: %7;"
+            "  font-weight: 600;"
+            "}"
+            "#tabCloseButton {"
+            "  background: transparent;"
+            "  margin-bottom: 1px;"
+            "  margin-left: 4px;"
+            "  border: none;"
+            "  padding: 0px;"
+            "  border-radius: 3px;"
+            "}"
+            "#tabCloseButton:hover {"
+            "  background-color: rgba(235, 87, 87, 0.35);"
+            "  color: #eb5757;"
+            "}"
+            "#tabCloseButton:pressed {"
+            "  background-color: #eb5757;"
+            "  color: #ffffff;"
+            "}")
+            .arg(QString::number(r), QString::number(g), QString::number(b), colorHex, borderCol)
+            .arg(textSec, textPri, cardBg);
+
+    dockWidget->tabWidget()->setStyleSheet(style);
+}
+
+QColor DockedEditor::editorTabColor(const ScintillaNext *editor) const
+{
+    if (!editor) {
+        return QColor();
+    }
+    return editor->qtProperty("tabColor").value<QColor>();
+}
+
+void DockedEditor::refreshAllEditorTabColors()
+{
+    for (auto *ed : editors()) {
+        if (ed) {
+            const QColor c = editorTabColor(ed);
+            if (c.isValid()) {
+                setEditorTabColor(ed, c);
+            }
+        }
+    }
 }
 
 void DockedEditor::editorRenamed(const ScintillaNext *editor) const
@@ -368,6 +527,11 @@ void DockedEditor::editorRenamed(const ScintillaNext *editor) const
     if (auto *dockWidget = qobject_cast<ads::CDockWidget *>(editor->parentWidget())) {
         dockWidget->setWindowTitle(editor->getName());
         dockWidget->tabWidget()->setToolTip(editor->getToolTip());
+    }
+
+    const QColor color = editorTabColor(editor);
+    if (color.isValid() && editor->isFile()) {
+        TabColorManager::instance()->setTabColor(editor->getFilePath(), color);
     }
 }
 

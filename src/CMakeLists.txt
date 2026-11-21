@@ -322,6 +322,8 @@ target_include_directories(NotepadNext
         ${CMAKE_CURRENT_SOURCE_DIR}/utils
         ${CMAKE_CURRENT_SOURCE_DIR}/widgets
         ${CMAKE_CURRENT_SOURCE_DIR}
+        ${OPENSSL_INCLUDE_DIR}
+        /usr/local/opt/openssl@3/include
 )
 
 configure_file(

@@ -1,10 +1,10 @@
-# Documentation Note (DOCNOTE) — NotepadNext-MacOS v0.15-08 (English)
+# Documentation Note (DOCNOTE) — NotepadNext-MacOS v0.15-09 (English)
 
 --------------------------------------------------------------------------------
 ================================================================================
 Application Edition   : NotepadNext For MacOS — Notepad++ Like
-Release Version       : 0.15-08 (Tab Bar Plus, Tabbed Markdown/HTML Preview, 28 Curated Icon Packs, Bilingual Localization en/id, Clean Text-Only Preferences, SubnetCalc-MacOS Attribution & Multi-Qt Compatibility)
-Release Date          : 2026-11-08
+Release Version       : 0.15-09 (Autosave & Crash Recovery, Developer Tools Hub, Live Log Tail Monitoring, POSIX File Inspector, Scintilla Change History, Tab Ergonomics & Color Suite, Ninja Elimination)
+Release Date          : 2026-11-21
 Lead Maintainer       : Harry Dertin Sutisna Alsyundawy (@alsyundawy)
 Organization          : ALSYUNDAWY IT SOLUTION (https://alsyundawy.com)
 Upstream Repository   : https://github.com/dail8859/NotepadNext (Baseline: v0.15)
@@ -19,9 +19,69 @@ License               : GNU General Public License v3.0 (GPL-3.0-or-later)
 
 ---
 
-## 1. Executive Summary (English): Release v0.15-08
+## 1. Executive Summary (English): Release v0.15-09
 
-NotepadNext-MacOS v0.15-08 is a premier enterprise release introducing cutting-edge productivity innovations, deep macOS desktop integration, refined ergonomics, and architectural hardening:
+NotepadNext-MacOS v0.15-09 is a major productivity, developer utilities, and resilience release adapted from sister project SparkNotePad v1.3.8 while strictly preserving 100% of the 25 SubnetCalc-MacOS theme suites, 30 markdown preview themes, and 28 toolbar icon packs:
+
+1. Background Autosave & Crash Recovery System (AutosaveRecoveryManager & CrashRecoveryDialog):
+   - Automatic 10-second non-blocking background snapshot timer for modified and untitled documents.
+   - SHA-256 integrity validation on each snapshot preventing corrupted state restoration.
+   - POSIX 0700/0600 sandbox file modes (~/.local/share/NotepadNext/autosave/).
+   - Startup crash recovery dialog with diff inspection, multi-document selection, and clean discard options.
+
+2. Integrated Developer Tools Hub (DeveloperToolsDialog, DeveloperToolsEngine, CodeCompressPretty):
+   - Dedicated 5-tab utility suite (Ctrl+Alt+D / Cmd+Alt+D):
+     - Hash Tab: MD5, SHA-1, SHA-256, SHA-384, SHA-512, Keccak-256, Keccak-512 with Hex/Base64 outputs, file digest computation, and hash comparator.
+     - MIME & Transcoding Tab: Bidirectional codecs for Base64, URL percent-encoding, HTML entities, and Quoted-Printable.
+     - Radix & Text Tab: Radix conversions (Bin, Oct, Dec, Hex), ASCII-to-Hex tables, Title Case, Invert Case, and Sentence Case.
+     - Crypto & Security Tab: NIST-standard password strength evaluation and password-based HTML AES encryption/decryption.
+     - Code Formatting & Minification Tab: Fast lossless minifiers and pretty-printers for JSON, XML, HTML, CSS, JavaScript, JWT token parsers, and UUID v4 generators.
+
+3. Real-time Live Log Tail Monitoring (TailMonitoringManager & TailOptionsDialog):
+   - Native non-blocking tail -f streaming of disk log files without modal reload prompts.
+   - Configurable polling intervals (250ms, 500ms, 750ms, 1s, 2s, 5s).
+   - Auto-scroll to end tracking with user scroll lock detection.
+   - Read-only write protection lock during active monitoring.
+   - Automatic file truncation and log rotation detection.
+
+4. POSIX File Inspector & Shebang Dialect Engine (PosixFileInspector):
+   - Real-time POSIX file permission inspection (octal 0755/0644/0600 and symbolic rwxr-xr-x).
+   - Instant executable bit toggling (chmod +x / chmod -x) via Tools menu.
+   - Instant timestamp update (touch) preserving existing file contents.
+   - Intelligent script interpreter and dialect detection from first-line shebangs (Bash, Zsh, POSIX sh, Dash, Ksh, FreeBSD rc.d, Python, Lua).
+
+5. Scintilla Change History Tracking Margin (ChangeHistoryDecorator):
+   - Native Scintilla margin 3 change tracking with continuous bar markers (SC_MARK_BAR).
+   - Four distinct status states: unsaved modifications (amber #E5A50A), saved changes (emerald green #22C55E), reverted to origin (sky blue #3B82F6), and reverted to modified (orange-red #F97316).
+
+6. Tab Ergonomics, Interactive Coloring & In-Place Rename (ClosedTabsManager, TabColorManager, RenameTabDialog, DockedEditor):
+   - 25-item LIFO closed-tab recovery stack (Ctrl+Shift+T / Cmd+Shift+T) restoring cursor positions, visible lines, untitled buffers, and associated tab color.
+   - Tab right-click context menu palette coloring with 10 vibrant presets (Red, Orange, Yellow, Green, Teal, Cyan, Blue, Purple, Magenta, Coral) with circular anti-aliased preview indicators.
+   - Interactive QColorDialog Custom Color picker ("Custom Color...") allowing arbitrary RGB/Hex selection.
+   - Dynamic stylesheet integration in DockedEditor (CDockWidgetTab) with theme palette reactivity (ThemeManager::themeChanged and paletteChanged), applying top accent borders, translucent tints, and active tab highlights across all 25 SubnetCalc theme palettes.
+   - Automatic color restoration upon reopening closed tabs and color migration on in-place file rename (editorRenamed).
+   - In-place file renaming dialog with cross-platform character sanitization and real-time disk collision protection (Ctrl+Shift+R / Cmd+Shift+R / tab context menu Rename).
+
+7. Workspace System Transfer & Portable Bundles (NotepadNextTransferManager & TransferBundleDialog):
+   - Portable .npnbundle workspace archive export and restoration across macOS, FreeBSD, and Linux.
+   - Includes preferences, custom themes, sessions, and scripts with SHA-256 integrity validation and optional AES-256-CBC encryption.
+
+8. Permanent Ninja Generator Elimination & Strict Unix Makefiles Enforcement:
+   - Permanently eliminated legacy Ninja generator across all repository files, CMakeLists.txt (FATAL_ERROR), .vscode/settings.json, and local build scripts (scripts/build_all_local_dmgs.sh), enforcing standard Unix Makefiles with make -j6.
+
+9. Keyboard Shortcut Deconfliction:
+   - Exclusively dedicated Ctrl+Shift+T (Cmd+Shift+T) to Restore Recently Closed File, and reassigned Theme Switcher to Ctrl+Alt+Shift+T (Cmd+Alt+Shift+T).
+   - Standardized Ctrl+Shift+R (Cmd+Shift+R) for in-place file rename.
+
+10. OpenSSL 3.x Include Path Resolution on macOS:
+    - Configured ${OPENSSL_INCLUDE_DIR} and /usr/local/opt/openssl@3/include in src/CMakeLists.txt for flawless compilation of transfer manager and developer tools.
+
+11. 100% Theme & Icon Integrity Preservation:
+    - All 25 SubnetCalc theme suites, 30 isolated markdown preview themes, and 28 toolbar icon packs remain 100% intact and functional.
+
+---
+
+## 2. Cumulative Previous Release: Release v0.15-08
 
 1. Persistent Tab Bar Plus (+) Button & Modern Tab Ergonomics:
    - Added a persistent '+' tool button directly on the editor tab bar (DockedEditorTitleBar) with native macOS styling and responsive hover/pressed interaction states.
@@ -61,25 +121,4 @@ NotepadNext-MacOS v0.15-08 is a premier enterprise release introducing cutting-e
     - High-performance live preview dock supporting KaTeX mathematical expressions and Mermaid diagrams, bidirectional scroll synchronization, and export to standalone GitHub-styled HTML and vector PDF via DocumentExportManager.
 
 12. Editor Ergonomics Suite:
-    - AutoClosePairs (intelligent auto-closing of brackets and quotes), MarkOccurrences (Scintilla indicator-based highlight matching across viewport), LogAutoTimestamp (Windows Notepad .LOG header auto-timestamping), and ColorPreviewCallTip (real-time Hex/RGB/HSL/CSS visual calltips and swatches).
-
-13. Text Forensics, Statistics & Cryptographic Hash Integrity:
-    - TokenForensicUtils (Shannon entropy, JWT decoding), DocumentStatisticsDialog (character/word/line analytics), CharacterInfoDialog (in-depth Unicode 16 codepoint inspection), MyersDiffEngine & FileDiffDialog (side-by-side LCS file comparison), and HashIntegrityManager (streaming constant-memory cryptographic digest generation for CRC32, MD5, SHA-1, SHA-256, SHA-512, SHA3).
-
-14. Deep macOS System Integration (76 Document Associations):
-    - Full declaration of 76 programming and configuration file formats with native macOS UTTypes in deploy/macos/info.plist, complete with macOS System Services integration.
-
-15. Permanent macOS Dark Aqua Titlebar:
-    - Enforced NSAppearanceNameDarkAqua via Objective-C Cocoa runtime (objc_msgSend) ensuring window frames and traffic light controls stay dark and sleek in any theme mode.
-
-16. Sub-2ms Fast Theme & Icon Switching:
-    - Optimized icon rasterization via scanline pointer arithmetic (scanLine()), cached theme-adapted icons, and deferred action sync reducing switch latency to under 2 ms.
-
-17. Full Multi-Qt Build Compatibility (Qt 6.5 LTS through Qt 6.12):
-    - Guarded setColorScheme with preprocessor checks (#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)), ensuring complete, warning-free compilation on both legacy and cutting-edge Qt runners.
-
-18. Duplicate Desktop Shortcut Elimination on FreeBSD & Linux Builds:
-    - Standardized installation to a single canonical NotepadNext.desktop entry in share/applications and synchronized AppStream launchable desktop-id, preventing duplicate launcher shortcuts in desktop menus when compiling on FreeBSD or Linux, or installing Linux build artifacts (.deb and .rpm).
-
-19. Qt::UniqueConnection Assert Crash Resolution in Automatic Update Check:
-    - Replaced functor lambda with dedicated private member slot pointer checkForUpdatesFinishedSilent in MainWindow::checkForUpdates() alongside prior slot disconnection, resolving Qt 6 fatal assertion abort (qt_assert_x / SIGABRT) during silent background update checks on application launch.
+    - AutoClosePairs, MarkOccurrences, LogAutoTimestamp, and ColorPreviewCallTip.

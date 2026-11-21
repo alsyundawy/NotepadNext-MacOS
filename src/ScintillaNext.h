@@ -28,6 +28,7 @@
 #include <QDateTime>
 #include <QFile>
 #include <QFileInfo>
+#include <QVariant>
 
 
 
@@ -134,6 +135,13 @@ public:
     void setTemporary(bool temp);
 
     void setFoldMarkers(const QString &type);
+
+    inline bool setQtProperty(const char *propName, const QVariant &value) {
+        return QObject::setProperty(propName, value);
+    }
+    [[nodiscard]] inline QVariant qtProperty(const char *propName) const {
+        return QObject::property(propName);
+    }
 
     QString languageName;
     QByteArray languageSingleLineComment;

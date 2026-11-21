@@ -22,6 +22,7 @@
 #ifndef DOCKEDEDITOR_H
 #define DOCKEDEDITOR_H
 
+#include <QColor>
 #include <QObject>
 #include <QPointer>
 
@@ -50,6 +51,10 @@ public:
     int count() const;
 
     ads::CDockWidget *addTabWidget(QWidget *widget, const QString &title, const QIcon &icon = QIcon(), const QString &toolTip = QString());
+
+    void setEditorTabColor(ScintillaNext *editor, const QColor &color);
+    [[nodiscard]] QColor editorTabColor(const ScintillaNext *editor) const;
+    void refreshAllEditorTabColors();
 
     void splitToRight(const ScintillaNext *editor);
     void splitToBottom(const ScintillaNext *editor);

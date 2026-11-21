@@ -21,6 +21,8 @@
 
 #include "MainWindow.h"
 #include <QtGlobal>
+#include <QColorDialog>
+#include <QPainter>
 #include "AboutDialog.h"
 #include "SaveModifiedDialog.h"
 #include "EncodingSelectionDialog.h"
@@ -243,6 +245,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) : // NOSONAR
     connect(ui->actionSaveAs, &QAction::triggered, this, &MainWindow::saveCurrentFileAsDialog);
     connect(ui->actionSaveCopyAs, &QAction::triggered, this, &MainWindow::saveCopyAsDialog);
     connect(ui->actionSaveAll, &QAction::triggered, this, &MainWindow::saveAll);
+    ui->actionRename->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_R));
     connect(ui->actionRename, &QAction::triggered, this, &MainWindow::renameFile);
 
     connect(ui->actionExportHtml, &QAction::triggered, this, [this]() {
@@ -1516,9 +1519,9 @@ void MainWindow::setupThemeMenu()
         ui->menuBar->addMenu(menuTheme);
     }
 
-    // 1. Open Theme Switcher... (Ctrl+Shift+T / Cmd+Shift+T)
+    // 1. Open Theme Switcher... (Ctrl+Alt+Shift+T / Cmd+Alt+Shift+T)
     actionThemeSwitcher = new QAction(tr("Open Theme Switcher..."), this);
-    actionThemeSwitcher->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_T));
+    actionThemeSwitcher->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::SHIFT | Qt::Key_T));
     connect(actionThemeSwitcher, &QAction::triggered, this, [this]() {
         ThemeSwitcherDialog dlg(this);
         dlg.exec();
@@ -2115,13 +2118,19 @@ void MainWindow::closeFile(ScintillaNext *editor)
         closedInfo.isUntitled = !target->isFile();
         if (target->isFile()) {
             closedInfo.filePath = target->getFilePath();
-            if (TabColorManager::instance()->hasTabColor(target->getFilePath())) {
+            const QColor col = dockedEditor->editorTabColor(target);
+            if (col.isValid()) {
+                closedInfo.tabColor = col;
+            } else if (TabColorManager::instance()->hasTabColor(target->getFilePath())) {
                 closedInfo.tabColor = TabColorManager::instance()->tabColor(target->getFilePath());
             }
         } else {
             closedInfo.untitledName = target->getName();
             closedInfo.untitledContent = QString::fromUtf8(target->get_text_range(0, static_cast<int>(target->length())));
-            if (TabColorManager::instance()->hasTabColor(target->getName())) {
+            const QColor col = dockedEditor->editorTabColor(target);
+            if (col.isValid()) {
+                closedInfo.tabColor = col;
+            } else if (TabColorManager::instance()->hasTabColor(target->getName())) {
                 closedInfo.tabColor = TabColorManager::instance()->tabColor(target->getName());
             }
         }
@@ -3548,21 +3557,67 @@ void MainWindow::tabBarRightClicked(const ScintillaNext *editor)
     }
 
     auto *menu = buildMenu(actionNames);
-    populateTabBarPreviewActions(menu, dockedEditor->getCurrentEditor());
+    auto *targetEd = const_cast<ScintillaNext *>(editor ? editor : dockedEditor->getCurrentEditor());
+    populateTabBarPreviewActions(menu, targetEd);
 
-    if (auto *currEd = dockedEditor->getCurrentEditor()) {
-        const QString tabKey = currEd->isFile() ? currEd->getFilePath() : currEd->getName();
-        auto *colorMenu = menu->addMenu(tr("Tab Color"));
+    if (targetEd) {
+        const QString tabKey = targetEd->isFile() ? targetEd->getFilePath() : targetEd->getName();
+        auto *colorMenu = menu->addMenu(tr("&Tab Color"));
         for (const auto &preset : TabColorManager::presets()) {
             QPixmap pix(14, 14);
-            pix.fill(preset.color);
-            colorMenu->addAction(QIcon(pix), preset.name, this, [tabKey, preset]() {
-                TabColorManager::instance()->setTabColor(tabKey, preset.color);
+            pix.fill(Qt::transparent);
+            {
+                QPainter p(&pix);
+                p.setRenderHint(QPainter::Antialiasing);
+                p.setBrush(preset.color);
+                p.setPen(Qt::NoPen);
+                p.drawEllipse(1, 1, 12, 12);
+            }
+            auto *colorAct = colorMenu->addAction(QIcon(pix), preset.name);
+            connect(colorAct, &QAction::triggered, this, [this, targetEd, tabKey, c = preset.color]() {
+                TabColorManager::instance()->setTabColor(tabKey, c);
+                dockedEditor->setEditorTabColor(targetEd, c);
             });
         }
         colorMenu->addSeparator();
-        colorMenu->addAction(tr("Clear Tab Color"), this, [tabKey]() {
+
+        // Custom Color picker
+        QPixmap customPx(14, 14);
+        customPx.fill(Qt::transparent);
+        {
+            QPainter p(&customPx);
+            p.setRenderHint(QPainter::Antialiasing);
+            p.fillRect(1, 1, 6, 6, QColor(QStringLiteral("#cf222e")));
+            p.fillRect(7, 1, 6, 6, QColor(QStringLiteral("#0969da")));
+            p.fillRect(1, 7, 6, 6, QColor(QStringLiteral("#bf8700")));
+            p.fillRect(7, 7, 6, 6, QColor(QStringLiteral("#1a7f37")));
+        }
+        auto *customColorAct = colorMenu->addAction(QIcon(customPx), tr("&Custom Color..."));
+        connect(customColorAct, &QAction::triggered, this, [this, targetEd, tabKey]() {
+            const QColor currentColor = dockedEditor->editorTabColor(targetEd);
+            const QColor chosen =
+                QColorDialog::getColor(currentColor.isValid() ? currentColor : QColor(QStringLiteral("#0969da")), this,
+                                       tr("Select Tab Color"));
+            if (chosen.isValid()) {
+                TabColorManager::instance()->setTabColor(tabKey, chosen);
+                dockedEditor->setEditorTabColor(targetEd, chosen);
+            }
+        });
+
+        // Clear Tab Color with indicator icon
+        QPixmap clearPx(14, 14);
+        clearPx.fill(Qt::transparent);
+        {
+            QPainter p(&clearPx);
+            p.setRenderHint(QPainter::Antialiasing);
+            p.setPen(QPen(QColor(QStringLiteral("#cf222e")), 1.5));
+            p.drawEllipse(1, 1, 11, 11);
+            p.drawLine(3, 3, 10, 10);
+        }
+        auto *clearColorAct = colorMenu->addAction(QIcon(clearPx), tr("C&lear Tab Color"));
+        connect(clearColorAct, &QAction::triggered, this, [this, targetEd, tabKey]() {
             TabColorManager::instance()->clearTabColor(tabKey);
+            dockedEditor->setEditorTabColor(targetEd, QColor());
         });
     }
 
@@ -3907,6 +3962,7 @@ void MainWindow::reopenClosedTab()
                     ed->gotoPos(info.cursorPosition);
                     if (info.tabColor.isValid()) {
                         TabColorManager::instance()->setTabColor(ed->getName(), info.tabColor);
+                        dockedEditor->setEditorTabColor(ed, info.tabColor);
                     }
                 }
             } else if (!info.filePath.isEmpty()) {
@@ -3915,6 +3971,7 @@ void MainWindow::reopenClosedTab()
                     ed->gotoPos(info.cursorPosition);
                     if (info.tabColor.isValid()) {
                         TabColorManager::instance()->setTabColor(info.filePath, info.tabColor);
+                        dockedEditor->setEditorTabColor(ed, info.tabColor);
                     }
                 }
             }

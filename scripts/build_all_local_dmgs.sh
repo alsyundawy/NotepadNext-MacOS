@@ -55,7 +55,7 @@ for BRANCH in "${BRANCHES[@]}"; do
 		-DCMAKE_C_COMPILER=/usr/bin/clang \
 		-DCMAKE_CXX_COMPILER=/usr/bin/clang++
 
-	ncpu="$(sysctl -n hw.ncpu 2>/dev/null || echo 4)"
+	ncpu=6
 	cmake --build build --target dmg -- -j"${ncpu}"
 
 	DMG_PATH="build/NotepadNext-v${BRANCH}-x64.dmg"

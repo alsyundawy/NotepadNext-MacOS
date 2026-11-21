@@ -795,6 +795,9 @@
    <property name="text">
     <string>Rename...</string>
    </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+Shift+R</string>
+   </property>
   </action>
   <action name="actionReload">
    <property name="icon">

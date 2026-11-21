@@ -41,15 +41,26 @@ NotepadNext-MacOS v0.15-09 adalah rilis peningkatan produktivitas dan stabilitas
   - Pelacakan perubahan baris Scintilla pada margin 3 dengan penanda bilah kontinu (`SC_MARK_BAR`).
   - Empat status visual: perubahan belum disimpan (kuning amber `#E5A50A`), perubahan tersimpan (hijau zamrud `#22C55E`), kembali ke awal (biru langit `#3B82F6`), dan kembali ke modifikasi (oranye kemerahan `#F97316`).
 - **Ergonomi Tab, Pewarnaan Kustom & Ganti Nama Berkas (`ClosedTabsManager`, `TabColorManager`, `RenameTabDialog`)**:
-  - Tumpukan LIFO 25 riwayat tab tertutup (`Ctrl+Shift+T` / `Cmd+Shift+T`) yang memulihkan posisi kursor, baris terlihat, serta konten tab tanpa nama.
-  - Pewarnaan tab individual melalui menu konteks klik-kanan tab dengan 8 palet warna cerah (Merah, Oranye, Kuning, Hijau, Sian, Biru, Ungu, Magenta) dan opsi bersihkan warna.
-  - Dialog ganti nama berkas di tempat (*in-place*) dengan validasi sanitasi karakter lintas-platform dan proteksi konflik nama fisik di disk (`Shift+Cmd+R` / menu Rename).
+  - Tumpukan LIFO 25 riwayat tab tertutup (`Ctrl+Shift+T` / `⇧⌘T`) yang memulihkan posisi kursor, baris terlihat, konten tab tanpa nama, serta warna tab terkait.
+  - Pewarnaan tab individual melalui menu konteks klik-kanan tab dengan 10 palet warna cerah (Merah, Oranye, Kuning, Hijau, Teal, Sian, Biru, Ungu, Magenta, Karang) lengkap dengan ikon pratinjau lingkaran anti-aliasing di menu konteks.
+  - Pemilih warna kustom penuh (*Custom Color...*) berbasis `QColorDialog` untuk memilih sembarang warna RGB/Hex sesuai preferensi pengguna.
+  - Integrasi penataan gaya dinamis `DockedEditor` (`CDockWidgetTab`) yang terhubung langsung dengan sinyal perubahan tema dan palet 25 tema SubnetCalc-MacOS (`ThemeManager::themeChanged` dan `paletteChanged`), menampilkan border atas beraksen 3px/4px, latar belakang transparan adaptif, serta highlight tab aktif yang harmonis.
+  - Pemulihan warna tab otomatis saat membuka kembali tab yang ditutup serta migrasi kunci warna saat berkas diganti namanya (`editorRenamed`).
+  - Dialog ganti nama berkas di tempat (*in-place*) dengan validasi sanitasi karakter lintas-platform dan proteksi konflik nama fisik di disk (`Ctrl+Shift+R` / `⇧⌘R` / menu Rename).
 - **Transfer Ruang Kerja & Bundel Portabel (`NotepadNextTransferManager` & `TransferBundleDialog`)**:
   - Ekspor dan impor seluruh konfigurasi NotepadNext (pengaturan preferensi, tema visual kustom, layout session, dan skrip pengguna) ke dalam arsip portabel `.npnbundle` lintas-platform (macOS, FreeBSD, Linux).
   - Dilengkapi validasi integritas SHA-256 per item, penanganan pencegahan Zip-Slip directory traversal, serta enkripsi opsional berbasis kata sandi AES-256-CBC.
 
 #### 🛡️ Diperbaiki & Diperkuat
 
+- **Peniadaan Permanen Generator Ninja & Penegakan Unix Makefiles**:
+  - Mengeliminasi secara permanen generator build Ninja dari repositori, konfigurasi IDE, dan skrip pembuat DMG (`scripts/build_all_local_dmgs.sh`), menggantikannya dengan standar `Unix Makefiles` (`make -j6`).
+  - Menambahkan perlindungan CMake `FATAL_ERROR` di `CMakeLists.txt` jika Ninja terdeteksi serta konfigurasi permanen `.vscode/settings.json`.
+- **Resolusi Konflik Tombol Pintas (Shortcut Collision)**:
+  - Memisahkan shortcut `Ctrl+Shift+T` (`⇧⌘T`) agar eksklusif untuk *Restore Recently Closed File*, dan memindahkan shortcut *Theme Switcher* ke `Ctrl+Alt+Shift+T` (`⌥⇧⌘T`).
+  - Menetapkan shortcut `Ctrl+Shift+R` (`⇧⌘R`) untuk aksi *Rename...* secara konsisten pada antarmuka pengguna (`MainWindow.ui`) dan binding runtime.
+- **Perbaikan Dependensi Header OpenSSL 3.x pada macOS**:
+  - Menambahkan direktori include OpenSSL (`${OPENSSL_INCLUDE_DIR}` dan `/usr/local/opt/openssl@3/include`) ke target `NotepadNext` di `src/CMakeLists.txt` untuk memastikan kompilasi `NotepadNextTransferManager` dan `DeveloperToolsEngine` sukses di macOS.
 - **Integritas Penuh Tema & Ikon**: Menjamin 100% dari 25 rangkaian tema SubnetCalc-MacOS, 30 tema pratinjau markdown, dan 28 paket ikon toolbar tetap utuh, aktif, dan berjalan sempurna.
 - **Penanganan Sinyal Polimorfik EditorDecorator**: Menjadikan `setEnabled(bool)` virtual pada `EditorDecorator` untuk memastikan keabsahan pewarisan polimorfik pada seluruh dekorator editor.
 - **Pembersihan Kesalahan Akses Properti File Path**: Menstandarisasikan akses file path ScintillaNext menjadi `getFilePath()` pada seluruh utilitas format kode.

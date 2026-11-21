@@ -1,10 +1,10 @@
-# Catatan Rilis Dokumentasi (DOCNOTE) — NotepadNext-MacOS v0.15-08 (Bahasa Indonesia)
+# Catatan Rilis Dokumentasi (DOCNOTE) — NotepadNext-MacOS v0.15-09 (Bahasa Indonesia)
 
 --------------------------------------------------------------------------------
 ================================================================================
 Edisi Aplikasi        : NotepadNext For MacOS — Notepad++ Like
-Versi Rilis           : 0.15-08 (Tab Bar Plus, Pratinjau Markdown/HTML Tabbed, Suite 28 Icon Pack, Lokalisasi Bilingual en/id, Preferensi Teks Murni, Atribusi SubnetCalc-MacOS & Kompatibilitas Multi-Qt)
-Tanggal Rilis         : 2026-11-08
+Versi Rilis           : 0.15-09 (Autosave & Pemulihan Crash, Developer Tools Hub, Pemantauan Log Real-time tail -f, POSIX Inspector, Riwayat Perubahan Scintilla, Suite Ergonomi & Warna Tab, Peniadaan Ninja)
+Tanggal Rilis         : 2026-11-21
 Pengembang / Builder  : Harry Dertin Sutisna Alsyundawy (@alsyundawy)
 Organisasi            : ALSYUNDAWY IT SOLUTION (https://alsyundawy.com)
 Repositori Upstream   : https://github.com/dail8859/NotepadNext (Basis: v0.15)
@@ -19,9 +19,70 @@ Lisensi               : GNU General Public License v3.0 (GPL-3.0-or-later)
 
 ---
 
-## 1. Ringkasan Eksekutif (Bahasa Indonesia): Rilis v0.15-08
+## 1. Ringkasan Eksekutif (Bahasa Indonesia): Rilis v0.15-09
 
-NotepadNext-MacOS v0.15-08 adalah rilis fitur dan stabilitas besar yang menghadirkan inovasi produktivitas terdepan, integrasi mendalam macOS, pemurnian antarmuka, dan pengerasan arsitektur:
+NotepadNext-MacOS v0.15-09 adalah rilis peningkatan produktivitas, utilitas pengembang, dan ketahanan besar yang diadaptasi dari proyek saudara SparkNotePad v1.3.8, dengan komitmen mutlak mempertahankan 100% dari 25 rangkaian tema SubnetCalc-MacOS, 30 tema pratinjau markdown, dan 28 paket ikon toolbar tanpa degradasi apa pun:
+
+1. Sistem Autosave & Pemulihan Crash Latar Belakang (AutosaveRecoveryManager & CrashRecoveryDialog):
+   - Timer snapshot otomatis 10 detik tanpa blokir untuk dokumen yang dimodifikasi maupun tab baru (untitled).
+   - Validasi integritas SHA-256 pada setiap snapshot untuk mencegah pemulihan berkas yang rusak.
+   - Izin berkas POSIX 0700 untuk folder snapshot dan 0600 untuk berkas snapshot (~/.local/share/NotepadNext/autosave/).
+   - Wisaya pemulihan crash otomatis saat startup dengan perbandingan diff, pemilihan multi-dokumen, dan opsi buang (discard).
+
+2. Pusat Utilitas Pengembang Terintegrasi (DeveloperToolsDialog, DeveloperToolsEngine, CodeCompressPretty):
+   - Hub utilitas 5-tab komprehensif (Ctrl+Alt+D / Cmd+Alt+D):
+     - Tab Hash: Komputasi & verifikasi hash MD5, SHA-1, SHA-256, SHA-384, SHA-512, Keccak-256, Keccak-512 dengan output Hex/Base64, digest berkas, dan pembanding hash.
+     - Tab MIME & Transcoding: Enkoder dan dekoder dua arah untuk Base64, URL percent-encoding, entitas HTML, dan Quoted-Printable.
+     - Tab Radix & Teks: Konversi basis bilangan (Bin, Oct, Dec, Hex), tabel ASCII-ke-Hex, Title Case, Invert Case, dan Sentence Case.
+     - Tab Crypto & Keamanan: Evaluasi kekuatan kata sandi standar NIST dan enkripsi/dekripsi HTML berbasis sandi AES.
+     - Tab Format & Minifikasi Kode: Minifier dan pretty-printer nir-rugi untuk JSON, XML, HTML, CSS, JavaScript, parser JWT, dan generator UUID v4.
+
+3. Pemantauan Log Real-time Tanpa Blokir (TailMonitoringManager & TailOptionsDialog):
+   - Mode pemantauan langsung tail -f untuk berkas log di disk tanpa dialog peringatan modal reload.
+   - Interval polling dinamis yang dapat dikonfigurasi (250ms, 500ms, 750ms, 1s, 2s, 5s).
+   - Pelacakan gulir otomatis ke akhir berkas dengan deteksi gulir manual pengguna.
+   - Kunci proteksi tulis read-only selama pemantauan aktif.
+   - Deteksi pemotongan berkas (truncation) dan rotasi log otomatis.
+
+4. Inspektur Berkas POSIX & Mesin Dialek Shebang (PosixFileInspector):
+   - Inspeksi izin berkas POSIX seketika (oktal 0755/0644/0600 dan simbolik rwxr-xr-x).
+   - Pengalihan bit eksekusi langsung (chmod +x / chmod -x) via menu Tools.
+   - Pembaruan timestamp berkas instan (touch) tanpa mengubah isi berkas.
+   - Deteksi cerdas interpreter dan dialek skrip dari shebang (Bash, Zsh, POSIX sh, Dash, Ksh, FreeBSD rc.d, Python, Lua).
+
+5. Margin Pelacakan Riwayat Perubahan Scintilla (ChangeHistoryDecorator):
+   - Pelacakan perubahan baris Scintilla pada margin 3 dengan penanda bilah kontinu (SC_MARK_BAR).
+   - Empat status visual: modifikasi belum disimpan (kuning amber #E5A50A), perubahan tersimpan (hijau zamrud #22C55E), kembali ke awal (biru langit #3B82F6), dan kembali ke modifikasi (oranye kemerahan #F97316).
+
+6. Ergonomi Tab, Pewarnaan Kustom & Ganti Nama Berkas (ClosedTabsManager, TabColorManager, RenameTabDialog, DockedEditor):
+   - Tumpukan LIFO 25 riwayat tab tertutup (Ctrl+Shift+T / Cmd+Shift+T) yang memulihkan posisi kursor, baris terlihat, konten tab tanpa nama, serta warna tab terkait.
+   - Pewarnaan tab individual melalui menu konteks klik-kanan dengan 10 palet warna cerah (Merah, Oranye, Kuning, Hijau, Teal, Sian, Biru, Ungu, Magenta, Karang) lengkap dengan ikon pratinjau lingkaran anti-aliasing.
+   - Dialog pemilih warna kustom penuh (Custom Color...) berbasis QColorDialog untuk memilih sembarang warna RGB/Hex.
+   - Integrasi penataan gaya dinamis DockedEditor (CDockWidgetTab) yang terhubung langsung dengan sinyal perubahan tema dan palet 25 tema SubnetCalc-MacOS (ThemeManager::themeChanged dan paletteChanged), menampilkan border atas beraksen 3px/4px, latar transparan adaptif, dan highlight tab aktif.
+   - Pemulihan warna tab otomatis saat membuka kembali tab tertutup serta migrasi kunci warna saat berkas diganti nama (editorRenamed).
+   - Dialog ganti nama berkas di tempat (in-place) dengan validasi sanitasi karakter lintas-platform dan proteksi konflik nama fisik (Ctrl+Shift+R / Cmd+Shift+R / menu Rename).
+
+7. Transfer Ruang Kerja & Bundel Portabel (NotepadNextTransferManager & TransferBundleDialog):
+   - Ekspor dan impor konfigurasi NotepadNext ke dalam arsip portabel .npnbundle lintas-platform (macOS, FreeBSD, Linux).
+   - Dilengkapi validasi integritas SHA-256 per item, penanganan pencegahan Zip-Slip directory traversal, dan enkripsi opsional AES-256-CBC.
+
+8. Peniadaan Permanen Generator Ninja & Penegakan Unix Makefiles:
+   - Mengeliminasi secara permanen generator build Ninja dari repositori, konfigurasi IDE, dan skrip pembuat DMG (scripts/build_all_local_dmgs.sh), menggantikannya dengan standar Unix Makefiles (make -j6).
+   - Menambahkan pemeriksaan CMake FATAL_ERROR jika generator Ninja digunakan.
+
+9. Resolusi Konflik Tombol Pintas:
+   - Memisahkan shortcut Ctrl+Shift+T (Cmd+Shift+T) eksklusif untuk Restore Recently Closed File, dan memindahkan Theme Switcher ke Ctrl+Alt+Shift+T (Cmd+Alt+Shift+T).
+   - Menetapkan shortcut Ctrl+Shift+R (Cmd+Shift+R) untuk aksi Rename....
+
+10. Perbaikan Dependensi Header OpenSSL 3.x pada macOS:
+    - Menambahkan direktori include OpenSSL (${OPENSSL_INCLUDE_DIR} dan /usr/local/opt/openssl@3/include) ke target NotepadNext di src/CMakeLists.txt.
+
+11. Integritas Penuh Tema & Ikon:
+    - Menjamin 100% dari 25 rangkaian tema SubnetCalc-MacOS, 30 tema pratinjau markdown, dan 28 paket ikon toolbar tetap utuh dan beroperasi sempurna.
+
+---
+
+## 2. Ringkasan Eksekutif Kumulatif: Rilis v0.15-08
 
 1. Tombol Tambah Tab (+) & Ergonomi Tab Modern:
    - Menambahkan tombol '+' persisten pada tab bar editor (DockedEditorTitleBar) dengan estetika native macOS dan status interaksi hover/pressed.
@@ -35,51 +96,28 @@ NotepadNext-MacOS v0.15-08 adalah rilis fitur dan stabilitas besar yang menghadi
    - Memperluas menu Themes dengan submenu pemilihan paket ikon toolbar dan 6 tingkat ukuran ikon (16x16, 20x20, 24x24, 32x32, 48x48, 64x64) dengan tanda centang aktif dan pembaruan visual seketika.
 
 4. Dokumentasi Terintegrasi pada Menu Help (DocNote & Changelog):
-   - Aksi DocNote dan Changelog pada menu Help secara otomatis mencari dan membuka berkas DOCNOTE.md dan CHANGELOG.md langsung di dalam tab editor Scintilla.
+   - Menambahkan aksi DocNote dan Changelog pada menu Help yang secara otomatis membuka berkas DOCNOTE.md dan CHANGELOG.md langsung di dalam tab editor Scintilla.
 
-5. Tab Terdedikasi "Themes & Toolbar" pada Dialog Preferensi:
-   - Dialog preferensi ditata ulang dengan tab berbasis teks murni tanpa ikon atau emoji.
-   - Memindahkan pengaturan tema, toggle mode gelap/terang, opasitas jendela, pemilihan icon pack, dan ukuran ikon ke dalam tab khusus "Themes & Toolbar" lengkap dengan baris pratinjau ikon langsung yang terang dan jelas.
+5. Tab Khusus "Themes & Toolbar" pada Dialog Preferensi:
+   - Merestrukturisasi dialog preferensi dengan antarmuka bertab berbasis teks murni (tanpa ikon/emoji), memindahkan pengaturan tema, toggle mode gelap/terang, opasitas jendela, pemilihan paket ikon, dan penyesuaian ukuran ikon ke dalam tab khusus Themes & Toolbar lengkap dengan baris pratinjau ikon langsung yang terang dan jelas.
 
-6. Installer DMG Bergaya Native macOS Resolusi Tinggi:
-   - Pipeline packaging kustom (generate_dmg_background.py & package-dmg.sh) menghasilkan kanvas DMG 680x440 resolusi tinggi (standard & Retina @2x), slot aplikasi NotepadNext di kiri, symlink /Applications di kanan, indikator drag-and-drop melengkung, ikon volume, dan verifikasi checksum teruji (hdiutil verify).
+6. Presentasi Installer DMG Bergaya Native macOS:
+   - Merancang pipeline pembuatan DMG kustom (generate_dmg_background.py & package-dmg.sh) yang menghasilkan aset latar belakang resolusi tinggi (standard & Retina @2x), geometri jendela (680x440), slot aplikasi NotepadNext di kiri, tautan /Applications di kanan, indikator drag-and-drop melengkung, ikon volume, dan verifikasi checksum citra disk (hdiutil verify).
 
-7. Suite Personalisasi 28 Icon Pack Terpilih (ToolbarIconManager):
-   - Mengintegrasikan koleksi terkurasi 28 paket ikon beresolusi tinggi dan SVG vektor tanpa buram (Modern Ribbon SVG, Fluent, Notepad++ Klasik, ragam Aksara, Retro Windows 7/Aero, dan skeuomorfik WinXP).
-   - Menghapus 10 paket ikon redundan untuk menjaga kerapian dan efisiensi bundle aplikasi.
+7. Suite Personalisasi 28 Icon Pack Terpilih & Manajemen Toolbar (ToolbarIconManager):
+   - Mengintegrasikan koleksi terkurasi 28 paket ikon (Modern Ribbon SVG, Fluent, Notepad++ Klasik, variasi Aksara, Retro Windows 7/Aero, dan skeuomorfik WinXP) secara optimal, menghapus 10 paket ikon redundan. Menambahkan kemampuan pergantian ikon secara langsung melalui menu konteks klik-kanan toolbar dan dialog Preferensi.
 
-8. Pengakuan Atribusi Proyek Donor & Kontributor Tema:
-   - Menyertakan pengakuan atribusi terperinci dan URL resmi untuk SparkNotePad (https://github.com/alsyundawy/SparkNotePad) sebagai donor arsitektur dan fitur utama, serta SubnetCalc-MacOS (https://github.com/alsyundawy/SubnetCalc-MacOS) atas sumbangan 25 rangkaian tema sintaksis dan UI.
+8. Pengakuan Atribusi & Proyek Donor:
+   - Menyertakan tautan resmi dan pengakuan atribusi terperinci untuk proyek saudara SparkNotePad (https://github.com/alsyundawy/SparkNotePad) sebagai donor arsitektur dan fitur utama, serta SubnetCalc-MacOS (https://github.com/alsyundawy/SubnetCalc-MacOS) atas kontribusi 25 tema syntax highlighting dan UI.
 
-9. Pelokalan Bilingual Terpadu (100% Selesai):
-   - Sistem bahasa dirampingkan khusus untuk Bahasa Inggris (en) dan Bahasa Indonesia (id) dengan status 100% tuntas (0 entri tertunda), membersihkan 20 berkas katalog terjemahan usang.
+9. Lokalisasi Bilingual Terpadu & Tab Preferensi Berbasis Teks Murni:
+   - Menyederhanakan sistem translasi hanya pada bahasa Inggris (en) dan bahasa Indonesia (id) dengan penyelesaian 100% tuntas, membersihkan 20 berkas katalog terjemahan usang. Memperbarui seluruh judul tab pada PreferencesDialog menjadi berbasis teks murni tanpa ikon atau emoji.
 
 10. Dialog Kustomisasi Toolbar Interaktif (CustomizeToolbarDialog):
-    - Antarmuka dual-list drag-and-drop untuk menambah, menghapus, mengurutkan aksi toolbar, menyisipkan garis pemisah (separator), dan reset ke default dengan refleksi seketika.
+    - Menghadirkan dialog kustomisasi toolbar interaktif dengan antarmuka dual-list drag-and-drop yang memungkinkan penambahan, pengurangan, pengurutan aksi, penyisipan pemisah (separator), dan reset ke default dengan pembaruan toolbar secara seketika. Dilengkapi pencarian filter aksi dan sinkronisasi otomatis dengan pengaturan aplikasi (Gui/ToolBar).
 
-11. Dock Pratinjau Aman Markdown & Ekspor Dokumen (MarkdownSafePreviewDock):
-    - Pratinjau langsung berkinerja tinggi dengan dukungan rumus matematika KaTeX dan diagram Mermaid, sinkronisasi scroll dua arah, serta ekspor ke HTML mandiri dan PDF vektor via DocumentExportManager.
+11. Dock Pratinjau Aman Markdown & Pipeline Ekspor Dokumen (MarkdownSafePreviewDock):
+    - Menambahkan dock pratinjau langsung berkinerja tinggi untuk dokumen Markdown dan HTML dengan dukungan formula matematika KaTeX dan diagram Mermaid. Mendukung sinkronisasi scroll dua arah antara Scintilla editor dan penampil pratinjau. Dilengkapi DocumentExportManager dan ExportOptionsDialog untuk mengekspor dokumen ke berkas HTML mandiri atau dokumen PDF vektor.
 
 12. Suite Ergonomi Editor:
-    - AutoClosePairs (penutupan otomatis tanda kurung/kutip cerdas), MarkOccurrences (penyorotan seluruh kemunculan token kata), LogAutoTimestamp (pencatatan otomatis stempel waktu berkas .LOG), dan ColorPreviewCallTip (pratinjau swatch warna Hex/RGB/HSL/CSS real-time).
-
-13. Suite Forensik Teks, Statistik & Integritas Hash:
-    - TokenForensicUtils (entropi Shannon, pembaca JWT), DocumentStatisticsDialog (analitik kata/baris/karakter), CharacterInfoDialog (inspeksi mendalam Unicode 16), MyersDiffEngine & FileDiffDialog (perbandingan berkas berdampingan algoritma LCS), dan HashIntegrityManager (pembuatan digest kriptografis streaming CRC32, MD5, SHA-1, SHA-256, SHA-512, SHA3).
-
-14. Integrasi Mendalam macOS (76 Asosiasi Format Berkas):
-    - Deklarasi komprehensif 76 tipe dokumen pemrograman dan konfigurasi serta UTType native di deploy/macos/info.plist, lengkap dengan integrasi macOS System Services.
-
-15. Judul Jendela macOS Permanen Dark Aqua:
-    - Menegakkan NSAppearanceNameDarkAqua melalui runtime Objective-C Cocoa (objc_msgSend) sehingga bingkai jendela dan tombol traffic lights macOS tetap gelap dan elegan dalam mode apa pun.
-
-16. Pergantian Tema Cepat (< 2 ms):
-    - Optimasi rasterisasi ikon via pointer scanline (scanLine()), caching ikon adaptif tema, dan eliminasi parse ulang stylesheet redundan.
-
-17. Kompatibilitas Multi-Qt Penuh (Qt 6.5 LTS hingga Qt 6.12):
-    - Perlindungan makro praprosesor (#if QT_VERSION >= QT_VERSION_CHECK(6, 8, 0)) untuk setColorScheme memastikan kompilasi sukses 100% di semua runner CI dan lingkungan lokal.
-
-18. Eliminasi Jalan Pintas Ganda pada Menu Desktop FreeBSD & Linux:
-    - Menstandarisasikan instalasi ke satu entri berkas kanonikal NotepadNext.desktop pada share/applications serta menyelaraskan AppStream metadata launchable desktop-id, mencegah kemunculan pintasan ganda pada menu desktop saat dikompilasi di FreeBSD, Linux, maupun pada instalasi paket build Linux (.deb dan .rpm).
-
-19. Perbaikan Crash Qt::UniqueConnection pada Pengecekan Pembaruan Otomatis:
-    - Menggantikan lambda functor dengan pointer member function slot privat checkForUpdatesFinishedSilent pada MainWindow::checkForUpdates() serta menambahkan pemutusan koneksi (disconnect) sebelum menghubungkan kembali, menyelesaikan kegagalan fatal asersi Qt 6 (qt_assert_x) dan penghentian SIGABRT saat pengecekan pembaruan otomatis di latar belakang.
+    - AutoClosePairs, MarkOccurrences, LogAutoTimestamp, dan ColorPreviewCallTip.

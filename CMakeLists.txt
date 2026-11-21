@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 3.21)
 
+if(CMAKE_GENERATOR MATCHES "Ninja")
+    message(FATAL_ERROR "Ninja generator is strictly prohibited in NotepadNext-MacOS! Please configure with -G \"Unix Makefiles\".")
+endif()
+
 project(NotepadNext
     VERSION 0.15
     DESCRIPTION "Cross-platform text editor"
