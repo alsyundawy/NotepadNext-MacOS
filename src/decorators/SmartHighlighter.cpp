@@ -108,20 +108,8 @@ void SmartHighlighter::highlightCurrentView() {
     editor->indicatorClearRange(0, docLen);
     m_hasHighlights = false;
 
-    // For large files (> 1MB or > 5000 lines), constrain search to viewport +/- 150 lines
-    Sci_PositionCR searchStart = 0;
-    Sci_PositionCR searchEnd = docLen;
-    if (docLen > 1024 * 1024 || editor->lineCount() > 5000) {
-        const int firstLine = qMax(0, static_cast<int>(editor->firstVisibleLine()) - 150);
-        const int lastLine = qMin(static_cast<int>(editor->lineCount()),
-                                  static_cast<int>(editor->firstVisibleLine() + editor->linesOnScreen() + 150));
-        searchStart = static_cast<Sci_PositionCR>(editor->positionFromLine(firstLine));
-        searchEnd = static_cast<Sci_PositionCR>(editor->lineEndPosition(lastLine));
-    }
-
-    Sci_TextToFind ttf{{searchStart, searchEnd}, selText.constData(), {-1, -1}};
+    Sci_TextToFind ttf{{0, static_cast<Sci_PositionCR>(docLen)}, selText.constData(), {-1, -1}};
     const int flags = SCFIND_MATCHCASE | SCFIND_WHOLEWORD;
-    int matchCount = 0;
 
     while (editor->send(SCI_FINDTEXT, flags, reinterpret_cast<sptr_t>(&ttf)) != -1) {
         if (ttf.chrgText.cpMax <= ttf.chrgText.cpMin) {
@@ -130,8 +118,5 @@ void SmartHighlighter::highlightCurrentView() {
         editor->indicatorFillRange(ttf.chrgText.cpMin, ttf.chrgText.cpMax - ttf.chrgText.cpMin);
         ttf.chrg.cpMin = ttf.chrgText.cpMax;
         m_hasHighlights = true;
-        if (++matchCount > 1500) {
-            break;  // Safety cap to prevent UI saturation
-        }
     }
 }

@@ -94,16 +94,14 @@ void HighlightedScrollBar::drawMarker(QPainter &p, int marker, sptr_t totalLines
 
 void HighlightedScrollBar::drawIndicator(QPainter &p, int indicator, sptr_t totalLines, int trackH, int arrowH) const {
     const sptr_t docLength = editor->length();
-    if (docLength <= 0 || docLength > 10L * 1024 * 1024) {
+    if (docLength <= 0) {
         return;
     }
 
     sptr_t curPos = 0;
     const auto color = static_cast<int>(editor->indicFore(indicator));
-    int safetyCount = 0;
 
-    while (curPos < docLength && safetyCount < 1500) {
-        safetyCount++;
+    while (curPos < docLength) {
         const sptr_t nextPos = editor->indicatorEnd(indicator, curPos);
         if (nextPos <= curPos) {
             break;
