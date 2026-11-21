@@ -44,6 +44,7 @@
 #include "URLFinder.h"
 #include "BookMarkDecorator.h"
 #include "HTMLAutoCompleteDecorator.h"
+#include "ChangeHistoryDecorator.h"
 #include "AutoClosePairs.h"
 #include "ColorPreviewCallTip.h"
 
@@ -469,6 +470,9 @@ void EditorManager::setupEditor(ScintillaNext *editor) const
     bm->setEnabled(true);
 
     new HTMLAutoCompleteDecorator(editor);
+
+    auto *ch = new ChangeHistoryDecorator(editor);
+    ch->setEnabled(true);
 
     auto *acp = new AutoClosePairs(editor);
     acp->setEnabled(true);

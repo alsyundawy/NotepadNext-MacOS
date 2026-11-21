@@ -1,12 +1,12 @@
-# 📘 Documentation Note (DOCNOTE) — NotepadNext-MacOS v0.15-08
+# 📘 Documentation Note (DOCNOTE) — NotepadNext-MacOS v0.15-09
 
 - **Project**: NotepadNext For MacOS
-- **Target Release**: `0.15-08`
-- **Date**: November 8, 2026
+- **Target Release**: `0.15-09`
+- **Date**: November 21, 2026
 - **Maintainer / Builder**: Harry Dertin Sutisna ([@alsyundawy](https://github.com/alsyundawy)) | ALSYUNDAWY IT SOLUTION
 - **Upstream Project**: [dail8859/NotepadNext](https://github.com/dail8859/NotepadNext)
 - **Feature Donor Project**: [SparkNotePad](https://github.com/alsyundawy/SparkNotePad) `v1.3.8` • [SubnetCalc-MacOS](https://github.com/alsyundawy/SubnetCalc-MacOS) (25 Theme Suites)
-- **Comparative Whitepaper**: [UPSTREAM_COMPARISON.md](UPSTREAM_COMPARISON.md) • [RELEASE_NOTES_0.15-08.md](RELEASE_NOTES_0.15-08.md)
+- **Comparative Whitepaper**: [UPSTREAM_COMPARISON.md](UPSTREAM_COMPARISON.md) • [RELEASE_NOTES_0.15-09.md](RELEASE_NOTES_0.15-09.md)
 
 ---
 
@@ -18,7 +18,7 @@ While alternative text editors each occupy specific architectural niches:
 
 - **Notepad2 / Notepad2-mod / Notepad3 / Notepad4**: Lightweight, single-file Windows Win32 editors based on Scintilla; minimal memory footprint but bound to the Windows API without cross-platform macOS support.
 - **Notepad++ (NPP)**: Highly extensible Windows desktop standard built on pure Win32 API and Scintilla; lacks native macOS rendering and Cocoa/AppKit integration.
-- **SparkNotePad**: Feature-rich sister project (v1.3.8) providing inspiration and donor architectures for icon pack management, toolbar customization, document forensics, and live previews ([github.com/alsyundawy/SparkNotePad](https://github.com/alsyundawy/SparkNotePad)).
+- **SparkNotePad**: Feature-rich sister project (v1.3.8) providing inspiration and donor architectures for icon pack management, toolbar customization, document forensics, live previews, and developer hub utilities ([github.com/alsyundawy/SparkNotePad](https://github.com/alsyundawy/SparkNotePad)).
 - **SubnetCalc-MacOS**: High-performance native macOS utility contributing 25 syntax highlighting and UI themes, with all remaining themes and UI styling infrastructure ported from SparkNotePad ([github.com/alsyundawy/SubnetCalc-MacOS](https://github.com/alsyundawy/SubnetCalc-MacOS)).
 - **Sublime Text**: Proprietary, ultra-fast custom UI toolkit and Python plugin engine; excellent macOS integration, but closed-source and commercial.
 - **BBEdit**: Premier macOS-exclusive commercial editor deeply integrated with AppleScript, macOS Text Services, and AppKit; not cross-platform.
@@ -26,12 +26,18 @@ While alternative text editors each occupy specific architectural niches:
 
 ---
 
-## 1.1 Comprehensive Feature & Architecture Matrix (Cumulative v0.15-01 to v0.15-08)
+## 1.1 Comprehensive Feature & Architecture Matrix (Cumulative v0.15-01 to v0.15-09)
 
-The table below details the cumulative architectural evolution and feature set synthesised across versions `v0.15-01` through `v0.15-08` compared to official upstream `dail8859/NotepadNext v0.15`:
+The table below details the cumulative architectural evolution and feature set synthesised across versions `v0.15-01` through `v0.15-09` compared to official upstream `dail8859/NotepadNext v0.15`:
 
-| Capability / Dimension                   | Official Upstream v0.15 (`dail8859`)                                   | NotepadNext-MacOS v0.15-08 Cumulative (`alsyundawy`)                                       | Engineering Impact & Reference in CHANGELOG                                                                                                                                           |
+| Capability / Dimension                   | Official Upstream v0.15 (`dail8859`)                                   | NotepadNext-MacOS v0.15-09 Cumulative (`alsyundawy`)                                       | Engineering Impact & Reference in CHANGELOG                                                                                                                                           |
 | :--------------------------------------- | :--------------------------------------------------------------------- | :----------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Autosave & Crash Recovery System**     | None                                                                   | **10s Timer + SHA-256 Verified Snapshot Vault (`AutosaveRecoveryManager`)**                 | Automatic background snapshots, POSIX 0700/0600 sandbox file modes, and startup orphaned snapshot recovery dialog with diff inspection (`v0.15-09`).                                  |
+| **Developer Tools & Utilities Hub**      | None                                                                   | **5-Tab Multi-Tool Utility Suite (`DeveloperToolsDialog`)**                                | Cryptographic hashes, MIME/Base64/URL transcoding, Radix/ASCII converter, NIST password tester, JSON/XML/HTML/CSS/JS minifier & formatter, JWT parser, and UUID generator (`v0.15-09`). |
+| **Live Log Tail Monitoring (tail -f)**   | None                                                                   | **Zero-Modal Live Log Streaming (`TailMonitoringManager`)**                                | Real-time disk log append tracking, configurable poll intervals, read-only write protection, auto-scroll lock, and rotation detection (`v0.15-09`).                                      |
+| **POSIX File Inspector & Shebang Engine** | None                                                                   | **POSIX Permissions & Shebang Dialect Detector (`PosixFileInspector`)**                   | Real-time octal/symbolic mode inspection, instant `chmod +x` toggle, timestamp touch, and intelligent script interpreter detection (`v0.15-09`).                                       |
+| **Scintilla Change History Margin**      | Disabled                                                               | **Margin 3 Change History Continuous Bar Indicators (`ChangeHistoryDecorator`)**           | Visual tracking for unsaved (amber), saved (green), and reverted (sky blue / orange) line modifications (`v0.15-09`).                                                                  |
+| **Tab Ergonomics & Custom Coloring**     | Static tabs only                                                       | **25-Item LIFO Closed Tab Stack & Tab Color Palette Menu (`ClosedTabsManager`, `TabColorManager`)** | Restores closed tabs (`Cmd+Shift+T`), cursor positions, and untitled buffers; sets per-tab vibrant palette colors (`v0.15-09`).                                                          |
 | **Tab Ergonomics & Plus (+) Button**     | Static tabs only                                                       | **Persistent `+` New Tab Button (`DockedEditorTitleBar`)**                                 | Instant tab creation with macOS native hover/pressed feedback (`v0.15-08`).                                                                                                           |
 | **Tabbed Markdown & HTML Preview**       | None                                                                   | **Dedicated Preview Tabs (`PreviewTabWidget`) & Preview Dock (`MarkdownSafePreviewDock`)** | Markdown-it compiler compliance, 30 isolated themes, IANA media type extensions (`.mdtxt`, `.mdtext`, etc.), GitHub callouts, HTML export, zoom, and tab context menu (`v0.15-08`).   |
 | **Themes & Toolbar Icon Scaling**        | Fixed single toolbar icon size                                         | **6-Tier Toolbar Icon Sizes (`16`, `20`, `24`, `32`, `48`, `64`)**                         | Dynamic toolbar icon pack and size switching under Themes menu with active checkmarks (`v0.15-08`).                                                                                   |

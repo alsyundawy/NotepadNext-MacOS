@@ -39,6 +39,14 @@
 #include "ui_MainWindow.h"
 #include "widgets/PreviewTabWidget.h"
 #include "features/ToolbarIconManager.h"
+#include "features/AutosaveRecoveryManager.h"
+#include "dialogs/CrashRecoveryDialog.h"
+#include "dialogs/DeveloperToolsDialog.h"
+#include "dialogs/TailOptionsDialog.h"
+#include "features/ClosedTabsManager.h"
+#include "features/TabColorManager.h"
+#include "features/TailMonitoringManager.h"
+#include "PosixFileInspector.h"
 #include "utils/MarkdownPreviewEnhancer.h"
 
 #include <QDesktopServices>
@@ -376,11 +384,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) : // NOSONAR
         recentFileListMenuBuilder->populateMenu(ui->menuRecentFiles);
     });
 
-    connect(ui->actionRestoreRecentlyClosedFile, &QAction::triggered, this, [this]() {
-        if (this->app->getRecentFilesListManager()->count() > 0) {
-            openFileList(QStringList() << this->app->getRecentFilesListManager()->mostRecentFile());
-        }
-    });
+    connect(ui->actionRestoreRecentlyClosedFile, &QAction::triggered, this, &MainWindow::reopenClosedTab);
 
     connect(ui->actionOpenAllRecentFiles, &QAction::triggered, this, [this]() {
         openFileList(this->app->getRecentFilesListManager()->fileList());
@@ -1302,6 +1306,33 @@ MainWindow::MainWindow(NotepadNextApplication *app) : // NOSONAR
     initUpdateCheck();
     setupSystemTray();
 
+    // Background Autosave & Crash Recovery (10s interval, 0600 permissions)
+    connect(AutosaveRecoveryManager::instance(), &AutosaveRecoveryManager::triggerAutosave, this, [this] {
+        for (auto *ed : editors()) {
+            if (!ed) {
+                continue;
+            }
+            if (ed->canSaveToDisk()) {
+                const QString text = QString::fromUtf8(ed->get_text_range(0, static_cast<int>(ed->length())));
+                if (!text.isEmpty()) {
+                    AutosaveRecoveryManager::instance()->saveSnapshot(ed->isFile() ? ed->getFilePath() : QString(),
+                                                                      ed->getName(), text,
+                                                                      static_cast<qint64>(ed->currentPos()));
+                }
+            } else if (ed->isFile()) {
+                AutosaveRecoveryManager::instance()->removeSnapshot(ed->getFilePath());
+            }
+        }
+    });
+    AutosaveRecoveryManager::instance()->start();
+
+    // Check for crash recovery snapshots on startup
+    QTimer::singleShot(250, this, &MainWindow::checkCrashRecoverySnapshots);
+
+    connect(TailMonitoringManager::instance(), &TailMonitoringManager::statusMessage, this, [this](const QString &msg) {
+        ui->statusBar->showMessage(msg, 3000);
+    });
+
     const auto allActions = findChildren<QAction *>();
     for (QAction *action : allActions) {
         action->setIconVisibleInMenu(true);
@@ -1649,6 +1680,39 @@ void MainWindow::setupToolsMenu()
     actionCustomizeToolbar->setObjectName(QStringLiteral("actionCustomizeToolbar"));
     connect(actionCustomizeToolbar, &QAction::triggered, this, &MainWindow::showCustomizeToolbarDialog);
     menuTools->addAction(actionCustomizeToolbar);
+
+    menuTools->addSeparator();
+
+    auto *actionDeveloperTools = new QAction(tr("Developer Tools & Utilities Hub..."), this);
+    actionDeveloperTools->setObjectName(QStringLiteral("actionDeveloperTools"));
+    actionDeveloperTools->setShortcut(QKeySequence(tr("Ctrl+Alt+D", "Shortcut for Developer Tools")));
+    connect(actionDeveloperTools, &QAction::triggered, this, [this] { showDeveloperToolsDialog(0); });
+    menuTools->addAction(actionDeveloperTools);
+
+    menuTools->addSeparator();
+
+    auto *actionTailMonitoring = new QAction(tr("Live Log Tail Monitoring (tail -f)"), this);
+    actionTailMonitoring->setObjectName(QStringLiteral("actionTailMonitoring"));
+    actionTailMonitoring->setCheckable(true);
+    connect(actionTailMonitoring, &QAction::triggered, this, &MainWindow::toggleTailMonitoring);
+    menuTools->addAction(actionTailMonitoring);
+
+    auto *actionTailOptions = new QAction(tr("Tail Monitoring Options..."), this);
+    actionTailOptions->setObjectName(QStringLiteral("actionTailOptions"));
+    connect(actionTailOptions, &QAction::triggered, this, &MainWindow::showTailOptions);
+    menuTools->addAction(actionTailOptions);
+
+    menuTools->addSeparator();
+
+    auto *actionToggleExecutable = new QAction(tr("Toggle Executable Bit (chmod +x)"), this);
+    actionToggleExecutable->setObjectName(QStringLiteral("actionToggleExecutable"));
+    connect(actionToggleExecutable, &QAction::triggered, this, &MainWindow::toggleExecutableBit);
+    menuTools->addAction(actionToggleExecutable);
+
+    auto *actionTouchFile = new QAction(tr("Touch File (Update Timestamp)"), this);
+    actionTouchFile->setObjectName(QStringLiteral("actionTouchFile"));
+    connect(actionTouchFile, &QAction::triggered, this, &MainWindow::touchCurrentFile);
+    menuTools->addAction(actionTouchFile);
 }
 
 void MainWindow::showFileDiffDialog()
@@ -2038,6 +2102,26 @@ void MainWindow::closeFile(ScintillaNext *editor)
     }
 
     if (auto *target = pEditor.data()) {
+        ClosedTabInfo closedInfo;
+        closedInfo.isUntitled = !target->isFile();
+        if (target->isFile()) {
+            closedInfo.filePath = target->getFilePath();
+            if (TabColorManager::instance()->hasTabColor(target->getFilePath())) {
+                closedInfo.tabColor = TabColorManager::instance()->tabColor(target->getFilePath());
+            }
+        } else {
+            closedInfo.untitledName = target->getName();
+            closedInfo.untitledContent = QString::fromUtf8(target->get_text_range(0, static_cast<int>(target->length())));
+            if (TabColorManager::instance()->hasTabColor(target->getName())) {
+                closedInfo.tabColor = TabColorManager::instance()->tabColor(target->getName());
+            }
+        }
+        closedInfo.cursorPosition = static_cast<qint64>(target->currentPos());
+        closedInfo.timestamp = QDateTime::currentSecsSinceEpoch();
+        ClosedTabsManager::instance()->pushClosedTab(closedInfo);
+
+        const QString snapshotId = (target->isFile() && !target->getFilePath().isEmpty()) ? target->getFilePath() : target->getName();
+        AutosaveRecoveryManager::instance()->removeSnapshot(snapshotId);
         target->close();
     }
 
@@ -2166,6 +2250,7 @@ bool MainWindow::saveFile(ScintillaNext *editor)
     else {
         QFileDevice::FileError error = editor->save();
         if (error == QFileDevice::NoError) {
+            AutosaveRecoveryManager::instance()->removeSnapshot(editor->getFilePath());
             return true;
         }
         else {
@@ -2211,6 +2296,7 @@ bool MainWindow::saveFileAs(ScintillaNext *editor, const QString &fileName)
     QFileDevice::FileError error = editor->saveAs(fileName);
 
     if (error == QFileDevice::NoError) {
+        AutosaveRecoveryManager::instance()->removeSnapshot(editor->getFilePath());
         return true;
     }
     else {
@@ -2243,6 +2329,7 @@ bool MainWindow::saveCopyAs(const QString &fileName)
     QFileDevice::FileError error = editor->saveCopyAs(fileName);
 
     if (error == QFileDevice::NoError) {
+        AutosaveRecoveryManager::instance()->removeSnapshot(editor->getFilePath());
         return true;
     }
     else {
@@ -3325,6 +3412,8 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
     emit aboutToClose();
 
+    AutosaveRecoveryManager::instance()->clearSnapshots();
+
     event->accept();
 
     QMainWindow::closeEvent(event);
@@ -3453,6 +3542,23 @@ void MainWindow::tabBarRightClicked(const ScintillaNext *editor)
 
     auto *menu = buildMenu(actionNames);
     populateTabBarPreviewActions(menu, dockedEditor->getCurrentEditor());
+
+    if (auto *currEd = dockedEditor->getCurrentEditor()) {
+        const QString tabKey = currEd->isFile() ? currEd->getFilePath() : currEd->getName();
+        auto *colorMenu = menu->addMenu(tr("Tab Color"));
+        for (const auto &preset : TabColorManager::presets()) {
+            QPixmap pix(14, 14);
+            pix.fill(preset.color);
+            colorMenu->addAction(QIcon(pix), preset.name, this, [tabKey, preset]() {
+                TabColorManager::instance()->setTabColor(tabKey, preset.color);
+            });
+        }
+        colorMenu->addSeparator();
+        colorMenu->addAction(tr("Clear Tab Color"), this, [tabKey]() {
+            TabColorManager::instance()->clearTabColor(tabKey);
+        });
+    }
+
     menu->popup(QCursor::pos());
 }
 
@@ -3741,5 +3847,135 @@ void MainWindow::setupSystemTray()
         trayMenu->addAction(ui->actionExit);
         m_systemTrayIcon->setContextMenu(trayMenu);
         m_systemTrayIcon->show();
+    }
+}
+
+void MainWindow::checkCrashRecoverySnapshots()
+{
+    const auto recoverable = AutosaveRecoveryManager::instance()->recoverableSnapshots();
+    if (recoverable.isEmpty()) {
+        return;
+    }
+
+    CrashRecoveryDialog dlg(recoverable, this);
+    if (dlg.exec() != QDialog::Accepted) {
+        return;
+    }
+
+    if (dlg.discardRequested()) {
+        AutosaveRecoveryManager::instance()->clearSnapshots();
+        return;
+    }
+
+    for (const auto &snap : dlg.selectedSnapshots()) {
+        if (snap.isUntitled) {
+            newFile();
+        } else {
+            openFile(snap.originalPath);
+        }
+        if (ScintillaNext *ed = currentEditor()) {
+            ed->setText(snap.content.toUtf8().constData());
+            ed->gotoPos(snap.cursorPosition);
+        }
+    }
+    AutosaveRecoveryManager::instance()->clearSnapshots();
+}
+
+void MainWindow::showDeveloperToolsDialog(int initialTab)
+{
+    DeveloperToolsDialog dlg(this, initialTab, this);
+    dlg.exec();
+}
+
+void MainWindow::reopenClosedTab()
+{
+    if (ClosedTabsManager::instance()->canReopen()) {
+        auto infoOpt = ClosedTabsManager::instance()->popClosedTab();
+        if (infoOpt.has_value()) {
+            const auto &info = *infoOpt;
+            if (info.isUntitled) {
+                newFile();
+                if (auto *ed = currentEditor()) {
+                    ed->setText(info.untitledContent.toUtf8().constData());
+                    ed->gotoPos(info.cursorPosition);
+                    if (info.tabColor.isValid()) {
+                        TabColorManager::instance()->setTabColor(ed->getName(), info.tabColor);
+                    }
+                }
+            } else if (!info.filePath.isEmpty()) {
+                openFile(info.filePath);
+                if (auto *ed = currentEditor()) {
+                    ed->gotoPos(info.cursorPosition);
+                    if (info.tabColor.isValid()) {
+                        TabColorManager::instance()->setTabColor(info.filePath, info.tabColor);
+                    }
+                }
+            }
+            ui->statusBar->showMessage(tr("Restored recently closed tab: %1").arg(info.isUntitled ? info.untitledName : QFileInfo(info.filePath).fileName()), 3000);
+            return;
+        }
+    }
+
+    if (this->app->getRecentFilesListManager()->count() > 0) {
+        openFileList(QStringList() << this->app->getRecentFilesListManager()->mostRecentFile());
+    } else {
+        ui->statusBar->showMessage(tr("No recently closed files to restore."), 3000);
+    }
+}
+
+void MainWindow::toggleTailMonitoring()
+{
+    auto *editor = currentEditor();
+    if (!editor) {
+        return;
+    }
+    if (!editor->isFile()) {
+        ui->statusBar->showMessage(tr("Tail monitoring requires a saved file on disk."), 3000);
+        return;
+    }
+    const bool nowActive = TailMonitoringManager::instance()->toggleMonitoring(editor);
+    if (nowActive) {
+        ui->statusBar->showMessage(tr("Live tail monitoring active (tail -f): %1").arg(editor->getName()), 3000);
+    } else {
+        ui->statusBar->showMessage(tr("Live tail monitoring stopped: %1").arg(editor->getName()), 3000);
+    }
+}
+
+void MainWindow::showTailOptions()
+{
+    TailOptionsDialog dlg(this, currentEditor());
+    dlg.exec();
+}
+
+void MainWindow::toggleExecutableBit()
+{
+    auto *editor = currentEditor();
+    if (!editor || !editor->isFile()) {
+        ui->statusBar->showMessage(tr("Executable bit toggle requires a saved file on disk."), 3000);
+        return;
+    }
+    const QString filePath = editor->getFilePath();
+    QString errMsg;
+    if (PosixFileInspector::toggleExecutable(filePath, &errMsg)) {
+        const auto insp = PosixFileInspector::inspect(filePath);
+        ui->statusBar->showMessage(tr("POSIX Mode updated: %1 (%2) for %3").arg(insp.octalString, insp.symbolicString, editor->getName()), 4000);
+    } else {
+        ui->statusBar->showMessage(tr("Failed to toggle executable bit: %1").arg(errMsg), 4000);
+    }
+}
+
+void MainWindow::touchCurrentFile()
+{
+    auto *editor = currentEditor();
+    if (!editor || !editor->isFile()) {
+        ui->statusBar->showMessage(tr("File touch requires a saved file on disk."), 3000);
+        return;
+    }
+    const QString filePath = editor->getFilePath();
+    QString errMsg;
+    if (PosixFileInspector::touchFile(filePath, &errMsg)) {
+        ui->statusBar->showMessage(tr("File timestamp successfully touched: %1").arg(editor->getName()), 3000);
+    } else {
+        ui->statusBar->showMessage(tr("Failed to touch file: %1").arg(errMsg), 4000);
     }
 }

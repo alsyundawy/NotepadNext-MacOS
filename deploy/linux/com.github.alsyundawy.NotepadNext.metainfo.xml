@@ -26,6 +26,7 @@
 
     <launchable type="desktop-id">NotepadNext.desktop</launchable>
     <releases>
+        <release version="v0.15-09" date="2026-11-21" />
         <release version="v0.15-08" date="2026-11-08" />
         <release version="v0.15-07" date="2026-10-26" />
         <release version="v0.15-06" date="2026-10-25" />

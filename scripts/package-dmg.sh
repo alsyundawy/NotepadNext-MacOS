@@ -13,7 +13,7 @@ REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 
 # Input parameters
 APP_DIR="${1:-${REPO_ROOT}/build/install/NotepadNext.app}"
-DMG_OUTPUT="${2:-${REPO_ROOT}/build/NotepadNext-v0.15-08-x64.dmg}"
+DMG_OUTPUT="${2:-${REPO_ROOT}/build/NotepadNext-v0.15-09-x64.dmg}"
 VOL_NAME="${3:-NotepadNext}"
 
 # Ensure absolute paths

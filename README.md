@@ -9,7 +9,8 @@
 >
 > 🇮🇩 Implementasi ulang Notepad++ lintas platform — dibangun secara native untuk macOS (DMG) dan Linux (.deb / .rpm).
 
-[![Release Notes v0.15-08](https://img.shields.io/badge/Release%20Notes-v0.15--08%20vs%20v0.15%20Official-success.svg)](doc/RELEASE_NOTES_0.15-08.md)
+[![Release Notes v0.15-09](https://img.shields.io/badge/Release%20Notes-v0.15--09%20vs%20v0.15%20Official-success.svg)](doc/RELEASE_NOTES_0.15-09.md)
+[![Roadmap Milestones](https://img.shields.io/badge/Roadmap-Milestones%20v0.15--09+-blueviolet.svg)](doc/ROADMAP.md)
 [![Platform: macOS & Linux](https://img.shields.io/badge/Platform-macOS%20%7C%20Linux-black.svg?logo=apple&logoColor=white)](#installation)
 [![Packages: DMG | DEB | RPM](https://img.shields.io/badge/Packages-DMG%20%7C%20DEB%20%7C%20RPM-blue.svg)](#installation)
 
@@ -41,7 +42,29 @@
 >
 > 🇮🇩 **NotepadNext For MacOS & Linux** adalah implementasi ulang native lintas platform dari Notepad++ yang dibangun menggunakan Qt 6 modern (mendukung Qt 6.5 hingga 6.12). Selain build native macOS (Apple Silicon & Intel DMG), repositori ini kini secara resmi menyediakan paket distribusi Linux CPack siap pakai (.deb untuk Debian/Ubuntu dan .rpm untuk Fedora/RHEL/openSUSE), integrasi MIME desktop Linux, penyorotan sintaks untuk 470+ format file, manajemen multi-tab dokumen, integrasi sistem macOS, serta pelokalan penuh Bahasa Indonesia dan Bahasa Inggris.
 
-### 🌟 Latest Release Highlights (v0.15-08)
+### 🌟 Latest Release Highlights (v0.15-09)
+
+> 🇬🇧 **Version 0.15-09 Major Feature & Resilience Upgrade:**
+>
+> - 🛡️ **Autosave & Crash Recovery System (`AutosaveRecoveryManager` & `CrashRecoveryDialog`)**: Automatic 10-second background snapshotting of modified and untitled documents, SHA-256 integrity verification, POSIX 0700/0600 sandbox file modes, and startup recovery wizard with diff preview and discard options.
+> - 🧰 **Integrated Developer Tools & Utilities Hub (`DeveloperToolsDialog`, `DeveloperToolsEngine`, `CodeCompressPretty`)**: Comprehensive 5-tab utility suite (`Cmd+Alt+D` / `Ctrl+Alt+D`) with cryptographic hash calculators & comparators, MIME/Base64/URL transcoding, radix conversion, NIST password strength testing, AES HTML crypto, JSON/XML/HTML/CSS/JS minification & formatting, JWT decoder, and UUID v4 generator.
+> - 📜 **Live Log Tail Monitoring (`TailMonitoringManager` & `TailOptionsDialog`)**: Real-time non-blocking `tail -f` streaming of disk log files without modal reload prompts, configurable polling intervals (250ms–5000ms), auto-scroll lock, read-only protection, and log truncation/rotation detection.
+> - 🔍 **POSIX File Inspector & Shebang Dialect Engine (`PosixFileInspector`)**: Real-time POSIX permission inspection (octal `0755`/`0644`/`0600` and symbolic `rwxr-xr-x`), direct executable bit toggle (`chmod +x`), fast timestamp update (`touch`), and intelligent script interpreter detection (Bash, Zsh, POSIX sh, Dash, Ksh, FreeBSD rc.d, Python, Lua).
+> - 🕒 **Scintilla Change History Tracking Margin (`ChangeHistoryDecorator`)**: Native Scintilla margin 3 change tracking with continuous bar markers for unsaved modifications (amber), saved changes (emerald green), and origin/modified reversion (sky blue / orange-red).
+> - 📑 **Tab Ergonomics & Custom Tab Coloring (`ClosedTabsManager` & `TabColorManager`)**: 25-item LIFO closed-tab recovery stack (`Cmd+Shift+T` / `Ctrl+Shift+T`) restoring cursor positions and untitled contents, plus tab right-click context menu palette coloring with 8 vibrant presets.
+> - 🎨 **100% Theme & Icon Integrity Preservation**: All 25 SubnetCalc theme suites, 30 isolated markdown preview themes, and 28 toolbar icon packs remain 100% intact and functional.
+>
+> 🇮🇩 **Peningkatan Fitur & Stabilitas Utama Versi 0.15-09:**
+>
+> - 🛡️ **Sistem Autosave & Pemulihan Crash Latar Belakang (`AutosaveRecoveryManager` & `CrashRecoveryDialog`)**: Snapshot otomatis latar belakang 10 detik untuk dokumen yang telah dimodifikasi dan tab baru, verifikasi integritas SHA-256, izin sandbox POSIX 0700/0600, serta wisaya pemulihan saat startup dengan pratinjau diff.
+> - 🧰 **Pusat Utilitas Developer Terintegrasi (`DeveloperToolsDialog`, `DeveloperToolsEngine`, `CodeCompressPretty`)**: Suite utilitas 5-tab lengkap (`Cmd+Alt+D` / `Ctrl+Alt+D`) mencakup komputasi & pembanding hash kriptografis, transcoding MIME/Base64/URL, konversi basis bilangan, evaluasi kekuatan kata sandi NIST, enkripsi HTML AES, minifikasi & pemformatan kode JSON/XML/HTML/CSS/JS, parser JWT, dan generator UUID v4.
+> - 📜 **Pemantauan Log Real-time Tanpa Blokir (`TailMonitoringManager` & `TailOptionsDialog`)**: Pemantauan langsung berkas log di disk ala `tail -f` tanpa dialog peringatan modal reload, interval polling dinamis (250ms–5s), pelacakan gulir otomatis, proteksi tulis read-only, dan deteksi rotasi berkas log.
+> - 🔍 **Inspektur Berkas POSIX & Mesin Dialek Shebang (`PosixFileInspector`)**: Inspeksi izin berkas POSIX seketika (oktal `0755`/`0644`/`0600` dan simbolik `rwxr-xr-x`), pengalihan bit eksekusi langsung (`chmod +x`), pembaruan stempel waktu instan (`touch`), dan deteksi cerdas interpreter skrip dari shebang (Bash, Zsh, POSIX sh, Dash, Ksh, FreeBSD rc.d, Python, Lua).
+> - 🕒 **Margin Pelacakan Riwayat Perubahan Scintilla (`ChangeHistoryDecorator`)**: Pelacakan riwayat perubahan baris Scintilla pada margin 3 dengan penanda bilah visual untuk modifikasi belum disimpan (kuning amber), perubahan tersimpan (hijau zamrud), dan pembalikan status (biru langit / oranye).
+> - 📑 **Ergonomi Tab & Pewarnaan Tab Kustom (`ClosedTabsManager` & `TabColorManager`)**: Tumpukan LIFO 25 riwayat tab tertutup (`Cmd+Shift+T` / `Ctrl+Shift+T`) untuk memulihkan posisi kursor dan konten tab tanpa nama, serta pewarnaan tab individual via menu klik-kanan dengan 8 palet warna cerah.
+> - 🎨 **Integritas Penuh Tema & Ikon**: Menjamin 100% dari 25 rangkaian tema SubnetCalc-MacOS, 30 tema pratinjau markdown, dan 28 paket ikon toolbar tetap utuh dan berjalan sempurna.
+
+### 🌟 Previous Release Highlights (v0.15-08)
 
 > 🇬🇧 **Version 0.15-08 Major Enterprise Upgrade & SparkNotePad Feature Integration:**
 >
@@ -99,6 +122,32 @@
 > - 🛡️ **Kualitas Kode 100% Bebas Cacat**: Lulus seluruh audit `trunk check -y` (4.023 berkas tervalidasi), bebas peringatan kompilasi, validasi `cppcheck` & `clangd` 100% bersih, dan pengemasan DMG terverifikasi (<32 MB).
 >
 > 📊 **Cumulative Architecture Matrix & In-Depth Upstream Comparison**: For the comprehensive 21-dimension comparative whitepaper detailing why this edition is vastly superior to official upstream v0.15, see [In-Depth Upstream Comparison](doc/UPSTREAM_COMPARISON.md), [Release Notes 0.15-08](doc/RELEASE_NOTES_0.15-08.md), and [DOCNOTE.md](doc/DOCNOTE.md).
+
+### 🗺️ Future Roadmap & Upcoming Milestones (v0.15-09+)
+
+> 🇬🇧 **Strategic Architecture Roadmap & Next Release Milestones:**
+>
+> Guided by the 14-Skill Operational Stack and 14 Engineering Review Pillars, the upcoming milestone introduces resilience, high-performance developer tools, tab workflow enhancements, and POSIX system inspection while guaranteeing **100% preservation and zero disruption to all 28 existing toolbar icon packs, UI themes, and 30 isolated preview themes**:
+>
+> - 🛡️ **Resilience & Crash Protection Suite**: `AutosaveRecoveryManager` (periodic 10s SHA-256 snapshot daemon, POSIX 0700/0600 sandbox permissions) and `CrashRecoveryDialog` (interactive session restoration wizard with line-diff previews).
+> - 🧰 **Universal Developer Tools Hub (`DeveloperToolsEngine` & `DeveloperToolsDialog`)**: Integrated 5-tab developer hub (`⌥⌘D` / Option+Cmd+D) featuring 11-algorithm stream hashing (MD5, SHA-1, SHA-224..512, SHA3, Keccak-256), MIME/Base64/URL/HTML transform tools, simultaneous Base Radix conversion (Bin/Oct/Dec/Hex), HTML CryptoJS AES-256-GCM suite with zxcvbn password estimator, and Code Formatter/Minifier (JSON/XML/HTML) + JWT Inspector + UUID v4 + Unix Epoch / ISO converter.
+> - 📑 **Tab Ergonomics & Navigation**: `TabColorManager` (10 visual tab palette presets and custom color picker), `RenameTabDialog` (`⇧⌘R` in-place file rename with disk/session synchronization), and `ClosedTabsManager` (`⇧⌘T` LIFO tab restoration stack).
+> - 🐧 **POSIX System & Shell Inspector (`PosixFileInspector`)**: Automatic shebang interpreter dialect detection (`#!/bin/bash`, `#!/usr/bin/env python3`, etc.), real-time status bar octal/symbolic permissions (`0644` / `-rw-r--r--`), single-click executable bit toggle (`chmod +x` / `0755`), and POSIX `utimes` file touch utility.
+> - 🖋️ **Visual Gutter & Real-Time Navigation**: `ChangeHistoryDecorator` (Scintilla gutter indicators tracking modified/unsaved orange and saved green line history), `ScrollbarNavigationMarkers` (vertical scrollbar track markers for bookmarks, search matches, and syntax diagnostics), and `TailMonitoringManager` (live log monitoring `tail -f` with auto-scroll).
+> - 🔒 **Strict Preservation Guarantee**: All existing 28 toolbar icon packs (`ToolbarIconManager`), 6 sizing tiers, all UI syntax styles, and 30 isolated preview themes remain strictly untouched, isolated, and fully functional.
+>
+> 🇮🇩 **Roadmap Pengembangan Strategis (v0.15-09 & Milestone Mendatang):**
+>
+> Berlandaskan 14-Skill Operational Stack dan 14 Pilar Review Rekayasa Perangkat Lunak, milestone pembaruan berikutnya menghadirkan proteksi data crash, hub perkakas developer lengkap, ergonomi navigasi tab, dan inspeksi sistem POSIX dengan jaminan **100% perlindungan penuh dan tanpa mengubah 28 paket ikon toolbar yang sudah ada, tema UI, maupun 30 tema pratinjau markdown**:
+>
+> - 🛡️ **Suite Ketahanan & Pemulihan Crash**: `AutosaveRecoveryManager` (daemon snapshot otomatis latar belakang tiap 10 detik berproteksi SHA-256 dan izin sandbox POSIX 0700/0600) serta `CrashRecoveryDialog` (wizard pemulihan dokumen pasca-crash dengan pratinjau diff dan pembersihan atomik).
+> - 🧰 **Hub Perkakas Developer Universal (`DeveloperToolsEngine` & `DeveloperToolsDialog`)**: Suite utilitas terpadu 5-tab (`⌥⌘D` / Option+Cmd+D) mencakup kalkulasi digest 11 algoritma (MD5, SHA-1, SHA-224..512, SHA3, Keccak-256), alat MIME/Base64/URL/HTML entities, konverter simultan basis radix (Biner, Oktal, Desimal, Hex), generator enkripsi HTML AES-256-GCM mandiri dengan meteran kata sandi zxcvbn, dan formatter/minifier kode (JSON/XML/HTML) + inspektur JWT + generator UUID v4 + konverter Unix Epoch / ISO 8601.
+> - 📑 **Ergonomi & Navigasi Tab**: `TabColorManager` (10 warna palet tab visual dan pemilih warna kustom), `RenameTabDialog` (pengubahan nama fisik berkas langsung dari tab `⇧⌘R`), dan `ClosedTabsManager` (stack pemulihan tab LIFO `⇧⌘T` dengan posisi kursor utuh).
+> - 🐧 **Inspektur Sistem POSIX & Shell (`PosixFileInspector`)**: Deteksi otomatis dialek shebang baris pertama (`#!/bin/bash`, `#!/usr/bin/env python3`, dll.), tampilan status bar hak akses POSIX (oktal & simbolik `0644` / `-rw-r--r--`), pengubahan status bit executable 1-klik (`chmod +x` / `0755`), dan utilitas touch berkas `utimes`.
+> - 🖋️ **Gutter Visual & Navigasi Real-Time**: `ChangeHistoryDecorator` (penanda margin Scintilla untuk riwayat baris oranye/hijau), `ScrollbarNavigationMarkers` (penanda visual pada track scrollbar untuk bookmark, hasil pencarian, dan error), serta `TailMonitoringManager` (pemantauan berkas log langsung `tail -f` dengan auto-scroll).
+> - 🔒 **Mandat Perlindungan Aset Eksisting**: Seluruh 28 paket ikon toolbar yang ada (`ToolbarIconManager`), 6 tingkat ukuran ikon, gaya sintaks UI, serta 30 tema pratinjau markdown terisolasi dipastikan tetap utuh, tidak tersentuh, dan berjalan 100% normal tanpa gangguan.
+>
+> 📋 **Comprehensive Master Architecture Document**: See [ROADMAP.md](doc/ROADMAP.md) for the complete phase-by-phase implementation plan, security controls, and quality matrices.
 
 ---
 
@@ -204,6 +253,7 @@ sudo zypper install ./notepadnext-0.15-08-1.x86_64.rpm
 
 > 📖 **Comprehensive Guides & Technical Architecture:**
 >
+> - 🗺️ **[Master Architecture Roadmap (v0.15-09+)](doc/ROADMAP.md)**: Master architecture roadmap covering crash protection, universal developer tools hub, tab ergonomics, POSIX shell inspector, and visual navigation.
 > - 📦 **[Linux Packaging Guide (.deb & .rpm)](doc/LINUX_DEB_RPM_PACKAGING.md)**: Dependency architecture, 64-bit `time_t` transition (`t64`), and DNF vs. APT deep dive.
 > - 🐧 **[Native Linux Compilation Guide](doc/BUILD_UBUNTU_DEBIAN.md)**: Native build instructions for Ubuntu 22.04/24.04/26.04 and Debian 12/13.
 > - 🌐 **[Platform & OS Support Matrix](doc/PLATFORM_SUPPORT.md)**: Detailed compatibility across macOS (11–26), Linux distributions, and FreeBSD.
@@ -398,10 +448,16 @@ sudo ./NotepadNext-Default-Editor-Linux.sh --system -f
 
 ## Credits
 
-> 🇬🇧 This repository is an enhanced **macOS & Linux edition** of the original project by **[@dail8859](https://github.com/dail8859)**, heavily supercharged with advanced features, UI ergonomics, and forensic utilities ported from the sister project **[SparkNotePad](https://github.com/alsyundawy/SparkNotePad)** (v1.3.8) across cumulative releases **v0.15-01 through v0.15-08**.
+> 🇬🇧 This repository is an enhanced **macOS & Linux edition** of the original project by **[@dail8859](https://github.com/dail8859)**, heavily supercharged with advanced features, UI ergonomics, and forensic utilities ported from the sister project **[SparkNotePad](https://github.com/alsyundawy/SparkNotePad)** (v1.3.8) across cumulative releases **v0.15-01 through v0.15-09**.
 >
 > All credit for the original codebase goes to the original author, and special architectural credit goes to the **SparkNotePad** project for serving as the foundational feature donor:
 >
+> - 🛡️ **Autosave & Crash Recovery System**: 10-second non-blocking background snapshotting and startup crash recovery wizard (`AutosaveRecoveryManager`, `CrashRecoveryDialog`).
+> - 🧰 **Developer Tools & Utilities Hub**: Comprehensive 5-tab utility suite with hash generators, MIME/Base64/URL transcoding, radix conversion, NIST password testing, code minifier/formatter, and UUID generator (`DeveloperToolsDialog`).
+> - 📜 **Live Log Tail Monitoring**: Non-blocking `tail -f` streaming of disk logs without modal reload prompts (`TailMonitoringManager`, `TailOptionsDialog`).
+> - 🔍 **POSIX File Inspector & Shebang Engine**: Real-time permission inspection, chmod +x toggle, timestamp touch, and shebang dialect detection (`PosixFileInspector`).
+> - 🕒 **Scintilla Change History Tracking Margin**: Margin 3 visual line change tracking for modified, saved, and reverted edits (`ChangeHistoryDecorator`).
+> - 📑 **Tab Ergonomics & Palette Coloring**: 25-item LIFO closed-tab recovery stack (`ClosedTabsManager`) and per-tab custom color presets (`TabColorManager`).
 > - 🎨 **28-Pack Toolbar Icon Engine & 6-Tier Sizing**: Runtime vector and multi-res PNG icon packs with dynamic toolbar resizing (`ToolbarIconManager`).
 > - ➕ **Tab Bar Plus (+) Button**: Persistent macOS-styled dock tab bar `+` button for instant new document creation (`DockedEditorTitleBar`).
 > - 📑 **Tabbed Markdown & HTML Live Preview & 30 Isolated Themes**: Full-featured `PreviewTabWidget` & `MarkdownSafePreviewDock` with markdown-it compiler compatibility, 30 isolated classless themes (independent of app dark/light mode), IANA media type extensions (`.mdtxt`, `.mdtext`, etc.), GitHub callouts, DevDocs styling, reading metrics, zoom, and direct browser previews.
@@ -413,7 +469,7 @@ sudo ./NotepadNext-Default-Editor-Linux.sh --system -f
 >
 > Special credit also goes to **[SubnetCalc-MacOS](https://github.com/alsyundawy/SubnetCalc-MacOS)** for contributing 25 syntax highlighting and UI themes, with all remaining themes and UI styling infrastructure ported from **[SparkNotePad](https://github.com/alsyundawy/SparkNotePad)**.
 >
-> 🇮🇩 Repository ini merupakan **edisi khusus macOS & Linux** dari proyek asli oleh **[@dail8859](https://github.com/dail8859)**, dengan integrasi arsitektur fitur tingkat lanjut, ergonomi UI, dan utilitas forensik yang diadaptasi dari proyek saudara **[SparkNotePad](https://github.com/alsyundawy/SparkNotePad)** (v1.3.8) dari rilis kumulatif **v0.15-01 hingga v0.15-08**.
+> 🇮🇩 Repository ini merupakan **edisi khusus macOS & Linux** dari proyek asli oleh **[@dail8859](https://github.com/dail8859)**, dengan integrasi arsitektur fitur tingkat lanjut, ergonomi UI, dan utilitas forensik yang diadaptasi dari proyek saudara **[SparkNotePad](https://github.com/alsyundawy/SparkNotePad)** (v1.3.8) dari rilis kumulatif **v0.15-01 hingga v0.15-09**.
 >
 > Seluruh kredit untuk proyek aslinya diberikan kepada penulis asli, dan kredit arsitektur khusus diberikan kepada proyek **SparkNotePad** sebagai donor fitur utama.
 >

@@ -52,6 +52,9 @@ class CharacterInfoDialog;
 class HashIntegrityDialog;
 class GenerateHashDigestDialog;
 class CustomizeToolbarDialog;
+class CrashRecoveryDialog;
+class DeveloperToolsDialog;
+class TailOptionsDialog;
 
 class NotepadNextApplication;
 class QSystemTrayIcon;
@@ -158,6 +161,13 @@ public slots:
     void compareOpenBuffers();
     void toggleHexView() const;
     void setupSystemTray();
+    void checkCrashRecoverySnapshots();
+    void showDeveloperToolsDialog(int initialTab = 0);
+    void reopenClosedTab();
+    void toggleTailMonitoring();
+    void showTailOptions();
+    void toggleExecutableBit();
+    void touchCurrentFile();
 
     void showFindReplaceDialog(int index);
 

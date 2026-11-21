@@ -81,6 +81,8 @@ qt_add_executable(NotepadNext
 	MacroStepTableModel.cpp
 	main.cpp
 	NotepadNextApplication.cpp
+	PosixFileInspector.cpp
+	PosixFileInspector.h
 	NppImporter.cpp
 	QRegexSearch.cpp
 	RangeAllocator.cpp
@@ -112,6 +114,8 @@ qt_add_executable(NotepadNext
 	decorators/BookMarkDecorator.h
 	decorators/BraceMatch.cpp
 	decorators/BraceMatch.h
+	decorators/ChangeHistoryDecorator.cpp
+	decorators/ChangeHistoryDecorator.h
 	decorators/EditorConfigAppDecorator.cpp
 	decorators/EditorConfigAppDecorator.h
 	decorators/EditorDecorator.cpp
@@ -164,6 +168,13 @@ qt_add_executable(NotepadNext
 	dialogs/UpdateDialog.h
 	dialogs/CustomizeToolbarDialog.cpp
 	dialogs/CustomizeToolbarDialog.h
+	dialogs/CrashRecoveryDialog.cpp
+	dialogs/CrashRecoveryDialog.h
+	dialogs/DeveloperToolsDialog.cpp
+	dialogs/DeveloperToolsDialog.h
+	dialogs/TailOptionsDialog.cpp
+	dialogs/TailOptionsDialog.h
+	dialogs/TailOptionsDialog.ui
 	dialogs/ExportOptionsDialog.cpp
 	dialogs/ExportOptionsDialog.h
 	dialogs/DocumentStatisticsDialog.cpp
@@ -177,6 +188,18 @@ qt_add_executable(NotepadNext
 	dialogs/GenerateHashDigestDialog.h
 	dialogs/HashIntegrityDialog.cpp
 	dialogs/HashIntegrityDialog.h
+	features/AutosaveRecoveryManager.cpp
+	features/AutosaveRecoveryManager.h
+	features/DeveloperToolsEngine.cpp
+	features/DeveloperToolsEngine.h
+	features/TabColorManager.cpp
+	features/TabColorManager.h
+	features/ClosedTabsManager.cpp
+	features/ClosedTabsManager.h
+	features/ScrollbarNavigationMarkers.cpp
+	features/ScrollbarNavigationMarkers.h
+	features/TailMonitoringManager.cpp
+	features/TailMonitoringManager.h
 	features/ThemeManager.cpp
 	features/ThemeManager.h
 	features/ThemePaletteData.h
@@ -200,6 +223,8 @@ qt_add_executable(NotepadNext
 	utils/Base64Utils.h
 	utils/CaseConverter.cpp
 	utils/CaseConverter.h
+	utils/CodeCompressPretty.cpp
+	utils/CodeCompressPretty.h
 	utils/GuidTimestampUtils.cpp
 	utils/GuidTimestampUtils.h
 	utils/HashIntegrityManager.cpp
@@ -324,6 +349,7 @@ target_link_libraries(NotepadNext
         lexilla
         scintilla
         uchardet
+        OpenSSL::Crypto
 )
 
 if(APPLE)

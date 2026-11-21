@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>TailOptionsDialog</class>
+ <widget class="QDialog" name="TailOptionsDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>450</width>
+    <height>280</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Tail Monitoring Options</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QGroupBox" name="groupStreaming">
+     <property name="title">
+      <string>Streaming &amp; Polling Configuration</string>
+     </property>
+     <layout class="QFormLayout" name="formLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="lblInterval">
+        <property name="text">
+         <string>Polling Heartbeat Interval:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="comboPollInterval">
+        <item>
+         <property name="text">
+          <string>250 ms (Ultra High Speed)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>500 ms (Fast)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>750 ms (Standard / Recommended)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>1000 ms (1 second)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>2000 ms (2 seconds)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>5000 ms (5 seconds)</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="lblMaxChunk">
+        <property name="text">
+         <string>Full Reload Threshold:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="comboMaxChunk">
+        <item>
+         <property name="text">
+          <string>1 MB</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>5 MB</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>10 MB (Recommended)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>25 MB</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBehavior">
+     <property name="title">
+      <string>Behavior &amp; Protection</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <property name="spacing">
+       <number>8</number>
+      </property>
+      <property name="leftMargin">
+       <number>10</number>
+      </property>
+      <property name="topMargin">
+       <number>8</number>
+      </property>
+      <property name="rightMargin">
+       <number>10</number>
+      </property>
+      <property name="bottomMargin">
+       <number>8</number>
+      </property>
+      <item>
+       <widget class="QCheckBox" name="chkAutoScroll">
+        <property name="text">
+         <string>Auto-scroll to end of document when new lines are appended</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="chkReadOnly">
+        <property name="text">
+         <string>Lock document in Read-Only mode while monitoring is active</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>10</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="btnBox">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -6,6 +6,52 @@ dan proyek ini mematuhi [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [0.15-09] - 2026-11-21
+
+### 🌟 Rilis Utama: Autosave & Crash Recovery, Developer Tools Hub, Live Log Tail Monitoring (tail -f), POSIX File Inspector, Scintilla Change History, dan Tab Ergonomics Suite
+
+NotepadNext-MacOS v0.15-09 adalah rilis peningkatan produktivitas dan stabilitas besar yang menghadirkan fitur-fitur mutakhir yang diadaptasi dari proyek saudara [SparkNotePad](https://github.com/alsyundawy/SparkNotePad) v1.3.8, dengan komitmen mutlak mempertahankan 100% dari 25 tema SubnetCalc-MacOS, 30 tema pratinjau markdown, dan 28 paket ikon toolbar tanpa perubahan atau degradasi apa pun:
+
+#### 🆕 Ditambahkan
+
+- **Sistem Autosave & Pemulihan Crash Latar Belakang (`AutosaveRecoveryManager` & `CrashRecoveryDialog`)**:
+  - Timer snapshot latar belakang otomatis 10 detik untuk dokumen yang telah dimodifikasi maupun tab baru (untitled).
+  - Validasi integritas SHA-256 pada setiap snapshot untuk mencegah pemulihan berkas yang rusak.
+  - Izin berkas aman POSIX 0700 untuk folder snapshot dan 0600 untuk berkas snapshot pada `~/.local/share/NotepadNext/autosave/`.
+  - Dialog pemulihan crash otomatis saat startup yang mendeteksi snapshot tertinggal dengan perbandingan diff, pemilihan multi-dokumen, dan opsi buang (discard).
+- **Pusat Utilitas Developer Terintegrasi (`DeveloperToolsDialog`, `DeveloperToolsEngine`, `CodeCompressPretty`)**:
+  - Hub pengembang 5-tab komprehensif (`Ctrl+Alt+D` / `Cmd+Alt+D`):
+    - *Tab Hash*: Komputasi dan verifikasi hash MD5, SHA-1, SHA-256, SHA-384, SHA-512, Keccak-256, Keccak-512 dengan output Hex/Base64, pencernaan hash berkas, dan pembanding hash instan.
+    - *Tab MIME & Transcoding*: Enkoder dan dekoder dua arah untuk Base64, URL percent-encoding, entitas HTML, dan Quoted-Printable.
+    - *Tab Radix & Teks*: Konversi basis bilangan (Bin, Oct, Dec, Hex), tabel ASCII-ke-Hex, Title Case, Invert Case, dan Sentence Case.
+    - *Tab Crypto & Keamanan*: Evaluasi kekuatan kata sandi berbasis standar NIST serta enkripsi/dekripsi HTML berbasis sandi AES.
+    - *Tab Format & Minifikasi Kode*: Minifier dan pretty-printer nir-rugi cepat untuk JSON, XML, HTML, CSS, JavaScript, parser header/payload token JWT, serta generator UUID v4.
+- **Pemantauan Log Real-time Tanpa Blokir (`TailMonitoringManager` & `TailOptionsDialog`)**:
+  - Mode monitoring langsung `tail -f` untuk berkas log di disk tanpa dialog peringatan modal reload.
+  - Interval polling dinamis yang dapat dikonfigurasi (250ms, 500ms, 750ms, 1s, 2s, 5s).
+  - Pelacakan gulir otomatis ke akhir berkas dengan deteksi gulir manual pengguna.
+  - Kunci proteksi tulis read-only selama pemantauan aktif.
+  - Deteksi pemotongan berkas (truncation) dan rotasi log otomatis.
+- **Inspektur Berkas POSIX & Mesin Dialek Shebang (`PosixFileInspector`)**:
+  - Inspeksi izin berkas POSIX seketika (oktal `0755`/`0644`/`0600` dan simbolik `rwxr-xr-x`).
+  - Pengalihan bit eksekusi langsung (`chmod +x` / `chmod -x`) via menu Tools.
+  - Pembaruan timestamp berkas instan (`touch`) tanpa mengubah isi berkas.
+  - Deteksi cerdas interpreter dan dialek skrip dari baris pertama shebang (Bash, Zsh, POSIX sh, Dash, Ksh, FreeBSD rc.d, Python, Lua).
+- **Margin Pelacakan Riwayat Perubahan Scintilla (`ChangeHistoryDecorator`)**:
+  - Pelacakan perubahan baris Scintilla pada margin 3 dengan penanda bilah kontinu (`SC_MARK_BAR`).
+  - Empat status visual: perubahan belum disimpan (kuning amber `#E5A50A`), perubahan tersimpan (hijau zamrud `#22C55E`), kembali ke awal (biru langit `#3B82F6`), dan kembali ke modifikasi (oranye kemerahan `#F97316`).
+- **Ergonomi Tab & Pewarnaan Tab Kustom (`ClosedTabsManager` & `TabColorManager`)**:
+  - Tumpukan LIFO 25 riwayat tab tertutup (`Ctrl+Shift+T` / `Cmd+Shift+T`) yang memulihkan posisi kursor, baris terlihat, serta konten tab tanpa nama.
+  - Pewarnaan tab individual melalui menu konteks klik-kanan tab dengan 8 palet warna cerah (Merah, Oranye, Kuning, Hijau, Sian, Biru, Ungu, Magenta) dan opsi bersihkan warna.
+
+#### 🛡️ Diperbaiki & Diperkuat
+
+- **Integritas Penuh Tema & Ikon**: Menjamin 100% dari 25 rangkaian tema SubnetCalc-MacOS, 30 tema pratinjau markdown, dan 28 paket ikon toolbar tetap utuh, aktif, dan berjalan sempurna.
+- **Penanganan Sinyal Polimorfik EditorDecorator**: Menjadikan `setEnabled(bool)` virtual pada `EditorDecorator` untuk memastikan keabsahan pewarisan polimorfik pada seluruh dekorator editor.
+- **Pembersihan Kesalahan Akses Properti File Path**: Menstandarisasikan akses file path ScintillaNext menjadi `getFilePath()` pada seluruh utilitas format kode.
+
+---
+
 ## [0.15-08] - 2026-11-08
 
 ### 🌟 Rilis Utama: Tab Bar Plus (+), Pratinjau Markdown/HTML Tabbed, Suite 28 Icon Pack, Lokalisasi Bilingual, Preferensi Teks Murni, Atribusi SubnetCalc-MacOS & Kompatibilitas Multi-Qt
@@ -76,6 +122,52 @@ NotepadNext-MacOS v0.15-08 adalah rilis fitur dan stabilitas besar yang menghadi
 All notable changes to the **NotepadNext For MacOS** project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+---
+
+## [0.15-09] - 2026-11-21
+
+### 🌟 Major Release: Autosave & Crash Recovery, Developer Tools Hub, Live Log Tail Monitoring (tail -f), POSIX File Inspector, Scintilla Change History, and Tab Ergonomics Suite
+
+NotepadNext-MacOS v0.15-09 is a major productivity and resilience release introducing advanced capabilities ported from sister project [SparkNotePad](https://github.com/alsyundawy/SparkNotePad) v1.3.8, while strictly preserving 100% of the 25 SubnetCalc-MacOS theme suites, 30 isolated markdown preview themes, and 28 toolbar icon packs without any regressions:
+
+#### 🆕 Added
+
+- **Background Autosave & Crash Recovery System (`AutosaveRecoveryManager` & `CrashRecoveryDialog`)**:
+  - 10-second non-blocking background snapshot timer for modified and untitled documents.
+  - SHA-256 integrity verification on each snapshot to prevent restoring corrupted files.
+  - Secure POSIX permissions: 0700 for snapshot directory and 0600 for snapshot files at `~/.local/share/NotepadNext/autosave/`.
+  - Startup crash recovery dialog with diff inspection, multi-document selection, and discard options.
+- **Integrated Developer Tools & Utilities Hub (`DeveloperToolsDialog`, `DeveloperToolsEngine`, `CodeCompressPretty`)**:
+  - Comprehensive 5-tab developer hub (`Ctrl+Alt+D` / `Cmd+Alt+D`):
+    - *Hash Tab*: Hash calculation and verification for MD5, SHA-1, SHA-256, SHA-384, SHA-512, Keccak-256, Keccak-512 with Hex/Base64 formatting, file hashing, and real-time hash comparator.
+    - *MIME & Transcoding Tab*: Bidirectional encoders and decoders for Base64, URL percent-encoding, HTML entities, and Quoted-Printable.
+    - *Radix & Text Tab*: Radix converter (Bin, Oct, Dec, Hex), ASCII-to-Hex lookup tables, Title Case, Invert Case, and Sentence Case.
+    - *Crypto & Security Tab*: NIST-compliant password strength evaluation and AES-based password-protected HTML encryption/decryption.
+    - *Code Formatting & Minification Tab*: Fast lossless minifiers and pretty-printers for JSON, XML, HTML, CSS, JavaScript, JWT token parser, and UUID v4 generator.
+- **Non-blocking Live Log Tail Monitoring (`TailMonitoringManager` & `TailOptionsDialog`)**:
+  - Live disk log streaming (`tail -f`) without disruptive modal reload alerts.
+  - Configurable polling intervals (250ms, 500ms, 750ms, 1s, 2s, 5s).
+  - Auto-scroll to end tracking with user scroll lock detection.
+  - Read-only write protection lock during active monitoring.
+  - Automatic detection of file truncation and log rotation.
+- **POSIX File Inspector & Shebang Dialect Engine (`PosixFileInspector`)**:
+  - Instant POSIX file permission inspection (octal `0755`/`0644`/`0600` and symbolic `rwxr-xr-x`).
+  - Executable bit toggling (`chmod +x` / `chmod -x`) directly from Tools menu.
+  - Fast file timestamp updating (`touch`) preserving existing content.
+  - Intelligent script dialect detection from shebang line (Bash, Zsh, POSIX sh, Dash, Ksh, FreeBSD rc.d, Python, Lua).
+- **Scintilla Change History Tracking Margin (`ChangeHistoryDecorator`)**:
+  - Scintilla margin 3 change tracking with continuous bar markers (`SC_MARK_BAR`).
+  - Four visual states: unsaved modifications (amber `#E5A50A`), saved changes (emerald green `#22C55E`), reverted to origin (sky blue `#3B82F6`), and reverted to modified (orange-red `#F97316`).
+- **Tab Ergonomics & Custom Tab Coloring (`ClosedTabsManager` & `TabColorManager`)**:
+  - 25-item LIFO closed-tab recovery stack (`Ctrl+Shift+T` / `Cmd+Shift+T`) restoring cursor positions, scroll offsets, and untitled buffer contents.
+  - Individual tab palette coloring via tab right-click context menu with 8 vibrant presets (Red, Orange, Yellow, Green, Cyan, Blue, Purple, Magenta) and clear color option.
+
+#### 🛡️ Fixed & Hardened
+
+- **Full Theme & Icon Suite Integrity**: Guaranteed 100% preservation of all 25 SubnetCalc-MacOS theme suites, 30 isolated markdown preview themes, and 28 toolbar icon packs.
+- **Polymorphic EditorDecorator Signal Handling**: Made `setEnabled(bool)` virtual in `EditorDecorator` for strict polymorphic correctness across all editor decorators.
+- **Standardized File Path Property Access**: Replaced legacy property accesses with `getFilePath()` across code formatting and file inspection utilities.
 
 ---
 
