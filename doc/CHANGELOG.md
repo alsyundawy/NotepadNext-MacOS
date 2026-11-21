@@ -40,9 +40,13 @@ NotepadNext-MacOS v0.15-09 adalah rilis peningkatan produktivitas dan stabilitas
 - **Margin Pelacakan Riwayat Perubahan Scintilla (`ChangeHistoryDecorator`)**:
   - Pelacakan perubahan baris Scintilla pada margin 3 dengan penanda bilah kontinu (`SC_MARK_BAR`).
   - Empat status visual: perubahan belum disimpan (kuning amber `#E5A50A`), perubahan tersimpan (hijau zamrud `#22C55E`), kembali ke awal (biru langit `#3B82F6`), dan kembali ke modifikasi (oranye kemerahan `#F97316`).
-- **Ergonomi Tab & Pewarnaan Tab Kustom (`ClosedTabsManager` & `TabColorManager`)**:
+- **Ergonomi Tab, Pewarnaan Kustom & Ganti Nama Berkas (`ClosedTabsManager`, `TabColorManager`, `RenameTabDialog`)**:
   - Tumpukan LIFO 25 riwayat tab tertutup (`Ctrl+Shift+T` / `Cmd+Shift+T`) yang memulihkan posisi kursor, baris terlihat, serta konten tab tanpa nama.
   - Pewarnaan tab individual melalui menu konteks klik-kanan tab dengan 8 palet warna cerah (Merah, Oranye, Kuning, Hijau, Sian, Biru, Ungu, Magenta) dan opsi bersihkan warna.
+  - Dialog ganti nama berkas di tempat (*in-place*) dengan validasi sanitasi karakter lintas-platform dan proteksi konflik nama fisik di disk (`Shift+Cmd+R` / menu Rename).
+- **Transfer Ruang Kerja & Bundel Portabel (`NotepadNextTransferManager` & `TransferBundleDialog`)**:
+  - Ekspor dan impor seluruh konfigurasi NotepadNext (pengaturan preferensi, tema visual kustom, layout session, dan skrip pengguna) ke dalam arsip portabel `.npnbundle` lintas-platform (macOS, FreeBSD, Linux).
+  - Dilengkapi validasi integritas SHA-256 per item, penanganan pencegahan Zip-Slip directory traversal, serta enkripsi opsional berbasis kata sandi AES-256-CBC.
 
 #### 🛡️ Diperbaiki & Diperkuat
 
@@ -159,9 +163,13 @@ NotepadNext-MacOS v0.15-09 is a major productivity and resilience release introd
 - **Scintilla Change History Tracking Margin (`ChangeHistoryDecorator`)**:
   - Scintilla margin 3 change tracking with continuous bar markers (`SC_MARK_BAR`).
   - Four visual states: unsaved modifications (amber `#E5A50A`), saved changes (emerald green `#22C55E`), reverted to origin (sky blue `#3B82F6`), and reverted to modified (orange-red `#F97316`).
-- **Tab Ergonomics & Custom Tab Coloring (`ClosedTabsManager` & `TabColorManager`)**:
+- **Tab Ergonomics, Custom Coloring & In-Place File Renaming (`ClosedTabsManager`, `TabColorManager`, `RenameTabDialog`)**:
   - 25-item LIFO closed-tab recovery stack (`Ctrl+Shift+T` / `Cmd+Shift+T`) restoring cursor positions, scroll offsets, and untitled buffer contents.
   - Individual tab palette coloring via tab right-click context menu with 8 vibrant presets (Red, Orange, Yellow, Green, Cyan, Blue, Purple, Magenta) and clear color option.
+  - Safe in-place file renaming dialog with cross-platform character sanitization and real-time disk collision protection (`Shift+Cmd+R` / tab context menu Rename).
+- **Workspace Transfer & Portable Configuration Bundle (`NotepadNextTransferManager` & `TransferBundleDialog`)**:
+  - Export and restore complete NotepadNext environment configurations (settings, custom QSS themes, active sessions, and user scripts) to and from portable `.npnbundle` archives across macOS, FreeBSD, and Linux.
+  - Engineered with per-item SHA-256 digest validation, Zip-Slip path containment defenses, and optional AES-256-CBC passphrase encryption.
 
 #### 🛡️ Fixed & Hardened
 

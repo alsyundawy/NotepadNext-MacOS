@@ -163,6 +163,7 @@ public slots:
     void setupSystemTray();
     void checkCrashRecoverySnapshots();
     void showDeveloperToolsDialog(int initialTab = 0);
+    void showTransferBundleDialog();
     void reopenClosedTab();
     void toggleTailMonitoring();
     void showTailOptions();

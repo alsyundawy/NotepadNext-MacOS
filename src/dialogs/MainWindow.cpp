@@ -43,6 +43,8 @@
 #include "dialogs/CrashRecoveryDialog.h"
 #include "dialogs/DeveloperToolsDialog.h"
 #include "dialogs/TailOptionsDialog.h"
+#include "dialogs/RenameTabDialog.h"
+#include "dialogs/TransferBundleDialog.h"
 #include "features/ClosedTabsManager.h"
 #include "features/TabColorManager.h"
 #include "features/TailMonitoringManager.h"
@@ -1713,6 +1715,13 @@ void MainWindow::setupToolsMenu()
     actionTouchFile->setObjectName(QStringLiteral("actionTouchFile"));
     connect(actionTouchFile, &QAction::triggered, this, &MainWindow::touchCurrentFile);
     menuTools->addAction(actionTouchFile);
+
+    menuTools->addSeparator();
+
+    auto *actionTransferBundle = new QAction(tr("Workspace Transfer & Portable Bundle (.npnbundle)..."), this);
+    actionTransferBundle->setObjectName(QStringLiteral("actionTransferBundle"));
+    connect(actionTransferBundle, &QAction::triggered, this, &MainWindow::showTransferBundleDialog);
+    menuTools->addAction(actionTransferBundle);
 }
 
 void MainWindow::showFileDiffDialog()
@@ -2389,22 +2398,20 @@ void MainWindow::copyAsFormat(Converter *converter, const QString &mimeType) con
 void MainWindow::renameFile()
 {
     ScintillaNext *editor = currentEditor();
+    if (!editor) return;
 
     if (editor->isFile()) {
-        const QString filter = app->getFileDialogFilter();
-        QString selectedFilter = app->getFileDialogFilterForLanguage(editor->languageName);
-        QString fileName = FileDialogHelpers::getSaveFileName(this, tr("Rename"), editor->getFilePath(), filter, &selectedFilter);
-
-        if (fileName.isEmpty()) {
-            return;
-        }
-
-        emit fileDialogAccepted(fileName);
-
-        // Note: Target collision checks handled by editor->rename(); warns if destination is locked or unwritable.
-        bool renameSuccessful = editor->rename(fileName);
-        if (!renameSuccessful) {
-            showSaveErrorMessage(editor, QFileDevice::WriteError);
+        RenameTabDialog dlg(editor->getFilePath(), this);
+        if (dlg.exec() == QDialog::Accepted) {
+            const QString newPath = dlg.newFilePath();
+            if (!newPath.isEmpty()) {
+                bool renameSuccessful = editor->rename(newPath);
+                if (!renameSuccessful) {
+                    showSaveErrorMessage(editor, QFileDevice::WriteError);
+                } else {
+                    emit fileDialogAccepted(newPath);
+                }
+            }
         }
     }
     else {
@@ -3978,4 +3985,10 @@ void MainWindow::touchCurrentFile()
     } else {
         ui->statusBar->showMessage(tr("Failed to touch file: %1").arg(errMsg), 4000);
     }
+}
+
+void MainWindow::showTransferBundleDialog()
+{
+    TransferBundleDialog dlg(this);
+    dlg.exec();
 }

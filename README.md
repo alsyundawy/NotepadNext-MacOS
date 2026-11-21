@@ -123,28 +123,30 @@
 >
 > 📊 **Cumulative Architecture Matrix & In-Depth Upstream Comparison**: For the comprehensive 21-dimension comparative whitepaper detailing why this edition is vastly superior to official upstream v0.15, see [In-Depth Upstream Comparison](doc/UPSTREAM_COMPARISON.md), [Release Notes 0.15-08](doc/RELEASE_NOTES_0.15-08.md), and [DOCNOTE.md](doc/DOCNOTE.md).
 
-### 🗺️ Future Roadmap & Upcoming Milestones (v0.15-09+)
+### 🗺️ Master Roadmap & Completed Milestones (v0.15-09)
 
-> 🇬🇧 **Strategic Architecture Roadmap & Next Release Milestones:**
+> 🇬🇧 **Strategic Architecture Roadmap & Release v0.15-09 Deliverables (100% Completed):**
 >
-> Guided by the 14-Skill Operational Stack and 14 Engineering Review Pillars, the upcoming milestone introduces resilience, high-performance developer tools, tab workflow enhancements, and POSIX system inspection while guaranteeing **100% preservation and zero disruption to all 28 existing toolbar icon packs, UI themes, and 30 isolated preview themes**:
+> Guided by the 14-Skill Operational Stack and 14 Engineering Review Pillars, the v0.15-09 release introduces resilience, high-performance developer tools, tab workflow enhancements, and POSIX system inspection while guaranteeing **100% preservation and zero disruption to all 28 existing toolbar icon packs, UI themes, and 30 isolated preview themes**:
 >
 > - 🛡️ **Resilience & Crash Protection Suite**: `AutosaveRecoveryManager` (periodic 10s SHA-256 snapshot daemon, POSIX 0700/0600 sandbox permissions) and `CrashRecoveryDialog` (interactive session restoration wizard with line-diff previews).
 > - 🧰 **Universal Developer Tools Hub (`DeveloperToolsEngine` & `DeveloperToolsDialog`)**: Integrated 5-tab developer hub (`⌥⌘D` / Option+Cmd+D) featuring 11-algorithm stream hashing (MD5, SHA-1, SHA-224..512, SHA3, Keccak-256), MIME/Base64/URL/HTML transform tools, simultaneous Base Radix conversion (Bin/Oct/Dec/Hex), HTML CryptoJS AES-256-GCM suite with zxcvbn password estimator, and Code Formatter/Minifier (JSON/XML/HTML) + JWT Inspector + UUID v4 + Unix Epoch / ISO converter.
 > - 📑 **Tab Ergonomics & Navigation**: `TabColorManager` (10 visual tab palette presets and custom color picker), `RenameTabDialog` (`⇧⌘R` in-place file rename with disk/session synchronization), and `ClosedTabsManager` (`⇧⌘T` LIFO tab restoration stack).
 > - 🐧 **POSIX System & Shell Inspector (`PosixFileInspector`)**: Automatic shebang interpreter dialect detection (`#!/bin/bash`, `#!/usr/bin/env python3`, etc.), real-time status bar octal/symbolic permissions (`0644` / `-rw-r--r--`), single-click executable bit toggle (`chmod +x` / `0755`), and POSIX `utimes` file touch utility.
 > - 🖋️ **Visual Gutter & Real-Time Navigation**: `ChangeHistoryDecorator` (Scintilla gutter indicators tracking modified/unsaved orange and saved green line history), `ScrollbarNavigationMarkers` (vertical scrollbar track markers for bookmarks, search matches, and syntax diagnostics), and `TailMonitoringManager` (live log monitoring `tail -f` with auto-scroll).
+> - 📦 **Workspace System Transfer & Portable Bundles (`NotepadNextTransferManager` & `TransferBundleDialog`)**: Cross-platform `.npnbundle` export/restore suite for preferences, custom themes, sessions, and scripts with SHA-256 validation and optional AES-256-CBC encryption.
 > - 🔒 **Strict Preservation Guarantee**: All existing 28 toolbar icon packs (`ToolbarIconManager`), 6 sizing tiers, all UI syntax styles, and 30 isolated preview themes remain strictly untouched, isolated, and fully functional.
 >
-> 🇮🇩 **Roadmap Pengembangan Strategis (v0.15-09 & Milestone Mendatang):**
+> 🇮🇩 **Peta Jalan Arsitektur & Realisasi Rilis v0.15-09 (100% Selesai):**
 >
-> Berlandaskan 14-Skill Operational Stack dan 14 Pilar Review Rekayasa Perangkat Lunak, milestone pembaruan berikutnya menghadirkan proteksi data crash, hub perkakas developer lengkap, ergonomi navigasi tab, dan inspeksi sistem POSIX dengan jaminan **100% perlindungan penuh dan tanpa mengubah 28 paket ikon toolbar yang sudah ada, tema UI, maupun 30 tema pratinjau markdown**:
+> Berlandaskan 14-Skill Operational Stack dan 14 Pilar Review Rekayasa Perangkat Lunak, rilis v0.15-09 berhasil menuntaskan seluruh sasaran ketahanan dokumen, hub perkakas developer lengkap, ergonomi navigasi tab, dan inspeksi sistem POSIX dengan jaminan **100% perlindungan penuh dan tanpa mengubah 28 paket ikon toolbar yang sudah ada, tema UI, maupun 30 tema pratinjau markdown**:
 >
 > - 🛡️ **Suite Ketahanan & Pemulihan Crash**: `AutosaveRecoveryManager` (daemon snapshot otomatis latar belakang tiap 10 detik berproteksi SHA-256 dan izin sandbox POSIX 0700/0600) serta `CrashRecoveryDialog` (wizard pemulihan dokumen pasca-crash dengan pratinjau diff dan pembersihan atomik).
 > - 🧰 **Hub Perkakas Developer Universal (`DeveloperToolsEngine` & `DeveloperToolsDialog`)**: Suite utilitas terpadu 5-tab (`⌥⌘D` / Option+Cmd+D) mencakup kalkulasi digest 11 algoritma (MD5, SHA-1, SHA-224..512, SHA3, Keccak-256), alat MIME/Base64/URL/HTML entities, konverter simultan basis radix (Biner, Oktal, Desimal, Hex), generator enkripsi HTML AES-256-GCM mandiri dengan meteran kata sandi zxcvbn, dan formatter/minifier kode (JSON/XML/HTML) + inspektur JWT + generator UUID v4 + konverter Unix Epoch / ISO 8601.
 > - 📑 **Ergonomi & Navigasi Tab**: `TabColorManager` (10 warna palet tab visual dan pemilih warna kustom), `RenameTabDialog` (pengubahan nama fisik berkas langsung dari tab `⇧⌘R`), dan `ClosedTabsManager` (stack pemulihan tab LIFO `⇧⌘T` dengan posisi kursor utuh).
 > - 🐧 **Inspektur Sistem POSIX & Shell (`PosixFileInspector`)**: Deteksi otomatis dialek shebang baris pertama (`#!/bin/bash`, `#!/usr/bin/env python3`, dll.), tampilan status bar hak akses POSIX (oktal & simbolik `0644` / `-rw-r--r--`), pengubahan status bit executable 1-klik (`chmod +x` / `0755`), dan utilitas touch berkas `utimes`.
 > - 🖋️ **Gutter Visual & Navigasi Real-Time**: `ChangeHistoryDecorator` (penanda margin Scintilla untuk riwayat baris oranye/hijau), `ScrollbarNavigationMarkers` (penanda visual pada track scrollbar untuk bookmark, hasil pencarian, dan error), serta `TailMonitoringManager` (pemantauan berkas log langsung `tail -f` dengan auto-scroll).
+> - 📦 **Transfer Ruang Kerja & Bundel Portabel (`NotepadNextTransferManager` & `TransferBundleDialog`)**: Suite ekspor/impor arsip `.npnbundle` untuk pengaturan, tema kustom, sesi kerja, dan skrip dengan proteksi SHA-256 dan enkripsi opsional AES-256-CBC.
 > - 🔒 **Mandat Perlindungan Aset Eksisting**: Seluruh 28 paket ikon toolbar yang ada (`ToolbarIconManager`), 6 tingkat ukuran ikon, gaya sintaks UI, serta 30 tema pratinjau markdown terisolasi dipastikan tetap utuh, tidak tersentuh, dan berjalan 100% normal tanpa gangguan.
 >
 > 📋 **Comprehensive Master Architecture Document**: See [ROADMAP.md](doc/ROADMAP.md) for the complete phase-by-phase implementation plan, security controls, and quality matrices.

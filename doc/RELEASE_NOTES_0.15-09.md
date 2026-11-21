@@ -46,9 +46,13 @@ This release successfully completes all 6 architectural phases defined in the Ro
    - Native Scintilla margin 3 change tracking with continuous bar markers (`SC_MARK_BAR`).
    - Four distinct status states: unsaved modifications (amber `#E5A50A`), saved changes (emerald green `#22C55E`), reverted to origin (sky blue `#3B82F6`), and reverted to modified (orange-red `#F97316`).
    - Jump to next/previous change navigation.
-6. **Phase 6: Tab Ergonomics & Custom Coloring Suite (`ClosedTabsManager` & `TabColorManager`)**:
+6. **Phase 6: Tab Ergonomics, Custom Coloring & In-Place Rename (`ClosedTabsManager`, `TabColorManager`, `RenameTabDialog`)**:
    - 25-item LIFO closed-tab recovery stack (`Ctrl+Shift+T` / `Cmd+Shift+T`) restoring cursor positions, visible lines, and untitled buffers.
    - Tab right-click context menu palette coloring with 8 studio presets (Red, Orange, Yellow, Green, Cyan, Blue, Purple, Magenta) and clear color action.
+   - In-place file renaming dialog with cross-platform character sanitization and real-time disk collision protection (`Shift+Cmd+R` / tab context menu Rename).
+7. **Phase 7: Workspace System Transfer & Portable Bundles (`NotepadNextTransferManager` & `TransferBundleDialog`)**:
+   - Portable `.npnbundle` workspace archive export and restoration across macOS, FreeBSD, and Linux.
+   - Includes preferences, custom themes, sessions, and scripts with SHA-256 integrity validation and optional AES-256-CBC encryption.
 
 ---
 

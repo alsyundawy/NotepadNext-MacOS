@@ -188,6 +188,12 @@ qt_add_executable(NotepadNext
 	dialogs/GenerateHashDigestDialog.h
 	dialogs/HashIntegrityDialog.cpp
 	dialogs/HashIntegrityDialog.h
+	dialogs/RenameTabDialog.cpp
+	dialogs/RenameTabDialog.h
+	dialogs/TransferBundleDialog.cpp
+	dialogs/TransferBundleDialog.h
+	features/NotepadNextTransferManager.cpp
+	features/NotepadNextTransferManager.h
 	features/AutosaveRecoveryManager.cpp
 	features/AutosaveRecoveryManager.h
 	features/DeveloperToolsEngine.cpp
