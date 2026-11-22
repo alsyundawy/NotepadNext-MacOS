@@ -3846,9 +3846,8 @@ Shannon Entropy: %12
         <translation>Show detected encoding details, confidence, and conversion options</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1839"/>
         <source>Ctrl+Alt+Shift+E</source>
-        <translation>Ctrl+Alt+Shift+E</translation>
+        <translation type="vanished">Ctrl+Alt+Shift+E</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1844"/>
@@ -3856,9 +3855,8 @@ Shannon Entropy: %12
         <translation>Convert to &amp;UTF-8</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1847"/>
         <source>Ctrl+Alt+U</source>
-        <translation>Ctrl+Alt+U</translation>
+        <translation type="vanished">Ctrl+Alt+U</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1852"/>
@@ -3871,9 +3869,8 @@ Shannon Entropy: %12
         <translation>Convert to &amp;ANSI (Windows-1252)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1860"/>
         <source>Ctrl+Alt+A</source>
-        <translation>Ctrl+Alt+A</translation>
+        <translation type="vanished">Ctrl+Alt+A</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1865"/>
@@ -3989,9 +3986,8 @@ Shannon Entropy: %12
         <translation>Evaluate Math Expression</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1973"/>
         <source>Ctrl+Shift+M</source>
-        <translation>Ctrl+Shift+M</translation>
+        <translation type="vanished">Ctrl+Shift+M</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1978"/>
