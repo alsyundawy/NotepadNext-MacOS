@@ -334,7 +334,7 @@ jobs:
           persist-credentials: false
 
       - name: Install Qt (mac)
-        uses: jdpurcell/install-qt-action@d715fb7cdd4e5661191a794764231398e2c952f2 # v5
+        uses: jdpurcell/install-qt-action@fc3306610123da3a5880d5c62e60debadcde18aa # v5
         with:
           version: ${{ matrix.qt_version }}
           host: mac
@@ -474,7 +474,7 @@ jobs:
           persist-credentials: false
 
       - name: Install Qt (mac)
-        uses: jdpurcell/install-qt-action@d715fb7cdd4e5661191a794764231398e2c952f2 # v5
+        uses: jdpurcell/install-qt-action@fc3306610123da3a5880d5c62e60debadcde18aa # v5
         with:
           version: ${{ matrix.qt_version }}
           host: mac
